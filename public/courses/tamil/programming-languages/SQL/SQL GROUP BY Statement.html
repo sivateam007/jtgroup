@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL GROUP BY Statement - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL UNION Operator.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL HAVING Clause.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL GROUP BY Statement</h2>
+            <p>ஒரே மதிப்புகளைக் கொண்ட வரிசைகளை சுருக்க வரிசைகளாக குழுவாக்க GROUP BY பற்றி அறிந்து கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is GROUP BY -->
+        <section class="content-section" id="what-is-groupby">
+            <h2>GROUP BY Statement என்றால் என்ன?</h2>
+            
+            <p>GROUP BY statement ஒரே மதிப்புகளைக் கொண்ட வரிசைகளை சுருக்க வரிசைகளாக குழுவாக்குகிறது, "ஒவ்வொரு நாட்டிலும் உள்ள வாடிக்கையாளர்களின் எண்ணிக்கையைக் கண்டறிய" போன்றவை.</p>
+            
+            <p>GROUP BY statement பெரும்பாலும் aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) உடன் பயன்படுத்தப்படுகிறது, முடிவு-தொகுப்பை ஒன்று அல்லது அதற்கு மேற்பட்ட நெடுவரிசைகளால் குழுவாக்க.</p>
+            
+            <div class="code-example">
+                <h3>GROUP BY தொடரியல்</h3>
+                <pre><code class="command-input">SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+ORDER BY column_name(s);</code></pre>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் "Customers" அட்டவணையில் இருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="code-example">
+                <h3>Customers அட்டவணை</h3>
+                <pre><code>+------------+--------------------------------+----------------+-------------------+----------+------------+---------+
+| CustomerID | CustomerName                   | ContactName    | Address           | City     | PostalCode | Country |
++------------+--------------------------------+----------------+-------------------+----------+------------+---------+
+| 1          | Alfreds Futterkiste            | Maria Anders   | Obere Str. 57     | Berlin   | 12209      | Germany |
+| 2          | Ana Trujillo Emparedados...    | Ana Trujillo   | Avda. Constitución| México   | 05021      | Mexico  |
+| 3          | Antonio Moreno Taquería        | Antonio Moreno | Mataderos 2312    | México   | 05023      | Mexico  |
+| 4          | Around the Horn                | Thomas Hardy   | 120 Hanover Sq.   | London   | WA1 1DP    | UK      |
+| 5          | Berglunds snabbköp             | Christina Berg | Berguvsvägen 8    | Luleå    | S-958 22   | Sweden  |
++------------+--------------------------------+----------------+-------------------+----------+------------+---------+</code></pre>
+            </div>
+        </section>
+
+        <!-- SQL GROUP BY Examples -->
+        <section class="content-section" id="groupby-examples">
+            <h2>SQL GROUP BY உதாரணங்கள்</h2>
+            
+            <p>பின்வரும் SQL statement ஒவ்வொரு நாட்டிலும் உள்ள வாடிக்கையாளர்களின் எண்ணிக்கையை பட்டியலிடுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country;</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>COUNT(CustomerID)</div>
+                        <div>Country</div>
+                    </div>
+                    <div class="table-row">
+                        <div>1</div>
+                        <div>Germany</div>
+                    </div>
+                    <div class="table-row">
+                        <div>2</div>
+                        <div>Mexico</div>
+                    </div>
+                    <div class="table-row">
+                        <div>1</div>
+                        <div>UK</div>
+                    </div>
+                    <div class="table-row">
+                        <div>1</div>
+                        <div>Sweden</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p>பின்வரும் SQL statement ஒவ்வொரு நாட்டிலும் உள்ள வாடிக்கையாளர்களின் எண்ணிக்கையை பட்டியலிடுகிறது, உயர் முதல் குறைந்த வரிசையில் வரிசைப்படுத்தப்பட்டது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+ORDER BY COUNT(CustomerID) DESC;</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>COUNT(CustomerID)</div>
+                        <div>Country</div>
+                    </div>
+                    <div class="table-row">
+                        <div>2</div>
+                        <div>Mexico</div>
+                    </div>
+                    <div class="table-row">
+                        <div>1</div>
+                        <div>Germany</div>
+                    </div>
+                    <div class="table-row">
+                        <div>1</div>
+                        <div>UK</div>
+                    </div>
+                    <div class="table-row">
+                        <div>1</div>
+                        <div>Sweden</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Demo Database -->
+        <section class="content-section" id="additional-demo">
+            <h2>கூடுதல் ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் "Orders" அட்டவணையில் இருந்து ஒரு தேர்வு:</p>
+            
+            <div class="code-example">
+                <h3>Orders அட்டவணை</h3>
+                <pre><code>+---------+------------+-----------+------------+------------+
+| OrderID | CustomerID | EmployeeID | OrderDate | ShipperID |
++---------+------------+-----------+------------+------------+
+| 10248   | 90         | 5         | 1996-07-04 | 3         |
+| 10249   | 81         | 6         | 1996-07-05 | 1         |
+| 10250   | 34         | 4         | 1996-07-08 | 2         |
++---------+------------+-----------+------------+------------+</code></pre>
+            </div>
+            
+            <p>மற்றும் "Shippers" அட்டவணையில் இருந்து ஒரு தேர்வு:</p>
+            
+            <div class="code-example">
+                <h3>Shippers அட்டவணை</h3>
+                <pre><code>+-----------+-------------------+
+| ShipperID | ShipperName       |
++-----------+-------------------+
+| 1         | Speedy Express    |
+| 2         | United Package    |
+| 3         | Federal Shipping  |
++-----------+-------------------+</code></pre>
+            </div>
+        </section>
+
+        <!-- GROUP BY With JOIN Example -->
+        <section class="content-section" id="groupby-join">
+            <h2>JOIN உடன் GROUP BY உதாரணம்</h2>
+            
+            <p>பின்வரும் SQL statement ஒவ்வொரு ஷிப்பரும் அனுப்பிய ஆர்டர்களின் எண்ணிக்கையை பட்டியலிடுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders 
+FROM Orders
+LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+GROUP BY ShipperName;</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>ShipperName</div>
+                        <div>NumberOfOrders</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Speedy Express</div>
+                        <div>1</div>
+                    </div>
+                    <div class="table-row">
+                        <div>United Package</div>
+                        <div>1</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Federal Shipping</div>
+                        <div>1</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Representation -->
+        <section class="content-section" id="visual-representation">
+            <h2>GROUP BY காட்சிப் பிரதிநிதித்துவம்</h2>
+            
+            <div class="visual-container">
+                <div class="groupby-visual">
+                    <div class="original-data">
+                        <h4>அசல் தரவு</h4>
+                        <div class="data-items">
+                            <div class="data-item" data-country="Germany">Alfreds Futterkiste - Germany</div>
+                            <div class="data-item" data-country="Mexico">Ana Trujillo - Mexico</div>
+                            <div class="data-item" data-country="Mexico">Antonio Moreno - Mexico</div>
+                            <div class="data-item" data-country="UK">Around the Horn - UK</div>
+                            <div class="data-item" data-country="Sweden">Berglunds - Sweden</div>
+                        </div>
+                    </div>
+                    
+                    <div class="groupby-process">
+                        <i class="fas fa-arrow-right"></i>
+                        <span>GROUP BY Country</span>
+                    </div>
+                    
+                    <div class="grouped-data">
+                        <h4>குழுவாக்கப்பட்ட தரவு</h4>
+                        <div class="group-items">
+                            <div class="group-item">
+                                <div class="group-header">Germany</div>
+                                <div class="group-count">1 வாடிக்கையாளர்</div>
+                            </div>
+                            <div class="group-item">
+                                <div class="group-header">Mexico</div>
+                                <div class="group-count">2 வாடிக்கையாளர்கள்</div>
+                            </div>
+                            <div class="group-item">
+                                <div class="group-header">UK</div>
+                                <div class="group-count">1 வாடிக்கையாளர்</div>
+                            </div>
+                            <div class="group-item">
+                                <div class="group-header">Sweden</div>
+                                <div class="group-count">1 வாடிக்கையாளர்</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <p><strong>கவனிக்க:</strong> GROUP BY ஒரே நாட்டு மதிப்புகளைக் கொண்ட அனைத்து வரிசைகளையும் குழுவாக்கி, ஒவ்வொரு குழுவிற்கும் aggregate functions-ஐப் பயன்படுத்துகிறது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aggregate Functions -->
+        <section class="content-section" id="aggregate-functions">
+            <h2>Aggregate Functions</h2>
+            
+            <div class="functions-grid">
+                <div class="function-card">
+                    <div class="function-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h4>COUNT()</h4>
+                    <p>வரிசைகளின் எண்ணிக்கையை தரும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT COUNT(*)
+FROM Customers
+GROUP BY Country;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <div class="function-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <h4>MAX()</h4>
+                    <p>அதிகபட்ச மதிப்பை தரும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT MAX(Price)
+FROM Products
+GROUP BY CategoryID;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <div class="function-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <h4>MIN()</h4>
+                    <p>குறைந்தபட்ச மதிப்பை தரும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT MIN(Price)
+FROM Products
+GROUP BY CategoryID;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <div class="function-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h4>SUM()</h4>
+                    <p>மொத்த தொகையை தரும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT SUM(Quantity)
+FROM OrderDetails
+GROUP BY OrderID;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <div class="function-icon">
+                        <i class="fas fa-divide"></i>
+                    </div>
+                    <h4>AVG()</h4>
+                    <p>சராசரி மதிப்பை தரும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT AVG(Price)
+FROM Products
+GROUP BY CategoryID;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multiple Column GROUP BY -->
+        <section class="content-section" id="multiple-groupby">
+            <h2>பல நெடுவரிசை GROUP BY</h2>
+            
+            <p>நீங்கள் ஒன்றுக்கு மேற்பட்ட நெடுவரிசைகளால் குழுவாக்கலாம்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT Country, City, COUNT(CustomerID)
+FROM Customers
+GROUP BY Country, City;</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>Country</div>
+                        <div>City</div>
+                        <div>COUNT(CustomerID)</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Germany</div>
+                        <div>Berlin</div>
+                        <div>1</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Mexico</div>
+                        <div>México D.F.</div>
+                        <div>2</div>
+                    </div>
+                    <div class="table-row">
+                        <div>UK</div>
+                        <div>London</div>
+                        <div>1</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Sweden</div>
+                        <div>Luleå</div>
+                        <div>1</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> குறிப்பு:</h4>
+                <p>பல நெடுவரிசைகளால் குழுவாக்கும் போது, ஒவ்வொரு தனித்த நெடுவரிசை மதிப்புகளின் கலவைக்கும் தனி குழுக்கள் உருவாக்கப்படும்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> GROUP BY statement-ல் பொதுவாக பயன்படுத்தப்படும் aggregate functions எவை?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">COUNT(), MAX(), MIN(), SUM(), AVG()</div>
+                            <div class="option-feedback correct">✓ சரி! இந்த aggregate functions GROUP BY-ல் பொதுவாக பயன்படுத்தப்படுகின்றன, குழுவாக்கப்பட்ட தரவில் கணக்கீடுகளைச் செய்ய</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SELECT(), INSERT(), UPDATE(), DELETE()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இவை aggregate functions அல்ல, இவை SQL commands</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">JOIN(), UNION(), INTERSECT(), EXCEPT()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இவை aggregate functions அல்ல, இவை SQL set operators</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">HAVING(), WHERE(), ORDER BY(), DISTINCT()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இவை aggregate functions அல்ல, இவை SQL clauses</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL UNION Operator.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL HAVING Clause.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-groupby">GROUP BY என்றால் என்ன?</a></li>
+                    <li><a href="#groupby-examples">GROUP BY உதாரணங்கள்</a></li>
+                    <li><a href="#groupby-join">JOIN உடன் GROUP BY</a></li>
+                    <li><a href="#aggregate-functions">Aggregate Functions</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .visual-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .groupby-visual {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .original-data, .grouped-data {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .original-data h4, .grouped-data h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .data-items {
+            border: 2px solid var(--git-color);
+            border-radius: 8px;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.05);
+        }
+        
+        .data-item {
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .data-item[data-country="Germany"] {
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .data-item[data-country="Mexico"] {
+            border-left: 4px solid #3498db;
+        }
+        
+        .data-item[data-country="UK"] {
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .data-item[data-country="Sweden"] {
+            border-left: 4px solid #2ecc71;
+        }
+        
+        .groupby-process {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 1rem;
+        }
+        
+        .groupby-process i {
+            font-size: 2rem;
+            color: var(--git-color);
+        }
+        
+        .groupby-process span {
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .group-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+        
+        .group-item {
+            background: white;
+            border: 2px solid var(--git-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .group-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .group-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .explanation {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary);
+            margin-top: 1.5rem;
+        }
+        
+        .explanation p {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        /* Functions Grid */
+        .functions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .function-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .function-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .function-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .function-card h4 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .function-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Result Box */
+        .result-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+        }
+        
+        .result-box h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .table-data {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .table-row {
+            display: grid;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .table-row.header {
+            background: var(--git-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .table-row > div {
+            padding: 0.8rem;
+            text-align: center;
+            border-right: 1px solid #ddd;
+        }
+        
+        .table-row > div:last-child {
+            border-right: none;
+        }
+        
+        .table-row.header > div {
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Exercise Styles */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .groupby-visual {
+                flex-direction: column;
+            }
+            
+            .groupby-process {
+                flex-direction: row;
+                padding: 1rem 0;
+            }
+            
+            .original-data, .grouped-data {
+                width: 100%;
+            }
+            
+            .functions-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .table-row {
+                font-size: 0.8rem;
+            }
+            
+            .table-row > div {
+                padding: 0.5rem;
+            }
+            
+            .group-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .table-row {
+                font-size: 0.7rem;
+            }
+            
+            .table-row > div {
+                padding: 0.3rem;
+            }
+            
+            .visual-container {
+                padding: 1rem;
+            }
+            
+            .data-item {
+                font-size: 0.8rem;
+                padding: 0.3rem;
+            }
+            
+            .group-items {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

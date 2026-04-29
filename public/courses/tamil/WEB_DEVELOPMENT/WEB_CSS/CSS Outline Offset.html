@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Outline Offset - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Outline Offset Examples */
+        .outline-offset-examples {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .offset-demo {
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .offset-demo.positive {
+            border: 2px solid black;
+            outline: 3px solid #e74c3c;
+            outline-offset: 15px;
+        }
+        
+        .offset-demo.transparent {
+            border: 2px solid black;
+            outline: 3px solid #3498db;
+            outline-offset: 15px;
+            background: #ffeb3b;
+        }
+        
+        .offset-demo.negative {
+            border: 2px solid black;
+            outline: 3px solid #2ecc71;
+            outline-offset: -5px;
+            background: #ffeb3b;
+        }
+        
+        .demo-label {
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--git-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .demo-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Space Visualization */
+        .space-visualization {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f0f8ff;
+            border-radius: 10px;
+            border: 2px dashed #3498db;
+        }
+        
+        .visual-box {
+            position: relative;
+            width: 100%;
+            height: 120px;
+            margin: 1rem 0;
+            border: 2px solid #333;
+            background: #fff;
+        }
+        
+        .content-area {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            background: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .outline-area {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            border: 3px dashed #e74c3c;
+            pointer-events: none;
+        }
+        
+        .offset-space {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px dotted #3498db;
+            pointer-events: none;
+        }
+        
+        .visual-label {
+            position: absolute;
+            font-size: 0.7rem;
+            font-weight: bold;
+            background: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+        
+        .label-content {
+            top: 5px;
+            left: 5px;
+            color: #4CAF50;
+        }
+        
+        .label-border {
+            top: 5px;
+            right: 5px;
+            color: #333;
+        }
+        
+        .label-offset {
+            bottom: 5px;
+            left: 5px;
+            color: #3498db;
+        }
+        
+        .label-outline {
+            bottom: 5px;
+            right: 5px;
+            color: #e74c3c;
+        }
+        
+        /* Property Table */
+        .property-table-container {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .property-table th {
+            background: linear-gradient(135deg, var(--git-color), #9b59b6);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .property-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .property-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .property-name {
+            font-weight: bold;
+            color: var(--git-color);
+        }
+        
+        @media (max-width: 768px) {
+            .property-table {
+                font-size: 0.9rem;
+            }
+            
+            .property-table th,
+            .property-table td {
+                padding: 0.8rem;
+            }
+            
+            .visual-box {
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Outline%20Shorthand.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Text%20Color.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Outline Offset</h2>
+            <p>CSS Outline Offset பற்றி கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS Outline Offset</h2>
+            
+            <p>outline-offset பண்பு ஒரு outline மற்றும் ஒரு உறுப்பின் விளிம்பு/border க்கு இடையே ஒரு இடத்தை சேர்க்கிறது. ஒரு உறுப்புக்கும் அதன் outline-க்கும் இடையே உள்ள இடம் வெளிப்படையானது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📐</span> offset என்றால் என்ன?</h4>
+                <p>Offset என்பது ஒரு உறுப்பிலிருந்து ஒரு குறிப்பிட்ட தூரத்திற்கு நகர்த்துவது அல்லது மாற்றுவது. outline-offset-ல், இது outline-ஐ உறுப்பிலிருந்து வெகு தொலைவில் நகர்த்துகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Positive Offset Example -->
+        <section class="content-section" id="positive-offset">
+            <h2>நேர்மறை Outline Offset</h2>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு border விளிம்பிலிருந்து 15px வெளியே ஒரு outline-ஐ குறிப்பிடுகிறது:</p>
+            
+            <div class="outline-offset-examples">
+                <div class="offset-demo positive">
+                    <div class="demo-label">15px outline-offset</div>
+                    <p>இந்தப் பத்திக்கு ஒரு கருப்பு border மற்றும் border விளிம்பிலிருந்து 15px வெளியே ஒரு சிவப்பு outline உள்ளது.</p>
+                    <div class="demo-code">p {
+  margin: 30px;
+  padding: 5px;
+  border: 1px solid black;
+  outline: 3px solid red;
+  outline-offset: 15px;
+}</div>
+                </div>
+            </div>
+            
+            <div class="space-visualization">
+                <h3>Outline Offset விஷுவலைசேஷன்</h3>
+                
+                <div class="visual-box">
+                    <div class="content-area">Content Area</div>
+                    <div class="offset-space"></div>
+                    <div class="outline-area"></div>
+                    
+                    <div class="visual-label label-content">Content</div>
+                    <div class="visual-label label-border">Border</div>
+                    <div class="visual-label label-offset">Offset Space (15px)</div>
+                    <div class="visual-label label-outline">Outline</div>
+                </div>
+                
+                <p class="visualization-note" style="text-align: center; margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                    <strong>கவனிக்க:</strong> outline மற்றும் border க்கு இடையே உள்ள இடம் வெளிப்படையானது (transparent). இங்கே நீல நிறம் புரிந்துகொள்வதற்காக மட்டுமே.
+                </p>
+            </div>
+        </section>
+
+        <!-- Transparent Space Example -->
+        <section class="content-section" id="transparent-space">
+            <h2>வெளிப்படையான இடம்</h2>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு ஒரு உறுப்பின் border மற்றும் அதன் outline க்கு இடையே உள்ள இடம் வெளிப்படையானது என்பதைக் காட்டுகிறது:</p>
+            
+            <div class="outline-offset-examples">
+                <div class="offset-demo transparent">
+                    <div class="demo-label">வெளிப்படையான offset இடம்</div>
+                    <p>இந்தப் பத்திக்கு border விளிம்பிலிருந்து 15px வெளியே ஒரு outline உள்ளது.</p>
+                    <div class="demo-code">p {
+  margin: 30px;
+  padding: 5px;
+  background: yellow;
+  border: 1px solid black;
+  outline: 3px solid red;
+  outline-offset: 15px;
+}</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔍</span> முக்கிய குறிப்பு:</h4>
+                <p>outline-offset உருவாக்கிய இடம் எப்போதும் வெளிப்படையானது. இது பின்னணி நிறத்தை காட்டாது. மேலே உள்ள எடுத்துக்காட்டில், outline மற்றும் border க்கு இடையே உள்ள இடத்தில் மஞ்சள் பின்னணி தெரியவில்லை.</p>
+            </div>
+        </section>
+
+        <!-- Negative Offset Example -->
+        <section class="content-section" id="negative-offset">
+            <h2>எதிர்மறை மதிப்புடன் CSS Outline Offset</h2>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு எதிர்மறை மதிப்புடன் ஒரு outline-offset-ன் பயன்பாட்டைக் காட்டுகிறது, இப்போது outline border விளிம்புக்குள் வைக்கப்படும்:</p>
+            
+            <div class="outline-offset-examples">
+                <div class="offset-demo negative">
+                    <div class="demo-label">-5px outline-offset (உள்ளே)</div>
+                    <p>இந்தப் பத்திக்கு ஒரு கருப்பு border மற்றும் border விளிம்புக்குள் -5px ஒரு சிவப்பு outline உள்ளது.</p>
+                    <div class="demo-code">p {
+  margin: 30px;
+  padding: 5px;
+  background: yellow;
+  border: 1px solid black;
+  outline: 3px solid red;
+  outline-offset: -5px;
+}</div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எதிர்மறை offset-ன் விளைவு:</h4>
+                <p>எதிர்மறை outline-offset மதிப்பு outline-ஐ உறுப்புக்குள் நகர்த்துகிறது. இது outline border-க்கு உள்ளே தோன்றும். outline இன்னும் உறுப்பின் பரிமாணங்களை பாதிக்காது என்பதை நினைவில் கொள்ளுங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Offset Values -->
+        <section class="content-section" id="offset-values">
+            <h2>Outline Offset மதிப்புகள்</h2>
+            
+            <p>outline-offset பின்வரும் மதிப்புகளை ஏற்கலாம்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-plus-circle"></i>
+                        <h4>நேர்மறை மதிப்புகள்</h4>
+                    </div>
+                    <p>Outline-ஐ border-க்கு வெளியே நகர்த்துகிறது</p>
+                    <div class="code-example" style="background: #f5f5f5; margin-top: 0.5rem;">
+                        <code>outline-offset: 10px;</code>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-minus-circle"></i>
+                        <h4>எதிர்மறை மதிப்புகள்</h4>
+                    </div>
+                    <p>Outline-ஐ border-க்கு உள்ளே நகர்த்துகிறது</p>
+                    <div class="code-example" style="background: #f5f5f5; margin-top: 0.5rem;">
+                        <code>outline-offset: -5px;</code>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-times-circle"></i>
+                        <h4>பூஜ்யம் (0)</h4>
+                    </div>
+                    <p>Outline border-ன் விளிம்பில் இருக்கும்</p>
+                    <div class="code-example" style="background: #f5f5f5; margin-top: 0.5rem;">
+                        <code>outline-offset: 0;</code>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📏</span> அளவீட்டு அலகுகள்:</h4>
+                <p>outline-offset பின்வரும் அலகுகளை ஏற்கும்: px, em, rem, pt, cm, mm. சதவீத மதிப்புகள் (%) ஏற்கப்படாது.</p>
+            </div>
+        </section>
+
+        <!-- SINGLE Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>CSS Outline Offset பயிற்சி</h2>
+            
+            <p>Jassif Team இல், உங்கள் அறிவை சோதிக்க பயிற்சிகள் உள்ளன. கீழே உள்ள பயிற்சியை முயற்சிக்கவும்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> outline-offset பண்பு என்ன செய்கிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Sets the thickness of the outline</div>
+                            <div class="option-feedback incorrect">✗ தவறு! outline-ன் தடிமன் outline-width பண்பு மூலம் அமைக்கப்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">Adds space between the outline and the edge/border of an element</div>
+                            <div class="option-feedback correct">✓ சரி! outline-offset பண்பு ஒரு outline மற்றும் ஒரு உறுப்பின் விளிம்பு/border க்கு இடையே இடத்தை சேர்க்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Specifies the color of the outline</div>
+                            <div class="option-feedback incorrect">✗ தவறு! outline-ன் நிறம் outline-color பண்பு மூலம் குறிப்பிடப்படுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tip-box" style="background: rgba(255,255,255,0.2); margin-top: 1.5rem;">
+                    <h4><span class="tip-icon">💡</span> outline-offset-ன் தனித்துவமான அம்சம்:</h4>
+                    <p>outline-offset என்பது outline-க்கு மட்டுமே உள்ள தனித்துவமான பண்பு. border-க்கு இதுபோன்ற offset பண்பு இல்லை. outline மட்டுமே border-லிருந்து தொலைவில் நகர்த்தப்பட முடியும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- All CSS Outline Properties -->
+        <section class="content-section" id="all-properties">
+            <h2>அனைத்து CSS Outline பண்புகள்</h2>
+            
+            <div class="property-table-container">
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="property-name">outline</td>
+                            <td>outline-width, outline-style, மற்றும் outline-color ஆகியவற்றை ஒரே அறிவிப்பில் அமைக்க ஒரு சுருக்கப் பண்பு</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">outline-color</td>
+                            <td>ஒரு outline-ன் நிறத்தை அமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">outline-offset</td>
+                            <td>ஒரு outline மற்றும் ஒரு உறுப்பின் விளிம்பு அல்லது border க்கு இடையே உள்ள இடத்தை குறிப்பிடுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">outline-style</td>
+                            <td>ஒரு outline-ன் பாணியை அமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">outline-width</td>
+                            <td>ஒரு outline-ன் அகலத்தை அமைக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📚</span> Outline பண்புகளின் தொகுப்பு:</h4>
+                <p>CSS outline பண்புகள் ஒன்றாக வேலை செய்கின்றன. பொதுவாக outline-style அமைக்கப்பட்ட பிறகே outline-width, outline-color, மற்றும் outline-offset வேலை செய்யும்.</p>
+            </div>
+        </section>
+
+        <!-- Practical Applications -->
+        <section class="content-section" id="applications">
+            <h2>நடைமுறை பயன்பாடுகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>முக்கியமான உறுப்புகளை முன்னிலைப்படுத்த outline-offset பயன்படுத்தவும்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>உறுப்புகளுக்கு இடையே தெளிவான பிரிப்புக்காக outline-offset பயன்படுத்தவும்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>சிறப்பு விளைவுகளுக்காக எதிர்மறை offset மதிப்புகளைப் பயன்படுத்தவும்</div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>மிக அதிகமான outline-offset மதிப்புகளைத் தவிர்க்கவும் - அவை பக்க தோற்றத்தை கெடுக்கலாம்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>அணுகல் தன்மைக்காக, :focus நிலையில் உள்ள உறுப்புகளுக்கு outline-offset பயன்படுத்தவும்</div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>நடைமுறை எடுத்துக்காட்டு: Focus நிலை</h3>
+                <pre><code class="command-input">/* Input புலங்களுக்கான அணுகல் தன்மை */
+input:focus {
+  outline: 3px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* பொத்தான்களுக்கான சிறப்பு விளைவு */
+button:hover {
+  outline: 2px solid #e74c3c;
+  outline-offset: 3px;
+  transition: outline-offset 0.3s ease;
+}
+
+/* எதிர்மறை offset-ன் பயன்பாடு */
+.special-box {
+  border: 2px solid #333;
+  outline: 3px solid #2ecc71;
+  outline-offset: -8px;
+  padding: 20px;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2>உலாவி ஆதரவு</h2>
+            
+            <p>CSS outline-offset பண்பு பெரும்பாலான நவீன உலாவிகளால் ஆதரிக்கப்படுகிறது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>உலாவி</th>
+                            <th>ஆதரவு</th>
+                            <th>குறிப்புகள்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fab fa-chrome"></i> Chrome</td>
+                            <td><span style="color: #2ecc71; font-weight: bold;">✓ 4.0+</span></td>
+                            <td>முழு ஆதரவு</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fab fa-firefox"></i> Firefox</td>
+                            <td><span style="color: #2ecc71; font-weight: bold;">✓ 3.5+</span></td>
+                            <td>முழு ஆதரவு</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fab fa-safari"></i> Safari</td>
+                            <td><span style="color: #2ecc71; font-weight: bold;">✓ 3.1+</span></td>
+                            <td>முழு ஆதரவு</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fab fa-edge"></i> Edge</td>
+                            <td><span style="color: #2ecc71; font-weight: bold;">✓ 12+</span></td>
+                            <td>முழு ஆதரவு</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fab fa-internet-explorer"></i> IE</td>
+                            <td><span style="color: #e74c3c; font-weight: bold;">✗ ஆதரவு இல்லை</span></td>
+                            <td>IE ஆதரிக்காது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> IE ஆதரவு:</h4>
+                <p>Internet Explorer outline-offset பண்பை ஆதரிக்காது. IE-க்கான பின்னோக்கு இணக்கத்திற்கு, வேறு மாற்று முறைகளைப் பயன்படுத்த வேண்டும்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Outline%20Shorthand.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Text%20Color.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Outline Offset அறிமுகம்</a></li>
+                    <li><a href="#positive-offset">நேர்மறை Outline Offset</a></li>
+                    <li><a href="#transparent-space">வெளிப்படையான இடம்</a></li>
+                    <li><a href="#negative-offset">எதிர்மறை Outline Offset</a></li>
+                    <li><a href="#offset-values">Outline Offset மதிப்புகள்</a></li>
+                    <li><a href="#exercises">Outline Offset பயிற்சி</a></li>
+                    <li><a href="#all-properties">அனைத்து Outline பண்புகள்</a></li>
+                    <li><a href="#applications">நடைமுறை பயன்பாடுகள்</a></li>
+                    <li><a href="#browser-support">உலாவி ஆதரவு</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction - ONLY ONE EXERCISE
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Constraints - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .constraints-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .constraint-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .constraint-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .constraint-card.notnull {
+            border-top: 4px solid #dc3545;
+        }
+        
+        .constraint-card.unique {
+            border-top: 4px solid #007bff;
+        }
+        
+        .constraint-card.primary {
+            border-top: 4px solid #28a745;
+        }
+        
+        .constraint-card.foreign {
+            border-top: 4px solid #ffc107;
+        }
+        
+        .constraint-card.check {
+            border-top: 4px solid #6f42c1;
+        }
+        
+        .constraint-card.default {
+            border-top: 4px solid #17a2b8;
+        }
+        
+        .constraint-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .constraint-card.notnull .constraint-icon {
+            color: #dc3545;
+        }
+        
+        .constraint-card.unique .constraint-icon {
+            color: #007bff;
+        }
+        
+        .constraint-card.primary .constraint-icon {
+            color: #28a745;
+        }
+        
+        .constraint-card.foreign .constraint-icon {
+            color: #ffc107;
+        }
+        
+        .constraint-card.check .constraint-icon {
+            color: #6f42c1;
+        }
+        
+        .constraint-card.default .constraint-icon {
+            color: #17a2b8;
+        }
+        
+        /* Level Indicators */
+        .constraint-levels {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .level-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .level-column {
+            background: #007bff;
+            color: white;
+        }
+        
+        .level-table {
+            background: #28a745;
+            color: white;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .constraint-flow {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            margin: 0.5rem;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step-arrow {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin: 0 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .constraints-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .flow-steps {
+                flex-direction: column;
+            }
+            
+            .step-arrow {
+                transform: rotate(90deg);
+                margin: 1rem 0;
+            }
+            
+            .constraint-levels {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL ALTER TABLE Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL NOT NULL Constraint.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Constraints</h2>
+            <p>அட்டவணையில் தரவுக்கான விதிகளைக் குறிப்பிட SQL கட்டுப்பாடுகளைப் பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What are SQL Constraints -->
+        <section class="content-section" id="what-are-constraints">
+            <h2>SQL கட்டுப்பாடுகள்</h2>
+            
+            <p>SQL கட்டுப்பாடுகள் ஒரு அட்டவணையில் தரவுக்கான விதிகளைக் குறிப்பிட பயன்படுகின்றன.</p>
+            
+            <div class="constraint-flow">
+                <h3>கட்டுப்பாடுகளின் பணிப்பாய்வு</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <p>கட்டுப்பாடுகளை வரையறுக்கவும்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <p>தரவு உள்ளீடு/மாற்றம்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <p>கட்டுப்பாடுகளை சரிபார்க்கவும்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <p>மீறல் இருந்தால் நிராகரிக்கவும்</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SQL Create Constraints -->
+        <section class="content-section" id="create-constraints">
+            <h2>SQL கட்டுப்பாடுகளை உருவாக்குதல்</h2>
+            
+            <p>கட்டுப்பாடுகள் அட்டவணை CREATE TABLE அறிக்கையுடன் உருவாக்கப்படும் போது குறிப்பிடப்படலாம், அல்லது அட்டவணை உருவாக்கப்பட்ட பிறகு ALTER TABLE அறிக்கையுடன் குறிப்பிடப்படலாம்.</p>
+            
+            <div class="syntax-box">
+                <h3>தொடரியல்</h3>
+                <pre><code>CREATE TABLE table_name (
+    column1 datatype constraint,
+    column2 datatype constraint,
+    column3 datatype constraint,
+    ....
+);</code></pre>
+            </div>
+        </section>
+
+        <!-- About Constraints -->
+        <section class="content-section" id="about-constraints">
+            <h2>SQL கட்டுப்பாடுகள் பற்றி</h2>
+            
+            <p>SQL கட்டுப்பாடுகள் அட்டவணையில் உள்ள தரவுக்கான விதிகளைக் குறிப்பிட பயன்படுகின்றன.</p>
+            
+            <p>அட்டவணையில் செல்லக்கூடிய தரவின் வகையைக் கட்டுப்படுத்த கட்டுப்பாடுகள் பயன்படுத்தப்படுகின்றன. இது அட்டவணையில் உள்ள தரவின் துல்லியம் மற்றும் நம்பகத்தன்மையை உறுதி செய்கிறது. கட்டுப்பாடு மற்றும் தரவு செயலுக்கு இடையே ஏதேனும் மீறல் இருந்தால், செயல் கைவிடப்படும்.</p>
+            
+            <p>கட்டுப்பாடுகள் நெடுவரிசை நிலை அல்லது அட்டவணை நிலையாக இருக்கலாம். நெடுவரிசை நிலை கட்டுப்பாடுகள் ஒரு நெடுவரிசைக்குப் பொருந்தும், மற்றும் அட்டவணை நிலை கட்டுப்பாடுகள் முழு அட்டவணைக்கும் பொருந்தும்.</p>
+        </section>
+
+        <!-- SQL Constraints Overview -->
+        <section class="content-section" id="constraints-overview">
+            <h2>SQL கட்டுப்பாடுகள் - முழுமையான பார்வை</h2>
+            
+            <div class="constraints-grid">
+                <div class="constraint-card notnull">
+                    <div class="constraint-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h3>NOT NULL</h3>
+                    <p>ஒரு நெடுவரிசை NULL மதிப்பைக் கொண்டிருக்க முடியாது என்பதை உறுதி செய்கிறது</p>
+                    <div class="constraint-levels">
+                        <span class="level-badge level-column">நெடுவரிசை நிலை</span>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>CREATE TABLE Persons (
+    ID int NOT NULL,
+    Name varchar(255) NOT NULL
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="constraint-card unique">
+                    <div class="constraint-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3>UNIQUE</h3>
+                    <p>ஒரு நெடுவரிசையில் உள்ள அனைத்து மதிப்புகளும் வெவ்வேறாக இருப்பதை உறுதி செய்கிறது</p>
+                    <div class="constraint-levels">
+                        <span class="level-badge level-column">நெடுவரிசை நிலை</span>
+                        <span class="level-badge level-table">அட்டவணை நிலை</span>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>CREATE TABLE Persons (
+    ID int UNIQUE,
+    Email varchar(255) UNIQUE
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="constraint-card primary">
+                    <div class="constraint-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3>PRIMARY KEY</h3>
+                    <p>NOT NULL மற்றும் UNIQUE ஆகியவற்றின் கலவை. அட்டவணையில் உள்ள ஒவ்வொரு வரிசையையும் தனித்துவமாக அடையாளம் காட்டுகிறது</p>
+                    <div class="constraint-levels">
+                        <span class="level-badge level-column">நெடுவரிசை நிலை</span>
+                        <span class="level-badge level-table">அட்டவணை நிலை</span>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>CREATE TABLE Persons (
+    ID int PRIMARY KEY,
+    Name varchar(255)
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="constraint-card foreign">
+                    <div class="constraint-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3>FOREIGN KEY</h3>
+                    <p>அட்டவணைகளுக்கு இடையேயான இணைப்புகளை அழிக்கக்கூடிய செயல்களைத் தடுக்கிறது</p>
+                    <div class="constraint-levels">
+                        <span class="level-badge level-table">அட்டவணை நிலை</span>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    PersonID int FOREIGN KEY REFERENCES Persons(ID)
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="constraint-card check">
+                    <div class="constraint-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>CHECK</h3>
+                    <p>ஒரு நெடுவரிசையில் உள்ள மதிப்புகள் ஒரு குறிப்பிட்ட நிபந்தனையைப் பூர்த்தி செய்கின்றன என்பதை உறுதி செய்கிறது</p>
+                    <div class="constraint-levels">
+                        <span class="level-badge level-column">நெடுவரிசை நிலை</span>
+                        <span class="level-badge level-table">அட்டவணை நிலை</span>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>CREATE TABLE Persons (
+    Age int CHECK (Age >= 18)
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="constraint-card default">
+                    <div class="constraint-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3>DEFAULT</h3>
+                    <p>எந்த மதிப்பும் குறிப்பிடப்படவில்லை என்றால் ஒரு நெடுவரிசைக்கு இயல்புநிலை மதிப்பை அமைக்கிறது</p>
+                    <div class="constraint-levels">
+                        <span class="level-badge level-column">நெடுவரிசை நிலை</span>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>CREATE TABLE Persons (
+    City varchar(255) DEFAULT 'Sandnes'
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CREATE INDEX -->
+        <section class="content-section" id="create-index">
+            <h2>CREATE INDEX</h2>
+            
+            <p>CREATE INDEX தரவுத்தளத்திலிருந்து தரவை மிக விரைவாக உருவாக்கவும் மீட்டெடுக்கவும் பயன்படுகிறது.</p>
+            
+            <div class="syntax-box">
+                <h3>தொடரியல்</h3>
+                <pre><code>CREATE INDEX index_name
+ON table_name (column1, column2, ...);</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>CREATE INDEX idx_lastname
+ON Persons (LastName);</code></pre>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>முழு அட்டவணை உதாரணம்</h3>
+            <p>பல்வேறு கட்டுப்பாடுகளுடன் கூடிய முழுமையான அட்டவணை உருவாக்கம்:</p>
+            
+            <div class="code-example">
+                <pre><code>CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    FirstName varchar(50) NOT NULL,
+    LastName varchar(50) NOT NULL,
+    Email varchar(100) UNIQUE NOT NULL,
+    Age int CHECK (Age >= 18),
+    DepartmentID int,
+    HireDate date DEFAULT GETDATE(),
+    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID)
+    REFERENCES Departments(DepartmentID)
+);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>கட்டுப்பாடுகள் உங்கள் தரவுத்தளத்தின் ஒருமைப்பாட்டைப் பராமரிக்க உதவுகின்றன. அவை தவறான தரவு அட்டவணைகளில் நுழைவதைத் தடுக்கின்றன மற்றும் அட்டவணைகளுக்கு இடையேயான உறவுகளை உறுதி செய்கின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL கட்டுப்பாடுகளின் முதன்மை நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தரவுத்தளங்களுக்கு இடையேயான உறவுகளை வரையறுக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! கட்டுப்பாடுகள் உறவுகளை வரையறுக்க உதவுகின்றன, ஆனால் இது முதன்மை நோக்கம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையில் உள்ள தரவுக்கான விதிகளைக் கட்டுப்படுத்த</div>
+                            <div class="option-feedback correct">✓ சரி! SQL கட்டுப்பாடுகளின் முதன்மை நோக்கம் அட்டவணையில் உள்ள தரவுக்கான விதிகளைக் குறிப்பிடுவதும் அதைக் கட்டுப்படுத்துவதும் ஆகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தரவுத்தளத்தில் புதிய அட்டவணைகளை உருவாக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது CREATE TABLE அறிக்கைக்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SQL பயனர் அனுமதிகளை நிர்வகிக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது GRANT/REVOKE அறிக்கைகளுக்கானது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL ALTER TABLE Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL NOT NULL Constraint.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-are-constraints">SQL கட்டுப்பாடுகள்</a></li>
+                    <li><a href="#create-constraints">கட்டுப்பாடுகளை உருவாக்குதல்</a></li>
+                    <li><a href="#constraints-overview">கட்டுப்பாடுகள் பார்வை</a></li>
+                    <li><a href="#practical-examples">நடைமுறை எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

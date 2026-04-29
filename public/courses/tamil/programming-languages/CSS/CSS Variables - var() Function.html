@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Variables - var() Function - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-bg-color: #1e90ff;
+            --primary-color: #ffffff;
+            --secondary-color: #f0f0f0;
+            --border-color: #ddd;
+        }
+        
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Variable Demo Styles */
+        .demo-container {
+            margin: 1rem 0;
+            padding: 15px;
+            color: var(--primary-bg-color);
+            background-color: var(--primary-color);
+            border-radius: 8px;
+        }
+        
+        .demo-container h2 {
+            border-bottom: 2px solid var(--primary-bg-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .demo-note {
+            border: 1px solid var(--primary-bg-color);
+            padding: 10px;
+            margin: 10px 0;
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+        }
+        
+        .variable-demo {
+            background-color: var(--primary-bg-color);
+            color: var(--primary-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .local-variable-demo {
+            --local-color: #ff6347;
+            color: var(--local-color);
+            padding: 15px;
+            border: 2px solid var(--local-color);
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-tabs">
+        <a href="CSS Media Queries.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Overriding%20Variables.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Variables - var() Function</h2>
+            <p>CSS மாறிகள் மற்றும் var() செயல்பாட்டைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="content-section" id="css-variables">
+            <h2>CSS Variables</h2>
+            <p>var() செயல்பாடு ஒரு CSS மாறியின் மதிப்பைச் செருகப் பயன்படுகிறது.</p>
+            <p>CSS மாறிகள் DOM க்கு அணுகலைக் கொண்டுள்ளன, அதாவது நீங்கள் உள்ளூர் அல்லது உலகளாவிய நோக்கத்துடன் மாறிகளை உருவாக்கலாம், JavaScript உடன் மாறிகளை மாற்றலாம், மற்றும் மீடியா வினவல்களின் அடிப்படையில் மாறிகளை மாற்றலாம்.</p>
+            <p>CSS மாறிகளைப் பயன்படுத்த ஒரு நல்ல வழி உங்கள் வடிவமைப்பின் நிறங்களைப் பொறுத்தவரை. ஒரே நிறங்களை மீண்டும் மீண்டும் நகலெடுத்து ஒட்டுவதற்குப் பதிலாக, நீங்கள் அவற்றை மாறிகளில் வைக்கலாம்.</p>
+        </section>
+
+        <section class="content-section" id="declare-variable">
+            <h2>CSS Declare a Variable</h2>
+            <p>CSS மாறிகள் உலகளாவிய அல்லது உள்ளூர் நோக்கத்தைக் கொண்டிருக்கலாம்.</p>
+            <p>உலகளாவிய மாறிகள் முழு ஆவணம் முழுவதும் அணுகலாம், அதே நேரத்தில் உள்ளூர் மாறிகள் அது அறிவிக்கப்பட்ட தேர்வியின் உள்ளே மட்டுமே பயன்படுத்தப்படும்.</p>
+            <p>உலகளாவிய மாறியை உருவாக்க, அதை :root தேர்விக்குள் அறிவிக்கவும். :root தேர்வி ஆவணத்தின் ரூட் உறுப்புடன் பொருந்துகிறது.</p>
+            <p>உள்ளூர் மாறியை உருவாக்க, அதைப் பயன்படுத்தப் போகும் தேர்விக்குள் அறிவிக்கவும்.</p>
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> கவனத்திற்குரியது:</h4>
+                <p>ஒரு CSS மாறி பெயர் இரண்டு கோடுகளுடன் (--) தொடங்க வேண்டும் மற்றும் எழுத்துப்பிழை உணர்திறன் கொண்டது!</p>
+            </div>
+            <div class="code-example">
+                <pre><code>:root {
+  --primary-bg-color: green; /* உலகளாவிய நோக்கம் */
+}
+
+.note {
+  --note-bg: yellow; /* உள்ளூர் நோக்கம் */
+}</code></pre>
+            </div>
+        </section>
+
+        <section class="content-section" id="var-function">
+            <h2>The CSS var() Function</h2>
+            <p>var() செயல்பாடு அறிவிக்கப்பட்ட CSS மாறியின் மதிப்பைச் செருகப் பயன்படுகிறது.</p>
+            <div class="code-example">
+                <pre><code>var(--name, value)</code></pre>
+            </div>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>name</td>
+                            <td>தேவைப்படுகிறது. மாறி பெயர் (இரண்டு கோடுகளுடன் தொடங்க வேண்டும்)</td>
+                        </tr>
+                        <tr>
+                            <td>value</td>
+                            <td>விருப்பமானது. பின்வாங்கல் மதிப்பு (மாறி கிடைக்கவில்லை என்றால் பயன்படுத்தப்படும்)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> var() பயன்படுத்துவதன் நன்மைகள்:</h4>
+                <ul>
+                    <li>குறியீட்டை பராமரிக்க எளிதாக்குகிறது (புதுப்பிப்புகளை எளிதாக்குகிறது)</li>
+                    <li>குறியீட்டைப் படிக்க எளிதாக்குகிறது (மேலும் புரிந்துகொள்ளக்கூடியது)</li>
+                    <li>முழு பக்கத்திற்கான நிற மதிப்புகளை மாற்ற எளிதாக்குகிறது</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section" id="variables-example">
+            <h2>CSS Variables Example</h2>
+            <p>இங்கே, நாங்கள் இரண்டு உலகளாவிய மாறிகளை அறிவிக்கிறோம் (--primary-bg-color மற்றும் --primary-color).</p>
+            <p>பின்னர், நாங்கள் var() செயல்பாட்டைப் பயன்படுத்தி பாணி தாளில் பின்னர் மாறிகளின் மதிப்பைச் செருகுகிறோம்:</p>
+            
+            <div class="demo-container">
+                <h2>CSS Variables Demo</h2>
+                <p>இந்த உள்ளடக்கத்தில் CSS மாறிகள் பயன்படுத்தப்படுகின்றன:</p>
+                <div class="demo-note">
+                    <p>இந்தக் குறிப்பு CSS மாறிகளைப் பயன்படுத்துகிறது. --primary-bg-color மாறி அனைத்து எல்லைகளுக்கும் பயன்படுத்தப்படுகிறது.</p>
+                </div>
+                <div class="variable-demo">
+                    <p>இந்தப் பெட்டி --primary-bg-color மற்றும் --primary-color மாறிகளைப் பயன்படுத்துகிறது.</p>
+                </div>
+                <div class="local-variable-demo">
+                    <p>இந்தப் பெட்டி --local-color என்ற உள்ளூர் மாறியைப் பயன்படுத்துகிறது.</p>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>:root {
+  --primary-bg-color: #1e90ff;
+  --primary-color: #ffffff;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.container {
+  color: var(--primary-bg-color);
+  background-color: var(--primary-color);
+  padding: 15px;
+}
+
+.container h2 {
+  border-bottom: 2px solid var(--primary-bg-color);
+}
+
+.container .note {
+  border: 1px solid var(--primary-bg-color);
+  padding: 10px;
+}</code></pre>
+            </div>
+        </section>
+
+        <section class="content-section" id="change-variables">
+            <h2>Changing Variable Values</h2>
+            <p>பக்கத்தின் தோற்றத்தை மாற்ற, நீங்கள் இரண்டு மாறி மதிப்புகளை மட்டும் மாற்ற வேண்டும்:</p>
+            <div class="code-example">
+                <pre><code>:root {
+  --primary-bg-color: #8FBC8F;
+  --primary-color: #FFFAF0;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.container {
+  color: var(--primary-bg-color);
+  background-color: var(--primary-color);
+  padding: 15px;
+}
+
+.container h2 {
+  border-bottom: 2px solid var(--primary-bg-color);
+}
+
+.container .note {
+  border: 1px solid var(--primary-bg-color);
+  padding: 10px;
+}</code></pre>
+            </div>
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎨</span> பயனுள்ள உதவிக்குறிப்பு:</h4>
+                <p>முழு வலைத்தளத்தின் தோற்றத்தையும் இரண்டு மாறி மதிப்புகளை மட்டும் மாற்றுவதன் மூலம் எளிதாக மாற்றலாம். இது வடிவமைப்பு புதுப்பிப்புகளை மிகவும் திறமையானதாக ஆக்குகிறது.</p>
+            </div>
+        </section>
+
+        <section class="content-section" id="exercise">
+            <h2>Exercise</h2>
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> நீல நிறங்களுக்கான உலகளாவிய CSS மாறியை அறிவிக்க சரியான மாறி பெயர்களை இழுத்து விடவும்.</h4>
+                <div class="code-example" style="background: #667eea; color: white;">
+                    <pre style="color: white;"><code>:root {
+  : #1e90ff;
+}</code></pre>
+                </div>
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">--primary-color</div>
+                            <div class="option-feedback correct">✓ சரி!</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">primary-color</div>
+                            <div class="option-feedback incorrect">✗ தவறு! CSS மாறிகள் -- உடன் தொடங்க வேண்டும்</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">var(--primary-color)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது மாறி அறிவிப்பு அல்ல, var() பயன்பாடு</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">$primary-color</div>
+                            <div class="option-feedback incorrect">✗ தவறு! $ என்பது Sass க்கானது, CSS மாறிகள் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="properties">
+            <h2>CSS var() Function</h2>
+            <p>பின்வரும் அட்டவணை CSS var() செயல்பாட்டை விவரிக்கிறது:</p>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Function</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>var()</td>
+                            <td>ஒரு CSS மாறியின் மதிப்பைச் செருகுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="bottom-nav">
+            <a href="CSS Media Queries.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Overriding%20Variables.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#css-variables">CSS Variables</a></li>
+                    <li><a href="#declare-variable">Declare Variables</a></li>
+                    <li><a href="#var-function">var() Function</a></li>
+                    <li><a href="#variables-example">Variables Example</a></li>
+                    <li><a href="#change-variables">Changing Variables</a></li>
+                    <li><a href="#exercise">Exercise</a></li>
+                    <li><a href="#properties">var() Function</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, {threshold: 0.1});
+        
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

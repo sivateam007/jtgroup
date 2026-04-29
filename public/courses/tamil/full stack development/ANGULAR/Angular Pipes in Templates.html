@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Pipes in Templates - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .pipe-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            margin: 2rem 0;
+        }
+        
+        .demo-container {
+            background: white;
+            color: #333;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .pipe-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .pipe-example {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .pipe-input {
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            margin: 0.3rem 0;
+        }
+        
+        .pipe-output {
+            font-family: 'Courier New', monospace;
+            background: #d4edda;
+            color: #155724;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            margin: 0.3rem 0;
+            font-weight: bold;
+        }
+        
+        .pipe-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2.5rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            padding: 0 1rem;
+        }
+        
+        .flow-step:not(:last-child):after {
+            content: '→';
+            position: absolute;
+            right: -0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--git-color);
+            font-weight: bold;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .builtin-pipes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .pipe-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 4px solid var(--git-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .pipe-icon {
+            font-size: 1.5rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .pipe-syntax {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .chaining-demo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .chain-step {
+            text-align: center;
+            padding: 0 1.5rem;
+            position: relative;
+        }
+        
+        .chain-step:not(:last-child):after {
+            content: '|';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--git-color);
+            font-weight: bold;
+        }
+        
+        .chain-value {
+            padding: 0.8rem 1.2rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .pipe-flow {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .flow-step:not(:last-child):after {
+                content: '↓';
+                right: 50%;
+                bottom: -1.5rem;
+                top: auto;
+                transform: translateX(50%);
+            }
+            
+            .chaining-demo {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .chain-step:not(:last-child):after {
+                content: '↓';
+                right: 50%;
+                bottom: -1rem;
+                top: auto;
+                transform: translateX(50%);
+            }
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a class="nav-tab prev" href="Angular%20Alias%20with%20as%20in%20ngIf.html">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a class="nav-tab அடுத்தது" href="Angular%20Templates%20Attribute%20Binding.html">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Angular Pipes in Templates (|)</h2>
+            <p>| ஆபரேட்டரைப் பயன்படுத்தி மதிப்புகளை இன்லைனில் வடிவமைத்தல் மற்றும் மாற்றுதல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What are Pipes in Templates (|)? -->
+        <section class="content-section" id="what-are-pipes">
+            <h2>டெம்ப்ளேட்டுகளில் குழாய்கள் (|) என்றால் என்ன?</h2>
+            <p>| ஆபரேட்டரைப் பயன்படுத்தி காட்சிக்கு மதிப்புகளை மாற்றவும்.</p>
+            <p>விருப்ப வாதங்களை ஏற்கவும் (எ.கா., வடிவங்கள், தேசிய மொழிகள்).</p>
+            <p>பல குழாய்கள் சங்கிலியாக இணைக்கப்படலாம்.</p>
+            
+            <div class="pipe-flow">
+                <div class="flow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>மூல தரவு</h4>
+                    <p>அசல் மதிப்பு</p>
+                    <div class="pipe-input">new Date()</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h4>குழாய் பயன்பாடு</h4>
+                    <p>| ஆபரேட்டருடன் மாற்றம்</p>
+                    <div class="pipe-syntax">| date:'yyyy-MM-dd'</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h4>வடிவமைக்கப்பட்ட வெளியீடு</h4>
+                    <p>காட்சிக்கு தயாரானது</p>
+                    <div class="pipe-output">2023-12-25</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-code"></i></span>தொடரியல்:</h4>
+                <p><strong>{{ amount | currency:'USD' }}</strong>: உள்ளமைக்கப்பட்ட CurrencyPipe ஐப் பயன்படுத்தி US டாலர்களாக amount ஐ வடிவமைக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- When to use Pipes -->
+        <section class="content-section" id="when-to-use">
+            <h2>எப்போது குழாய்களைப் பயன்படுத்துவது</h2>
+            
+            <div class="builtin-pipes">
+                <div class="pipe-card">
+                    <div class="pipe-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <h4>தேதிகள், எண்கள் மற்றும் உரையை வடிவமைக்கவும்</h4>
+                    <p>நேரடியாக டெம்ப்ளேட்டில் வடிவமைக்கவும்</p>
+                    <div class="pipe-syntax">{{ date | date:'medium' }}</div>
+                </div>
+                
+                <div class="pipe-card">
+                    <div class="pipe-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>செயல்திறனுக்கு தூய குழாய்களைப் பயன்படுத்தவும்</h4>
+                    <p>தூய குழாய்கள் மாற்றங்களை கண்டறிந்து மீண்டும் இயக்குகின்றன</p>
+                    <div class="pipe-syntax">@Pipe({ pure: true })</div>
+                </div>
+                
+                <div class="pipe-card">
+                    <div class="pipe-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h4>சிக்கலான அல்லது பக்க விளைவுள்ள தர்க்கத்தை கூறுக்கு நகர்த்தவும்</h4>
+                    <p>டெம்ப்ளேட்டை சுத்தமாக வைத்திருங்கள்</p>
+                    <div class="pipe-syntax">component.formatData()</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example -->
+        <section class="content-section" id="example">
+            <h2>எடுத்துக்காட்டு</h2>
+            <p>குழாய்களைப் பயன்படுத்தி மதிப்புகளை மாற்றவும்:</p>
+            
+            <div class="code-example">
+                <h3>main.ts</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <h3>Built-in pipes</h3>
+    <p>Today: {{ today | date:'yyyy-MM-dd' }}</p>
+    <p>Name: {{ name | uppercase }}</p>
+    <p>Chained: {{ ratio | percent:'1.0-2' | uppercase }}</p>
+  `
+})
+export class App {
+  today = new Date();
+  name = 'Ada Lovelace';
+  ratio = 0.756;
+}
+
+bootstrapApplication(App);</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>index.html</h3>
+<pre><code class="command-input">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Angular App&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;app-root&gt;&lt;/app-root&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="pipe-demo">
+                <h3 style="color: white; text-align: center;">நேரடி டெமோ: குழாய் மாற்றங்கள்</h3>
+                <div class="demo-container">
+                    <div class="pipe-examples">
+                        <div class="pipe-example">
+                            <h4>தேதி குழாய்</h4>
+                            <p><strong>மூல மதிப்பு:</strong> <span class="pipe-input" id="dateInput">new Date()</span></p>
+                            <p><strong>குழாய்:</strong> <code>| date:'yyyy-MM-dd'</code></p>
+                            <p><strong>முடிவு:</strong> <span class="pipe-output" id="dateOutput">{{today | date:'yyyy-MM-dd'}}</span></p>
+                        </div>
+                        
+                        <div class="pipe-example">
+                            <h4>அப்பர்கேஸ் குழாய்</h4>
+                            <p><strong>மூல மதிப்பு:</strong> <span class="pipe-input" id="nameInput">"Ada Lovelace"</span></p>
+                            <p><strong>குழாய்:</strong> <code>| uppercase</code></p>
+                            <p><strong>முடிவு:</strong> <span class="pipe-output" id="nameOutput">{{name | uppercase}}</span></p>
+                        </div>
+                        
+                        <div class="pipe-example">
+                            <h4>சதவீதம் குழாய்</h4>
+                            <p><strong>மூல மதிப்பு:</strong> <span class="pipe-input" id="ratioInput">0.756</span></p>
+                            <p><strong>குழாய்:</strong> <code>| percent:'1.0-2'</code></p>
+                            <p><strong>முடிவு:</strong> <span class="pipe-output" id="percentOutput">{{ratio | percent:'1.0-2'}}</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="chaining-demo">
+                        <div class="chain-step">
+                            <h4>மூல மதிப்பு</h4>
+                            <div class="chain-value">0.756</div>
+                        </div>
+                        <div class="chain-step">
+                            <h4>percent:'1.0-2'</h4>
+                            <div class="chain-value">75.6%</div>
+                        </div>
+                        <div class="chain-step">
+                            <h4>uppercase</h4>
+                            <div class="chain-value">75.6%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example explained -->
+        <section class="content-section" id="example-explained">
+            <h2>எடுத்துக்காட்டு விளக்கம்</h2>
+            
+            <div class="builtin-pipes">
+                <div class="pipe-card">
+                    <h4><code>date:'yyyy-MM-dd'</code></h4>
+                    <p>வழங்கப்பட்ட வடிவம் சரத்தைப் பயன்படுத்தி today தேதியை வடிவமைக்கிறது (வருடம்-மாதம்-நாள்). தேசிய மொழி இல்லாமல் இருந்தால் இயல்புநிலைகள் பொருந்தும்.</p>
+                </div>
+                
+                <div class="pipe-card">
+                    <h4><code>uppercase</code></h4>
+                    <p>name இன் சரம் மதிப்பை மேல் வழக்குக்கு மாற்றுகிறது.</p>
+                </div>
+                
+                <div class="pipe-card">
+                    <h4><code>percent:'1.0-2'</code></h4>
+                    <p>digitsInfo (minInteger.minFraction-maxFraction) உடன் ratio ஐ சதவீதமாக வடிவமைக்கிறது: 1 முழு எண் இலக்கம், 0–2 பின்ன இலக்கங்கள்.</p>
+                </div>
+                
+                <div class="pipe-card">
+                    <h4>சங்கிலியாக்கம்</h4>
+                    <p>குழாய்கள் இடமிருந்து வலமாக இயங்குகின்றன. <code>ratio | percent:'1.0-2' | uppercase</code> முதலில் ஒரு சதவீத சரத்தை வடிவமைக்கிறது, பின்னர் அதை மேல் வழக்குக்கு மாற்றுகிறது.</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-book"></i></span>மேலும் கற்றுக்கொள்ள:</h4>
+                <p>முழு சுற்றுப்பயணம் மற்றும் தனிப்பயன் குழாய்களுக்கு குழாய்கள் பகுதியைப் பார்க்கவும்.</p>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon"><i class="fas fa-exclamation-triangle"></i></span>செயல்திறன் கருத்து:</h4>
+                <p>டெம்ப்ளேட்டில் நீண்ட சங்கிலி குழாய்களைத் தவிர்க்கவும். ஒவ்வொரு குழாயும் மாற்றம் கண்டறிதல் சுழற்சியின் போது இயக்கப்படுகிறது. நீண்ட அல்லது சிக்கலான மாற்றங்களுக்கு, முன்-கணக்கிடப்பட்ட மதிப்புகளைக் கொண்டு கூறு முறைகளைப் பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            <p>உங்கள் அறிவைச் சோதிக்க இந்தப் பயிற்சியை முயற்சிக்கவும்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span>Angular டெம்ப்ளேட்டில் ஒரு மதிப்பில் குழாயைப் பயன்படுத்தும் தொடரியல் எது?</h4>
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">{{ value | pipeName }}</div>
+                            <div class="option-feedback correct">✓ சரி! {{ value | pipeName }} தொடரியல் Angular டெம்ப்ளேட்டில் ஒரு குழாயைப் பயன்படுத்துகிறது. குழாய் ஆபரேட்டர் (|) காட்சிக்காக மதிப்புகளை மாற்றுவதற்கான Angular இன் வழியாகும், இது இடைச்செருகல் தொடரியலுடன் பயன்படுத்தப்படுகிறது.</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">[value] | pipeName</div>
+                            <div class="option-feedback incorrect">✗ தவறானது! [value] | pipeName தொடரியல் சரியான குழாய் தொடரியல் அல்ல. சதுர அடைப்புக்குறிகள் [] பண்பு பைண்டிங்கிற்குப் பயன்படுத்தப்படுகின்றன, இது உறுப்பு பண்புகளை அமைக்கப் பயன்படுகிறது. குழாய்கள் இடைச்செருகல் தொடரியலுடன் ({{ }}) பயன்படுத்தப்படுகின்றன.</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">(value) | pipeName</div>
+                            <div class="option-feedback incorrect">✗ தவறானது! (value) | pipeName தொடரியல் சரியான குழாய் தொடரியல் அல்ல. சுற்று அடைப்புக்குறிகள் () நிகழ்வு பைண்டிங்கிற்குப் பயன்படுத்தப்படுகின்றன, இது பயனர் நிகழ்வுகளைக் கையாளப் பயன்படுகிறது. குழாய்கள் மதிப்புகளை மாற்றுவதற்காகவும், நிகழ்வுகளைக் கையாளுவதற்காகவும் அல்ல.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-filter"></i></span>குழாய் வகைகள்:</h4>
+                <p>Angular பல உள்ளமைக்கப்பட்ட குழாய்களை வழங்குகிறது: <strong>தேதி குழாய்</strong> (தேதிகளை வடிவமைக்க), <strong>அப்பர்கேஸ்/லோவர்கேஸ்</strong> (வழக்கை மாற்ற), <strong>கரன்சி குழாய்</strong> (பணத்தை வடிவமைக்க), <strong>சதவீதம் குழாய்</strong> (எண்களை சதவீதமாக வடிவமைக்க), மற்றும் <strong>JSON குழாய்</strong> (பிழைத்திருத்தத்திற்காக). நீங்கள் உங்கள் சொந்த தனிப்பயன் குழாய்களையும் உருவாக்கலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a class="nav-tab prev" href="Angular%20Alias%20with%20as%20in%20ngIf.html">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a class="nav-tab அடுத்தது" href="Angular%20Templates%20Attribute%20Binding.html">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழ் மொழியில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணிகக் கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#what-are-pipes">டெம்ப்ளேட்டுகளில் குழாய்கள் என்றால் என்ன?</a></li>
+                    <li><a href="#when-to-use">எப்போது குழாய்களைப் பயன்படுத்துவது</a></li>
+                    <li><a href="#example">எடுத்துக்காட்டு</a></li>
+                    <li><a href="#example-explained">எடுத்துக்காட்டு விளக்கம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">எங்களைத் தொடர்பு கொள்ளவும்</a></li>
+                    <li><a href="#">இடம் மற்றும் நேரம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>எங்களைப் பின்தொடருங்கள்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Demo functionality
+        function updatePipeDemo() {
+            const today = new Date();
+            const name = "Ada Lovelace";
+            const ratio = 0.756;
+            
+            // Format date
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('dateOutput').textContent = formattedDate;
+            
+            // Uppercase name
+            document.getElementById('nameOutput').textContent = name.toUpperCase();
+            
+            // Format percentage
+            const percentValue = (ratio * 100).toFixed(1) + '%';
+            document.getElementById('percentOutput').textContent = percentValue;
+            
+            // Update chaining demo
+            document.querySelectorAll('.chain-value')[0].textContent = ratio;
+            document.querySelectorAll('.chain-value')[1].textContent = percentValue;
+            document.querySelectorAll('.chain-value')[2].textContent = percentValue.toUpperCase();
+        }
+        
+        // Initialize demo
+        updatePipeDemo();
+    </script>
+
+    <!-- Home Button -->
+    <a class="home-icon" href="index.html">
+        <i class="fas fa-home"></i>
+</a>
+</body>
+</html>

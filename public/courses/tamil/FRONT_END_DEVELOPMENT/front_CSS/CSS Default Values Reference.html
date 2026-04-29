@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Default Values Reference - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Reference table styling */
+        .reference-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+        
+        .reference-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        .reference-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        
+        .reference-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .reference-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .element-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-family: 'Courier New', monospace;
+            white-space: nowrap;
+        }
+        
+        .css-value {
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+            background: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+        
+        .css-property {
+            color: #3498db;
+            font-weight: 500;
+        }
+        
+        /* Filter and search */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--git-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .category-filter {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .category-btn.active {
+            background: var(--git-color);
+            color: white;
+            border-color: var(--git-color);
+        }
+        
+        /* Responsive table */
+        @media (max-width: 768px) {
+            .reference-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .reference-table th,
+            .reference-table td {
+                min-width: 150px;
+            }
+            
+            .table-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+            
+            .category-filter {
+                justify-content: center;
+            }
+        }
+        
+        /* Code examples */
+        .css-example {
+            background: #f8f9fa;
+            border-left: 4px solid var(--git-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .example-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .example-code {
+            font-family: 'Courier New', monospace;
+            color: #333;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Legal%20Color%20Values.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Entities.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+          <h2>  CSS Default Values Reference</h2>
+            <p>HTML உறுப்புகளுக்கான இயல்புநிலை CSS உலாவி மதிப்புகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Default CSS Values for HTML Elements</h2>
+            
+            <p>கீழே உள்ள அட்டவணை அனைத்து HTML உறுப்புகளுக்கான இயல்புநிலை CSS உலாவி மதிப்புகளைக் காட்டுகிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>இந்த இயல்புநிலை மதிப்புகளை அறிந்து கொள்வது CSS ஐ மேம்படுத்தும் போது உதவுகிறது, ஏனெனில் உலாவி ஏற்கனவே பயன்படுத்தும் நடத்தைகளை நீங்கள் அறிந்து கொள்ள வேண்டும்.</p>
+            </div>
+        </section>
+
+        <!-- Table Controls -->
+        <div class="table-controls">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="உறுப்புகளைத் தேடுக...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            
+            <div class="category-filter">
+                <button class="category-btn active" data-category="all">அனைத்தும்</button>
+                <button class="category-btn" data-category="text">உரை உறுப்புகள்</button>
+                <button class="category-btn" data-category="layout">தளவமைப்பு</button>
+                <button class="category-btn" data-category="media">மீடியா</button>
+            </div>
+        </div>
+
+        <!-- Reference Table -->
+        <section class="content-section" id="reference-table">
+            <h2>CSS Default Values Reference Table</h2>
+            
+            <table class="reference-table" id="css-reference-table">
+                <thead>
+                    <tr>
+                        <th width="20%">Element</th>
+                        <th width="60%">Default CSS Value</th>
+                        <th width="20%">Try it</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-categories="text">
+                        <td><span class="element-name">a:link</span></td>
+                        <td>
+                            <span class="css-property">color</span>: (internal value);<br>
+                            <span class="css-property">text-decoration</span>: underline;<br>
+                            <span class="css-property">cursor</span>: auto;
+                        </td>
+                        <td><button class="view-demo" data-element="a:link">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">a:visited</span></td>
+                        <td>
+                            <span class="css-property">color</span>: (internal value);<br>
+                            <span class="css-property">text-decoration</span>: underline;<br>
+                            <span class="css-property">cursor</span>: auto;
+                        </td>
+                        <td><button class="view-demo" data-element="a:visited">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">address</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">font-style</span>: italic;
+                        </td>
+                        <td><button class="view-demo" data-element="address">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">b</span></td>
+                        <td>
+                            <span class="css-property">font-weight</span>: bold;
+                        </td>
+                        <td><button class="view-demo" data-element="b">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="layout">
+                        <td><span class="element-name">blockquote</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">margin-top</span>: 1em;<br>
+                            <span class="css-property">margin-bottom</span>: 1em;<br>
+                            <span class="css-property">margin-left</span>: 40px;<br>
+                            <span class="css-property">margin-right</span>: 40px;
+                        </td>
+                        <td><button class="view-demo" data-element="blockquote">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="layout">
+                        <td><span class="element-name">body</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">margin</span>: 8px;
+                        </td>
+                        <td><button class="view-demo" data-element="body">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">code</span></td>
+                        <td>
+                            <span class="css-property">font-family</span>: monospace;
+                        </td>
+                        <td><button class="view-demo" data-element="code">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="layout">
+                        <td><span class="element-name">div</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;
+                        </td>
+                        <td><button class="view-demo" data-element="div">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">em</span></td>
+                        <td>
+                            <span class="css-property">font-style</span>: italic;
+                        </td>
+                        <td><button class="view-demo" data-element="em">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="layout">
+                        <td><span class="element-name">fieldset</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">margin-left</span>: 2px;<br>
+                            <span class="css-property">margin-right</span>: 2px;<br>
+                            <span class="css-property">padding-top</span>: 0.35em;<br>
+                            <span class="css-property">padding-bottom</span>: 0.625em;<br>
+                            <span class="css-property">padding-left</span>: 0.75em;<br>
+                            <span class="css-property">padding-right</span>: 0.75em;<br>
+                            <span class="css-property">border</span>: 2px groove (internal value);
+                        </td>
+                        <td><button class="view-demo" data-element="fieldset">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">h1</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">font-size</span>: 2em;<br>
+                            <span class="css-property">margin-top</span>: 0.67em;<br>
+                            <span class="css-property">margin-bottom</span>: 0.67em;<br>
+                            <span class="css-property">margin-left</span>: 0;<br>
+                            <span class="css-property">margin-right</span>: 0;<br>
+                            <span class="css-property">font-weight</span>: bold;
+                        </td>
+                        <td><button class="view-demo" data-element="h1">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">h2</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">font-size</span>: 1.5em;<br>
+                            <span class="css-property">margin-top</span>: 0.83em;<br>
+                            <span class="css-property">margin-bottom</span>: 0.83em;<br>
+                            <span class="css-property">margin-left</span>: 0;<br>
+                            <span class="css-property">margin-right</span>: 0;<br>
+                            <span class="css-property">font-weight</span>: bold;
+                        </td>
+                        <td><button class="view-demo" data-element="h2">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">h3</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">font-size</span>: 1.17em;<br>
+                            <span class="css-property">margin-top</span>: 1em;<br>
+                            <span class="css-property">margin-bottom</span>: 1em;<br>
+                            <span class="css-property">margin-left</span>: 0;<br>
+                            <span class="css-property">margin-right</span>: 0;<br>
+                            <span class="css-property">font-weight</span>: bold;
+                        </td>
+                        <td><button class="view-demo" data-element="h3">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">h4</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">margin-top</span>: 1.33em;<br>
+                            <span class="css-property">margin-bottom</span>: 1.33em;<br>
+                            <span class="css-property">margin-left</span>: 0;<br>
+                            <span class="css-property">margin-right</span>: 0;<br>
+                            <span class="css-property">font-weight</span>: bold;
+                        </td>
+                        <td><button class="view-demo" data-element="h4">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">h5</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">font-size</span>: .83em;<br>
+                            <span class="css-property">margin-top</span>: 1.67em;<br>
+                            <span class="css-property">margin-bottom</span>: 1.67em;<br>
+                            <span class="css-property">margin-left</span>: 0;<br>
+                            <span class="css-property">margin-right</span>: 0;<br>
+                            <span class="css-property">font-weight</span>: bold;
+                        </td>
+                        <td><button class="view-demo" data-element="h5">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">h6</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">font-size</span>: .67em;<br>
+                            <span class="css-property">margin-top</span>: 2.33em;<br>
+                            <span class="css-property">margin-bottom</span>: 2.33em;<br>
+                            <span class="css-property">margin-left</span>: 0;<br>
+                            <span class="css-property">margin-right</span>: 0;<br>
+                            <span class="css-property">font-weight</span>: bold;
+                        </td>
+                        <td><button class="view-demo" data-element="h6">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="layout">
+                        <td><span class="element-name">hr</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">margin-top</span>: 0.5em;<br>
+                            <span class="css-property">margin-bottom</span>: 0.5em;<br>
+                            <span class="css-property">margin-left</span>: auto;<br>
+                            <span class="css-property">margin-right</span>: auto;<br>
+                            <span class="css-property">border-style</span>: inset;<br>
+                            <span class="css-property">border-width</span>: 1px;
+                        </td>
+                        <td><button class="view-demo" data-element="hr">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">i</span></td>
+                        <td>
+                            <span class="css-property">font-style</span>: italic;
+                        </td>
+                        <td><button class="view-demo" data-element="i">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="media">
+                        <td><span class="element-name">img</span></td>
+                        <td>
+                            <span class="css-property">display</span>: inline-block;
+                        </td>
+                        <td><button class="view-demo" data-element="img">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">li</span></td>
+                        <td>
+                            <span class="css-property">display</span>: list-item;
+                        </td>
+                        <td><button class="view-demo" data-element="li">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">mark</span></td>
+                        <td>
+                            <span class="css-property">background-color</span>: yellow;<br>
+                            <span class="css-property">color</span>: black;
+                        </td>
+                        <td><button class="view-demo" data-element="mark">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="layout">
+                        <td><span class="element-name">ol</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">list-style-type</span>: decimal;<br>
+                            <span class="css-property">margin-top</span>: 1em;<br>
+                            <span class="css-property">margin-bottom</span>: 1em;<br>
+                            <span class="css-property">margin-left</span>: 0;<br>
+                            <span class="css-property">margin-right</span>: 0;<br>
+                            <span class="css-property">padding-left</span>: 40px;
+                        </td>
+                        <td><button class="view-demo" data-element="ol">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="layout">
+                        <td><span class="element-name">p</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">margin-top</span>: 1em;<br>
+                            <span class="css-property">margin-bottom</span>: 1em;<br>
+                            <span class="css-property">margin-left</span>: 0;<br>
+                            <span class="css-property">margin-right</span>: 0;
+                        </td>
+                        <td><button class="view-demo" data-element="p">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">pre</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">font-family</span>: monospace;<br>
+                            <span class="css-property">white-space</span>: pre;<br>
+                            <span class="css-property">margin</span>: 1em 0;
+                        </td>
+                        <td><button class="view-demo" data-element="pre">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="layout">
+                        <td><span class="element-name">table</span></td>
+                        <td>
+                            <span class="css-property">display</span>: table;<br>
+                            <span class="css-property">border-collapse</span>: separate;<br>
+                            <span class="css-property">border-spacing</span>: 2px;<br>
+                            <span class="css-property">border-color</span>: gray;
+                        </td>
+                        <td><button class="view-demo" data-element="table">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">strong</span></td>
+                        <td>
+                            <span class="css-property">font-weight</span>: bold;
+                        </td>
+                        <td><button class="view-demo" data-element="strong">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">sub</span></td>
+                        <td>
+                            <span class="css-property">vertical-align</span>: sub;<br>
+                            <span class="css-property">font-size</span>: smaller;
+                        </td>
+                        <td><button class="view-demo" data-element="sub">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="text">
+                        <td><span class="element-name">sup</span></td>
+                        <td>
+                            <span class="css-property">vertical-align</span>: super;<br>
+                            <span class="css-property">font-size</span>: smaller;
+                        </td>
+                        <td><button class="view-demo" data-element="sup">பார்வை</button></td>
+                    </tr>
+                    
+                    <tr data-categories="layout">
+                        <td><span class="element-name">ul</span></td>
+                        <td>
+                            <span class="css-property">display</span>: block;<br>
+                            <span class="css-property">list-style-type</span>: disc;<br>
+                            <span class="css-property">margin-top</span>: 1em;<br>
+                            <span class="css-property">margin-bottom</span>: 1em;<br>
+                            <span class="css-property">margin-left</span>: 0;<br>
+                            <span class="css-property">margin-right</span>: 0;<br>
+                            <span class="css-property">padding-left</span>: 40px;
+                        </td>
+                        <td><button class="view-demo" data-element="ul">பார்வை</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>"(internal value)" என்பது உலாவியின் உள் மதிப்பைக் குறிக்கிறது, இது வெவ்வேறு உலாவிகளில் மாறுபடலாம். "None" என்பது அந்த உறுப்புக்கு இயல்புநிலை CSS பாணி இல்லை என்று பொருள்.</p>
+            </div>
+        </section>
+
+        <!-- Important Default Values -->
+        <section class="content-section" id="important-defaults">
+            <h2>Important Default CSS Values</h2>
+            
+            <div class="css-example">
+                <div class="example-title">Heading Elements (h1-h6):</div>
+                <div class="example-code">
+                    display: block;<br>
+                    font-weight: bold;<br>
+                    margin-top/bottom: varies by level
+                </div>
+            </div>
+            
+            <div class="css-example">
+                <div class="example-title">Paragraph (p):</div>
+                <div class="example-code">
+                    display: block;<br>
+                    margin-top: 1em;<br>
+                    margin-bottom: 1em
+                </div>
+            </div>
+            
+            <div class="css-example">
+                <div class="example-title">Anchor Links (a):</div>
+                <div class="example-code">
+                    color: (internal value);<br>
+                    text-decoration: underline;<br>
+                    cursor: pointer
+                </div>
+            </div>
+            
+            <div class="css-example">
+                <div class="example-title">Lists (ul, ol):</div>
+                <div class="example-code">
+                    display: block;<br>
+                    margin: 1em 0;<br>
+                    padding-left: 40px
+                </div>
+            </div>
+            
+            <div class="css-example">
+                <div class="example-title">Body Element:</div>
+                <div class="example-code">
+                    display: block;<br>
+                    margin: 8px
+                </div>
+            </div>
+        </section>
+
+        <!-- Reset CSS -->
+        <section class="content-section" id="reset-css">
+            <h2>Why Understanding Default Values is Important</h2>
+            
+            <p>இயல்புநிலை CSS மதிப்புகளைப் புரிந்துகொள்வது முக்கியமானது, ஏனெனில்:</p>
+            
+            <ul>
+                <li>உலாவிகளுக்கு இடையே சீரான வடிவமைப்பை உருவாக்க இது உதவுகிறது</li>
+                <li>CSS ஐ மீட்டமைக்க (reset) அல்லது இயல்புநிலைப்படுத்த (normalize) உதவுகிறது</li>
+                <li>எதிர்பாராத நடத்தைகளை சரிசெய்ய உதவுகிறது</li>
+                <li>மிகவும் திறமையான CSS எழுத உதவுகிறது</li>
+            </ul>
+            
+            <div class="code-example">
+                <h3>Simple CSS Reset Example</h3>
+                <pre><code>/* Reset margins and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set consistent font and line-height */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Remove default list styles */
+ul, ol {
+    list-style: none;
+}
+
+/* Remove text decoration from links */
+a {
+    text-decoration: none;
+    color: inherit;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் HTML உறுப்புகளில் எது இயல்புநிலையாக "display: block;" CSS மதிப்பைக் கொண்டுள்ளது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">span</div>
+                            <div class="option-feedback incorrect">✗ தவறு! span உறுப்பு "display: inline;" கொண்டுள்ளது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">img</div>
+                            <div class="option-feedback incorrect">✗ தவறு! img உறுப்பு "display: inline-block;" கொண்டுள்ளது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">div</div>
+                            <div class="option-feedback correct">✓ சரி! div உறுப்பு இயல்புநிலையாக "display: block;" கொண்டுள்ளது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">a</div>
+                            <div class="option-feedback incorrect">✗ தவறு! a உறுப்பு "display: inline;" கொண்டுள்ளது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Legal%20Color%20Values.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Entities.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">இயல்புநிலை CSS மதிப்புகள்</a></li>
+                    <li><a href="#reference-table">குறிப்பு அட்டவணை</a></li>
+                    <li><a href="#important-defaults">முக்கியமான இயல்புநிலை மதிப்புகள்</a></li>
+                    <li><a href="#reset-css">CSS மீட்டமைத்தல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Table filtering functionality
+        const searchInput = document.getElementById('search-input');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const tableRows = document.querySelectorAll('#css-reference-table tbody tr');
+        
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            tableRows.forEach(row => {
+                const elementName = row.querySelector('.element-name').textContent.toLowerCase();
+                const cssValue = row.textContent.toLowerCase();
+                
+                if (elementName.includes(searchTerm) || cssValue.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+        
+        // Category filter functionality
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const category = this.getAttribute('data-category');
+                
+                tableRows.forEach(row => {
+                    if (category === 'all') {
+                        row.style.display = '';
+                    } else {
+                        const categories = row.getAttribute('data-categories');
+                        if (categories && categories.includes(category)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+        
+        // View demo functionality
+        document.querySelectorAll('.view-demo').forEach(button => {
+            button.addEventListener('click', function() {
+                const element = this.getAttribute('data-element');
+                
+                // Create a simple demo based on the element
+                let demoHTML = '';
+                let demoTitle = '';
+                
+                switch(element) {
+                    case 'h1':
+                        demoHTML = '<h1>This is an H1 heading</h1>';
+                        demoTitle = 'H1 Heading Default Style';
+                        break;
+                    case 'p':
+                        demoHTML = '<p>This is a paragraph with default margins and display block.</p>';
+                        demoTitle = 'Paragraph Default Style';
+                        break;
+                    case 'a:link':
+                        demoHTML = '<a href="#">This is a link (unvisited)</a>';
+                        demoTitle = 'Link Default Style (Unvisited)';
+                        break;
+                    case 'ul':
+                        demoHTML = '<ul><li>List item 1</li><li>List item 2</li></ul>';
+                        demoTitle = 'Unordered List Default Style';
+                        break;
+                    case 'blockquote':
+                        demoHTML = '<blockquote>This is a blockquote with default margins.</blockquote>';
+                        demoTitle = 'Blockquote Default Style';
+                        break;
+                    case 'code':
+                        demoHTML = '<code>console.log("Hello World");</code>';
+                        demoTitle = 'Code Element Default Style';
+                        break;
+                    case 'strong':
+                        demoHTML = '<strong>This text is strong (bold)</strong>';
+                        demoTitle = 'Strong Element Default Style';
+                        break;
+                    case 'em':
+                        demoHTML = '<em>This text is emphasized (italic)</em>';
+                        demoTitle = 'Emphasis Element Default Style';
+                        break;
+                    default:
+                        demoHTML = `<${element}>${element} element demo</${element}>`;
+                        demoTitle = `${element} Default Style`;
+                }
+                
+                // Show demo in alert/modal
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '50%';
+                modal.style.left = '50%';
+                modal.style.transform = 'translate(-50%, -50%)';
+                modal.style.background = 'white';
+                modal.style.padding = '2rem';
+                modal.style.borderRadius = '10px';
+                modal.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+                modal.style.zIndex = '10000';
+                modal.style.maxWidth = '500px';
+                modal.style.width = '90%';
+                
+                modal.innerHTML = `
+                    <h3>${demoTitle}</h3>
+                    <div style="margin: 1.5rem 0; padding: 1.5rem; background: #f8f9fa; border-radius: 8px;">
+                        ${demoHTML}
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <button onclick="this.parentElement.remove()" style="padding: 10px 20px; background: var(--git-color); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            Close
+                        </button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Add backdrop
+                const backdrop = document.createElement('div');
+                backdrop.style.position = 'fixed';
+                backdrop.style.top = '0';
+                backdrop.style.left = '0';
+                backdrop.style.width = '100%';
+                backdrop.style.height = '100%';
+                backdrop.style.background = 'rgba(0,0,0,0.5)';
+                backdrop.style.zIndex = '9999';
+                backdrop.onclick = function() {
+                    modal.remove();
+                    backdrop.remove();
+                };
+                
+                document.body.appendChild(backdrop);
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

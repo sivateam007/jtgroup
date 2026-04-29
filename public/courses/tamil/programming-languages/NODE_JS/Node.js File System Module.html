@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js File System Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js HTTPS Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Path Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js File System Module</h2>
+            <p>Node.js இல் கோப்பு முறைமையுடன் பணிபுரிய கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to Node.js File System -->
+        <section class="content-section" id="introduction">
+            <h2>Node.js File System தொகுதிக்கு அறிமுகம்</h2>
+            
+            <p>Node.js File System தொகுதி (fs) உங்கள் கணினியில் உள்ள கோப்பு முறைமையுடன் பணிபுரிய ஒரு விரிவான முறைகளின் தொகுப்பை வழங்குகிறது.</p>
+            
+            <p>இது ஒத்திசைவு மற்றும் ஒத்திசைவற்ற வழிகளில் கோப்பு I/O செயல்பாடுகளை செய்ய உங்களை அனுமதிக்கிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">ℹ️</span> குறிப்பு:</h4>
+                <p>File System தொகுதி Node.js இன் முக்கிய தொகுதியாகும், எனவே எந்த நிறுவலும் தேவையில்லை.</p>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file"></i>
+                        <h4>கோப்பு செயல்பாடுகள்</h4>
+                    </div>
+                    <p>கோப்புகளைப் படித்தல் மற்றும் எழுதுதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-folder"></i>
+                        <h4>அடைவு செயல்பாடுகள்</h4>
+                    </div>
+                    <p>அடைவுகளை உருவாக்குதல் மற்றும் நீக்குதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h4>மேம்பட்ட அம்சங்கள்</h4>
+                    </div>
+                    <p>கோப்பு ஸ்ட்ரீம்கள், கோப்பு கண்காணிப்பு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Importing the File System Module -->
+        <section class="content-section" id="importing">
+            <h2>File System தொகுதியை இறக்குமதி செய்தல்</h2>
+            
+            <p>நீங்கள் CommonJS require() அல்லது ES தொகுதிகள் import இலக்கணத்தைப் பயன்படுத்தி File System தொகுதியை இறக்குமதி செய்யலாம்:</p>
+            
+            <div class="code-example">
+                <h3>CommonJS (Node.js இல் இயல்புநிலை)</h3>
+                <pre><code>const fs = require('fs');</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>ES Modules (Node.js 14+ with "type": "module" in package.json)</h3>
+                <pre><code>import fs from 'fs';
+// Or for specific methods:
+// import { readFile, writeFile } from 'fs/promises';</code></pre>
+            </div>
+
+            <h3>Promise-அடிப்படையிலான API</h3>
+            
+            <p>Node.js fs/promises பெயர்வெளியில் File System API இன் promise-அடிப்படையிலான பதிப்புகளை வழங்குகிறது, இது நவீன பயன்பாடுகளுக்கு பரிந்துரைக்கப்படுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>// Using promises (Node.js 10.0.0+)
+const fs = require('fs').promises;
+
+// Or with destructuring
+const { readFile, writeFile } = require('fs').promises;
+
+// Or with ES modules
+// import { readFile, writeFile } from 'fs/promises';</code></pre>
+            </div>
+        </section>
+
+        <!-- Common Use Cases -->
+        <section class="content-section" id="use-cases">
+            <h2>பொதுவான பயன்பாட்டு நிகழ்வுகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h4>கோப்பு செயல்பாடுகள்</h4>
+                    </div>
+                    <ul>
+                        <li>கோப்புகளைப் படித்தல் மற்றும் எழுதுதல்</li>
+                        <li>கோப்புகளை உருவாக்குதல் மற்றும் நீக்குதல்</li>
+                        <li>கோப்புகளில் சேர்த்தல்</li>
+                        <li>கோப்புகளை மறுபெயரிடுதல் மற்றும் நகர்த்துதல்</li>
+                        <li>கோப்பு அனுமதிகளை மாற்றுதல்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-folder-open"></i>
+                        <h4>அடைவு செயல்பாடுகள்</h4>
+                    </div>
+                    <ul>
+                        <li>அடைவுகளை உருவாக்குதல் மற்றும் அகற்றுதல்</li>
+                        <li>அடைவு உள்ளடக்கங்களை பட்டியலிடுதல்</li>
+                        <li>கோப்பு மாற்றங்களைக் கண்காணித்தல்</li>
+                        <li>கோப்பு/அடைவு புள்ளிவிவரங்களைப் பெறுதல்</li>
+                        <li>கோப்பு இருப்பைச் சரிபார்த்தல்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>மேம்பட்ட அம்சங்கள்</h4>
+                    </div>
+                    <ul>
+                        <li>கோப்பு ஸ்ட்ரீம்கள்</li>
+                        <li>கோப்பு விவரிப்பான்கள்</li>
+                        <li>சின்ன இணைப்புகள்</li>
+                        <li>கோப்பு கண்காணிப்பு</li>
+                        <li>கோப்பு அனுமதிகளுடன் பணிபுரிதல்</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚡</span> செயல்திறன் உதவிக்குறிப்பு:</h4>
+                <p>பெரிய கோப்புகளுக்கு, உயர் நினைவக பயன்பாட்டைத் தவிர்க்க ஸ்ட்ரீம்களை (fs.createReadStream மற்றும் fs.createWriteStream) பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- Reading Files -->
+        <section class="content-section" id="reading-files">
+            <h2>கோப்புகளைப் படித்தல்</h2>
+            
+            <p>Node.js கோப்புகளைப் படிக்க பல முறைகளை வழங்குகிறது, callback-அடிப்படையிலான மற்றும் promise-அடிப்படையிலான அணுகுமுறைகள் உட்பட.</p>
+            
+            <p>மிகவும் பொதுவான முறை fs.readFile() ஆகும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>கோப்பு செயல்பாடுகளுடன் பணிபுரியும் போது எப்போதும் பிழைகளைக் கையாளவும், இது உங்கள் பயன்பாட்டை செயலிழக்காமல் தடுக்கும்.</p>
+            </div>
+
+            <h3>Callbacks உடன் கோப்புகளைப் படித்தல்</h3>
+            
+            <p>பாரம்பரிய callback முறையைப் பயன்படுத்தி கோப்பைப் படிக்க இங்கே எப்படி:</p>
+            
+            <div class="code-example">
+                <h3>myfile.txt</h3>
+                <pre><code>This is the content of myfile.txt</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: Callbacks உடன் கோப்பைப் படித்தல்</h3>
+                <pre><code>const fs = require('fs');
+
+// Read file asynchronously with callback
+fs.readFile('myfile.txt', 'utf8', (err, data) => {
+  if (err) {
+    console.error('Error reading file:', err);
+    return;
+  }
+  console.log('File content:', data);
+});
+
+// For binary data (like images), omit the encoding
+fs.readFile('image.png', (err, data) => {
+  if (err) throw err;
+  // data is a Buffer containing the file content
+  console.log('Image size:', data.length, 'bytes');
+});</code></pre>
+            </div>
+
+            <h3>Promises உடன் கோப்புகளைப் படித்தல் (நவீன அணுகுமுறை)</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: async/await உடன் கோப்பைப் படித்தல்</h3>
+                <pre><code>// Using fs.promises (Node.js 10.0.0+)
+const fs = require('fs').promises;
+
+async function readFileExample() {
+  try {
+    const data = await fs.readFile('myfile.txt', 'utf8');
+    console.log('File content:', data);
+  } catch (err) {
+    console.error('Error reading file:', err);
+  }
+}
+
+readFileExample();
+
+// Or with util.promisify (Node.js 8.0.0+)
+const { promisify } = require('util');
+const readFileAsync = promisify(require('fs').readFile);
+
+async function readWithPromisify() {
+  try {
+    const data = await readFileAsync('myfile.txt', 'utf8');
+    console.log(data);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+readWithPromisify();</code></pre>
+            </div>
+
+            <h3>ஒத்திசைவாக கோப்புகளைப் படித்தல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: ஒத்திசைவாக கோப்பைப் படித்தல்</h3>
+                <pre><code>const fs = require('fs');
+
+try {
+  // Read file synchronously
+  const data = fs.readFileSync('myfile.txt', 'utf8');
+  console.log('File content:', data);
+} catch (err) {
+  console.error('Error reading file:', err);
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> சிறந்த நடைமுறை:</h4>
+                <p>உரை கோப்புகளைப் படிக்கும்போது எப்போதும் எழுத்து குறியீட்டை ('utf8' போன்றவை) குறிப்பிடவும், இது Buffer க்கு பதிலாக ஒரு சரத்தைப் பெறும்.</p>
+            </div>
+        </section>
+
+        <!-- Creating and Writing Files -->
+        <section class="content-section" id="writing-files">
+            <h2>கோப்புகளை உருவாக்குதல் மற்றும் எழுதுதல்</h2>
+            
+            <p>Node.js கோப்புகளை உருவாக்கவும் எழுதவும் பல முறைகளை வழங்குகிறது.</p>
+            
+            <p>மிகவும் பொதுவான அணுகுமுறைகள் இங்கே:</p>
+
+            <h3>1. fs.writeFile() பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: கோப்பில் எழுதுதல்</h3>
+                <pre><code>const fs = require('fs').promises;
+
+async function writeFileExample() {
+  try {
+    // Write text to a file
+    await fs.writeFile('myfile.txt', 'Hello, World!', 'utf8');
+
+    // Write JSON data
+    const data = { name: 'John', age: 30, city: 'New York' };
+    await fs.writeFile('data.json', JSON.stringify(data, null, 2), 'utf8');
+
+    console.log('Files created successfully');
+  } catch (err) {
+    console.error('Error writing files:', err);
+  }
+}
+
+writeFileExample();</code></pre>
+            </div>
+
+            <h3>2. fs.appendFile() பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: கோப்பில் சேர்த்தல்</h3>
+                <pre><code>const fs = require('fs').promises;
+
+async function appendToFile() {
+  try {
+    // Append a timestamped log entry
+    const logEntry = `${new Date().toISOString()}: Application started\n`;
+    await fs.appendFile('app.log', logEntry, 'utf8');
+
+    console.log('Log entry added');
+  } catch (err) {
+    console.error('Error appending to file:', err);
+  }
+}
+
+appendToFile();</code></pre>
+            </div>
+
+            <h3>3. கோப்பு கைப்பிடிகளைப் பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: கோப்பு கைப்பிடிகளைப் பயன்படுத்துதல்</h3>
+                <pre><code>const fs = require('fs').promises;
+
+async function writeWithFileHandle() {
+  let fileHandle;
+
+  try {
+    // Open a file for writing (creates if doesn't exist)
+    fileHandle = await fs.open('output.txt', 'w');
+
+    // Write content to the file
+    await fileHandle.write('First line\n');
+    await fileHandle.write('Second line\n');
+    await fileHandle.write('Third line\n');
+
+    console.log('Content written successfully');
+  } catch (err) {
+    console.error('Error writing to file:', err);
+  } finally {
+    // Always close the file handle
+    if (fileHandle) {
+      await fileHandle.close();
+    }
+  }
+}
+
+writeWithFileHandle();</code></pre>
+            </div>
+
+            <h3>4. பெரிய கோப்புகளுக்கு ஸ்ட்ரீம்களைப் பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: ஸ்ட்ரீம்களுடன் பெரிய கோப்புகளை எழுதுதல்</h3>
+                <pre><code>const fs = require('fs');
+const { pipeline } = require('stream/promises');
+const { Readable } = require('stream');
+
+async function writeLargeFile() {
+  // Create a readable stream (could be from HTTP request, etc.)
+  const data = Array(1000).fill().map((_, i) => `Line ${i + 1}: ${'x'.repeat(100)}\n`);
+  const readable = Readable.from(data);
+
+  // Create a writable stream to a file
+  const writable = fs.createWriteStream('large-file.txt');
+
+  try {
+    // Pipe the data from readable to writable
+    await pipeline(readable, writable);
+    console.log('Large file written successfully');
+  } catch (err) {
+    console.error('Error writing file:', err);
+  }
+}
+
+writeLargeFile();</code></pre>
+            </div>
+
+            <h3>கோப்பு கொடிகள்</h3>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>கொடி</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>'w'</strong></td>
+                            <td>எழுதுவதற்காக திறக்கவும் (கோப்பு உருவாக்கப்பட்டது அல்லது சுருக்கப்பட்டது)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'wx'</strong></td>
+                            <td>'w' போன்றது ஆனால் பாதை இருந்தால் தோல்வியடைகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'w+'</strong></td>
+                            <td>படிப்பதற்கும் எழுதுவதற்கும் திறக்கவும் (கோப்பு உருவாக்கப்பட்டது அல்லது சுருக்கப்பட்டது)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'a'</strong></td>
+                            <td>சேர்ப்பதற்காக திறக்கவும் (கோப்பு இல்லையென்றால் உருவாக்கப்படும்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'ax'</strong></td>
+                            <td>'a' போன்றது ஆனால் பாதை இருந்தால் தோல்வியடைகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'r+'</strong></td>
+                            <td>படிப்பதற்கும் எழுதுவதற்கும் திறக்கவும் (கோப்பு இருக்க வேண்டும்)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Deleting Files and Directories -->
+        <section class="content-section" id="deleting">
+            <h2>கோப்புகள் மற்றும் அடைவுகளை நீக்குதல்</h2>
+            
+            <p>Node.js கோப்புகள் மற்றும் அடைவுகளை நீக்க பல முறைகளை வழங்குகிறது.</p>
+            
+            <p>வெவ்வேறு நீக்கல் சூழ்நிலைகளைக் கையாள இங்கே எப்படி:</p>
+
+            <h3>1. ஒற்றை கோப்பை நீக்குதல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: கோப்பை நீக்குதல்</h3>
+                <pre><code>const fs = require('fs').promises;
+
+async function deleteFile() {
+  const filePath = 'file-to-delete.txt';
+
+  try {
+    // Check if file exists before deleting
+    await fs.access(filePath);
+
+    // Delete the file
+    await fs.unlink(filePath);
+    console.log('File deleted successfully');
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log('File does not exist');
+    } else {
+      console.error('Error deleting file:', err);
+    }
+  }
+}
+
+deleteFile();</code></pre>
+            </div>
+
+            <h3>2. பல கோப்புகளை நீக்குதல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: பல கோப்புகளை நீக்குதல்</h3>
+                <pre><code>const fs = require('fs').promises;
+const path = require('path');
+
+async function deleteFiles() {
+  const filesToDelete = [
+    'temp1.txt',
+    'temp2.txt',
+    'temp3.txt'
+  ];
+
+  try {
+    // Delete all files in parallel
+    await Promise.all(
+      filesToDelete.map(file =>
+        fs.unlink(file).catch(err => {
+          if (err.code !== 'ENOENT') {
+            console.error(`Error deleting ${file}:`, err);
+          }
+        })
+      )
+    );
+
+    console.log('Files deleted successfully');
+  } catch (err) {
+    console.error('Error during file deletion:', err);
+  }
+}
+
+deleteFiles();</code></pre>
+            </div>
+
+            <h3>3. அடைவுகளை நீக்குதல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: அடைவுகளை நீக்குதல்</h3>
+                <pre><code>const fs = require('fs').promises;
+const path = require('path');
+
+async function deleteDirectory(dirPath) {
+  try {
+    // Check if the directory exists
+    const stats = await fs.stat(dirPath);
+   
+    if (!stats.isDirectory()) {
+      console.log('Path is not a directory');
+      return;
+    }
+
+    // For Node.js 14.14.0+ (recommended)
+    await fs.rm(dirPath, { recursive: true, force: true });
+
+    // For older Node.js versions (deprecated but still works)
+    // await fs.rmdir(dirPath, { recursive: true });
+
+    console.log('Directory deleted successfully');
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log('Directory does not exist');
+    } else {
+      console.error('Error deleting directory:', err);
+    }
+  }
+}
+
+// Usage
+deleteDirectory('directory-to-delete');</code></pre>
+            </div>
+
+            <h3>4. அடைவை காலியாக்குதல் (நீக்காமல்)</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: அடைவை காலியாக்குதல்</h3>
+                <pre><code>const fs = require('fs').promises;
+const path = require('path');
+
+async function emptyDirectory(dirPath) {
+  try {
+    // Read the directory
+    const files = await fs.readdir(dirPath, { withFileTypes: true });
+
+    // Delete all files and directories in parallel
+    await Promise.all(
+      files.map(file => {
+        const fullPath = path.join(dirPath, file.name);
+        return file.isDirectory()
+          ? fs.rm(fullPath, { recursive: true, force: true })
+          : fs.unlink(fullPath);
+      })
+    );
+
+    console.log('Directory emptied successfully');
+  } catch (err) {
+    console.error('Error emptying directory:', err);
+  }
+}
+
+// Usage
+emptyDirectory('directory-to-empty');</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🔒</span> பாதுகாப்பு குறிப்பு:</h4>
+                <p>கோப்பு நீக்குதலுடன் மிகவும் கவனமாக இருங்கள், குறிப்பாக சுழல்நிலை விருப்பங்கள் அல்லது வைல்ட்கார்டுகளைப் பயன்படுத்தும் போது. அடைவு டிராவர்சல் தாக்குதல்களைத் தடுக்க கோப்பு பாதைகளை எப்போதும் சரிபார்க்கவும் மற்றும் சுத்திகரிக்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- Renaming and Moving Files -->
+        <section class="content-section" id="renaming-moving">
+            <h2>கோப்புகளை மறுபெயரிடுதல் மற்றும் நகர்த்துதல்</h2>
+            
+            <p>fs.rename() முறையை கோப்பு பாதைகளை மாற்றுவதை உள்ளடக்கிய கோப்பு முறைமை செயல்பாடுகளுக்கான இரு வகையிலும் பயன்படுத்தலாம்.</p>
+
+            <h3>1. அடிப்படை கோப்பு மறுபெயரிடுதல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: கோப்பை மறுபெயரிடுதல்</h3>
+                <pre><code>const fs = require('fs').promises;
+
+async function renameFile() {
+  const oldPath = 'old-name.txt';
+  const newPath = 'new-name.txt';
+
+  try {
+    // Check if source file exists
+    await fs.access(oldPath);
+
+    // Check if destination file already exists
+    try {
+      await fs.access(newPath);
+      console.log('Destination file already exists');
+      return;
+    } catch (err) {
+      // Destination doesn't exist, safe to proceed
+    }
+
+    // Perform the rename
+    await fs.rename(oldPath, newPath);
+    console.log('File renamed successfully');
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log('Source file does not exist');
+    } else {
+      console.error('Error renaming file:', err);
+    }
+  }
+}
+
+// Usage
+renameFile();</code></pre>
+            </div>
+
+            <h3>2. அடைவுகளுக்கு இடையே கோப்புகளை நகர்த்துதல்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: கோப்பை வெவ்வேறு அடைவுக்கு நகர்த்துதல்</h3>
+                <pre><code>const fs = require('fs').promises;
+const path = require('path');
+
+async function moveFile() {
+  const sourceFile = 'source/file.txt';
+  const targetDir = 'destination';
+  const targetFile = path.join(targetDir, 'file.txt');
+
+  try {
+    // Ensure source file exists
+    await fs.access(sourceFile);
+
+    // Create target directory if it doesn't exist
+    await fs.mkdir(targetDir, { recursive: true });
+
+    // Move the file
+    await fs.rename(sourceFile, targetFile);
+
+    console.log('File moved successfully');
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log('Source file does not exist');
+    } else if (err.code === 'EXDEV') {
+      console.log('Cross-device move detected, using copy+delete fallback');
+      await moveAcrossDevices(sourceFile, targetFile);
+    } else {
+      console.error('Error moving file:', err);
+    }
+  }
+}
+
+// Helper function for cross-device moves
+async function moveAcrossDevices(source, target) {
+  try {
+    // Copy the file
+    await fs.copyFile(source, target);
+
+    // Delete the original
+    await fs.unlink(source);
+
+    console.log('File moved across devices successfully');
+  } catch (err) {
+    // Clean up if something went wrong
+    try { await fs.unlink(target); } catch (e) {}
+    throw err;
+  }
+}
+
+// Usage
+moveFile();</code></pre>
+            </div>
+
+            <h3>3. தொகுதி மறுபெயரிடுதல் கோப்புகள்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: தொகுதி மறுபெயரிடுதல் கோப்புகள்</h3>
+                <pre><code>const fs = require('fs').promises;
+const path = require('path');
+
+async function batchRename() {
+  const directory = 'images';
+  const pattern = /^image(\d+)\.jpg$/;
+
+  try {
+    // Read directory contents
+    const files = await fs.readdir(directory);
+
+    // Process each file
+    for (const file of files) {
+      const match = file.match(pattern);
+      if (match) {
+        const [_, number] = match;
+        const newName = `photo-${number.padStart(3, '0')}.jpg`;
+        const oldPath = path.join(directory, file);
+        const newPath = path.join(directory, newName);
+
+        // Skip if the new name is the same as the old name
+        if (oldPath !== newPath) {
+          await fs.rename(oldPath, newPath);
+          console.log(`Renamed: ${file} - ${newName}`);
+        }
+      }
+    }
+
+    console.log('Batch rename completed');
+  } catch (err) {
+    console.error('Error during batch rename:', err);
+  }
+}
+
+batchRename();</code></pre>
+            </div>
+
+            <h3>4. அணு மறுபெயரிடுதல் செயல்பாடுகள்</h3>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: அணு கோப்பு புதுப்பிப்பு</h3>
+                <pre><code>const fs = require('fs').promises;
+const path = require('path');
+const os = require('os');
+
+async function updateFileAtomic(filePath, newContent) {
+  const tempPath = path.join(
+    os.tmpdir(),
+    `temp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  );
+
+  try {
+    // 1. Write to temp file
+    await fs.writeFile(tempPath, newContent, 'utf8');
+
+    // 2. Verify the temp file was written correctly
+    const stats = await fs.stat(tempPath);
+    if (stats.size === 0) {
+      throw new Error('Temporary file is empty');
+    }
+
+    // 3. Rename (atomic on most systems)
+    await fs.rename(tempPath, filePath);
+
+    console.log('File updated atomically');
+  } catch (err) {
+    // Clean up temp file if it exists
+    try { await fs.unlink(tempPath); } catch (e) {}
+
+    console.error('Atomic update failed:', err);
+    throw err;
+  }
+}
+
+// Usage
+updateFileAtomic('important-config.json', JSON.stringify({ key: 'value' }, null, 2));</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💻</span> குறுக்கு-மேடை குறிப்பு:</h4>
+                <p>fs.rename() செயல்பாடு யூனிக்ஸ் போன்ற அமைப்புகளில் அணுவாக உள்ளது ஆனால் விண்டோஸில் இல்லாமல் இருக்கலாம்.</p>
+                <p>குறுக்கு-மேடை அணு செயல்பாடுகளுக்கு, மேலே உள்ள எடுத்துக்காட்டில் காட்டப்பட்டுள்ளபடி தற்காலிக கோப்பு அணுகுமுறையைப் பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> வாக்கியத்தை முடிக்க சரியான வார்த்தையை இழுத்து விடவும்.</h4>
+                <p>Node.js provides both <span class="blank">______</span> and asynchronous methods for file operations.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">synchronous</div>
+                            <div class="option-feedback correct">✓ சரி! Node.js கோப்பு செயல்பாடுகளுக்கு ஒத்திசைவு மற்றும் ஒத்திசைவற்ற முறைகள் இரண்டையும் வழங்குகிறது.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">parallel</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "parallel" என்பது சரியான வார்த்தை அல்ல. Node.js ஒத்திசைவு மற்றும் ஒத்திசைவற்ற முறைகளை வழங்குகிறது.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">sequential</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "sequential" என்பது சரியான வார்த்தை அல்ல. Node.js ஒத்திசைவு மற்றும் ஒத்திசைவற்ற முறைகளை வழங்குகிறது.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">linear</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "linear" என்பது சரியான வார்த்தை அல்ல. Node.js ஒத்திசைவு மற்றும் ஒத்திசைவற்ற முறைகளை வழங்குகிறது.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js HTTPS Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Path Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">File System தொகுதிக்கு அறிமுகம்</a></li>
+                    <li><a href="#reading-files">கோப்புகளைப் படித்தல்</a></li>
+                    <li><a href="#writing-files">கோப்புகளை எழுதுதல்</a></li>
+                    <li><a href="#deleting">கோப்புகளை நீக்குதல்</a></li>
+                    <li><a href="#renaming-moving">மறுபெயரிடுதல் மற்றும் நகர்த்துதல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB mongosh Update - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MongoDB mongosh Find.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MongoDB mongosh Delete.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MongoDB mongosh Update</h2>
+            <p>ஆவணங்களைப் புதுப்பித்தல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Update Document -->
+        <section class="content-section" id="update-document">
+            <h2>ஆவணத்தைப் புதுப்பித்தல்</h2>
+            
+            <p>ஏற்கனவே உள்ள ஒரு ஆவணத்தைப் புதுப்பிக்க updateOne() அல்லது updateMany() முறைகளைப் பயன்படுத்தலாம்.</p>
+            
+            <p>முதல் அளவுரு எந்த ஆவணம் அல்லது ஆவணங்கள் புதுப்பிக்கப்பட வேண்டும் என வரையறுக்கும் ஒரு குவேரி பொருளாகும்.</p>
+            
+            <p>இரண்டாவது அளவுரு புதுப்பிக்கப்பட்ட தரவை வரையறுக்கும் ஒரு பொருளாகும்.</p>
+        </section>
+
+        <!-- updateOne() -->
+        <section class="content-section" id="updateone">
+            <h2>updateOne()</h2>
+            
+            <p>updateOne() முறை வழங்கப்பட்ட குவேரியுடன் பொருந்தக்கூடிய முதல் ஆவணத்தைப் புதுப்பிக்கும்.</p>
+            
+            <p>"Post Title 1" என்ற தலைப்பைக் கொண்ட போஸ்ட்டிற்கான "like" எண்ணிக்கை என்னவென்று பார்ப்போம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code>db.posts.find( { title: "Post Title 1" } )</code></pre>
+            </div>
+            
+            <p>இப்போது இந்த போஸ்ட்டில் உள்ள "likes" ஐ 2 ஆகப் புதுப்பிப்போம். இதைச் செய்ய, $set ஆபரேட்டரைப் பயன்படுத்த வேண்டும்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code>db.posts.updateOne( { title: "Post Title 1" }, { $set: { likes: 2 } } )</code></pre>
+            </div>
+            
+            <p>ஆவணத்தை மீண்டும் சரிபார்க்கவும், "like" புதுப்பிக்கப்பட்டதை நீங்கள் காண்பீர்கள்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code>db.posts.find( { title: "Post Title 1" } )</code></pre>
+            </div>
+        </section>
+
+        <!-- Insert if not found -->
+        <section class="content-section" id="upsert">
+            <h2>கண்டறியவில்லை என்றால் செருகவும்</h2>
+            
+            <p>ஆவணம் கண்டறியப்படவில்லை என்றால் அதைச் செருக விரும்பினால், upsert விருப்பத்தைப் பயன்படுத்தலாம்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>ஆவணத்தைப் புதுப்பிக்கவும், ஆனால் கண்டறியப்படவில்லை என்றால் செருகவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>db.posts.updateOne( 
+  { title: "Post Title 5" }, 
+  {
+    $set: 
+      {
+        title: "Post Title 5",
+        body: "Body of post.",
+        category: "Event",
+        likes: 5,
+        tags: ["news", "events"],
+        date: Date()
+      }
+  }, 
+  { upsert: true }
+)</code></pre>
+            </div>
+        </section>
+
+        <!-- updateMany() -->
+        <section class="content-section" id="updatemany">
+            <h2>updateMany()</h2>
+            
+            <p>updateMany() முறை வழங்கப்பட்ட குவேரியுடன் பொருந்தக்கூடிய அனைத்து ஆவணங்களையும் புதுப்பிக்கும்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>அனைத்து ஆவணங்களிலும் likes ஐ 1 ஆகப் புதுப்பிக்கவும். இதற்காக $inc (increment) ஆபரேட்டரைப் பயன்படுத்துவோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>db.posts.updateMany({}, { $inc: { likes: 1 } })</code></pre>
+            </div>
+            
+            <p>இப்போது அனைத்து ஆவணங்களிலும் உள்ள likes ஐ சரிபார்க்கவும், அவை அனைத்தும் 1 ஆக அதிகரிக்கப்பட்டதை நீங்கள் காண்பீர்கள்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MongoDB இல் ஒரு ஆவணம் கண்டறியப்படவில்லை என்றால் அதைச் செருக எந்த விருப்பம் பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">insertIfNotFound</div>
+                            <div class="option-feedback incorrect">✗ தவறு! insertIfNotFound என்பது MongoDB இல் ஒரு செல்லுபடியாகும் விருப்பம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">upsert</div>
+                            <div class="option-feedback correct">✓ சரி! upsert விருப்பம் ஆவணம் கண்டறியப்படவில்லை என்றால் அதைச் செருக பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">createIfMissing</div>
+                            <div class="option-feedback incorrect">✗ தவறு! createIfMissing என்பது MongoDB இல் ஒரு செல்லுபடியாகும் விருப்பம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">insertOrUpdate</div>
+                            <div class="option-feedback incorrect">✗ தவறு! insertOrUpdate என்பது MongoDB இல் ஒரு செல்லுபடியாகும் விருப்பம் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MongoDB mongosh Find.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MongoDB mongosh Delete.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#update-document">ஆவணத்தைப் புதுப்பித்தல்</a></li>
+                    <li><a href="#updateone">updateOne()</a></li>
+                    <li><a href="#upsert">Upsert விருப்பம்</a></li>
+                    <li><a href="#updatemany">updateMany()</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

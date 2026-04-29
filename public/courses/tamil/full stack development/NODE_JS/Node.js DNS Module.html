@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js DNS Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Timers Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Assert Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js DNS Module</h2>
+            <p>Node.js இல் பெயர் தீர்மானத்திற்கான DNS தொகுதியைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to the DNS Module -->
+        <section class="content-section" id="introduction">
+            <h2>DNS தொகுதிக்கு அறிமுகம்</h2>
+            
+            <p>DNS (டொமைன் நேம் சிஸ்டம்) தொகுதி Node.js இல் பெயர் தீர்மானத்திற்கான செயல்பாட்டை வழங்குகிறது.</p>
+            
+            <p>இது இரண்டு முக்கிய APIகளை வழங்குகிறது:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sync"></i>
+                        <h4>Callback-அடிப்படையிலான API</h4>
+                    </div>
+                    <p>பாரம்பரிய Node.js பாணி callback செயல்பாடுகளுடன்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>Promise-அடிப்படையிலான API</h4>
+                    </div>
+                    <p>நவீன async/await ஆதரவு dns.promises மூலம்</p>
+                </div>
+            </div>
+            
+            <h3>முக்கிய அம்சங்கள்:</h3>
+            
+            <ul>
+                <li>டொமைன் பெயர்களை IP முகவரிகளாக தீர்மானித்தல் (A/AAAA records)</li>
+                <li>தலைகீழ் DNS lookups செயல்படுத்துதல் (PTR records)</li>
+                <li>பல்வேறு DNS record வகைகளை வினவுதல் (MX, TXT, SRV, முதலியன)</li>
+                <li>குறிப்பிட்ட அமைப்புகளுடன் தனிப்பயன் DNS resolvers உருவாக்குதல்</li>
+                <li>நிரலாக்க ரீதியாக DNS சேவையக அமைப்புகளை கட்டமைத்தல்</li>
+            </ul>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>DNS தொகுதி இரண்டு தனித்துவமான முறைகளில் செயல்பட முடியும் - இயக்க முறைமையின் வசதிகளைப் பயன்படுத்துதல் அல்லது நேரடி நெட்வொர்க் DNS வினவல்களை செயல்படுத்துதல்.</p>
+                <p>இது உங்கள் பயன்பாட்டில் hostname தீர்மானம் எவ்வாறு செயல்படுகிறது என்பதை பாதிக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Getting Started with DNS -->
+        <section class="content-section" id="getting-started">
+            <h2>DNS உடன் தொடங்குதல்</h2>
+            
+            <p>ஒரு டொமைனின் IP முகவரியைப் பார்க்க DNS தொகுதியைப் பயன்படுத்துவதற்கான விரைவான எடுத்துக்காட்டு இங்கே:</p>
+            
+            <h3>அடிப்படை DNS Lookup</h3>
+            
+            <div class="code-example">
+                <pre><code>const dns = require('dns');
+
+// Look up a domain name
+dns.lookup('example.com', (err, address, family) => {
+  if (err) {
+    console.error('Lookup error:', err);
+    return;
+  }
+  console.log(`IP address: ${address}`);
+  console.log(`IP version: IPv${family}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Importing and Setup -->
+        <section class="content-section" id="importing-setup">
+            <h2>இறக்குமதி செய்தல் மற்றும் அமைப்பு</h2>
+            
+            <p>DNS தொகுதியைப் பயன்படுத்த, callback அல்லது promise-அடிப்படையிலான API ஐப் பயன்படுத்தி உங்கள் Node.js பயன்பாட்டில் அதை இறக்குமதி செய்யலாம்:</p>
+            
+            <h3>Callback-அடிப்படையிலான API</h3>
+            
+            <div class="code-example">
+                <pre><code>// Import the DNS module
+const dns = require('dns');
+
+// Example usage
+dns.lookup('example.com', (err, address, family) => {
+  if (err) throw err;
+  console.log(`Resolved: ${address} (IPv${family})`);
+});</code></pre>
+            </div>
+            
+            <h3>Promise-அடிப்படையிலான API (Node.js 10.0.0+)</h3>
+            
+            <div class="code-example">
+                <pre><code>// Import the promises API
+const { promises: dns } = require('dns');
+// Or: const dns = require('dns').promises;
+
+// Example with async/await
+async function lookupDomain(domain) {
+  try {
+    const address = await dns.lookup(domain);
+    console.log(`Resolved: ${address.address} (IPv${address.family})`);
+  } catch (err) {
+    console.error('Lookup failed:', err);
+  }
+}
+
+lookupDomain('example.com');</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>Promise-அடிப்படையிலான API பொதுவாக புதிய குறியீட்டிற்கு முன்னுரிமை அளிக்கப்படுகிறது, ஏனெனில் இது நவீன async/await முறைகளுடன் சிறப்பாக வேலை செய்கிறது மற்றும் சிறந்த பிழை கையாளலை வழங்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Basic DNS Lookups -->
+        <section class="content-section" id="basic-lookups">
+            <h2>அடிப்படை DNS Lookups</h2>
+            
+            <p>DNS தொகுதி டொமைன் பெயர்கள் மற்றும் IP முகவரிகளைப் பார்க்க பல முறைகளை வழங்குகிறது. மிகவும் பொதுவான செயல்பாடுகள்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>dns.lookup()</h4>
+                    </div>
+                    <p>hostnames தீர்க்க இயக்க முறைமையின் வசதிகளைப் பயன்படுத்துகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>dns.resolve*()</h4>
+                    </div>
+                    <p>பெயர் சேவையகங்களுக்கு நேரடியாக DNS வினவல்களை செயல்படுத்துகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>dns.reverse()</h4>
+                    </div>
+                    <p>தலைகீழ் DNS lookups செயல்படுத்துகிறது (IP to hostname)</p>
+                </div>
+            </div>
+            
+            <h3>டொமைன் பெயர்களை IP முகவரிகளாக தீர்மானித்தல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const dns = require('dns');
+
+// Callback-based API
+dns.lookup('www.example.com', (err, address, family) => {
+  if (err) throw err;
+  console.log('IP address: %s', address);
+  console.log('IP version: IPv%s', family);
+});</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>const dns = require('dns').promises;
+
+// Promise-based API
+async function lookupExample() {
+  try {
+    const result = await dns.lookup('www.example.com');
+    console.log('IP address:', result.address);
+    console.log('IP version: IPv' + result.family);
+  } catch (err) {
+    console.error('Lookup failed:', err);
+  }
+}
+
+lookupExample();</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>dns.lookup() முறை பெயர் தீர்மானத்திற்கு இயக்க முறைமையின் வசதிகளைப் பயன்படுத்துகிறது மற்றும் எந்த நெட்வொர்க் தகவல்தொடர்பையும் அவசியம் செயல்படுத்தாது.</p>
+            </div>
+            
+            <h3>ஒரு டொமைனுக்கான அனைத்து IP முகவரிகளையும் பார்த்தல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const dns = require('dns');
+
+// Get all IPv4 addresses
+dns.resolve4('www.google.com', (err, addresses) => {
+  if (err) throw err;
+
+  console.log('IPv4 addresses:');
+  addresses.forEach(address => {
+    console.log(` ${address}`);
+  });
+
+  // Perform a reverse lookup on the first IP
+  dns.reverse(addresses[0], (err, hostnames) => {
+    if (err) throw err;
+
+    console.log(`Reverse lookup for ${addresses[0]}:`);
+    hostnames.forEach(hostname => {
+      console.log(` ${hostname}`);
+    });
+  });
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- DNS Record Types -->
+        <section class="content-section" id="record-types">
+            <h2>DNS Record வகைகள்</h2>
+            
+            <p>DNS தொகுதி பல்வேறு DNS record வகைகளுக்கான lookups ஆதரிக்கிறது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>Record வகை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>resolve4()</strong></td>
+                            <td>A</td>
+                            <td>IPv4 முகவரிகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolve6()</strong></td>
+                            <td>AAAA</td>
+                            <td>IPv6 முகவரிகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolveMx()</strong></td>
+                            <td>MX</td>
+                            <td>மெயில் exchange records</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolveTxt()</strong></td>
+                            <td>TXT</td>
+                            <td>உரை records</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolveSrv()</strong></td>
+                            <td>SRV</td>
+                            <td>சேவை records</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolveNs()</strong></td>
+                            <td>NS</td>
+                            <td>பெயர் சேவையக records</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolveCname()</strong></td>
+                            <td>CNAME</td>
+                            <td>Canonical name records</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolveSoa()</strong></td>
+                            <td>SOA</td>
+                            <td>Start of authority records</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolvePtr()</strong></td>
+                            <td>PTR</td>
+                            <td>Pointer records</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolveNaptr()</strong></td>
+                            <td>NAPTR</td>
+                            <td>Name authority pointer records</td>
+                        </tr>
+                        <tr>
+                            <td><strong>resolveAny()</strong></td>
+                            <td>ANY</td>
+                            <td>Any records</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Advanced DNS Operations -->
+        <section class="content-section" id="advanced-operations">
+            <h2>மேம்பட்ட DNS செயல்பாடுகள்</h2>
+            
+            <h3>1. தனிப்பயன் DNS தீர்மானம்</h3>
+            
+            <p>DNS lookups மேல் அதிக கட்டுப்பாட்டிற்காக குறிப்பிட்ட அமைப்புகளுடன் ஒரு தனிப்பயன் DNS resolver உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const dns = require('dns');
+
+// Create a new resolver
+const resolver = new dns.Resolver();
+
+// Set custom server (Google's public DNS)
+resolver.setServers(['8.8.8.8', '8.8.4.4']);
+
+// Use the custom resolver
+resolver.resolve4('www.example.com', (err, addresses) => {
+  if (err) throw err;
+
+  console.log('Addresses resolved using Google DNS:');
+  addresses.forEach(addr => {
+    console.log(` ${addr}`);
+  });
+});
+
+// See what servers are configured
+console.log('Current resolver servers:', resolver.getServers());</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>தனிப்பயன் resolver உருவாக்குவது பயனுள்ளதாக இருக்கும், நீங்கள் கணினியின் இயல்புநிலைகளுக்குப் பதிலாக குறிப்பிட்ட DNS சேவையகங்களைப் பயன்படுத்த விரும்பும் போது, அல்லது வெவ்வேறு lookups க்கு வெவ்வேறு அமைப்புகள் தேவைப்படும் போது.</p>
+            </div>
+            
+            <h3>2. நெட்வொர்க் vs. இயக்க முறைமை நிலை தீர்மானம்</h3>
+            
+            <p>DNS தொகுதி பெயர் தீர்மானத்திற்கு இரண்டு வெவ்வேறு அணுகுமுறைகளை வழங்குகிறது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>செயல்பாடு</th>
+                            <th>செயல்படுத்தல்</th>
+                            <th>நெட்வொர்க் அழைப்புகள்</th>
+                            <th>பயன்படுத்துகிறது</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>dns.lookup()</strong></td>
+                            <td>getaddrinfo() system call ஐப் பயன்படுத்துகிறது</td>
+                            <td>நேரடி நெட்வொர்க் அழைப்புகள் இல்லை</td>
+                            <td>உள்ளூர் கட்டமைப்பைப் பின்பற்றுகிறது (hosts கோப்பு, முதலியன)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>dns.resolve*(), dns.reverse()</strong></td>
+                            <td>உண்மையான நெட்வொர்க் கோரிக்கைகளை செய்கிறது</td>
+                            <td>எப்போதும் DNS சேவையகங்களுடன் இணைகிறது</td>
+                            <td>உள்ளூர் கட்டமைப்பைத் தவிர்க்கிறது, நேரடி DNS வினவல்கள்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>இந்த வேறுபாடுகள் காரணமாக, dns.lookup() மற்றும் dns.resolve*() முறைகளிலிருந்து வரும் முடிவுகள் எப்போதும் பொருந்தாமல் இருக்கலாம், குறிப்பாக தனிப்பயன் host கட்டமைப்புகள் உள்ள சூழல்களில்.</p>
+            </div>
+            
+            <h3>3. பிழை கையாளுதல் மற்றும் மீண்டும் முயற்சிகள்</h3>
+            
+            <p>வலுவான DNS கையாளுதலுக்கு சரியான பிழை மேலாண்மை தேவை. பொதுவான DNS பிழைகளைக் கையாள்வது மற்றும் மீண்டும் முயற்சி தர்க்கத்தை செயல்படுத்துவது எப்படி என்பது இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const dns = require('dns');
+
+function lookupWithErrorHandling(domain) {
+  dns.lookup(domain, (err, address, family) => {
+    if (err) {
+      console.error(`DNS lookup failed for ${domain}`);
+
+      // Check specific error codes
+      switch (err.code) {
+        case 'ENOTFOUND':
+          console.error(' Domain name not found');
+          break;
+        case 'ETIMEDOUT':
+          console.error(' DNS lookup timed out');
+          break;
+        case 'ENODATA':
+          console.error(' Domain exists but no data of requested type');
+          break;
+        case 'ESERVFAIL':
+          console.error(' DNS server returned general failure');
+          break;
+        default:
+          console.error(` Error code: ${err.code}`);
+      }
+
+      return;
+    }
+
+    console.log(`DNS lookup successful for ${domain}`);
+    console.log(` IP address: ${address}`);
+    console.log(` IP version: IPv${family}`);
+  });
+}
+
+// Test with valid and invalid domains
+lookupWithErrorHandling('www.google.com');
+lookupWithErrorHandling('this-domain-does-not-exist-123456789.com');</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>DNS பிழைகள் நெட்வொர்க் சிக்கல்கள் அல்லது DNS பரவல் தாமதங்கள் காரணமாக தற்காலிகமாக இருக்கலாம்.</p>
+                <p>உற்பத்தி பயன்பாடுகளில், நீங்கள் அதிவேக பின்வாங்கல் மூலம் மீண்டும் முயற்சி தர்க்கத்தை செயல்படுத்த விரும்பலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Performance Optimization -->
+        <section class="content-section" id="performance">
+            <h2>செயல்திறன் மேம்படுத்தல்</h2>
+            
+            <p>DNS lookups பயன்பாடுகளில் செயல்திறன் தடையாக இருக்கலாம். DNS தீர்மானத்தை மேம்படுத்துவதற்கான உத்திகள் இங்கே:</p>
+            
+            <h3>1. Caching</h3>
+            
+            <p>அதே டொமைனுக்கான மீண்டும் மீண்டும் lookups தவிர்க்க ஒரு எளிய DNS cache ஐ செயல்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const dns = require('dns');
+const util = require('util');
+const lookup = util.promisify(dns.lookup);
+const dnsCache = new Map();
+
+async function cachedLookup(domain) {
+  if (dnsCache.has(domain)) {
+    console.log('Cache hit for:', domain);
+    return dnsCache.get(domain);
+  }
+  console.log('Cache miss for:', domain);
+  const result = await lookup(domain);
+  dnsCache.set(domain, result);
+  return result;
+}
+
+// Example usage
+(async () => {
+  const domains = ['google.com', 'facebook.com', 'google.com'];
+  for (const domain of domains) {
+    const result = await cachedLookup(domain);
+    console.log(`${domain} → ${result.address}`);
+  }
+})();</code></pre>
+            </div>
+            
+            <h3>2. Parallel Lookups</h3>
+            
+            <p>பல DNS lookups ஐ இணையாக செயல்படுத்த Promise.all() ஐப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const dns = require('dns').promises;
+
+async function lookupMultiple(domains) {
+  try {
+    const lookups = domains.map(domain => dns.lookup(domain));
+    const results = await Promise.all(lookups);
+    return domains.map((domain, i) => ({
+      domain,
+      ...results[i]
+    }));
+  } catch (err) {
+    console.error('One or more lookups failed:', err);
+    throw err;
+  }
+}
+
+// Example usage
+lookupMultiple(['google.com', 'facebook.com', 'github.com'])
+  .then(results => console.log(results))
+  .catch(console.error);</code></pre>
+            </div>
+            
+            <h3>3. தனிப்பயன் Resolvers மற்றும் Timeouts</h3>
+            
+            <p>சிறந்த கட்டுப்பாட்டிற்காக தனிப்பயன் DNS சேவையகங்கள் மற்றும் timeouts ஐ கட்டமைக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const dns = require('dns');
+const { Resolver } = dns;
+
+// Create a custom resolver with timeout
+const resolver = new Resolver();
+resolver.setServers(['8.8.8.8', '1.1.1.1']); // Google and Cloudflare DNS
+
+// Set timeout for all operations (in ms)
+const TIMEOUT = 2000;
+
+async function resolveWithTimeout(domain, rrtype = 'A') {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(`DNS query timed out after ${TIMEOUT}ms`));
+    }, TIMEOUT);
+
+    resolver.resolve(domain, rrtype, (err, addresses) => {
+      clearTimeout(timer);
+      if (err) return reject(err);
+      resolve(addresses);
+    });
+  });
+}
+
+// Example usage
+resolveWithTimeout('example.com')
+  .then(console.log)
+  .catch(console.error);</code></pre>
+            </div>
+        </section>
+
+        <!-- DNS Module vs. Third-Party DNS Libraries -->
+        <section class="content-section" id="comparison">
+            <h2>DNS தொகுதி vs. Third-Party DNS நூலகங்கள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>Node.js DNS தொகுதி</th>
+                            <th>Third-Party நூலகங்கள்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>நிறுவல்</strong></td>
+                            <td>உள்ளமைக்கப்பட்ட, எந்த சார்புகளும் இல்லை</td>
+                            <td>நிறுவல் மற்றும் மேலாண்மை தேவை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>அம்ச தொகுப்பு</strong></td>
+                            <td>அடிப்படை DNS செயல்பாடுகள்</td>
+                            <td>பெரும்பாலும் மிகவும் விரிவான</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Caching</strong></td>
+                            <td>உள்ளமைக்கப்படவில்லை</td>
+                            <td>பெரும்பாலும் caching உள்ளடக்கியது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>மேம்பட்ட அம்சங்கள்</strong></td>
+                            <td>வரையறுக்கப்பட்ட</td>
+                            <td>DNSSEC, DoH, DoT ஆதரவை உள்ளடக்கியிருக்கலாம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>செயல்திறன்</strong></td>
+                            <td>அடிப்படை பயன்பாட்டிற்கு நல்லது</td>
+                            <td>குறிப்பிட்ட பயன்பாட்டு நிகழ்வுகளுக்கு மேம்படுத்தப்படலாம்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p>Node.js க்கான பிரபலமான third-party DNS நூலகங்கள்:</p>
+            
+            <ul>
+                <li><strong>dns-packet:</strong> குறைந்த-நிலை DNS பாக்கெட் குறியாக்கம்/குறிவிலக்கம்</li>
+                <li><strong>native-dns:</strong> மிகவும் முழுமையான DNS செயல்படுத்தல்</li>
+                <li><strong>dns2:</strong> Promise ஆதரவுடன் நவீன DNS நூலகம்</li>
+            </ul>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>Node.js DNS தொகுதி டொமைன் நேம் சிஸ்டத்துடன் தொடர்பு கொள்வதற்கான அத்தியாவசிய செயல்பாட்டை வழங்குகிறது. முக்கிய அம்சங்கள்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-globe"></i>
+                        <h4>டொமைன் பெயர்களை IP முகவரிகளாகப் பார்த்தல்</h4>
+                    </div>
+                    <p>டொமைன் பெயர்களை IP முகவரிகளாக தீர்மானித்தல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-list"></i>
+                        <h4>பல்வேறு DNS record வகைகளை தீர்மானித்தல்</h4>
+                    </div>
+                    <p>A, AAAA, MX, TXT, முதலியன</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>தலைகீழ் DNS lookups செயல்படுத்துதல்</h4>
+                    </div>
+                    <p>IP முகவரிகளை டொமைன் பெயர்களாக தீர்மானித்தல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>குறிப்பிட்ட அமைப்புகளுடன் தனிப்பயன் resolvers உருவாக்குதல்</h4>
+                    </div>
+                    <p>விருப்ப DNS சேவையகங்கள் மற்றும் அமைப்புகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>இரண்டு APIகள்</h4>
+                    </div>
+                    <p>Callback-அடிப்படையிலான மற்றும் Promise-அடிப்படையிலான</p>
+                </div>
+            </div>
+            
+            <p>DNS தொகுதியைப் புரிந்துகொள்வது, டொமைன் பெயரால் நெட்வொர்க் வளங்களுடன் தொடர்பு கொள்ள வேண்டிய பயன்பாடுகளுக்கு, தனிப்பயன் பெயர் தீர்மான தர்க்கத்தை செயல்படுத்துவதற்கு அல்லது டொமைன் தொடர்பான தகவலைச் சரிபார்க்க முக்கியமானது.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> டொமைன் நேம் சிஸ்டம் (DNS) உடன் பணிபுரிய செயல்பாடுகளை வழங்கும் தொகுதியின் பெயரைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">HTTP தொகுதி</div>
+                            <div class="option-feedback incorrect">✗ தவறு! HTTP தொகுதி வலை கோரிக்கைகளைக் கையாள பயன்படுகிறது, DNS செயல்பாடு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">FS தொகுதி</div>
+                            <div class="option-feedback incorrect">✗ தவறு! FS தொகுதி கோப்பு முறைமை செயல்பாடுகளைக் கையாள பயன்படுகிறது, DNS அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">DNS தொகுதி</div>
+                            <div class="option-feedback correct">✓ சரி! DNS தொகுதி டொமைன் நேம் சிஸ்டம் (DNS) உடன் பணிபுரிய செயல்பாடுகளை வழங்கும் சரியான தொகுதியாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">OS தொகுதி</div>
+                            <div class="option-feedback incorrect">✗ தவறு! OS தொகுதி இயக்க முறைமை தொடர்பான செயல்பாடுகளை வழங்குகிறது, DNS அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Timers Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Assert Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">DNS தொகுதிக்கு அறிமுகம்</a></li>
+                    <li><a href="#basic-lookups">அடிப்படை DNS Lookups</a></li>
+                    <li><a href="#record-types">DNS Record வகைகள்</a></li>
+                    <li><a href="#advanced-operations">மேம்பட்ட DNS செயல்பாடுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

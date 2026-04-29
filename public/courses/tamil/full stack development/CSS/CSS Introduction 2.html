@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Introduction - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+
+        /* CSS Demo Styles - Same Page Different Stylesheets */
+        .demo-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .demo-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px 10px 0 0;
+            margin: -2rem -2rem 2rem -2rem;
+        }
+
+        .demo-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .demo-header p {
+            color: rgba(255,255,255,0.9);
+            margin: 1rem 0 0 0;
+        }
+
+        .style-menu {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #f05033;
+        }
+
+        .style-link {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .style-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .style-link.active {
+            background: #f05033;
+            color: white;
+            border-color: #f05033;
+        }
+
+        .demo-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .demo-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .main-content {
+            padding-right: 2rem;
+            border-right: 2px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding-right: 0;
+                border-right: none;
+                border-bottom: 2px solid #eee;
+                padding-bottom: 2rem;
+            }
+        }
+
+        .sidebar {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .demo-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #fff;
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .demo-section:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .demo-section h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f05033;
+        }
+
+        .links-container {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .content-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .content-link:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Different Styles for Demo */
+        /* Style 1 - Basic */
+        .style1 .demo-header {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+        }
+
+        .style1 .demo-section h3 {
+            border-bottom-color: #3498db;
+        }
+
+        .style1 .sidebar {
+            border-left-color: #3498db;
+        }
+
+        /* Style 2 - Modern */
+        .style2 .demo-header {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .style2 .demo-section {
+            background: #f8f9fa;
+            border: none;
+        }
+
+        .style2 .demo-section h3 {
+            border-bottom-color: #e74c3c;
+        }
+
+        .style2 .sidebar {
+            background: #2c3e50;
+            color: white;
+            border-left-color: #e74c3c;
+        }
+
+        /* Style 3 - Creative */
+        .style3 .demo-header {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .style3 .demo-container {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        }
+
+        .style3 .demo-section {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .style3 .demo-section h3 {
+            border-bottom-color: #9b59b6;
+        }
+
+        .style3 .sidebar {
+            background: rgba(155, 89, 182, 0.1);
+            border-left-color: #9b59b6;
+        }
+
+        /* Style 4 - Minimal */
+        .style4 .demo-header {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+
+        .style4 .demo-section {
+            background: white;
+            border: 2px solid #27ae60;
+        }
+
+        .style4 .demo-section h3 {
+            border-bottom-color: #27ae60;
+            color: #27ae60;
+        }
+
+        .style4 .sidebar {
+            background: rgba(39, 174, 96, 0.1);
+            border-left-color: #27ae60;
+        }
+
+        /* No Style */
+        .no-style .demo-header {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .no-style .demo-header h2 {
+            color: #333;
+        }
+
+        .no-style .demo-container {
+            background: white;
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+
+        .no-style .demo-content {
+            display: block;
+        }
+
+        .no-style .main-content {
+            padding: 0;
+            border: none;
+        }
+
+        .no-style .demo-section {
+            background: white;
+            border: 1px solid #ddd;
+            margin: 1rem 0;
+            padding: 1rem;
+        }
+
+        .no-style .sidebar {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            margin: 1rem 0;
+        }
+
+        .no-style .style-menu {
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .style-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Tutorial.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Syntax.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Introduction</h2>
+            <p>CSS அறிமுகம்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS என்றால் என்ன?</h2>
+            
+            <p>CSS என்பது வலைப்பக்கத்தை ஸ்டைல் செய்ய பயன்படும் மொழியாகும்.</p>
+            
+            <h3>CSS என்பது Cascading Style Sheets என்பதன் சுருக்கமாகும்</h3>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📋</span> CSS பண்புகள்:</h4>
+                <p>HTML உறுப்புகள் திரை, காகிதம் அல்லது பிற ஊடகங்களில் எவ்வாறு காட்சிப்படுத்தப்பட வேண்டும் என்பதை CSS விவரிக்கிறது</p>
+                <p>CSS நிறைய வேலையை மிச்சப்படுத்துகிறது. இது ஒரே நேரத்தில் பல வலைப்பக்கங்களின் அமைப்பைக் கட்டுப்படுத்த முடியும்</p>
+                <p>வெளிப்புற ஸ்டைல்ஷீட்கள் CSS கோப்புகளில் சேமிக்கப்படுகின்றன</p>
+            </div>
+        </section>
+
+        <!-- CSS Demo -->
+        <section class="content-section" id="demo">
+            <h2>CSS டெமோ - ஒரு HTML பக்கம் - பல ஸ்டைல்ஷீட்கள்!</h2>
+            
+            <p>இங்கே நான்கு வெவ்வேறு ஸ்டைல்ஷீட்களுடன் காட்சிப்படுத்தப்பட்ட ஒரு HTML பக்கத்தைக் காண்பிப்போம். வெவ்வேறு ஸ்டைல்களைக் காண கீழே உள்ள "ஸ்டைல்ஷீட் 1", "ஸ்டைல்ஷீட் 2", "ஸ்டைல்ஷீட் 3", "ஸ்டைல்ஷீட் 4" இணைப்புகளைக் கிளிக் செய்யவும்:</p>
+            
+            <div class="demo-container style1 style-transition" id="demoContainer">
+                <div class="demo-header">
+                    <h2>Welcome to My Homepage</h2>
+                    <p>Use the menu to select different Stylesheets</p>
+                </div>
+
+                <div class="style-menu">
+                    <a href="#" class="style-link active" data-style="style1">Stylesheet 1</a>
+                    <a href="#" class="style-link" data-style="style2">Stylesheet 2</a>
+                    <a href="#" class="style-link" data-style="style3">Stylesheet 3</a>
+                    <a href="#" class="style-link" data-style="style4">Stylesheet 4</a>
+                    <a href="#" class="style-link" data-style="no-style">No Stylesheet</a>
+                </div>
+
+                <div class="demo-content">
+                    <div class="main-content">
+                        <div class="demo-section">
+                            <h3>Same Page Different Stylesheets</h3>
+                            <p>This is a demonstration of how different stylesheets can change the layout of your HTML page. You can change the layout of this page by selecting different stylesheets in the menu, or by selecting one of the following links:</p>
+                            <div class="links-container">
+                                <a href="#" class="content-link" data-style="style1">Stylesheet1</a>
+                                <a href="#" class="content-link" data-style="style2">Stylesheet2</a>
+                                <a href="#" class="content-link" data-style="style3">Stylesheet3</a>
+                                <a href="#" class="content-link" data-style="style4">Stylesheet4</a>
+                            </div>
+                        </div>
+
+                        <div class="demo-section">
+                            <h3>No Styles</h3>
+                            <p>This page uses DIV elements to group different sections of the HTML page. Click here to see how the page looks like with no stylesheet:</p>
+                            <a href="#" class="content-link" data-style="no-style">No Stylesheet</a>
+                        </div>
+                    </div>
+
+                    <div class="sidebar">
+                        <h3>Side-Bar</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Use CSS? -->
+        <section class="content-section" id="why-css">
+            <h2>ஏன் CSS பயன்படுத்த வேண்டும்?</h2>
+            
+            <p>CSS உங்கள் வலைப்பக்கங்களுக்கான ஸ்டைல்களை வரையறுக்க பயன்படுகிறது, இதில் வடிவமைப்பு, ஏற்பாடு மற்றும் வெவ்வேறு சாதனங்கள் மற்றும் திரை அளவுகளுக்கான காட்சி மாறுபாடுகள் அடங்கும்.</p>
+            
+            <h3>CSS எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code>body {
+  background-color: lightblue;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS Saves Work -->
+        <section class="content-section" id="saves-work">
+            <h2>CSS நிறைய வேலையை மிச்சப்படுத்துகிறது!</h2>
+            
+            <p>CSS வரையறைகள் பொதுவாக வெளிப்புற .css கோப்பில் சேமிக்கப்படுகின்றன.</p>
+            
+            <p>வெளிப்புற ஸ்டைல்ஷீட் கோப்புடன், நீங்கள் ஒரே ஒரு கோப்பை மாற்றுவதன் மூலம் முழு வலைத்தளத்தின் தோற்றத்தையும் மாற்றலாம்!</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பயிற்சி:</h4>
+                <p>CSS ஸ்டைல் விதியின் சரியான தொடரியலைத் தேர்ந்தெடுக்கவும்:</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">h1 {color: blue; font-size: 12px}</div>
+                            <div class="option-feedback incorrect">✗ தவறு! அரைப்புள்ளி காணவில்லை மற்றும் சுருள் பிரேஸ்கள் முறையாக மூடப்படவில்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">h1 {color: blue; font-size: 12px;}</div>
+                            <div class="option-feedback correct">✓ சரி! இது சரியான CSS தொடரியல் - பண்புத்தொகுப்புகள் அரைப்புள்ளியுடன் முடிவடைகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">h1 (color: blue; font-size: 12px;)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! சுருள் பிரேஸ்கள் { } பயன்படுத்தப்பட வேண்டும், அடைப்புக்குறிகள் ( ) அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">h1 [color: blue; font-size: 12px;]</div>
+                            <div class="option-feedback incorrect">✗ தவறு! சதுர அடைப்புக்குறிகள் [ ] CSS ஸ்டைல் விதிகளுக்குப் பயன்படுத்தப்படுவதில்லை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Tutorial.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Syntax.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">CSS அறிமுகம்</a></li>
+                    <li><a href="#demo">CSS டெமோ</a></li>
+                    <li><a href="#why-css">ஏன் CSS பயன்படுத்த?</a></li>
+                    <li><a href="#saves-work">CSS வேலை மிச்சம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // CSS Style Switching Demo
+        const styleLinks = document.querySelectorAll('.style-link');
+        const contentLinks = document.querySelectorAll('.content-link');
+        const demoContainer = document.getElementById('demoContainer');
+
+        function switchStyle(styleClass) {
+            // Remove active class from all style links
+            styleLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to clicked link
+            const activeLink = document.querySelector(`.style-link[data-style="${styleClass}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Add fade out effect
+            demoContainer.style.opacity = '0.7';
+            demoContainer.style.transform = 'scale(0.99)';
+            
+            // Wait for fade out, then change class
+            setTimeout(() => {
+                // Remove all style classes
+                demoContainer.classList.remove('style1', 'style2', 'style3', 'style4', 'no-style');
+                
+                // Add new style class
+                demoContainer.classList.add(styleClass);
+                
+                // Add animation effect
+                demoContainer.style.opacity = '1';
+                demoContainer.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        // Add event listeners to style links
+        styleLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const styleClass = this.getAttribute('data-style');
+                switchStyle(styleClass);
+            });
+        });
+
+        // Add event listeners to content links
+        contentLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const styleClass = this.getAttribute('data-style');
+                switchStyle(styleClass);
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

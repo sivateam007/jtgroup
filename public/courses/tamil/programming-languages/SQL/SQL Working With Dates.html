@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Working With Dates - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles specific to this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Syntax Grid */
+        .syntax-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .syntax-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .syntax-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .syntax-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .syntax-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            margin: 2rem 0;
+        }
+        
+        .responsive-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--git-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .comparison-grid,
+            .syntax-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .syntax-header,
+            .comparison-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL AUTO INCREMENT Field.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL Views.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Working With Dates</h2>
+            <p>SQL-ல் தேதிகளுடன் பணிபுரிவது பற்றி அறிந்து, தேதி செயல்பாடுகளை எவ்வாறு பயன்படுத்துவது என்பதைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- SQL Dates Introduction -->
+        <section class="content-section" id="dates-intro">
+            <h2>SQL தேதிகள்</h2>
+            
+            <p>தேதிகளுடன் பணிபுரியும் போது மிகவும் கடினமான பகுதி என்னவென்றால், நீங்கள் செருக முயற்சிக்கும் தேதியின் வடிவம் தரவுத்தளத்தில் உள்ள தேதி நெடுவரிசையின் வடிவத்துடன் பொருந்துகிறது என்பதை உறுதிப்படுத்துவதாகும்.</p>
+            
+            <p>உங்கள் தரவில் தேதிப் பகுதி மட்டுமே இருப்பது வரை, உங்கள் குவெரிகள் எதிர்பார்த்தபடி வேலை செய்யும். இருப்பினும், ஒரு நேரப் பகுதி சம்பந்தப்பட்டிருந்தால், அது மிகவும் சிக்கலானதாகிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கியமான குறிப்பு:</h4>
+                <p>தேதி வடிவங்கள் தரவுத்தள அமைப்புகள் மற்றும் பிராந்திய அமைப்புகளுக்கு இடையே மாறுபடும். எப்போதும் உங்கள் குறிப்பிட்ட தரவுத்தளத்தின் ஆவணங்களைச் சரிபார்க்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- SQL Date Data Types -->
+        <section class="content-section" id="date-data-types">
+            <h2>SQL தேதி தரவு வகைகள்</h2>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>MySQL தேதி வகைகள்</h3>
+                    </div>
+                    <ul>
+                        <li><strong>DATE</strong> - வடிவம் YYYY-MM-DD</li>
+                        <li><strong>DATETIME</strong> - வடிவம்: YYYY-MM-DD HH:MI:SS</li>
+                        <li><strong>TIMESTAMP</strong> - வடிவம்: YYYY-MM-DD HH:MI:SS</li>
+                        <li><strong>YEAR</strong> - வடிவம் YYYY அல்லது YY</li>
+                    </ul>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>SQL Server தேதி வகைகள்</h3>
+                    </div>
+                    <ul>
+                        <li><strong>DATE</strong> - வடிவம் YYYY-MM-DD</li>
+                        <li><strong>DATETIME</strong> - வடிவம்: YYYY-MM-DD HH:MI:SS</li>
+                        <li><strong>SMALLDATETIME</strong> - வடிவம்: YYYY-MM-DD HH:MI:SS</li>
+                        <li><strong>TIMESTAMP</strong> - வடிவம்: ஒரு தனித்துவமான எண்</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> குறிப்பு:</h4>
+                <p>தேதி வகைகள் உங்கள் தரவுத்தளத்தில் ஒரு புதிய அட்டவணையை உருவாக்கும் போது ஒரு நெடுவரிசைக்குத் தேர்ந்தெடுக்கப்படுகின்றன!</p>
+            </div>
+        </section>
+
+        <!-- SQL Working with Dates - Example -->
+        <section class="content-section" id="dates-example">
+            <h2>தேதிகளுடன் SQL பணிபுரிதல்</h2>
+            
+            <p>பின்வரும் அட்டவணையைப் பாருங்கள்:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>OrderId</th>
+                                <th>ProductName</th>
+                                <th>OrderDate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Geitost</td>
+                                <td>2008-11-11</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Camembert Pierrot</td>
+                                <td>2008-11-09</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Mozzarella di Giovanni</td>
+                                <td>2008-11-11</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Mascarpone Fabioli</td>
+                                <td>2008-10-29</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <p>இப்போது மேலே உள்ள அட்டவணையில் இருந்து "2008-11-11" OrderDate உள்ள பதிவுகளைத் தேர்ந்தெடுக்க விரும்புகிறோம்.</p>
+            
+            <p>நாங்கள் பின்வரும் SELECT அறிக்கையைப் பயன்படுத்துகிறோம்:</p>
+            
+            <div class="code-example">
+                <h3>தேதி அடிப்படையில் தேர்ந்தெடுத்தல்:</h3>
+                <pre><code>SELECT * FROM Orders 
+WHERE OrderDate='2008-11-11'</code></pre>
+            </div>
+            
+            <p>முடிவு-தொகுப்பு இப்படித் தோற்றமளிக்கும்:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>OrderId</th>
+                                <th>ProductName</th>
+                                <th>OrderDate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Geitost</td>
+                                <td>2008-11-11</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Mozzarella di Giovanni</td>
+                                <td>2008-11-11</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>நேரக் கூறு சம்பந்தப்படாவிட்டால் இரண்டு தேதிகளை எளிதாக ஒப்பிட முடியும்!</p>
+            </div>
+        </section>
+
+        <!-- Time Component Example -->
+        <section class="content-section" id="time-component">
+            <h2>நேரக் கூறு உதாரணம்</h2>
+            
+            <p>இப்போது, "Orders" அட்டவணை இப்படித் தோற்றமளிக்கிறது என்று வைத்துக்கொள்வோம் ("OrderDate" நெடுவரிசையில் சேர்க்கப்பட்ட நேரக் கூறைக் கவனிக்கவும்):</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>OrderId</th>
+                                <th>ProductName</th>
+                                <th>OrderDate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Geitost</td>
+                                <td>2008-11-11 13:23:44</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Camembert Pierrot</td>
+                                <td>2008-11-09 15:45:21</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Mozzarella di Giovanni</td>
+                                <td>2008-11-11 11:12:01</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Mascarpone Fabioli</td>
+                                <td>2008-10-29 14:56:59</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <p>நாம் மேலே உள்ள அதே SELECT அறிக்கையைப் பயன்படுத்தினால்:</p>
+            
+            <div class="code-example">
+                <h3>நேரக் கூறுடன் தேடல்:</h3>
+                <pre><code>SELECT * FROM Orders 
+WHERE OrderDate='2008-11-11'</code></pre>
+            </div>
+            
+            <p>எங்களுக்கு எந்த முடிவும் கிடைக்காது! குவெரி நேரப் பகுதி இல்லாத தேதிகளை மட்டுமே தேடுகிறது என்பதே இதற்குக் காரணம்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>உங்கள் குவெரிகளை எளிமையாகவும் பராமரிக்க எளிதாகவும் வைத்திருப்பதற்காக, உங்களுக்குத் தேவையில்லாவிட்டால், உங்கள் தேதிகளில் நேரக் கூறுகளைப் பயன்படுத்தாதீர்கள்!</p>
+            </div>
+        </section>
+
+        <!-- Date Functions -->
+        <section class="content-section" id="date-functions">
+            <h2>பொதுவான தேதி செயல்பாடுகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <h3>தற்போதைய தேதி</h3>
+                    <p>தற்போதைய தேதியைப் பெறுதல்</p>
+                    <div class="code-example">
+                        <pre><code>-- MySQL
+SELECT CURDATE();
+
+-- SQL Server
+SELECT GETDATE();
+
+-- Oracle
+SELECT SYSDATE FROM DUAL;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <h3>தேதி கூட்டல்</h3>
+                    <p>தேதிகளில் நாட்களைச் சேர்த்தல்</p>
+                    <div class="code-example">
+                        <pre><code>-- MySQL
+SELECT DATE_ADD(OrderDate, INTERVAL 7 DAY)
+FROM Orders;
+
+-- SQL Server
+SELECT DATEADD(day, 7, OrderDate)
+FROM Orders;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-calendar-minus"></i>
+                    </div>
+                    <h3>தேதி வேறுபாடு</h3>
+                    <p>இரண்டு தேதிகளுக்கு இடையே உள்ள வேறுபாடு</p>
+                    <div class="code-example">
+                        <pre><code>-- MySQL
+SELECT DATEDIFF('2023-12-31', '2023-01-01');
+
+-- SQL Server
+SELECT DATEDIFF(day, '2023-01-01', '2023-12-31');</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Date Formatting -->
+        <section class="content-section" id="date-formatting">
+            <h2>தேதி வடிவமைப்பு</h2>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-language"></i>
+                        <h3>MySQL தேதி வடிவமைப்பு</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>-- வெவ்வேறு வடிவங்கள்
+SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') AS FormattedDate,
+       DATE_FORMAT(OrderDate, '%d/%m/%Y') AS EuropeanDate,
+       DATE_FORMAT(OrderDate, '%M %d, %Y') AS LongDate
+FROM Orders;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-language"></i>
+                        <h3>SQL Server தேதி வடிவமைப்பு</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>-- வெவ்வேறு வடிவங்கள்
+SELECT CONVERT(VARCHAR, OrderDate, 23) AS ISOFormat,
+       CONVERT(VARCHAR, OrderDate, 103) AS BritishFormat,
+       FORMAT(OrderDate, 'dddd, MMMM dd, yyyy') AS LongDate
+FROM Orders;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Date Queries -->
+        <section class="content-section" id="practical-queries">
+            <h2>நடைமுறை தேதி குவெரிகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-filter"></i>
+                        <h4>தேதி வரம்பு குவெரிகள்</h4>
+                    </div>
+                    <div class="code-example">
+                        <pre><code>-- கடந்த 30 நாட்களின் ஆர்டர்கள்
+SELECT * FROM Orders 
+WHERE OrderDate >= DATE_SUB(CURDATE(), INTERVAL 30 DAY);
+
+-- குறிப்பிட்ட மாதத்தின் ஆர்டர்கள்
+SELECT * FROM Orders 
+WHERE YEAR(OrderDate) = 2023 
+AND MONTH(OrderDate) = 12;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h4>தேதி ஒருங்கிணைப்பு</h4>
+                    </div>
+                    <div class="code-example">
+                        <pre><code>-- மாதம் வாரியாக ஆர்டர்கள்
+SELECT YEAR(OrderDate) AS Year,
+       MONTH(OrderDate) AS Month,
+       COUNT(*) AS OrderCount
+FROM Orders 
+GROUP BY YEAR(OrderDate), MONTH(OrderDate)
+ORDER BY Year, Month;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sort"></i>
+                        <h4>தேதி வரிசைப்படுத்தல்</h4>
+                    </div>
+                    <div class="code-example">
+                        <pre><code>-- சமீபத்திய ஆர்டர்கள் முதலில்
+SELECT * FROM Orders 
+ORDER BY OrderDate DESC;
+
+-- பழமையான ஆர்டர்கள் முதலில்
+SELECT * FROM Orders 
+ORDER BY OrderDate ASC;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வருவனவற்றில் எது DATE தரவு வகைக்கான சரியான வடிவம்?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">YYYY/MM/DD</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது சில அமைப்புகளில் பயன்படுத்தப்படலாம், ஆனால் SQL-ல் நிலையான DATE வடிவம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">MM-DD-YYYY</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது அமெரிக்க வடிவம், ஆனால் SQL-ல் நிலையான DATE வடிவம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">YYYY-MM-DD</div>
+                            <div class="option-feedback correct">✓ சரி! YYYY-MM-DD என்பது SQL-ல் DATE தரவு வகைக்கான நிலையான ISO வடிவமாகும். இது சர்வதேச தேதி வடிவமாகும் மற்றும் பெரும்பாலான தரவுத்தள அமைப்புகளில் வேலை செய்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">DD-MM-YYYY</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது ஐரோப்பிய வடிவம், ஆனால் SQL-ல் நிலையான DATE வடிவம் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL AUTO INCREMENT Field.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL Views.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#dates-intro">SQL தேதிகள்</a></li>
+                    <li><a href="#date-data-types">தேதி தரவு வகைகள்</a></li>
+                    <li><a href="#dates-example">தேதிகளுடன் பணிபுரிதல்</a></li>
+                    <li><a href="#date-functions">தேதி செயல்பாடுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

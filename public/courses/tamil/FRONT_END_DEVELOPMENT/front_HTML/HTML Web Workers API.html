@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Web Workers API - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        .worker-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-right: 10px;
+        }
+        
+        .worker-demo {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .demo-btn {
+            padding: 10px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            margin: 0.5rem;
+        }
+        
+        .demo-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+        
+        .demo-btn.stop {
+            background: #dc3545;
+        }
+        
+        .demo-btn.stop:hover {
+            background: #c82333;
+        }
+        
+        .demo-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            min-height: 60px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card.main {
+            border-left: 4px solid #3498db;
+        }
+        
+        .comparison-card.worker {
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+        }
+        
+        .comparison-header.main i {
+            color: #3498db;
+        }
+        
+        .comparison-header.worker i {
+            color: #e74c3c;
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .browser-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .browser-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .browser-table td {
+            padding: 0.8rem;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .browser-table .version {
+            color: var(--git-color);
+            font-weight: bold;
+        }
+        
+        .restriction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .restriction-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #ffc107;
+            text-align: center;
+        }
+        
+        .restriction-card i {
+            font-size: 2rem;
+            color: #ffc107;
+            margin-bottom: 1rem;
+        }
+        
+        .code-visual {
+            background: #2d2d2d;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .code-keyword {
+            color: #569cd6;
+        }
+        
+        .code-function {
+            color: #dcdcaa;
+        }
+        
+        .code-string {
+            color: #ce9178;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML Web Storage API.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML-Server-Sent-Events-API.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML Web Workers API</h2>
+            <p>பின்னணியில் இயங்கும் வெளிப்புற JavaScript கோப்புகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2><i class="fas fa-users-cog worker-icon"></i>HTML Web Workers API</h2>
+            
+            <p>ஒரு வலைப் பணியாளர் என்பது பக்கத்தின் செயல்திறனை பாதிக்காமல் பின்னணியில் இயங்கும் வெளிப்புற JavaScript கோப்பு ஆகும்.</p>
+        </section>
+
+        <!-- What is a Web Worker? -->
+        <section class="content-section" id="what-is-worker">
+            <h2><i class="fas fa-question-circle worker-icon"></i>வலைப் பணியாளர் என்றால் என்ன?</h2>
+            
+            <p>ஒரு HTML பக்கத்தில் ஸ்கிரிப்ட்களை இயக்கும் போது, ஸ்கிரிப்ட் முடியும் வரை பக்கம் பதிலளிக்காததாக மாறும்.</p>
+            
+            <p>ஒரு வலைப் பணியாளர் என்பது பக்கத்தின் செயல்திறனை பாதிக்காமல், பிற ஸ்கிரிப்ட்களிடமிருந்து சுயாதீனமாக பின்னணியில் இயங்கும் வெளிப்புற JavaScript கோப்பு ஆகும். வலைப் பணியாளர் பின்னணியில் இயங்கும் போது, நீங்கள் எதையும் செய்யலாம்: கிளிக் செய்தல், விஷயங்களைத் தேர்ந்தெடுத்தல் போன்றவை.</p>
+            
+            <p>வலைப் பணியாளர்கள் முக்கிய நூலில் இயக்க முடியாத கனரக குறியீட்டிற்கு பயனுள்ளதாக இருக்கும், இது பக்கத்தை பதிலளிக்காததாக மாற்றும் நீண்ட பணிகளை ஏற்படுத்தாது.</p>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2><i class="fas fa-globe worker-icon"></i>உலாவி ஆதரவு</h2>
+            
+            <p>அட்டவணையில் உள்ள எண்கள் வலைப் பணியாளர்கள் API ஐ முழுமையாக ஆதரிக்கும் முதல் உலாவி பதிப்பைக் குறிக்கின்றன.</p>
+            
+            <table class="browser-table">
+                <thead>
+                    <tr>
+                        <th>API</th>
+                        <th>Chrome</th>
+                        <th>Edge</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                        <th>Opera</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Web Workers</td>
+                        <td class="version">4.0</td>
+                        <td class="version">10.0</td>
+                        <td class="version">3.5</td>
+                        <td class="version">4.0</td>
+                        <td class="version">11.5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Web Workers API Example -->
+        <section class="content-section" id="api-example">
+            <h2><i class="fas fa-code worker-icon"></i>வலைப் பணியாளர்கள் API எடுத்துக்காட்டு</h2>
+            
+            <p>கீழே உள்ள எடுத்துக்காட்டு பின்னணியில் எண்களை எண்ணும் ஒரு எளிய வலைப் பணியாளரை உருவாக்குகிறது:</p>
+            
+            <div class="worker-demo">
+                <h3>எண்களை எண்ணுங்கள்:</h3>
+                <button class="demo-btn" onclick="startWorkerDemo()">
+                    <i class="fas fa-play"></i> பணியாளரைத் தொடங்கு
+                </button>
+                <button class="demo-btn stop" onclick="stopWorkerDemo()">
+                    <i class="fas fa-stop"></i> பணியாளரை நிறுத்து
+                </button>
+                <div class="demo-result" id="workerResult">
+                    பணியாளர் முடிவு இங்கே காட்டப்படும்...
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i>குறிப்பு:</h4>
+                <p>பொதுவாக வலைப் பணியாளர்கள் இவ்வளவு எளிய ஸ்கிரிப்ட்களுக்குப் பயன்படுத்தப்படுவதில்லை, ஆனால் மிகவும் CPU தீவிரமான பணிகளுக்குப் பயன்படுத்தப்படுகின்றன!</p>
+            </div>
+        </section>
+
+        <!-- Check Web Worker API Support -->
+        <section class="content-section" id="check-support">
+            <h2><i class="fas fa-vial worker-icon"></i>வலைப் பணியாளர் API ஆதரவை சோதிக்கவும்</h2>
+            
+            <p>வலைப் பணியாளரைப் பயன்படுத்துவதற்கு முன், உலாவி ஆதரவை விரைவாக சரிபார்க்கலாம்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;script&gt;
+const x = document.getElementById("result");
+if(typeof(Worker) !== "undefined") {
+  x.innerHTML = "Your browser support Web Workers!";
+} else {
+  x.innerHTML = "Sorry, your browser does not support Web Workers.";
+}
+&lt;/script&gt;</code></pre>
+            </div>
+            
+            <div class="worker-demo">
+                <h3>உங்கள் உலாவி ஆதரவை சோதிக்கவும்:</h3>
+                <button class="demo-btn" onclick="testWorkerSupport()">
+                    <i class="fas fa-check-circle"></i> ஆதரவை சோதிக்கவும்
+                </button>
+                <div class="demo-result" id="supportResult">
+                    இங்கே முடிவு காட்டப்படும்...
+                </div>
+            </div>
+        </section>
+
+        <!-- Create a .js Web Worker File -->
+        <section class="content-section" id="create-worker-file">
+            <h2><i class="fas fa-file-code worker-icon"></i>.js வலைப் பணியாளர் கோப்பை உருவாக்குதல்</h2>
+            
+            <p>இப்போது, ஒரு வெளிப்புற JavaScript கோப்பில் ஒரு வலைப் பணியாளரை உருவாக்குவோம்.</p>
+            
+            <p>இங்கே நாம் எண்ணும் ஒரு ஸ்கிரிப்டை உருவாக்குகிறோம். ஸ்கிரிப்ட் "demo_workers.js" கோப்பில் சேமிக்கப்பட்டுள்ளது:</p>
+            
+            <div class="code-visual">
+                <span class="code-keyword">var</span> i = <span class="code-string">0</span>;<br><br>
+                <span class="code-keyword">function</span> <span class="code-function">timedCount</span>() {<br>
+                &nbsp;&nbsp;i = i + <span class="code-string">1</span>;<br>
+                &nbsp;&nbsp;<span class="code-function">postMessage</span>(i);<br>
+                &nbsp;&nbsp;<span class="code-function">setTimeout</span>(<span class="code-string">"timedCount()"</span>,<span class="code-string">500</span>);<br>
+                }<br><br>
+                <span class="code-function">timedCount</span>();
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i>குறிப்பு:</h4>
+                <p>மேலே உள்ள குறியீட்டின் முக்கிய பகுதி <code>postMessage()</code> முறையாகும் - இது HTML பக்கத்திற்கு செய்திகளை இடுகையிட பயன்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Create a Web Worker Object -->
+        <section class="content-section" id="create-worker-object">
+            <h2><i class="fas fa-cube worker-icon"></i>வலைப் பணியாளர் பொருளை உருவாக்குதல்</h2>
+            
+            <p>.js வலைப் பணியாளர் கோப்பை உருவாக்கிய பிறகு, அதை ஒரு HTML பக்கத்திலிருந்து அழைக்கலாம்.</p>
+            
+            <p>பின்வரும் வரிகள் ஒரு பணியாளர் (w) ஏற்கனவே உள்ளதா எனச் சரிபார்க்கின்றன, இல்லையெனில் - இது ஒரு புதிய வலைப் பணியாளர் பொருளை உருவாக்கி .js கோப்பை சுட்டிக்காட்டுகிறது: "demo_workers.js":</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>if (typeof(w) == "undefined") {
+  w = new Worker("demo_workers.js");
+}</code></pre>
+            </div>
+            
+            <p>பின்னர் நாம் வலைப் பணியாளரிடமிருந்து செய்திகளை அனுப்பலாம் மற்றும் பெறலாம்.</p>
+            
+            <p>தரவு வலைப் பணியாளர்கள் மற்றும் முக்கிய நூல் இடையே செய்திகளின் முறைமை மூலம் அனுப்பப்படுகிறது - இரு தரப்பினரும் தங்கள் செய்திகளை <code>postMessage()</code> முறையைப் பயன்படுத்தி அனுப்புகின்றனர், மேலும் <code>onmessage</code> நிகழ்வு கையாளி மூலம் செய்திகளுக்கு பதிலளிக்கின்றனர்.</p>
+            
+            <p>வலைப் பணியாளர் பொருளுக்கு ஒரு <code>onmessage</code> நிகழ்வு கேட்பியைச் சேர்க்கவும்.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>w.onmessage = function(event){
+  document.getElementById("result").innerHTML = event.data;
+};</code></pre>
+            </div>
+            
+            <p>.js இல் உள்ள வலைப் பணியாளர் ஒரு செய்தியை இடுகையிடும் போது, நிகழ்வு கேட்பியிற்குள் உள்ள குறியீடு இயக்கப்படுகிறது. வலைப் பணியாளரிலிருந்து தரவு <code>event.data</code> இல் சேமிக்கப்படுகிறது.</p>
+        </section>
+
+        <!-- Terminate a Web Worker -->
+        <section class="content-section" id="terminate-worker">
+            <h2><i class="fas fa-stop-circle worker-icon"></i>வலைப் பணியாளரை முடித்தல்</h2>
+            
+            <p>ஒரு வலைப் பணியாளர் பொருள் உருவாக்கப்படும் போது, அது முடிக்கப்படும் வரை செய்திகளைக் கேட்கத் தொடர்கிறது.</p>
+            
+            <p>ஒரு வலைப் பணியாளர் பொருளை முடிக்க, மற்றும் உலாவி/கணினி வளங்களை விடுவிக்க, <code>terminate()</code> முறையைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>w.terminate();</code></pre>
+            </div>
+        </section>
+
+        <!-- Reuse the Web Worker -->
+        <section class="content-section" id="reuse-worker">
+            <h2><i class="fas fa-redo worker-icon"></i>வலைப் பணியாளரை மீண்டும் பயன்படுத்துதல்</h2>
+            
+            <p>வலைப் பணியாளர் மாறியை முடிக்கப்பட்ட பிறகு வரையறுக்கப்படாததாக அமைத்தால், நீங்கள் பணியாளர்/குறியீட்டை மீண்டும் பயன்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>w = undefined;</code></pre>
+            </div>
+        </section>
+
+        <!-- Full Web Worker Example -->
+        <section class="content-section" id="full-example">
+            <h2><i class="fas fa-file-alt worker-icon"></i>முழு வலைப் பணியாளர் எடுத்துக்காட்டு</h2>
+            
+            <p>நாங்கள் ஏற்கனவே .js கோப்பில் வலைப் பணியாளர் குறியீட்டைப் பார்த்துள்ளோம்.</p>
+            
+            <p>HTML பக்கத்திற்கான முழு குறியீடு கீழே உள்ளது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;p&gt;Count numbers: &lt;output id="result"&gt;&lt;/output&gt;&lt;/p&gt;
+&lt;button onclick="startWorker()"&gt;Start Worker&lt;/button&gt;
+&lt;button onclick="stopWorker()"&gt;Stop Worker&lt;/button&gt;
+
+&lt;script&gt;
+let w;
+
+function startWorker() {
+  const x = document.getElementById("result");
+  if (typeof(Worker) !== "undefined") {
+    if (typeof(w) == "undefined") {
+      w = new Worker("demo_workers.js");
+    }
+    w.onmessage = function(event) {
+      x.innerHTML = event.data;
+    };
+  } else {
+    x.innerHTML = "Sorry! No Web Worker support.";
+  }
+}
+
+function stopWorker() {
+  w.terminate();
+  w = undefined;
+}
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Web Workers and the DOM -->
+        <section class="content-section" id="workers-dom">
+            <h2><i class="fas fa-ban worker-icon"></i>வலைப் பணியாளர்கள் மற்றும் DOM</h2>
+            
+            <p>வலைப் பணியாளர்கள் வெளிப்புற .js கோப்புகளில் இருப்பதால், அவர்களுக்கு பின்வரும் JavaScript பொருள்களுக்கான அணுகல் இல்லை:</p>
+            
+            <div class="restriction-grid">
+                <div class="restriction-card">
+                    <i class="fas fa-window-maximize"></i>
+                    <h4>window பொருள்</h4>
+                    <p>அணுக முடியாது</p>
+                </div>
+                
+                <div class="restriction-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h4>document பொருள்</h4>
+                    <p>அணுக முடியாது</p>
+                </div>
+                
+                <div class="restriction-card">
+                    <i class="fas fa-sitemap"></i>
+                    <h4>parent பொருள்</h4>
+                    <p>அணுக முடியாது</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle warning-icon"></i>கவனிக்க:</h4>
+                <p>வலைப் பணியாளர்கள் DOM ஐ நேரடியாக மாற்ற முடியாது. அவர்கள் முக்கிய நூலுடன் செய்தி பரிமாற்றம் மூலம் தொடர்பு கொள்ள வேண்டும்.</p>
+            </div>
+        </section>
+
+        <!-- Main Thread vs Web Worker -->
+        <section class="content-section" id="comparison">
+            <h2><i class="fas fa-balance-scale worker-icon"></i>முக்கிய நூல் vs வலைப் பணியாளர்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card main">
+                    <div class="comparison-header main">
+                        <i class="fas fa-user"></i>
+                        <h4>முக்கிய நூல்</h4>
+                    </div>
+                    <ul>
+                        <li>UI இடைமுகத்தை கையாளுகிறது</li>
+                        <li>DOM க்கு அணுகல் உள்ளது</li>
+                        <li>பயனர் தொடர்புகளுக்கு பதிலளிக்கிறது</li>
+                        <li>நீண்ட பணிகள் பக்கத்தை முடக்கலாம்</li>
+                        <li>உடனடி கையாளுதலுக்கு ஏற்றது</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card worker">
+                    <div class="comparison-header worker">
+                        <i class="fas fa-robot"></i>
+                        <h4>வலைப் பணியாளர்</h4>
+                    </div>
+                    <ul>
+                        <li>பின்னணியில் இயங்குகிறது</li>
+                        <li>DOM க்கு அணுகல் இல்லை</li>
+                        <li>பயனர் தொடர்புகளைத் தொந்தரவு செய்யாது</li>
+                        <li>கனரக கணக்கீடுகளைக் கையாளுகிறது</li>
+                        <li>தரவு செயலாக்கத்திற்கு ஏற்றது</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercise">
+            <h2><i class="fas fa-dumbbell worker-icon"></i>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் எந்த JavaScript பொருள் வலைப் பணியாளர்களால் நேரடியாக அணுக முடியாது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Math object</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Math object வலைப் பணியாளர்களால் அணுக முடியும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">document object</div>
+                            <div class="option-feedback correct">✓ சரி! document object வலைப் பணியாளர்களால் அணுக முடியாது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Array object</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Array object வலைப் பணியாளர்களால் அணுக முடியும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML Web Storage API.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML-Server-Sent-Events-API.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Web Workers API</a></li>
+                    <li><a href="#what-is-worker">வலைப் பணியாளர் என்றால் என்ன?</a></li>
+                    <li><a href="#browser-support">உலாவி ஆதரவு</a></li>
+                    <li><a href="#create-worker-file">பணியாளர் கோப்பு உருவாக்குதல்</a></li>
+                    <li><a href="#create-worker-object">பணியாளர் பொருள் உருவாக்குதல்</a></li>
+                    <li><a href="#workers-dom">வலைப் பணியாளர்கள் மற்றும் DOM</a></li>
+                    <li><a href="#comparison">முக்கிய நூல் vs பணியாளர்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Web Worker Demo Variables
+        let w;
+
+        // Test Web Worker Support
+        function testWorkerSupport() {
+            const resultElement = document.getElementById("supportResult");
+            if (typeof(Worker) !== "undefined") {
+                resultElement.innerHTML = 
+                    "<span style='color: #28a745;'><i class='fas fa-check-circle'></i> உங்கள் உலாவி வலைப் பணியாளர்களை ஆதரிக்கிறது!</span><br>" +
+                    "நீங்கள் பின்னணி நூல்களை உருவாக்கலாம்.";
+            } else {
+                resultElement.innerHTML = 
+                    "<span style='color: #dc3545;'><i class='fas fa-times-circle'></i> மன்னிக்கவும், உங்கள் உலாவி வலைப் பணியாளர்களை ஆதரிக்கவில்லை.</span>";
+            }
+        }
+
+        // Start Web Worker Demo
+        function startWorkerDemo() {
+            const resultElement = document.getElementById("workerResult");
+            if (typeof(Worker) !== "undefined") {
+                if (typeof(w) == "undefined") {
+                    // Create a blob with the worker code
+                    const workerCode = `
+                        var i = 0;
+                        function timedCount() {
+                            i = i + 1;
+                            postMessage(i);
+                            setTimeout("timedCount()", 100);
+                        }
+                        timedCount();
+                    `;
+                    
+                    const blob = new Blob([workerCode], { type: 'application/javascript' });
+                    const workerURL = URL.createObjectURL(blob);
+                    
+                    w = new Worker(workerURL);
+                }
+                
+                w.onmessage = function(event) {
+                    resultElement.innerHTML = 
+                        "<span style='color: #e74c3c;'><i class='fas fa-calculator'></i> தற்போதைய எண்: " + event.data + "</span><br>" +
+                        "பின்னணியில் இயங்கும் வலைப் பணியாளர்...";
+                };
+                
+                resultElement.innerHTML = 
+                    "<span style='color: #3498db;'><i class='fas fa-play-circle'></i> வலைப் பணியாளர் தொடங்கப்பட்டது!</span><br>" +
+                    "பின்னணியில் எண்கள் எண்ணப்படுகின்றன...";
+            } else {
+                resultElement.innerHTML = 
+                    "<span style='color: #dc3545;'><i class='fas fa-times-circle'></i> மன்னிக்கவும்! வலைப் பணியாளர் ஆதரவு இல்லை.</span>";
+            }
+        }
+
+        // Stop Web Worker Demo
+        function stopWorkerDemo() {
+            const resultElement = document.getElementById("workerResult");
+            if (typeof(w) !== "undefined") {
+                w.terminate();
+                w = undefined;
+                resultElement.innerHTML = 
+                    "<span style='color: #6c757d;'><i class='fas fa-stop-circle'></i> வலைப் பணியாளர் நிறுத்தப்பட்டது!</span><br>" +
+                    "பின்னணி எண்ணுதல் நிறுத்தப்பட்டது.";
+            } else {
+                resultElement.innerHTML = 
+                    "<span style='color: #ffc107;'><i class='fas fa-exclamation-triangle'></i> எந்த வலைப் பணியாளரும் செயலில் இல்லை.</span>";
+            }
+        }
+
+        // Clean up worker on page unload
+        window.addEventListener('beforeunload', function() {
+            if (typeof(w) !== "undefined") {
+                w.terminate();
+                w = undefined;
+            }
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

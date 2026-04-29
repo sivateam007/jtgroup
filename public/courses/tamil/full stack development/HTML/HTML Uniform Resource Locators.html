@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Uniform Resource Locators - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .url-syntax {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .url-syntax h4 {
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .url-example {
+            font-family: 'Courier New', monospace;
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .schemes-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .schemes-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .schemes-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .schemes-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .schemes-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .encoding-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .encoding-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .encoding-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .encoding-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .encoding-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .url-demo {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border: 2px solid var(--git-color);
+            text-align: center;
+        }
+        
+        .url-input {
+            padding: 10px;
+            width: 300px;
+            border: 2px solid var(--git-color);
+            border-radius: 5px;
+            margin: 10px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            padding: 10px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #e74c3c;
+        }
+        
+        .url-breakdown {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 1.5rem 0;
+        }
+        
+        .url-part {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .url-part h5 {
+            color: var(--git-color);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .url-part p {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        .code-example pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Purple Exercise Box Styling */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .exercise-box:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .exercise-icon {
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML%20Encoding%20(Character%20Sets).html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML%20Versus%20XHTML.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML Uniform Resource Locators</h2>
+            <p>URLகள் மற்றும் வலை முகவரிகளைப் புரிந்துகொள்ளுதல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML Uniform Resource Locators</h2>
+            
+            <p>URL என்பது வலை முகவரிக்கான மற்றொரு சொல்.</p>
+            
+            <p>ஒரு URL சொற்களால் (எ.கா. jassifteam.com) அல்லது இணைய நெறிமுறை (IP) முகவரியால் (எ.கா. 192.68.20.50) உருவாக்கப்படலாம்.</p>
+            
+            <p>பெரும்பாலான மக்கள் உலாவும்போது பெயரை உள்ளிடுகிறார்கள், ஏனெனில் பெயர்கள் எண்களை விட நினைவில் கொள்வது எளிது.</p>
+        </section>
+
+        <!-- URL - Uniform Resource Locator -->
+        <section class="content-section" id="url-explanation">
+            <h2>URL - Uniform Resource Locator</h2>
+            
+            <p>வலை உலாவிகள் URL பயன்படுத்தி வலை சேவையகங்களிலிருந்து பக்கங்களைக் கோருகின்றன.</p>
+            
+            <p>வலைத்தளத்தில் ஒரு ஆவணத்தை (அல்லது பிற தரவு) முகவரிட ஒரு சீரான வள இடம் காட்டி (URL) பயன்படுத்தப்படுகிறது.</p>
+            
+            <p>https://www.jassifteam.com/html/default.asp போன்ற வலை முகவரி பின்வரும் தொடரியல் விதிகளைப் பின்பற்றுகிறது:</p>
+            
+            <div class="url-syntax">
+                <h4>scheme://prefix.domain:port/path/filename</h4>
+                <div class="url-example">
+                    https://www.jassifteam.com:443/html/tutorial.html
+                </div>
+            </div>
+            
+            <div class="url-breakdown">
+                <div class="url-part">
+                    <h5>scheme</h5>
+                    <p>https</p>
+                    <small>இணைய சேவையின் வகையை வரையறுக்கிறது (மிகவும் பொதுவானது http அல்லது https)</small>
+                </div>
+                
+                <div class="url-part">
+                    <h5>prefix</h5>
+                    <p>www</p>
+                    <small>டொமைன் முன்னொட்டை வரையறுக்கிறது (http க்கான இயல்புநிலை www)</small>
+                </div>
+                
+                <div class="url-part">
+                    <h5>domain</h5>
+                    <p>jassifteam.com</p>
+                    <small>இணைய டொமைன் பெயரை வரையறுக்கிறது (jassifteam.com போன்றது)</small>
+                </div>
+                
+                <div class="url-part">
+                    <h5>port</h5>
+                    <p>443</p>
+                    <small>ஹோஸ்டில் உள்ள போர்ட் எண்ணை வரையறுக்கிறது (http க்கான இயல்புநிலை 80)</small>
+                </div>
+                
+                <div class="url-part">
+                    <h5>path</h5>
+                    <p>/html/</p>
+                    <small>சேவையகத்தில் ஒரு பாதையை வரையறுக்கிறது (தவிர்க்கப்பட்டால்: தளத்தின் ரூட் டைரக்டரி)</small>
+                </div>
+                
+                <div class="url-part">
+                    <h5>filename</h5>
+                    <p>tutorial.html</p>
+                    <small>ஒரு ஆவணம் அல்லது வளத்தின் பெயரை வரையறுக்கிறது</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common URL Schemes -->
+        <section class="content-section" id="url-schemes">
+            <h2>Common URL Schemes</h2>
+            
+            <p>கீழே உள்ள அட்டவணை சில பொதுவான திட்டங்களை பட்டியலிடுகிறது:</p>
+            
+            <div class="schemes-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Scheme</th>
+                            <th>Short for</th>
+                            <th>Used for</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>http</td>
+                            <td>HyperText Transfer Protocol</td>
+                            <td>பொதுவான வலைப்பக்கங்கள். குறியாக்கம் செய்யப்படவில்லை</td>
+                        </tr>
+                        <tr>
+                            <td>https</td>
+                            <td>Secure HyperText Transfer Protocol</td>
+                            <td>பாதுகாப்பான வலைப்பக்கங்கள். குறியாக்கம் செய்யப்பட்டது</td>
+                        </tr>
+                        <tr>
+                            <td>ftp</td>
+                            <td>File Transfer Protocol</td>
+                            <td>கோப்புகளைப் பதிவிறக்கம் அல்லது பதிவேற்றம் செய்தல்</td>
+                        </tr>
+                        <tr>
+                            <td>file</td>
+                            <td></td>
+                            <td>உங்கள் கணினியில் உள்ள ஒரு கோப்பு</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- URL Encoding -->
+        <section class="content-section" id="url-encoding">
+            <h2>URL Encoding</h2>
+            
+            <p>URLகளை ASCII எழுத்துத்தொகுப்பை மட்டுமே பயன்படுத்தி இணையத்தில் அனுப்ப முடியும். ஒரு URL ASCII தொகுப்பிற்கு வெளியே உள்ள எழுத்துக்களைக் கொண்டிருந்தால், URL மாற்றப்பட வேண்டும்.</p>
+            
+            <p>URL குறியாக்கம் ASCII அல்லாத எழுத்துக்களை இணையம் வழியாக அனுப்பப்படக்கூடிய வடிவமாக மாற்றுகிறது.</p>
+            
+            <p>URL குறியாக்கம் ASCII அல்லாத எழுத்துக்களை "%" மற்றும் அதைத் தொடர்ந்து ஹெக்ஸாடெசிமல் இலக்கங்களுடன் மாற்றுகிறது.</p>
+            
+            <p>URLகளில் இடைவெளிகள் இருக்க முடியாது. URL குறியாக்கம் பொதுவாக ஒரு இடைவெளியை கூட்டல் (+) அடையாளம் அல்லது %20 உடன் மாற்றுகிறது.</p>
+        </section>
+
+        <!-- Try It Yourself -->
+        <section class="content-section" id="try-it">
+            <h2>Try It Yourself</h2>
+            
+            <div class="url-demo">
+                <h4>Hello Günter</h4>
+                <p>நீங்கள் "சமர்ப்பி" என்பதைக் கிளிக் செய்தால், உள்ளீடு சேவையகத்திற்கு அனுப்பப்படுவதற்கு முன் உலாவி URL குறியாக்கம் செய்யும்.</p>
+                <p>சேவையகத்தில் உள்ள ஒரு பக்கம் பெறப்பட்ட உள்ளீட்டைக் காட்டும்.</p>
+                <p>வேறு சில உள்ளீட்டை முயற்சிக்கவும் மற்றும் சமர்ப்பிப்பை மீண்டும் கிளிக் செய்யவும்.</p>
+                
+                <div style="margin: 1.5rem 0;">
+                    <input type="text" id="urlInput" class="url-input" value="Hello Günter" placeholder="குறியாக்க செய்ய உரையை உள்ளிடவும்">
+                    <button id="submitBtn" class="submit-btn">சமர்ப்பி</button>
+                </div>
+                
+                <div id="urlResult" style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 5px; display: none;">
+                    <p>குறியாக்க URL: <code id="encodedUrl"></code></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ASCII Encoding Examples -->
+        <section class="content-section" id="ascii-encoding">
+            <h2>ASCII Encoding Examples</h2>
+            
+            <p>உங்கள் உலாவி உங்கள் பக்கத்தில் பயன்படுத்தப்படும் எழுத்துத்தொகுப்பின் படி உள்ளீட்டை குறியாக்கம் செய்யும்.</p>
+            
+            <p>HTML5 இல் இயல்புநிலை எழுத்துத்தொகுப்பு UTF-8 ஆகும்.</p>
+            
+            <div class="encoding-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>From Windows-1252</th>
+                            <th>From UTF-8</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>€</td>
+                            <td>%80</td>
+                            <td>%E2%82%AC</td>
+                        </tr>
+                        <tr>
+                            <td>£</td>
+                            <td>%A3</td>
+                            <td>%C2%A3</td>
+                        </tr>
+                        <tr>
+                            <td>©</td>
+                            <td>%A9</td>
+                            <td>%C2%A9</td>
+                        </tr>
+                        <tr>
+                            <td>®</td>
+                            <td>%AE</td>
+                            <td>%C2%AE</td>
+                        </tr>
+                        <tr>
+                            <td>À</td>
+                            <td>%C0</td>
+                            <td>%C3%80</td>
+                        </tr>
+                        <tr>
+                            <td>Á</td>
+                            <td>%C1</td>
+                            <td>%C3%81</td>
+                        </tr>
+                        <tr>
+                            <td>Â</td>
+                            <td>%C2</td>
+                            <td>%C3%82</td>
+                        </tr>
+                        <tr>
+                            <td>Ã</td>
+                            <td>%C3</td>
+                            <td>%C3%83</td>
+                        </tr>
+                        <tr>
+                            <td>Ä</td>
+                            <td>%C4</td>
+                            <td>%C3%84</td>
+                        </tr>
+                        <tr>
+                            <td>Å</td>
+                            <td>%C5</td>
+                            <td>%C3%85</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-book tip-icon"></i> அனைத்து URL குறியாக்கங்களின் முழுமையான குறிப்புக்கு:</h4>
+                <p>எங்கள் URL Encoding Reference ஐப் பார்வையிடவும்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> பின்வருவனவற்றில் URL இன் சரியான வடிவம் எது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">https://www.jassifteam.com:443/html/tutorial.html</div>
+                            <div class="option-feedback correct">✓ சரி! இது சரியான URL தொடரியல்: scheme://prefix.domain:port/path/filename</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">jassifteam.com/html/tutorial.html</div>
+                            <div class="option-feedback incorrect">✗ தவறு! திட்டம் (https://) இல்லாமல் URL முழுமையடையவில்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">https://jassifteam.com:html/tutorial</div>
+                            <div class="option-feedback incorrect">✗ தவறு! போர்ட் எண்ணுக்குப் பிறகு பாதை வரவேண்டும், பாதையை போர்ட்டாக கருத முடியாது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">www.jassifteam com/html tutorial html</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இடைவெளிகள் URLகளில் அனுமதிக்கப்படுவதில்லை, அவை %20 ஆக குறியாக்கம் செய்யப்பட வேண்டும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML%20Encoding%20(Character%20Sets).html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML%20Versus%20XHTML.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">URL அறிமுகம்</a></li>
+                    <li><a href="#url-explanation">URL விளக்கம்</a></li>
+                    <li><a href="#url-schemes">URL திட்டங்கள்</a></li>
+                    <li><a href="#url-encoding">URL குறியாக்கம்</a></li>
+                    <li><a href="#ascii-encoding">ASCII குறியாக்கம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // URL Encoding Demo
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const input = document.getElementById('urlInput').value;
+            const encoded = encodeURIComponent(input);
+            const resultDiv = document.getElementById('urlResult');
+            const encodedUrlSpan = document.getElementById('encodedUrl');
+            
+            // Show special characters in URL encoding
+            let displayText = encoded;
+            
+            // Highlight space encoding
+            displayText = displayText.replace(/%20/g, '<span style="color:#e74c3c">%20</span>');
+            displayText = displayText.replace(/\+/g, '<span style="color:#e74c3c">+</span>');
+            
+            // Highlight other special encodings
+            displayText = displayText.replace(/%C3%BC/g, '<span style="color:#3498db">%C3%BC</span>'); // ü
+            displayText = displayText.replace(/%C3%A4/g, '<span style="color:#3498db">%C3%A4</span>'); // ä
+            displayText = displayText.replace(/%C3%B6/g, '<span style="color:#3498db">%C3%B6</span>'); // ö
+            displayText = displayText.replace(/%C3%9F/g, '<span style="color:#3498db">%C3%9F</span>'); // ß
+            
+            encodedUrlSpan.innerHTML = displayText;
+            resultDiv.style.display = 'block';
+            
+            // Show alert with explanation
+            const hasSpecialChars = /[^\w\s]/.test(input);
+            const hasSpaces = /\s/.test(input);
+            
+            let message = `உள்ளீடு: "${input}"\nகுறியாக்கம்: ${encoded}\n\n`;
+            
+            if (hasSpaces) {
+                message += "• இடைவெளிகள் %20 ஆக மாற்றப்பட்டன\n";
+            }
+            
+            if (hasSpecialChars) {
+                message += "• சிறப்பு எழுத்துக்கள் % உடன் குறியாக்கம் செய்யப்பட்டன\n";
+            }
+            
+            if (!hasSpaces && !hasSpecialChars) {
+                message += "• ASCII எழுத்துக்களுக்கு குறியாக்கம் தேவையில்லை\n";
+            }
+            
+            alert(message);
+        });
+        
+        // Enter key support for input
+        document.getElementById('urlInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('submitBtn').click();
+            }
+        });
+        
+        // Add copy functionality to encoding table
+        document.querySelectorAll('.encoding-table td:nth-child(2), .encoding-table td:nth-child(3)').forEach(cell => {
+            cell.style.cursor = 'pointer';
+            cell.title = 'குறியாக்கத்தை நகலெடுக்க கிளிக் செய்யவும்';
+            
+            cell.addEventListener('click', function() {
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = 'நகலெடுக்கப்பட்டது!';
+                    this.style.background = '#e8f5e9';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                    }, 1000);
+                });
+            });
+        });
+        
+        // Interactive URL breakdown
+        const urlParts = document.querySelectorAll('.url-part p');
+        urlParts.forEach(part => {
+            part.style.cursor = 'pointer';
+            part.title = 'மேலும் அறிய கிளிக் செய்யவும்';
+            
+            part.addEventListener('click', function() {
+                const partName = this.parentElement.querySelector('h5').textContent;
+                const partValue = this.textContent;
+                
+                let explanation = '';
+                switch(partName) {
+                    case 'scheme':
+                        explanation = `திட்டம்: ${partValue}\nபயன்படுத்தப்படும் நெறிமுறையை தீர்மானிக்கிறது (HTTP, HTTPS, FTP, போன்றவை)`;
+                        break;
+                    case 'prefix':
+                        explanation = `முன்னொட்டு: ${partValue}\nபொதுவாக 'www' ஆனால் மற்ற துணைடொமைன்களாக இருக்கலாம்`;
+                        break;
+                    case 'domain':
+                        explanation = `டொமைன்: ${partValue}\nவலைத்தளத்தின் பதிவுசெய்யப்பட்ட பெயர்`;
+                        break;
+                    case 'port':
+                        explanation = `போர்ட்: ${partValue}\nநெட்வொர்க் போர்ட் (HTTP க்கு 80, HTTPS க்கு 443)`;
+                        break;
+                    case 'path':
+                        explanation = `பாதை: ${partValue}\nசேவையகத்தில் அடைவு அமைப்பு`;
+                        break;
+                    case 'filename':
+                        explanation = `கோப்பு பெயர்: ${partValue}\nகோரப்படும் குறிப்பிட்ட வளம்`;
+                        break;
+                }
+                
+                alert(explanation);
+            });
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    const feedback = c.querySelector('.option-feedback');
+                    feedback.style.display = 'block';
+                    
+                    // Highlight correct/wrong answers
+                    if(c.getAttribute('data-correct') === 'true') {
+                        c.style.borderColor = '#28a745';
+                        c.style.background = 'rgba(40, 167, 69, 0.1)';
+                    } else {
+                        c.style.borderColor = '#dc3545';
+                        c.style.background = 'rgba(220, 53, 69, 0.1)';
+                    }
+                });
+                
+                // Show alert message in Tamil
+                if(isCorrect) {
+                    alert('🎉 சரி! URL க்கு scheme://prefix.domain:port/path/filename என்ற சரியான தொடரியல் உள்ளது.');
+                } else {
+                    alert('❌ தவறு! URL தொடரியல் பற்றி மீண்டும் மதிப்பாய்வு செய்யவும்.');
+                }
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

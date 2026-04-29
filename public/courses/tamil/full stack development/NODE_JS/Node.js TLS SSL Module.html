@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js TLS/SSL Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js VM Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Net Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js TLS/SSL Module</h2>
+            <p>Node.js இல் பாதுகாப்பான TLS/SSL தொடர்புகளை உருவாக்க கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is TLS/SSL? -->
+        <section class="content-section" id="what-is-tls">
+            <h2>TLS/SSL என்றால் என்ன?</h2>
+            
+            <p>Transport Layer Security (TLS) மற்றும் அதன் முன்னோடி, Secure Socket Layer (SSL), ஆகியவை கணினி வலையமைப்பில் பாதுகாப்பான தகவல்தொடர்பை வழங்கும் நெறிமுறைகள் ஆகும். அவை உறுதிபடுத்துகின்றன:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-lock"></i>
+                        <h4>தனியுரிமை</h4>
+                    </div>
+                    <p>தகவல்தொடர்புகள் கேட்கப்படுவதைத் தடுக்க குறியாக்கம் செய்யப்படுகின்றன</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>தரவு ஒருமைப்பாடு</h4>
+                    </div>
+                    <p>கண்டறியப்படாமல் செய்தி உள்ளடக்கங்களை மாற்ற முடியாது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-user-check"></i>
+                        <h4>அங்கீகாரம்</h4>
+                    </div>
+                    <p>தொடர்பு கொள்ளும் தரப்பினரின் அடையாளங்களை சரிபார்க்க முடியும்</p>
+                </div>
+            </div>
+
+            <p>TLS/SSL பொதுவாக பாதுகாக்க பயன்படுத்தப்படுகிறது:</p>
+            
+            <ul>
+                <li>வலை உலாவுதல் (HTTPS)</li>
+                <li>மின்னஞ்சல் பரிமாற்றங்கள் (SMTP, IMAP, POP3)</li>
+                <li>உடனடி செய்தியனுப்புதல்</li>
+                <li>Voice over IP (VoIP)</li>
+                <li>API தகவல்தொடர்பு</li>
+            </ul>
+        </section>
+
+        <!-- Using the TLS Module -->
+        <section class="content-section" id="using-tls">
+            <h2>TLS தொகுதியைப் பயன்படுத்துதல்</h2>
+            
+            <p>Node.js இல் TLS தொகுதியைப் பயன்படுத்த, அதை உங்கள் பயன்பாட்டில் require() முறையைப் பயன்படுத்தி சேர்க்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');</code></pre>
+            </div>
+        </section>
+
+        <!-- TLS Server -->
+        <section class="content-section" id="tls-server">
+            <h2>TLS சேவையகம்</h2>
+            
+            <p>அடிப்படை TLS சேவையகத்தை உருவாக்குவது எப்படி என்பது இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const fs = require('fs');
+const path = require('path');
+
+// Server options with TLS certificates
+const options = {
+  key: fs.readFileSync(path.join(__dirname, 'server-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'server-cert.pem')),
+  // Request client certificate (optional)
+  requestCert: true,
+  // Reject connections without authorized certificates (optional)
+  rejectUnauthorized: false
+};
+
+// Create TLS server
+const server = tls.createServer(options, (socket) => {
+  console.log('Server connected',
+    socket.authorized ? 'authorized' : 'unauthorized');
+  
+  // Set encoding for data
+  socket.setEncoding('utf8');
+  
+  // Handle incoming data
+  socket.on('data', (data) => {
+    console.log('Received:', data);
+    // Echo back the data
+    socket.write(`You said: ${data}`);
+  });
+  
+  // Handle socket closure
+  socket.on('end', () => {
+    console.log('Socket ended');
+  });
+  
+  // Write welcome message
+  socket.write('Welcome to the TLS server!\n');
+});
+
+// Start TLS server
+const port = 8000;
+server.listen(port, () => {
+  console.log(`TLS server running on port ${port}`);
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>இந்த எடுத்துக்காட்டுக்கு சான்றிதழ் கோப்புகள் (server-key.pem மற்றும் server-cert.pem) தேவை. வளர்ச்சி நோக்கங்களுக்காக, நீங்கள் OpenSSL ஐப் பயன்படுத்தி சுய-கையொப்பமிடப்பட்ட சான்றிதழ்களை உருவாக்கலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Generating Self-Signed Certificates for Development -->
+        <section class="content-section" id="generating-certificates">
+            <h2>வளர்ச்சிக்கான சுய-கையொப்பமிடப்பட்ட சான்றிதழ்களை உருவாக்குதல்</h2>
+            
+            <p>வளர்ச்சி மற்றும் சோதனை நோக்கங்களுக்காக சுய-கையொப்பமிடப்பட்ட சான்றிதழ்களை உருவாக்க OpenSSL ஐப் பயன்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code># Generate CA certificate
+openssl genrsa -out ca-key.pem 2048
+openssl req -new -x509 -key ca-key.pem -out ca-cert.pem -days 365
+
+# Generate server certificate
+openssl genrsa -out server-key.pem 2048
+openssl req -new -key server-key.pem -out server-csr.pem
+openssl x509 -req -in server-csr.pem -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem -days 365
+
+# Generate client certificate (optional, for mutual authentication)
+openssl genrsa -out client-key.pem 2048
+openssl req -new -key client-key.pem -out client-csr.pem
+openssl x509 -req -in client-csr.pem -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out client-cert.pem -days 365</code></pre>
+            </div>
+        </section>
+
+        <!-- TLS Client -->
+        <section class="content-section" id="tls-client">
+            <h2>TLS கிளையன்ட்</h2>
+            
+            <p>TLS சேவையகத்துடன் இணையும் கிளையன்ட் உருவாக்குதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const fs = require('fs');
+const path = require('path');
+
+// Client options
+const options = {
+  // For mutual authentication (optional)
+  key: fs.readFileSync(path.join(__dirname, 'client-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'client-cert.pem')),
+  // Server name for Server Name Indication (SNI)
+  servername: 'localhost',
+  // CA certificate to verify the server (optional)
+  ca: fs.readFileSync(path.join(__dirname, 'ca-cert.pem')),
+  // Reject unauthorized certificates
+  rejectUnauthorized: true
+};
+
+// Connect to server
+const client = tls.connect(8000, 'localhost', options, () => {
+  // Check if authorized
+  console.log('Client connected',
+    client.authorized ? 'authorized' : 'unauthorized');
+    
+  if (!client.authorized) {
+    console.log('Reason:', client.authorizationError);
+  }
+  
+  // Send data to server
+  client.write('Hello from TLS client!');
+});
+
+// Set encoding for received data
+client.setEncoding('utf8');
+
+// Handle received data
+client.on('data', (data) => {
+  console.log('Received from server:', data);
+  
+  // Send another message
+  client.write('How are you?');
+});
+
+// Handle errors
+client.on('error', (error) => {
+  console.error('Connection error:', error);
+});
+
+// Handle connection end
+client.on('end', () => {
+  console.log('Server ended connection');
+});
+
+// Close connection after 5 seconds
+setTimeout(() => {
+  console.log('Closing connection');
+  client.end();
+}, 5000);</code></pre>
+            </div>
+        </section>
+
+        <!-- Server and Client Options -->
+        <section class="content-section" id="server-client-options">
+            <h2>சேவையகம் மற்றும் கிளையன்ட் விருப்பங்கள்</h2>
+            
+            <p>tls.createServer() மற்றும் tls.connect() இரண்டும் TLS இணைப்பை உள்ளமைக்க பல்வேறு விருப்பங்களை ஏற்கின்றன:</p>
+            
+            <h3>பொதுவான விருப்பங்கள்</h3>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>விருப்பம்</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>key</strong></td>
+                            <td>PEM வடிவத்தில் தனிப்பட்ட விசை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>cert</strong></td>
+                            <td>PEM வடிவத்தில் சான்றிதழ்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ca</strong></td>
+                            <td>நம்பப்படும் CA சான்றிதழ்கள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ciphers</strong></td>
+                            <td>சைஃபர் தொகுப்பு விவரக்குறிப்பு சரம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>minVersion</strong></td>
+                            <td>அனுமதிக்க வேண்டிய குறைந்தபட்ச TLS பதிப்பு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>maxVersion</strong></td>
+                            <td>அனுமதிக்க வேண்டிய அதிகபட்ச TLS பதிப்பு</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>சேவையகம்-குறிப்பிட்ட விருப்பங்கள்</h3>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const fs = require('fs');
+
+// Comprehensive server options
+const serverOptions = {
+  // Key and certificate
+  key: fs.readFileSync('server-key.pem'),
+  cert: fs.readFileSync('server-cert.pem'),
+  
+  // Certificate Authority
+  ca: [fs.readFileSync('ca-cert.pem')],
+  
+  // Protocol version control
+  minVersion: 'TLSv1.2',
+  maxVersion: 'TLSv1.3',
+  
+  // Cipher control
+  ciphers: 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384',
+  
+  // Client authentication
+  requestCert: true,
+  rejectUnauthorized: true,
+  
+  // Server Name Indication handling
+  SNICallback: (servername, cb) => {
+    // Different certificates for different servernames
+    if (servername === 'example.com') {
+      cb(null, tls.createSecureContext({
+        key: fs.readFileSync('example-key.pem'),
+        cert: fs.readFileSync('example-cert.pem')
+      }));
+    } else {
+      // Default certificate
+      cb(null, tls.createSecureContext({
+        key: fs.readFileSync('default-key.pem'),
+        cert: fs.readFileSync('default-cert.pem')
+      }));
+    }
+  }
+};</code></pre>
+            </div>
+
+            <h3>கிளையன்ட்-குறிப்பிட்ட விருப்பங்கள்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Example client options
+const clientOptions = {
+  key: fs.readFileSync('client-key.pem'),
+  cert: fs.readFileSync('client-cert.pem'),
+  ca: [fs.readFileSync('ca-cert.pem')],
+  
+  servername: 'example.com',
+  minVersion: 'TLSv1.2',
+  
+  // Custom identity check function
+  checkServerIdentity: (hostname, cert) => {
+    // Custom validation logic
+    if (hostname !== cert.subject.CN) {
+      return new Error(`Certificate CN does not match hostname: ${hostname}`);
+    }
+    return undefined; // No error
+  },
+  
+  // Session reuse
+  session: savedTlsSession, // Previously saved session
+};</code></pre>
+            </div>
+        </section>
+
+        <!-- Secure HTTP Server (HTTPS) -->
+        <section class="content-section" id="secure-http-server">
+            <h2>பாதுகாப்பான HTTP சேவையகம் (HTTPS)</h2>
+            
+            <p>TLS தொகுதியை நேரடியாகப் பயன்படுத்தலாம், ஆனால் HTTPS சேவையகங்களுக்கு, Node.js TLS மேல் கட்டப்பட்ட ஒரு உயர்-நிலை https தொகுதியை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const https = require('https');
+const fs = require('fs');
+const path = require('path');
+
+// HTTPS server options
+const options = {
+  key: fs.readFileSync(path.join(__dirname, 'server-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'server-cert.pem'))
+};
+
+// Create HTTPS server
+https.createServer(options, (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end('<h1>Secure HTTPS Server</h1><p>This connection is encrypted using TLS.</p>');
+}).listen(443, () => {
+  console.log('HTTPS server running on port 443');
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">ℹ️</span> தகவல்:</h4>
+                <p>HTTPS தொகுதி பாதுகாப்பான HTTP சேவையகங்களை உருவாக்க ஒரு வசதியான வழியை வழங்குகிறது, ஆனால் அது பின்னணியில் TLS தொகுதியைப் பயன்படுத்துகிறது.</p>
+            </div>
+        </section>
+
+        <!-- TLS with Express -->
+        <section class="content-section" id="tls-with-express">
+            <h2>Express உடன் TLS</h2>
+            
+            <p>நீங்கள் Express உடன் ஒரு HTTPS சேவையகத்தையும் உருவாக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+
+// Create Express app
+const app = express();
+
+// Define routes
+app.get('/', (req, res) => {
+  res.send('<h1>Secure Express App</h1><p>This connection is encrypted using TLS.</p>');
+});
+
+app.get('/api/data', (req, res) => {
+  res.json({
+    message: 'This is sensitive data',
+    timestamp: new Date()
+  });
+});
+
+// HTTPS server options
+const options = {
+  key: fs.readFileSync(path.join(__dirname, 'server-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'server-cert.pem'))
+};
+
+// Create HTTPS server with Express app
+const port = 443;
+https.createServer(options, app).listen(port, () => {
+  console.log(`Secure Express app running on port ${port}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Certificate Verification -->
+        <section class="content-section" id="certificate-verification">
+            <h2>சான்றிதழ் சரிபார்ப்பு</h2>
+            
+            <p>TLS சேவையகங்களின் அடையாளத்தை சரிபார்க்க சான்றிதழ்களைப் பயன்படுத்துகிறது மற்றும் விருப்பமாக கிளையன்ட்களைப் பயன்படுத்துகிறது. தனிப்பயன் சான்றிதழ் சரிபார்ப்பைச் செயல்படுத்துவது எப்படி என்பதற்கான எடுத்துக்காட்டு இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const fs = require('fs');
+
+// Custom verification function
+function validateCertificate(cert) {
+  // Basic certificate info
+  console.log('Certificate subject:', cert.subject);
+  console.log('Certificate issuer:', cert.issuer);
+  console.log('Valid from:', cert.valid_from);
+  console.log('Valid to:', cert.valid_to);
+  
+  // Check certificate validity period
+  const now = new Date();
+  const validFrom = new Date(cert.valid_from);
+  const validTo = new Date(cert.valid_to);
+  
+  if (now < validFrom || now > validTo) {
+    return { valid: false, reason: 'Certificate is not within its validity period' };
+  }
+  
+  // Additional checks could include:
+  // - Certificate revocation status
+  // - Certificate chain validation
+  // - Public key strength
+  
+  return { valid: true };
+}
+
+// Create TLS client with custom validation
+const options = {
+  ca: [fs.readFileSync('ca-cert.pem')],
+  checkServerIdentity: (hostname, cert) => {
+    // First check the certificate against our custom rules
+    const validationResult = validateCertificate(cert);
+    
+    if (!validationResult.valid) {
+      return new Error(validationResult.reason);
+    }
+    
+    // Then verify the hostname matches the certificate
+    const certCN = cert.subject.CN;
+    
+    if (hostname !== certCN &&
+        !cert.subjectaltname ||
+        !cert.subjectaltname.includes(hostname)) {
+      return new Error(`Certificate name mismatch: ${hostname} !== ${certCN}`);
+    }
+    
+    // Certificate is valid
+    return undefined;
+  }
+};
+
+// Connect to server with custom verification
+const client = tls.connect(8000, 'example.com', options, () => {
+  if (client.authorized) {
+    console.log('Connection authorized');
+    client.write('Secure message');
+  } else {
+    console.log('Connection not authorized:', client.authorizationError);
+  }
+});
+
+// Handle connection events
+client.on('error', (error) => {
+  console.error('TLS error:', error);
+});
+
+client.on('end', () => {
+  console.log('Connection ended');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- TLS Session Resumption -->
+        <section class="content-section" id="tls-session-resumption">
+            <h2>TLS அமர்வு மீட்டெடுப்பு</h2>
+            
+            <p>அமர்வு மீட்டெடுப்பு கிளையன்ட்கள் முழு TLS கைக்குலுக்கலைச் செய்யாமல் சேவையகத்துடன் மீண்டும் இணைய அனுமதிக்கிறது, இது செயல்திறனை மேம்படுத்துகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const fs = require('fs');
+const path = require('path');
+
+// Server options
+const serverOptions = {
+  key: fs.readFileSync(path.join(__dirname, 'server-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'server-cert.pem')),
+  // Enable session resumption
+  sessionTimeout: 300, // Session timeout in seconds
+  ticketKeys: Buffer.from('0123456789abcdef0123456789abcdef'), // 32 bytes for key encryption
+};
+
+// Create TLS server
+const server = tls.createServer(serverOptions, (socket) => {
+  console.log('Client connected');
+  
+  // Check if this is a resumed session
+  if (socket.isSessionReused()) {
+    console.log('Session reused!');
+  } else {
+    console.log('New session');
+  }
+  
+  socket.on('data', (data) => {
+    console.log('Received:', data.toString());
+    socket.write('Hello back!');
+  });
+  
+  socket.on('end', () => {
+    console.log('Client disconnected');
+  });
+});
+
+server.listen(8443, () => {
+  console.log('TLS server listening on port 8443');
+  
+  // First client connection
+  connectClient(() => {
+    // Second client connection - should use session resumption
+    connectClient();
+  });
+});
+
+// Function to create a client with session resumption
+let savedSession = null;
+
+function connectClient(callback) {
+  const clientOptions = {
+    rejectUnauthorized: false, // For self-signed certificates
+    session: savedSession // Use saved session if available
+  };
+  
+  const client = tls.connect(8443, 'localhost', clientOptions, () => {
+    console.log('Client connected. Authorized:', client.authorized);
+    console.log('Using session resumption:', client.isSessionReused());
+    
+    // Save the session for future connections
+    savedSession = client.getSession();
+    
+    // Send data
+    client.write('Hello server!');
+    
+    // Close after a short delay
+    setTimeout(() => {
+      client.end();
+      if (callback) setTimeout(callback, 100);
+    }, 100);
+  });
+  
+  client.on('data', (data) => {
+    console.log('Client received:', data.toString());
+  });
+  
+  client.on('error', (err) => {
+    console.error('Client error:', err);
+  });
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Server Name Indication (SNI) -->
+        <section class="content-section" id="server-name-indication">
+            <h2>சேவையக பெயர் குறிப்பீடு (SNI)</h2>
+            
+            <p>SNI ஒரு சேவையகம் ஒரே IP முகவரி மற்றும் போர்ட்டில் வெவ்வேறு ஹோஸ்ட்பெயர்களுக்கு வெவ்வேறு சான்றிதழ்களை வழங்க அனுமதிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const fs = require('fs');
+const path = require('path');
+
+// Load different certificates for different domains
+const serverOptions = {
+  SNICallback: (servername, cb) => {
+    console.log(`SNI request for: ${servername}`);
+    
+    // Different certificate contexts based on hostname
+    if (servername === 'example.com') {
+      const context = tls.createSecureContext({
+        key: fs.readFileSync(path.join(__dirname, 'example.com-key.pem')),
+        cert: fs.readFileSync(path.join(__dirname, 'example.com-cert.pem'))
+      });
+      cb(null, context);
+    }
+    else if (servername === 'another.com') {
+      const context = tls.createSecureContext({
+        key: fs.readFileSync(path.join(__dirname, 'another.com-key.pem')),
+        cert: fs.readFileSync(path.join(__dirname, 'another.com-cert.pem'))
+      });
+      cb(null, context);
+    }
+    else {
+      // Default certificate
+      const context = tls.createSecureContext({
+        key: fs.readFileSync(path.join(__dirname, 'default-key.pem')),
+        cert: fs.readFileSync(path.join(__dirname, 'default-cert.pem'))
+      });
+      cb(null, context);
+    }
+  },
+  // Default keys and certificates (used as a fallback)
+  key: fs.readFileSync(path.join(__dirname, 'default-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'default-cert.pem'))
+};
+
+// Create server
+const server = tls.createServer(serverOptions, (socket) => {
+  socket.write(`Hello, you connected to ${socket.servername || 'unknown'}!\n`);
+  socket.end();
+});
+
+server.listen(8443, () => {
+  console.log('TLS SNI server running on port 8443');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Advanced Certificate Management -->
+        <section class="content-section" id="advanced-certificate-management">
+            <h2>மேம்பட்ட சான்றிதழ் மேலாண்மை</h2>
+            
+            <p>சரியான சான்றிதழ் மேலாண்மை பாதுகாப்பான TLS தகவல்தொடர்புகளுக்கு முக்கியமானது. இங்கே சில மேம்பட்ட நுட்பங்கள் உள்ளன:</p>
+            
+            <h3>1. சான்றிதழ் சங்கிலி மற்றும் பல CAகள்</h3>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const fs = require('fs');
+const path = require('path');
+
+// Load multiple CA certificates
+const caCerts = [
+  fs.readFileSync(path.join(__dirname, 'ca1-cert.pem')),
+  fs.readFileSync(path.join(__dirname, 'ca2-cert.pem')),
+  fs.readFileSync(path.join(__dirname, 'intermediate-cert.pem'))
+];
+
+// Server with multiple CA certificates
+const serverOptions = {
+  key: fs.readFileSync(path.join(__dirname, 'server-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'server-cert.pem')),
+  ca: caCerts,  // Array of CA certificates
+  requestCert: true,
+  rejectUnauthorized: true
+};
+
+const server = tls.createServer(serverOptions, (socket) => {
+  console.log('Client connected:', socket.authorized ? 'Authorized' : 'Unauthorized');
+  
+  // Get peer certificate
+  const cert = socket.getPeerCertificate();
+  console.log('Client certificate subject:', cert.subject);
+  console.log('Issuer:', cert.issuer.CN);
+  
+  socket.write('Welcome to the secure server!\n');
+  socket.end();
+});
+
+server.listen(8000, () => {
+  console.log('TLS server running on port 8000');
+});</code></pre>
+            </div>
+
+            <h3>2. CRL உடன் சான்றிதழ் ரத்து</h3>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const fs = require('fs');
+const crypto = require('crypto');
+
+// Load CRL (Certificate Revocation List)
+const crl = fs.readFileSync('revoked-certs.pem');
+
+// Parse CRL to check against
+const checkRevocation = (cert) => {
+  // In a real application, you would parse the CRL and check
+  // if the certificate's serial number is in the revocation list
+  
+  // For demonstration, we'll just check against a known revoked serial
+  const revokedSerials = [
+    '0123456789ABCDEF', // Example revoked serial
+    'FEDCBA9876543210'
+  ];
+  
+  const certInfo = crypto.certificateVerify(
+    cert.raw,
+    'sha256',
+    Buffer.from(''),
+    Buffer.from('')
+  );
+  
+  return !revokedSerials.includes(certInfo.serialNumber.toString('hex').toUpperCase());
+};
+
+const server = tls.createServer({
+  key: fs.readFileSync('server-key.pem'),
+  cert: fs.readFileSync('server-cert.pem'),
+  requestCert: true,
+  rejectUnauthorized: true,
+  
+  // Custom certificate validation
+  checkServerIdentity: (host, cert) => {
+    if (!checkRevocation(cert)) {
+      return new Error('Certificate has been revoked');
+    }
+    return undefined; // No error means certificate is valid
+  }
+}, (socket) => {
+  // Handle connection
+  console.log('Client connected:', socket.authorized ? 'Authorized' : 'Unauthorized');
+  socket.end('Hello secure world!\n');
+});
+
+server.listen(8000);</code></pre>
+            </div>
+
+            <h3>3. Let's Encrypt உடன் தானியங்கி சான்றிதழ் மேலாண்மை</h3>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
+
+class TLSCertManager {
+  constructor(domain, email) {
+    this.domain = domain;
+    this.email = email;
+    this.certDir = path.join(__dirname, 'certs', domain);
+    this.ensureCertDir();
+  }
+  
+  ensureCertDir() {
+    if (!fs.existsSync(this.certDir)) {
+      fs.mkdirSync(this.certDir, { recursive: true });
+    }
+  }
+  
+  async getCertificates() {
+    const keyPath = path.join(this.certDir, 'privkey.pem');
+    const certPath = path.join(this.certDir, 'cert.pem');
+    const chainPath = path.join(this.certDir, 'chain.pem');
+    
+    // Check if certificates exist and are valid
+    if (this.certsValid(keyPath, certPath, chainPath)) {
+      return {
+        key: fs.readFileSync(keyPath),
+        cert: fs.readFileSync(certPath),
+        ca: fs.readFileSync(chainPath)
+      };
+    }
+    
+    // Use certbot to obtain new certificates
+    return await this.obtainCertificates();
+  }
+  
+  certsValid(keyPath, certPath, chainPath) {
+    try {
+      if (!fs.existsSync(keyPath) || !fs.existsSync(certPath) || !fs.existsSync(chainPath)) {
+        return false;
+      }
+      
+      // Check if certificate is valid for at least 7 more days
+      const cert = fs.readFileSync(certPath);
+      const notAfter = cert.toString().match(/Not After : (.*?)\n/)[1];
+      const expiryDate = new Date(notAfter);
+      const now = new Date();
+      
+      return (expiryDate - now) > 7 * 24 * 60 * 60 * 1000; // 7 days in ms
+    } catch (err) {
+      console.error('Error checking certificate validity:', err);
+      return false;
+    }
+  }
+  
+  async obtainCertificates() {
+    try {
+      // This is a simplified example - in production, use a proper ACME client
+      console.log('Obtaining new certificates from Let\'s Encrypt...');
+      
+      // In a real application, you would use an ACME client like 'greenlock' or 'acme'
+      // This is just a placeholder to illustrate the concept
+      execSync(`certbot certonly --standalone -d ${this.domain} --email ${this.email} --agree-tos --non-interactive`);
+      
+      // Copy certificates to our certs directory
+      const certs = {
+        key: fs.readFileSync(`/etc/letsencrypt/live/${this.domain}/privkey.pem`),
+        cert: fs.readFileSync(`/etc/letsencrypt/live/${this.domain}/cert.pem`),
+        ca: fs.readFileSync(`/etc/letsencrypt/live/${this.domain}/chain.pem`)
+      };
+      
+      // Save certificates for future use
+      fs.writeFileSync(path.join(this.certDir, 'privkey.pem'), certs.key);
+      fs.writeFileSync(path.join(this.certDir, 'cert.pem'), certs.cert);
+      fs.writeFileSync(path.join(this.certDir, 'chain.pem'), certs.ca);
+      
+      return certs;
+    } catch (err) {
+      console.error('Failed to obtain certificates:', err);
+      throw err;
+    }
+  }
+}
+
+// Usage example
+async function createSecureServer() {
+  const certManager = new TLSCertManager('example.com', 'admin@example.com');
+  
+  try {
+    const certs = await certManager.getCertificates();
+    
+    const server = https.createServer({
+      key: certs.key,
+      cert: certs.cert,
+      ca: certs.ca,
+      requestCert: true,
+      rejectUnauthorized: true
+    }, (req, res) => {
+      res.writeHead(200);
+      res.end('Hello, secure world!\n');
+    });
+    
+    server.listen(443, () => {
+      console.log('HTTPS server running on port 443');
+    });
+    
+    // Schedule certificate renewal check (e.g., daily)
+    setInterval(async () => {
+      try {
+        await certManager.getCertificates();
+      } catch (err) {
+        console.error('Certificate renewal check failed:', err);
+      }
+    }, 24 * 60 * 60 * 1000); // Check daily
+    
+  } catch (err) {
+    console.error('Failed to start secure server:', err);
+    process.exit(1);
+  }
+}
+
+createSecureServer();</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> குறிப்பு:</h4>
+                <p>Let's Encrypt எடுத்துக்காட்டு எளிமைப்படுத்தப்பட்டது. உற்பத்தியில், நன்கு பராமரிக்கப்படும் ACME கிளையன்ட் நூலகத்தைப் பயன்படுத்தவும் மற்றும் Let's Encrypt இன் விகித வரம்புகள் மற்றும் சிறந்த நடைமுறைகளைப் பின்பற்றவும்.</p>
+            </div>
+        </section>
+
+        <!-- Security Best Practices -->
+        <section class="content-section" id="security-best-practices">
+            <h2>பாதுகாப்பு சிறந்த நடைமுறைகள்</h2>
+            
+            <p>உற்பத்தி பயன்பாடுகளில் TLS ஐப் பயன்படுத்தும் போது, இந்த பாதுகாப்பு சிறந்த நடைமுறைகளைக் கவனியுங்கள்:</p>
+            
+            <h3>1. வலுவான TLS பதிப்புகளைப் பயன்படுத்தவும்</h3>
+            
+            <div class="code-example">
+                <pre><code>const options = {
+  // Disable older TLS versions
+  minVersion: 'TLSv1.2',
+  
+  // Explicitly disallow TLS 1.0 and 1.1
+  secureOptions: crypto.constants.SSL_OP_NO_TLSv1 |
+                 crypto.constants.SSL_OP_NO_TLSv1_1
+};</code></pre>
+            </div>
+
+            <h3>2. வலுவான சைஃபர் தொகுப்புகளை உள்ளமைக்கவும்</h3>
+            
+            <div class="code-example">
+                <pre><code>const options = {
+  // Prioritize modern, secure cipher suites
+  ciphers: [
+    'TLS_AES_256_GCM_SHA384',
+    'TLS_CHACHA20_POLY1305_SHA256',
+    'TLS_AES_128_GCM_SHA256',
+    'ECDHE-RSA-AES256-GCM-SHA384',
+    'ECDHE-RSA-AES128-GCM-SHA256'
+  ].join(':')
+};</code></pre>
+            </div>
+
+            <h3>3. சரியான முன்னோக்கி இரகசியத்தைப் பயன்படுத்தவும்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Cipher suites with ECDHE (Elliptic Curve Diffie-Hellman Ephemeral) support PFS
+const options = {
+  ciphers: 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384'
+};</code></pre>
+            </div>
+
+            <h3>4. OCSP ஸ்டேப்ளிங் செயல்படுத்தவும்</h3>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+
+// Server with OCSP stapling
+const serverOptions = {
+  key: fs.readFileSync(path.join(__dirname, 'server-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'server-cert.pem')),
+  ca: fs.readFileSync(path.join(__dirname, 'ca-cert.pem')),
+  
+  // Enable OCSP stapling
+  requestOCSP: true,
+  
+  // OCSP response cache timeout (in milliseconds)
+  ocspCache: new tls.OCSPCache({
+    max: 1000,  // Maximum number of cached responses
+    maxAge: 60 * 60 * 1000  // Cache for 1 hour
+  })
+};
+
+// Create HTTPS server with OCSP stapling
+const server = https.createServer(serverOptions, (req, res) => {
+  res.writeHead(200);
+  res.end('Hello with OCSP stapling!\n');
+});
+
+// Handle OCSP request errors
+server.on('OCSPRequest', (cert, issuer, callback) => {
+  if (!cert || !issuer) {
+    return callback(new Error('No certificate or issuer provided'));
+  }
+  
+  // Get OCSP URL from certificate
+  const ocspUrl = tls.getOCSPURL(cert);
+  if (!ocspUrl) {
+    return callback(new Error('No OCSP URL in certificate'));
+  }
+  
+  console.log('OCSP request for:', cert.subject.CN);
+  
+  // In a real application, you would make an OCSP request here
+  // and return the response via the callback
+  
+  // For demonstration, we'll just return a dummy response
+  const ocspResponse = Buffer.from('OCSP response would go here');
+  callback(null, ocspResponse);
+});
+
+server.listen(443, () => {
+  console.log('HTTPS server with OCSP stapling running on port 443');
+});</code></pre>
+            </div>
+
+            <h3>5. ALPN மற்றும் SNI ஆதரவு</h3>
+            
+            <div class="code-example">
+                <pre><code>const tls = require('tls');
+const http2 = require('http2');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+
+// Server with ALPN and SNI support
+const serverOptions = {
+  // ALPN protocols in order of preference
+  ALPNProtocols: ['h2', 'http/1.1'],
+  
+  // SNI callback for multiple domains
+  SNICallback: (servername, cb) => {
+    console.log('SNI request for:', servername);
+    
+    try {
+      let context;
+      
+      // Create different contexts for different domains
+      if (servername === 'example.com') {
+        context = tls.createSecureContext({
+          key: fs.readFileSync(path.join(__dirname, 'example.com-key.pem')),
+          cert: fs.readFileSync(path.join(__dirname, 'example.com-cert.pem')),
+          // Enable OCSP stapling for this domain
+          requestOCSP: true,
+          // Custom cipher suites for this domain
+          ciphers: [
+            'TLS_AES_256_GCM_SHA384',
+            'TLS_CHACHA20_POLY1305_SHA256',
+            'TLS_AES_128_GCM_SHA256'
+          ].join(':')
+        });
+      } else {
+        // Default context for other domains
+        context = tls.createSecureContext({
+          key: fs.readFileSync(path.join(__dirname, 'default-key.pem')),
+          cert: fs.readFileSync(path.join(__dirname, 'default-cert.pem')),
+          // Less strict ciphers for legacy clients
+          ciphers: [
+            'TLS_AES_256_GCM_SHA384',
+            'TLS_CHACHA20_POLY1305_SHA256',
+            'TLS_AES_128_GCM_SHA256',
+            'ECDHE-RSA-AES256-GCM-SHA384',
+            'ECDHE-RSA-AES128-GCM-SHA256'
+          ].join(':')
+        });
+      }
+      
+      // Set ALPN protocols for this context
+      context.setALPNProtocols(['h2', 'http/1.1']);
+      
+      // Return the created context
+      if (cb) {
+        cb(null, context);
+      } else {
+        return context;
+      }
+    } catch (err) {
+      console.error('SNI callback error:', err);
+      if (cb) {
+        cb(err);
+      } else {
+        throw err;
+      }
+    }
+  },
+  
+  // Default key and cert (used if SNI is not supported by client)
+  key: fs.readFileSync(path.join(__dirname, 'default-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'default-cert.pem'))
+};</code></pre>
+            </div>
+
+            <h3>6. HTTP கடுமையான போக்குவரத்து பாதுகாப்பைப் பயன்படுத்தவும் (HSTS)</h3>
+            
+            <div class="code-example">
+                <pre><code>// In an Express application
+app.use((req, res, next) => {
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  next();
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் TLS சேவையகத்தை உருவாக்க பயன்படுத்தப்படும் சரியான முறையைத் தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">tls.createTLSServer()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "tls.createTLSServer()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">tls.createSecureServer()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "tls.createSecureServer()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">tls.createServer()</div>
+                            <div class="option-feedback correct">✓ சரி! "tls.createServer()" என்பது Node.js இல் TLS சேவையகத்தை உருவாக்க பயன்படும் சரியான முறையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">tls.secureServer()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "tls.secureServer()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js VM Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Net Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-tls">TLS/SSL என்றால் என்ன?</a></li>
+                    <li><a href="#tls-server">TLS சேவையகம்</a></li>
+                    <li><a href="#tls-client">TLS கிளையன்ட்</a></li>
+                    <li><a href="#security-best-practices">பாதுகாப்பு நடைமுறைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Joins - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL Aliases.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL INNER JOIN.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Joins</h2>
+            <p>இரண்டு அல்லது அதற்கு மேற்பட்ட அட்டவணைகளில் இருந்து வரிசைகளை இணைக்க SQL Joins பற்றி அறிந்து கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is SQL JOIN -->
+        <section class="content-section" id="what-is-join">
+            <h2>SQL JOIN என்றால் என்ன?</h2>
+            
+            <p>ஒரு JOIN clause இரண்டு அல்லது அதற்கு மேற்பட்ட அட்டவணைகளில் இருந்து வரிசைகளை இணைக்க பயன்படுகிறது, அவற்றுக்கிடையேயான தொடர்புடைய நெடுவரிசையின் அடிப்படையில்.</p>
+            
+            <p>"Orders" அட்டவணையில் இருந்து ஒரு தேர்வைப் பார்ப்போம்:</p>
+            
+            <div class="code-example">
+                <h3>Orders அட்டவணை</h3>
+                <pre><code>+---------+------------+------------+
+| OrderID | CustomerID | OrderDate  |
++---------+------------+------------+
+| 10308   | 2          | 1996-09-18 |
+| 10309   | 37         | 1996-09-19 |
+| 10310   | 77         | 1996-09-20 |
++---------+------------+------------+</code></pre>
+            </div>
+            
+            <p>பின்னர், "Customers" அட்டவணையில் இருந்து ஒரு தேர்வைப் பார்ப்போம்:</p>
+            
+            <div class="code-example">
+                <h3>Customers அட்டவணை</h3>
+                <pre><code>+------------+--------------------------------+----------------+---------+
+| CustomerID | CustomerName                   | ContactName    | Country |
++------------+--------------------------------+----------------+---------+
+| 1          | Alfreds Futterkiste            | Maria Anders   | Germany |
+| 2          | Ana Trujillo Emparedados...    | Ana Trujillo   | Mexico  |
+| 3          | Antonio Moreno Taquería        | Antonio Moreno | Mexico  |
++------------+--------------------------------+----------------+---------+</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> கவனிக்க:</h4>
+                <p>"Orders" அட்டவணையில் உள்ள "CustomerID" நெடுவரிசை "Customers" அட்டவணையில் உள்ள "CustomerID"-ஐக் குறிக்கிறது. மேலே உள்ள இரண்டு அட்டவணைகளுக்கு இடையேயான உறவு "CustomerID" நெடுவரிசையாகும்.</p>
+            </div>
+        </section>
+
+        <!-- INNER JOIN Example -->
+        <section class="content-section" id="inner-join-example">
+            <h2>INNER JOIN உதாரணம்</h2>
+            
+            <p>பின்னர், நாம் பின்வரும் SQL statement-ஐ உருவாக்கலாம் (இது ஒரு INNER JOIN-ஐக் கொண்டுள்ளது), இது இரண்டு அட்டவணைகளிலும் பொருந்தக்கூடிய மதிப்புகளைக் கொண்ட பதிவுகளைத் தேர்ந்தெடுக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;</code></pre>
+            </div>
+            
+            <p>இது இப்படி ஏதாவது ஒன்றை உருவாக்கும்:</p>
+            
+            <div class="code-example">
+                <h3>முடிவு</h3>
+                <pre><code class="command-output">+---------+--------------------------------+------------+
+| OrderID | CustomerName                   | OrderDate  |
++---------+--------------------------------+------------+
+| 10308   | Ana Trujillo Emparedados...    | 9/18/1996  |
+| 10365   | Antonio Moreno Taquería        | 11/27/1996 |
+| 10383   | Around the Horn                | 12/16/1996 |
+| 10355   | Around the Horn                | 11/15/1996 |
+| 10278   | Berglunds snabbköp             | 8/12/1996  |
++---------+--------------------------------+------------+</code></pre>
+            </div>
+        </section>
+
+        <!-- Different Types of SQL JOINs -->
+        <section class="content-section" id="join-types">
+            <h2>வெவ்வேறு வகையான SQL JOINs</h2>
+            
+            <p>SQL-ல் உள்ள JOINs-ன் வெவ்வேறு வகைகள் இங்கே உள்ளன:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>(INNER) JOIN</h4>
+                    </div>
+                    <p>இரண்டு அட்டவணைகளிலும் பொருந்தக்கூடிய மதிப்புகளைக் கொண்ட பதிவுகளைத் தரும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT columns
+FROM table1
+INNER JOIN table2
+ON table1.column = table2.column;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-left"></i>
+                        <h4>LEFT (OUTER) JOIN</h4>
+                    </div>
+                    <p>இடது அட்டவணையில் இருந்து அனைத்து பதிவுகளையும், வலது அட்டவணையில் இருந்து பொருந்தக்கூடிய பதிவுகளையும் தரும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT columns
+FROM table1
+LEFT JOIN table2
+ON table1.column = table2.column;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-right"></i>
+                        <h4>RIGHT (OUTER) JOIN</h4>
+                    </div>
+                    <p>வலது அட்டவணையில் இருந்து அனைத்து பதிவுகளையும், இடது அட்டவணையில் இருந்து பொருந்தக்கூடிய பதிவுகளையும் தரும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT columns
+FROM table1
+RIGHT JOIN table2
+ON table1.column = table2.column;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        <h4>FULL (OUTER) JOIN</h4>
+                    </div>
+                    <p>இடது அல்லது வலது அட்டவணையில் பொருந்தும் போது அனைத்து பதிவுகளையும் தரும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT columns
+FROM table1
+FULL OUTER JOIN table2
+ON table1.column = table2.column;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOIN Types Diagram -->
+        <section class="content-section" id="join-diagram">
+            <h2>JOIN வகைகள் வரைபடம்</h2>
+            
+            <div class="visual-grid">
+                <div class="visual-card">
+                    <div class="visual-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>INNER JOIN</h4>
+                    </div>
+                    <div class="visual-content">
+                        <div class="circle left">Table A</div>
+                        <div class="circle right">Table B</div>
+                        <div class="intersection">பொருந்தும் தரவு</div>
+                    </div>
+                    <p>இரண்டு அட்டவணைகளுக்கும் இடையே பொருந்தும் தரவு மட்டுமே</p>
+                </div>
+                
+                <div class="visual-card">
+                    <div class="visual-header">
+                        <i class="fas fa-arrow-left"></i>
+                        <h4>LEFT JOIN</h4>
+                    </div>
+                    <div class="visual-content">
+                        <div class="circle left full">Table A</div>
+                        <div class="circle right partial">Table B</div>
+                        <div class="intersection">பொருந்தும் தரவு</div>
+                    </div>
+                    <p>அனைத்து Table A தரவு + Table B-ல் பொருந்தும் தரவு</p>
+                </div>
+                
+                <div class="visual-card">
+                    <div class="visual-header">
+                        <i class="fas fa-arrow-right"></i>
+                        <h4>RIGHT JOIN</h4>
+                    </div>
+                    <div class="visual-content">
+                        <div class="circle left partial">Table A</div>
+                        <div class="circle right full">Table B</div>
+                        <div class="intersection">பொருந்தும் தரவு</div>
+                    </div>
+                    <p>அனைத்து Table B தரவு + Table A-ல் பொருந்தும் தரவு</p>
+                </div>
+                
+                <div class="visual-card">
+                    <div class="visual-header">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        <h4>FULL JOIN</h4>
+                    </div>
+                    <div class="visual-content">
+                        <div class="circle left full">Table A</div>
+                        <div class="circle right full">Table B</div>
+                        <div class="intersection">பொருந்தும் தரவு</div>
+                    </div>
+                    <p>இரண்டு அட்டவணைகளில் இருந்தும் அனைத்து தரவும்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> SQL JOIN-ன் முதன்மை நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஏற்கனவே உள்ள அட்டவணைகளில் இருந்து புதிய அட்டவணையை உருவாக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! JOIN புதிய அட்டவணையை உருவாக்காது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு அட்டவணையில் நகல் வரிசைகளை நீக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! JOIN நகல் வரிசைகளை நீக்க பயன்படுத்தப்படாது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தரவை ஏறுவரிசை அல்லது இறங்குவரிசையில் வரிசைப்படுத்த</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ORDER BY தரவை வரிசைப்படுத்த பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">தொடர்புடைய நெடுவரிசையின் அடிப்படையில் இரண்டு அல்லது அதற்கு மேற்பட்ட அட்டவணைகளில் இருந்து வரிசைகளை இணைக்க</div>
+                            <div class="option-feedback correct">✓ சரி! JOIN-ன் முதன்மை நோக்கம் தொடர்புடைய நெடுவரிசையின் அடிப்படையில் பல அட்டவணைகளில் இருந்து தரவை இணைப்பதாகும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL Aliases.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL INNER JOIN.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-join">SQL JOIN என்றால் என்ன?</a></li>
+                    <li><a href="#inner-join-example">INNER JOIN உதாரணம்</a></li>
+                    <li><a href="#join-types">JOIN வகைகள்</a></li>
+                    <li><a href="#join-diagram">JOIN வரைபடம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        .comparison-card p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        /* Visual Grid Styles */
+        .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .visual-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .visual-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .visual-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .visual-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .visual-content {
+            position: relative;
+            height: 120px;
+            margin-bottom: 1rem;
+        }
+        
+        .circle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 2px solid var(--git-color);
+        }
+        
+        .circle.left {
+            left: 10px;
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
+        .circle.right {
+            right: 10px;
+            background: rgba(231, 76, 60, 0.1);
+        }
+        
+        .circle.full {
+            background: rgba(52, 152, 219, 0.3);
+        }
+        
+        .circle.partial {
+            background: rgba(231, 76, 60, 0.3);
+        }
+        
+        .intersection {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(46, 204, 113, 0.2);
+            padding: 0.3rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            border: 1px dashed #2ecc71;
+        }
+        
+        .visual-card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+        
+        /* Exercise Styles */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid,
+            .visual-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .visual-content {
+                height: 100px;
+            }
+            
+            .circle {
+                width: 60px;
+                height: 60px;
+                font-size: 0.7rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .visual-content {
+                height: 80px;
+            }
+            
+            .circle {
+                width: 50px;
+                height: 50px;
+                font-size: 0.6rem;
+            }
+            
+            .intersection {
+                font-size: 0.6rem;
+                padding: 0.2rem 0.4rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

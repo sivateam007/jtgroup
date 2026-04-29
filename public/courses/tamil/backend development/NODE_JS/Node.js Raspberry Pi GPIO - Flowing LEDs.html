@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Raspberry Pi GPIO - Flowing LEDs - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Raspberry Pi GPIO - LED and Pushbutton.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js and Raspberry Pi - Webserver with WebSocket.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Raspberry Pi GPIO - Flowing LEDs</h2>
+            <p>பல GPIO பின்களைப் பயன்படுத்தி வரிசையாக ஒளிரும் "பாயும்" விளைவை உருவாக்க கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Using Array With Output to Create Flowing LEDs -->
+        <section class="content-section" id="flowing-leds">
+            <h2>வெளியீட்டுடன் வரிசையைப் பயன்படுத்தி பாயும் LED களை உருவாக்குதல்</h2>
+            
+            <p>இந்த அத்தியாயத்தில் நாம் பல GPIO பின்களை வரிசையாக எரியச் செய்து மற்றும் அணைப்பதன் மூலம் ஒரு "பாயும்" விளைவை உருவாக்குவோம்.</p>
+        </section>
+
+        <!-- What do we need? -->
+        <section class="content-section" id="requirements">
+            <h2>எங்களுக்கு என்ன தேவை?</h2>
+            
+            <p>இதற்கு உங்களுக்கு தேவை:</p>
+            
+            <ul>
+                <li>A Raspberry Pi with Raspian, internet, SSH, with Node.js installed</li>
+                <li>The onoff module for Node.js</li>
+                <li>1 x Breadboard</li>
+                <li>8 x 220 Ohm resistor</li>
+                <li>8 x Through Hole LED</li>
+                <li>9 x Female to male jumper wires</li>
+            </ul>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>நீங்கள் பயன்படுத்தும் LED வகையைப் பொறுத்து உங்களுக்குத் தேவையான மின்தடை நாம் பயன்படுத்துவதிலிருந்து வேறுபட்டிருக்கலாம். பெரும்பாலான சிறிய LED க்களுக்கு ஒரு சிறிய மின்தடை மட்டுமே தேவை, சுமார் 200-500 ஓம்கள். நீங்கள் பயன்படுத்தும் சரியான மதிப்பு பொதுவாக முக்கியமானது அல்ல, ஆனால் மின்தடையின் மதிப்பு சிறியதாக இருந்தால், LED பிரகாசமாக ஒளிரும்.</p>
+            </div>
+            
+            <p>வெவ்வேறு கூறுகளின் விளக்கங்களுக்கு மேலே உள்ள பட்டியலில் உள்ள இணைப்புகளைக் கிளிக் செய்யவும்.</p>
+        </section>
+
+        <!-- Building the Circuit -->
+        <section class="content-section" id="building-circuit">
+            <h2>சுற்றுகளைக் கட்டும் பணி</h2>
+            
+            <p>இப்போது எங்கள் பிரெட்போர்டில் சுற்றுகளைக் கட்ட வேண்டிய நேரம் வந்துவிட்டது.</p>
+            
+            <p>நீங்கள் மின்னணுவியலில் புதியவராக இருந்தால், Raspberry Pi க்கான மின்சாரத்தை அணைக்க பரிந்துரைக்கிறோம். மேலும் அதைச் சேதப்படுத்தாமல் இருக்க ஆன்டி-ஸ்டேடிக் பாய அல்லது கிரவுண்டிங் பட்டா பயன்படுத்தவும்.</p>
+            
+            <p>Raspberry Pi ஐ சரியாக அணைக்க கட்டளையைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ sudo shutdown -h now</code></pre>
+            </div>
+            
+            <p>Raspberry Pi இல் LED கள் ஒளிர்வதை நிறுத்திய பிறகு, Raspberry Pi இலிருந்து பவர் பிளக்கை வெளியே இழுக்கவும் (அல்லது அது இணைக்கப்பட்டுள்ள பவர் ஸ்ட்ரிப்பை அணைக்கவும்).</p>
+            
+            <p>சரியாக அணைக்காமல் பிளக்கை இழுப்பது நினைவக கார்ட்டின் ஊழலை ஏற்படுத்தக்கூடும்.</p>
+
+            <div style="text-align: center; margin: 2rem 0;">
+                <img src="img6.png" alt="Raspberry Pi 3 with Breadboard. Flowing LEDs circuit" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <p style="margin-top: 1rem; font-style: italic; color: #666;">Raspberry Pi 3 with Breadboard. Flowing LEDs circuit</p>
+            </div>
+            
+            <p>மேலே உள்ள சுற்றுகளின் விளக்கப்படத்தைப் பாருங்கள்.</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-plug"></i>
+                    <span><strong>Raspberry Pi இல்:</strong> ஒரு ஜம்பர் கம்பியின் பெண் காலை GND பின்னுடன் இணைக்கவும். எங்கள் எடுத்துக்காட்டில் நாம் Physical Pin 6 (GND, row 3, right column) ஐப் பயன்படுத்தினோம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-th"></i>
+                    <span><strong>பிரெட்போர்டில்:</strong> GND பவருடன் இணைக்கப்பட்ட ஜம்பர் கம்பியின் ஆண் காலை வலது பக்கத்தில் உள்ள கிரவுண்ட் பஸில் இணைக்கவும். உங்கள் பிரெட்போர்டின் அந்த முழு நெடுவரிசையும் இணைக்கப்பட்டுள்ளது, எனவே எந்த வரிசை என்பது முக்கியமல்ல. எங்கள் எடுத்துக்காட்டில் நாம் அதை row 1 உடன் இணைத்துள்ளோம்</span>
+                </div>
+            </div>
+            
+            <h3>ஒவ்வொரு LED க்கும்:</h3>
+            <p>LED 2 Tie-Point வரிசைகளுடன் இணையும் வகையில் இணைக்கவும். எங்கள் எடுத்துக்காட்டில் நாம் இணைத்தோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>LED1 to rows 5 (cathode) & 6 (anode) column J
+LED2 to rows 8 (cathode) & 9 (anode) column J
+LED3 to rows 11 (cathode) & 12 (anode) column J
+LED4 to rows 14 (cathode) & 15 (anode) column J
+LED5 to rows 17 (cathode) & 18 (anode) column J
+LED6 to rows 20 (cathode) & 21 (anode) column J
+LED7 to rows 23 (cathode) & 24 (anode) column J
+LED8 to rows 26 (cathode) & 27 (anode) column J</code></pre>
+            </div>
+            
+            <h3>ஒவ்வொரு LED க்கும்:</h3>
+            <p>220 ohm மின்தடையின் கால்களில் ஒன்றை வலது பக்கத்தில் உள்ள கிரவுண்ட் பஸ் நெடுவரிசையிலிருந்து இணைக்கவும், மற்றும் மற்ற காலை LED இன் கேதோடு காலுடன் இணைக்கும் வலது பக்க Tie-Point வரிசையில் இணைக்கவும். எங்கள் எடுத்துக்காட்டில் நாம் இணைத்தோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>LED1 to row 5 column I
+LED2 to row 8 column I
+LED3 to row 11 column I
+LED4 to row 14 column I
+LED5 to row 17 column I
+LED6 to row 20 column I
+LED7 to row 23 column I
+LED8 to row 26 column I</code></pre>
+            </div>
+            
+            <h3>ஒவ்வொரு LED க்கும்:</h3>
+            <p>Raspberry Pi இல் ஒரு GPIO பின்னுடன் ஒரு ஜம்பர் கம்பியின் பெண் காலை இணைக்கவும், மற்றும் LED இன் அனோடு காலுடன் இணைக்கும் வலது பக்க Tie-Point வரிசையில் ஜம்பர் கம்பியின் ஆண் காலை இணைக்கவும். எங்கள் எடுத்துக்காட்டில் நாம் இணைத்தோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>LED1 from Physical Pin 7 (GPIO 4, row 4, left column) to Tie-point row 6 column F
+LED2 from Physical Pin 11 (GPIO 17, row 6, left column) to Tie-point row 9 column F
+LED3 from Physical Pin 13 (GPIO 27, row 7, left column) to Tie-point row 12 column F
+LED4 from Physical Pin 15 (GPIO 22, row 8, left column) to Tie-point row 15 column F
+LED5 from Physical Pin 12 (GPIO 18, row 6, right column) to Tie-point row 18 column F
+LED6 from Physical Pin 16 (GPIO 23, row 8, right column) to Tie-point row 21 column F
+LED7 from Physical Pin 18 (GPIO 24, row 9, right column) to Tie-point row 24 column F
+LED8 from Physical Pin 22 (GPIO 25, row 11, right column) to Tie-point row 27 column F</code></pre>
+            </div>
+            
+            <p>உங்கள் சுற்று இப்போது முழுமையாக இருக்க வேண்டும், மேலும் உங்கள் இணைப்புகள் மேலே உள்ள விளக்கப்படத்தைப் போலவே இருக்க வேண்டும்.</p>
+            
+            <p>இப்போது Raspberry Pi ஐ துவக்குவதற்கும், அதனுடன் தொடர்பு கொள்ள Node.js ஸ்கிரிப்டை எழுதுவதற்கும் நேரம் வந்துவிட்டது.</p>
+        </section>
+
+        <!-- Raspberry Pi and Node.js Flowing LEDs Script -->
+        <section class="content-section" id="flowing-script">
+            <h2>Raspberry Pi மற்றும் Node.js பாயும் LED கள் ஸ்கிரிப்ட்</h2>
+            
+            <p>"nodetest" அடைவிற்குச் சென்று, "flowingleds.js" என்ற புதிய கோப்பை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ nano flowingleds.js</code></pre>
+            </div>
+            
+            <p>கோப்பு இப்போது திறக்கப்பட்டு உள்ளமைக்கப்பட்ட Nano Editor உடன் திருத்தப்படலாம்.</p>
+            
+            <p>பின்வருவனவற்றை எழுதவும் அல்லது ஒட்டவும்:</p>
+            
+            <div class="code-example">
+                <h3>flowingleds.js</h3>
+                <pre><code>let Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+let LED04 = new Gpio(4, 'out'), //use declare variables for all the GPIO output pins
+  LED17 = new Gpio(17, 'out'),
+  LED27 = new Gpio(27, 'out'),
+  LED22 = new Gpio(22, 'out'),
+  LED18 = new Gpio(18, 'out'),
+  LED23 = new Gpio(23, 'out'),
+  LED24 = new Gpio(24, 'out'),
+  LED25 = new Gpio(25, 'out');
+
+//Put all the LED variables in an array
+let leds = [LED04, LED17, LED27, LED22, LED18, LED23, LED24, LED25];
+let indexCount = 0; //a counter
+dir = "up"; //variable for flowing direction
+
+let flowInterval = setInterval(flowingLeds, 100); //run the flowingLeds function every 100ms
+
+function flowingLeds() { //function for flowing Leds
+  leds.forEach(function(currentValue) { //for each item in array
+    currentValue.writeSync(0); //turn off LED
+  });
+  if (indexCount == 0) dir = "up"; //set flow direction to "up" if the count reaches zero
+  if (indexCount >= leds.length) dir = "down"; //set flow direction to "down" if the count reaches 7
+  if (dir == "down") indexCount--; //count downwards if direction is down
+  leds[indexCount].writeSync(1); //turn on LED that where array index matches count
+  if (dir == "up") indexCount++ //count upwards if direction is up
+};
+
+function unexportOnClose() { //function to run when exiting program
+  clearInterval(flowInterval); //stop flow interwal
+  leds.forEach(function(currentValue) { //for each LED
+    currentValue.writeSync(0); //turn off LED
+    currentValue.unexport(); //unexport GPIO
+  });
+};
+
+process.on('SIGINT', unexportOnClose); //function to run when user closes using ctrl+cc</code></pre>
+            </div>
+            
+            <p>குறியீட்டைச் சேமிக்க "Ctrl+x" ஐ அழுத்தவும். "y" உடன் உறுதிப்படுத்தவும், மற்றும் பெயரை "Enter" உடன் உறுதிப்படுத்தவும்.</p>
+            
+            <p>குறியீட்டை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ node flowingleds.js</code></pre>
+            </div>
+            
+            <p>இப்போது LED கள் வரிசையாக எரியவும் அணையவும் வேண்டும், ஒரு பாயும் விளைவை உருவாக்க வேண்டும்.</p>
+            
+            <p>Ctrl+c உடன் நிரலை முடிக்கவும்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் பாயும் LED விளைவை உருவாக்க எந்த JavaScript முறை பயன்படுத்தப்படுகிறது? தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">setTimeout()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! setTimeout() ஒரு முறை மட்டுமே இயங்கும், தொடர்ச்சியான விளைவுகளுக்கு ஏற்றது அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">setInterval()</div>
+                            <div class="option-feedback correct">✓ சரி! setInterval() தொடர்ச்சியான விளைவுகளை உருவாக்க வழங்கப்பட்ட இடைவெளியில் செயல்பாட்டை இயக்க பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">setImmediate()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! setImmediate() உடனடியாக இயங்கும், தொடர்ச்சியான விளைவுகளுக்கு ஏற்றது அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">process.nextTick()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! process.nextTick() அடுத்த டிக்கில் இயங்கும், தொடர்ச்சியான விளைவுகளுக்கு ஏற்றது அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Raspberry Pi GPIO - LED and Pushbutton.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js and Raspberry Pi - Webserver with WebSocket.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#flowing-leds">பாயும் LED கள்</a></li>
+                    <li><a href="#requirements">தேவைகள்</a></li>
+                    <li><a href="#building-circuit">சுற்றுகளைக் கட்டுதல்</a></li>
+                    <li><a href="#flowing-script">பாயும் ஸ்கிரிப்ட்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

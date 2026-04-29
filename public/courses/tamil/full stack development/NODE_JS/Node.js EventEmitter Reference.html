@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js EventEmitter Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .methods-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .methods-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .methods-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .methods-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .methods-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .method-name {
+            font-weight: 600;
+            color: var(--git-color);
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Built-in Modules.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Worker Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js EventEmitter Reference</h2>
+            <p>Node.js இல் நிகழ்வு-ஆதாரமான நிரலாக்கத்தின் மையமான EventEmitter ஐ அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- EventEmitter Object -->
+        <section class="content-section" id="eventemitter-object">
+            <h2>EventEmitter பொருள்</h2>
+            
+            <p>EventEmitter என்பது Node.js இல் பொருள்களுக்கு இடையேயான தகவல்தொடர்பை எளிதாக்கும் ஒரு தொகுதியாகும். இது Node இன் அசிங்க்ரோனஸ் நிகழ்வு-ஆதாரமான கட்டமைப்பின் மையத்தில் உள்ளது.</p>
+            
+            <p>Node இன் உள்ளமைக்கப்பட்ட பல தொகுதிகள் EventEmitter இலிருந்து பரம்பரை பெறுகின்றன, HTTP சேவையகங்கள், ஸ்ட்ரீம்கள் மற்றும் பலவும் அடங்கும்.</p>
+        </section>
+
+        <!-- Import EventEmitter -->
+        <section class="content-section" id="import-eventemitter">
+            <h2>EventEmitter ஐ இறக்குமதி செய்தல்</h2>
+            
+            <div class="code-example">
+                <pre><code>// முறை 1: require பயன்படுத்துதல்
+const EventEmitter = require('events');
+
+// முறை 2: ES6 destructuring
+const { EventEmitter } = require('events');</code></pre>
+            </div>
+        </section>
+
+        <!-- Creating an EventEmitter -->
+        <section class="content-section" id="creating-eventemitter">
+            <h2>EventEmitter உருவாக்குதல்</h2>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+
+// புதிய EventEmitter நிகழ்வை உருவாக்கவும்
+const myEmitter = new EventEmitter();
+
+// EventEmitter ஐ விரிவுபடுத்தும் வகுப்பை உருவாக்கவும்
+class MyEmitter extends EventEmitter {
+  constructor() {
+    super();
+  }
+}
+
+// விரிவுபடுத்தப்பட்ட வகுப்பை உருவாக்கவும்
+const myExtendedEmitter = new MyEmitter();</code></pre>
+            </div>
+        </section>
+
+        <!-- EventEmitter Methods -->
+        <section class="content-section" id="eventemitter-methods">
+            <h2>EventEmitter முறைகள்</h2>
+            
+            <table class="methods-table">
+                <thead>
+                    <tr>
+                        <th>முறை</th>
+                        <th>விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="method-name">addListener(event, listener)</td>
+                        <td>குறிப்பிட்ட நிகழ்வுக்கான கேட்போர் வரிசையின் முடிவில் ஒரு கேட்போரைச் சேர்க்கிறது. on()க்கான மாற்றுப் பெயர்.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">emit(event, [arg1], [arg2], ...)</td>
+                        <td>நிகழ்விற்குப் பதிவுசெய்யப்பட்ட ஒவ்வொரு கேட்போரையும் அவை பதிவுசெய்யப்பட்ட வரிசையில் ஒத்திசைவாக அழைக்கிறது, வழங்கப்பட்ட வாதங்களை ஒவ்வொருவருக்கும் அனுப்புகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">eventNames()</td>
+                        <td>எமிட்டருக்குப் பதிவுசெய்யப்பட்ட கேட்போர்கள் உள்ள நிகழ்வுகளை பட்டியலிடும் ஒரு வரிசையை வழங்குகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">getMaxListeners()</td>
+                        <td>emitter.setMaxListeners(n) மூலம் அமைக்கப்பட்ட அல்லது EventEmitter.defaultMaxListeners இல் இருப்பு மதிப்பாக உள்ள EventEmitter க்கான தற்போதைய அதிகபட்ச கேட்போர் மதிப்பை வழங்குகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">listenerCount(event)</td>
+                        <td>குறிப்பிட்ட நிகழ்வைக் கேட்கும் கேட்போர்களின் எண்ணிக்கையை வழங்குகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">listeners(event)</td>
+                        <td>குறிப்பிட்ட நிகழ்வுக்கான கேட்போர்களின் வரிசையின் நகலை வழங்குகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">off(event, listener)</td>
+                        <td>removeListener()க்கான மாற்றுப் பெயர்.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">on(event, listener)</td>
+                        <td>குறிப்பிட்ட நிகழ்வுக்கான கேட்போர் வரிசையின் முடிவில் ஒரு கேட்போரைச் சேர்க்கிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">once(event, listener)</td>
+                        <td>ஒரு முறை மட்டும் தூண்டப்பட்ட பிறகு நீக்கப்படும் நிகழ்வுக்கான ஒரு முறை கேட்போரைச் சேர்க்கிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">prependListener(event, listener)</td>
+                        <td>குறிப்பிட்ட நிகழ்வுக்கான கேட்போர் வரிசையின் தொடக்கத்தில் ஒரு கேட்போரைச் சேர்க்கிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">prependOnceListener(event, listener)</td>
+                        <td>ஒரு முறை மட்டும் தூண்டப்பட்ட பிறகு நீக்கப்படும் நிகழ்வுக்கான கேட்போர் வரிசையின் தொடக்கத்தில் ஒரு முறை கேட்போரைச் சேர்க்கிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">removeAllListeners([event])</td>
+                        <td>அனைத்து கேட்போர்களையும் அல்லது குறிப்பிட்ட நிகழ்வின் கேட்போர்களையும் நீக்குகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">removeListener(event, listener)</td>
+                        <td>குறிப்பிட்ட நிகழ்வுக்கான கேட்போர் வரிசையிலிருந்து குறிப்பிட்ட கேட்போரை நீக்குகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">setMaxListeners(n)</td>
+                        <td>ஒரு EventEmitter நிகழ்வில் சேர்க்கக்கூடிய அதிகபட்ச கேட்போர்களின் எண்ணிக்கையை அமைக்கிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">rawListeners(event)</td>
+                        <td>குறிப்பிட்ட நிகழ்வுக்கான கேட்போர்களின் வரிசையின் நகலை வழங்குகிறது, எந்தவொரு மூடல்களையும் (once() மூலம் உருவாக்கப்பட்டவை போன்றவை) உள்ளடக்கியது.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- EventEmitter Properties -->
+        <section class="content-section" id="eventemitter-properties">
+            <h2>EventEmitter பண்புகள்</h2>
+            
+            <table class="methods-table">
+                <thead>
+                    <tr>
+                        <th>பண்பு</th>
+                        <th>விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="method-name">EventEmitter.defaultMaxListeners</td>
+                        <td>அனைத்து EventEmitter நிகழ்வுகளுக்கும் இருப்பு அதிகபட்ச கேட்போர்களின் எண்ணிக்கையை அமைக்கிறது. இருப்பு 10.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">emitter.errorMonitor</td>
+                        <td>'error' நிகழ்வுகளைக் கண்காணிக்க மட்டும் ஒரு கேட்போரை நிறுவ பயன்படுத்தக்கூடிய ஒரு நிலையான சின்னம்.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">emitter.captureRejections</td>
+                        <td>உண்மையாக இருக்கும்போது, வாக்குறுதி நிராகரிப்புகள் பிடிக்கப்பட்டு 'error' நிகழ்வுகளாக வெளியிடப்படுகின்றன.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Basic EventEmitter Usage -->
+        <section class="content-section" id="basic-usage">
+            <h2>அடிப்படை EventEmitter பயன்பாடு</h2>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// நிகழ்வு கேட்போரைப் பதிவு செய்யவும்
+myEmitter.on('event', () => {
+  console.log('ஒரு நிகழ்வு நடந்தது!');
+});
+
+// நிகழ்வை வெளியிடவும்
+myEmitter.emit('event');</code></pre>
+            </div>
+        </section>
+
+        <!-- Passing Arguments to Listeners -->
+        <section class="content-section" id="passing-arguments">
+            <h2>கேட்போர்களுக்கு வாதங்களை அனுப்புதல்</h2>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// பல வாதங்களுடன் நிகழ்வு
+myEmitter.on('status', (code, message) => {
+  console.log(`நிலை கிடைத்தது: ${code} ${message}`);
+});
+
+// வாதங்களுடன் வெளியிடவும்
+myEmitter.emit('status', 200, 'OK');</code></pre>
+            </div>
+        </section>
+
+        <!-- One-time Event Listeners -->
+        <section class="content-section" id="one-time-listeners">
+            <h2>ஒரு முறை நிகழ்வு கேட்போர்கள்</h2>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// ஒரு முறை கேட்போரைச் சேர்க்கவும்
+myEmitter.once('onetime', () => {
+  console.log('இது ஒரு முறை மட்டுமே அழைக்கப்படும்');
+});
+
+// முதல் வெளியீடு - கேட்போரைத் தூண்டும்
+myEmitter.emit('onetime');
+
+// இரண்டாவது வெளியீடு - கேட்போரைத் தூண்டாது
+myEmitter.emit('onetime');</code></pre>
+            </div>
+        </section>
+
+        <!-- Error Events -->
+        <section class="content-section" id="error-events">
+            <h2>பிழை நிகழ்வுகள்</h2>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// பிழை நிகழ்வு கையாளுதல்
+myEmitter.on('error', (err) => {
+  console.error('பிழை ஏற்பட்டது:', err.message);
+});
+
+// பிழை நிகழ்வை வெளியிடவும்
+myEmitter.emit('error', new Error('ஏதோ தவறு நடந்தது'));
+
+// 'error' கேட்போர் சேர்க்கப்படவில்லை என்றால், Node வீசி கிராஷ் ஆகும்
+// எப்போதும் பிழை கையாளுதலைச் சேர்க்கவும்!</code></pre>
+            </div>
+        </section>
+
+        <!-- Getting Event Names and Listeners -->
+        <section class="content-section" id="event-names-listeners">
+            <h2>நிகழ்வு பெயர்கள் மற்றும் கேட்போர்களைப் பெறுதல்</h2>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// சில கேட்போர்களைச் சேர்க்கவும்
+myEmitter.on('event1', () => console.log('நிகழ்வு 1'));
+myEmitter.on('event2', () => console.log('நிகழ்வு 2'));
+myEmitter.on('event2', () => console.log('நிகழ்வு 2 மீண்டும்'));
+
+// அனைத்து நிகழ்வு பெயர்களையும் பெறவும்
+console.log('நிகழ்வு பெயர்கள்:', myEmitter.eventNames());
+
+// குறிப்பிட்ட நிகழ்வுக்கான கேட்போர்களைப் பெறவும்
+console.log('event2 க்கான கேட்போர்கள்:', myEmitter.listeners('event2'));
+
+// கேட்போர்களை எண்ணுங்கள்
+console.log('event2 க்கான கேட்போர் எண்ணிக்கை:', myEmitter.listenerCount('event2'));</code></pre>
+            </div>
+        </section>
+
+        <!-- Removing Listeners -->
+        <section class="content-section" id="removing-listeners">
+            <h2>கேட்போர்களை நீக்குதல்</h2>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// கேட்போர் செயல்பாட்டை வரையறுக்கவும் (நீக்கத்திற்குத் தேவை)
+function listener1() {
+  console.log('கேட்போர் 1 இயக்கப்பட்டது');
+}
+
+function listener2() {
+  console.log('கேட்போர் 2 இயக்கப்பட்டது');
+}
+
+// கேட்போர்களைச் சேர்க்கவும்
+myEmitter.on('event', listener1);
+myEmitter.on('event', listener2);
+
+console.log('நீக்குவதற்கு முன் கேட்போர்கள்:', myEmitter.listenerCount('event'));
+
+// குறிப்பிட்ட கேட்போரை நீக்கவும்
+myEmitter.removeListener('event', listener1);
+// அல்லது மாற்றுப் பெயரைப் பயன்படுத்துதல்: myEmitter.off('event', listener1);
+
+console.log('நீக்கிய பின் கேட்போர்கள்:', myEmitter.listenerCount('event'));
+
+// ஒரு நிகழ்வுக்கான அனைத்து கேட்போர்களையும் நீக்கவும்
+myEmitter.removeAllListeners('event');
+
+console.log('அனைத்தையும் நீக்கிய பின் கேட்போர்கள்:', myEmitter.listenerCount('event'));</code></pre>
+            </div>
+        </section>
+
+        <!-- Setting Maximum Listeners -->
+        <section class="content-section" id="setting-max-listeners">
+            <h2>அதிகபட்ச கேட்போர்களை அமைத்தல்</h2>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+
+// அனைத்து EventEmitter நிகழ்வுகளுக்கும் இருப்பு அதிகபட்ச கேட்போர்களை அமைக்கவும்
+EventEmitter.defaultMaxListeners = 15;
+
+const myEmitter = new EventEmitter();
+
+// குறிப்பிட்ட நிகழ்வுக்கான அதிகபட்ச கேட்போர்களை அமைக்கவும்
+myEmitter.setMaxListeners(20);
+
+console.log('இருப்பு அதிகபட்ச கேட்போர்கள்:', EventEmitter.defaultMaxListeners);
+console.log('myEmitter அதிகபட்ச கேட்போர்கள்:', myEmitter.getMaxListeners());
+
+// maxListeners ஐ விட அதிகமாகச் சேர்ப்பது எச்சரிக்கையைத் தூண்டும்
+// எச்சரிக்கை சாத்தியமான நினைவக கசிவுகளை அடையாளம் காண உதவுகிறது</code></pre>
+            </div>
+        </section>
+
+        <!-- Order of Listeners -->
+        <section class="content-section" id="order-listeners">
+            <h2>கேட்போர்களின் வரிசை</h2>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// இருப்பு நடத்தை: கேட்போர்கள் சேர்க்கப்பட்ட வரிசையில் இயக்கப்படும்
+myEmitter.on('event', () => console.log('முதல் கேட்போர்'));
+myEmitter.on('event', () => console.log('இரண்டாவது கேட்போர்'));
+
+// முன்னோட்ட கேட்போரைச் சேர்க்கவும் (அது முதலில் இயக்கப்படும்)
+myEmitter.prependListener('event', () => console.log('முன்னோட்ட கேட்போர்'));
+
+// ஒரு முறை முன்னோட்ட கேட்போர்
+myEmitter.prependOnceListener('event', () => console.log('முன்னோட்ட ஒரு முறை கேட்போர்'));
+
+// நிகழ்வை வெளியிடவும்
+myEmitter.emit('event');
+
+// வெளியீடு இருக்கும்:
+// முன்னோட்ட ஒரு முறை கேட்போர்
+// முன்னோட்ட கேட்போர்
+// முதல் கேட்போர்
+// இரண்டாவது கேட்போர்</code></pre>
+            </div>
+        </section>
+
+        <!-- Extending EventEmitter -->
+        <section class="content-section" id="extending-eventemitter">
+            <h2>EventEmitter ஐ விரிவுபடுத்துதல்</h2>
+            
+            <p>Node.js இல் ஒரு பொதுவான முறை EventEmitter ஐ விரிவுபடுத்தும் ஒரு வகுப்பை உருவாக்குவதாகும், தனிப்பட்ட செயல்பாட்டைச் சேர்ப்பது:</p>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+
+// EventEmitter ஐ விரிவுபடுத்தும் தனிப்பட்ட வகுப்பு
+class MyApp extends EventEmitter {
+  constructor() {
+    super();
+    this.name = 'MyApp';
+  }
+
+  process(data) {
+    // சில செயலாக்கங்களைச் செய்யுங்கள்
+    console.log(`தரவைச் செயலாக்குகிறது: ${data}`);
+    
+    // செயலாக்க முடிவுகளின் அடிப்படையில் நிகழ்வுகளை வெளியிடவும்
+    if (data.length > 10) {
+      this.emit('large-data', data);
+    } else {
+      this.emit('small-data', data);
+    }
+    
+    // முடிவு நிகழ்வை வெளியிடவும்
+    this.emit('processed', data);
+  }
+}
+
+// ஒரு நிகழ்வை உருவாக்கவும்
+const app = new MyApp();
+
+// நிகழ்வு கேட்போர்களைப் பதிவு செய்யவும்
+app.on('large-data', (data) => {
+  console.log(`பெரிய தரவு கண்டறியப்பட்டது: ${data.length} பைட்டுகள்`);
+});
+
+app.on('small-data', (data) => {
+  console.log(`சிறிய தரவு கண்டறியப்பட்டது: ${data.length} பைட்டுகள்`);
+});
+
+app.on('processed', (data) => {
+  console.log('செயலாக்கம் முடிந்தது');
+});
+
+// பயன்பாட்டைப் பயன்படுத்தவும்
+app.process('Hello');
+app.process('Hello, this is a longer string of data');</code></pre>
+            </div>
+        </section>
+
+        <!-- Asynchronous vs. Synchronous -->
+        <section class="content-section" id="async-vs-sync">
+            <h2>அசிங்க்ரோனஸ் vs. ஒத்திசைவு</h2>
+            
+            <p>EventEmitter அனைத்து கேட்போர்களையும் அவை பதிவுசெய்யப்பட்ட வரிசையில் ஒத்திசைவாக அழைக்கிறது. எதிர்பார்க்கப்படும் இயக்க வரிசையை பராமரிப்பதற்கு முக்கியமானது:</p>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// கேட்போரைப் பதிவு செய்யவும்
+myEmitter.on('event', () => {
+  console.log('கேட்போர் இயக்கப்பட்டது');
+});
+
+// நிகழ்வை வெளியிடவும்
+console.log('வெளியீட்டிற்கு முன்');
+myEmitter.emit('event');
+console.log('வெளியீட்டிற்குப் பிறகு');
+
+// வெளியீடு:
+// வெளியீட்டிற்கு முன்
+// கேட்போர் இயக்கப்பட்டது
+// வெளியீட்டிற்குப் பிறகு</code></pre>
+            </div>
+            
+            <p>கேட்போர்களை அசிங்க்ரோனஸாக இயக்க, நீங்கள் setImmediate() அல்லது process.nextTick() பயன்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// setImmediate பயன்படுத்தி அசிங்க்ரோனஸ் கேட்போரைப் பதிவு செய்யவும்
+myEmitter.on('async-event', () => {
+  setImmediate(() => {
+    console.log('அசிங்க்ரோனஸ் கேட்போர் இயக்கப்பட்டது');
+  });
+});
+
+console.log('வெளியீட்டிற்கு முன்');
+myEmitter.emit('async-event');
+console.log('வெளியீட்டிற்குப் பிறகு');
+
+// வெளியீடு:
+// வெளியீட்டிற்கு முன்
+// வெளியீட்டிற்குப் பிறகு
+// அசிங்க்ரோனஸ் கேட்போர் இயக்கப்பட்டது</code></pre>
+            </div>
+        </section>
+
+        <!-- Promise Integration -->
+        <section class="content-section" id="promise-integration">
+            <h2>வாக்குறுதி ஒருங்கிணைப்பு</h2>
+            
+            <p>நவீன Node.js பதிப்புகளில் EventEmitter வாக்குறுதிகளைக் கையாளலாம் மற்றும் நிராகரிப்புகளைப் பிடிக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+
+// நிராகரிப்புகளைப் பிடிக்க இயலுமைப்படுத்தவும் (Node.js 12.16.0+)
+const myEmitter = new EventEmitter({ captureRejections: true });
+
+// அல்லது உலகளவில் அமைக்கவும்
+// EventEmitter.captureRejections = true;
+
+// வாக்குறுதியை வழங்கும் நிகழ்வு கையாளுதல்
+myEmitter.on('async-operation', async () => {
+  // இந்த நிராகரிக்கப்பட்ட வாக்குறுதி பிடிக்கப்பட்டு 'error' நிகழ்வாக மாற்றப்படும்
+  throw new Error('அசிங்க்ரோனஸ் செயல்பாடு தோல்வியடைந்தது');
+});
+
+// பிழை கையாளுதல்
+myEmitter.on('error', (err) => {
+  console.error('பிடிக்கப்பட்ட பிழை:', err.message);
+});
+
+// நிகழ்வைத் தூண்டவும்
+myEmitter.emit('async-operation');</code></pre>
+            </div>
+        </section>
+
+        <!-- Real-World Example: HTTP Server -->
+        <section class="content-section" id="http-server-example">
+            <h2>நிஜ உலக எடுத்துக்காட்டு: HTTP சேவையகம்</h2>
+            
+            <p>EventEmitter பல Node.js மைய தொகுதிகளை இயக்குகிறது. ஒரு HTTP சேவையகம் நிகழ்வுகளை எவ்வாறு பயன்படுத்துகிறது என்பது இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// HTTP சேவையகம் ஒரு EventEmitter ஆகும்
+const server = http.createServer();
+
+// 'request' நிகழ்வுகளைக் கேளுங்கள்
+server.on('request', (request, response) => {
+  console.log(`பெறப்பட்டது ${request.method} கோரிக்கை ${request.url}க்கு`);
+  response.writeHead(200, { 'Content-Type': 'text/plain' });
+  response.end('Hello World\n');
+});
+
+// 'connection' நிகழ்வுகளைக் கேளுங்கள்
+server.on('connection', (socket) => {
+  console.log('புதிய வாடிக்கையாளர் இணைப்பு', socket.remoteAddress);
+});
+
+// 'close' நிகழ்வைக் கேளுங்கள்
+server.on('close', () => {
+  console.log('சேவையகம் மூடப்பட்டது');
+});
+
+// போர்ட் 8080 இல் கேளுங்கள்
+server.listen(8080, () => {
+  console.log('சேவையகம் போர்ட் 8080 இல் கேட்கிறது');
+});
+
+// பின்னர், சேவையகத்தை மூடலாம்
+// server.close();</code></pre>
+            </div>
+        </section>
+
+        <!-- Common Patterns and Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>பொதுவான முறைகள் மற்றும் சிறந்த நடைமுறைகள்</h2>
+            
+            <h3>1. எப்போதும் 'error' நிகழ்வுகளைக் கேளுங்கள்</h3>
+            <p>ஒரு EventEmitter 'error' நிகழ்வை வெளியிட்டு கேட்போர்கள் இல்லை என்றால், Node.js பிழையை வீசி செயல்முறையை கிராஷ் செய்யும். எப்போதும் பிழை கையாளுதலைச் சேர்க்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+// எப்போதும் பிழை கையாளுதலைச் சேர்க்கவும்
+myEmitter.on('error', (err) => {
+  console.error('பிழை ஏற்பட்டது:', err);
+  // பிழையை பொருத்தமாக கையாளவும்
+});</code></pre>
+            </div>
+            
+            <h3>2. நினைவக கசிவுகளைத் தடுக்க கேட்போர்களை சுத்தம் செய்யுங்கள்</h3>
+            
+            <div class="code-example">
+                <pre><code>const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+
+function setupHandler() {
+  const handler = () => console.log('நிகழ்வு கையாளப்பட்டது');
+  
+  // கையாளுதலைச் சேர்க்கவும்
+  myEmitter.on('some-event', handler);
+  
+  // ஒரு சுத்தம் செயல்பாட்டை வழங்கவும்
+  return function cleanup() {
+    myEmitter.removeListener('some-event', handler);
+  };
+}
+
+// ஒரு கையாளுதலை அமைக்கவும்
+const cleanup = setupHandler();
+
+// பின்னர், தேவையில்லாதபோது
+cleanup();</code></pre>
+            </div>
+            
+            <h3>3> நீக்கக்கூடிய கேட்போர்களுக்குப் பெயரிடப்பட்ட செயல்பாடுகளைப் பயன்படுத்தவும்</h3>
+            
+            <div class="code-example">
+                <pre><code>// மோசமானது - இந்த கேட்போரை பின்னர் நீக்க முடியாது
+emitter.on('event', () => console.log('அநாமதேய செயல்பாடு'));
+
+// நல்லது - குறிப்பு மூலம் நீக்கப்படலாம்
+function namedHandler() {
+  console.log('பெயரிடப்பட்ட செயல்பாடு');
+}
+
+emitter.on('event', namedHandler);
+
+// பின்னர்
+emitter.removeListener('event', namedHandler);</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> EventEmitter இல் ஒரு முறை மட்டும் இயங்கும் கேட்போரைச் சேர்க்க எந்த முறை பயன்படுத்தப்படுகிறது? தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">on() முறை</div>
+                            <div class="option-feedback incorrect">✗ தவறு! on() முறை பல முறை இயங்கும் கேட்போர்களைச் சேர்க்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">once() முறை</div>
+                            <div class="option-feedback correct">✓ சரி! once() முறை ஒரு முறை மட்டும் இயங்கும் கேட்போர்களைச் சேர்க்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">addListener() முறை</div>
+                            <div class="option-feedback incorrect">✗ தவறு! addListener() முறை on()க்கு மாற்றுப் பெயர் மற்றும் பல முறை இயங்கும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">prependListener() முறை</div>
+                            <div class="option-feedback incorrect">✗ தவறு! prependListener() முறை கேட்போரை தொடக்கத்தில் சேர்க்கிறது ஆனால் பல முறை இயங்கும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Built-in Modules.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Worker Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#eventemitter-object">EventEmitter பொருள்</a></li>
+                    <li><a href="#eventemitter-methods">EventEmitter முறைகள்</a></li>
+                    <li><a href="#basic-usage">அடிப்படை பயன்பாடு</a></li>
+                    <li><a href="#extending-eventemitter">விரிவுபடுத்துதல்</a></li>
+                    <li><a href="#best-practices">சிறந்த நடைமுறைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

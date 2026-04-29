@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML DOM Reference - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Element properties table styles */
+        .element-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .element-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        
+        .element-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        .element-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+            line-height: 1.4;
+        }
+        
+        .element-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .element-table tr:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .deprecated {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .property-name {
+            color: var(--git-color);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 0.8rem 1rem;
+            font-weight: 600;
+            font-size: 1rem;
+            border-left: 4px solid var(--git-color);
+            margin: 1.5rem 0 0.5rem 0;
+        }
+        
+        .element-demo {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .demo-output {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #ddd;
+            min-height: 60px;
+        }
+        
+        .demo-btn {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .demo-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .demo-element {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .demo-element:hover {
+            transform: scale(1.02);
+            border-color: var(--git-color);
+        }
+        
+        .demo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML%20DOM%20Document.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20Events.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML DOM Reference</h2>
+            <p>HTML DOM உறுப்பு பண்புகள் மற்றும் முறைகளின் முழு குறிப்பு</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML DOM குறிப்பு</h2>
+            
+            <p>உறுப்பு பண்புகள் மற்றும் முறைகள்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📅</span> புதுப்பிக்கப்பட்டது:</h4>
+                <p>ஜனவரி 2026</p>
+            </div>
+        </section>
+
+        <!-- Element Properties and Methods Table -->
+        <section class="content-section" id="element-properties">
+            <h2>உறுப்பு பண்புகள் மற்றும் முறைகள்</h2>
+            
+            <div class="element-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பெயர்</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="property-name">accessKey</td>
+                            <td>உறுப்பின் accesskey பண்புக்கூறை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">addEventListener()</td>
+                            <td>உறுப்பில் ஒரு நிகழ்வு கையாளுநரை இணைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">after()</td>
+                            <td>ஒரு உறுப்புக்குப் பிறகு ஒன்று அல்லது அதற்கு மேற்பட்ட முனைகள் (உறுப்புகள்) அல்லது சரங்களைச் செருகுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">append()</td>
+                            <td>ஒரு உறுப்பின் கடைசி குழந்தைக்குப் பிறகு ஒன்று அல்லது பல முனைகள் (உறுப்பு) அல்லது சரங்களைச் சேர்க்கிறது (இணைக்கிறது)</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">appendChild()</td>
+                            <td>ஒரு உறுப்பின் கடைசி குழந்தைக்குப் பிறகு ஒரு புதிய குழந்தை முனையைச் சேர்க்கிறது (இணைக்கிறது)</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">attributes</td>
+                            <td>உறுப்பின் பண்புக்கூறுகளின் NamedNodeMap ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">before()</td>
+                            <td>ஒரு உறுப்புக்கு முன் ஒன்று அல்லது அதற்கு மேற்பட்ட முனைகள் (உறுப்புகள்) அல்லது சரங்களைச் செருகுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">blur()</td>
+                            <td>உறுப்பிலிருந்து கவனத்தை அகற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">childElementCount</td>
+                            <td>உறுப்பின் குழந்தை உறுப்புகளின் எண்ணிக்கையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">childNodes</td>
+                            <td>உறுப்பின் குழந்தை முனைகளின் NodeList ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">children</td>
+                            <td>உறுப்பின் குழந்தை உறுப்புகளின் HTMLCollection ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">classList</td>
+                            <td>உறுப்பின் வகுப்புப் பெயர்(களை) திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">className</td>
+                            <td>உறுப்பின் class பண்புக்கூறின் மதிப்பை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">click()</td>
+                            <td>உறுப்பில் சுட்டி-கிளிக் செயலை உருவகப்படுத்துகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">clientHeight</td>
+                            <td>உறுப்பின் உயரத்தைத் திருப்பித் தருகிறது, padding உட்பட</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">clientLeft</td>
+                            <td>உறுப்பின் இடது எல்லையின் அகலத்தைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">clientTop</td>
+                            <td>உறுப்பின் மேல் எல்லையின் அகலத்தைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">clientWidth</td>
+                            <td>உறுப்பின் அகலத்தைத் திருப்பித் தருகிறது, padding உட்பட</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">cloneNode()</td>
+                            <td>உறுப்பை நகலெடுக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">closest()</td>
+                            <td>CSS தேர்ந்தெடுப்பாளருடன் பொருந்தும் அருகிலுள்ள உறுப்பைக் கண்டறிய DOM மரத்தைத் தேடுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">compareDocumentPosition()</td>
+                            <td>இரு உறுப்புகளின் ஆவண நிலையை ஒப்பிடுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">contains()</td>
+                            <td>ஒரு முனை மற்றொரு முனையின் வழித்தோன்றலாக இருந்தால் true ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">contentEditable</td>
+                            <td>உறுப்பின் உள்ளடக்கம் திருத்தக்கூடியதா இல்லையா என்பதை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">dir</td>
+                            <td>உறுப்பின் dir பண்புக்கூறின் மதிப்பை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">firstChild</td>
+                            <td>உறுப்பின் முதல் குழந்தை முனையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">firstElementChild</td>
+                            <td>உறுப்பின் முதல் குழந்தை உறுப்பைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">focus()</td>
+                            <td>உறுப்புக்கு கவனத்தைக் கொடுக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">getAttribute()</td>
+                            <td>உறுப்பின் பண்புக்கூறின் மதிப்பைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">getAttributeNode()</td>
+                            <td>பண்புக்கூறு முனையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">getBoundingClientRect()</td>
+                            <td>உறுப்பின் அளவு மற்றும் viewport உடன் தொடர்புடைய அதன் நிலையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">getElementsByClassName()</td>
+                            <td>கொடுக்கப்பட்ட வகுப்புப் பெயருடன் குழந்தை உறுப்புகளின் தொகுப்பைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">getElementsByTagName()</td>
+                            <td>கொடுக்கப்பட்ட டேக் பெயருடன் குழந்தை உறுப்புகளின் தொகுப்பைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">hasAttribute()</td>
+                            <td>உறுப்புக்கு கொடுக்கப்பட்ட பண்புக்கூறு இருந்தால் true ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">hasAttributes()</td>
+                            <td>உறுப்புக்கு எந்த பண்புக்கூறுகள் இருந்தாலும் true ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">hasChildNodes()</td>
+                            <td>உறுப்புக்கு எந்த குழந்தை முனைகள் இருந்தாலும் true ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">id</td>
+                            <td>உறுப்பின் id பண்புக்கூறின் மதிப்பை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">innerHTML</td>
+                            <td>உறுப்பின் உள்ளடக்கத்தை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">innerText</td>
+                            <td>முனையின் உரை உள்ளடக்கத்தையும் அதன் வழித்தோன்றல்களையும் அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">insertAdjacentElement()</td>
+                            <td>உறுப்புடன் தொடர்புடைய நிலையில் புதிய HTML உறுப்பைச் செருகுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">insertAdjacentHTML()</td>
+                            <td>உறுப்புடன் தொடர்புடைய நிலையில் HTML வடிவமைக்கப்பட்ட உரையைச் செருகுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">insertAdjacentText()</td>
+                            <td>உறுப்புடன் தொடர்புடைய நிலையில் உரையைச் செருகுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">insertBefore()</td>
+                            <td>இருக்கும் குழந்தை முனைக்கு முன் புதிய குழந்தை முனையைச் செருகுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">isContentEditable</td>
+                            <td>உறுப்பின் உள்ளடக்கம் திருத்தக்கூடியதாக இருந்தால் true ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">isDefaultNamespace()</td>
+                            <td>கொடுக்கப்பட்ட namespaceURI இயல்புநிலையாக இருந்தால் true ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">isEqualNode()</td>
+                            <td>இரு உறுப்புகள் சமமாக இருக்கிறதா எனச் சரிபார்க்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">isSameNode()</td>
+                            <td>இரு உறுப்புகள் ஒரே முனையா எனச் சரிபார்க்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name deprecated">isSupported()</td>
+                            <td class="deprecated">பழையது (DEPRECATED)</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">lang</td>
+                            <td>உறுப்பின் lang பண்புக்கூறின் மதிப்பை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">lastChild</td>
+                            <td>உறுப்பின் கடைசி குழந்தை முனையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">lastElementChild</td>
+                            <td>உறுப்பின் கடைசி குழந்தை உறுப்பைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">matches()</td>
+                            <td>உறுப்பு கொடுக்கப்பட்ட CSS தேர்ந்தெடுப்பாளரால் பொருத்தப்பட்டால் true ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">namespaceURI</td>
+                            <td>உறுப்பின் namespace URI ஐத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">nextSibling</td>
+                            <td>அதே முனை மர நிலையில் அடுத்த முனையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">nextElementSibling</td>
+                            <td>அதே முனை மர நிலையில் அடுத்த உறுப்பைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">nodeName</td>
+                            <td>முனையின் பெயரைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">nodeType</td>
+                            <td>முனையின் முனை வகையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">nodeValue</td>
+                            <td>முனையின் மதிப்பை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">normalize()</td>
+                            <td>உறுப்பில் அருகிலுள்ள உரை முனைகளை இணைத்து, வெற்று உரை முனைகளை அகற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">offsetHeight</td>
+                            <td>உறுப்பின் உயரத்தைத் திருப்பித் தருகிறது, padding, border மற்றும் scrollbar உட்பட</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">offsetWidth</td>
+                            <td>உறுப்பின் அகலத்தைத் திருப்பித் தருகிறது, padding, border மற்றும் scrollbar உட்பட</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">offsetLeft</td>
+                            <td>உறுப்பின் கிடைமட்ட ஆஃப்செட் நிலையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">offsetParent</td>
+                            <td>உறுப்பின் ஆஃப்செட் கொள்கலனைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">offsetTop</td>
+                            <td>உறுப்பின் செங்குத்து ஆஃப்செட் நிலையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">outerHTML</td>
+                            <td>உறுப்பின் உள்ளடக்கத்தை அமைக்கிறது அல்லது திருப்பித் தருகிறது (தொடக்க டேக் மற்றும் முடிவு டேக் உட்பட)</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">outerText</td>
+                            <td>முனையின் வெளிப்புற உரை உள்ளடக்கத்தையும் அதன் வழித்தோன்றல்களையும் அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">ownerDocument</td>
+                            <td>உறுப்புக்கான ரூட் உறுப்பை (ஆவண பொருள்) திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">parentNode</td>
+                            <td>உறுப்பின் பெற்றோர் முனையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">parentElement</td>
+                            <td>உறுப்பின் பெற்றோர் உறுப்பு முனையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">previousSibling</td>
+                            <td>அதே முனை மர நிலையில் முந்தைய முனையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">previousElementSibling</td>
+                            <td>அதே முனை மர நிலையில் முந்தைய உறுப்பைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">querySelector()</td>
+                            <td>CSS தேர்ந்தெடுப்பாளர்(களுடன்) பொருந்தும் முதல் குழந்தை உறுப்பைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">querySelectorAll()</td>
+                            <td>CSS தேர்ந்தெடுப்பாளர்(களுடன்) பொருந்தும் அனைத்து குழந்தை உறுப்புகளையும் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">remove()</td>
+                            <td>DOM இலிருந்து ஒரு உறுப்பை அகற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">removeAttribute()</td>
+                            <td>உறுப்பிலிருந்து பண்புக்கூறை அகற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">removeAttributeNode()</td>
+                            <td>பண்புக்கூறு முனையை அகற்றுகிறது, மற்றும் அகற்றப்பட்ட முனையைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">removeChild()</td>
+                            <td>உறுப்பிலிருந்து குழந்தை முனையை அகற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">removeEventListener()</td>
+                            <td>addEventListener() முறையுடன் இணைக்கப்பட்ட நிகழ்வு கையாளுநரை அகற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">replaceChild()</td>
+                            <td>உறுப்பில் குழந்தை முனையை மாற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">scrollHeight</td>
+                            <td>உறுப்பின் முழு உயரத்தைத் திருப்பித் தருகிறது, padding உட்பட</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">scrollIntoView()</td>
+                            <td>உலாவி சாளரத்தின் காட்சிப்பகுதிக்கு உறுப்பை ஸ்க்ரோல் செய்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">scrollLeft</td>
+                            <td>உறுப்பின் உள்ளடக்கம் கிடைமட்டமாக ஸ்க்ரோல் செய்யப்பட்ட பிக்சல்களின் எண்ணிக்கையை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">scrollTop</td>
+                            <td>உறுப்பின் உள்ளடக்கம் செங்குத்தாக ஸ்க்ரோல் செய்யப்பட்ட பிக்சல்களின் எண்ணிக்கையை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">scrollWidth</td>
+                            <td>உறுப்பின் முழு அகலத்தைத் திருப்பித் தருகிறது, padding உட்பட</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">setAttribute()</td>
+                            <td>பண்புக்கூறின் மதிப்பை அமைக்கிறது அல்லது மாற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">setAttributeNode()</td>
+                            <td>பண்புக்கூறு முனையை அமைக்கிறது அல்லது மாற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">style</td>
+                            <td>உறுப்பின் style பண்புக்கூறின் மதிப்பை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">tabIndex</td>
+                            <td>உறுப்பின் tabindex பண்புக்கூறின் மதிப்பை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">tagName</td>
+                            <td>உறுப்பின் டேக் பெயரைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">textContent</td>
+                            <td>முனையின் உரை உள்ளடக்கத்தையும் அதன் வழித்தோன்றல்களையும் அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">title</td>
+                            <td>உறுப்பின் title பண்புக்கூறின் மதிப்பை அமைக்கிறது அல்லது திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">toString()</td>
+                            <td>உறுப்பை சரமாக மாற்றுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Interactive Element Demo -->
+        <section class="content-section" id="element-demo">
+            <h2>ஊடாடும் உறுப்பு ஆர்ப்பாட்டம்</h2>
+            
+            <div class="element-demo">
+                <h4>ஊடாடும் உறுப்பு:</h4>
+                
+                <div id="demoElement" class="demo-element">
+                    <i class="fas fa-code fa-2x"></i>
+                    <h3 id="demoTitle">DOM உறுப்பு ஆர்ப்பாட்டம்</h3>
+                    <p id="demoText">இந்த உறுப்பின் பண்புகள் மற்றும் முறைகளைச் சோதிக்கவும்</p>
+                </div>
+                
+                <h4>உறுப்பு பண்புகளைச் சோதிக்கவும்:</h4>
+                
+                <div class="demo-controls">
+                    <button class="demo-btn" onclick="showElementProperties()">
+                        <i class="fas fa-info-circle"></i> பண்புகளைக் காண்பி
+                    </button>
+                    <button class="demo-btn" onclick="changeElementContent()">
+                        <i class="fas fa-edit"></i> உள்ளடக்கத்தை மாற்று
+                    </button>
+                    <button class="demo-btn" onclick="toggleElementClass()">
+                        <i class="fas fa-tag"></i> வகுப்பை மாற்று
+                    </button>
+                    <button class="demo-btn" onclick="simulateClick()">
+                        <i class="fas fa-mouse-pointer"></i> கிளிக் செய்யுங்கள்
+                    </button>
+                    <button class="demo-btn" onclick="getElementDimensions()">
+                        <i class="fas fa-ruler"></i> பரிமாணங்களைப் பெறு
+                    </button>
+                </div>
+                
+                <div id="elementOutput" class="demo-output">
+                    மேலே உள்ள பொத்தான்களைக் கிளிக் செய்வதன் மூலம் உறுப்பு பண்புகள் மற்றும் முறைகளைச் சோதிக்கவும்
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>ஒவ்வொரு HTML உறுப்பும் ஒரு பொருளாகும், மேலும் இந்த அட்டவணையில் பட்டியலிடப்பட்டுள்ள அனைத்து பண்புகள் மற்றும் முறைகளையும் கொண்டுள்ளது. இந்த பொருள்கள் நீங்கள் பயனருக்கு வலைப்பக்கத்தை ஊடாடும் மற்றும் இயங்கும் வகையில் மாற்ற அனுமதிக்கின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Element Categories -->
+        <section class="content-section" id="element-categories">
+            <h2>உறுப்புப் பகுப்புகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>தேடல் மற்றும் தேர்வு</h4>
+                    </div>
+                    <p class="property-name">querySelector()<br>closest()<br>matches()<br>getElementsByClassName()</p>
+                    <p>உறுப்புகளைக் கண்டறிந்து தேர்ந்தெடுப்பதற்கான முறைகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code-branch"></i>
+                        <h4>DOM மரத்தை கையாளுதல்</h4>
+                    </div>
+                    <p class="property-name">appendChild()<br>insertBefore()<br>removeChild()<br>replaceChild()</p>
+                    <p>DOM கட்டமைப்பில் உறுப்புகளைச் சேர்க்க, அகற்ற அல்லது மாற்ற முறைகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cube"></i>
+                        <h4>உறுப்பு பண்புக்கூறுகள்</h4>
+                    </div>
+                    <p class="property-name">getAttribute()<br>setAttribute()<br>hasAttribute()<br>removeAttribute()</p>
+                    <p>உறுப்புப் பண்புக்கூறுகளைக் கையாளுவதற்கான முறைகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-ruler-combined"></i>
+                        <h4>அளவு மற்றும் நிலை</h4>
+                    </div>
+                    <p class="property-name">clientWidth<br>offsetHeight<br>scrollTop<br>getBoundingClientRect()</p>
+                    <p>உறுப்பு பரிமாணங்கள் மற்றும் நிலைகளைப் பெறுவதற்கான பண்புகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sitemap"></i>
+                        <h4>குடும்ப உறவுகள்</h4>
+                    </div>
+                    <p class="property-name">parentNode<br>children<br>firstChild<br>nextSibling</p>
+                    <p>DOM மரத்தில் உறுப்புகளுக்கிடையிலான உறவுகளைப் பெறுவதற்கான பண்புகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-headphones"></i>
+                        <h4>நிகழ்வு கையாளுதல்</h4>
+                    </div>
+                    <p class="property-name">addEventListener()<br>removeEventListener()<br>click()<br>focus()</p>
+                    <p>நிகழ்வுகளைக் கையாளுவதற்கான முறைகள்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Most Important Methods -->
+        <section class="content-section" id="important-methods">
+            <h2>மிக முக்கியமான முறைகள்</h2>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⭐</span> முக்கியமான குறிப்பு:</h4>
+                <p>பின்வரும் முறைகள் நவீன வலை அபிவிருத்தியில் மிகவும் அடிக்கடி பயன்படுத்தப்படுகின்றன:</p>
+                
+                <ul>
+                    <li><span class="property-name">querySelector() / querySelectorAll()</span> - CSS தேர்ந்தெடுப்பாளர்களைப் பயன்படுத்தி உறுப்புகளைத் தேர்ந்தெடுக்கவும்</li>
+                    <li><span class="property-name">addEventListener() / removeEventListener()</span> - நிகழ்வு கையாளுதலுக்கு</li>
+                    <li><span class="property-name">classList</span> வணிகம் - வகுப்புகளைக் கையாளுவதற்கு (add, remove, toggle, contains)</li>
+                    <li><span class="property-name">setAttribute() / getAttribute()</span> - பண்புக்கூறுகளைக் கையாளுவதற்கு</li>
+                    <li><span class="property-name">innerHTML / textContent</span> - உறுப்பு உள்ளடக்கத்தை மாற்றுவதற்கு</li>
+                </ul>
+                
+                <p>இந்த முறைகள் பரிந்துரைக்கப்பட்டவை மற்றும் அனைத்து நவீன உலாவிகளாலும் ஆதரிக்கப்படுகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Exercise - ONLY ONE EXERCISE -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வருவனவற்றில் எது உறுப்பின் உரை உள்ளடக்கத்தைப் பெறுவதற்கான சரியான பண்பு?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">element.innerHTML</div>
+                            <div class="option-feedback incorrect">✗ innerHTML HTML உள்ளடக்கத்தைத் திருப்பித் தருகிறது, ஆனால் உரை மட்டும் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">element.outerText</div>
+                            <div class="option-feedback incorrect">✗ outerText என்பது வெளிப்புற உரை உள்ளடக்கத்தைத் திருப்பித் தருகிறது, ஆனால் இது நிலையானது அல்ல மற்றும் அனைத்து உலாவிகளிலும் ஆதரிக்கப்படுவதில்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">element.textContent</div>
+                            <div class="option-feedback correct">✓ சரி! textContent என்பது உறுப்பின் முழு உரை உள்ளடக்கத்தையும் அதன் வழித்தோன்றல்களையும் திருப்பித் தரும் சட்டபூர்வமான மற்றும் நம்பகமான பண்பாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">element.nodeValue</div>
+                            <div class="option-feedback incorrect">✗ nodeValue உரை முனைகளுக்கு மட்டுமே செயல்படுகிறது, உறுப்பு முனைகளுக்கு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML%20DOM%20Document.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20Events.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">HTML DOM குறிப்பு</a></li>
+                    <li><a href="#element-properties">உறுப்பு பண்புகள்</a></li>
+                    <li><a href="#element-demo">ஊடாடும் ஆர்ப்பாட்டம்</a></li>
+                    <li><a href="#element-categories">உறுப்புப் பகுப்புகள்</a></li>
+                    <li><a href="#important-methods">முக்கியமான முறைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Element demo functions
+        let classToggled = false;
+        let contentChanged = false;
+
+        function showElementProperties() {
+            const elem = document.getElementById('demoElement');
+            const output = document.getElementById('elementOutput');
+            const properties = `
+            🏷️ டேக் பெயர்: ${elem.tagName}
+            🔢 உறுப்பு ID: ${elem.id || 'எதுவும் இல்லை'}
+            🎨 வகுப்புகள்: ${elem.className}
+            👶 குழந்தை உறுப்புகள்: ${elem.children.length}
+            📏 உயரம்: ${elem.clientHeight}px
+            📐 அகலம்: ${elem.clientWidth}px
+            🔍 உறுப்பு முனையாக உள்ளதா?: ${elem.nodeType === 1 ? 'ஆம் (உறுப்பு முனை)' : 'இல்லை'}
+            `;
+            output.innerHTML = properties.replace(/\n/g, '<br>');
+        }
+
+        function changeElementContent() {
+            const title = document.getElementById('demoTitle');
+            const text = document.getElementById('demoText');
+            const output = document.getElementById('elementOutput');
+            
+            if (!contentChanged) {
+                title.textContent = 'உள்ளடக்கம் மாற்றப்பட்டது!';
+                text.textContent = 'இப்போது உறுப்பின் உள்ளடக்கம் மாற்றப்பட்டுள்ளது. மீண்டும் மாற்ற பொத்தானைக் கிளிக் செய்க.';
+                output.innerHTML = '✅ உள்ளடக்கம் வெற்றிகரமாக மாற்றப்பட்டது!';
+                contentChanged = true;
+            } else {
+                title.textContent = 'DOM உறுப்பு ஆர்ப்பாட்டம்';
+                text.textContent = 'இந்த உறுப்பின் பண்புகள் மற்றும் முறைகளைச் சோதிக்கவும்';
+                output.innerHTML = '🔄 உள்ளடக்கம் அசல் நிலைக்கு மீட்டமைக்கப்பட்டது!';
+                contentChanged = false;
+            }
+        }
+
+        function toggleElementClass() {
+            const elem = document.getElementById('demoElement');
+            const output = document.getElementById('elementOutput');
+            
+            if (!classToggled) {
+                elem.classList.add('highlighted');
+                elem.style.background = 'linear-gradient(135deg, var(--git-color), #e74c3c)';
+                elem.style.transform = 'scale(1.05)';
+                elem.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
+                output.innerHTML = '✨ வகுப்பு சேர்க்கப்பட்டது! உறுப்பு இப்போது முன்னிலைப்படுத்தப்பட்டுள்ளது.';
+                classToggled = true;
+            } else {
+                elem.classList.remove('highlighted');
+                elem.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                elem.style.transform = 'scale(1)';
+                elem.style.boxShadow = 'none';
+                output.innerHTML = '♻️ வகுப்பு அகற்றப்பட்டது! உறுப்பு அசல் நிலைக்கு மீட்டமைக்கப்பட்டது.';
+                classToggled = false;
+            }
+        }
+
+        function simulateClick() {
+            const elem = document.getElementById('demoElement');
+            const output = document.getElementById('elementOutput');
+            
+            // Simulate a visual click effect
+            elem.style.transform = 'scale(0.95)';
+            output.innerHTML = '🖱️ கிளிக் செய்யப்பட்டது! உறுப்பு கிளிக் செய்யப்பட்டதை உருவகப்படுத்துகிறது.';
+            
+            setTimeout(() => {
+                elem.style.transform = classToggled ? 'scale(1.05)' : 'scale(1)';
+            }, 200);
+        }
+
+        function getElementDimensions() {
+            const elem = document.getElementById('demoElement');
+            const output = document.getElementById('elementOutput');
+            const rect = elem.getBoundingClientRect();
+            
+            const dimensions = `
+            📏 clientWidth: ${elem.clientWidth}px
+            📐 clientHeight: ${elem.clientHeight}px
+            📏 offsetWidth: ${elem.offsetWidth}px
+            📐 offsetHeight: ${elem.offsetHeight}px
+            📍 getBoundingClientRect():
+              ↕ உயரம்: ${Math.round(rect.height)}px
+              ↔ அகலம்: ${Math.round(rect.width)}px
+              ⬅ இடது: ${Math.round(rect.left)}px
+              ⬆ மேல்: ${Math.round(rect.top)}px
+            `;
+            output.innerHTML = dimensions.replace(/\n/g, '<br>');
+        }
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

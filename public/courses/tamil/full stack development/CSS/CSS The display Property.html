@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS The display Property - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Display examples */
+        .block-demo {
+            background-color: #e74c3c;
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .inline-demo {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            margin: 0 5px;
+            border-radius: 3px;
+            display: inline;
+        }
+        
+        .demo-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 2px solid #e9ecef;
+        }
+        
+        /* Image examples */
+        .image-container {
+            display: flex;
+            gap: 20px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .image-box {
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .image-box img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+        }
+        
+        .image-box h4 {
+            margin: 0;
+            color: var(--git-color);
+        }
+        
+        /* JavaScript panel example */
+        .panel {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .panel-btn {
+            background-color: var(--git-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .panel-btn:hover {
+            background-color: #d1402a;
+        }
+        
+        .toggle-btn {
+            background-color: #3498db;
+            margin-left: 10px;
+        }
+        
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Hide vs Visibility demo */
+        .hide-visibility-demo {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 2px solid #e9ecef;
+        }
+        
+        .demo-box {
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+        }
+        
+        .display-none {
+            display: none;
+        }
+        
+        .visibility-hidden {
+            visibility: hidden;
+        }
+        
+        .demo-controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .control-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .reset-btn {
+            background-color: #28a745;
+        }
+        
+        .reset-btn:hover {
+            background-color: #218838;
+        }
+        
+        /* Display values table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .properties-table th {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .properties-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .properties-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .properties-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Code examples */
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .code-example h3 {
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .code-example pre {
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Responsive%20Tables.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20The%20max-width%20Property.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS The display Property</h2>
+            <p>HTML உறுப்புகளின் தளவமைப்பைக் கட்டுப்படுத்தும் முக்கிய பண்பு</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS The display Property -->
+        <section class="content-section" id="display-property">
+            <h2>CSS The display Property</h2>
+            
+            <p>display பண்பானது தளவமைப்பைக் கட்டுப்படுத்தும் முக்கியமான CSS பண்பாகும். இது ஒரு HTML உறுப்பு தொகுதியாக அல்லது உள்ளமை உறுப்பாகக் கருதப்படுகிறதா என்பதைக் குறிப்பிடுகிறது.</p>
+            
+            <p>ஒவ்வொரு HTML உறுப்புக்கும் ஒரு இயல்புநிலை display மதிப்பு உள்ளது, அது எந்த வகை உறுப்பு என்பதைப் பொறுத்து. பெரும்பாலான உறுப்புகளுக்கான இயல்புநிலை display மதிப்பு block அல்லது inline ஆகும்.</p>
+            
+            <p>display பண்பானது HTML உறுப்புகளின் இயல்புநிலை காட்சி நடத்தையை மாற்றப் பயன்படுகிறது.</p>
+        </section>
+
+        <!-- Block-level Elements -->
+        <section class="content-section" id="block-elements">
+            <h2>Block-level Elements</h2>
+            
+            <p>ஒரு block-level உறுப்பு எப்போதும் ஒரு புதிய வரியில் தொடங்குகிறது மற்றும் கிடைக்கக்கூடிய முழு அகலத்தையும் எடுத்துக்கொள்கிறது (இடது மற்றும் வலது பக்கங்களுக்கு முடிந்தவரை நீட்டிக்கிறது).</p>
+            
+            <p>&lt;div&gt; உறுப்பு ஒரு block-level உறுப்பாகும்.</p>
+            
+            <div class="demo-container">
+                <h4>Block-level உறுப்புகளின் எடுத்துக்காட்டுகள்:</h4>
+                <div class="block-demo">இது ஒரு &lt;div&gt; உறுப்பு (block-level)</div>
+                <div class="block-demo">மற்றொரு &lt;div&gt; உறுப்பு - புதிய வரியில் தோன்றுகிறது</div>
+            </div>
+            
+            <p>Block-level உறுப்புகளின் எடுத்துக்காட்டுகள்:</p>
+            <ul>
+                <li>&lt;div&gt;</li>
+                <li>&lt;h1&gt; - &lt;h6&gt;</li>
+                <li>&lt;p&gt;</li>
+                <li>&lt;form&gt;</li>
+                <li>&lt;header&gt;</li>
+                <li>&lt;footer&gt;</li>
+                <li>&lt;section&gt;</li>
+            </ul>
+        </section>
+
+        <!-- Inline Elements -->
+        <section class="content-section" id="inline-elements">
+            <h2>Inline Elements</h2>
+            
+            <p>ஒரு inline உறுப்பு புதிய வரியில் தொடங்காது மற்றும் தேவையான அளவுக்கு மட்டுமே அகலத்தை எடுத்துக்கொள்கிறது.</p>
+            
+            <div class="demo-container">
+                <h4>Inline உறுப்புகளின் எடுத்துக்காட்டு:</h4>
+                <p>இது ஒரு பத்தியில் உள்ள ஒரு inline <span class="inline-demo">&lt;span&gt; உறுப்பு</span> ஆகும். <span class="inline-demo">மற்றொரு &lt;span&gt;</span> அதே வரியில் தொடர்கிறது.</p>
+            </div>
+            
+            <p>Inline உறுப்புகளின் எடுத்துக்காட்டுகள்:</p>
+            <ul>
+                <li>&lt;span&gt;</li>
+                <li>&lt;a&gt;</li>
+                <li>&lt;img&gt;</li>
+            </ul>
+        </section>
+
+        <!-- Common display Values -->
+        <section class="content-section" id="display-values">
+            <h2>Common display Values</h2>
+            
+            <p>CSS display பண்புக்கு பல மதிப்புகள் உள்ளன. பின்வரும் அட்டவணை பொதுவாகப் பயன்படுத்தப்படுவதை பட்டியலிடுகிறது:</p>
+            
+            <table class="properties-table">
+                <tr>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>inline</td>
+                    <td>உறுப்பை inline உறுப்பாகக் காட்டுகிறது</td>
+                </tr>
+                <tr>
+                    <td>block</td>
+                    <td>உறுப்பை block உறுப்பாகக் காட்டுகிறது</td>
+                </tr>
+                <tr>
+                    <td>contents</td>
+                    <td>கொள்கலனை மறைத்து, அதன் குழந்தை உறுப்புகளை DOM இல் அடுத்த நிலையில் உள்ள உறுப்பின் குழந்தைகளாக ஆக்குகிறது</td>
+                </tr>
+                <tr>
+                    <td>flex</td>
+                    <td>உறுப்பை block-level flex கொள்கலனாகக் காட்டுகிறது</td>
+                </tr>
+                <tr>
+                    <td>grid</td>
+                    <td>உறுப்பை block-level grid கொள்கலனாகக் காட்டுகிறது</td>
+                </tr>
+                <tr>
+                    <td>inline-block</td>
+                    <td>உறுப்பை inline-level block கொள்கலனாகக் காட்டுகிறது. உறுப்பு தானே inline உறுப்பாக வடிவமைக்கப்படுகிறது, ஆனால் நீங்கள் உயரம், அகலம், padding, மற்றும் margin மதிப்புகளைப் பயன்படுத்தலாம்</td>
+                </tr>
+                <tr>
+                    <td>none</td>
+                    <td>உறுப்பு ஆவணப் பாய்விலிருந்து முற்றிலும் மறைக்கப்படுகிறது (எந்த இடத்தையும் எடுக்காது)</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- CSS display: none; -->
+        <section class="content-section" id="display-none">
+            <h2>CSS display: none;</h2>
+            
+            <p>display: none; பயன்படுத்தும் போது, உறுப்பு ஆவணப் பாய்விலிருந்து முற்றிலும் மறைக்கப்பட்டு எந்த இடத்தையும் எடுக்காது.</p>
+            
+            <p>இது பொதுவாக உறுப்புகளை நீக்காமல் மறைக்கவும் காண்பிக்கவும் JavaScript உடன் பயன்படுத்தப்படுகிறது.</p>
+            
+            <div class="demo-container">
+                <h4>Click to show hidden panel</h4>
+                <button class="panel-btn" onclick="showPanel()">Show Panel</button>
+                <button class="panel-btn toggle-btn" onclick="togglePanel()">Toggle Panel</button>
+                
+                <div class="panel" id="panel">
+                    <h4>Hidden Panel</h4>
+                    <p>இந்த பேனல் முதலில் display: none; உடன் மறைக்கப்பட்டது. JavaScript பயன்படுத்தி இப்போது இது காட்டப்படுகிறது.</p>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <p>கிளிக் நிகழ்வில் மறைக்கப்பட்ட உறுப்பைக் காட்ட CSS மற்றும் JavaScript ஐ எவ்வாறு பயன்படுத்துவது:</p>
+                <pre><code>&lt;style&gt;
+#panel {
+  display: none;
+}
+&lt;/style&gt;
+
+&lt;script&gt;
+function showPanel() {
+  document.getElementById("panel").style.display = "block";
+}
+&lt;/script&gt;</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <p>கிளிக் நிகழ்வில் காட்டு மற்றும் மறைக்கும் இடையே மாற்ற CSS மற்றும் JavaScript ஐ எவ்வாறு பயன்படுத்துவது:</p>
+                <pre><code>&lt;script&gt;
+function togglePanel() {
+  var x = document.getElementById("panel");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+&lt;/script&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Override the Default Display Value -->
+        <section class="content-section" id="override-display">
+            <h2>Override the Default Display Value</h2>
+            
+            <p>display பண்பானது HTML உறுப்புகளின் இயல்புநிலை காட்சி நடத்தையை மாற்றப் பயன்படுகிறது.</p>
+            
+            <p>ஒரு inline உறுப்பை block உறுப்பாக மாற்றுவது, அல்லது நேர்மாறாக, பக்கத்தை ஒரு குறிப்பிட்ட வழியில் தோன்றச் செய்வதற்கும், இன்னும் வலைத் தரங்களைப் பின்பற்றுவதற்கும் பயனுள்ளதாக இருக்கும்.</p>
+            
+            <p>&lt;li&gt; உறுப்புகளை inline ஆக மாற்றுவது ஒரு பொதுவான எடுத்துக்காட்டாகும், இது கிடைமட்ட மெனுவை உருவாக்குகிறது:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>li {
+  display: inline;
+}</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">📌</span> குறிப்பு:</h4>
+                <p>உறுப்பின் display பண்பை அமைப்பது உறுப்பு எவ்வாறு காட்டப்படுகிறது என்பதை மட்டுமே மாற்றுகிறது, அது எந்த வகை உறுப்பு என்பதை அல்ல. எனவே, display: block; உடன் கூடிய inline உறுப்பு அதற்குள் மற்ற block உறுப்புகளைக் கொண்டிருக்க அனுமதிக்கப்படாது.</p>
+            </div>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு &lt;span&gt; உறுப்புகளை block உறுப்புகளாகக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>span {
+  display: block;
+}</code></pre>
+            </div>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு &lt;a&gt; உறுப்புகளை block உறுப்புகளாகக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>a {
+  display: block;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Hide an Element - Use display:none or visibility:hidden? -->
+        <section class="content-section" id="hide-element">
+            <h2>Hide an Element - Use display:none or visibility:hidden?</h2>
+            
+            <div class="hide-visibility-demo">
+                <h4>Image Examples with Different Hiding Methods:</h4>
+                
+                <div class="image-container">
+                    <div class="image-box">
+                        <img src="3.jpg" alt="Italy" id="img1">
+                        <h4>Italy</h4>
+                        <p>display:none - முழுமையாக மறைக்கப்பட்டது</p>
+                    </div>
+                    
+                    <div class="image-box">
+                        <img src="4.jpg" alt="Forest" id="img2">
+                        <h4>Forest</h4>
+                        <p>visibility:hidden - இடம் வைத்திருக்கிறது</p>
+                    </div>
+                    
+                    <div class="image-box">
+                        <img src="5.jpg" alt="Lights" id="img3">
+                        <h4>Lights</h4>
+                        <p>Normal - காட்டப்பட்டது</p>
+                    </div>
+                </div>
+                
+                <div class="demo-controls">
+                    <button class="control-btn" onclick="applyDisplayNone()">display:none</button>
+                    <button class="control-btn" onclick="applyVisibilityHidden()">visibility:hidden</button>
+                    <button class="control-btn reset-btn" onclick="resetImages()">Reset</button>
+                    <button class="control-btn" onclick="hideImages()">Hide</button>
+                    <button class="control-btn" onclick="showImages()">Show</button>
+                </div>
+                
+                <p id="demo-status">மூன்று படங்களும் தற்போது காட்டப்படுகின்றன.</p>
+            </div>
+            
+            <p>உறுப்பை மறைக்க display பண்பை none ஆக அமைக்கலாம். உறுப்பு மறைக்கப்படும், மேலும் அந்த உறுப்பு இல்லாதது போல பக்கம் காட்டப்படும்:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>h1.hidden {
+  display: none;
+}</code></pre>
+            </div>
+            
+            <p>உறுப்பை மறைக்க visibility:hidden; பயன்படுத்தலாம்.</p>
+            
+            <p>இருப்பினும், இந்த பண்புடன், உறுப்பு மறைக்கப்படும், ஆனால் அது காணப்படுவது போலவே அதே இடத்தை எடுத்துக்கொள்ளும்:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>h1.hidden {
+  visibility: hidden;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <p>பெரும்பாலான HTML உறுப்புகளுக்கான இயல்புநிலை display மதிப்பு என்ன?</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பெரும்பாலான HTML உறுப்புகளுக்கான இயல்புநிலை display மதிப்பு என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">inline-block</div>
+                            <div class="option-feedback incorrect">✗ தவறு! inline-block என்பது ஒரு குறிப்பிட்ட display மதிப்பு, இயல்புநிலை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">block or inline</div>
+                            <div class="option-feedback correct">✓ சரி! பெரும்பாலான HTML உறுப்புகள் block அல்லது inline ஆக இயல்புநிலை display மதிப்பைக் கொண்டுள்ளன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">flex</div>
+                            <div class="option-feedback incorrect">✗ தவறு! flex என்பது நவீன தளவமைப்பு பண்பு, இயல்புநிலை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">none</div>
+                            <div class="option-feedback incorrect">✗ தவறு! none என்பது உறுப்புகளை மறைக்கப் பயன்படுகிறது, இயல்புநிலை மதிப்பு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Display/Visibility Properties -->
+        <section class="content-section" id="display-properties">
+            <h2>CSS Display/Visibility Properties</h2>
+            
+            <p>காட்சி மற்றும் காண்பித்தலைக் கட்டுப்படுத்தும் CSS பண்புகள்:</p>
+            
+            <table class="properties-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>display</td>
+                    <td>உறுப்பு எவ்வாறு காட்டப்பட வேண்டும் என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>visibility</td>
+                    <td>உறுப்பு காணப்பட வேண்டுமா இல்லையா என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கிய வேறுபாடு:</h4>
+                <p><strong>display: none</strong> - உறுப்பை முழுமையாக மறைத்து ஆவணப் பாய்விலிருந்து அகற்றுகிறது.<br>
+                <strong>visibility: hidden</strong> - உறுப்பை மறைக்கிறது ஆனால் அதன் இடத்தை வைத்திருக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Responsive%20Tables.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20The%20max-width%20Property.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#display-property">The display Property</a></li>
+                    <li><a href="#block-elements">Block-level Elements</a></li>
+                    <li><a href="#inline-elements">Inline Elements</a></li>
+                    <li><a href="#display-none">display: none</a></li>
+                    <li><a href="#hide-element">Hide Elements</a></li>
+                    <li><a href="#exercises">Exercise</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Panel functions
+        function showPanel() {
+            document.getElementById("panel").style.display = "block";
+        }
+        
+        function togglePanel() {
+            var panel = document.getElementById("panel");
+            if (panel.style.display === "none" || panel.style.display === "") {
+                panel.style.display = "block";
+            } else {
+                panel.style.display = "none";
+            }
+        }
+        
+        // Image hiding functions
+        function applyDisplayNone() {
+            document.getElementById("img1").style.display = "none";
+            document.getElementById("demo-status").textContent = "Italy படம் display:none உடன் மறைக்கப்பட்டது - இடம் விடப்படவில்லை.";
+        }
+        
+        function applyVisibilityHidden() {
+            document.getElementById("img2").style.visibility = "hidden";
+            document.getElementById("demo-status").textContent = "Forest படம் visibility:hidden உடன் மறைக்கப்பட்டது - இடம் வைத்திருக்கிறது.";
+        }
+        
+        function resetImages() {
+            document.getElementById("img1").style.display = "";
+            document.getElementById("img2").style.visibility = "";
+            document.getElementById("img3").style.display = "";
+            document.getElementById("img3").style.visibility = "";
+            document.getElementById("demo-status").textContent = "அனைத்து படங்களும் மீட்டமைக்கப்பட்டன.";
+        }
+        
+        function hideImages() {
+            document.getElementById("img1").style.display = "none";
+            document.getElementById("img2").style.display = "none";
+            document.getElementById("img3").style.display = "none";
+            document.getElementById("demo-status").textContent = "அனைத்து படங்களும் display:none உடன் மறைக்கப்பட்டன.";
+        }
+        
+        function showImages() {
+            document.getElementById("img1").style.display = "";
+            document.getElementById("img2").style.display = "";
+            document.getElementById("img3").style.display = "";
+            document.getElementById("img2").style.visibility = "";
+            document.getElementById("demo-status").textContent = "அனைத்து படங்களும் காட்டப்பட்டன.";
+        }
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

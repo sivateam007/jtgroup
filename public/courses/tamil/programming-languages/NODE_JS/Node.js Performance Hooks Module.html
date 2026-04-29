@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Performance Hooks Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js HTTP2 Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js VM Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Performance Hooks Module</h2>
+            <p>Node.js இல் செயல்திறன் அளவீடு மற்றும் கண்காணிப்பு கருவிகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What are Performance Hooks? -->
+        <section class="content-section" id="what-are-performance-hooks">
+            <h2>Performance Hooks என்றால் என்ன?</h2>
+            
+            <p>perf_hooks தொகுதி W3C Performance Timeline விவரக்குறிப்பின் அடிப்படையில் செயல்திறன் அளவீட்டிற்கான APIகளின் தொகுப்பை வழங்குகிறது.</p>
+            
+            <p>இந்த கருவிகள் பின்வருவனவற்றிற்கு அத்தியாவசியமானவை:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-stopwatch"></i>
+                        <h4>குறிப்பிட்ட செயல்பாடுகளின் நேரத்தை அளவிடுதல்</h4>
+                    </div>
+                    <p>வெவ்வேறு செயல்பாடுகள் எடுக்கும் நேரத்தை துல்லியமாக அளவிடுதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h4>செயல்திறன் தடைகளைக் கண்டறிதல்</h4>
+                    </div>
+                    <p>பயன்பாட்டில் மெதுவாக செயல்படும் பகுதிகளை அடையாளம் காணுதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-balance-scale"></i>
+                        <h4>வெவ்வேறு செயல்படுத்தல்களின் செயல்திறனை ஒப்பிடுதல்</h4>
+                    </div>
+                    <p>வெவ்வேறு அல்காரிதம் செயல்படுத்தல்களின் செயல்திறனை ஒப்பிடுதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>காலப்போக்கில் பயன்பாட்டு செயல்திறனைக் கண்காணித்தல்</h4>
+                    </div>
+                    <p>பயன்பாட்டின் செயல்திறன் மாற்றங்களை காலப்போக்கில் கண்காணித்தல்</p>
+                </div>
+            </div>
+            
+            <p>இந்த தொகுதி உயர்-ரெசல்யூஷன் டைமர்கள், செயல்திறன் மார்க்குகள், அளவீடுகள், கண்காணிப்பாளர்கள் மற்றும் ஹிஸ்டோகிராம்கள் போன்ற பல பயனுள்ள அம்சங்களை உள்ளடக்கியது.</p>
+        </section>
+
+        <!-- Using the Performance Hooks Module -->
+        <section class="content-section" id="using-performance-hooks">
+            <h2>Performance Hooks தொகுப்பைப் பயன்படுத்துதல்</h2>
+            
+            <p>Performance Hooks தொகுப்பைப் பயன்படுத்த, உங்கள் குறியீட்டில் அதை தேவைப்படுத்த வேண்டும்:</p>
+            
+            <div class="code-example">
+                <pre><code>// Import the entire module
+const { performance, PerformanceObserver } = require('perf_hooks');
+
+// Or using destructuring for specific parts
+const { performance } = require('perf_hooks');</code></pre>
+            </div>
+        </section>
+
+        <!-- Basic Time Measurement -->
+        <section class="content-section" id="basic-time-measurement">
+            <h2>அடிப்படை நேர அளவீடு</h2>
+            
+            <p>செயல்திறன் API இன் மிக அடிப்படை பயன்பாடு உயர் துல்லியத்துடன் கடந்து செல்லும் நேரத்தை அளவிடுவதாகும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance } = require('perf_hooks');
+
+// Get the current high-resolution time
+const startTime = performance.now();
+
+// Perform some operation
+let sum = 0;
+for (let i = 0; i < 1000000; i++) {
+  sum += i;
+}
+
+// Get the end time
+const endTime = performance.now();
+
+// Calculate and display the elapsed time in milliseconds
+console.log(`Operation took ${(endTime - startTime).toFixed(2)} milliseconds`);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⏱️</span> குறிப்பு:</h4>
+                <p>performance.now() முறை தற்போதைய Node.js செயல்முறை தொடங்கிய நேரத்திலிருந்து அளவிடப்பட்ட மில்லி விநாடிகளில் உயர்-ரெசல்யூஷன் டைம்ஸ்டாம்பை வழங்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Performance Marks and Measures -->
+        <section class="content-section" id="performance-marks-measures">
+            <h2>செயல்திறன் மார்க்குகள் மற்றும் அளவீடுகள்</h2>
+            
+            <h3>மார்க்குகள்</h3>
+            
+            <p>செயல்திறன் மார்க்குகள் நீங்கள் கண்காணிக்க விரும்பும் குறிப்பிட்ட நேர புள்ளிகள்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance } = require('perf_hooks');
+
+// Create marks at specific points in your code
+performance.mark('startProcess');
+
+// Simulate some work
+let result = 0;
+for (let i = 0; i < 1000000; i++) {
+  result += Math.sqrt(i);
+}
+
+// Create another mark
+performance.mark('endProcess');
+
+// Get all the marks
+console.log(performance.getEntriesByType('mark'));</code></pre>
+            </div>
+            
+            <h3>அளவீடுகள்</h3>
+            
+            <p>செயல்திறன் அளவீடுகள் இரண்டு மார்க்குகளுக்கு இடையே உள்ள நேர கால அளவைக் கணக்கிடுகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance } = require('perf_hooks');
+
+// Create a start mark
+performance.mark('start');
+
+// Simulate some work
+let result = 0;
+for (let i = 0; i < 1000000; i++) {
+  result += Math.sqrt(i);
+}
+
+// Create an end mark
+performance.mark('end');
+
+// Create a measure between the two marks
+performance.measure('processTime', 'start', 'end');
+
+// Get the measure
+const measure = performance.getEntriesByName('processTime')[0];
+console.log(`Process took ${measure.duration.toFixed(2)} milliseconds`);
+
+// Clear marks and measures
+performance.clearMarks();
+performance.clearMeasures();</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Observer -->
+        <section class="content-section" id="performance-observer">
+            <h2>செயல்திறன் கண்காணிப்பாளர்</h2>
+            
+            <p>PerformanceObserver செயல்திறன் நிகழ்வுகளை அசின்க்ரோனஸாக கண்காணிக்க உங்களை அனுமதிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance, PerformanceObserver } = require('perf_hooks');
+
+// Create a performance observer
+const obs = new PerformanceObserver((items) => {
+  // Process all entries
+  const entries = items.getEntries();
+  entries.forEach((entry) => {
+    console.log(`Name: ${entry.name}, Type: ${entry.entryType}, Duration: ${entry.duration.toFixed(2)}ms`);
+  });
+});
+
+// Subscribe to specific entry types
+obs.observe({ entryTypes: ['measure'] });
+
+// First task
+performance.mark('task1Start');
+// Simulate work
+setTimeout(() => {
+  performance.mark('task1End');
+  performance.measure('Task 1', 'task1Start', 'task1End');
+  
+  // Second task
+  performance.mark('task2Start');
+  setTimeout(() => {
+    performance.mark('task2End');
+    performance.measure('Task 2', 'task2Start', 'task2End');
+    
+    // Clean up
+    performance.clearMarks();
+    performance.clearMeasures();
+    obs.disconnect();
+  }, 1000);
+}, 1000);</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Timeline API -->
+        <section class="content-section" id="performance-timeline-api">
+            <h2>செயல்திறன் டைம்லைன் API</h2>
+            
+            <p>செயல்திறன் டைம்லைன் API செயல்திறன் உள்ளீடுகளை மீட்டெடுக்க முறைகளை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance } = require('perf_hooks');
+
+// Create some performance entries
+performance.mark('mark1');
+performance.mark('mark2');
+
+let sum = 0;
+for (let i = 0; i < 100000; i++) {
+  sum += i;
+}
+
+performance.mark('mark3');
+performance.measure('measure1', 'mark1', 'mark2');
+performance.measure('measure2', 'mark2', 'mark3');
+
+// Get all performance entries
+console.log('All entries:');
+console.log(performance.getEntries());
+
+// Get entries by type
+console.log('\nMarks:');
+console.log(performance.getEntriesByType('mark'));
+
+// Get entries by name
+console.log('\nMeasure 1:');
+console.log(performance.getEntriesByName('measure1'));</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Timing Levels -->
+        <section class="content-section" id="performance-timing-levels">
+            <h2>செயல்திறன் டைமிங் நிலைகள்</h2>
+            
+            <p>Node.js மாறுபட்ட அளவிலான துல்லியத்துடன் வெவ்வேறு செயல்திறன் டைமிங் APIகளை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance, monitorEventLoopDelay } = require('perf_hooks');
+
+// 1. Date.now() - millisecond precision
+const dateStart = Date.now();
+const dateEnd = Date.now();
+console.log(`Date.now() difference: ${dateEnd - dateStart}ms`);
+
+// 2. process.hrtime() - nanosecond precision
+const hrStart = process.hrtime();
+const hrEnd = process.hrtime(hrStart);
+console.log(`process.hrtime() difference: ${hrEnd[0]}s ${hrEnd[1]}ns`);
+
+// 3. performance.now() - microsecond precision
+const perfStart = performance.now();
+const perfEnd = performance.now();
+console.log(`performance.now() difference: ${(perfEnd - perfStart).toFixed(6)}ms`);
+
+// 4. Event loop delay monitoring (available in Node.js 12.0.0+)
+const histogram = monitorEventLoopDelay({ resolution: 20 });
+histogram.enable();
+
+setTimeout(() => {
+  histogram.disable();
+  console.log('Event loop delay metrics:');
+  console.log(`  Min: ${histogram.min}ns`);
+  console.log(`  Max: ${histogram.max}ns`);
+  console.log(`  Mean: ${histogram.mean.toFixed(2)}ns`);
+  console.log(`  Stddev: ${histogram.stddev.toFixed(2)}ns`);
+  console.log(`  Percentiles: 50=${histogram.percentile(50).toFixed(2)}ns, 99=${histogram.percentile(99).toFixed(2)}ns`);
+}, 1000);</code></pre>
+            </div>
+        </section>
+
+        <!-- Event Loop Monitoring -->
+        <section class="content-section" id="event-loop-monitoring">
+            <h2>நிகழ்வு வளைய கண்காணிப்பு</h2>
+            
+            <p>monitorEventLoopDelay செயல்பாடு நிகழ்வு வளையில் உள்ள தாமதத்தை கண்காணிக்க ஒரு வழியை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const { monitorEventLoopDelay } = require('perf_hooks');
+
+// Create a histogram
+const histogram = monitorEventLoopDelay({ resolution: 10 });
+
+// Enable monitoring
+histogram.enable();
+
+// Simulate load on the event loop
+const operations = [];
+for (let i = 0; i < 10; i++) {
+  operations.push(new Promise((resolve) => {
+    setTimeout(() => {
+      // Simulate CPU-intensive work
+      let sum = 0;
+      for (let j = 0; j < 10000000; j++) {
+        sum += j;
+      }
+      resolve(sum);
+    }, 100);
+  }));
+}
+
+// After all operations complete
+Promise.all(operations).then(() => {
+  // Disable monitoring
+  histogram.disable();
+  
+  // Print statistics
+  console.log('Event Loop Delay Statistics:');
+  console.log(`  Min: ${histogram.min}ns`);
+  console.log(`  Max: ${histogram.max}ns`);
+  console.log(`  Mean: ${histogram.mean.toFixed(2)}ns`);
+  console.log(`  Stddev: ${histogram.stddev.toFixed(2)}ns`);
+  
+  // Percentiles
+  console.log('\nPercentiles:');
+  [1, 10, 50, 90, 99, 99.9].forEach((p) => {
+    console.log(`  p${p}: ${histogram.percentile(p).toFixed(2)}ns`);
+  });
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔄</span> குறிப்பு:</h4>
+                <p>நீண்ட-இயக்கும் பணிகள் நிகழ்வு வளையத்தைத் தடுப்பதால் உங்கள் பயன்பாடு பதிலளிப்புத் தன்மையில் சிக்கல்களை அனுபவிக்கும் போது கண்டறிய நிகழ்வு வளைய கண்காணிப்பு குறிப்பாக பயனுள்ளதாக இருக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Performance Tracking in Async Operations -->
+        <section class="content-section" id="async-performance-tracking">
+            <h2>அசின்க்ரோனஸ் செயல்பாடுகளில் செயல்திறன் கண்காணிப்பு</h2>
+            
+            <p>அசின்க்ரோனஸ் செயல்பாடுகளில் செயல்திறனைக் கண்காணிப்பதற்கு கவனமான மார்க் வைப்பு தேவைப்படுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance, PerformanceObserver } = require('perf_hooks');
+const fs = require('fs');
+
+// Create observer for the measures
+const obs = new PerformanceObserver((items) => {
+  items.getEntries().forEach((entry) => {
+    console.log(`${entry.name}: ${entry.duration.toFixed(2)}ms`);
+  });
+});
+obs.observe({ entryTypes: ['measure'] });
+
+// Measure async file read operation
+performance.mark('readStart');
+
+fs.readFile(__filename, (err, data) => {
+  if (err) throw err;
+  
+  performance.mark('readEnd');
+  performance.measure('File Read', 'readStart', 'readEnd');
+  
+  // Measure async processing time
+  performance.mark('processStart');
+  
+  // Simulate processing the file data
+  setTimeout(() => {
+    const lines = data.toString().split('\n').length;
+    
+    performance.mark('processEnd');
+    performance.measure('File Processing', 'processStart', 'processEnd');
+    
+    console.log(`File has ${lines} lines`);
+    
+    // Clean up
+    performance.clearMarks();
+    performance.clearMeasures();
+  }, 100);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Tracking Promises -->
+        <section class="content-section" id="tracking-promises">
+            <h2>வாக்குறுதிகளைக் கண்காணித்தல்</h2>
+            
+            <p>வாக்குறுதிகளின் செயல்திறனை அளவிடுவதற்கு ஒத்த நுட்பங்கள் தேவைப்படுகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance, PerformanceObserver } = require('perf_hooks');
+
+// Set up the observer
+const obs = new PerformanceObserver((items) => {
+  items.getEntries().forEach((entry) => {
+    console.log(`${entry.name}: ${entry.duration.toFixed(2)}ms`);
+  });
+});
+obs.observe({ entryTypes: ['measure'] });
+
+// Function that returns a promise
+function fetchData(delay) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ data: 'Sample data' });
+    }, delay);
+  });
+}
+
+// Function to process data
+function processData(data) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ processed: data.data.toUpperCase() });
+    }, 200);
+  });
+}
+
+// Measure Promise chain
+async function run() {
+  performance.mark('fetchStart');
+  
+  const data = await fetchData(300);
+  
+  performance.mark('fetchEnd');
+  performance.mark('processStart');
+  
+  const processed = await processData(data);
+  
+  performance.mark('processEnd');
+  
+  // Create measures
+  performance.measure('Fetch Data', 'fetchStart', 'fetchEnd');
+  performance.measure('Process Data', 'processStart', 'processEnd');
+  performance.measure('Total Operation', 'fetchStart', 'processEnd');
+  
+  console.log('Result:', processed);
+}
+
+run().finally(() => {
+  // Clear after execution
+  performance.clearMarks();
+  performance.clearMeasures();
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Timing Caveats -->
+        <section class="content-section" id="performance-timing-caveats">
+            <h2>செயல்திறன் டைமிங் எச்சரிக்கைகள்</h2>
+            
+            <p>செயல்திறன் APIகளைப் பயன்படுத்தும் போது, சில எச்சரிக்கைகளை அறிந்து கொள்ளுங்கள்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-desktop"></i>
+                        <h4>டைமிங் ரெசல்யூஷன்</h4>
+                    </div>
+                    <p>டைமிங் ரெசல்யூஷன் பிளாட்ஃபார்ம்களுக்கு இடையே வேறுபடுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-clock"></i>
+                        <h4>கிளாக் டிரிஃப்ட்</h4>
+                    </div>
+                    <p>நீண்ட-இயக்கும் செயல்முறைகளில் கிளாக் டிரிஃப்ட் ஏற்படலாம்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tasks"></i>
+                        <h4>பேக்குரவுண்ட் செயல்பாடு</h4>
+                    </div>
+                    <p>பேக்குரவுண்ட் செயல்பாடு டைமிங் அளவீடுகளை பாதிக்கலாம்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cog"></i>
+                        <h4>JIT தொகுப்பு</h4>
+                    </div>
+                    <p>JavaScript JIT தொகுப்பு சீரற்ற முதல்-இயக்க நேரங்களை ஏற்படுத்தும்</p>
+                </div>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு: துல்லியமான பேன்ச்மார்க்கிங்</h3>
+            
+            <div class="code-example">
+                <pre><code>const { performance } = require('perf_hooks');
+
+// For accurate benchmarking, perform multiple runs
+function benchmark(fn, iterations = 1000) {
+  // Warm-up run (for JIT optimization)
+  fn();
+  
+  const times = [];
+  
+  for (let i = 0; i < iterations; i++) {
+    const start = performance.now();
+    fn();
+    const end = performance.now();
+    times.push(end - start);
+  }
+  
+  // Calculate statistics
+  times.sort((a, b) => a - b);
+  
+  const sum = times.reduce((a, b) => a + b, 0);
+  const avg = sum / times.length;
+  const median = times[Math.floor(times.length / 2)];
+  const min = times[0];
+  const max = times[times.length - 1];
+  
+  return {
+    average: avg,
+    median: median,
+    min: min,
+    max: max,
+    samples: times.length
+  };
+}
+
+// Example usage
+function testFunction() {
+  // Function to benchmark
+  let x = 0;
+  for (let i = 0; i < 10000; i++) {
+    x += i;
+  }
+  return x;
+}
+
+const results = benchmark(testFunction);
+console.log('Benchmark Results:');
+console.log(`  Samples: ${results.samples}`);
+console.log(`  Average: ${results.average.toFixed(4)}ms`);
+console.log(`  Median: ${results.median.toFixed(4)}ms`);
+console.log(`  Min: ${results.min.toFixed(4)}ms`);
+console.log(`  Max: ${results.max.toFixed(4)}ms`);</code></pre>
+            </div>
+        </section>
+
+        <!-- NodeJS Performance Hooks vs Browser Performance API -->
+        <section class="content-section" id="nodejs-vs-browser-performance">
+            <h2>NodeJS Performance Hooks vs Browser Performance API</h2>
+            
+            <p>Node.js Performance Hooks API W3C Performance Timeline விவரக்குறிப்பின் அடிப்படையில் உள்ளது, ஆனால் பிரௌசரின் Performance API உடன் ஒப்பிடும்போது சில வேறுபாடுகள் உள்ளன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>பிரௌசர் Performance API</th>
+                            <th>Node.js Performance Hooks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>நேர தோற்றம்</strong></td>
+                            <td>பக்கம் வழிசெலுத்துதல் தொடக்கம்</td>
+                            <td>செயல்முறை தொடக்க நேரம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>வள டைமிங்</strong></td>
+                            <td>கிடைக்கும்</td>
+                            <td>பயன்படுத்த முடியாது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>வழிசெலுத்துதல் டைமிங்</strong></td>
+                            <td>கிடைக்கும்</td>
+                            <td>பயன்படுத்த முடியாது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>பயனர் டைமிங் (மார்க்/அளவீடு)</strong></td>
+                            <td>கிடைக்கும்</td>
+                            <td>கிடைக்கும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>உயர்-ரெசல்யூஷன் நேரம்</strong></td>
+                            <td>கிடைக்கும்</td>
+                            <td>கிடைக்கும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>நிகழ்வு வளைய கண்காணிப்பு</strong></td>
+                            <td>வரையறுக்கப்பட்ட</td>
+                            <td>கிடைக்கும்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Practical Example: API Performance Monitoring -->
+        <section class="content-section" id="api-performance-monitoring">
+            <h2>நடைமுறை எடுத்துக்காட்டு: API செயல்திறன் கண்காணிப்பு</h2>
+            
+            <p>API எண்ட்பாயிண்டுகளைக் கண்காணிக்க செயல்திறன் கூடுகளைப் பயன்படுத்துவதற்கான ஒரு நடைமுறை எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance, PerformanceObserver } = require('perf_hooks');
+const express = require('express');
+const app = express();
+const port = 8080;
+
+// Set up performance observer for logging
+const obs = new PerformanceObserver((items) => {
+  items.getEntries().forEach((entry) => {
+    console.log(`[${new Date().toISOString()}] ${entry.name}: ${entry.duration.toFixed(2)}ms`);
+  });
+});
+obs.observe({ entryTypes: ['measure'] });
+
+// Middleware to track request processing time
+app.use((req, res, next) => {
+  const start = performance.now();
+  const requestId = `${req.method} ${req.url} ${Date.now()}`;
+  
+  // Mark the start of request processing
+  performance.mark(`${requestId}-start`);
+  
+  // Override end method to capture when response is sent
+  const originalEnd = res.end;
+  res.end = function(...args) {
+    performance.mark(`${requestId}-end`);
+    performance.measure(
+      `Request ${req.method} ${req.url}`,
+      `${requestId}-start`,
+      `${requestId}-end`
+    );
+    
+    // Clean up marks
+    performance.clearMarks(`${requestId}-start`);
+    performance.clearMarks(`${requestId}-end`);
+    
+    return originalEnd.apply(this, args);
+  };
+  
+  next();
+});
+
+// API routes
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.get('/fast', (req, res) => {
+  res.send('Fast response!');
+});
+
+app.get('/slow', (req, res) => {
+  // Simulate a slow API endpoint
+  setTimeout(() => {
+    res.send('Slow response after delay');
+  }, 500);
+});
+
+app.get('/process', (req, res) => {
+  // Simulate CPU-intensive processing
+  const requestId = `process-${Date.now()}`;
+  performance.mark(`${requestId}-process-start`);
+  
+  let result = 0;
+  for (let i = 0; i < 1000000; i++) {
+    result += Math.sqrt(i);
+  }
+  
+  performance.mark(`${requestId}-process-end`);
+  performance.measure(
+    'CPU Processing',
+    `${requestId}-process-start`,
+    `${requestId}-process-end`
+  );
+  
+  res.send(`Processed result: ${result}`);
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`Performance monitoring example running at http://localhost:${port}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Advanced Performance Monitoring -->
+        <section class="content-section" id="advanced-performance-monitoring">
+            <h2>மேம்பட்ட செயல்திறன் கண்காணிப்பு</h2>
+            
+            <p>உற்பத்தி-தர பயன்பாடுகளுக்கு, இந்த மேம்பட்ட கண்காணிப்பு நுட்பங்களைக் கவனியுங்கள்:</p>
+            
+            <h3>1. நினைவக கசிவு கண்டறிதல்</h3>
+            
+            <p>செயல்திறன் கூடுகள் மற்றும் Node.js நினைவக கண்காணிப்பைப் பயன்படுத்தி நினைவக கசிவுகளைக் கண்டறிந்து பகுப்பாய்வு செய்யுங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance, PerformanceObserver } = require('perf_hooks');
+const { performance: perf } = require('process');
+
+class MemoryMonitor {
+  constructor() {
+    this.leakThreshold = 10 * 1024 * 1024; // 10MB
+    this.checkInterval = 10000; // 10 seconds
+    this.interval = null;
+    this.lastMemoryUsage = process.memoryUsage();
+    this.leakDetected = false;
+    
+    // Set up performance observer for GC events
+    const obs = new PerformanceObserver((items) => {
+      items.getEntries().forEach((entry) => {
+        if (entry.name === 'gc') {
+          this.checkMemoryLeak();
+        }
+      });
+    });
+    obs.observe({ entryTypes: ['gc'] });
+  }
+  
+  start() {
+    console.log('Memory monitoring started');
+    this.interval = setInterval(() => this.checkMemoryLeak(), this.checkInterval);
+  }
+  
+  stop() {
+    if (this.interval) {
+      clearInterval(this.interval);
+      console.log('Memory monitoring stopped');
+    }
+  }
+  
+  checkMemoryLeak() {
+    const current = process.memoryUsage();
+    const heapDiff = current.heapUsed - this.lastMemoryUsage.heapUsed;
+    
+    if (heapDiff > this.leakThreshold) {
+      this.leakDetected = true;
+      console.warn(`⚠️  Possible memory leak detected: Heap increased by ${(heapDiff / 1024 / 1024).toFixed(2)}MB`);
+      console.log('Memory snapshot:', {
+        rss: this.formatMemory(current.rss),
+        heapTotal: this.formatMemory(current.heapTotal),
+        heapUsed: this.formatMemory(current.heapUsed),
+        external: this.formatMemory(current.external)
+      });
+      
+      // Take a heap snapshot if needed
+      if (process.env.NODE_ENV === 'development') {
+        this.takeHeapSnapshot();
+      }
+    }
+    
+    this.lastMemoryUsage = current;
+  }
+  
+  formatMemory(bytes) {
+    return `${(bytes / 1024 / 1024).toFixed(2)}MB`;
+  }
+  
+  takeHeapSnapshot() {
+    const heapdump = require('heapdump');
+    const filename = `heapdump-${Date.now()}.heapsnapshot`;
+    heapdump.writeSnapshot(filename, (err, filename) => {
+      if (err) {
+        console.error('Failed to take heap snapshot:', err);
+      } else {
+        console.log(`Heap snapshot written to ${filename}`);
+      }
+    });
+  }
+}
+
+// Usage example
+const monitor = new MemoryMonitor();
+monitor.start();
+
+// Simulate a memory leak
+const leaks = [];
+setInterval(() => {
+  for (let i = 0; i < 1000; i++) {
+    leaks.push(new Array(1000).fill('*'.repeat(100)));
+  }
+}, 1000);
+
+// Stop monitoring after 1 minute
+setTimeout(() => {
+  monitor.stop();
+  console.log('Memory monitoring completed');
+}, 60000);</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">📦</span> குறிப்பு:</h4>
+                <p>நினைவக கசிவு கண்டறிதல் எடுத்துக்காட்டிற்கு heapdump பேக்கேஜ் தேவைப்படுகிறது. <code>npm install heapdump</code> ஐப் பயன்படுத்தி அதை நிறுவவும்.</p>
+            </div>
+            
+            <h3>2. தனிப்பயன் செயல்திறன் அளவீடுகள்</h3>
+            
+            <p>விரிவான டைமிங் தகவலுடன் தனிப்பயன் செயல்திறன் அளவீடுகளை உருவாக்கி கண்காணிக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance, PerformanceObserver, PerformanceEntry } = require('perf_hooks');
+
+class PerformanceTracker {
+  constructor() {
+    this.metrics = new Map();
+    this.observers = new Map();
+    
+    // Set up default observer for custom metrics
+    this.setupDefaultObserver();
+  }
+  
+  setupDefaultObserver() {
+    const obs = new PerformanceObserver((items) => {
+      items.getEntries().forEach((entry) => {
+        if (!this.metrics.has(entry.name)) {
+          this.metrics.set(entry.name, []);
+        }
+        this.metrics.get(entry.name).push(entry);
+        
+        // Log detailed metrics
+        this.logMetric(entry);
+      });
+    });
+    
+    obs.observe({ entryTypes: ['measure'] });
+    this.observers.set('default', obs);
+  }
+  
+  startTimer(name) {
+    performance.mark(`${name}-start`);
+  }
+  
+  endTimer(name, attributes = {}) {
+    performance.mark(`${name}-end`);
+    performance.measure(name, {
+      start: `${name}-start`,
+      end: `${name}-end`,
+      ...attributes
+    });
+    
+    // Clean up marks
+    performance.clearMarks(`${name}-start`);
+    performance.clearMarks(`${name}-end`);
+  }
+  
+  logMetric(entry) {
+    const { name, duration, startTime, entryType, detail } = entry;
+    console.log(`📊 [${new Date().toISOString()}] ${name}: ${duration.toFixed(2)}ms`);
+    
+    if (detail) {
+      console.log('   Details:', JSON.stringify(detail, null, 2));
+    }
+  }
+  
+  getMetrics(name) {
+    return this.metrics.get(name) || [];
+  }
+  
+  getStats(name) {
+    const metrics = this.getMetrics(name);
+    if (metrics.length === 0) return null;
+    
+    const durations = metrics.map(m => m.duration);
+    const sum = durations.reduce((a, b) => a + b, 0);
+    const avg = sum / durations.length;
+    
+    return {
+      count: durations.length,
+      total: sum,
+      average: avg,
+      min: Math.min(...durations),
+      max: Math.max(...durations),
+      p90: this.percentile(durations, 90),
+      p95: this.percentile(durations, 95),
+      p99: this.percentile(durations, 99)
+    };
+  }
+  
+  percentile(arr, p) {
+    if (!arr.length) return 0;
+    const sorted = [...arr].sort((a, b) => a - b);
+    const pos = (sorted.length - 1) * p / 100;
+    const base = Math.floor(pos);
+    const rest = pos - base;
+    
+    if (sorted[base + 1] !== undefined) {
+      return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
+    } else {
+      return sorted[base];
+    }
+  }
+}
+
+// Usage example
+const tracker = new PerformanceTracker();
+
+// Track a simple operation
+tracker.startTimer('database-query');
+setTimeout(() => {
+  tracker.endTimer('database-query', {
+    detail: {
+      query: 'SELECT * FROM users',
+      params: { limit: 100 },
+      success: true
+    }
+  });
+  
+  // Get statistics
+  console.log('Stats:', tracker.getStats('database-query'));
+}, 200);</code></pre>
+            </div>
+        </section>
+
+        <!-- Distributed Tracing with Performance Hooks -->
+        <section class="content-section" id="distributed-tracing">
+            <h2>செயல்திறன் கூடுகளுடன் விநியோகிக்கப்பட்ட ட்ரேசிங்</h2>
+            
+            <p>செயல்திறன் கூடுகளைப் பயன்படுத்தி மைக்ரோசர்விஸ்கள் முழுவதும் விநியோகிக்கப்பட்ட ட்ரேசிங்கை செயல்படுத்துங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { performance, PerformanceObserver } = require('perf_hooks');
+const crypto = require('crypto');
+
+class Tracer {
+  constructor(serviceName) {
+    this.serviceName = serviceName;
+    this.spans = new Map();
+    this.exportInterval = setInterval(() => this.exportSpans(), 10000);
+  }
+  
+  startSpan(name, parentSpanId = null) {
+    const spanId = crypto.randomBytes(8).toString('hex');
+    const traceId = parentSpanId ? this.spans.get(parentSpanId)?.traceId : crypto.randomBytes(16).toString('hex');
+    
+    const span = {
+      id: spanId,
+      traceId,
+      parentSpanId,
+      name,
+      service: this.serviceName,
+      startTime: performance.now(),
+      endTime: null,
+      duration: null,
+      tags: {},
+      logs: []
+    };
+    
+    this.spans.set(spanId, span);
+    return spanId;
+  }
+  
+  endSpan(spanId, status = 'OK') {
+    const span = this.spans.get(spanId);
+    if (!span) return;
+    
+    span.endTime = performance.now();
+    span.duration = span.endTime - span.startTime;
+    span.status = status;
+    
+    // Auto-export if this is a root span
+    if (!span.parentSpanId) {
+      this.exportSpan(span);
+    }
+    
+    return span;
+  }
+  
+  addTag(spanId, key, value) {
+    const span = this.spans.get(spanId);
+    if (span) {
+      span.tags[key] = value;
+    }
+  }
+  
+  log(spanId, message, data = {}) {
+    const span = this.spans.get(spanId);
+    if (span) {
+      span.logs.push({
+        timestamp: new Date().toISOString(),
+        message,
+        data: JSON.stringify(data)
+      });
+    }
+  }
+  
+  exportSpan(span) {
+    // In a real application, this would send the span to a tracing backend
+    // like Jaeger, Zipkin, or AWS X-Ray
+    console.log('Exporting span:', JSON.stringify(span, null, 2));
+    
+    // Clean up
+    this.spans.delete(span.id);
+  }
+  
+  exportSpans() {
+    // Export any remaining spans that have ended
+    for (const [id, span] of this.spans.entries()) {
+      if (span.endTime) {
+        this.exportSpan(span);
+      }
+    }
+  }
+  
+  injectContext(spanId, headers = {}) {
+    const span = this.spans.get(spanId);
+    if (!span) return headers;
+    
+    return {
+      ...headers,
+      'x-trace-id': span.traceId,
+      'x-span-id': span.id,
+      'x-service': this.serviceName
+    };
+  }
+  
+  extractContext(headers) {
+    const traceId = headers['x-trace-id'] || crypto.randomBytes(16).toString('hex');
+    const parentSpanId = headers['x-span-id'] || null;
+    
+    return { traceId, parentSpanId };
+  }
+}
+
+// Usage example
+const tracer = new Tracer('user-service');
+
+// Simulate a request
+function handleRequest(req) {
+  const { traceId, parentSpanId } = tracer.extractContext(req.headers);
+  const spanId = tracer.startSpan('handle-request', parentSpanId);
+  
+  tracer.addTag(spanId, 'http.method', req.method);
+  tracer.addTag(spanId, 'http.url', req.url);
+  
+  // Simulate work
+  setTimeout(() => {
+    // Call another service
+    const childSpanId = tracer.startSpan('call-auth-service', spanId);
+    
+    setTimeout(() => {
+      tracer.endSpan(childSpanId, 'OK');
+      
+      // End the request
+      tracer.endSpan(spanId, 'OK');
+    }, 100);
+  }, 50);
+  
+  return { status: 'processing', traceId };
+}
+
+// Simulate an incoming request
+const request = {
+  method: 'GET',
+  url: '/api/users/123',
+  headers: {}
+};
+
+const response = handleRequest(request);
+console.log('Response:', response);
+
+// Wait for spans to complete
+setTimeout(() => {}, 200);</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Optimization Techniques -->
+        <section class="content-section" id="performance-optimization-techniques">
+            <h2>செயல்திறன் உகப்பாக்க நுட்பங்கள்</h2>
+            
+            <p>Node.js பயன்பாட்டு செயல்திறனை உகப்பாக்குவதற்கான மேம்பட்ட நுட்பங்கள்:</p>
+            
+            <h3>1. CPU-தீவிர பணிகளுக்கான தொழிலாளர் நூல்கள்</h3>
+            
+            <p>நிகழ்வு வளையத்தைத் தடுப்பதைத் தடுக்க CPU-தீவிர செயல்பாடுகளை தொழிலாளர் நூல்களுக்கு இடமாற்றம் செய்யுங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
+const { performance, PerformanceObserver } = require('perf_hooks');
+
+if (isMainThread) {
+  // Main thread
+  function runWorker(data) {
+    return new Promise((resolve, reject) => {
+      const start = performance.now();
+      
+      const worker = new Worker(__filename, {
+        workerData: data
+      });
+      
+      worker.on('message', (result) => {
+        const duration = performance.now() - start;
+        resolve({
+          ...result,
+          duration: `${duration.toFixed(2)}ms`
+        });
+      });
+      
+      worker.on('error', reject);
+      worker.on('exit', (code) => {
+        if (code !== 0) {
+          reject(new Error(`Worker stopped with exit code ${code}`));
+        }
+      });
+    });
+  }
+  
+  // Example usage
+  async function main() {
+    try {
+      const result = await runWorker({
+        task: 'processData',
+        data: Array(1000000).fill().map((_, i) => i)
+      });
+      
+      console.log('Worker result:', result);
+    } catch (err) {
+      console.error('Worker error:', err);
+    }
+  }
+  
+  main();
+} else {
+  // Worker thread
+  function processData(data) {
+    // Simulate CPU-intensive work
+    return data.map(x => Math.sqrt(x) * Math.PI);
+  }
+  
+  try {
+    const result = processData(workerData.data);
+    parentPort.postMessage({
+      task: workerData.task,
+      resultLength: result.length,
+      sample: result.slice(0, 5)
+    });
+  } catch (err) {
+    parentPort.postMessage({ error: err.message });
+  }
+}</code></pre>
+            </div>
+            
+            <h3>2. திறமையான தரவு செயலாக்கம்</h3>
+            
+            <p>திறமையான பெரிய தரவு செயலாக்கத்திற்கு ஸ்ட்ரீம்கள் மற்றும் பஃபர்களைப் பயன்படுத்துங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { Transform } = require('stream');
+const { performance } = require('perf_hooks');
+
+class ProcessingPipeline {
+  constructor() {
+    this.startTime = performance.now();
+    this.processedItems = 0;
+  }
+  
+  createTransformStream(transformFn) {
+    return new Transform({
+      objectMode: true,
+      transform(chunk, encoding, callback) {
+        try {
+          const result = transformFn(chunk);
+          this.processedItems++;
+          callback(null, result);
+        } catch (err) {
+          callback(err);
+        }
+      }
+    });
+  }
+  
+  async processData(data, batchSize = 1000) {
+    const batches = [];
+    
+    // Process in batches
+    for (let i = 0; i < data.length; i += batchSize) {
+      const batch = data.slice(i, i + batchSize);
+      const processedBatch = await this.processBatch(batch);
+      batches.push(processedBatch);
+      
+      // Log progress
+      const progress = ((i + batchSize) / data.length * 100).toFixed(1);
+      console.log(`Processed ${Math.min(i + batchSize, data.length)}/${data.length} (${progress}%)`);
+    }
+    
+    return batches.flat();
+  }
+  
+  processBatch(batch) {
+    return new Promise((resolve) => {
+      const results = [];
+      
+      // Create a transform stream for processing
+      const processor = this.createTransformStream((item) => {
+        // Simulate processing
+        return {
+          ...item,
+          processed: true,
+          timestamp: new Date().toISOString()
+        };
+      });
+      
+      // Collect results
+      processor.on('data', (data) => {
+        results.push(data);
+      });
+      
+      processor.on('end', () => {
+        resolve(results);
+      });
+      
+      // Process each item in the batch
+      for (const item of batch) {
+        processor.write(item);
+      }
+      
+      processor.end();
+    });
+  }
+  
+  getStats() {
+    const endTime = performance.now();
+    const duration = endTime - this.startTime;
+    
+    return {
+      processedItems: this.processedItems,
+      duration: `${duration.toFixed(2)}ms`,
+      itemsPerSecond: (this.processedItems / (duration / 1000)).toFixed(2)
+    };
+  }
+}
+
+// Example usage
+async function main() {
+  // Generate test data
+  const testData = Array(10000).fill().map((_, i) => ({
+    id: i,
+    value: Math.random() * 1000
+  }));
+  
+  console.log('Starting data processing...');
+  const pipeline = new ProcessingPipeline();
+  
+  // Process data in batches
+  const result = await pipeline.processData(testData, 1000);
+  
+  // Print statistics
+  console.log('Processing complete!');
+  console.log('Statistics:', pipeline.getStats());
+  console.log('Sample result:', result[0]);
+}
+
+main().catch(console.error);</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Testing Best Practices -->
+        <section class="content-section" id="performance-testing-best-practices">
+            <h2>செயல்திறன் சோதனை சிறந்த நடைமுறைகள்</h2>
+            
+            <p>செயல்திறன் சோதனையை நடத்தும் போது, இந்த சிறந்த நடைமுறைகளைப் பின்பற்றவும்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-server"></i>
+                    <span><strong>உற்பத்தி-போன்ற சூழல்களில் சோதிக்கவும்</strong> - உற்பத்திக்கு ஒத்த வன்பொருளைப் பயன்படுத்தவும், யதார்த்தமான தரவு அளவுகளைச் சேர்க்கவும், உற்பத்தி ட்ராஃபிக் வடிவங்களை உருவகப்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-chart-bar"></i>
+                    <span><strong>புள்ளிவிவர முக்கியத்துவத்தைப் பயன்படுத்தவும்</strong> - பல சோதனை மறு செய்கைகளை இயக்கவும், நம்பிக்கை இடைவெளிகளைக் கணக்கிடவும், பொருத்தமற்ற வெளிப்பாடுகளைப் புறக்கணிக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-desktop"></i>
+                    <span><strong>கணினி வளங்களைக் கண்காணிக்கவும்</strong> - CPU மற்றும் நினைவக பயன்பாட்டைக் கண்காணிக்கவும், குப்பை சேகரிப்பைக் கண்காணிக்கவும், நினைவக கசிவுகளுக்குக் கவனிக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-search"></i>
+                    <span><strong>உகப்பாக்குவதற்கு முன் சுயவிவரம்</strong> - உண்மையான தடைகளை அடையாளம் காணவும், மாற்றங்களுக்கு முன்னும் பின்னும் அளவிடவும், உயர்-தாக்க உகப்பாக்கங்களில் கவனம் செலுத்தவும்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான முறை பெயரை தேர்வு செய்யவும்.</h4>
+                <h4>The <span style="color: #ffd700;">______</span> method is used to create a timestamp in the performance timeline.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">performance.measure()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "performance.measure()" முறை இரண்டு மார்க்குகளுக்கு இடையே உள்ள கால அளவைக் கணக்கிடப் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">performance.observe()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "performance.observe()" என்பது ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">performance.mark()</div>
+                            <div class="option-feedback correct">✓ சரி! "performance.mark()" முறை செயல்திறன் டைம்லைனில் ஒரு டைம்ஸ்டாம்பை உருவாக்கப் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">performance.timestamp()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "performance.timestamp()" என்பது ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js HTTP2 Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js VM Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-are-performance-hooks">Performance Hooks என்றால் என்ன?</a></li>
+                    <li><a href="#basic-time-measurement">அடிப்படை நேர அளவீடு</a></li>
+                    <li><a href="#performance-marks-measures">செயல்திறன் மார்க்குகள் மற்றும் அளவீடுகள்</a></li>
+                    <li><a href="#performance-observer">செயல்திறன் கண்காணிப்பாளர்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,1140 @@
+﻿<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Hard Level - Answer Key | Jassif Team</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional Quiz-specific styles - EXACT SAME AS hard answer.html */
+        
+        /* Jassif Team Quiz Header */
+        .jassif-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--git-color);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .team-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Quiz Hero */
+        .quiz-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quiz-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .quiz-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Question Selection Grid */
+        .question-selection-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        /* Question number button with Hard level color (RED) */
+        .question-number-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number-btn:hover {
+            border-color: var(--git-color);
+            transform: translateY(-3px);
+        }
+
+        .question-number-btn.active {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .question-number-btn.answered {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: var(--dark);
+        }
+
+        /* Difficulty level indicator - RED for Hard */
+        .difficulty-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 8px 8px 0 0;
+            background-color: #dc3545;
+        }
+
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+
+        .current-question-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--git-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        /* ANSWER KEY MODIFICATION: Show correct/incorrect colors immediately on click */
+        .quiz-option.selected.correct {
+            border-color: #27ae60;
+            background: #d4edda;
+        }
+
+        .quiz-option.selected.incorrect {
+            border-color: var(--accent);
+            background: #f8d7da;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected.correct .option-letter {
+            background: #27ae60;
+        }
+
+        .quiz-option.selected.incorrect .option-letter {
+            background: var(--accent);
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-btn.prev {
+            background: #667eea;
+        }
+
+        .quiz-btn.submit {
+            background: var(--success);
+        }
+
+        /* Results Container */
+        .results-container {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: black;
+            padding: 0;
+        }
+
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Answer Feedback Section */
+        .answer-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .answer-feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #27ae60;
+            color: #155724;
+        }
+
+        .answer-feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid var(--accent);
+            color: #721c24;
+        }
+
+        .feedback-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .team-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quiz-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .question-selection-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .question-number-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="jassif-header">
+        <div class="header-container">
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <img src="logo.jpg" alt="Jassif Team Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">JASSIF TEAM</div>
+                    <div class="logo-sub">SQL ADVANCED COURSE - ANSWER KEY</div>
+                </div>
+            </a>
+            <div class="team-info">
+                <div class="team-badge">
+                    <i class="fas fa-database"></i>
+                    Advanced SQL
+                </div>
+                <div class="team-badge">
+                    <i class="fas fa-key"></i>
+                    Answer Key
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Hero Section -->
+    <section class="quiz-hero">
+        <div class="quiz-hero-content">
+            <h2>Advanced SQL Topics - Answer Key</h2>
+            <p>Interactive answer key for advanced SQL concepts. Click on options to see correct answers with explanations.</p>
+            <div class="quiz-badges">
+                <span class="info-badge level"><i class="fas fa-signal"></i> Expert Level</span>
+                <span class="info-badge"><i class="fas fa-question-circle"></i> 30 Questions</span>
+                <span class="info-badge"><i class="fas fa-check-circle"></i> Detailed Explanations</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Question Selection Grid -->
+    <section class="question-selection-section">
+        <div class="section-title">
+            <h2>Advanced SQL Questions - Answer Key</h2>
+            <p>Topics covered: Query Optimization, Performance Tuning, Advanced Joins, Window Functions, CTEs, Indexing Strategies</p>
+        </div>
+        
+        <div class="question-selection-grid" id="questionSelectionGrid">
+            <!-- Question numbers will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Main Quiz Container -->
+    <main class="quiz-container">
+        <!-- Quiz Interface -->
+        <div class="quiz-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="current-question-number" id="questionNumber">
+                    Question 1 of 30
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <!-- Question -->
+            <div class="question-text" id="questionText">
+                à®•à¯‡à®³à¯à®µà®¿ à®à®±à¯à®±à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯...
+            </div>
+            
+            <!-- Options -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+
+            <!-- Answer Feedback -->
+            <div class="answer-feedback" id="answerFeedback">
+                <!-- Feedback will be inserted here -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="quiz-footer">
+                <button class="quiz-btn prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="quiz-btn next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <div class="footer-logo-image">
+                <img src="logo.jpg" alt="Jassif Team Logo">
+            </div>
+            <div>Jassif Team - Advanced SQL Answer Key</div>
+        </div>
+        <div class="footer-text">
+            &copy; 2024 Jassif Team. All rights reserved. | Advanced SQL Concepts Answer Key
+        </div>
+    </footer>
+
+    <script>
+        // Advanced SQL Questions with Topics
+        const quizData = [
+            { 
+                question: "SQL à®‡à®²à¯ Correlated Subquery à®Žà®µà¯à®µà®¾à®±à¯ à®µà¯‡à®²à¯ˆ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®®à¯à®¤à®©à¯à®®à¯ˆ query à®’à®µà¯à®µà¯Šà®°à¯ row à®•à¯à®•à¯à®®à¯ subquery à®‡à®¯à®•à¯à®•à¯à®•à®¿à®±à®¤à¯",
+                    "Subquery à®®à¯à®¤à®²à®¿à®²à¯ à®‡à®¯à®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®Ÿà¯ à®®à¯à®Ÿà®¿à®µà¯ cache à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯",
+                    "à®‡à®°à®£à¯à®Ÿà¯ queries à®‡à®£à¯ˆà®¯à®¾à®• à®‡à®¯à®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®•à®¿à®©à¯à®±à®©",
+                    "Subquery à®®à¯à®¤à®©à¯à®®à¯ˆ query à®‡à®©à¯ WHERE clause à® à®ªà®¾à®¤à®¿à®•à¯à®•à®¾à®¤à¯"
+                ], 
+                correct: 0,
+                explanation: "Correlated Subquery à®‡à®²à¯, subquery à®®à¯à®¤à®©à¯à®®à¯ˆ query à®‡à®©à¯ à®’à®µà¯à®µà¯Šà®°à¯ row à®•à¯à®•à¯à®®à¯ à®¤à®©à®¿à®¤à¯à®¤à®©à®¿à®¯à®¾à®• à®‡à®¯à®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ à®šà¯†à®¯à®²à¯à®¤à®¿à®±à®©à¯ˆ à®•à¯à®±à¯ˆà®•à¯à®•à¯à®®à¯, à®†à®©à®¾à®²à¯ à®šà®¿à®•à¯à®•à®²à®¾à®© à®¨à®¿à®ªà®¨à¯à®¤à®©à¯ˆà®•à®³à¯ˆ à®šà®°à®¿à®ªà®¾à®°à¯à®•à¯à®• à®ªà®¯à®©à¯à®³à¯à®³à®¤à¯."
+            },
+            { 
+                question: "SQL Query Optimizer Index à® à®Žà®ªà¯à®ªà¯‹à®¤à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤ à®®à¯à®Ÿà®¿à®µà¯ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "SELECTED rows 30% à®•à¯à®•à¯à®®à¯ à®•à¯à®±à¯ˆà®µà®¾à®• à®‡à®°à¯à®•à¯à®•à¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "à®…à®Ÿà¯à®Ÿà®µà®£à¯ˆ à®®à¯à®´à¯à®µà®¤à¯à®®à¯ scan à®šà¯†à®¯à¯à®µà®¤à¯ˆ à®µà®¿à®Ÿ index scan à®µà¯‡à®•à®®à®¾à®• à®‡à®°à¯à®•à¯à®•à¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "Index statistics à®ªà¯à®¤à¯à®ªà¯à®ªà®¿à®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®Ÿà®¿à®°à¯à®•à¯à®•à¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "à®®à¯‡à®²à¯‡ à®‰à®³à¯à®³ à®…à®©à¯ˆà®¤à¯à®¤à¯à®®à¯"
+                ], 
+                correct: 3,
+                explanation: "Query Optimizer à®ªà®² à®•à®¾à®°à®£à®¿à®•à®³à¯ˆ à®•à®°à¯à®¤à¯à®¤à®¿à®²à¯ à®•à¯Šà®£à¯à®Ÿà¯ Index à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤ à®®à¯à®Ÿà®¿à®µà¯ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯: 1. à®¤à¯‡à®°à¯à®¨à¯à®¤à¯†à®Ÿà¯à®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®Ÿ rows à®šà®¤à®µà¯€à®¤à®®à¯, 2. Index selectivity, 3. Statistics à®¤à¯à®²à¯à®²à®¿à®¯à®®à¯, 4. Data distribution."
+            },
+            { 
+                question: "Covering Index à®Žà®©à¯à®±à®¾à®²à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "Query à®‡à®©à¯ à®…à®©à¯ˆà®¤à¯à®¤à¯ columns à®¯à¯à®®à¯ index à®‡à®²à¯ à®‰à®³à¯à®³à®©",
+                    "Index à®®à¯à®´à¯ à®…à®Ÿà¯à®Ÿà®µà®£à¯ˆà®¯à¯ˆà®¯à¯à®®à¯ cover à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯",
+                    "Index tablespace à®®à¯à®´à¯à®µà®¤à¯à®®à¯ cover à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯",
+                    "Primary key à®®à®±à¯à®±à¯à®®à¯ foreign key columns cover à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®•à®¿à®©à¯à®±à®©"
+                ], 
+                correct: 0,
+                explanation: "Covering Index à®Žà®©à¯à®ªà®¤à¯ query à®‡à®©à¯ SELECT, WHERE, ORDER BY, GROUP BY clauses à®‡à®²à¯ à®‰à®³à¯à®³ à®…à®©à¯ˆà®¤à¯à®¤à¯ columns à®¯à¯à®®à¯ index à®‡à®²à¯ à®‡à®°à¯à®ªà¯à®ªà®¤à¯ˆà®•à¯ à®•à¯à®±à®¿à®•à¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ à®¤à®°à®µà¯à®¤à¯à®¤à®³à®¤à¯à®¤à¯ˆ à®…à®£à¯à®•à®¾à®®à®²à¯ query à®®à¯à®Ÿà®¿à®•à¯à®• à®…à®©à¯à®®à®¤à®¿à®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ Lateral Join à®Žà®ªà¯à®ªà¯‹à®¤à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯?", 
+                options: [
+                    "Subquery column à®•à®³à¯ˆ FROM clause à®‡à®²à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "à®®à¯à®©à¯à®©à®°à¯‡ à®¤à¯†à®°à®¿à®¨à¯à®¤ row count à®‰à®Ÿà®©à¯ join à®šà¯†à®¯à¯à®¯ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "Self join à®šà¯†à®¯à¯à®¯ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "Cross join à®šà¯†à®¯à¯à®¯ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯"
+                ], 
+                correct: 0,
+                explanation: "Lateral Join subquery à®®à®±à¯à®±à¯à®®à¯ à®®à¯à®¤à®©à¯à®®à¯ˆ query à®‡à®Ÿà¯ˆà®¯à¯‡ correlation à®…à®©à¯à®®à®¤à®¿à®•à¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ FROM clause à®‡à®²à¯ subquery column à®•à®³à¯ˆ reference à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "CTE (Common Table Expression) Recursive à®‡à®©à¯ maximum recursion depth?", 
+                options: [
+                    "100 (default), MAXRECURSION option à®®à¯‚à®²à®®à¯ à®®à®¾à®±à¯à®±à®²à®¾à®®à¯",
+                    "1000 (fixed)",
+                    "Unlimited",
+                    "256 (fixed)"
+                ], 
+                correct: 0,
+                explanation: "Recursive CTE à®‡à®©à¯ default maximum recursion depth 100. OPTION (MAXRECURSION 0) à®®à¯‚à®²à®®à¯ unlimited à®†à®• à®…à®®à¯ˆà®•à¯à®•à®²à®¾à®®à¯ (0 = unlimited), à®†à®©à®¾à®²à¯ infinite loop à® à®¤à®µà®¿à®°à¯à®•à¯à®• à®•à®µà®©à®®à®¾à®• à®‡à®°à¯à®•à¯à®• à®µà¯‡à®£à¯à®Ÿà¯à®®à¯."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ Windowing Functions à®‡à®²à¯ ROWS vs RANGE à®µà¯‡à®±à¯à®ªà®¾à®Ÿà¯?", 
+                options: [
+                    "ROWS physical rows, RANGE logical values",
+                    "RANGE physical rows, ROWS logical values",
+                    "à®‡à®°à®£à¯à®Ÿà¯à®®à¯ à®’à®©à¯à®±à¯‡",
+                    "ROWS string à®•à®³à¯à®•à¯à®•à¯, RANGE numbers à®•à®³à¯à®•à¯à®•à¯"
+                ], 
+                correct: 0,
+                explanation: "ROWS physical row positions à®…à®Ÿà®¿à®ªà¯à®ªà®Ÿà¯ˆà®¯à®¿à®²à¯ window à®µà®°à¯ˆà®¯à®±à¯à®•à¯à®•à®¿à®±à®¤à¯ (à®Ž.à®•à®¾: 2 preceding rows). RANGE logical values à®…à®Ÿà®¿à®ªà¯à®ªà®Ÿà¯ˆà®¯à®¿à®²à¯ window à®µà®°à¯ˆà®¯à®±à¯à®•à¯à®•à®¿à®±à®¤à¯ (à®Ž.à®•à®¾: values within 10 of current value)."
+            },
+            { 
+                question: "SQL Server à®‡à®²à¯ Batch Mode Processing à®‡à®©à¯ à®¨à®©à¯à®®à¯ˆ à®Žà®©à¯à®©?", 
+                options: [
+                    "Row-by-row processing à®µà®¿à®Ÿ à®µà¯‡à®•à®®à®¾à®©à®¤à¯",
+                    "Memory usage à®•à¯à®±à¯ˆà®µà¯",
+                    "CPU cache efficiency à®…à®¤à®¿à®•à®®à¯",
+                    "à®®à¯‡à®²à¯‡ à®‰à®³à¯à®³ à®…à®©à¯ˆà®¤à¯à®¤à¯à®®à¯"
+                ], 
+                correct: 3,
+                explanation: "Batch Mode Processing à®’à®°à¯‡ à®¨à¯‡à®°à®¤à¯à®¤à®¿à®²à¯ à®ªà®² rows process à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯ (à®µà®´à®•à¯à®•à®®à®¾à®• 900). à®‡à®¤à¯ modern CPU architectures à®®à®±à¯à®±à¯à®®à¯ columnstore indexes à®‰à®Ÿà®©à¯ à®¨à®©à¯à®•à¯ à®µà¯‡à®²à¯ˆ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯, memory usage à®®à®±à¯à®±à¯à®®à¯ CPU efficiency à®…à®¤à®¿à®•à®°à®¿à®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Query Plan à®‡à®²à¯ Key Lookup (Bookmark Lookup) à®à®©à¯ à®ªà®¿à®°à®šà¯à®šà®©à¯ˆ?", 
+                options: [
+                    "Additional I/O operations à®à®±à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯",
+                    "Index fragmentation à®à®±à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯",
+                    "Transaction log full à®†à®•à®¿à®±à®¤à¯",
+                    "Memory leak à®à®±à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯"
+                ], 
+                correct: 0,
+                explanation: "Key Lookup non-clustered index à® à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®¿ rows à®•à®£à¯à®Ÿà¯à®ªà®¿à®Ÿà®¿à®¤à¯à®¤à¯, clustered index à® à®…à®£à¯à®•à®¿ à®®à¯€à®¤à®®à¯à®³à¯à®³ columns à® à®ªà¯†à®± à®µà¯‡à®£à¯à®Ÿà¯à®®à¯. à®‡à®¤à¯ additional I/O operations à®à®±à¯à®ªà®Ÿà¯à®¤à¯à®¤à®¿ query performance à®•à¯à®±à¯ˆà®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ PIVOT à®‰à®ªà®¯à¯‹à®•à®¿à®•à¯à®•à¯à®®à¯ à®ªà¯‹à®¤à¯ common mistakes?", 
+                options: [
+                    "Dynamic columns à®‰à®³à¯à®³ queries à®šà¯†à®¯à¯à®µà®¤à¯",
+                    "Aggregation functions à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®¾à®®à®²à¯ à®‡à®°à¯à®¤à¯à®¤à®²à¯",
+                    "Column names quotes à®‡à®²à¯ à®‡à®²à¯à®²à®¾à®®à®²à¯ à®‡à®°à¯à®¤à¯à®¤à®²à¯",
+                    "à®®à¯‡à®²à¯‡ à®‰à®³à¯à®³ à®…à®©à¯ˆà®¤à¯à®¤à¯à®®à¯"
+                ], 
+                correct: 3,
+                explanation: "PIVOT à®‰à®ªà®¯à¯‹à®•à®¿à®•à¯à®•à¯à®®à¯ à®ªà¯‹à®¤à¯ common mistakes: 1. Dynamic columns à®‰à®³à¯à®³ queries (PIVOT static columns à®¤à®¾à®©à¯ à®Žà®¤à®¿à®°à¯à®ªà®¾à®°à¯à®•à¯à®•à®¿à®±à®¤à¯), 2. Aggregation function à®‡à®²à¯à®²à®¾à®®à®²à¯, 3. Incorrect column naming, 4. Data type issues."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ Materialized View Refresh Strategies?", 
+                options: [
+                    "COMPLETE, FAST, FORCE",
+                    "INCREMENTAL, FULL, PARTIAL",
+                    "IMMEDIATE, DEFERRED, ON COMMIT",
+                    "AUTO, MANUAL, SCHEDULED"
+                ], 
+                correct: 0,
+                explanation: "Materialized View refresh strategies: COMPLETE (à®®à¯à®´à¯ view à®®à¯€à®£à¯à®Ÿà¯à®®à¯ à®‰à®°à¯à®µà®¾à®•à¯à®•à®®à¯), FAST (incremental changes à®®à®Ÿà¯à®Ÿà¯à®®à¯), FORCE (FAST à®®à¯à®Ÿà®¿à®¯à¯à®®à®¾à®©à®¾à®²à¯, à®‡à®²à¯à®²à¯ˆà®¯à¯†à®©à¯à®±à®¾à®²à¯ COMPLETE)."
+            },
+            { 
+                question: "Parameter Sniffing à®Žà®©à¯à®±à®¾à®²à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "Query plan cache à®†à®•à¯à®®à¯à®ªà¯‹à®¤à¯ parameter values based à®†à®• optimized à®šà¯†à®¯à¯à®¤à®²à¯",
+                    "SQL injection vulnerabilities à® à®•à®£à¯à®Ÿà®±à®¿à®¤à®²à¯",
+                    "Stored procedure parameters validate à®šà¯†à®¯à¯à®¤à®²à¯",
+                    "Query parameters encrypt à®šà¯†à®¯à¯à®¤à®²à¯"
+                ], 
+                correct: 0,
+                explanation: "Parameter Sniffing à®Žà®©à¯à®ªà®¤à¯ query à®®à¯à®¤à®²à®¿à®²à¯ compile à®†à®•à¯à®®à¯à®ªà¯‹à®¤à¯, à®…à®ªà¯à®ªà¯‹à®¤à¯ˆà®¯ parameter values à®…à®Ÿà®¿à®ªà¯à®ªà®Ÿà¯ˆà®¯à®¿à®²à¯ optimal plan à®¤à¯‡à®°à¯à®µà¯ à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ à®šà®¿à®² à®¨à¯‡à®°à®™à¯à®•à®³à®¿à®²à¯ subsequent executions à®•à¯à®•à¯ suboptimal plans à®à®±à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®®à¯."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ LEAD() à®®à®±à¯à®±à¯à®®à¯ LAG() functions à®µà¯‡à®±à¯à®ªà®¾à®Ÿà¯?", 
+                options: [
+                    "LEAD() à®…à®Ÿà¯à®¤à¯à®¤ row, LAG() à®®à¯à®¨à¯à®¤à¯ˆà®¯ row",
+                    "LAG() à®…à®Ÿà¯à®¤à¯à®¤ row, LEAD() à®®à¯à®¨à¯à®¤à¯ˆà®¯ row",
+                    "à®‡à®°à®£à¯à®Ÿà¯à®®à¯ à®’à®©à¯à®±à¯‡, à®µà¯†à®µà¯à®µà¯‡à®±à¯ syntax",
+                    "LEAD() ascending order, LAG() descending order"
+                ], 
+                correct: 0,
+                explanation: "LEAD() function à®¤à®±à¯à®ªà¯‹à®¤à¯ˆà®¯ row à®•à¯à®•à¯ à®ªà®¿à®±à®•à¯ à®µà®°à¯à®®à¯ row à®‡à®©à¯ value à® à®¤à®°à¯à®•à®¿à®±à®¤à¯. LAG() function à®¤à®±à¯à®ªà¯‹à®¤à¯ˆà®¯ row à®•à¯à®•à¯ à®®à¯à®©à¯à®©à®°à¯ à®µà®¨à¯à®¤ row à®‡à®©à¯ value à® à®¤à®°à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Database Partitioning à®šà¯†à®¯à¯à®¯à¯à®®à¯ à®ªà¯‹à®¤à¯ Partition Key à®¤à¯‡à®°à¯à®µà¯ à®µà®¿à®¤à®¿à®•à®³à¯?", 
+                options: [
+                    "Frequently queried columns, Even data distribution",
+                    "Rarely updated columns, Sequential values",
+                    "Foreign key columns, Small data types",
+                    "Primary key columns, Null values à®‡à®²à¯à®²à®¾à®¤à®¤à¯"
+                ], 
+                correct: 0,
+                explanation: "Partition Key à®¤à¯‡à®°à¯à®µà¯: 1. Frequently queried columns (partition pruning à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤), 2. Even data distribution (à®…à®©à¯ˆà®¤à¯à®¤à¯ partitions à®¯à¯à®®à¯ à®šà®® à®…à®³à®µà¯ à®¤à®°à®µà¯), 3. Business logic match (data retention policies), 4. JOIN operations consider."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ MERGE statement à®‰à®ªà®¯à¯‹à®•à®¿à®•à¯à®•à¯à®®à¯ à®ªà¯‹à®¤à¯ performance considerations?", 
+                options: [
+                    "Source table index à®‰à®³à¯à®³à®¤à®¾ à®Žà®©à¯à®ªà®¤à¯",
+                    "Target table triggers disable à®šà¯†à®¯à¯à®¯ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯",
+                    "Batch processing à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯",
+                    "à®®à¯‡à®²à¯‡ à®‰à®³à¯à®³ à®…à®©à¯ˆà®¤à¯à®¤à¯à®®à¯"
+                ], 
+                correct: 3,
+                explanation: "MERGE statement performance considerations: 1. Source table à®‰à®³à¯à®³ indexes, 2. Disable unnecessary triggers during operation, 3. Batch large operations, 4. Appropriate indexes on target table, 5. Statistics up-to-date."
+            },
+            { 
+                question: "SQL Server Query Store features?", 
+                options: [
+                    "Query performance history, Forced plans, Regression detection",
+                    "Automatic index creation, Query rewriting",
+                    "Data encryption, Access control",
+                    "Backup automation, Disaster recovery"
+                ], 
+                correct: 0,
+                explanation: "Query Store features: 1. Query performance history tracking, 2. Plan forcing (specific plan select), 3. Performance regression detection, 4. Wait statistics analysis, 5. Multiple plan comparison."
+            },
+            { 
+                question: "Temporal Tables à®‰à®ªà®¯à¯‹à®•à®¿à®ªà¯à®ªà®¤à®©à¯ à®¨à®©à¯à®®à¯ˆà®•à®³à¯?", 
+                options: [
+                    "Automatic history tracking, Point-in-time analysis",
+                    "Improved query performance, Reduced storage",
+                    "Automatic indexing, Query optimization",
+                    "Data compression, Encryption"
+                ], 
+                correct: 0,
+                explanation: "Temporal Tables à®¨à®©à¯à®®à¯ˆà®•à®³à¯: 1. Automatic history tracking, 2. Point-in-time queries, 3. Audit trail, 4. Data recovery, 5. Simplified application code."
+            },
+            { 
+                question: "Columnstore Indexes à®‰à®ªà®¯à¯‹à®•à®¿à®•à¯à®• à®‰à®•à®¨à¯à®¤ scenarios?", 
+                options: [
+                    "Data warehousing, Analytics queries, Large scans",
+                    "OLTP workloads, Single row lookups",
+                    "Small tables, Frequent updates",
+                    "Real-time transactions, Row-based operations"
+                ], 
+                correct: 0,
+                explanation: "Columnstore Indexes à®‰à®•à®¨à¯à®¤ scenarios: 1. Data warehousing, 2. Analytics/Reporting queries, 3. Large table scans, 4. Aggregation queries, 5. Star schema queries."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ Recursive Queries à®‡à®²à¯ termination conditions?", 
+                options: [
+                    "Anchor à®®à®±à¯à®±à¯à®®à¯ recursive members",
+                    "WHILE loops",
+                    "GOTO statements",
+                    "BREAK commands"
+                ], 
+                correct: 0,
+                explanation: "Recursive CTE termination conditions: 1. Anchor member (starting point), 2. Recursive member (iterative part), 3. Termination when no rows returned, 4. MAXRECURSION option."
+            },
+            { 
+                question: "Query Plan à®‡à®²à¯ Parallelism (CXPACKET) waits à®à®©à¯ à®à®±à¯à®ªà®Ÿà¯à®•à®¿à®©à¯à®±à®©?", 
+                options: [
+                    "Parallel query execution threads synchronization",
+                    "CPU contention",
+                    "Memory pressure",
+                    "Disk I/O bottlenecks"
+                ], 
+                correct: 0,
+                explanation: "CXPACKET waits parallel query execution à®‡à®²à¯ threads synchronization à®•à¯à®•à®¾à®• à®à®±à¯à®ªà®Ÿà¯à®•à®¿à®©à¯à®±à®©. à®‡à®¤à¯ à®’à®°à¯ thread à®®à®±à¯à®± threads complete à®†à®• à®•à®¾à®¤à¯à®¤à®¿à®°à¯à®•à¯à®•à¯à®®à¯à®ªà¯‹à®¤à¯ à®à®±à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "SQL Server In-Memory OLTP à®Žà®µà¯à®µà®¾à®±à¯ traditional disk-based tables à®µà®¿à®Ÿ à®µà¯‡à®•à®®à®¾à®©à®¤à¯?", 
+                options: [
+                    "No latching/locking, Optimized for memory",
+                    "Larger cache size, Faster disks",
+                    "Better compression, Reduced logging",
+                    "Automatic indexing, Query optimization"
+                ], 
+                correct: 0,
+                explanation: "In-Memory OLTP à®µà¯‡à®•à®®à®¾à®© à®•à®¾à®°à®£à®™à¯à®•à®³à¯: 1. Memory-optimized data structures, 2. No latching/locking (optimistic concurrency), 3. Native compilation, 4. Reduced logging, 5. Schemaå›ºå®š."
+            },
+            { 
+                question: "Database Sharding strategies?", 
+                options: [
+                    "Range-based, Hash-based, Directory-based",
+                    "Vertical, Horizontal, Diagonal",
+                    "Primary, Secondary, Tertiary",
+                    "Local, Global, Hybrid"
+                ], 
+                correct: 0,
+                explanation: "Sharding strategies: 1. Range-based (customer IDs A-M, N-Z), 2. Hash-based (hash function on shard key), 3. Directory-based (lookup table), 4. Geographic, 5. Tenant-based."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ Anti-Join implementations à®µà¯‡à®±à¯à®ªà®¾à®Ÿà¯?", 
+                options: [
+                    "NOT EXISTS vs LEFT JOIN/IS NULL",
+                    "IN vs EXISTS",
+                    "JOIN vs UNION",
+                    "WHERE vs HAVING"
+                ], 
+                correct: 0,
+                explanation: "Anti-Join implementations: 1. NOT EXISTS (correlated subquery), 2. LEFT JOIN/IS NULL. Performance difference depends on data size, indexes, and database optimizer."
+            },
+            { 
+                question: "Query Plan à®‡à®²à¯ Sort Warning (Spill to tempdb) à®à®©à¯ à®à®±à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "Sort operation memory insufficient",
+                    "Tempdb configuration issues",
+                    "Query timeout",
+                    "Lock escalation"
+                ], 
+                correct: 0,
+                explanation: "Sort Warning à®Žà®©à¯à®ªà®¤à¯ sort operationà®•à¯à®•à¯ à®ªà¯‹à®¤à®¿à®¯ memory à®‡à®²à¯à®²à®¾à®¤à®ªà¯‹à®¤à¯, tempdb à®•à¯à®•à¯ data spill à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®µà®¤à¯ˆ à®•à¯à®±à®¿à®•à¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ query performance à®•à¯à®±à¯ˆà®•à¯à®•à¯à®®à¯."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ Window Functions à®‡à®²à¯ Frame Clause à®‰à®¤à®¾à®°à®£à®®à¯?", 
+                options: [
+                    "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+                    "WHERE column = value",
+                    "GROUP BY column",
+                    "HAVING COUNT(*) > 1"
+                ], 
+                correct: 0,
+                explanation: "Frame Clause window function calculation à®šà¯†à®¯à¯à®¯à¯à®®à¯ rows à® à®•à¯à®±à®¿à®ªà¯à®ªà®¿à®Ÿà¯à®•à®¿à®±à®¤à¯. à®‰à®¤à®¾à®°à®£à®®à¯: ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW (à®¤à¯Šà®Ÿà®•à¯à®•à®¤à¯à®¤à®¿à®²à®¿à®°à¯à®¨à¯à®¤à¯ à®¤à®±à¯à®ªà¯‹à®¤à¯ˆà®¯ row à®µà®°à¯ˆ)."
+            },
+            { 
+                question: "Database Index Maintenance best practices?", 
+                options: [
+                    "Regular REBUILD/REORGANIZE based on fragmentation",
+                    "Disable indexes during business hours",
+                    "Create indexes on all columns",
+                    "Never update statistics"
+                ], 
+                correct: 0,
+                explanation: "Index Maintenance best practices: 1. Monitor fragmentation, 2. REBUILD (>30% fragmentation), 3. REORGANIZE (5-30% fragmentation), 4. Update statistics regularly, 5. Consider fill factor."
+            },
+            { 
+                question: "SQL Server AlwaysOn Availability Groups synchronous vs asynchronous commit?", 
+                options: [
+                    "Synchronous: zero data loss, higher latency",
+                    "Asynchronous: potential data loss, lower latency",
+                    "Both provide same guarantees",
+                    "Synchronous for local, asynchronous for remote"
+                ], 
+                correct: 0,
+                explanation: "Synchronous commit: primary transaction commit à®†à®•à¯à®®à¯ à®®à¯à®©à¯ secondary confirm, zero data loss, higher latency. Asynchronous commit: primary commit without waiting secondary, potential data loss, lower latency."
+            },
+            { 
+                question: "Query Plan à®‡à®²à¯ Missing Indexes suggestions reliability?", 
+                options: [
+                    "Consider starting point only, not definitive",
+                    "Always implement immediately",
+                    "Ignore completely",
+                    "Database automatically implements them"
+                ], 
+                correct: 0,
+                explanation: "Missing Indexes suggestions starting point à®®à®Ÿà¯à®Ÿà¯à®®à¯‡. Consider: 1. Impact on other queries, 2. Update/Insert performance, 3. Storage requirements, 4. Existing indexes overlap, 5. Business requirements."
+            },
+            { 
+                question: "SQL à®‡à®²à¯ Recursive Query performance tuning tips?", 
+                options: [
+                    "Anchor member selective, Recursive member efficient",
+                    "Use WHILE loops instead",
+                    "Avoid recursion entirely",
+                    "Use temporary tables always"
+                ], 
+                correct: 0,
+                explanation: "Recursive Query performance tips: 1. Anchor member highly selective, 2. Recursive member efficient join conditions, 3. Appropriate indexes, 4. Consider iteration count, 5. Test with MAXRECURSION."
+            },
+            { 
+                question: "Database Connection Pooling optimal settings?", 
+                options: [
+                    "Based on workload, Monitor performance",
+                    "Always maximum connections",
+                    "Minimum connections only",
+                    "Fixed number regardless of load"
+                ], 
+                correct: 0,
+                explanation: "Connection Pooling settings: 1. Min pool size (warm connections), 2. Max pool size (resource limits), 3. Connection lifetime, 4. Based on workload patterns, 5. Monitor connection wait times."
+            },
+            { 
+                question: "SQL Server Temporal Tables vs Change Data Capture (CDC) à®µà¯‡à®±à¯à®ªà®¾à®Ÿà¯?", 
+                options: [
+                    "Temporal: application-level, CDC: replication/log-based",
+                    "CDC: application-level, Temporal: replication",
+                    "Both identical",
+                    "Temporal for DML, CDC for DDL"
+                ], 
+                correct: 0,
+                explanation: "Temporal Tables: application-level history, automatic, queryable. CDC: replication/log-based, requires enabling, external process consumption. Different use cases and implementations."
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let answeredQuestions = new Array(quizData.length).fill(false);
+
+        // DOM elements
+        const questionSelectionGrid = document.getElementById('questionSelectionGrid');
+        const questionNumberElement = document.getElementById('questionNumber');
+        const questionTextElement = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const answerFeedback = document.getElementById('answerFeedback');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+
+        // Initialize question selection grid
+        function initializeQuestionGrid() {
+            questionSelectionGrid.innerHTML = '';
+            quizData.forEach((question, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'question-number-btn';
+                btn.dataset.index = index;
+                
+                const difficultyIndicator = document.createElement('div');
+                difficultyIndicator.className = 'difficulty-indicator';
+                btn.appendChild(difficultyIndicator);
+                
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'question-number';
+                numberSpan.textContent = index + 1;
+                btn.appendChild(numberSpan);
+                
+                if (index === 0) {
+                    btn.classList.add('active');
+                }
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    updateQuestionGrid();
+                });
+                
+                questionSelectionGrid.appendChild(btn);
+            });
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const buttons = document.querySelectorAll('.question-number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = quizData[currentQuestionIndex];
+            
+            questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            questionTextElement.textContent = question.question;
+            
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            optionsContainer.innerHTML = '';
+            
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.dataset.optionIndex = index;
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            answerFeedback.style.display = 'none';
+            answerFeedback.className = 'answer-feedback';
+            answerFeedback.innerHTML = '';
+            
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            const question = quizData[currentQuestionIndex];
+            const optionElements = document.querySelectorAll('.quiz-option');
+            
+            optionElements.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            const selectedOption = optionElements[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            if (optionIndex === question.correct) {
+                selectedOption.classList.add('correct');
+                showFeedback(true, question.explanation);
+            } else {
+                selectedOption.classList.add('incorrect');
+                const correctOption = optionElements[question.correct];
+                correctOption.classList.add('correct');
+                showFeedback(false, question.explanation);
+            }
+            
+            if (!answeredQuestions[currentQuestionIndex]) {
+                answeredQuestions[currentQuestionIndex] = true;
+                updateQuestionGrid();
+            }
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect, explanation) {
+            answerFeedback.className = `answer-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            const icon = isCorrect ? 'fa-check-circle' : 'fa-times-circle';
+            const message = isCorrect ? 'à®šà®°à®¿à®¯à®¾à®© à®µà®¿à®Ÿà¯ˆ!' : 'à®¤à®µà®±à®¾à®© à®µà®¿à®Ÿà¯ˆ!';
+            
+            answerFeedback.innerHTML = `
+                <div>
+                    <i class="fas ${icon} feedback-icon"></i>
+                    <strong>${message}</strong> ${explanation}
+                </div>
+            `;
+            
+            answerFeedback.style.display = 'block';
+            answerFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        // Initialize
+        initializeQuestionGrid();
+        loadQuestion();
+    </script>
+</body>
+</html>

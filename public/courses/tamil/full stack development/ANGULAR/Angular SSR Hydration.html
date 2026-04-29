@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular SSR & Hydration - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20Security.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="certificate.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular SSR & Hydration</h2>
+<p>Server-Side Rendering மற்றும் Hydration-ஐக் கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular SSR & Hydration</h2>
+<p>SSR சர்வரில் HTML-ஐ வழங்குகிறது, மற்றும் hydration கிளையண்டில் அந்த HTML-ஐ மீண்டும் பயன்படுத்துகிறது மாநிலம் மற்றும் கேட்போர்களை இணைப்பதன் மூலம்.</p>
+</section>
+
+<!-- SSR & Hydration Essentials -->
+<section class="content-section" id="essentials">
+<h2>SSR & Hydration Essentials</h2>
+<p><strong>SSR:</strong> வேகமான முதல் ஓவியம் மற்றும் SEO-க்காக சர்வரில் HTML-ஐ முன்கூட்டியே வழங்குகிறது.</p>
+<p><strong>Hydration:</strong> மாநிலம் மற்றும் கேட்போர்களை இணைப்பதன் மூலம் கிளையண்டில் சர்வர் HTML-ஐ மீண்டும் பயன்படுத்துகிறது (முழு மறு-வழங்கல் இல்லை).</p>
+<p><strong>Determinism:</strong> வழங்கல் வெளியீட்டைக் கணிக்கக்கூடியதாக வைத்திருங்கள்; விளைவுகளை idempotent-ஆக ஆக்குங்கள்.</p>
+
+<div class="code-example">
+<h3>Deterministic Render Example</h3>
+<pre><code>// Deterministic render (no random IDs during render)
+@Component({ template: `&lt;div&gt;Hello&lt;/div&gt;` })
+class App {}</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">💡</span>Jassif Team Tips:</h4>
+<p>App Bootstrap, Router, and HTTP பற்றி காண்க.</p>
+<p>விளைவுகளை idempotent-ஆக வைத்திருங்கள் மற்றும் மென்மையான hydration உறுதிப்படுத்த கணிக்க முடியாத வழங்கலைத் தவிர்க்கவும்.</p>
+</div>
+</section>
+
+<!-- Hydration-safe Checks -->
+<section class="content-section" id="hydration-checks">
+<h2>Hydration-safe Checks</h2>
+<p>பிரௌசர்-மட்டும் APIs-ஐ பிரௌசரில் இயங்கும்போது மட்டுமே அழைக்கவும்.</p>
+<p>அம்சக் கண்டறிதல் அல்லது தள சரிபார்ப்புகளுடன் பாதுகாக்கவும்.</p>
+
+<div class="code-example">
+<h3>Feature Detection</h3>
+<pre><code>// Simple feature detection
+const isBrowser = typeof window !== 'undefined';
+
+// Angular platform check
+import { PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
+const platformId = inject(PLATFORM_ID);
+const onBrowser = isPlatformBrowser(platformId);</code></pre>
+</div>
+
+<div class="code-example">
+<h3>Complete Example</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;SSR & Hydration&lt;/h3&gt;
+    &lt;p&gt;Is Browser: {{ isBrowser }}&lt;/p&gt;
+  `
+})
+class App {
+  isBrowser = typeof window !== 'undefined';
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">⚠️</span>Example Explained:</h4>
+<p><strong>isBrowser:</strong> குறியீடு பிரௌசரில் இயங்குகிறதா என்பதைச் சரிபார்க்க typeof window !== 'undefined' பயன்படுத்துகிறது.</p>
+<p><strong>Hydration-safe:</strong> சர்வர் வழங்கலின் போது பிரௌசர்-மட்டும் APIs-ஐ அணுகுவதைத் தவிர்க்கிறது; கிளையண்டில் hydration-க்குப் பிறகு மட்டுமே அவற்றைப் படிக்கிறது.</p>
+<p><strong>SSR → Hydration:</strong> சர்வர் ஆரம்ப HTML-ஐ வழங்குகிறது; கிளையண்ட் கேட்போர்கள்/மாநிலத்தை முழு பார்வையையும் மறுவழங்காமல் இணைக்கிறது.</p>
+</div>
+
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-check-circle"></i>
+<h4>Guidelines</h4>
+</div>
+<p>SSR-ன் போது window/document-ஐ அணுகுவதைத் தவிர்க்கவும்.</p>
+<p>முதலில் கிடைப்பதைச் சரிபார்க்கவும்.</p>
+<p>பக்க விளைவுகளை (எ.கா., நிகழ்வு கேட்போர்கள், அளவீடுகள்) hydration-க்குப் பிறகு தள்ளுபடி செய்யவும்.</p>
+<p>பயனர்-முகவர் சரிபார்ப்புகளை விட அம்சக் கண்டறிதலைப் பயன்படுத்தவும்.</p>
+</div>
+</div>
+</section>
+
+<!-- SSR Tips -->
+<section class="content-section" id="ssr-tips">
+<h2>SSR Tips</h2>
+<p>தூய, கணிக்கக்கூடிய டெம்ப்ளேட்டுகளைப் பயன்படுத்தவும் (வழங்கலின் போது சீரற்ற மதிப்புகளைத் தவிர்க்கவும்).</p>
+<p>கனரக வேலையை post-hydration இயங்கும் விளைவுகளுக்குத் தள்ளுபடி செய்யவும்.</p>
+<p>கிளையண்டில் SSR-பெறப்பட்ட தரவை மீண்டும் பயன்படுத்த TransferState பயன்படுத்தவும்.</p>
+
+<div class="code-example">
+<h3>TransferState Example</h3>
+<pre><code>import { TransferState, makeStateKey } from '@angular/platform-browser';
+
+const DATA_KEY = makeStateKey('initial-data');
+// Server: state.set(DATA_KEY, data)
+// Client: const cached = state.get(DATA_KEY, null);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">🚀</span>Best Practices:</h4>
+<p>சர்வர் மற்றும் கிளையண்டில் IDs-ஐ உறுதிப்படுத்தவும் பொருந்தாமையைத் தவிர்க்க.</p>
+<p>வழங்கலின் போது நேர-சார்ந்த சீரற்றத்தைத் தவிர்க்கவும்; தேவைப்படும் இடத்தில் hydration-க்குப் பிறகு கணக்கிடவும்.</p>
+<p>இரட்டை-பெறுதலைத் தடுக்க SSR-பெறப்பட்ட தரவை TransferState மூலம் கேச் செய்யவும்.</p>
+</div>
+
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-server"></i>
+<div>
+<strong>Server-Side:</strong> தூய மற்றும் கணிக்கக்கூடிய கூறு வழங்கலை உறுதிப்படுத்தவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-sync-alt"></i>
+<div>
+<strong>Hydration:</strong> மாநிலம் மற்றும் நிகழ்வு கட்டுப்பாடுகளை மென்மையாக இணைக்கவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-database"></i>
+<div>
+<strong>Data Transfer:</strong> இரட்டை API கோரிக்கைகளைத் தடுக்க TransferState பயன்படுத்தவும்
+</div>
+</div>
+</div>
+</section>
+
+<!-- SSR vs CSR Comparison -->
+<section class="content-section" id="ssr-vs-csr">
+<h2>SSR vs CSR Comparison</h2>
+<div class="comparison-table">
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>SSR (Server-Side Rendering)</th>
+<th>CSR (Client-Side Rendering)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Initial Load</strong></td>
+<td>Faster (HTML from server)</td>
+<td>Slower (JavaScript bundle first)</td>
+</tr>
+<tr>
+<td><strong>SEO</strong></td>
+<td>Better (search engines see content)</td>
+<td>Poorer (JS required for content)</td>
+</tr>
+<tr>
+<td><strong>First Paint</strong></td>
+<td>Immediate</td>
+<td>After JS download & execution</td>
+</tr>
+<tr>
+<td><strong>Hydration</strong></td>
+<td>Required (attach listeners)</td>
+<td>Not applicable</td>
+</tr>
+<tr>
+<td><strong>Server Load</strong></td>
+<td>Higher (renders each request)</td>
+<td>Lower (static files)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>SSR & Hydration Quiz</h2>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>What does hydration do in an Angular SSR setup?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">Replaces server HTML with brand new client HTML</div>
+<div class="option-feedback incorrect">✗ Incorrect! Hydration reuses server HTML, doesn't replace it</div>
+</div>
+</div>
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">Reuses server-rendered HTML and wires up event listeners/state</div>
+<div class="option-feedback correct">✓ Correct! Hydration attaches Angular's runtime to existing server HTML without re-rendering</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">Disables client-side routing</div>
+<div class="option-feedback incorrect">✗ Incorrect! Hydration works with client-side routing; it doesn't disable it</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20Security.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="certificate.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education in Tamil.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">SSR & Hydration</a></li>
+<li><a href="#essentials">SSR Essentials</a></li>
+<li><a href="#hydration-checks">Hydration Checks</a></li>
+<li><a href="#ssr-tips">SSR Tips</a></li>
+<li><a href="#ssr-vs-csr">SSR vs CSR</a></li>
+<li><a href="#exercise">Quiz</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contact</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Location &amp; Hours</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

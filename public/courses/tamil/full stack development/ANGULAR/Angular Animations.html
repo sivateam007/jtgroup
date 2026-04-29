@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Animations - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20State%20Management.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Testing.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Animations</h2>
+<p>Angular-இல் அனிமேஷன்களைக் கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Animations</h2>
+<p>Angular-இல் அனிமேஷன்கள் declarative முறையில் உள்ளன: component-இல் trigger/transition/animate-ஐ வரையறுத்து, தரவுகளிலிருந்து state-ஐ toggle செய்யவும்; app-wide-ஆக provideAnimations() மூலம் செயல்படுத்தவும்.</p>
+</section>
+
+<!-- Animations Essentials -->
+<section class="content-section" id="essentials">
+<h2>அனிமேஷன் அத்தியாவசியங்கள்</h2>
+<p><strong>trigger:</strong> டெம்ப்ளேட்டில் bind செய்யப்பட்ட ஒரு பெயரிடப்பட்ட அனிமேஷனை வரையறுக்கவும் (எ.கா., [@openClose]).</p>
+<p><strong>transition:</strong> எப்போது இயங்கும் என்பதை அறிவிக்கவும் (state மாற்றங்கள் அல்லது wildcards போன்ற * <=> *).</p>
+<p><strong>animate:</strong> கால அளவு/எளிதாக்குதல் மற்றும் style() மூலம் இறுதி பாணிகளை அமைக்கவும்.</p>
+
+<h3>அமைப்பு:</h3>
+<ul>
+<li><strong>நிறுவு:</strong> npm install @angular/animations</li>
+<li><strong>செயல்படுத்து:</strong> provideAnimations() மூலம் app-wide-ஆக அனிமேஷன்களை வழங்கவும்</li>
+<li><strong>தவிர்க்க:</strong> provideNoopAnimations()-ஐப் பயன்படுத்தி இயக்கத்தை முடக்கவும் (எ.கா., சோதனைகளில்)</li>
+</ul>
+
+<div class="code-example">
+<h3>அடிப்படை அனிமேஷன் அமைப்பு</h3>
+<pre><code>import { trigger, state, style, transition, animate } from '@angular/animations';
+
+@Component({
+  animations: [
+    trigger('openClose', [
+      state('open', style({ opacity: 1 })),
+      state('closed', style({ opacity: 0 })),
+      transition('open <=> closed', [animate('200ms ease-in-out')])
+    ])
+  ]
+})
+class App {}</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">💡</span>Jassif Team குறிப்பு:</h4>
+<p>அனிமேஷன்களை component-இல் declarative-ஆக வைத்து, state மூலம் toggle செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Example Explained -->
+<section class="content-section" id="example-explained">
+<h2>எடுத்துக்காட்டு விளக்கம்</h2>
+<p><strong>trigger('openClose'):</strong> டெம்ப்ளேட்டில் [@openClose] உடன் பயன்படுத்தப்படும் பெயரிடப்பட்ட அனிமேஷனை வரையறுக்கிறது.</p>
+<p><strong>state():</strong> ஒவ்வொரு state-க்கும் இறுதி பாணிகளை அறிவிக்கிறது (எ.கா., open மற்றும் closed).</p>
+<p><strong>transition('open <=> closed'):</strong> state-களுக்கு இடையில் மாறும்போது இயங்குகிறது; animate('200ms ease-in-out') கால அளவு/எளிதாக்குதலை அமைக்கிறது.</p>
+
+<div class="warning-box">
+<h4><span class="warning-icon">⚠️</span>முக்கிய குறிப்புகள்:</h4>
+<p>Components and Templates பற்றி காண்க.</p>
+<p>அனிமேஷன்களை component-இல் declarative-ஆக வைத்து, state மூலம் toggle செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Component Animations -->
+<section class="content-section" id="component-animations">
+<h2>கூறு அனிமேஷன்கள்</h2>
+<p>கூறில் triggers-ஐ வரையறுக்கவும்.</p>
+<p>டெம்ப்ளேட்டுகளை எளிமையாக வைத்திருப்பதற்காக தரவுகள் மூலம் state-ஐ toggle செய்யவும்.</p>
+
+<div class="code-example">
+<h3>டெம்ப்ளேட் பயன்பாடு</h3>
+<pre><code>&lt;div [@openClose]="open ? 'open' : 'closed'"&gt;...&lt;/div&gt;
+
+toggle() { this.open = !this.open; }</code></pre>
+</div>
+
+<div class="code-example">
+<h3>முழுமையான எடுத்துக்காட்டு</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  animations: [
+    trigger('openClose', [
+      state('open', style({ height: '80px', opacity: 1 })),
+      state('closed', style({ height: '0px', opacity: 0 })),
+      transition('open <=> closed', [animate('200ms ease-in-out')])
+    ])
+  ],
+  template: `
+    &lt;h3&gt;Animations&lt;/h3&gt;
+    &lt;button (click)="open = !open"&gt;Toggle&lt;/button&gt;
+    &lt;div [@openClose]="open ? 'open' : 'closed'" style="overflow:hidden;background:#e3f2fd;margin-top:8px"&gt;Panel&lt;/div&gt;
+  `
+})
+class App { open = true; }
+
+bootstrapApplication(App, { providers: [provideAnimations()] });</code></pre>
+</div>
+</section>
+
+<!-- Best Practices -->
+<section class="content-section" id="best-practices">
+<h2>சிறந்த நடைமுறைகள் & செயல்திறன்</h2>
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-check-circle"></i>
+<h4>பரிந்துரைக்கப்படுகிறது</h4>
+</div>
+<p>மென்மையான இயக்கத்திற்காக opacity/transform-ஐ animate செய்யவும்</p>
+</div>
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-times-circle"></i>
+<h4>தவிர்க்க</h4>
+</div>
+<p>layout பண்புகள் (width/height போன்றவை) அதிக செலவாகும்</p>
+</div>
+</div>
+
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-thumbs-up"></i>
+<div>
+<strong>State-driven:</strong> அனிமேஷன்களை declarative-ஆக வைத்து, கூறு state மூலம் இயக்கவும்
+</div>
+</div>
+<div class="practice-item negative">
+<i class="fas fa-thumbs-down"></i>
+<div>
+<strong>தவிர்க்க:</strong> கட்டாயமான DOM அழைப்புகள்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-universal-access"></i>
+<div>
+<strong>அணுகல்:</strong> prefers-reduced-motion-ஐ மரியாதை செய்து, பொருத்தமான போது குறுகிய அல்லது முடக்கப்பட்ட அனிமேஷன்கள்
+</div>
+</div>
+</div>
+</section>
+
+<!-- Reusable Animations -->
+<section class="content-section" id="reusable-animations">
+<h2>மீண்டும் பயன்படுத்தக்கூடிய அனிமேஷன்கள்</h2>
+<div class="code-example">
+<pre><code>import { animation, style, animate, useAnimation } from '@angular/animations';
+
+// மீண்டும் பயன்படுத்தக்கூடிய அனிமேஷன் வரையறை
+export const fadeIn = animation([
+  style({ opacity: 0 }),
+  animate('{{time}} ease-out', style({ opacity: 1 }))
+]);
+
+// கூறு trigger-இல்:
+// transition(':enter', [ useAnimation(fadeIn, { params: { time: '200ms' } }) ])</code></pre>
+</div>
+</section>
+
+<!-- Providing Animations -->
+<section class="content-section" id="providing-animations">
+<h2>அனிமேஷன்களை வழங்குதல்</h2>
+<p>provideAnimations()-ஐப் பயன்படுத்தி app-ஆகிய முழுவதும் அனிமேஷன்களைச் செயல்படுத்தவும்.</p>
+<p>சோதனைகளில் அல்லது நீங்கள் இயக்கத்தை முடக்க விரும்பும்போது provideNoopAnimations() ஐப் பயன்படுத்தவும்.</p>
+
+<div class="code-example">
+<h3>அனிமேஷன் வழங்குநர்கள்</h3>
+<pre><code>import { provideAnimations, provideNoopAnimations } from '@angular/platform-browser/animations';
+
+bootstrapApplication(App, { providers: [provideAnimations()] });
+// சோதனைகள் அல்லது தவிர்ப்பு:
+// bootstrapApplication(App, { providers: [provideNoopAnimations()] });</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">🧪</span>சோதனை குறிப்புகள்:</h4>
+<p>provideNoopAnimations() ஐப் பயன்படுத்தி நிலையான நேரத்திற்காக சோதனைகளில் அனிமேஷன்களை முடக்கவும்.</p>
+<p>Feature-flag அல்லது குறைந்த-சக்தி சாதனங்களில் கனமான அனிமேஷன்களை முடக்கவும்.</p>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>கற்றல் பயிற்சி</h2>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>Angular-இல் அனிமேஷன்களை முழு பயன்பாடாக செயல்படுத்துவதற்கு எந்த செயல்பாட்டைப் பயன்படுத்துவீர்கள்?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">provideAnimations()</div>
+<div class="option-feedback correct">✓ சரி! provideAnimations() அனிமேஷன்களை முழு Angular பயன்பாடாக செயல்படுத்தப் பயன்படுகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">provideHttpClient()</div>
+<div class="option-feedback incorrect">✗ தவறு! provideHttpClient() HTTP கிளையண்ட் செயல்பாட்டிற்காகப் பயன்படுகிறது, அனிமேஷன்களுக்கு அல்ல</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">provideRouter()</div>
+<div class="option-feedback incorrect">✗ தவறு! provideRouter() ரூட்டிங் செயல்பாட்டிற்காகப் பயன்படுகிறது, அனிமேஷன்களுக்கு அல்ல</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20State%20Management.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Testing.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+</div>
+<div class="footer-column">
+<h3>விரைவு இணைப்புகள்</h3>
+<ul>
+<li><a href="#introduction">Angular Animations</a></li>
+<li><a href="#essentials">அனிமேஷன் அத்தியாவசியங்கள்</a></li>
+<li><a href="#example-explained">எடுத்துக்காட்டு விளக்கம்</a></li>
+<li><a href="#component-animations">கூறு அனிமேஷன்கள்</a></li>
+<li><a href="#best-practices">சிறந்த நடைமுறைகள்</a></li>
+<li><a href="#exercise">பயிற்சி</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>தொடர்பு</h3>
+<ul>
+<li><a href="#">எங்களைப் பற்றி</a></li>
+<li><a href="#">எங்களைத் தொடர்பு கொள்ள</a></li>
+<li><a href="#">இடம் &amp; நேரங்கள்</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>எங்களைப் பின்தொடரவும்</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

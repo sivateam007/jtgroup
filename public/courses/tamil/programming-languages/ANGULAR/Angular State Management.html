@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular State Management - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20Reactive%20Forms%20Advanced.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Animations.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular State Management</h2>
+<p>நிலை மேலாண்மை நுட்பங்களைக் கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular State Management</h2>
+<p>நிலை மேலாண்மை தரவு காலப்போக்கில் எவ்வாறு மாறுகிறது என்பதை ஒழுங்கமைக்கிறது.</p>
+</section>
+
+<!-- State Management Essentials -->
+<section class="content-section" id="essentials">
+<h2>State Management Essentials</h2>
+<p><strong>Local first:</strong> கூறு சிக்னல்களுடன் தொடங்கவும்; பகிர்வு தேவைப்படும்போது மட்டுமே ஒரு சேவைக்கு (ஸ்டோர்) மேம்படுத்தவும்.</p>
+<p><strong>Signals:</strong> உள்ளூர் மற்றும் சேவை-ஆதரவு நிலைக்கு signal() பயன்படுத்தவும்; computed() மூலம் பெறவும்.</p>
+<p><strong>Interop:</strong> ஸ்ட்ரீம் குறிப்பியல் தேவைப்படும்போது மட்டுமே RxJS பயன்படுத்தவும்; உலகளாவிய நிலையை குறைவாக வைத்திருங்கள்.</p>
+
+<div class="code-example">
+<h3>Signal-based Store Example</h3>
+<pre><code>import { Injectable, signal, computed, inject } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+class CounterStore {
+  count = signal(0);
+  double = computed(() =&gt; this.count() * 2);
+  inc() { this.count.update(n =&gt; n + 1); }
+}
+
+// Component: const store = inject(CounterStore);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">💡</span>Jassif Team Notes:</h4>
+<p>Signals, Services, and Change Detection பற்றி காண்க.</p>
+<p>எளிமையான சேவை + சிக்னல்களுடன் தொடங்கவும்; சிக்கலானது கோரும் போது மட்டுமே நூலகங்களை அடையவும்.</p>
+</div>
+</section>
+
+<!-- Service-backed Signals (Store) -->
+<section class="content-section" id="service-signals">
+<h2>Service-backed Signals (Store)</h2>
+<p>கூறுகளுக்கு இடையே பகிர்வதற்கு நிலையை ஒரு சேவைக்கு உயர்த்தவும்.</p>
+<p>இது மறுபயன்பாட்டை மேம்படுத்துகிறது.</p>
+
+<div class="code-example">
+<h3>Service Store Setup</h3>
+<pre><code>import { Injectable, signal, inject } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+class CounterStore {
+  count = signal(0);
+  inc() { this.count.update(n =&gt; n + 1); }
+}
+
+// Component usage
+class App { store = inject(CounterStore); }</code></pre>
+</div>
+
+<div class="code-example">
+<h3>Complete Example</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, Injectable, signal, inject } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+class CounterStore {
+  count = signal(0);
+  inc() { this.count.update(n =&gt; n + 1); }
+}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Service with Signals&lt;/h3&gt;
+    &lt;p&gt;Count: {{ store.count() }}&lt;/p&gt;
+    &lt;button (click)="store.inc()"&gt;Increment&lt;/button&gt;
+  `
+})
+class App { store = inject(CounterStore); }
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>Example Explained:</h4>
+<p><strong>CounterStore:</strong> ஒரு சிக்னல் மற்றும் புதுப்பிப்பு முறையை (inc()) வைத்திருக்கும் ஒரு சேவை.</p>
+<p><strong>inject(CounterStore):</strong> கூறில் ஸ்டோரை மீட்டெடுக்கிறது (உருவாக்கி தேவையில்லை).</p>
+<p><strong>store.count():</strong> டெம்ப்ளேட்டில் தற்போதைய மதிப்பைப் படிக்கவும்; பொத்தானைக் கிளிக் செய்வது store.inc() அழைக்கிறது.</p>
+</div>
+
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-database"></i>
+<div>
+<strong>Single source of truth:</strong> ஒரு அம்சத்திற்கு ஒற்றை மூல உண்மையை ஒரு சேவையில் வைத்திருங்கள்; தேவைப்படும் இடத்தில் உட்செலுத்தவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-lock"></i>
+<div>
+<strong>Encapsulate updates:</strong> புதுப்பிப்புகளுக்கான முறைகளை வெளிப்படுத்தவும்; கூறுகளிலிருந்து நேரடியாக நிலையை மாற்றுவதைத் தவிர்க்கவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-calculator"></i>
+<div>
+<strong>Derived values:</strong> கணக்கிடப்பட்ட சிக்னல்களுடன் மதிப்புகளைப் பெறவும்; பக்க விளைவுகளை (நிலைத்தன்மை போன்றவை) சேவையில் வைக்கவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-exchange-alt"></i>
+<div>
+<strong>Stream interop:</strong> RxJS-அடிப்படையிலான APIs உடன் இடைநிலை செய்ய வேண்டியபோது மட்டுமே ஸ்ட்ரீம்களுக்கு பாலம் அமைக்கவும்
+</div>
+</div>
+</div>
+</section>
+
+<!-- Local vs Global State -->
+<section class="content-section" id="local-vs-global">
+<h2>Local vs Global State</h2>
+<p>இணைப்பைக் குறைக்க பெரும்பாலான நிலையை கூறுகளுக்கு உள்ளூராக வைத்திருங்கள்.</p>
+<p>பல அம்சங்களுக்குத் தேவைப்படும்போது மட்டுமே பகிரப்பட்ட சேவைக்கு மேம்படுத்தவும்.</p>
+<p>தனிமைப்படுத்துதல் விரும்பப்படும் போது வழங்குநர்களை அம்சம்/பாதை நிலையில் நோக்குநிலைப்படுத்தவும்.</p>
+
+<div class="code-example">
+<h3>Scoped State Providers</h3>
+<pre><code>import { provideRouter, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', component: Home, providers: [CounterStore] }
+];
+
+bootstrapApplication(App, { providers: [provideRouter(routes)] });</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">⚖️</span>State Management Guidelines:</h4>
+<p><strong>Promote state when:</strong> பல பாதைகள்/கூறுகளுக்கு ஒரே தரவு தேவைப்படும்போது அல்லது கேச்சிங் UX-ஐ மேம்படுத்தும்போது.</p>
+<p><strong>Separate UI state:</strong> UI நிலையை (வடிப்பான்கள், உரையாடல்கள்) சர்வர்/கேச் நிலையிலிருந்து பிரிக்கவும்; அவற்றை சுயாதீனமாக நிர்வகிக்கவும்.</p>
+<p><strong>Initialize lazily:</strong> முதல் பயன்பாட்டில் சோம்பேறியாகத் தொடங்கவும் மற்றும் மீட்டமைப்பு புள்ளிகளைக் கருத்தில் கொள்ளவும் (எ.கா., வெளியேற்றும் போது).</p>
+</div>
+
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-home"></i>
+<h4>Local State</h4>
+</div>
+<p>கூறுக்குள் கட்டுப்படுத்தப்பட்டது</p>
+<p>சிறிய இணைப்பு</p>
+<p>எளிதான சோதனை</p>
+<p>எ.கா: படிவ நிலை, UI தொகுதிகள்</p>
+</div>
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-globe"></i>
+<h4>Global State</h4>
+</div>
+<p>சேவை மூலம் பகிரப்படுகிறது</p>
+<p>பல கூறுகளுக்கு தேவை</p>
+<p>சிக்கலான நிர்வகிப்பு</p>
+<p>எ.கா: பயனர் தகவல், கேச் செய்யப்பட்ட தரவு</p>
+</div>
+</div>
+</section>
+
+<!-- State Management Patterns -->
+<section class="content-section" id="patterns">
+<h2>State Management Patterns</h2>
+<div class="comparison-table">
+<table>
+<thead>
+<tr>
+<th>முறை</th>
+<th>சிறந்தது எதற்கு</th>
+<th>செயல்படுத்தல்</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Component Signals</strong></td>
+<td>உள்ளூர் UI நிலை, படிவ கட்டுப்பாடுகள்</td>
+<td>கூறு உள்ளே signal()</td>
+</tr>
+<tr>
+<td><strong>Service Store</strong></td>
+<td>பகிரப்பட்ட அம்ச நிலை</td>
+<td>சிக்னல்களுடன் உட்செலுத்தக்கூடிய சேவை</td>
+</tr>
+<tr>
+<td><strong>Route-level State</strong></td>
+<td>அம்சம்-குறிப்பிட்ட தரவு</td>
+<td>பாதை மட்டத்தில் வழங்குநர்கள்</td>
+</tr>
+<tr>
+<td><strong>Computed Signals</strong></td>
+<td>பெறப்பட்ட மதிப்புகள், மாற்றங்கள்</td>
+<td>சேவை/கூறில் computed()</td>
+</tr>
+<tr>
+<td><strong>Effect Functions</strong></td>
+<td>பக்க விளைவுகள், நிலைத்தன்மை</td>
+<td>சேவையில் effect()</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>நிலை மேலாண்மை வினாடி வினா</h2>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>பகிரப்பட்ட அம்ச நிலை பொதுவாக Angular-ல் எங்கு இருக்க வேண்டும்?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">கூறு உள்ளூர் மாறிகளுக்குள்</div>
+<div class="option-feedback incorrect">✗ தவறு! கூறு உள்ளூர் மாறிகள் கூறுகளுக்கு இடையில் பகிரப்படுவதில்லை</div>
+</div>
+</div>
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">சிக்னல்களைப் பயன்படுத்தும் ஒரு சேவையில் (ஒரு ஸ்டோர்)</div>
+<div class="option-feedback correct">✓ சரி! சிக்னல்களுடன் கூடிய சேவைகள் கூறுகளுக்கிடையே நிலையை பகிர்வதற்கும் நிர்வகிப்பதற்கும் ஒரு சுத்தமான வழியை வழங்குகின்றன</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">உலகளாவிய சாளர பண்புகளாக</div>
+<div class="option-feedback incorrect">✗ தவறு! உலகளாவிய சாளர பண்புகள் Angular-ன் செயல்பாட்டுத் தன்மை மற்றும் சார்பு உட்செலுத்தலை முறியடிக்கின்றன</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20Reactive%20Forms%20Advanced.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Animations.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+</div>
+<div class="footer-column">
+<h3>விரைவு இணைப்புகள்</h3>
+<ul>
+<li><a href="#introduction">நிலை மேலாண்மை</a></li>
+<li><a href="#essentials">அத்தியாவசியங்கள்</a></li>
+<li><a href="#service-signals">சேவை சிக்னல்கள்</a></li>
+<li><a href="#local-vs-global">உள்ளூர் vs உலகளாவிய</a></li>
+<li><a href="#patterns">முறைகள்</a></li>
+<li><a href="#exercise">வினாடி வினா</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>தொடர்பு</h3>
+<ul>
+<li><a href="#">எங்களைப் பற்றி</a></li>
+<li><a href="#">எங்களைத் தொடர்பு கொள்ள</a></li>
+<li><a href="#">இடம் &amp; நேரங்கள்</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>எங்களைப் பின்தொடரவும்</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

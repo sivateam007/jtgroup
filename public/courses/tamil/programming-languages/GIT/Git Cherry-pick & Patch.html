@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Cherry-pick & Patch - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Git Signing.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Git Merge Conflicts.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Git Cherry-pick & Patch</h2>
+            <p>தனிப்பட்ட கமிட்டுகள் மற்றும் மாற்றங்களைத் தேர்ந்தெடுத்து பயன்படுத்தவும்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is Cherry-pick -->
+        <section class="content-section" id="what-is-cherry-pick">
+            <h2>Cherry-pick என்றால் என்ன?</h2>
+            
+            <p>Cherry-pick உங்களை ஒரு கிளையில் இருந்து ஒரு கமிட்டை மற்றொரு கிளைக்கு நகலெடுக்க அனுமதிக்கிறது. மற்றொரு கிளையில் இருந்து எல்லாவற்றையும் அல்ல, ஒன்று (அல்லது சில) மாற்றங்களை மட்டும் வேண்டும்போது இது பயனுள்ளதாக இருக்கும்.</p>
+        </section>
+
+        <!-- What is a Patch -->
+        <section class="content-section" id="what-is-patch">
+            <h2>Patch என்றால் என்ன?</h2>
+            
+            <p>ஒரு பேட்ச் என்பது ஒன்று அல்லது அதற்கு மேற்பட்ட கமிட்டுகளில் இருந்து மாற்றங்களைக் கொண்ட ஒரு கோப்பு. ஒரு பேட்சைப் பகிரலாம் அல்லது அதை மற்றொரு களஞ்சியத்தில் பயன்படுத்தலாம், அது உங்கள் சொந்தத்துடன் தொடர்புடையதாக இல்லாவிட்டாலும் கூட.</p>
+        </section>
+
+        <!-- When to Use Each -->
+        <section class="content-section" id="when-to-use">
+            <h2>ஒவ்வொன்றையும் எப்போது பயன்படுத்துவது</h2>
+            
+            <p>அதே களஞ்சியத்தில் கிளைகளுக்கு இடையே ஒரு கமிட்டை நகலெடுக்க cherry-pick பயன்படுத்தவும்.</p>
+            
+            <p>கோப்புகளாக மாற்றங்களைப் பகிர அல்லது வெவ்வேறு களஞ்சியங்களில் பணிபுரியும் போது பேட்ச்களைப் பயன்படுத்தவும்.</p>
+        </section>
+
+        <!-- How to Cherry-pick a Commit -->
+        <section class="content-section" id="how-to-cherry-pick">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h2>ஒரு கமிட்டை Cherry-pick செய்வது எப்படி</h2>
+            </div>
+            
+            <p>மற்றொரு கிளையில் இருந்து ஒரு குறிப்பிட்ட கமிட்டை உங்கள் தற்போதைய கிளைக்கு நகலெடுக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: ஒரு கமிட்டை Cherry-pick செய்யவும்</h3>
+                <pre><code class="command-input">git cherry-pick abc1234</code></pre>
+            </div>
+            
+            <p>இது அதே மாற்றங்களுடன் உங்கள் கிளையில் ஒரு புதிய கமிட்டை உருவாக்குகிறது.</p>
+        </section>
+
+        <!-- Edit the Commit Message -->
+        <section class="content-section" id="edit-commit-message">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h2>கமிட் செய்தியைத் திருத்தவும்</h2>
+            </div>
+            
+            <p>Cherry-pick செய்யும் போது கமிட் செய்தியை மாற்ற <code>--edit</code> பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: கமிட் செய்தியைத் திருத்தவும்</h3>
+                <pre><code class="command-input">git cherry-pick abc1234 --edit</code></pre>
+            </div>
+        </section>
+
+        <!-- Apply Without Committing -->
+        <section class="content-section" id="apply-without-commit">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h2>கமிட் இல்லாமல் பயன்படுத்தவும்</h2>
+            </div>
+            
+            <p>மாற்றங்களைப் பயன்படுத்த, ஆனால் இன்னும் கமிட்டை உருவாக்காமல் இருக்க <code>--no-commit</code> (அல்லது <code>-n</code>) பயன்படுத்தவும். கமிட் செய்வதற்கு முன் அதிக மாற்றங்களைச் செய்ய இது உங்களை அனுமதிக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: கமிட் இல்லாமல் Cherry-pick செய்யவும்</h3>
+                <pre><code class="command-input">git cherry-pick abc1234 --no-commit</code></pre>
+            </div>
+        </section>
+
+        <!-- Add Commit Origin -->
+        <section class="content-section" id="add-commit-origin">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h2>கமிட் தோற்றத்தைச் சேர்க்கவும்</h2>
+            </div>
+            
+            <p>கமிட் எங்கிருந்து வந்தது என்பதைக் காட்டும் வரியை கமிட் செய்தியில் சேர்க்க <code>-x</code> பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: தோற்றத்துடன் Cherry-pick செய்யவும்</h3>
+                <pre><code class="command-input">git cherry-pick abc1234 -x</code></pre>
+            </div>
+        </section>
+
+        <!-- Handling Conflicts -->
+        <section class="content-section" id="handling-conflicts">
+            <h2>முரண்பாடுகளைக் கையாளுதல்</h2>
+            
+            <p>முரண்பாடுகள் இருந்தால், Git இடைநிறுத்தி அவற்றை சரிசெய்ய உங்களிடம் கேட்கும். சரிசெய்த பிறகு, இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: முரண்பாட்டிற்குப் பிறகு தொடரவும்</h3>
+                <pre><code class="command-input">git add .
+git cherry-pick --continue</code></pre>
+            </div>
+            
+            <p>Cherry-pick ஐ ரத்து செய்ய, பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: Cherry-pick ஐ கைவிடவும்</h3>
+                <pre><code class="command-input">git cherry-pick --abort</code></pre>
+            </div>
+        </section>
+
+        <!-- How to Create a Patch -->
+        <section class="content-section" id="create-patch">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h2>ஒரு பேட்சை உருவாக்குவது எப்படி</h2>
+            </div>
+            
+            <p>ஒரு கமிட்டில் இருந்து ஒரு பேட்ச் கோப்பை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: பேட்ச் உருவாக்கவும்</h3>
+                <pre><code class="command-input">git format-patch -1 abc1234</code></pre>
+            </div>
+            
+            <p>பல கமிட்டுகளுக்கு:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: பல கமிட்டுகள்</h3>
+                <pre><code class="command-input">git format-patch HEAD~3</code></pre>
+            </div>
+        </section>
+
+        <!-- How to Apply a Patch -->
+        <section class="content-section" id="apply-patch">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <h2>ஒரு பேட்சைப் பயன்படுத்துவது எப்படி</h2>
+            </div>
+            
+            <p>ஒரு பேட்ச் கோப்பை உங்கள் தற்போதைய கிளைக்குப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: பேட்சைப் பயன்படுத்தவும்</h3>
+                <pre><code class="command-input">git apply 0001-some-change.patch</code></pre>
+            </div>
+        </section>
+
+        <!-- Apply a Patch and Keep Metadata -->
+        <section class="content-section" id="apply-patch-metadata">
+            <div class="step-header">
+                <div class="step-number">7</div>
+                <h2>பேட்சைப் பயன்படுத்தவும் மற்றும் மெட்டாடேட்டாவை வைத்திருக்கவும்</h2>
+            </div>
+            
+            <p>ஒரு பேட்சைப் பயன்படுத்தவும் மற்றும் அசல் ஆசிரியர் மற்றும் செய்தியை வைத்திருக்க <code>git am</code> பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: மெட்டாடேட்டாவுடன் பேட்சைப் பயன்படுத்தவும்</h3>
+                <pre><code class="command-input">git am 0001-some-change.patch</code></pre>
+            </div>
+        </section>
+
+        <!-- Reverse a Patch -->
+        <section class="content-section" id="reverse-patch">
+            <div class="step-header">
+                <div class="step-number">8</div>
+                <h2>ஒரு பேட்சைத் தலைகீழாக மாற்றவும்</h2>
+            </div>
+            
+            <p>ஒரு பேட்ச் கோப்பில் உள்ள மாற்றங்களை செயல்தவிர்க்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்: தலைகீழ் பேட்ச்</h3>
+                <pre><code class="command-input">git apply -R 0001-some-change.patch</code></pre>
+            </div>
+        </section>
+
+        <!-- Tip Box -->
+        <section class="content-section" id="tip">
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> Jassif Team உதவிக்குறிப்பு</h4>
+                <p>அதே களஞ்சியத்தில் ஒரு கமிட்டை நகலெடுக்க cherry-pick பயன்படுத்தவும்.</p>
+                <p>கோப்புகளாக மாற்றங்களைப் பகிர அல்லது களஞ்சியங்களில் பணிபுரியும் போது பேட்ச்களைப் பயன்படுத்தவும்.</p>
+                <p>கமிட் வரலாறு மற்றும் ஆசிரியர்களை வைத்திருக்க விரும்பினால், <code>git apply</code> க்கு பதிலாக <code>git am</code> பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- Troubleshooting & Best Practices -->
+        <section class="content-section" id="troubleshooting">
+            <h2>பழுது நீக்குதல் & சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="troubleshooting-grid">
+                <div class="issue-card">
+                    <div class="issue-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h4>Cherry-pick முரண்பாடுகள்</h4>
+                    <p>முரண்பாடுகள் கிடைத்தால், அவற்றை சரிசெய்யவும், பின்னர் <code>git cherry-pick --continue</code> இயக்கவும்.</p>
+                </div>
+                
+                <div class="issue-card">
+                    <div class="issue-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <h4>தேவைப்பட்டால் கைவிடவும்</h4>
+                    <p>தேவைப்பட்டால் <code>git cherry-pick --abort</code> மூலம் கைவிடவும்.</p>
+                </div>
+                
+                <div class="issue-card">
+                    <div class="issue-icon">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <h4>பேட்ச் சுத்தமாகப் பயன்படுத்தப்படவில்லை</h4>
+                    <p>பேட்ச் உங்கள் குறியீட்டுத் தளத்துடன் பொருந்துகிறதா என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள். சில நேரங்களில் நீங்கள் கைமுறையாக சரிசெய்ய வேண்டியிருக்கும்.</p>
+                </div>
+                
+                <div class="issue-card">
+                    <div class="issue-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h4>உங்கள் கிளைகளைப் புதுப்பித்துக் கொள்ளுங்கள்</h4>
+                    <p>Cherry-pick செய்வதற்கு அல்லது பேட்ச்களைப் பயன்படுத்துவதற்கு முன், சமீபத்திய மாற்றங்களை இழுக்கவும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="content-section" id="quick-reference">
+            <h2>விரைவு குறிப்பு</h2>
+            
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-cherries"></i>
+                    </div>
+                    <h3>Cherry-pick</h3>
+                    <p>கமிட்டை நகலெடுக்க</p>
+                    <div class="code-block small">
+                        <pre><code>git cherry-pick abc123</code></pre>
+                    </div>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3>பேட்ச் உருவாக்கவும்</h3>
+                    <p>கமிட்டில் இருந்து பேட்ச்</p>
+                    <div class="code-block small">
+                        <pre><code>git format-patch -1</code></pre>
+                    </div>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-file-import"></i>
+                    </div>
+                    <h3>பேட்ச் பயன்படுத்தவும்</h3>
+                    <p>பேட்சைப் பயன்படுத்தவும்</p>
+                    <div class="code-block small">
+                        <pre><code>git apply patch.patch</code></pre>
+                    </div>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>மெட்டாடேட்டாவுடன் பேட்ச்</h3>
+                    <p>வரலாற்றை வைத்திருக்க</p>
+                    <div class="code-block small">
+                        <pre><code>git am patch.patch</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Git Signing.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Git Merge Conflicts.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-cherry-pick">Cherry-pick என்றால் என்ன?</a></li>
+                    <li><a href="#what-is-patch">Patch என்றால் என்ன?</a></li>
+                    <li><a href="#how-to-cherry-pick">Cherry-pick செய்யவும்</a></li>
+                    <li><a href="#create-patch">பேட்ச் உருவாக்கவும்</a></li>
+                    <li><a href="#troubleshooting">பழுது நீக்குதல்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .benefits-grid, .troubleshooting-grid, .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .benefit-card, .issue-card, .concept-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .benefit-card:hover, .issue-card:hover, .concept-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon, .issue-icon, .concept-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h3, .issue-card h4, .concept-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Step Header Styles */
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            background: var(--git-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.5rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .benefits-grid, .troubleshooting-grid, .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+     <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+    <i class="fas fa-home"></i>
+</a>
+</body>
+</html>

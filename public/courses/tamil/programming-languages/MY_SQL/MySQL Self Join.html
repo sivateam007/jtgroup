@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL Self Join - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+
+        .join-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            display: block;
+            border: 3px solid var(--git-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MySQL CROSS JOIN Keyword.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MySQL UNION Operator.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MySQL Self Join</h2>
+            <p>MySQL இல் Self Join ஐப் பயன்படுத்தி அதே அட்டவணையை தானாக இணைக்க கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- MySQL Self Join -->
+        <section class="content-section" id="self-join">
+            <h2>MySQL Self Join</h2>
+            
+            <p>ஒரு self join என்பது ஒரு வழக்கமான join ஆகும், ஆனால் அட்டவணை தானாகவே இணைக்கப்படுகிறது.</p>
+            
+            <h3>Self Join தொடரியல்</h3>
+            
+            <div class="code-example">
+                <pre><code>SELECT column_name(s)
+FROM table1 T1, table1 T2
+WHERE condition;</code></pre>
+            </div>
+            
+            <p>T1 மற்றும் T2 ஆகியவை ஒரே அட்டவணைக்கான வெவ்வேறு அட்டவணை மாற்றுப் பெயர்கள் ஆகும்.</p>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>டெமோ தரவுத்தளம்</h2>
+            
+            <p>இந்த டுடோரியலில் நன்கு அறியப்பட்ட Northwind மாதிரி தரவுத்தளத்தைப் பயன்படுத்துவோம்.</p>
+            
+            <p>"Customers" அட்டவணையிலிருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CustomerID</th>
+                            <th>CustomerName</th>
+                            <th>ContactName</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>PostalCode</th>
+                            <th>Country</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Alfreds Futterkiste</td>
+                            <td>Maria Anders</td>
+                            <td>Obere Str. 57</td>
+                            <td>Berlin</td>
+                            <td>12209</td>
+                            <td>Germany</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Ana Trujillo Emparedados y helados</td>
+                            <td>Ana Trujillo</td>
+                            <td>Avda. de la Constitución 2222</td>
+                            <td>México D.F.</td>
+                            <td>05021</td>
+                            <td>Mexico</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Antonio Moreno Taquería</td>
+                            <td>Antonio Moreno</td>
+                            <td>Mataderos 2312</td>
+                            <td>México D.F.</td>
+                            <td>05023</td>
+                            <td>Mexico</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- MySQL Self Join Example -->
+        <section class="content-section" id="self-join-example">
+            <h2>MySQL Self Join எடுத்துக்காட்டு</h2>
+            
+            <p>பின்வரும் SQL கூற்று ஒரே நகரத்தைச் சேர்ந்த வாடிக்கையாளர்களை பொருத்துகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City
+ORDER BY A.City;</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Self Join பற்றிய கூற்றுகளை மதிப்பிடவும்</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">Self Join ஒரே அட்டவணையை தானாக இணைக்கப் பயன்படுகிறது</div>
+                            <div class="option-feedback correct">✓ சரி! Self Join ஒரே அட்டவணையை வெவ்வேறு மாற்றுப் பெயர்களுடன் இணைக்கப் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">Self Join க்கு வெவ்வேறு அட்டவணை மாற்றுப் பெயர்கள் தேவை</div>
+                            <div class="option-feedback correct">✓ சரி! ஒரே அட்டவணையை இரண்டு முறை குறிப்பிட வெவ்வேறு மாற்றுப் பெயர்கள் பயன்படுத்தப்படுகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Self Join இரண்டு வெவ்வேறு அட்டவணைகளை இணைக்கப் பயன்படுகிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Self Join ஒரே அட்டவணையை தானாக இணைக்கப் பயன்படுகிறது, வெவ்வேறு அட்டவணைகளை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">WHERE நிபந்தனை Self Join இல் முக்கியமானது</div>
+                            <div class="option-feedback correct">✓ சரி! WHERE நிபந்தனை அதே வரிசைகளைத் தவிர்க்கவும் சரியான பொருத்தத்தை உருவாக்கவும் உதவுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MySQL CROSS JOIN Keyword.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MySQL UNION Operator.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#self-join">MySQL Self Join</a></li>
+                    <li><a href="#demo-database">டெமோ தரவுத்தளம்</a></li>
+                    <li><a href="#self-join-example">Self Join எடுத்துக்காட்டு</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

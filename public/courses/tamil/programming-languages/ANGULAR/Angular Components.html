@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Components - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular Templates TrackBy with ngFor.html">
+<i class="fas fa-arrow-left"></i>
+<span>
+முந்தைய</span>
+</a>
+<a class="nav-tab next" href="Angular Data Binding.html">
+<span>அடுத்தது
+</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Components</h2>
+<p>Angular apps-ன் building blocks-ஐ கற்றுக்கொள்ளுங்கள். ஒவ்வொரு component ஒரு view (அதன் template)-ஐ control செய்கிறது</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Components</h2>
+<p>Components என்பது Angular apps-ன் building blocks ஆகும். ஒவ்வொரு component ஒரு view (அதன் template)-ஐ control செய்கிறது.</p>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i> Component Essentials</h4>
+<ul>
+<li><strong>Build reusable UI blocks with components.</strong></li>
+<li><strong>@Component ties together selector, template, styles, and logic; use the selector (e.g., &lt;hello-comp&gt;) in templates.</strong></li>
+<li><strong>Communicate with parents via @Input() and @Output().</strong></li>
+<li><strong>Project parent content with &lt;ng-content&gt;.</strong></li>
+</ul>
+</div>
+
+<div class="code-example">
+<h3>Component Example</h3>
+<pre><code class="command-input">@Component({ selector: 'hello-comp' })
+&lt;hello-comp&gt;&lt;/hello-comp&gt;</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-info-circle tip-icon"></i> Note</h4>
+<p><strong>Related:</strong> Data Binding, Events, Templates. On-demand UIs-க்கு, Dynamic Components (createComponent(), *ngComponentOutlet) காணவும்.</p>
+</div>
+</section>
+
+<!-- Anatomy of a Component -->
+<section class="content-section" id="anatomy">
+<h2>Anatomy of a Component</h2>
+<p><strong>Selector:</strong> Templates-ல் நீங்கள் வைக்கும் tag (e.g., &lt;app-root&gt;).</p>
+<p><strong>Template and styles:</strong> Inline அல்லது external files.</p>
+<p><strong>Standalone:</strong> standalone: true set செய்யவும் மற்றும் imports-ல் dependencies import செய்யவும்.</p>
+
+<div class="code-example">
+<h3>Component Anatomy Example</h3>
+<pre><code class="command-input">import { Component } from '@angular/core';
+
+@Component({
+  selector: 'hello-comp',
+  standalone: true,
+  imports: [],
+  styles: [`:host { display: block; }`],
+  template: `&lt;p&gt;Hello!&lt;/p&gt;`
+})
+export class HelloComponent {}</code></pre>
+</div>
+</section>
+
+<!-- Component Input -->
+<section class="content-section" id="component-input">
+<h2>Component Input</h2>
+<p>Parent-லிருந்து child-க்கு data pass செய்ய @Input() பயன்படுத்தவும்.</p>
+<p>Parent template-லிருந்து [prop] உடன் bind செய்யவும் (e.g., [name]="parentValue").</p>
+<p><strong>One-way flow:</strong> parent → child.</p>
+<p>Defaults வழங்கவும் மற்றும் predictable templates-க்கு clear types வழங்கவும்.</p>
+
+<div class="code-example">
+<h3>Input Syntax</h3>
+<pre><code class="command-input">@Input() name: string;
+&lt;hello-comp [name]="parentValue"&gt;&lt;/hello-comp&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<p>@Input() உடன் parent-லிருந்து child-க்கு data pass செய்யவும் மற்றும் [prop] உடன் bind செய்யவும்:</p>
+
+<div class="code-example">
+<h3>Input Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'hello-comp',
+  standalone: true,
+  template: `&lt;p&gt;Hello {{ name }} from child!&lt;/p&gt;`
+})
+export class HelloComponent {
+  @Input() name = '';
+}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [HelloComponent],
+  template: `
+    &lt;h3&gt;Parent Component&lt;/h3&gt;
+    &lt;hello-comp [name]="user"&gt;&lt;/hello-comp&gt;
+  `
+})
+export class App {
+  user = 'Angular';
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>@Input() name:</strong> Child component-ல் input property declare செய்கிறது.</li>
+<li><strong>[name]="user":</strong> Parent-ன் user value-ஐ child-ன் name input-க்கு bind செய்கிறது.</li>
+<li><strong>One-way flow:</strong> Data parent → child flow ஆகிறது. Parent state update செய்ய, child-லிருந்து output emit செய்யவும்.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Input names matter:</strong> Template property name-க்கு bind செய்கிறது (அல்லது நீங்கள் alias வழங்கும் போது).</li>
+<li><strong>Don't mutate inputs:</strong> Children-ல் input objects mutate செய்வதை avoid செய்யவும்; event emit செய்யவும் மற்றும் parent update செய்ய அனுமதிக்கவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Component Output -->
+<section class="content-section" id="component-output">
+<h2>Component Output</h2>
+<p>Events-ல் parent-க்கு notify செய்ய @Output() பயன்படுத்தவும்.</p>
+<p>EventEmitter&lt;T&gt; மூலம் emit செய்யவும்; parent (event)="handler($event)" உடன் listen செய்கிறது.</p>
+<p>Simple, well-typed payloads send செய்யவும்.</p>
+
+<div class="code-example">
+<h3>Output Syntax</h3>
+<pre><code class="command-input">@Output() saved = new EventEmitter&lt;number&gt;();
+&lt;child-comp (saved)="onSaved($event)"&gt;&lt;/child-comp&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<p>Child-லிருந்து events emit செய்ய @Output() பயன்படுத்தவும் மற்றும் parent-ல் listen செய்யவும்:</p>
+
+<div class="code-example">
+<h3>Output Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'counter-button',
+  standalone: true,
+  template: `
+    &lt;button (click)="inc()"&gt;Clicked {{ count }} times&lt;/button&gt;
+  `
+})
+export class CounterButton {
+  @Input() step = 1;
+  @Output()
+  /** @type {import('@angular/core').EventEmitter&lt;number&gt;} */
+  clicked = new EventEmitter();
+  count = 0;
+  inc() {
+    this.count += this.step;
+    this.clicked.emit(this.count);
+  }
+}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CounterButton],
+  template: `
+    &lt;h3&gt;Component Output&lt;/h3&gt;
+    &lt;counter-button [step]="2" (clicked)="onChildClicked($event)"&gt;&lt;/counter-button&gt;
+    &lt;p&gt;Parent received: {{ lastCount }}&lt;/p&gt;
+  `
+})
+export class App {
+  lastCount = 0;
+  /** @param {number} n */
+  onChildClicked(n) {
+    this.lastCount = n;
+  }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>@Output() clicked = new EventEmitter&lt;number&gt;():</strong> Parent-க்கு number emit செய்ய output declare செய்கிறது.</li>
+<li><strong>(clicked)="onChildClicked($event)":</strong> Parent clicked event-க்கு listen செய்கிறது; $event emitted number carry செய்கிறது.</li>
+<li><strong>count/step:</strong> Child count-ஐ step மூலம் increment செய்து updated total emit செய்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Note</h4>
+<p><strong>Use outputs to notify actions; keep data fetching and other side effects in services.</strong></p>
+</div>
+</section>
+
+<!-- Content Projection -->
+<section class="content-section" id="content-projection">
+<h2>Content Projection</h2>
+<p>Child component-ல் parent-provided content render செய்யவும்.</p>
+<p>Insertion points-ஐ &lt;ng-content&gt; உடன் mark செய்யவும்.</p>
+<p>Specific slots target செய்ய select பயன்படுத்தவும் (e.g., title vs body).</p>
+
+<div class="code-example">
+<h3>Content Projection Syntax</h3>
+<pre><code class="command-input">&lt;ng-content&gt;&lt;/ng-content&gt;
+&lt;ng-content select="[card-title]"&gt;&lt;/ng-content&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<p>Parent content-ஐ child component-ல் &lt;ng-content&gt; slots உடன் project செய்யவும்:</p>
+
+<div class="code-example">
+<h3>Content Projection Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'w3-card',
+  standalone: true,
+  styles: [`
+    .card { border: 1px solid #ccc; border-radius: 8px; padding: 12px; max-width: 360px; }
+    .card-header { font-weight: 600; margin-bottom: 6px; }
+    .card-body { color: #333; }
+  `],
+  template: `
+    &lt;div class="card"&gt;
+      &lt;div class="card-header"&gt;&lt;ng-content select="[card-title]"&gt;&lt;/ng-content&gt;&lt;/div&gt;
+      &lt;div class="card-body"&gt;&lt;ng-content&gt;&lt;/ng-content&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  `
+})
+export class CardComponent {}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CardComponent],
+  template: `
+    &lt;h3&gt;Content Projection (ng-content)&lt;/h3&gt;
+
+    &lt;w3-card&gt;
+      &lt;span card-title&gt;Welcome&lt;/span&gt;
+      &lt;p&gt;Project any markup into a reusable shell component.&lt;/p&gt;
+    &lt;/w3-card&gt;
+
+    &lt;br&gt;
+
+    &lt;w3-card&gt;
+      &lt;span card-title&gt;Another Card&lt;/span&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Works with lists&lt;/li&gt;
+        &lt;li&gt;Images, buttons, etc.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/w3-card&gt;
+  `
+})
+export class App {}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>&lt;ng-content&gt;:</strong> Parent content-ஐ child component-ன் template-ல் project செய்கிறது.</li>
+<li><strong>select="[card-title]":</strong> Named slot define செய்கிறது; card-title attribute உள்ள elements மட்டுமே அங்கு projected ஆகின்றன.</li>
+<li><strong>Default slot:</strong> Unqualified &lt;ng-content&gt; மீதமுள்ள projected content-ஐ render செய்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Note</h4>
+<p><strong>Define and document projection slots with &lt;ng-content select&gt; so consumers know what to pass.</strong></p>
+</div>
+</section>
+
+<!-- Lifecycle Hooks -->
+<section class="content-section" id="lifecycle-hooks">
+<h2>Lifecycle Hooks</h2>
+<p><strong>Initialization:</strong> Bindings resolved ஆக தேவைப்படும் setup-க்கு ngOnInit பயன்படுத்தவும்.</p>
+<p><strong>Teardown:</strong> Timers/subscriptions clean up செய்ய ngOnDestroy பயன்படுத்தவும்.</p>
+<p><strong>Other hooks include ngOnChanges, ngAfterViewInit, etc.</strong></p>
+
+<div class="code-example">
+<h3>Lifecycle Hooks Example</h3>
+<pre><code class="command-input">import { Component, OnInit, OnDestroy } from '@angular/core';
+
+@Component({ selector: 'demo', standalone: true, template: `&lt;p&gt;Lifecycle&lt;/p&gt;` })
+export class Demo implements OnInit, OnDestroy {
+  intervalId: any;
+  ngOnInit() {
+    this.intervalId = setInterval(() => {/* ... */}, 1000);
+  }
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+  }
+}</code></pre>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Exercise</h2>
+<div class="exercise-box">
+<h4><i class="fas fa-question-circle exercise-icon"></i> Which decorator turns a class into an Angular component?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">@Directive</div>
+<div class="option-feedback incorrect">✗ Incorrect! @Directive decorator directives-க்கு பயன்படுகிறது, components-க்கு அல்ல</div>
+</div>
+</div>
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">@Component</div>
+<div class="option-feedback correct">✓ Correct! @Component decorator ஒரு class-ஐ Angular component ஆக மாற்றுகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">@Injectable</div>
+<div class="option-feedback incorrect">✗ Incorrect! @Injectable decorator services-க்கு பயன்படுகிறது, components-க்கு அல்ல</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular Templates TrackBy with ngFor.html">
+<i class="fas fa-arrow-left"></i>
+<span>
+முந்தைய</span>
+</a>
+<a class="nav-tab next" href="Angular Data Binding.html">
+<span>அடுத்தது
+</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">Components Introduction</a></li>
+<li><a href="#anatomy">Anatomy of a Component</a></li>
+<li><a href="#component-input">Component Input</a></li>
+<li><a href="#component-output">Component Output</a></li>
+<li><a href="#content-projection">Content Projection</a></li>
+<li><a href="#lifecycle-hooks">Lifecycle Hooks</a></li>
+<li><a href="#exercise">Exercise</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contact</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Location &amp; Hours</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

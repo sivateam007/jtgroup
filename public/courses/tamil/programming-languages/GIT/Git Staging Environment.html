@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Staging Environment - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Git New Files.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Git Commit.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Git Staging Environment</h2>
+            <p>Learn how to prepare your changes for commit using the staging area</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is Staging Environment Section -->
+        <section class="content-section" id="what-is-staging">
+            <h2>Staging Environment என்றால் என்ன?</h2>
+            
+            <p>Staging environment (அல்லது staging area) உங்கள் மாற்றங்களுக்கான காத்திருப்பு அறை போன்றது.</p>
+            
+            <p>உங்கள் அடுத்த கமிட்டில் எந்த கோப்புகளைச் சேர்க்க விரும்புகிறீர்கள் என Git-க்கு சொல்ல இதைப் பயன்படுத்துகிறீர்கள்.</p>
+            
+            <p>இது உங்கள் திட்ட வரலாற்றில் என்ன செல்கிறது என்பதைக் கட்டுப்படுத்த உங்களுக்கு அதிகாரம் அளிக்கிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔑</span> Staging-க்கான முக்கிய கட்டளைகள்:</h4>
+                <ul>
+                    <li>git add &lt;file&gt; - ஒரு கோப்பை stage செய்ய</li>
+                    <li>git add --all அல்லது git add -A - அனைத்து மாற்றங்களையும் stage செய்ய</li>
+                    <li>git status - எது staged என்பதைப் பார்க்க</li>
+                    <li>git restore --staged &lt;file&gt; - ஒரு கோப்பை unstage செய்ய</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Stage a File Section -->
+        <section class="content-section" id="stage-file">
+            <h2>git add உடன் ஒரு கோப்பை Stage செய்யவும்</h2>
+            
+            <p>ஒரு கோப்பை staging area-ல் சேர்க்க, git add &lt;file&gt; பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git add index.html</code></pre>
+            </div>
+
+            <p>இப்போது index.html staged ஆகிவிட்டது. எது staged என்பதை git status உடன் சரிபார்க்கலாம்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git status</code></pre>
+                <pre><code class="command-output">On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git restore --staged ..." to unstage)
+    new file: index.html</code></pre>
+            </div>
+        </section>
+
+        <!-- Stage Multiple Files Section -->
+        <section class="content-section" id="stage-multiple">
+            <h2>பல கோப்புகளை Stage செய்யவும் (git add --all, git add -A)</h2>
+            
+            <p>நீங்கள் அனைத்து மாற்றங்களையும் (புதிய, மாற்றப்பட்ட மற்றும் நீக்கப்பட்ட கோப்புகள்) ஒரே நேரத்தில் stage செய்யலாம்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git add --all</code></pre>
+            </div>
+
+            <div class="note-box">
+                <h4>குறிப்பு:</h4>
+                <p>git add -A என்பது git add --all போலவே செயல்படும்.</p>
+            </div>
+        </section>
+
+        <!-- Check Staged Files Section -->
+        <section class="content-section" id="check-staged">
+            <h2>git status உடன் Staged கோப்புகளைச் சரிபார்க்கவும்</h2>
+            
+            <p>எந்த கோப்புகள் staged மற்றும் கமிட் செய்யத் தயாராக உள்ளன என்பதைப் பார்க்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git status</code></pre>
+                <pre><code class="command-output">On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git restore --staged ..." to unstage)
+        new file:   README.md
+        new file:   bluestyle.css
+        new file:   index.html</code></pre>
+            </div>
+        </section>
+
+        <!-- Unstage a File Section -->
+        <section class="content-section" id="unstage-file">
+            <h2>ஒரு கோப்பை Unstage செய்வது எப்படி</h2>
+            
+            <p>தவறுதலாக ஒரு கோப்பை stage செய்திருந்தால், அதை staging area-லிருந்து அகற்றலாம் (unstage செய்யலாம்):</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git restore --staged index.html</code></pre>
+            </div>
+
+            <div class="note-box">
+                <h4>குறிப்பு:</h4>
+                <p>இப்போது index.html staged இல்லை. அதே விளைவிற்கு git reset HEAD index.html-ஐயும் பயன்படுத்தலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Staging Concepts Section -->
+        <section class="content-section" id="staging-concepts">
+            <h2>Staging கருத்துக்கள்</h2>
+            
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3>Staging</h3>
+                    <p>கமிட் செய்யத் தயாராக உள்ள கோப்புகளைத் தேர்ந்தெடுத்தல்</p>
+                    <p>கட்டளை: git add &lt;file&gt;</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Status Check</h3>
+                    <p>எந்த கோப்புகள் staged என்பதைச் சரிபார்க்க</p>
+                    <p>கட்டளை: git status</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <h3>Unstaging</h3>
+                    <p>தவறுதலாக staged கோப்புகளை அகற்றுதல்</p>
+                    <p>கட்டளை: git restore --staged</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Staging Workflow Section -->
+        <section class="content-section" id="staging-workflow">
+            <h2>Staging வேலைப்பாய்வு</h2>
+            
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>கோப்புகளை உருவாக்கவும்/மாற்றவும்</h3>
+                        <p>உங்கள் திட்ட கோப்புகளை உருவாக்கவும் அல்லது மாற்றவும்</p>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>நிலையைச் சரிபார்க்கவும்</h3>
+                        <p>git status உடன் கண்காணிக்கப்படாத கோப்புகளைப் பார்க்கவும்</p>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>கோப்புகளை Stage செய்யவும்</h3>
+                        <p>git add உடன் கமிட் செய்ய விரும்பும் கோப்புகளைத் தேர்ந்தெடுக்கவும்</p>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Staged கோப்புகளைச் சரிபார்க்கவும்</h3>
+                        <p>git status உடன் எல்லாம் சரியாக உள்ளதா என சரிபார்க்கவும்</p>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>தயாராக!</h3>
+                        <p>இப்போது கோப்புகள் கமிட் செய்யத் தயாராக உள்ளன</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting Section -->
+        <section class="content-section" id="troubleshooting">
+            <h2>சிக்கல் தீர்வு</h2>
+            
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>தவறான கோப்பை Stage செய்துவிட்டீர்களா?</h3>
+                    <p><strong>தீர்வு:</strong> அதை unstage செய்ய git restore --staged &lt;file&gt; பயன்படுத்தவும்.</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>ஒரு கோப்பை Stage செய்ய மறந்துவிட்டீர்களா?</h3>
+                    <p><strong>தீர்வு:</strong> நீங்கள் கமிட் செய்வதற்கு முன் git add &lt;file&gt; மீண்டும் இயக்கவும்.</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>எது Staged என்பது உறுதியாகத் தெரியவில்லையா?</h3>
+                    <p><strong>தீர்வு:</strong> எது கமிட் செய்யப்படும் என்பதைப் பார்க்க git status இயக்கவும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">✅</span> நீங்கள் இப்போது கற்றுக்கொண்டவை:</h4>
+                <ul>
+                    <li>Staging environment என்றால் என்ன மற்றும் அது ஏன் முக்கியமானது</li>
+                    <li>git add உடன் தனிப்பட்ட கோப்புகளை Stage செய்வது எப்படி</li>
+                    <li>git add --all உடன் அனைத்து கோப்புகளையும் Stage செய்வது எப்படி</li>
+                    <li>git status உடன் Staged கோப்புகளைச் சரிபார்ப்பது எப்படி</li>
+                    <li>git restore --staged உடன் கோப்புகளை Unstage செய்வது எப்படி</li>
+                </ul>
+            </div>
+
+            <div class="note-box">
+                <h4>அடுத்து என்ன?</h4>
+                <p>இப்போது உங்கள் கோப்புகள் staged ஆகிவிட்டன! அடுத்த பாடத்தில், இந்த staged கோப்புகளை Git களஞ்சியத்தில் கமிட் செய்வது எப்படி என்பதைக் கற்றுக்கொள்வோம்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Git New Files.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Git Commit.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-staging">Staging Environment</a></li>
+                    <li><a href="#stage-file">கோப்பை Stage செய்தல்</a></li>
+                    <li><a href="#stage-multiple">பல கோப்புகள் Stage செய்தல்</a></li>
+                    <li><a href="#unstage-file">கோப்பை Unstage செய்தல்</a></li>
+                    <li><a href="#troubleshooting">சிக்கல் தீர்வு</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .concept-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .concept-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .concept-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .workflow-steps {
+            margin: 2rem 0;
+        }
+        
+        .workflow-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .step-number {
+            background: var(--git-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .command-input {
+            color: #8be9fd;
+        }
+        
+        .command-output {
+            color: #50fa7b;
+        }
+        
+        .note-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .note-box h4 {
+            color: #1565c0;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Copy code functionality
+        document.querySelectorAll('.code-example').forEach(codeBlock => {
+            const copyButton = document.createElement('button');
+            copyButton.className = 'copy-btn';
+            copyButton.innerHTML = '<i class="far fa-copy"></i> நகலெடு';
+            copyButton.style.cssText = `
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: rgba(255,255,255,0.1);
+                border: 1px solid rgba(255,255,255,0.3);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.8rem;
+                transition: all 0.3s;
+            `;
+            
+            copyButton.addEventListener('mouseenter', () => {
+                copyButton.style.background = 'rgba(255,255,255,0.2)';
+            });
+            
+            copyButton.addEventListener('mouseleave', () => {
+                copyButton.style.background = 'rgba(255,255,255,0.1)';
+            });
+            
+            copyButton.addEventListener('click', () => {
+                const code = codeBlock.querySelector('code').textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    copyButton.innerHTML = '<i class="fas fa-check"></i> நகலெடுக்கப்பட்டது!';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '<i class="far fa-copy"></i> நகலெடு';
+                    }, 2000);
+                });
+            });
+            
+            codeBlock.style.position = 'relative';
+            codeBlock.appendChild(copyButton);
+        });
+    </script>
+     <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+    <i class="fas fa-home"></i>
+</a>
+</body>
+</html>

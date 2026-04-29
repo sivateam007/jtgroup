@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Promises - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Asynchronous Programming.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Async-Await.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Promises</h2>
+            <p>வாக்குறுதிகள் மூலம் அசிங்க்ரோனஸ் நிரலாக்கத்தை எளிதாக்குங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to Promises -->
+        <section class="content-section" id="introduction">
+            <h2>வாக்குறுதிகளுக்கு அறிமுகம்</h2>
+            
+            <p>Node.js இல், வாக்குறுதிகள் பாரம்பரிய கால்பேக்குகளுடன் ஒப்பிடும்போது அசிங்க்ரோனஸ் செயல்பாடுகளைக் கையாள ஒரு தூய்மையான வழியை வழங்குகின்றன.</p>
+            
+            <p>வாக்குறுதிகள் ஒரு அசிங்க்ரோனஸ் செயல்பாட்டின் நிறைவு (அல்லது தோல்வி) மற்றும் அதன் முடிவைக் குறிக்கின்றன.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-clock"></i>
+                        <h4>நிலுவையில்</h4>
+                    </div>
+                    <p>ஆரம்ப நிலை, செயல்பாடு முடிவடையவில்லை</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>நிறைவேறியது</h4>
+                    </div>
+                    <p>செயல்பாடு வெற்றிகரமாக முடிந்தது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-times-circle"></i>
+                        <h4>நிராகரிக்கப்பட்டது</h4>
+                    </div>
+                    <p>செயல்பாடு தோல்வியடைந்தது</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கிய குறிப்பு:</h4>
+                <p>ஒரு வாக்குறுதி தீர்மானிக்கப்பட்ட பிறகு (நிறைவேறியது அல்லது நிராகரிக்கப்பட்டது), அதன் நிலை மாறாது.</p>
+            </div>
+        </section>
+
+        <!-- Benefits of Using Promises -->
+        <section class="content-section" id="benefits">
+            <h2>வாக்குறுதிகளைப் பயன்படுத்துவதன் நன்மைகள்</h2>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>கால்பேக்குகளுடன்</h4>
+                    <div class="code-example">
+                        <pre><code>getUser(id, (err, user) => {
+  if (err) return handleError(err);
+  getOrders(user.id, (err, orders) => {
+    if (err) return handleError(err);
+    // Process orders...
+  });
+});</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>வாக்குறுதிகளுடன்</h4>
+                    <div class="code-example">
+                        <pre><code>getUser(id)
+  .then(user => getOrders(user.id))
+  .then(orders => processOrders(orders))
+  .catch(handleError);</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>சமதள குறியீடு கட்டமைப்பு</h4>
+                    </div>
+                    <p>கால்பேக் நரகத்தைத் தவிர்க்கிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>சிறந்த பிழை கையாளுதல்</h4>
+                    </div>
+                    <p>ஒற்றை .catch() உடன்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-link"></i>
+                        <h4>செயல்பாடுகளை இணைக்க எளிதானது</h4>
+                    </div>
+                    <p>கூட்டு மற்றும் சங்கிலி செயல்பாடுகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>இணையான செயல்பாடுகள்</h4>
+                    </div>
+                    <p>உள்ளமைக்கப்பட்ட ஆதரவு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Callback Hell Example -->
+        <section class="content-section" id="callback-hell">
+            <h2>கால்பேக் நரக எடுத்துக்காட்டு (வாக்குறுதிகள் இல்லாமல்)</h2>
+            
+            <div class="code-example">
+                <pre><code>fs.readFile('file1.txt', (err, data1) => {
+  if (err) throw err;
+  fs.readFile('file2.txt', (err, data2) => {
+    if (err) throw err;
+    fs.readFile('file3.txt', (err, data3) => {
+      if (err) throw err;
+      // Use data1, data2, and data3
+    });
+  });
+});</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> பிரச்சனைகள்:</h4>
+                <ul>
+                    <li>கூடு கட்டிய குறியீடு பராமரிப்பது கடினம்</li>
+                    <li>பிழை கையாளுதல் மீண்டும் மீண்டும்</li>
+                    <li>வாசிப்புத்திறன் மோசமானது</li>
+                    <li>செயல்பாடுகளை இணைக்க கடினம்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Creating and Using Promises -->
+        <section class="content-section" id="creating-promises">
+            <h2>வாக்குறுதிகளை உருவாக்குதல் மற்றும் பயன்படுத்துதல்</h2>
+            
+            <p>வாக்குறுதிகள் Promise கட்டமைப்பாளரைப் பயன்படுத்தி உருவாக்கப்படலாம், இது இரண்டு அளவுருக்களைக் கொண்ட ஒரு செயல்பாட்டை ஏற்கும்: resolve மற்றும் reject.</p>
+            
+            <div class="example-section">
+                <h3>அடிப்படை வாக்குறுதி உருவாக்கம்</h3>
+                <div class="code-example">
+                    <pre><code>// Create a new Promise
+const myPromise = new Promise((resolve, reject) => {
+  // Simulate an async operation (e.g., API call, file read)
+  setTimeout(() => {
+    const success = Math.random() > 0.5;
+    
+    if (success) {
+      resolve('Operation completed successfully');
+    } else {
+      reject(new Error('Operation failed'));
+    }
+  }, 1000); // Simulate delay
+});
+
+// Using the Promise
+myPromise
+  .then(result => console.log('Success:', result))
+  .catch(error => console.error('Error:', error.message));</code></pre>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: வாக்குறுதிகளுடன் கோப்பு படித்தல்</h3>
+                <div class="code-example">
+                    <pre><code>const fs = require('fs').promises;
+const promise1 = Promise.resolve('First result');
+const promise2 = new Promise((resolve) => setTimeout(() => resolve('Second result'), 1000));
+const promise3 = fs.readFile('myfile.txt', 'utf8');
+
+Promise.all([promise1, promise2, promise3])
+  .then(results => {
+    console.log('Results:', results);
+    // results[0] is from promise1
+    // results[1] is from promise2
+    // results[2] is the content of myfile.txt
+  })
+  .catch(error => {
+    console.error('Error in one of the promises:', error);
+  });</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promise Chaining -->
+        <section class="content-section" id="promise-chaining">
+            <h2>வாக்குறுதி சங்கிலியாக்கம்</h2>
+            
+            <p>வாக்குறுதிகள் வரிசையில் அசிங்க்ரோனஸ் செயல்பாடுகளை இயக்க சங்கிலியாக்கப்படலாம், ஒவ்வொரு .then() முந்தைய செயல்பாட்டின் முடிவைப் பெறும்.</p>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: வாக்குறுதி சங்கிலியாக்கம்</h3>
+                <div class="code-example">
+                    <pre><code>function getUser(userId) {
+  return new Promise((resolve, reject) => {
+    // Simulating database call
+    setTimeout(() => {
+      resolve({ id: userId, name: 'John' });
+    }, 1000);
+  });
+}
+
+function getUserPosts(user) {
+  return new Promise((resolve, reject) => {
+    // Simulating API call
+    setTimeout(() => {
+      resolve(['Post 1', 'Post 2', 'Post 3']);
+    }, 1000);
+  });
+}
+
+// Chain the promises
+getUser(123)
+  .then(user => {
+    console.log('User:', user);
+    return getUserPosts(user);
+  })
+  .then(posts => {
+    console.log('Posts:', posts);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promise Methods -->
+        <section class="content-section" id="promise-methods">
+            <h2>வாக்குறுதி முறைகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3>நிகழ்வு முறைகள்</h3>
+                    <ul>
+                        <li><strong>then(onFulfilled, onRejected)</strong> - நிறைவேறுதல் அல்லது நிராகரிப்பைக் கையாளுகிறது</li>
+                        <li><strong>catch(onRejected)</strong> - நிராகரிப்புகளைக் கையாளுகிறது</li>
+                        <li><strong>finally(onFinally)</strong> - வாக்குறுதி தீர்மானிக்கப்பட்ட பிறகு இயங்கும்</li>
+                    </ul>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>நிலையான முறைகள்</h3>
+                    <ul>
+                        <li><strong>Promise.all(iterable)</strong> - அனைத்து வாக்குறுதிகளும் தீர்க்கப்படும் வரை காத்திருக்கிறது</li>
+                        <li><strong>Promise.race(iterable)</strong> - முதல் வாக்குறுதி தீர்மானிக்கப்படும் வரை காத்திருக்கிறது</li>
+                        <li><strong>Promise.allSettled(iterable)</strong> - அனைத்தும் தீர்மானிக்கப்படும் வரை காத்திருக்கிறது</li>
+                    </ul>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3>பயன்பாட்டு முறைகள்</h3>
+                    <ul>
+                        <li><strong>Promise.resolve(value)</strong> - தீர்க்கப்பட்ட வாக்குறுதியை உருவாக்குகிறது</li>
+                        <li><strong>Promise.reject(reason)</strong> - நிராகரிக்கப்பட்ட வாக்குறுதியை உருவாக்குகிறது</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promise.then() -->
+        <section class="content-section" id="promise-then">
+            <h2>Promise.then()</h2>
+            
+            <p>then() முறை இரண்டு வரை வாதங்களை எடுக்கும். வாதங்கள் வாக்குறுதிக்கான வெற்றி மற்றும் தோல்வி நிகழ்வுகளுக்கான கால்பேக் செயல்பாடுகள்.</p>
+            
+            <div class="code-example">
+                <pre><code>myPromise
+  .then(
+    result => console.log(result),
+    error => console.error(error)
+  );</code></pre>
+            </div>
+        </section>
+
+        <!-- Promise.catch() -->
+        <section class="content-section" id="promise-catch">
+            <h2>Promise.catch()</h2>
+            
+            <p>catch() முறை நிராகரிக்கப்பட்ட வாக்குறுதிகளைக் கையாளுகிறது மற்றும் .then(null, errorHandler) க்கு சமமானது.</p>
+            
+            <div class="code-example">
+                <pre><code>myPromise
+  .then(result => console.log(result))
+  .catch(error => console.error(error));</code></pre>
+            </div>
+        </section>
+
+        <!-- Promise.finally() -->
+        <section class="content-section" id="promise-finally">
+            <h2>Promise.finally()</h2>
+            
+            <p>finally() முறை வாக்குறுதி நிறைவேற்றப்பட்டதா அல்லது நிராகரிக்கப்பட்டதா என்பதைப் பொருட்படுத்தாமல் குறியீட்டை இயக்குகிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>myPromise
+  .then(result => console.log(result))
+  .catch(error => console.error(error))
+  .finally(() => console.log('Operation completed'));</code></pre>
+            </div>
+        </section>
+
+        <!-- Promise.all() -->
+        <section class="content-section" id="promise-all">
+            <h2>Promise.all() இணையான செயல்பாட்டிற்கு</h2>
+            
+            <p>Promise.all() பல வாக்குறுதிகளை இணையாக இயக்கப் பயன்படுத்தப்படுகிறது, மேலும் அனைத்தும் முடியும் வரை காத்திருக்கிறது. எந்த வாக்குறுதி நிராகரித்தாலும் அது விரைவாக தோல்வியடைகிறது.</p>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: இணையாக பல வாக்குறுதிகளை இயக்குதல்</h3>
+                <div class="code-example">
+                    <pre><code>const fs = require('fs').promises;
+const promise1 = Promise.resolve('First result');
+const promise2 = new Promise((resolve) => setTimeout(() => resolve('Second result'), 1000));
+const promise3 = fs.readFile('data.txt', 'utf8');
+
+Promise.all([promise1, promise2, promise3])
+  .then(results => {
+    console.log('Results:', results);
+    // results[0] is from promise1
+    // results[1] is from promise2
+    // results[2] is the content of data.txt
+  })
+  .catch(error => {
+    console.error('Error in one of the promises:', error);
+  });</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promise.race() -->
+        <section class="content-section" id="promise-race">
+            <h2>Promise.race() முதல் முடிவுக்கு</h2>
+            
+            <p>Promise.race() முதல் தீர்மானிக்கப்பட்ட வாக்குறுதியின் முடிவு தேவைப்படும் போது பயனுள்ளதாக இருக்கும், அது நிறைவேற்றப்பட்டதா அல்லது நிராகரிக்கப்பட்டதா என்பதைப் பொருட்படுத்தாமல்.</p>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: Promise.race() உடன் நேரம்கடத்தல் முறை</h3>
+                <div class="code-example">
+                    <pre><code>const promise1 = new Promise(resolve => setTimeout(() => resolve('First result'), 1000));
+const promise2 = new Promise(resolve => setTimeout(() => resolve('Second result'), 500));
+
+Promise.race([promise1, promise2])
+  .then(result => {
+    console.log('Fastest result:', result);
+    // Will log 'Second result' because promise2 is faster
+  });</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Handling -->
+        <section class="content-section" id="error-handling">
+            <h2>வாக்குறுதிகளில் பிழை கையாளுதல்</h2>
+            
+            <p>சரியான பிழை கையாளுதல் முக்கியமானது. வாக்குறுதிகள் பிழைகளைக் கையாள பல வழிகளை வழங்குகின்றன:</p>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: வாக்குறுதியில் பிழை கையாளுதல்</h3>
+                <div class="code-example">
+                    <pre><code>function fetchData() {
+  return new Promise((resolve, reject) => {
+    // Simulating an error
+    reject(new Error('Network error'));
+  });
+}
+
+fetchData()
+  .then(
+    data => console.log('Data:', data),
+    error => console.log('Error handled in then:', error.message)
+  );
+
+// Alternative method using catch
+fetchData()
+  .then(data => console.log('Data:', data))
+  .catch(error => console.log('Error handled in catch:', error.message));</code></pre>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🚨</span> சிறந்த நடைமுறை:</h4>
+                <p>எப்போதும் வாக்குறுதிகளுடன் .catch() ஐப் பயன்படுத்தி பிழை கையாளுதலைச் சேர்க்கவும், இது கையாளப்படாத வாக்குறுதி நிராகரிப்புகளைத் தடுக்கும், இது அமைதியான தோல்விகள் மற்றும் நினைவக கசிவுகளுக்கு வழிவகுக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-handshake"></i>
+                        <h4>வாக்குறுதிகள்</h4>
+                    </div>
+                    <p>அசிங்க்ரோனஸ் செயல்பாடுகளுக்கான தூய்மையான குறியீடு</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-link"></i>
+                        <h4>சங்கிலியாக்கம்</h4>
+                    </div>
+                    <p>பல அசிங்க்ரோனஸ் செயல்பாடுகளை இணைக்க உதவுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-users"></i>
+                        <h4>இணையானம்</h4>
+                    </div>
+                    <p>Promise.all() மற்றும் Promise.race()</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>பிழை கையாளுதல்</h4>
+                    </div>
+                    <p>ஒற்றை .catch() உடன் மையப்படுத்தப்பட்டது</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💎</span> முக்கிய புள்ளிகள்:</h4>
+                <ul>
+                    <li>வாக்குறுதிகள் கால்பேக் நரகத்தைத் தவிர்க்கின்றன</li>
+                    <li>சங்கிலியாக்கம் வரிசைச் செயல்பாடுகளை எளிதாக்குகிறது</li>
+                    <li>Promise.all() இணையான செயல்பாட்டிற்கு உதவுகிறது</li>
+                    <li>எப்போதும் .catch() உடன் பிழைகளைக் கையாளவும்</li>
+                    <li>finally() சுத்தம் செய்யும் குறியீட்டிற்கு பயனுள்ளதாக இருக்கும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான நிலையை தேர்ந்தெடுக்கவும்.</h4>
+                <p>ஒரு வாக்குறுதி மூன்று நிலைகளில் ஒன்றில் இருக்கலாம்: நிலுவையில், <strong>______</strong>, அல்லது நிராகரிக்கப்பட்டது.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தீர்க்கப்பட்டது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "தீர்க்கப்பட்டது" என்பது வாக்குறுதி நிலை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">நிறைவேறியது</div>
+                            <div class="option-feedback correct">✓ சரி! வாக்குறுதி நிலைகள்: நிலுவையில், நிறைவேறியது, அல்லது நிராகரிக்கப்பட்டது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">முடிந்தது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "முடிந்தது" என்பது வாக்குறுதி நிலை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">செயல்படுத்தப்பட்டது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "செயல்படுத்தப்பட்டது" என்பது வாக்குறுதி நிலை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Asynchronous Programming.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Async-Await.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">அறிமுகம்</a></li>
+                    <li><a href="#benefits">நன்மைகள்</a></li>
+                    <li><a href="#creating-promises">வாக்குறுதிகளை உருவாக்குதல்</a></li>
+                    <li><a href="#promise-chaining">வாக்குறுதி சங்கிலியாக்கம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .architecture-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .flow-step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .step-content p {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .code-column h4 {
+            text-align: center;
+            margin-bottom: 0.8rem;
+            color: var(--git-color);
+            font-size: 1.1rem;
+        }
+        
+        .example-section {
+            margin-bottom: 3rem;
+        }
+        
+        .example-section h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border-left: 6px solid #ff9ff3;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .warning-box:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .warning-box h4 {
+            color: #ff9ff3;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .warning-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .warning-box ul {
+            margin-left: 2rem;
+            margin-bottom: 0;
+        }
+        
+        .warning-box li {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .warning-icon {
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .architecture-flow {
+                gap: 1.5rem;
+            }
+            
+            .flow-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .examples-grid,
+            .comparison-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .flow-step {
+                padding: 1rem;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

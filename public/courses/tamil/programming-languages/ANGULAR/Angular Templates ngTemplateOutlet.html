@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Templates: ngTemplateOutlet - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Template visualization */
+        .template-visualization {
+            display: flex;
+            gap: 20px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .template-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        
+        .template-icon {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        /* Color coding for template types */
+        .info-template {
+            border-left-color: #3498db;
+        }
+        
+        .warning-template {
+            border-left-color: #e74c3c;
+        }
+        
+        .success-template {
+            border-left-color: #27ae60;
+        }
+        
+        /* ng-template vs component comparison */
+        .comparison-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .visual-box {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+        }
+        
+        .visual-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        .template-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular Templates Structural Directives Micro-syntax.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Template Statements and $event.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Templates: ngTemplateOutlet</h2>
+<p>[ngTemplateOutlet] உடன் மீண்டும் பயன்படுத்தக்கூடிய டெம்ப்ளேட்டுகளை மறுவழங்கவும்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>ngTemplateOutlet என்றால் என்ன?</h2>
+<p><strong>&lt;ng-template&gt;</strong> மீண்டும் பயன்படுத்தக்கூடிய டெம்ப்ளேட் தொகுதியை வரையறுக்கிறது (ஒரு "செய்முறை").</p>
+<p><strong>[ngTemplateOutlet]</strong> உடன் அதை மறுவழங்கவும்.</p>
+<p><strong>[ngTemplateOutletContext]</strong> மூலம் மதிப்புகளை அனுப்பவும் மற்றும் <strong>let-</strong> மாறிகள் மூலம் படிக்கவும்.</p>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i>டெம்ப்ளேட் அடிப்படைகள்</h4>
+<p><strong>&lt;ng-template&gt;</strong> என்பது ஒரு கோப்பு வரைவு போன்றது - இது ஒரு திட்டமாகும் ஆனால் பயன்படுத்தப்படும் வரை காட்சியில் இல்லை.</p>
+<p><strong>[ngTemplateOutlet]</strong> அந்த திட்டத்தை உண்மையான காட்சியாக மாற்றுகிறது.</p>
+</div>
+</section>
+
+<!-- When to use ngTemplateOutlet -->
+<section class="content-section" id="when-to-use">
+<h2>ngTemplateOutlet எப்போது பயன்படுத்த வேண்டும்</h2>
+<ul>
+<li>வெவ்வேறு தரவு அல்லது மறுவழங்கல் மாறுபாடுகளுடன் UI முறைகளை மீண்டும் பயன்படுத்த</li>
+<li>சிக்கலான, மீண்டும் பயன்படுத்தக்கூடிய தர்க்கத்திற்கு கூறுகளைப் பயன்படுத்தவும்</li>
+<li>இலகுவான, காட்சி-மட்டுமே மறுபயன்பாட்டிற்கு டெம்ப்ளேட்டுகளைப் பயன்படுத்தவும்</li>
+</ul>
+
+<div class="tip-box">
+<h4><i class="fas fa-code tip-icon"></i>முக்கிய உதவிக்குறிப்பு</h4>
+<p><strong>&lt;ng-container&gt;</strong> ஒரு தர்க்கரீதியான மூடியாகப் பயன்படுத்தவும், இது கூடுதல் DOM உறுப்புகளைச் சேர்க்காது.</p>
+<p>தொடர்புடையது: உள்ளடக்கத் திட்டத்திற்கான கூறுகளை <strong>&lt;ng-content&gt;</strong> உடன் பார்க்கவும்.</p>
+</div>
+</section>
+
+<!-- ng-template vs Component -->
+<section class="content-section" id="comparison">
+<h2>ng-template vs Component - எது எப்போது?</h2>
+<div class="comparison-visual">
+<div class="visual-box">
+<div class="visual-header">
+<i class="fas fa-file-code"></i>
+<h4>Use ng-template When:</h4>
+</div>
+<ul>
+<li>காட்சி மட்டத்தில் மீண்டும் பயன்படுத்த</li>
+<li>எளிய மறுவழங்கல் மாறுபாடுகள்</li>
+<li>இலகுவான மறுபயன்பாடு</li>
+<li>தனி தர்க்கம் தேவையில்லை</li>
+<li>வெவ்வேறு தரவு உள்ளீடுகள்</li>
+</ul>
+</div>
+
+<div class="visual-box">
+<div class="visual-header">
+<i class="fas fa-cube"></i>
+<h4>Use Component When:</h4>
+</div>
+<ul>
+<li>மறைக்கப்பட்ட/சுயாதீனமான தர்க்கம்</li>
+<li>தனி நிலை மேலாண்மை</li>
+<li>சிக்கலான மறுபயன்பாடு</li>
+<li>சுய வடிவமைப்பு மற்றும் பாணிகள்</li>
+<li>உள்ளீடுகள்/வெளியீடுகள் தேவை</li>
+</ul>
+</div>
+</div>
+
+<div class="template-visualization">
+<div class="template-card info-template">
+<div class="template-icon">
+<i class="fas fa-info-circle"></i>
+</div>
+<h4>Info Template</h4>
+<p>நீல நிற தகவல் செய்திகள்</p>
+<pre style="font-size: 0.8rem;">&lt;ng-template #infoTpl&gt;
+  &lt;p style="color:royalblue"&gt;{{ text }}&lt;/p&gt;
+&lt;/ng-template&gt;</pre>
+</div>
+
+<div class="template-card warning-template">
+<div class="template-icon">
+<i class="fas fa-exclamation-triangle"></i>
+</div>
+<h4>Warning Template</h4>
+<p>ஆரஞ்சு எச்சரிக்கை செய்திகள்</p>
+<pre style="font-size: 0.8rem;">&lt;ng-template #warnTpl&gt;
+  &lt;p style="color:darkorange"&gt;{{ text }}&lt;/p&gt;
+&lt;/ng-template&gt;</pre>
+</div>
+
+<div class="template-card success-template">
+<div class="template-icon">
+<i class="fas fa-check-circle"></i>
+</div>
+<h4>Success Template</h4>
+<p>பச்சை வெற்றி செய்திகள்</p>
+<pre style="font-size: 0.8rem;">&lt;ng-template #successTpl&gt;
+  &lt;p style="color:seagreen"&gt;{{ text }}&lt;/p&gt;
+&lt;/ng-template&gt;</pre>
+</div>
+</div>
+</section>
+
+<!-- Complete Example -->
+<section class="content-section" id="example">
+<h2>Complete Example</h2>
+
+<div class="code-example">
+<h3>Angular ngTemplateOutlet Example</h3>
+<pre><code><span class="angular-keyword">import</span> { bootstrapApplication } <span class="angular-keyword">from</span> <span class="angular-binding">'@angular/platform-browser'</span>;
+<span class="angular-keyword">import</span> { Component } <span class="angular-keyword">from</span> <span class="angular-binding">'@angular/core'</span>;
+<span class="angular-keyword">import</span> { CommonModule } <span class="angular-keyword">from</span> <span class="angular-binding">'@angular/common'</span>;
+
+<span class="angular-keyword">@Component</span>({
+  selector: <span class="angular-binding">'app-root'</span>,
+  standalone: <span class="angular-keyword">true</span>,
+  imports: [CommonModule],
+  template: <span class="angular-binding">`
+    &lt;h3&gt;Templates with ngTemplateOutlet&lt;/h3&gt;
+
+    &lt;label&gt;
+      Type:
+      &lt;select (change)="type = $any($event.target).value"&gt;
+        &lt;option value="info"&gt;info&lt;/option&gt;
+        &lt;option value="warning"&gt;warning&lt;/option&gt;
+        &lt;option value="success"&gt;success&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+
+    &lt;label&gt;
+      Message: &lt;input (input)="msg = $any($event.target).value" [value]="msg" /&gt;
+    &lt;/label&gt;
+
+    &lt;ng-container
+      [ngTemplateOutlet]="type === 'info' ? infoTpl : 
+                         (type === 'warning' ? warnTpl : successTpl)"
+      [ngTemplateOutletContext]="{ $implicit: msg }"&gt;
+    &lt;/ng-container&gt;
+
+    &lt;ng-template #infoTpl let-text&gt;
+      &lt;p style="color:royalblue"&gt;Info: {{ text }}&lt;/p&gt;
+    &lt;/ng-template&gt;
+
+    &lt;ng-template #warnTpl let-text&gt;
+      &lt;p style="color:darkorange"&gt;Warning: {{ text }}&lt;/p&gt;
+    &lt;/ng-template&gt;
+
+    &lt;ng-template #successTpl let-text&gt;
+      &lt;p style="color:seagreen"&gt;Success: {{ text }}&lt;/p&gt;
+    &lt;/ng-template&gt;
+  `</span>
+})
+<span class="angular-keyword">export class</span> App {
+  type: <span class="angular-binding">'info'</span> | <span class="angular-binding">'warning'</span> | <span class="angular-binding">'success'</span> = <span class="angular-binding">'info'</span>;
+  msg = <span class="angular-binding">'Hello'</span>;
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-code tip-icon"></i>Example Explained</h4>
+<p><strong>&lt;ng-template&gt;:</strong> மீண்டும் பயன்படுத்தக்கூடிய டெம்ப்ளேட் தொகுதியை வரையறுக்கிறது (குறிப்பிடப்படும் வரை மறுவழங்கப்படாது).</p>
+<p><strong>[ngTemplateOutlet]:</strong> எந்த டெம்ப்ளேட்டை மறுவழங்குவது என்பதைத் தேர்ந்தெடுக்கிறது (இங்கே வகையின் அடிப்படையில் மூன்று கூறு வெளிப்பாடு மூலம்).</p>
+<p><strong>[ngTemplateOutletContext]:</strong> டெம்ப்ளேட்டுக்குள் மதிப்புகளை அனுப்புகிறது. $implicit விசை பொருந்தக்கூடிய let- மாறியால் படிக்கப்படுகிறது.</p>
+<p><strong>let-text:</strong> கண்ணோட்டத்திலிருந்து $implicit மதிப்பைப் படிக்கும் டெம்ப்ளேட்டுக்குள் உள்ளூர் மாறியை அறிவிக்கிறது.</p>
+<p><strong>&lt;ng-container&gt;:</strong> கூடுதல் DOM உறுப்புகளை உருவாக்காத தர்க்கரீதியான மூடி.</p>
+</div>
+</section>
+
+<!-- Template Context and Variables -->
+<section class="content-section" id="context">
+<h2>டெம்ப்ளேட் கண்ணோட்டம் மற்றும் மாறிகள்</h2>
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-sign-out-alt"></i>
+<h4>Context Passing</h4>
+</div>
+<pre style="font-size: 0.9rem;">[ngTemplateOutletContext]="{
+  $implicit: 'Hello',
+  count: 42,
+  active: true
+}"</pre>
+<p><strong>$implicit:</strong> let- மாறி இல்லாமல் அணுகக்கூடிய இயல்புநிலை மதிப்பு</p>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-sign-in-alt"></i>
+<h4>Variable Reading</h4>
+</div>
+<pre style="font-size: 0.9rem;">&lt;ng-template #myTemplate 
+              let-data 
+              let-cnt="count"
+              let-isActive="active"&gt;
+  {{ data }}, {{ cnt }}, {{ isActive }}
+&lt;/ng-template&gt;</pre>
+<p><strong>let-data:</strong> $implicit ஐப் பெறுகிறது</p>
+<p><strong>let-cnt:</strong> "count" பண்பைப் பெறுகிறது</p>
+</div>
+</div>
+
+<div class="template-example">
+<h4>டெம்ப்ளேட் கண்ணோட்ட பாய்வு:</h4>
+<pre>
+Template Definition → ngTemplateOutlet → Context Passing → Variable Reading → Rendering
+       ↓                     ↓                 ↓                ↓               ↓
+   &lt;ng-template&gt;      [ngTemplateOutlet]   Context Object    let-vars      Final View
+</pre>
+</div>
+</section>
+
+<!-- Practical Use Cases -->
+<section class="content-section" id="use-cases">
+<h2>நடைமுறை பயன்பாட்டு நிகழ்வுகள்</h2>
+<div class="examples-grid">
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-th"></i>
+</div>
+<h4>Dynamic Card Layouts</h4>
+<p>ஒரே டெம்ப்ளேட்டுடன் வெவ்வேறு தரவு வடிவங்களுக்கான அட்டைகள்</p>
+<pre style="font-size: 0.8rem;">&lt;ng-container *ngFor="let item of items"
+               [ngTemplateOutlet]="cardTemplate"
+               [ngTemplateOutletContext]="{$implicit: item}"&gt;
+&lt;/ng-container&gt;</pre>
+</div>
+
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-exchange-alt"></i>
+</div>
+<h4>Conditional UI Rendering</h4>
+<p>நிலை அடிப்படையில் வெவ்வேறு UI பகுதிகளை மறுவழங்குதல்</p>
+<pre style="font-size: 0.8rem;">&lt;ng-container [ngTemplateOutlet]="
+    user.isAdmin ? adminTpl : userTpl"&gt;
+&lt;/ng-container&gt;</pre>
+</div>
+
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-table"></i>
+</div>
+<h4>Reusable Table Rows</h4>
+<p>வெவ்வேறு அட்டவணைகளுக்கு ஒரே வரிசை வடிவமைப்பு</p>
+<pre style="font-size: 0.8rem;">&lt;tr *ngFor="let row of data"
+    [ngTemplateOutlet]="rowTemplate"
+    [ngTemplateOutletContext]="{row: row}"&gt;
+&lt;/tr&gt;</pre>
+</div>
+</div>
+</section>
+
+<!-- Exercise -->
+<section class="content-section" id="exercise">
+<h2>Exercise</h2>
+<p>ngTemplateOutlet என்ன செய்கிறது?</p>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>ngTemplateOutlet என்ன செய்கிறது?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">ஒரு குறிப்பிட்ட இடத்தில் &lt;ng-template&gt; ஐ மறுவழங்குகிறது</div>
+<div class="option-feedback correct">✓ சரி! [ngTemplateOutlet] ஒரு குறிப்பிடப்பட்ட &lt;ng-template&gt; ஐ DOM இல் ஒரு குறிப்பிட்ட இடத்தில் மறுவழங்குகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">புதிய கூறை மாறும் வகையில் உருவாக்குகிறது</div>
+<div class="option-feedback incorrect">✗ தவறு! ngTemplateOutlet கூறுகளை உருவாக்காது - அது டெம்ப்ளேட்டுகளை மட்டுமே மறுவழங்குகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">ஒரு குழாயை வரையறுக்கிறது</div>
+<div class="option-feedback incorrect">✗ தவறு! குழாய்கள் தனி நோக்கங்களுக்காக உள்ளன - ngTemplateOutlet டெம்ப்ளேட் மறுவழங்கலுக்கு பயன்படுகிறது</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Best Practices -->
+<section class="content-section" id="best-practices">
+<h2>ngTemplateOutlet சிறந்த நடைமுறைகள்</h2>
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-check-circle"></i>
+<div>
+<h4>Use ng-container as Wrapper</h4>
+<p>கூடுதல் DOM உறுப்புகளைத் தவிர்க்க ng-container உடன் ngTemplateOutlet ஐ இணைக்கவும்</p>
+</div>
+</div>
+
+<div class="practice-item positive">
+<i class="fas fa-check-circle"></i>
+<div>
+<h4>Clear Context Structure</h4>
+<p>$implicit மற்றும் தெளிவான பண்புப் பெயர்களைக் கொண்ட நன்கு கட்டமைக்கப்பட்ட கண்ணோட்டத்தைப் பயன்படுத்தவும்</p>
+</div>
+</div>
+
+<div class="practice-item negative">
+<i class="fas fa-times-circle"></i>
+<div>
+<h4>Avoid Complex Logic in Outlet</h4>
+<p>ngTemplateOutlet வெளிப்பாட்டில் மிகவும் சிக்கலான தர்க்கத்தை வைக்காதீர்கள் - கூறு தர்க்கத்தைப் பயன்படுத்தவும்</p>
+</div>
+</div>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i>Common Mistakes</h4>
+<ul>
+<li><strong>மறந்து விடுதல் &lt;ng-container&gt;:</strong> ngTemplateOutlet ஐ நேரடியாக div உடன் இணைக்காமல்</li>
+<li><strong>தவறான கண்ணோட்ட மேப்பிங்:</strong> let- மாறிகள் கண்ணோட்ட பண்புகளுடன் பொருந்தவில்லை</li>
+<li><strong>தேவையில்லாதபோது பயன்படுத்துதல்:</strong> எளிய *ngIf அல்லது *ngFor போதுமானதாக இருக்கும்போது ngTemplateOutlet பயன்படுத்துதல்</li>
+</ul>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular Templates Structural Directives Micro-syntax.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Template Statements and $event.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality Angular programming education in Tamil.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">ngTemplateOutlet என்றால் என்ன?</a></li>
+<li><a href="#when-to-use">எப்போது பயன்படுத்த வேண்டும்</a></li>
+<li><a href="#comparison">டெம்ப்ளேட் vs கூறு</a></li>
+<li><a href="#example">முழுமையான உதாரணம்</a></li>
+<li><a href="#exercise">பயிற்சி</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Angular Templates Series</h3>
+<ul>
+<li><a href="Angular Templates Structural Directives Micro-syntax.html">Structural Directives</a></li>
+<li><a href="#home">ngTemplateOutlet</a></li>
+<li><a href="Angular Template Statements and event.html">Template Statements</a></li>
+<li><a href="#">Content Projection</a></li>
+<li><a href="#">View Children</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Template visualization animation
+        const templateCards = document.querySelectorAll('.template-card');
+        templateCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.transform = 'translateY(-10px)';
+                card.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+                setTimeout(() => {
+                    card.style.transform = 'translateY(0)';
+                    card.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+                }, 1000);
+            }, index * 500);
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

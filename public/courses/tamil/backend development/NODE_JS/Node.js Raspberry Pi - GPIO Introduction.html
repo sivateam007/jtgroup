@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Raspberry Pi - GPIO Introduction - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .gpio-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+        }
+        
+        .breadboard-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js and Raspberry Pi.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Raspberry Pi - Blinking LED.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Raspberry Pi - GPIO Introduction</h2>
+            <p>Raspberry Pi GPIO பின்கள் மற்றும் அவற்றை Node.js உடன் எவ்வாறு பயன்படுத்துவது என்பதை கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is GPIO? -->
+        <section class="content-section" id="what-is-gpio">
+            <h2>GPIO என்றால் என்ன?</h2>
+            
+            <p>GPIO என்பது General Purpose Input Output என்பதன் சுருக்கமாகும்.</p>
+            
+            <p>Raspberry Pi க்கு GPIO பின்களின் இரண்டு வரிசைகள் உள்ளன, அவை Raspberry Pi மற்றும் நிஜ உலகத்திற்கு இடையேயான இணைப்புகளாகும்.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>வெளியீட்டு பின்கள்</h4>
+                    </div>
+                    <p>Raspberry Pi ஆன் அல்லது ஆஃப் செய்யக்கூடிய சுவிட்சுகள் போன்றவை (LED ஒளியை ஆன்/ஆஃப் செய்வது போல). ஆனால் அது மற்றொரு சாதனத்திற்கு சிக்னலையும் அனுப்ப முடியும்.</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-down"></i>
+                        <h4>உள்ளீட்டு பின்கள்</h4>
+                    </div>
+                    <p>வெளி உலகத்திலிருந்து நீங்கள் ஆன் அல்லது ஆஃப் செய்யக்கூடிய சுவிட்சுகள் போன்றவை (ஆன்/ஆஃப் ஒளி சுவிட்சு போல). ஆனால் அது ஒரு சென்சாரிலிருந்து தரவு அல்லது மற்றொரு சாதனத்திலிருந்து சிக்னலாகவும் இருக்கலாம்.</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🌍</span> நிஜ உலக தொடர்பு:</h4>
+                <p>அதாவது நீங்கள் நிஜ உலகத்துடன் தொடர்பு கொள்ளலாம், மற்றும் Raspberry PI மற்றும் அதன் GPIO பின்களைப் பயன்படுத்தி சாதனங்கள் மற்றும் எலக்ட்ரானிக்ஸைக் கட்டுப்படுத்தலாம்!</p>
+            </div>
+        </section>
+
+        <!-- Taking a Closer Look at the GPIO Pins -->
+        <section class="content-section" id="gpio-pins">
+            <h2>GPIO பின்களை நெருக்கமாகப் பார்ப்போம்</h2>
+            
+            <p>இது Raspberry Pi 3 இன் விளக்கப்படம்.</p>
+            
+            <p>GPIO பின்கள் Raspberry Pi இன் வலது பக்கத்தில் இரண்டு வரிசைகளில் உள்ள சிறிய சிவப்பு சதுரங்கள், உண்மையான Raspberry Pi இல் அவை சிறிய உலோக பின்கள்.</p>
+            
+            <!-- Image 2: GPIO Pins -->
+            <div class="image-placeholder">
+                <img src="img3.png" alt="Raspberry Pi 3 with GPIO Pins" class="gpio-image">
+                <p class="image-caption">Raspberry Pi 3 with GPIO pins highlighted</p>
+            </div>
+            
+            <p>Raspberry Pi 3 க்கு 26 GPIO பின்கள் உள்ளன, மீதமுள்ள பின்கள் பவர், கிரவுண்ட் அல்லது "மற்றவை".</p>
+            
+            <p>பின் இடங்கள் கீழே உள்ள அட்டவணையுடன் ஒத்துப்போகின்றன.</p>
+            
+            <h3>Raspberry Pi B+, 2, 3 & Zero</h3>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பின்</th>
+                            <th>எண்</th>
+                            <th>எண்</th>
+                            <th>பின்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>3V3</td><td>1</td><td>2</td><td>5V</td></tr>
+                        <tr><td>GPIO 2</td><td>3</td><td>4</td><td>5V</td></tr>
+                        <tr><td>GPIO 3</td><td>5</td><td>6</td><td>GND</td></tr>
+                        <tr><td>GPIO 4</td><td>7</td><td>8</td><td>GPIO 14</td></tr>
+                        <tr><td>GND</td><td>9</td><td>10</td><td>GPIO 15</td></tr>
+                        <tr><td>GPIO 17</td><td>11</td><td>12</td><td>GPIO 18</td></tr>
+                        <tr><td>GPIO 27</td><td>13</td><td>14</td><td>GND</td></tr>
+                        <tr><td>GPIO 22</td><td>15</td><td>16</td><td>GPIO 23</td></tr>
+                        <tr><td>3V3</td><td>17</td><td>18</td><td>GPIO 24</td></tr>
+                        <tr><td>GPIO 10</td><td>19</td><td>20</td><td>GND</td></tr>
+                        <tr><td>GPIO 9</td><td>21</td><td>22</td><td>GPIO 25</td></tr>
+                        <tr><td>GPIO 11</td><td>23</td><td>24</td><td>GPIO 8</td></tr>
+                        <tr><td>GND</td><td>25</td><td>26</td><td>GPIO 7</td></tr>
+                        <tr><td>DNC</td><td>27</td><td>28</td><td>DNC</td></tr>
+                        <tr><td>GPIO 5</td><td>29</td><td>30</td><td>GND</td></tr>
+                        <tr><td>GPIO 6</td><td>31</td><td>32</td><td>GPIO 12</td></tr>
+                        <tr><td>GPIO 13</td><td>33</td><td>34</td><td>GND</td></tr>
+                        <tr><td>GPIO 19</td><td>35</td><td>36</td><td>GPIO 16</td></tr>
+                        <tr><td>GPIO 26</td><td>37</td><td>38</td><td>GPIO 20</td></tr>
+                        <tr><td>GND</td><td>39</td><td>40</td><td>GPIO 21</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>லெஜெண்ட் (விளக்கம்)</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-hashtag"></i>
+                    <span><strong>உடல் பின் எண்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span><strong>பவர் +</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-ground"></i>
+                    <span><strong>கிரவுண்ட்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span><strong>UART</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-network-wired"></i>
+                    <span><strong>I2C</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-microchip"></i>
+                    <span><strong>SPI</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-plug"></i>
+                    <span><strong>GPIO</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-ban"></i>
+                    <span><strong>இணைக்க வேண்டாம்</strong></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Taking a Closer Look at the Breadboard -->
+        <section class="content-section" id="breadboard">
+            <h2>பிரெட்போர்டை நெருக்கமாகப் பார்ப்போம்</h2>
+            
+            <p>ஒரு பிரெட்போர்ட் எலக்ட்ரானிக்ஸுக்கான முன்மாதிரியாக பயன்படுத்தப்படுகிறது, இது சாலிடரிங் இல்லாமல் சர்க்யூட்களை உருவாக்க உங்களை அனுமதிக்கிறது. இது அடிப்படையில் ஒரு பிளாஸ்டிக் போர்டு, டை-பாயிண்ட்களின் (துளைகள்) கிரிட் உள்ளது. போர்டுக்குள் உலோக துண்டுகள் குறிப்பிட்ட வழிகளில் வெவ்வேறு டை-பாயிண்ட்களை இணைக்கின்றன.</p>
+            
+            <!-- Image 3: Breadboard -->
+            <div class="image-placeholder">
+                <img src="img2.png" alt="Breadboard with connections highlighted" class="breadboard-image">
+                <p class="image-caption">Breadboard with connections highlighted showing different sections</p>
+            </div>
+            
+            <p>கீழே உள்ள விளக்கப்படத்தில் வெவ்வேறு நிறங்களுடன் சில பிரிவுகளை முன்னிலைப்படுத்தியுள்ளோம். கிரிட் எவ்வாறு இணைக்கப்பட்டுள்ளது என்பதைக் காட்ட இதுவாகும்.</p>
+            
+            <h3>பிரெட்போர்டின் வெவ்வேறு பிரிவுகள்:</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-arrows-alt-h"></i>
+                    <span><strong>இடது மற்றும் வலது பக்கங்களில்</strong> 2 நெடுவரிசைகள் டை-பாயிண்ட்கள் உள்ளன. இந்த ஒவ்வொரு நெடுவரிசைகளிலும் உள்ள அனைத்து டை-பாயிண்ட்களும் இணைக்கப்பட்டுள்ளன.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span><strong>பவர் பஸ்</strong> - சிவப்பு நிறத்தில் முன்னிலைப்படுத்தப்பட்ட நெடுவரிசைகள். இவை பொதுவாக பிரெட்போர்டுக்கு பவரை இணைக்க பயன்படுத்தப்படுகின்றன. முழு நெடுவரிசையும் இணைக்கப்பட்டிருப்பதால், நெடுவரிசையில் உள்ள எந்த டை-பாயிண்ட்களுக்கும் பவரை இணைக்கலாம்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-ground"></i>
+                    <span><strong>கிரவுண்ட் பஸ்</strong> - நீல நிறத்தில் முன்னிலைப்படுத்தப்பட்ட நெடுவரிசைகள். இவை பொதுவாக பிரெட்போர்டுக்கு கிரவுண்டை இணைக்க பயன்படுத்தப்படுகின்றன. முழு நெடுவரிசையும் இணைக்கப்பட்டிருப்பதால், நெடுவரிசையில் உள்ள எந்த டை-பாயிண்ட்களுக்கும் கிரவுண்டை இணைக்கலாம்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <span><strong>இணைக்கப்பட்ட டை-பாயிண்ட்களின் வரிசைகள்</strong> - பச்சை நிறத்தில் முன்னிலைப்படுத்தப்பட்ட வரிசைகள். இந்த ஒவ்வொரு வரிசைகளின் டை-பாயிண்ட்களும் இணைக்கப்பட்டுள்ளன, ஆனால் முழு வரிசையும் அல்ல! இடது பக்க டை-பாயிண்ட்கள் இணைக்கப்பட்டுள்ளன (A-B-C-D-E), மற்றும் வலது பக்க டை-பாயிண்ட்கள் இணைக்கப்பட்டுள்ளன (F-G-H-I-J).</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-grip-lines"></i>
+                    <span><strong>பிரெட்போர்டின் மையத்தில் ஒரு ட்ரென்ச் உள்ளது</strong>, இது இடது மற்றும் வலது வரிசைகளை பிரிக்கிறது. ட்ரென்சின் அகலம் பல ஒருங்கிணைந்த சர்க்யூட்கள் அதில் பொருந்தும் வகையில் வடிவமைக்கப்பட்டுள்ளது.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Install the onoff Module -->
+        <section class="content-section" id="install-onoff">
+            <h2>onoff தொகுதியை நிறுவவும்</h2>
+            
+            <p>Node.js ஐப் பயன்படுத்தி Raspberry Pi இல் GPIO உடன் இடைமுகப்படுத்த, "onoff" என்ற தொகுதியைப் பயன்படுத்துவோம்.</p>
+            
+            <p>npm ஐப் பயன்படுத்தி onoff தொகுதியை நிறுவவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifdemopi:~ $ npm install onoff</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">✅</span> நிறுவல் வெற்றி:</h4>
+                <p>இப்போது onoff நிறுவப்பட்டிருக்க வேண்டும் மற்றும் நாம் Raspberry Pi இன் GPIO உடன் தொடர்பு கொள்ளலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js and Raspberry Pi.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Raspberry Pi - Blinking LED.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-gpio">GPIO என்றால் என்ன?</a></li>
+                    <li><a href="#gpio-pins">GPIO பின்கள்</a></li>
+                    <li><a href="#breadboard">பிரெட்போர்ட்</a></li>
+                    <li><a href="#install-onoff">onoff தொகுதி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

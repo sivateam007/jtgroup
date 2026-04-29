@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS display: inline-block - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Display comparison styling */
+        .demo-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 2px solid #e9ecef;
+        }
+        
+        .demo-label {
+            font-weight: bold;
+            color: var(--git-color);
+            margin-bottom: 10px;
+        }
+        
+        /* Display comparison examples - SIMPLIFIED */
+        .display-comparison {
+            margin: 2rem 0;
+        }
+        
+        .inline-demo {
+            display: inline;
+            padding: 3px 6px;
+            background-color: rgba(231, 76, 60, 0.1);
+            border-radius: 3px;
+            margin: 0 2px;
+        }
+        
+        .inline-block-demo {
+            display: inline-block;
+            width: 100px;
+            height: 35px;
+            padding: 5px;
+            background-color: rgba(52, 152, 219, 0.1);
+            text-align: center;
+            vertical-align: middle;
+            line-height: 25px;
+            margin: 2px;
+            border-radius: 3px;
+        }
+        
+        .block-demo {
+            display: block;
+            width: 100px;
+            margin: 5px 0;
+            padding: 5px;
+            background-color: rgba(46, 204, 113, 0.1);
+            text-align: center;
+            line-height: 25px;
+            border-radius: 3px;
+        }
+        
+        .comparison-text {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        /* Horizontal Navigation Menu */
+        .nav-menu-demo {
+            background-color: lightgray;
+            list-style-type: none;
+            padding: 0;
+            margin: 2rem 0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .nav-menu-demo li {
+            display: inline-block;
+            font-size: 18px;
+            padding: 15px 25px;
+            font-weight: bold;
+            color: #2c3e50;
+            transition: all 0.3s;
+            border-right: 1px solid #bdc3c7;
+        }
+        
+        .nav-menu-demo li:last-child {
+            border-right: none;
+        }
+        
+        .nav-menu-demo li:hover {
+            background-color: var(--git-color);
+            color: white;
+        }
+        
+        /* Drag and drop exercise */
+        .drag-drop-area {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            min-height: 200px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        .code-line {
+            margin: 0.5rem 0;
+        }
+        
+        .code-property {
+            display: inline-block;
+            background: #444;
+            color: #8be9fd;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            margin: 0 0.2rem;
+            cursor: move;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .code-property:hover {
+            background: #555;
+            border-color: #ff79c6;
+        }
+        
+        .code-property.dragging {
+            opacity: 0.5;
+        }
+        
+        .drop-target {
+            display: inline-block;
+            min-width: 100px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin: 0 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .drop-target.active {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4CAF50;
+        }
+        
+        .drop-target.incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: #f44336;
+        }
+        
+        .property-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .check-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .check-button:hover {
+            background: #45a049;
+        }
+        
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+        
+        /* Properties table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .properties-table th {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .properties-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .properties-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .properties-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Code examples */
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .code-example h3 {
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .code-example pre {
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Float%20Examples.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Horizontal%20&%20Vertical%20Align.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS display: inline-block</h2>
+            <p>inline மற்றும் block உறுப்புகளின் அம்சங்களை இணைக்கவும்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS display: inline-block -->
+        <section class="content-section" id="inline-block-property">
+            <h2>The CSS display: inline-block</h2>
+            
+            <p>display: inline-block பண்பானது inline மற்றும் block உறுப்புகள் இரண்டின் அம்சங்களையும் இணைக்கிறது.</p>
+            
+            <p>display: inline-block கொண்ட உறுப்பு மற்ற inline அல்லது inline-block உறுப்புகளுடன் அதே வரியில் தோன்றும். கூடுதலாக, உறுப்புக்கு width, height, margin-top, மற்றும் margin-bottom பண்புகளை அமைக்கலாம் (block உறுப்புகளைப் போல).</p>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு display: inline, display: inline-block மற்றும் display: block இன் வெவ்வேறு நடத்தையைக் காட்டுகிறது:</p>
+        </section>
+
+        <!-- Display comparison example -->
+        <section class="content-section" id="display-comparison">
+            <h2>Display Comparison Example</h2>
+            
+            <div class="demo-container">
+                <div class="display-comparison">
+                    <div class="demo-label">display: inline (இயல்புநிலை span)</div>
+                    <p>இந்த வரியில் <span class="inline-demo">inline</span> உறுப்பு உள்ளது. இது உரையின் <span class="inline-demo">ஒரு பகுதியாக</span> உள்ளது. width மற்றும் height பண்புகள் <span class="inline-demo">செயல்படாது</span>.</p>
+                    
+                    <div class="demo-label">display: inline-block</div>
+                    <p>
+                        <span class="inline-block-demo">inline-block 1</span>
+                        <span class="inline-block-demo">inline-block 2</span>
+                        <span class="inline-block-demo">inline-block 3</span>
+                        இவை ஒரே வரியில் உள்ளன, ஆனால் width மற்றும் height பண்புகளைக் கொண்டுள்ளன.
+                    </p>
+                    
+                    <div class="demo-label">display: block</div>
+                    <div class="block-demo">block 1</div>
+                    <div class="block-demo">block 2</div>
+                    <div class="block-demo">block 3</div>
+                    <p>இவை ஒவ்வொன்றும் புதிய வரியில் தொடங்குகின்றன.</p>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>span.a {
+  display: inline; /* the default for span */
+  padding: 5px;
+  border: 2px solid red;
+}
+
+span.b {
+  display: inline-block;
+  width: 100px;
+  height: 35px;
+  padding: 5px;
+  border: 2px solid red;
+}
+
+span.c {
+  display: block;
+  width: 100px;
+  height: 35px;
+  padding: 5px;
+  border: 2px solid red;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Create a Horizontal Navigation Menu -->
+        <section class="content-section" id="horizontal-nav">
+            <h2>Create a Horizontal Navigation Menu</h2>
+            
+            <p>display: inline-block க்கான பொதுவான பயன்பாடு பட்டியல் உருப்படிகளை செங்குத்தாக காட்டுவதற்குப் பதிலாக கிடைமட்டமாகக் காட்டுவதாகும். பின்வரும் எடுத்துக்காட்டு ஒரு கிடைமட்ட வழிசெலுத்தல் மெனுவை உருவாக்குகிறது:</p>
+            
+            <div class="demo-container">
+                <div class="demo-label">Horizontal Navigation Menu using display: inline-block</div>
+                <ul class="nav-menu-demo">
+                    <li>Home</li>
+                    <li>About</li>
+                    <li>Services</li>
+                    <li>Portfolio</li>
+                    <li>Contact</li>
+                </ul>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <p>Create a horizontal navigation menu:</p>
+                <pre><code>.nav {
+  background-color: lightgray;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav li {
+  display: inline-block;
+  font-size: 18px;
+  padding: 15px;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <p>inline-block பயன்படுத்தி பட்டியல் உருப்படிகளை கிடைமட்டமாகக் காட்ட சரியான பண்பு மற்றும் மதிப்பை இழுத்து விடவும்.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🎯</span> inline-block பயன்படுத்தி பட்டியல் உருப்படிகளை கிடைமட்டமாகக் காட்ட சரியான பண்பு மற்றும் மதிப்பை இழுத்து விடவும்.</h4>
+                
+                <div class="drag-drop-area">
+                    <div class="code-block">
+                        <div class="code-line">.nav li {</div>
+                        <div class="code-line">&nbsp;&nbsp;<span class="drop-target" id="drop1"></span>: <span class="drop-target" id="drop2"></span>;</div>
+                        <div class="code-line">}</div>
+                    </div>
+                    
+                    <div class="property-pool" id="propertyPool">
+                        <div class="code-property" draggable="true" data-value="display">display</div>
+                        <div class="code-property" draggable="true" data-value="inline-block">inline-block</div>
+                        <div class="code-property" draggable="true" data-value="float">float</div>
+                        <div class="code-property" draggable="true" data-value="position">position</div>
+                        <div class="code-property" draggable="true" data-value="inline">inline</div>
+                        <div class="code-property" draggable="true" data-value="block">block</div>
+                        <div class="code-property" draggable="true" data-value="flex">flex</div>
+                        <div class="code-property" draggable="true" data-value="left">left</div>
+                    </div>
+                    
+                    <button class="check-button" onclick="checkExercise()">பதிலை சரிபார்க்கவும்</button>
+                    <button class="check-button" onclick="resetExercise()" style="background: #6c757d; margin-left: 10px;">மீட்டமைக்கவும்</button>
+                    
+                    <div class="feedback" id="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Property -->
+        <section class="content-section" id="css-property">
+            <h2>CSS Property</h2>
+            
+            <p>காட்சி நடத்தை தொடர்பான CSS பண்பு:</p>
+            
+            <table class="properties-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>display</td>
+                    <td>உறுப்பின் காட்சி நடத்தையை (ரெண்டரிங் பெட்டியின் வகை) குறிப்பிடுகிறது</td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கிய வேறுபாடுகள்:</h4>
+                <p><strong>display: inline</strong> - ஒரே வரியில் தோன்றும், width/height பண்புகள் செயல்படாது<br>
+                <strong>display: block</strong> - புதிய வரியில் தொடங்கும், width/height பண்புகள் செயல்படும்<br>
+                <strong>display: inline-block</strong> - ஒரே வரியில் தோன்றும், width/height பண்புகள் செயல்படும்<br>
+                <strong>display: flex</strong> - நவீன ஃப்ளெக்சிபிள் தளவமைப்புக்கானது</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Float%20Examples.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Horizontal%20&%20Vertical%20Align.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#inline-block-property">display: inline-block</a></li>
+                    <li><a href="#display-comparison">Display Comparison</a></li>
+                    <li><a href="#horizontal-nav">Horizontal Navigation Menu</a></li>
+                    <li><a href="#exercises">Exercise</a></li>
+                    <li><a href="#css-property">CSS Property</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Drag and drop functionality
+        let draggedItem = null;
+        
+        document.querySelectorAll('.code-property').forEach(item => {
+            item.addEventListener('dragstart', function(e) {
+                draggedItem = this;
+                this.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', this.getAttribute('data-value'));
+            });
+            
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+                draggedItem = null;
+            });
+        });
+        
+        document.querySelectorAll('.drop-target').forEach(target => {
+            target.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('active');
+            });
+            
+            target.addEventListener('dragleave', function() {
+                this.classList.remove('active');
+            });
+            
+            target.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('active');
+                
+                if (draggedItem) {
+                    const value = draggedItem.getAttribute('data-value');
+                    this.innerHTML = `<span class="code-property" data-value="${value}">${value}</span>`;
+                    this.setAttribute('data-filled', value);
+                    
+                    // Remove from pool
+                    draggedItem.style.display = 'none';
+                }
+            });
+        });
+        
+        // Check exercise function
+        function checkExercise() {
+            const drop1 = document.getElementById('drop1');
+            const drop2 = document.getElementById('drop2');
+            const feedback = document.getElementById('feedback');
+            
+            const answer1 = drop1.getAttribute('data-filled');
+            const answer2 = drop2.getAttribute('data-filled');
+            
+            // Correct answer: display: inline-block;
+            if (answer1 === 'display' && answer2 === 'inline-block') {
+                feedback.textContent = '✓ சரி! .nav li { display: inline-block; } பட்டியல் உருப்படிகளை கிடைமட்டமாகக் காட்டும்.';
+                feedback.className = 'feedback correct';
+                feedback.style.display = 'block';
+                
+                // Mark drop targets as correct
+                drop1.classList.remove('incorrect');
+                drop1.classList.add('active');
+                drop2.classList.remove('incorrect');
+                drop2.classList.add('active');
+            } else {
+                feedback.textContent = '✗ தவறு! மீண்டும் முயற்சிக்கவும். சரியான பதில்: .nav li { display: inline-block; }';
+                feedback.className = 'feedback incorrect';
+                feedback.style.display = 'block';
+                
+                // Mark incorrect answers
+                if (answer1 !== 'display') drop1.classList.add('incorrect');
+                if (answer2 !== 'inline-block') drop2.classList.add('incorrect');
+            }
+        }
+        
+        // Reset functionality
+        function resetExercise() {
+            document.querySelectorAll('.drop-target').forEach(target => {
+                target.innerHTML = '';
+                target.removeAttribute('data-filled');
+                target.classList.remove('active', 'incorrect');
+            });
+            
+            document.querySelectorAll('.code-property').forEach(prop => {
+                prop.style.display = 'inline-block';
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+        }
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

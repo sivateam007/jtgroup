@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Comments - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comment Types Grid */
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .type-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .type-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .type-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .type-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .type-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Comment highlighting */
+        .comment-single {
+            color: #6a9955;
+            font-style: italic;
+        }
+        
+        .comment-multi {
+            color: #6a9955;
+            font-style: italic;
+        }
+        
+        .sql-keyword {
+            color: #569cd6;
+            font-weight: bold;
+        }
+        
+        .sql-table {
+            color: #4ec9b0;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .warning-note {
+            background: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            color: #856404;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .types-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .type-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL Stored Procedures for SQL Server.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL Operators.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Comments</h2>
+            <p>SQL அறிக்கைகளின் பகுதிகளை விளக்கவோ அல்லது SQL அறிக்கைகளின் இயக்கத்தைத் தடுக்கவோ கருத்துகளைப் பயன்படுத்துங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>SQL கருத்துகள்</h2>
+            
+            <p>கருத்துகள் SQL அறிக்கைகளின் பகுதிகளை விளக்க அல்லது SQL அறிக்கைகளின் இயக்கத்தைத் தடுக்க பயன்படுத்தப்படுகின்றன.</p>
+            
+            <div class="warning-note">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>கருத்துகள் Microsoft Access தரவுத்தளங்களில் ஆதரிக்கப்படவில்லை!</p>
+            </div>
+        </section>
+
+        <!-- Single Line Comments -->
+        <section class="content-section" id="single-line">
+            <h2>ஒற்றை வரி கருத்துகள்</h2>
+            
+            <p>ஒற்றை வரி கருத்துகள் <code>--</code> உடன் தொடங்கும்.</p>
+            
+            <p><code>--</code> மற்றும் வரியின் முடிவுக்கு இடையே உள்ள எந்த உரையும் புறக்கணிக்கப்படும் (இயக்கப்படாது).</p>
+            
+            <div class="types-grid">
+                <div class="type-card">
+                    <div class="type-header">
+                        <i class="fas fa-comment"></i>
+                        <h4>விளக்கமாக</h4>
+                    </div>
+                    <p>பின்வரும் எடுத்துக்காட்டு விளக்கமாக ஒற்றை-வரி கருத்தைப் பயன்படுத்துகிறது:</p>
+                    <div class="syntax-box">
+                        <pre><code><span class="comment-single">-- Select all:</span>
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> <span class="sql-table">Customers</span>;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-header">
+                        <i class="fas fa-eye-slash"></i>
+                        <h4>வரியின் முடிவை புறக்கணிக்க</h4>
+                    </div>
+                    <p>பின்வரும் எடுத்துக்காட்டு ஒரு வரியின் முடிவைப் புறக்கணிக்க ஒற்றை-வரி கருத்தைப் பயன்படுத்துகிறது:</p>
+                    <div class="syntax-box">
+                        <pre><code><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> <span class="sql-table">Customers</span> <span class="comment-single">-- WHERE City='Berlin'</span>;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-header">
+                        <i class="fas fa-ban"></i>
+                        <h4>அறிக்கையை புறக்கணிக்க</h4>
+                    </div>
+                    <p>பின்வரும் எடுத்துக்காட்டு ஒரு அறிக்கையைப் புறக்கணிக்க ஒற்றை-வரி கருத்தைப் பயன்படுத்துகிறது:</p>
+                    <div class="syntax-box">
+                        <pre><code><span class="comment-single">-- SELECT * FROM Customers;</span>
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> <span class="sql-table">Products</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-line Comments -->
+        <section class="content-section" id="multi-line">
+            <h2>பல வரி கருத்துகள்</h2>
+            
+            <p>பல வரி கருத்துகள் <code>/*</code> உடன் தொடங்கி <code>*/</code> உடன் முடிகின்றன.</p>
+            
+            <p><code>/*</code> மற்றும் <code>*/</code> இடையே உள்ள எந்த உரையும் புறக்கணிக்கப்படும்.</p>
+            
+            <div class="types-grid">
+                <div class="type-card">
+                    <div class="type-header">
+                        <i class="fas fa-comments"></i>
+                        <h4>விளக்கமாக</h4>
+                    </div>
+                    <p>பின்வரும் எடுத்துக்காட்டு விளக்கமாக பல-வரி கருத்தைப் பயன்படுத்துகிறது:</p>
+                    <div class="syntax-box">
+                        <pre><code><span class="comment-multi">/*Select all the columns
+of all the records
+in the Customers table:*/</span>
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> <span class="sql-table">Customers</span>;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-header">
+                        <i class="fas fa-eye-slash"></i>
+                        <h4>பல அறிக்கைகளை புறக்கணிக்க</h4>
+                    </div>
+                    <p>பின்வரும் எடுத்துக்காட்டு பல அறிக்கைகளைப் புறக்கணிக்க பல-வரி கருத்தைப் பயன்படுத்துகிறது:</p>
+                    <div class="syntax-box">
+                        <pre><code><span class="comment-multi">/*SELECT * FROM Customers;
+SELECT * FROM Products;
+SELECT * FROM Orders;
+SELECT * FROM Categories;*/</span>
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> <span class="sql-table">Suppliers</span>;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-header">
+                        <i class="fas fa-code"></i>
+                        <h4>அறிக்கையின் பகுதியை புறக்கணிக்க</h4>
+                    </div>
+                    <p>ஒரு அறிக்கையின் ஒரு பகுதியை மட்டும் புறக்கணிக்க, <code>/* */</code> கருத்தையும் பயன்படுத்தவும்.</p>
+                    <div class="syntax-box">
+                        <pre><code><span class="sql-keyword">SELECT</span> <span class="sql-table">CustomerName</span>, <span class="comment-multi">/*City,*/</span> <span class="sql-table">Country</span> <span class="sql-keyword">FROM</span> <span class="sql-table">Customers</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Examples -->
+        <section class="content-section" id="advanced-examples">
+            <h2>மேம்பட்ட எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>சிக்கலான அறிக்கையில் பகுதி கருத்து</h3>
+            <p>பின்வரும் எடுத்துக்காட்டு ஒரு அறிக்கையின் பகுதியைப் புறக்கணிக்க கருத்தைப் பயன்படுத்துகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> <span class="sql-table">Customers</span> <span class="sql-keyword">WHERE</span> (<span class="sql-table">CustomerName</span> <span class="sql-keyword">LIKE</span> 'L%'
+<span class="sql-keyword">OR</span> <span class="sql-table">CustomerName</span> <span class="sql-keyword">LIKE</span> 'R%' <span class="comment-multi">/*OR CustomerName LIKE 'S%'
+OR CustomerName LIKE 'T%'*/</span> <span class="sql-keyword">OR</span> <span class="sql-table">CustomerName</span> <span class="sql-keyword">LIKE</span> 'W%')
+<span class="sql-keyword">AND</span> <span class="sql-table">Country</span>='USA'
+<span class="sql-keyword">ORDER BY</span> <span class="sql-table">CustomerName</span>;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>கருத்துகள் உங்கள் SQL குறியீட்டை ஆவணப்படுத்தவும், பிழைத்திருத்தத்திற்காக குறியீட்டைத் தற்காலிகமாக முடக்கவும், மற்றவர்களுக்கு சிக்கலான வினவல்களை விளக்கவும் பயனுள்ளதாக இருக்கும். அவை உங்கள் குறியீட்டை மேலும் பராமரிக்கக்கூடியதாகவும் படிக்கக்கூடியதாகவும் ஆக்குகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த பயிற்சிகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>விளக்கக் கருத்துகள்</h3>
+                    <p>சிக்கலான வினவல்கள் அல்லது வணிக தர்க்கத்தை விளக்குங்கள்</p>
+                    <div class="code-block small">
+                        <pre><code>-- Calculate total sales for active customers
+-- who made purchases in the last 30 days
+SELECT CustomerID, SUM(Amount) 
+FROM Orders 
+WHERE Status = 'Active' 
+AND OrderDate >= DATEADD(day, -30, GETDATE())</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h3>பிழைத்திருத்த கருத்துகள்</h3>
+                    <p>பிழைத்திருத்தத்திற்காக குறியீட்டைத் தற்காலிகமாக முடக்கவும்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT CustomerName, City
+FROM Customers
+WHERE Country = 'USA'
+-- AND City = 'New York'
+ORDER BY CustomerName;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>மாற்றம் வரலாறு</h3>
+                    <p>முக்கியமான மாற்றங்களை ஆவணப்படுத்துங்கள்</p>
+                    <div class="code-block small">
+                        <pre><code>/* 
+Author: John Doe
+Date: 2024-01-15
+Description: Added support for multi-currency
+Version: 2.1
+*/
+UPDATE Products 
+SET Price = Price * 1.1 
+WHERE Category = 'Electronics'</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL-ல் கருத்துகளின் முதன்மை நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">கூடுதல் SQL அறிக்கைகளை இயக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! கருத்துகள் இயக்கப்படாது, அவை புறக்கணிக்கப்படும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">SQL குறியீட்டின் பகுதிகளை விளக்கவோ அல்லது இயக்கத்தைத் தடுக்கவோ</div>
+                            <div class="option-feedback correct">✓ சரி! கருத்துகளின் முதன்மை நோக்கம் SQL குறியீட்டை விளக்கவோ அல்லது குறிப்பிட்ட அறிக்கைகளின் இயக்கத்தைத் தடுக்கவோ ஆகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">நெடுவரிசைகளுக்கு மாற்றுப் பெயர்களை உருவாக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! மாற்றுப் பெயர்கள் AS உரையைப் பயன்படுத்தி உருவாக்கப்படுகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">சிக்கலான கணக்கீடுகளைச் செய்ய</div>
+                            <div class="option-feedback incorrect">✗ தவறு! கருத்துகள் கணக்கீடுகளைச் செய்யாது, அவை விளக்கங்களுக்கு மட்டுமே</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL Stored Procedures for SQL Server.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL Operators.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">SQL கருத்துகள்</a></li>
+                    <li><a href="#single-line">ஒற்றை வரி கருத்துகள்</a></li>
+                    <li><a href="#multi-line">பல வரி கருத்துகள்</a></li>
+                    <li><a href="#best-practices">சிறந்த பயிற்சிகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

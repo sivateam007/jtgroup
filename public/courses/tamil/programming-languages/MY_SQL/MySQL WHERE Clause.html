@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL WHERE Clause - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .data-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .operators-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .operators-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .operators-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .operators-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MySQL SELECT Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MySQL AND, OR and NOT Operators.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MySQL WHERE Clause</h2>
+            <p>MySQL WHERE விதி</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- WHERE Clause Section -->
+        <section class="content-section" id="where-clause">
+            <h2>MySQL WHERE விதி</h2>
+            
+            <p>WHERE விதி பதிவுகளை வடிகட்ட பயன்படுகிறது.</p>
+            
+            <p>குறிப்பிட்ட நிபந்தனையை நிறைவேற்றும் பதிவுகளை மட்டும் பிரித்தெடுக்க இது பயன்படுகிறது.</p>
+        </section>
+
+        <!-- WHERE Syntax Section -->
+        <section class="content-section" id="where-syntax">
+            <h2>WHERE தொடரமைப்பு</h2>
+            
+            <div class="code-example">
+                <pre><code>SELECT column1, column2, ...
+FROM table_name
+WHERE condition;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>WHERE விதி SELECT அறிக்கைகளில் மட்டும் பயன்படுத்தப்படுவதில்லை, இது UPDATE, DELETE, போன்றவற்றிலும் பயன்படுத்தப்படுகிறது!</p>
+            </div>
+        </section>
+
+        <!-- Demo Database Section -->
+        <section class="content-section" id="demo-database">
+            <h2>டெமோ தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் உள்ள "Customers" அட்டவணையில் இருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>CustomerID</th>
+                        <th>CustomerName</th>
+                        <th>ContactName</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>PostalCode</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Maria Anders</td>
+                        <td>Obere Str. 57</td>
+                        <td>Berlin</td>
+                        <td>12209</td>
+                        <td>Germany</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ana Trujillo Emparedados y helados</td>
+                        <td>Ana Trujillo</td>
+                        <td>Avda. de la Constitución 2222</td>
+                        <td>México D.F.</td>
+                        <td>05021</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Antonio Moreno Taquería</td>
+                        <td>Antonio Moreno</td>
+                        <td>Mataderos 2312</td>
+                        <td>México D.F.</td>
+                        <td>05023</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Around the Horn</td>
+                        <td>Thomas Hardy</td>
+                        <td>120 Hanover Sq.</td>
+                        <td>London</td>
+                        <td>WA1 1DP</td>
+                        <td>UK</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Berglunds snabbköp</td>
+                        <td>Christina Berglund</td>
+                        <td>Berguvsvägen 8</td>
+                        <td>Luleå</td>
+                        <td>S-958 22</td>
+                        <td>Sweden</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- WHERE Clause Example -->
+        <section class="content-section" id="where-example">
+            <h2>WHERE விதி எடுத்துக்காட்டு</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை "Mexico" இலிருந்து அனைத்து வாடிக்கையாளர்களையும் தேர்ந்தெடுக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: உங்கள் சொந்த SQL சர்வரைப் பெறுங்கள்</h3>
+                <pre><code>SELECT * FROM Customers
+WHERE Country = 'Mexico';</code></pre>
+            </div>
+        </section>
+
+        <!-- Text Fields vs Numeric Fields -->
+        <section class="content-section" id="text-vs-numeric">
+            <h2>உரை புலங்கள் vs எண் புலங்கள்</h2>
+            
+            <p>SQL க்கு உரை மதிப்புகளைச் சுற்றி ஒற்றை மேற்கோள்கள் தேவை (பெரும்பாலான தரவுத்தள அமைப்புகள் இரட்டை மேற்கோள்களையும் அனுமதிக்கும்).</p>
+            
+            <p>இருப்பினும், எண் புலங்கள் மேற்கோள்களில் இணைக்கப்படக்கூடாது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>SELECT * FROM Customers
+WHERE CustomerID = 1;</code></pre>
+            </div>
+        </section>
+
+        <!-- Operators in WHERE Clause -->
+        <section class="content-section" id="operators">
+            <h2>WHERE விதியில் ஆபரேட்டர்கள்</h2>
+            
+            <p>பின்வரும் ஆபரேட்டர்கள் WHERE விதியில் பயன்படுத்தப்படலாம்:</p>
+            
+            <table class="operators-table">
+                <thead>
+                    <tr>
+                        <th>ஆபரேட்டர்</th>
+                        <th>விளக்கம்</th>
+                        <th>எடுத்துக்காட்டு</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>=</strong></td>
+                        <td>சமம்</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>&gt;</strong></td>
+                        <td>அதிகமான</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>&lt;</strong></td>
+                        <td>குறைவான</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>&gt;=</strong></td>
+                        <td>அதிகமான அல்லது சமம்</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>&lt;=</strong></td>
+                        <td>குறைவான அல்லது சமம்</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>&lt;&gt;</strong></td>
+                        <td>சமமில்லை. குறிப்பு: SQL இன் சில பதிப்புகளில் இந்த ஆபரேட்டர் != என எழுதப்படலாம்</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>BETWEEN</strong></td>
+                        <td>ஒரு குறிப்பிட்ட வரம்பிற்குள்</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>LIKE</strong></td>
+                        <td>ஒரு மாதிரிக்காக தேடு</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>IN</strong></td>
+                        <td>ஒரு நெடுவரிசைக்கு பல சாத்தியமான மதிப்புகளைக் குறிப்பிட</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> WHERE விதியுடன் கூடிய சட்டபூர்வமான SQL அறிக்கையை உருவாக்க சரியான பகுதிகளை தேர்வு செய்யவும்:</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">SELECT</div>
+                            <div class="option-feedback correct">✓ சரி! SELECT என்பது SQL அறிக்கையின் தொடக்கம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">*</div>
+                            <div class="option-feedback correct">✓ சரி! * அனைத்து நெடுவரிசைகளையும் தேர்ந்தெடுக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">FROM</div>
+                            <div class="option-feedback correct">✓ சரி! FROM அட்டவணைப் பெயரைக் குறிப்பிடுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">Customers</div>
+                            <div class="option-feedback correct">✓ சரி! Customers என்பது அட்டவணைப் பெயர்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">WHERE</div>
+                            <div class="option-feedback correct">✓ சரி! WHERE நிபந்தனையைக் குறிப்பிடுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">Country = 'Norway'</div>
+                            <div class="option-feedback correct">✓ சரி! இது WHERE நிபந்தனையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">INSERT</div>
+                            <div class="option-feedback incorrect">✗ தவறு! INSERT என்பது SELECT அறிக்கையின் பகுதியல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MySQL SELECT Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MySQL AND, OR and NOT Operators.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#where-clause">WHERE விதி</a></li>
+                    <li><a href="#where-syntax">WHERE தொடரமைப்பு</a></li>
+                    <li><a href="#where-example">WHERE எடுத்துக்காட்டு</a></li>
+                    <li><a href="#operators">WHERE ஆபரேட்டர்கள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

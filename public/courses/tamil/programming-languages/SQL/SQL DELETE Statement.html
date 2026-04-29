@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL DELETE Statement - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL UPDATE Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL TOP, LIMIT, FETCH FIRST or ROWNUM Clause.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL DELETE Statement</h2>
+            <p>அட்டவணையில் உள்ள தற்போதைய பதிவுகளை நீக்க DELETE அறிக்கையைப் பயன்படுத்துவது பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is DELETE Statement -->
+        <section class="content-section" id="what-is-delete">
+            <h2>SQL DELETE அறிக்கை</h2>
+            
+            <p>DELETE அறிக்கை ஒரு அட்டவணையில் உள்ள தற்போதைய பதிவுகளை நீக்க பயன்படுகிறது.</p>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-code"></i>
+                        <h3>DELETE தொடரியல்</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>DELETE FROM table_name 
+WHERE condition;</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>அட்டவணையில் பதிவுகளை நீக்கும்போது கவனமாக இருங்கள்! DELETE அறிக்கையில் WHERE விதியைக் கவனியுங்கள். எந்தப் பதிவு(கள்) நீக்கப்பட வேண்டும் என்பதை WHERE விதி குறிப்பிடுகிறது. நீங்கள் WHERE விதியைத் தவிர்த்தால், அட்டவணையில் உள்ள அனைத்து பதிவுகளும் நீக்கப்படும்!</p>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>உதாரணங்களில் பயன்படுத்தப்படும் Customers அட்டவணையிலிருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CustomerID</th>
+                                <th>CustomerName</th>
+                                <th>ContactName</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>PostalCode</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Alfreds Futterkiste</td>
+                                <td>Maria Anders</td>
+                                <td>Obere Str. 57</td>
+                                <td>Berlin</td>
+                                <td>12209</td>
+                                <td>Germany</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Ana Trujillo Emparedados y helados</td>
+                                <td>Ana Trujillo</td>
+                                <td>Avda. de la Constitución 2222</td>
+                                <td>México D.F.</td>
+                                <td>05021</td>
+                                <td>Mexico</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Antonio Moreno Taquería</td>
+                                <td>Antonio Moreno</td>
+                                <td>Mataderos 2312</td>
+                                <td>México D.F.</td>
+                                <td>05023</td>
+                                <td>Mexico</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Around the Horn</td>
+                                <td>Thomas Hardy</td>
+                                <td>120 Hanover Sq.</td>
+                                <td>London</td>
+                                <td>WA1 1DP</td>
+                                <td>UK</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Berglunds snabbköp</td>
+                                <td>Christina Berglund</td>
+                                <td>Berguvsvägen 8</td>
+                                <td>Luleå</td>
+                                <td>S-958 22</td>
+                                <td>Sweden</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SQL DELETE Example -->
+        <section class="content-section" id="delete-example">
+            <h2>SQL DELETE உதாரணம்</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை "Customers" அட்டவணையிலிருந்து "Alfreds Futterkiste" வாடிக்கையாளரை நீக்குகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code>DELETE FROM Customers 
+WHERE CustomerName='Alfreds Futterkiste';</code></pre>
+            </div>
+            
+            <p>"Customers" அட்டவணை இப்போது இப்படித் தோன்றும்:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CustomerID</th>
+                                <th>CustomerName</th>
+                                <th>ContactName</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>PostalCode</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2</td>
+                                <td>Ana Trujillo Emparedados y helados</td>
+                                <td>Ana Trujillo</td>
+                                <td>Avda. de la Constitución 2222</td>
+                                <td>México D.F.</td>
+                                <td>05021</td>
+                                <td>Mexico</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Antonio Moreno Taquería</td>
+                                <td>Antonio Moreno</td>
+                                <td>Mataderos 2312</td>
+                                <td>México D.F.</td>
+                                <td>05023</td>
+                                <td>Mexico</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Around the Horn</td>
+                                <td>Thomas Hardy</td>
+                                <td>120 Hanover Sq.</td>
+                                <td>London</td>
+                                <td>WA1 1DP</td>
+                                <td>UK</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Berglunds snabbköp</td>
+                                <td>Christina Berglund</td>
+                                <td>Berguvsvägen 8</td>
+                                <td>Luleå</td>
+                                <td>S-958 22</td>
+                                <td>Sweden</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Delete All Records -->
+        <section class="content-section" id="delete-all">
+            <h2>அனைத்து பதிவுகளையும் நீக்கவும்</h2>
+            
+            <p>அட்டவணையை நீக்காமல் அட்டவணையில் உள்ள அனைத்து வரிசைகளையும் நீக்க முடியும். இதன் பொருள் அட்டவணை கட்டமைப்பு, பண்புக்கூறுகள் மற்றும் குறியீடுகள் அப்படியே இருக்கும்:</p>
+            
+            <div class="code-example">
+                <h3>தொடரியல்</h3>
+                <pre><code>DELETE FROM table_name;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL அறிக்கை "Customers" அட்டவணையில் உள்ள அனைத்து வரிசைகளையும் நீக்குகிறது, ஆனால் அட்டவணையை நீக்காது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code>DELETE FROM Customers;</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🚨</span> முக்கியமான எச்சரிக்கை:</h4>
+                <p>WHERE விதி இல்லாமல் DELETE அறிக்கையை இயக்கும்போது மிகவும் கவனமாக இருங்கள். இது அட்டவணையில் உள்ள அனைத்து தரவையும் நிரந்தரமாக நீக்கிவிடும்!</p>
+            </div>
+        </section>
+
+        <!-- Delete a Table -->
+        <section class="content-section" id="delete-table">
+            <h2>அட்டவணையை நீக்கவும்</h2>
+            
+            <p>அட்டவணையை முழுமையாக நீக்க, DROP TABLE அறிக்கையைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>Customers அட்டவணையை நீக்க:</p>
+                <pre><code>DROP TABLE Customers;</code></pre>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-trash-alt"></i>
+                        <h4>DELETE FROM</h4>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>DELETE FROM table_name</code></pre>
+                    </div>
+                    <ul>
+                        <li>தரவு மட்டும் நீக்கப்படும்</li>
+                        <li>அட்டவணை கட்டமைப்பு இருக்கும்</li>
+                        <li>பதிவுகள் மட்டும் நீக்கப்படும்</li>
+                        <li>ROLLBACK மூலம் மீட்டெடுக்க முடியும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-times-circle"></i>
+                        <h4>DROP TABLE</h4>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>DROP TABLE table_name</code></pre>
+                    </div>
+                    <ul>
+                        <li>முழு அட்டவணையும் நீக்கப்படும்</li>
+                        <li>அட்டவணை கட்டமைப்பு நீக்கப்படும்</li>
+                        <li>தரவு மற்றும் அட்டவணை நீக்கப்படும்</li>
+                        <li>மீட்டெடுக்க முடியாது</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <h3>குறிப்பிட்ட வாடிக்கையாளரை நீக்குதல்</h3>
+                    <p>குறிப்பிட்ட ID உள்ள வாடிக்கையாளரை நீக்குதல்</p>
+                    <div class="code-block small">
+                        <pre><code>DELETE FROM Customers
+WHERE CustomerID = 5;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>நகரத்தின் அடிப்படையில் நீக்குதல்</h3>
+                    <p>குறிப்பிட்ட நகரத்தில் உள்ள அனைத்து வாடிக்கையாளர்களையும் நீக்குதல்</p>
+                    <div class="code-block small">
+                        <pre><code>DELETE FROM Customers
+WHERE City = 'London';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <h3>நாட்டின் அடிப்படையில் நீக்குதல்</h3>
+                    <p>குறிப்பிட்ட நாட்டில் உள்ள அனைத்து வாடிக்கையாளர்களையும் நீக்குதல்</p>
+                    <div class="code-block small">
+                        <pre><code>DELETE FROM Customers
+WHERE Country = 'Germany';</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL DELETE அறிக்கையின் நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையில் புதிய பதிவுகளைச் சேர்க்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! புதிய பதிவுகளைச் சேர்க்க INSERT அறிக்கை பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையில் தற்போதைய பதிவுகளை மாற்ற</div>
+                            <div class="option-feedback incorrect">✗ தவறு! பதிவுகளை மாற்ற UPDATE அறிக்கை பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையிலிருந்து தற்போதைய பதிவுகளை நீக்க</div>
+                            <div class="option-feedback correct">✓ சரி! DELETE அறிக்கை தற்போதைய பதிவுகளை நீக்க பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையிலிருந்து பதிவுகளை மீட்டெடுக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! பதிவுகளை மீட்டெடுக்க SELECT அறிக்கை பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL UPDATE Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL TOP, LIMIT, FETCH FIRST or ROWNUM Clause.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-delete">DELETE அறிக்கை</a></li>
+                    <li><a href="#demo-database">ஆர்ப்பாட்ட தரவுத்தளம்</a></li>
+                    <li><a href="#delete-example">DELETE உதாரணம்</a></li>
+                    <li><a href="#delete-all">அனைத்து பதிவுகளையும் நீக்க</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Syntax Grid */
+        .syntax-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .syntax-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .syntax-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .syntax-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .syntax-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            margin: 2rem 0;
+        }
+        
+        .responsive-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--git-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border-left: 6px solid #ffd700;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .warning-box:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .warning-box h4 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .warning-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 0;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .warning-icon {
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .comparison-grid,
+            .syntax-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .syntax-header,
+            .comparison-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .responsive-table {
+                font-size: 0.8rem;
+            }
+            
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

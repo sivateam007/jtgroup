@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js VM Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Performance Hooks Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js TLS SSL Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js VM Module</h2>
+            <p>V8 மெய்நிகர் இயந்திர சூழல்களில் குறியீட்டை தொகுத்து இயக்குவதற்கான APIகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to the VM Module -->
+        <section class="content-section" id="introduction">
+            <h2>VM தொகுப்பு அறிமுகம்</h2>
+            
+            <p>VM (மெய்நிகர் இயந்திரம்) தொகுதி தனிமைப்படுத்தப்பட்ட சூழல்களுக்குள் குறியீட்டை தொகுத்து இயக்க உங்களை அனுமதிக்கிறது.</p>
+            
+            <p>இது பின்வருவனவற்றிற்கு பயனுள்ளதாக இருக்கிறது:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>நம்பப்படாத குறியீட்டை பாதுகாப்பாக இயக்குதல்</h4>
+                    </div>
+                    <p>சாண்ட்பாக்ஸில் நம்பப்படாத குறியீட்டை பாதுகாப்பாக இயக்குதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>JavaScript குறியீட்டை டைனமிக்காக மதிப்பீடு செய்தல்</h4>
+                    </div>
+                    <p>JavaScript குறியீட்டை டைனமிக்காக மதிப்பீடு செய்தல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <h4>பிளகின்கள் மற்றும் நீட்டிப்பு அமைப்புகளை உருவாக்குதல்</h4>
+                    </div>
+                    <p>பிளகின்கள் மற்றும் நீட்டிப்பு அமைப்புகளை உருவாக்குதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-terminal"></i>
+                        <h4>தனிப்பயன் ஸ்கிரிப்டிங் சூழல்களை கட்டமைத்தல்</h4>
+                    </div>
+                    <p>தனிப்பயன் ஸ்கிரிப்டிங் சூழல்களை கட்டமைத்தல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-flask"></i>
+                        <h4>தனிமைப்பாட்டில் குறியீட்டை சோதித்தல்</h4>
+                    </div>
+                    <p>தனிமைப்பாட்டில் குறியீட்டை சோதித்தல்</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>VM தொகுதி முக்கிய JavaScript சூழலில் இருந்து தனிமைப்பாட்டை வழங்கினாலும், இது முழுமையான பாதுகாப்பான சாண்ட்பாக்ஸ் அல்ல. நம்பப்படாத குறியீட்டை இயக்குவதற்கான ஒரே பாதுகாப்பு பொறிமுறையாக இது பயன்படுத்தப்படக்கூடாது.</p>
+            </div>
+        </section>
+
+        <!-- Importing the VM Module -->
+        <section class="content-section" id="importing-vm">
+            <h2>VM தொகுப்பை இறக்குமதி செய்தல்</h2>
+            
+            <p>VM தொகுப்பைப் பயன்படுத்த, உங்கள் Node.js பயன்பாட்டில் அதை தேவைப்படுத்த வேண்டும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');</code></pre>
+            </div>
+        </section>
+
+        <!-- Key Concepts -->
+        <section class="content-section" id="key-concepts">
+            <h2>முக்கிய கருத்துகள்</h2>
+            
+            <p>VM தொகுதியில் பல முக்கிய கூறுகள் உள்ளன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>கூறு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Script</strong></td>
+                            <td>வெவ்வேறு சூழல்களில் பல முறை இயக்கப்படக்கூடிய தொகுக்கப்பட்ட JavaScript குறியீடு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Context</strong></td>
+                            <td>ஸ்கிரிப்ட்கள் இயக்கும் தனிமைப்படுத்தப்பட்ட உலகளாவிய பொருள், சாண்ட்பாக்ஸ்டு சூழலுக்கு ஒத்தது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ContextifiedObject</strong></td>
+                            <td>ஒரு VM சூழலுடன் தொடர்புபடுத்தப்பட்ட மற்றும் அதன் உலகளாவிய பொருளாக செயல்படும் ஒரு பொருள்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Basic Usage: Running JavaScript in a Context -->
+        <section class="content-section" id="basic-usage">
+            <h2>அடிப்படை பயன்பாடு: ஒரு சூழலில் JavaScript ஐ இயக்குதல்</h2>
+            
+            <p>VM தொகுப்பைப் பயன்படுத்துவதற்கான எளிய வழி ஒரு சூழலில் குறியீட்டை இயக்குவதாகும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+
+// Create a context object
+const context = { x: 2 };
+
+// Compile and run a script in the context
+vm.createContext(context);
+vm.runInContext('x = x * 2; y = 10;', context);
+
+// Inspect the modified context
+console.log(context); // Outputs: { x: 4, y: 10 }</code></pre>
+            </div>
+            
+            <p>இந்த எடுத்துக்காட்டில்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-cube"></i>
+                    <span>ஒரு மாறி x உடன் ஒரு சூழல் பொருளை உருவாக்குகிறோம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-magic"></i>
+                    <span>vm.createContext() ஐப் பயன்படுத்தி இந்த பொருளை "சூழலாக்குகிறோம்"</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-play"></i>
+                    <span>x ஐ மாற்றி y ஐ உருவாக்கும் இந்த சூழலில் JavaScript குறியீட்டை இயக்குகிறோம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-eye"></i>
+                    <span>மாற்றங்கள் சூழல் பொருளில் பிரதிபலிக்கின்றன</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- VM Module Methods -->
+        <section class="content-section" id="vm-methods">
+            <h2>VM தொகுப்பு முறைகள்</h2>
+            
+            <h3>ஸ்கிரிப்ட் முறைகள்</h3>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>vm.Script(code[, options])</strong></td>
+                            <td>தொகுக்கப்பட்ட குறியீட்டை பிரதிநிதித்துவப்படுத்தும் ஒரு புதிய Script பொருளை உருவாக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>script.runInContext(contextObject[, options])</strong></td>
+                            <td>குறிப்பிட்ட சூழலில் தொகுக்கப்பட்ட குறியீட்டை இயக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>script.runInNewContext([contextObject][, options])</strong></td>
+                            <td>ஒரு புதிய சூழலில் தொகுக்கப்பட்ட குறியீட்டை இயக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>script.runInThisContext([options])</strong></td>
+                            <td>தற்போதைய சூழலில் தொகுக்கப்பட்ட குறியீட்டை இயக்குகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>சூழல் முறைகள்</h3>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>vm.createContext([contextObject][, options])</strong></td>
+                            <td>ஸ்கிரிப்ட் இயக்கத்திற்குப் பயன்படுத்தக்கூடிய ஒரு புதிய சூழலை உருவாக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>vm.isContext(object)</strong></td>
+                            <td>ஒரு பொருள் சூழலாக்கப்பட்டுள்ளதா என சரிபார்க்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>vm.runInContext(code, contextObject[, options])</strong></td>
+                            <td>கொடுக்கப்பட்ட சூழலில் குறியீட்டை தொகுத்து இயக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>vm.runInNewContext(code[, contextObject][, options])</strong></td>
+                            <td>ஒரு புதிய சூழலில் குறியீட்டை தொகுத்து இயக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>vm.runInThisContext(code[, options])</strong></td>
+                            <td>தற்போதைய சூழலில் குறியீட்டை தொகுத்து இயக்குகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Creating and Compiling Scripts -->
+        <section class="content-section" id="creating-compiling-scripts">
+            <h2>ஸ்கிரிப்ட்களை உருவாக்குதல் மற்றும் தொகுத்தல்</h2>
+            
+            <p>அதே குறியீட்டை பல முறை இயக்க வேண்டியிருக்கும் போது சிறந்த செயல்திறனுக்கு, Script வகுப்பைப் பயன்படுத்தி அதை முன்கூட்டியே தொகுக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+
+// Compile the script once
+const script = new vm.Script('x += 40; let z = 30;');
+
+// Create multiple contexts
+const context1 = { x: 10 };
+const context2 = { x: 20 };
+
+// Contextify the objects
+vm.createContext(context1);
+vm.createContext(context2);
+
+// Run the same script in different contexts
+script.runInContext(context1);
+script.runInContext(context2);
+
+console.log(context1); // Outputs: { x: 50, z: 30 }
+console.log(context2); // Outputs: { x: 60, z: 30 }</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚡</span> குறிப்பு:</h4>
+                <p>ஸ்கிரிப்ட்களை தனித்தனியாக தொகுப்பது நீங்கள் அதே குறியீட்டை பல முறை இயக்க வேண்டியிருக்கும் போது மிகவும் திறமையானது, ஏனெனில் பாகுபடுத்துதல் மற்றும் தொகுப்பு படிகள் ஒருமுறை மட்டுமே நடக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Different Ways to Run Code -->
+        <section class="content-section" id="different-ways-run-code">
+            <h2>குறியீட்டை இயக்குவதற்கான வெவ்வேறு வழிகள்</h2>
+            
+            <h3>1. runInContext</h3>
+            
+            <p>முன்பு உருவாக்கப்பட்ட சூழலில் குறியீட்டை இயக்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+
+const context = { value: 10 };
+vm.createContext(context);
+
+// Run directly
+vm.runInContext('value += 5', context);
+console.log(context.value); // 15
+
+// Compile then run
+const script = new vm.Script('value *= 2');
+script.runInContext(context);
+console.log(context.value); // 30</code></pre>
+            </div>
+            
+            <h3>2. runInNewContext</h3>
+            
+            <p>ஒரு புதிய சூழலை உருவாக்கி அதில் குறியீட்டை இயக்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+
+// No need to call createContext first
+const context = { value: 10 };
+vm.runInNewContext('value += 5; result = value * 2;', context);
+
+console.log(context); // { value: 15, result: 30 }</code></pre>
+            </div>
+            
+            <h3>3. runInThisContext</h3>
+            
+            <p>தற்போதைய V8 சூழலில் குறியீட்டை இயக்குகிறது (eval போன்றது ஆனால் பாதுகாப்பானது):</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+
+// Define a variable in the current scope
+const locallet = 20;
+let result;
+
+// This won't have access to localVar
+vm.runInThisContext('result = (typeof locallet !== "undefined" ? locallet : "not defined")');
+console.log(result); // 'not defined'
+
+// But it can access globals
+global.globallet = 30;
+vm.runInThisContext('result = globalVar');
+console.log(result); // 30
+
+// Compare with eval, which CAN access local variables
+eval('result = localVar');
+console.log(result); // 20</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔒</span> குறிப்பு:</h4>
+                <p>runInThisContext என்பது eval போன்றது, ஆனால் அது அழைக்கப்பட்ட நோக்கத்தில் உள்ளூர் மாறிகள் அணுகல் இல்லை. இது ஓரளவு பாதுகாப்பானதாக்குகிறது, ஏனெனில் இது உள்ளூர் மாறிகளை பாதிக்கும் குறியீடு ஊசி நுழைவு ஆபத்தை குறைக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Working with the Timeout Option -->
+        <section class="content-section" id="timeout-option">
+            <h2>டைம்அவுட் விருப்பத்துடன் பணிபுரிதல்</h2>
+            
+            <p>முடிவில்லாத சுழற்சிகள் அல்லது நீண்ட-இயக்கும் ஸ்கிரிப்ட்களைத் தடுக்க ஸ்கிரிப்ட் இயக்கத்திற்கு ஒரு டைம்அவுட் அமைக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+
+const context = { result: 0 };
+vm.createContext(context);
+
+try {
+  // This should timeout after 1000ms (1 second)
+  vm.runInContext(`
+    let counter = 0;
+    while (true) {
+      counter++;
+      result = counter;
+    }
+  `, context, { timeout: 1000 });
+} catch (err) {
+  console.error(`Execution timed out: ${err.message}`);
+  console.log(`Results before timeout: counter reached ${context.result}`);
+}</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⏰</span> எச்சரிக்கை:</h4>
+                <p>டைம்அவுட் விருப்பம் இயக்கம் குறிப்பிட்ட நேரத்தில் சரியாக நிறுத்தப்படும் என்பதை உறுதிப்படுத்தாது. உண்மையான டைம்அவுட் சற்று மாறுபடலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Controlling Access to Node.js Core Modules -->
+        <section class="content-section" id="controlling-access">
+            <h2>Node.js முக்கிய தொகுதிகளுக்கான அணுகலைக் கட்டுப்படுத்துதல்</h2>
+            
+            <p>இயல்புநிலையாக, VM சூழல்களில் இயக்கப்படும் குறியீட்டிற்கு Node.js முக்கிய தொகுதிகள் அணுகல் இல்லை. எந்த தொகுதிகள் கிடைக்கும் என்பதை நீங்கள் கட்டுப்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+const fs = require('fs');
+
+// Create a sandbox with controlled access to core modules
+const sandbox = {
+  // Allow limited access to console
+  console: {
+    log: console.log,
+    error: console.error
+  },
+  
+  // Provide controlled access to fs module
+  fs: {
+    readFileSync: fs.readFileSync
+  },
+  
+  // Custom utility
+  util: {
+    add: (a, b) => a + b,
+    multiply: (a, b) => a * b
+  },
+  
+  // No access to process, child_process, etc.
+};
+
+vm.createContext(sandbox);
+
+// Run code with limited access
+try {
+  vm.runInContext(`
+    // We can use the allowed methods
+    console.log('Running in sandbox');
+    console.log('2 + 3 =', util.add(2, 3));
+    
+    // Try to read a safe file
+    try {
+      const content = fs.readFileSync('example.txt', 'utf8');
+      console.log('File content:', content);
+    } catch (err) {
+      console.error('File read error:', err.message);
+    }
+    
+    // Try to access process (should fail)
+    try {
+      console.log('Process info:', process.version);
+    } catch (err) {
+      console.error('Cannot access process:', err.message);
+    }
+  `, sandbox);
+} catch (err) {
+  console.error('Sandbox execution failed:', err);
+}</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🛡️</span> எச்சரிக்கை:</h4>
+                <p>நீங்கள் சில தொகுதிகளுக்கான அணுகலைக் கட்டுப்படுத்த முடிந்தாலும், இந்த அணுகுமுறை முற்றிலும் பாதுகாப்பானது அல்ல. ஒரு உறுதியான தாக்குபவர் இன்னும் சாண்ட்பாக்ஸிலிருந்து தப்பிக்க வழிகளைக் கண்டறியக்கூடும். உண்மையான பாதுகாப்பான சாண்ட்பாக்சிங்கிற்கு, கூடுதல் தனிமைப்பாட்டு நுட்பங்கள் அல்லது சிறப்பு நூலகங்களைக் கவனியுங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Building a Simple Template Engine -->
+        <section class="content-section" id="template-engine">
+            <h2>ஒரு எளிய டெம்ப்ளேட் இயந்திரத்தை கட்டமைத்தல்</h2>
+            
+            <p>VM தொகுதி ஒரு எளிய டெம்ப்ளேட் இயந்திரத்தை உருவாக்க பயன்படுத்தப்படலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+
+function renderTemplate(template, data) {
+  // Create template function - replace {{ let }} with values
+  const templateScript = `
+    function template(data) {
+      let output = \`${template.replace(/\{\{\s*(\w+)\s*\}\}/g, '${data.$1}')}\`;
+      return output;
+    }
+    template(data);
+  `;
+  
+  // Create a context with the data
+  const context = { data };
+  vm.createContext(context);
+  
+  // Execute the template function
+  return vm.runInContext(templateScript, context);
+}
+
+// Example usage
+const template = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title }}</title>
+</head>
+<body>
+  <h1>{{ title }}</h1>
+  <p>Welcome, {{ name }}!</p>
+  <p>Today is {{ date }}</p>
+</body>
+</html>
+`;
+
+const data = {
+  title: 'My Template Page',
+  name: 'User',
+  date: new Date().toLocaleDateString()
+};
+
+const rendered = renderTemplate(template, data);
+console.log(rendered);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>இந்த எடுத்துக்காட்டு ஒரு எளிய பயன்பாட்டு வழக்கை நிரூபிக்கிறது, உற்பத்தி டெம்ப்ளேட் இயந்திரங்கள் Handlebars அல்லது EJS போன்றவை மிகவும் உறுதியானவை மற்றும் பாதுகாப்பானவை. பயனர் தரவு சரியாக தப்பிப்பினால் இந்த எடுத்துக்காட்டு ஊசி நுழைவு தாக்குதல்களுக்கு எளிதில் உள்ளாகும்.</p>
+            </div>
+        </section>
+
+        <!-- Creating a Plugin System -->
+        <section class="content-section" id="plugin-system">
+            <h2>ஒரு பிளகின் அமைப்பை உருவாக்குதல்</h2>
+            
+            <p>பிளகின்கள் ஏற்றப்பட்டு தனிமைப்பாட்டில் இயக்கப்படக்கூடிய பிளகின் அமைப்புகளை உருவாக்க VM தொகுதி பயனுள்ளதாக இருக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+const fs = require('fs');
+const path = require('path');
+
+class PluginSystem {
+  constructor() {
+    this.plugins = new Map();
+    this.api = {
+      version: '1.0.0',
+      registerHook: this.registerHook.bind(this),
+      utils: {
+        add: (a, b) => a + b,
+        multiply: (a, b) => a * b,
+        formatDate: (date) => new Date(date).toLocaleDateString()
+      }
+    };
+    
+    this.hooks = {
+      init: [],
+      process: [],
+      shutdown: []
+    };
+  }
+  
+  // Register a plugin hook
+  registerHook(hookName, callback) {
+    if (this.hooks[hookName]) {
+      this.hooks[hookName].push(callback);
+      console.log(`Registered ${hookName} hook`);
+    } else {
+      console.error(`Invalid hook name: ${hookName}`);
+    }
+  }
+  
+  // Load a plugin from file
+  loadPlugin(pluginName, pluginCode) {
+    try {
+      console.log(`Loading plugin: ${pluginName}`);
+      
+      // Create a sandbox for this plugin
+      const sandbox = {
+        console: {
+          log: (msg) => console.log(`[${pluginName}] ${msg}`),
+          error: (msg) => console.error(`[${pluginName}] ${msg}`)
+        },
+        setTimeout,
+        clearTimeout,
+        api: this.api
+      };
+      
+      // Create context and run the plugin code
+      const context = vm.createContext(sandbox);
+      vm.runInContext(pluginCode, context);
+      
+      // Store the loaded plugin
+      this.plugins.set(pluginName, {
+        name: pluginName,
+        sandbox
+      });
+      
+      console.log(`Successfully loaded plugin: ${pluginName}`);
+    } catch (err) {
+      console.error(`Error loading plugin ${pluginName}:`, err.message);
+    }
+  }
+  
+  // Run all hooks of a specific type
+  async runHooks(hookName, data) {
+    console.log(`Running ${hookName} hooks...`);
+    
+    for (const hook of this.hooks[hookName]) {
+      try {
+        const result = await hook(data);
+        console.log(`Hook result:`, result);
+      } catch (err) {
+        console.error(`Error in ${hookName} hook:`, err.message);
+      }
+    }
+  }
+  
+  // Load all plugins from a directory
+  loadPluginsFromDirectory(directory) {
+    try {
+      const files = fs.readdirSync(directory);
+      
+      for (const file of files) {
+        if (file.endsWith('.js')) {
+          const pluginName = path.basename(file, '.js');
+          const pluginPath = path.join(directory, file);
+          const pluginCode = fs.readFileSync(pluginPath, 'utf8');
+          
+          this.loadPlugin(pluginName, pluginCode);
+        }
+      }
+    } catch (err) {
+      console.error('Error loading plugins directory:', err.message);
+    }
+  }
+  
+  // Run the plugin system
+  async run(data) {
+    await this.runHooks('init', data);
+    await this.runHooks('process', data);
+    await this.runHooks('shutdown', data);
+  }
+}
+
+// Example plugin code (normally this would be in a separate file)
+const examplePlugin = `
+// Register initialization hook
+api.registerHook('init', async (data) => {
+  console.log('Plugin initializing with data:', data);
+  return 'Initialization complete';
+});
+
+// Register processing hook
+api.registerHook('process', async (data) => {
+  console.log('Processing data');
+  return {
+    processed: true,
+    sum: api.utils.add(data.x, data.y),
+    product: api.utils.multiply(data.x, data.y),
+    date: api.utils.formatDate(new Date())
+  };
+});
+
+// Register shutdown hook
+api.registerHook('shutdown', async () => {
+  console.log('Plugin shutting down');
+  return 'Shutdown complete';
+});
+
+console.log('Plugin loaded with API version', api.version);
+`;
+
+// Create and run the plugin system
+(async () => {
+  const system = new PluginSystem();
+  
+  // Load plugins
+  system.loadPlugin('example', examplePlugin);
+  
+  // You could also load from a directory
+  // system.loadPluginsFromDirectory('./plugins');
+  
+  // Run the system
+  await system.run({ x: 5, y: 10 });
+})();</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices and Security Considerations -->
+        <section class="content-section" id="best-practices-security">
+            <h2>சிறந்த நடைமுறைகள் மற்றும் பாதுகாப்பு கருத்துகள்</h2>
+            
+            <h3>பாதுகாப்பு சிறந்த நடைமுறைகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-ban"></i>
+                    <span><strong>பாதுகாப்பிற்காக VM தொகுப்பை மட்டும் நம்ப வேண்டாம்:</strong> நம்பப்படாத குறியீட்டிற்கு கூடுதல் பாதுகாப்பு நடவடிக்கைகளைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>வளங்களைக் கட்டுப்படுத்தவும்:</strong> இயக்கப்பட்ட குறியீட்டிற்கான டைம்அவுட்கள் மற்றும் நினைவக வரம்புகளை அமைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-filter"></i>
+                    <span><strong>அணுகலைக் கட்டுப்படுத்தவும்:</strong> சாண்ட்பாக்ஸுக்கு தேவையான செயல்பாட்டை மட்டுமே வழங்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>உள்ளீடுகளை சரிபார்க்கவும்:</strong> VM இல் செயலாக்குவதற்கு முன் அனைத்து உள்ளீடுகளையும் கவனமாக சரிபார்க்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sitemap"></i>
+                    <span><strong>செயல்முறை தனிமைப்பாட்டைக் கவனியுங்கள்:</strong> மிக உயர் பாதுகாப்பிற்கு, தனி செயல்முறைகள் அல்லது கொள்கலன்களில் நம்பப்படாத குறியீட்டை இயக்கவும்</span>
+                </div>
+            </div>
+            
+            <h3>செயல்திறன் சிறந்த நடைமுறைகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span><strong>ஸ்கிரிப்ட்களை ஒருமுறை தொகுக்கவும்:</strong> பல முறை இயக்கப்படும் குறியீட்டிற்கு new vm.Script() ஐப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-recycle"></i>
+                    <span><strong>சூழல்களை மீண்டும் பயன்படுத்தவும்:</strong> புதிய சூழல்களை உருவாக்குவது விலை உயர்ந்தது, எனவே முடிந்தால் மீண்டும் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-compress-alt"></i>
+                    <span><strong>சூழல் அளவைக் கட்டுப்படுத்தவும்:</strong> செயல்திறனை மேம்படுத்த சூழல்களை சிறியதாக வைத்திருங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span><strong>பெரிய தரவுகளுடன் கவனமாக இருங்கள்:</strong> சூழல்களுக்கு இடையே பெரிய தரவு கட்டமைப்புகளை அனுப்புவது திறமையற்றதாக இருக்கலாம்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- VM Module vs. eval() -->
+        <section class="content-section" id="vm-vs-eval">
+            <h2>VM தொகுப்பு vs. eval()</h2>
+            
+            <p>VM தொகுதி eval() ஐப் பயன்படுத்துவதை விட பல நன்மைகளை வழங்குகிறது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>VM தொகுப்பு</th>
+                            <th>eval()</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>உள்ளூர் மாறிகள் அணுகல்</strong></td>
+                            <td>இல்லை (runInThisContext உடன்)</td>
+                            <td>ஆம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தனிமைப்பாடு</strong></td>
+                            <td>சிறந்தது (தனி சூழல்கள்)</td>
+                            <td>இல்லை (அதே சூழல்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>பாதுகாப்பு</strong></td>
+                            <td>சிறந்தது (கட்டுப்படுத்தப்பட்ட சூழல்)</td>
+                            <td>மோசமானது (எல்லாவற்றையும் அணுக முடியும்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>மீண்டும் இயக்கத்திற்கான செயல்திறன்</strong></td>
+                            <td>சிறந்தது (முன்கூட்டியே தொகுக்க முடியும்)</td>
+                            <td>மோசமானது (ஒவ்வொரு முறையும் தொகுக்கிறது)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>இயக்கத்தின் மீதான கட்டுப்பாடு</strong></td>
+                            <td>மேலும் (டைம்அவுட்கள், முதலியன)</td>
+                            <td>குறைவாக</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Limitations of the VM Module -->
+        <section class="content-section" id="limitations">
+            <h2>VM தொகுப்பின் வரம்புகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item negative">
+                    <i class="fas fa-box"></i>
+                    <span><strong>முழுமையான சாண்ட்பாக்ஸ் அல்ல:</strong> VM சூழல்கள் தனி செயல்முறைகளைப் போல உண்மையான தனிமைப்பாட்டை வழங்காது</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-microchip"></i>
+                    <span><strong>CPU அல்லது நினைவக வரம்புகள் இல்லை:</strong> வள பயன்பாட்டை நேரடியாக கட்டுப்படுத்த முடியாது (டைம்அவுட் மட்டுமே கிடைக்கும்)</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>முன்மாதிரி மாசுபாட்டு அபாயங்கள்:</strong> VM சூழல்களில் உள்ள குறியீடு இன்னும் JavaScript முன்மாதிரிகளை மாற்றக்கூடும்</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-sync"></i>
+                    <span><strong>சின்க்ரோனஸ் இயக்கம்:</strong> குறியீட்டை இயக்குவது நிகழ்வு வளையத்தைத் தடுக்கிறது (நீங்கள் அதை ஒரு தொழிலாளர் நூலில் இயக்காவிட்டால்)</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-bug"></i>
+                    <span><strong>டீபக்சிங் சவால்கள்:</strong> VM சூழல்களில் இயங்கும் குறியீட்டை டீபக்சிங் செய்வது கடினமாக இருக்கலாம்</span>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🚨</span> எச்சரிக்கை:</h4>
+                <p>முக்கியமான பாதுகாப்பு பயன்பாடுகளுக்கு, child_process தொகுப்புடன் தனி செயல்முறைகள், கொள்கலன்கள் அல்லது vm2 போன்ற சிறப்பு நூலகங்கள் போன்ற மிகவும் உறுதியான சாண்ட்பாக்சிங் தீர்வுகளைக் கவனியுங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>Node.js VM தொகுதி தனிமைப்படுத்தப்பட்ட V8 சூழல்களில் JavaScript குறியீட்டை இயக்க ஒரு வழியை வழங்குகிறது. இது பின்வருவனவற்றிற்கு பயனுள்ளதாக இருக்கிறது:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <span>சில அளவிலான தனிமைப்பாட்டுடன் குறியீட்டை டைனமிக்காக இயக்குதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span>பாதுகாப்பாக நீட்டிக்கப்படக்கூடிய பிளகின் அமைப்புகளை உருவாக்குதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-terminal"></i>
+                    <span>டெம்ப்ளேட் இயந்திரங்கள் மற்றும் ஸ்கிரிப்டிங் சூழல்களை கட்டமைத்தல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-flask"></i>
+                    <span>கட்டுப்படுத்தப்பட்ட சூழல்களில் குறியீட்டை சோதித்தல்</span>
+                </div>
+            </div>
+            
+            <p>நம்பப்படாத குறியீட்டை இயக்குவதற்கான முழுமையான பாதுகாப்பு தீர்வாக இல்லை என்றாலும், VM தொகுதி eval() ஐ விட அதிக தனிமைப்பாட்டை வழங்குகிறது மற்றும் Node.js பயன்பாடுகளுக்குள் JavaScript மதிப்பீட்டிற்கான ஒரு மதிப்புமிக்க கருவியாகும்.</p>
+        </section>
+
+        <!-- Advanced Context Management -->
+        <section class="content-section" id="advanced-context-management">
+            <h2>மேம்பட்ட சூழல் மேலாண்மை</h2>
+            
+            <p>தனிப்பயன் உலகளாவிகள் மற்றும் தொகுதிகளுடன் சிக்கலான VM சூழல்களை உருவாக்குவது மற்றும் நிர்வகிப்பது எப்படி என்பதைக் கற்றுக்கொள்ளுங்கள்:</p>
+            
+            <h3>1. உலகளாவி மாறிகள் கொண்ட தனிப்பயன் சூழலை உருவாக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+const util = require('util');
+
+// Create a custom context with specific global variables
+const context = {
+  console: {
+    log: (...args) => {
+      // Custom console.log implementation
+      process.stdout.write('Custom Log: ' + util.format(...args) + '\n');
+    },
+    error: console.error,
+    warn: console.warn,
+    info: console.info
+  },
+  // Add custom utilities
+  utils: {
+    formatDate: () => new Date().toISOString(),
+    generateId: () => Math.random().toString(36).substr(2, 9)
+  },
+  // Add a safe require function
+  require: (moduleName) => {
+    const allowedModules = ['path', 'url', 'util'];
+    if (!allowedModules.includes(moduleName)) {
+      throw new Error(`Module '${moduleName}' is not allowed`);
+    }
+    return require(moduleName);
+  }
+};
+
+// Contextify the object
+vm.createContext(context);
+
+// Run code in the custom context
+const code = `
+  console.log('Current time:', utils.formatDate());
+  console.log('Generated ID:', utils.generateId());
+  
+  try {
+    const fs = require('fs'); // This will throw an error
+  } catch (err) {
+    console.error('Security error:', err.message);
+  }
+  
+  // This will work as it's an allowed module
+  const path = require('path');
+  console.log('Current directory:', path.dirname('/path/to/file.txt'));
+`;
+
+try {
+  vm.runInContext(code, context, { filename: 'custom-context.js' });
+} catch (err) {
+  console.error('Script execution failed:', err);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Security Best Practices -->
+        <section class="content-section" id="security-best-practices">
+            <h2>பாதுகாப்பு சிறந்த நடைமுறைகள்</h2>
+            
+            <p>VM தொகுப்பைப் பயன்படுத்தும் போது, பாதுகாப்பு உங்கள் முதல் முன்னுரிமையாக இருக்க வேண்டும். சில சிறந்த நடைமுறைகள் இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+const { execSync } = require('child_process');
+
+// UNSAFE: Directly executing untrusted code
+function unsafeEval(code) {
+  // This is dangerous as it has access to the entire Node.js environment
+  return vm.runInThisContext(code);
+}
+
+// SAFER: Isolated context with limited access
+function safeEval(code, timeout = 1000) {
+  // Create a context with only the necessary globals
+  const context = {
+    console: {
+      log: console.log,
+      error: console.error
+    },
+    // Add safe utilities
+    Math: Object.create(null),
+    JSON: {
+      parse: JSON.parse,
+      stringify: JSON.stringify
+    },
+    // Add a safe setTimeout with limits
+    setTimeout: (fn, delay) => {
+      if (delay > 1000) delay = 1000; // Cap delay at 1 second
+      return setTimeout(fn, delay);
+    }
+  };
+  
+  // Copy safe methods from Math
+  Object.getOwnPropertyNames(Math)
+    .filter(prop => typeof Math[prop] === 'function')
+    .forEach(prop => {
+      context.Math[prop] = Math[prop];
+    });
+  
+  // Create the context without prototype access
+  const sandbox = vm.createContext(context, {
+    name: 'sandbox',
+    codeGeneration: {
+      strings: false,
+      wasm: false
+    }
+  });
+  
+  // Run the code with a timeout
+  try {
+    const script = new vm.Script(`
+      (function() {
+        "use strict";
+        ${code}
+      })();
+    `, {
+      filename: 'sandbox.js',
+      lineOffset: 0,
+      displayErrors: true,
+      timeout: timeout,
+      microtaskMode: 'afterEvaluate'
+    });
+    
+    return script.runInContext(sandbox, { timeout });
+  } catch (err) {
+    console.error('Script execution failed:', err.message);
+    throw new Error('Script execution failed');
+  }
+}
+
+// Example of safe evaluation
+try {
+  const result = safeEval(`
+    function add(a, b) { return a + b; }
+    add(2, 3);
+  `);
+  console.log('Safe evaluation result:', result); // Outputs: 5
+  
+  // This will be caught by our safe evaluator
+  safeEval('process.exit(1)');
+} catch (err) {
+  console.error('Caught error:', err.message);
+}
+
+// Example of security risks
+console.log('\nTesting security risks:');
+
+try {
+  console.log('1. Accessing process:');
+  safeEval('process.versions.node');
+} catch (err) {
+  console.log('✓ Blocked access to process object');
+}
+
+try {
+  console.log('2. Infinite loop:');
+  safeEval('while(true){}');
+} catch (err) {
+  console.log('✓ Caught infinite loop with timeout');
+}
+
+try {
+  console.log('3. Prototype pollution:');
+  safeEval('({}).constructor.prototype.polluted = true');
+  console.log('✓ Blocked prototype pollution');
+} catch (err) {
+  console.log('✓ Blocked prototype pollution');
+}</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🔒</span> முக்கியமானது:</h4>
+                <p>VM தொகுதி ஒரு பாதுகாப்பு எல்லை அல்ல. உண்மையில் நம்பப்படாத குறியீட்டை இயக்குவதற்கு, Docker, AWS Lambda, அல்லது Google Cloud Functions போன்ற அர்ப்பணிக்கப்பட்ட சாண்ட்பாக்சிங் தீர்வுகளைப் பயன்படுத்துவதைக் கவனியுங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Performance Optimization -->
+        <section class="content-section" id="performance-optimization">
+            <h2>செயல்திறன் உகப்பாக்கம்</h2>
+            
+            <p>இந்த நுட்பங்களுடன் VM செயல்திறனை உகப்பாக்குங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>const vm = require('vm');
+const { performance, PerformanceObserver } = require('perf_hooks');
+
+// 1. Compile once, run many times
+const expensiveCalculation = new vm.Script(`
+  function calculate(n) {
+    let result = 0;
+    for (let i = 0; i < n; i++) {
+      result += Math.sqrt(i) * Math.PI;
+    }
+    return result;
+  }
+  
+  // Return the function reference
+  calculate;
+`);
+
+// Create a context
+const context = { Math };
+vm.createContext(context);
+
+// Run once to get the function
+const calculate = expensiveCalculation.runInContext(context);
+
+// Now we can call the function multiple times without recompiling
+console.log('Result (n=1000):', calculate(1000));
+console.log('Result (n=2000):', calculate(2000));
+
+// 2. Use code caching for better performance
+const cache = new Map();
+
+function compileWithCache(code, filename) {
+  if (cache.has(code)) {
+    console.log(`Using cached script for ${filename}`);
+    return cache.get(code);
+  }
+  
+  console.log(`Compiling script for ${filename}`);
+  const script = new vm.Script(code, {
+    filename,
+    cachedData: null, // Will be populated on first run
+    produceCachedData: true
+  });
+  
+  cache.set(code, script);
+  return script;
+}
+
+// 3. Measure performance
+function measurePerformance() {
+  const obs = new PerformanceObserver((items) => {
+    const entry = items.getEntries()[0];
+    console.log(`\nExecution time for ${entry.name}: ${entry.duration.toFixed(2)}ms`);
+    performance.clearMarks();
+  });
+  obs.observe({ entryTypes: ['measure'] });
+  
+  // Test with different script sizes
+  const smallScript = new vm.Script('let sum = 0; for (let i = 0; i < 1000; i++) sum += i; return sum;');
+  const largeScript = new vm.Script(`
+    function processData(data) {
+      return data.map(x => ({
+        ...x,
+        processed: true,
+        timestamp: Date.now(),
+        hash: require('crypto').createHash('md5').update(JSON.stringify(x)).digest('hex')
+      }));
+    }
+    
+    // Process sample data
+    const data = Array(1000).fill(null).map((_, i) => ({ id: i, value: Math.random() }));
+    return processData(data);
+  `);
+  
+  // Measure execution
+  performance.mark('small-start');
+  smallScript.runInThisContext();
+  performance.mark('small-end');
+  
+  performance.mark('large-start');
+  largeScript.runInThisContext();
+  performance.mark('large-end');
+  
+  performance.measure('Small script execution', 'small-start', 'small-end');
+  performance.measure('Large script execution', 'large-start', 'large-end');
+}
+
+// Run performance test
+measurePerformance();
+
+// 4. Reuse contexts for better performance
+function createOptimizedContext() {
+  const context = {
+    // Only include what's necessary
+    console: {
+      log: console.log,
+      error: console.error
+    },
+    // Add required globals
+    setTimeout,
+    clearTimeout,
+    // Add custom utilities
+    utils: {
+      formatNumber: n => new Intl.NumberFormat().format(n),
+      formatDate: d => d.toISOString()
+    }
+  };
+  
+  // Create context once
+  vm.createContext(context);
+  return context;
+}
+
+// Reuse the same context for multiple scripts
+const sharedContext = createOptimizedContext();
+
+// Run multiple scripts with the same context
+function runWithSharedContext(code) {
+  try {
+    const script = new vm.Script(code);
+    return script.runInContext(sharedContext);
+  } catch (err) {
+    console.error('Script execution failed:', err);
+    throw err;
+  }
+}
+
+// Example usage
+const script1 = 'console.log("Script 1:", utils.formatNumber(1234567.89));';
+const script2 = 'console.log("Script 2:", utils.formatDate(new Date()));';
+
+runWithSharedContext(script1);
+runWithSharedContext(script2);</code></pre>
+            </div>
+            
+            <h3>செயல்திறன் உதவிக்குறிப்புகள்:</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span>முடிந்தால் ஸ்கிரிப்ட்களை முன்கூட்டியே தொகுக்கவும் மீண்டும் தொகுப்பு மேலோட்டத்தை தவிர்க்க</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-recycle"></i>
+                    <span>ஒவ்வொரு இயக்கத்திற்கும் புதியவற்றை உருவாக்குவதற்குப் பதிலாக சூழல்களை மீண்டும் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-compress-alt"></i>
+                    <span>தேவையான உலகளாவிகளை மட்டும் சேர்ப்பதன் மூலம் சூழல் அளவைக் குறைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span>அடிக்கடி இயக்கப்படும் ஸ்கிரிப்ட்களுக்கு குறியீடு கேச்சிங்கைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-chart-line"></i>
+                    <span>தடைகளை அடையாளம் காண செயல்திறனை கண்காணிக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-users"></i>
+                    <span>CPU-தீவிர செயல்பாடுகளுக்கு தொழிலாளர் நூல்களைக் கவனியுங்கள்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான தொகுப்பு பெயரை தேர்வு செய்யவும்.</h4>
+                <h4>The <span style="color: #ffd700;">______</span> module provides APIs for compiling and running code within V8 Virtual Machine contexts.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">v8</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "v8" தொகுதி V8 இயந்திரத்திற்கான குறைந்த-நிலை APIகளை வழங்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">vm2</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "vm2" என்பது மூன்றாம் தரப்பு தொகுப்பாகும், Node.js இன் உள்ளமைக்கப்பட்ட தொகுப்பு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">vm</div>
+                            <div class="option-feedback correct">✓ சரி! "vm" தொகுதி V8 மெய்நிகர் இயந்திர சூழல்களுக்குள் குறியீட்டை தொகுத்து இயக்குவதற்கான APIகளை வழங்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">context</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "context" என்பது Node.js இல் ஒரு செல்லுபடியாகும் தொகுப்பு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Performance Hooks Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js TLS SSL Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">VM தொகுப்பு அறிமுகம்</a></li>
+                    <li><a href="#basic-usage">அடிப்படை பயன்பாடு</a></li>
+                    <li><a href="#creating-compiling-scripts">ஸ்கிரிப்ட்களை உருவாக்குதல் மற்றும் தொகுத்தல்</a></li>
+                    <li><a href="#vm-vs-eval">VM தொகுப்பு vs. eval()</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

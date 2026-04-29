@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL HAVING Clause - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MySQL GROUP BY Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MySQL EXISTS Operator.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MySQL HAVING Clause</h2>
+            <p>MySQL இல் HAVING கிளாஸைப் பயன்படுத்தி ஒருங்கிணைந்த செயல்பாடுகளுடன் நிபந்தனைகளைச் சேர்த்து கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- The MySQL HAVING Clause -->
+        <section class="content-section" id="having-clause">
+            <h2>MySQL HAVING கிளாஸ்</h2>
+            
+            <p>HAVING கிளாஸ் SQL இல் சேர்க்கப்பட்டது, ஏனெனில் WHERE முக்கிய சொல் ஒருங்கிணைந்த செயல்பாடுகளுடன் பயன்படுத்த முடியாது.</p>
+            
+            <h3>HAVING தொடரியல்</h3>
+            
+            <div class="code-example">
+                <pre><code>SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s);</code></pre>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>டெமோ தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் "Customers" அட்டவணையிலிருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CustomerID</th>
+                            <th>CustomerName</th>
+                            <th>ContactName</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>PostalCode</th>
+                            <th>Country</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Alfreds Futterkiste</td>
+                            <td>Maria Anders</td>
+                            <td>Obere Str. 57</td>
+                            <td>Berlin</td>
+                            <td>12209</td>
+                            <td>Germany</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Ana Trujillo Emparedados y helados</td>
+                            <td>Ana Trujillo</td>
+                            <td>Avda. de la Constitución 2222</td>
+                            <td>México D.F.</td>
+                            <td>05021</td>
+                            <td>Mexico</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Antonio Moreno Taquería</td>
+                            <td>Antonio Moreno</td>
+                            <td>Mataderos 2312</td>
+                            <td>México D.F.</td>
+                            <td>05023</td>
+                            <td>Mexico</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Around the Horn</td>
+                            <td>Thomas Hardy</td>
+                            <td>120 Hanover Sq.</td>
+                            <td>London</td>
+                            <td>WA1 1DP</td>
+                            <td>UK</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Berglunds snabbköp</td>
+                            <td>Christina Berglund</td>
+                            <td>Berguvsvägen 8</td>
+                            <td>Luleå</td>
+                            <td>S-958 22</td>
+                            <td>Sweden</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- MySQL HAVING Examples -->
+        <section class="content-section" id="having-examples">
+            <h2>MySQL HAVING எடுத்துக்காட்டுகள்</h2>
+            
+            <p>பின்வரும் SQL கூற்று ஒவ்வொரு நாட்டிலும் உள்ள வாடிக்கையாளர்களின் எண்ணிக்கையை பட்டியலிடுகிறது. 5 க்கும் மேற்பட்ட வாடிக்கையாளர்களைக் கொண்ட நாடுகளை மட்டும் சேர்க்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL கூற்று ஒவ்வொரு நாட்டிலும் உள்ள வாடிக்கையாளர்களின் எண்ணிக்கையை பட்டியலிடுகிறது, உயர் முதல் குறைந்த வரிசையில் வரிசைப்படுத்தப்பட்டுள்ளது (5 க்கும் மேற்பட்ட வாடிக்கையாளர்களைக் கொண்ட நாடுகளை மட்டும் சேர்க்கவும்):</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5
+ORDER BY COUNT(CustomerID) DESC;</code></pre>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database-2">
+            <h2>டெமோ தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் "Orders" அட்டவணையிலிருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OrderID</th>
+                            <th>CustomerID</th>
+                            <th>EmployeeID</th>
+                            <th>OrderDate</th>
+                            <th>ShipperID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10248</td>
+                            <td>90</td>
+                            <td>5</td>
+                            <td>1996-07-04</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>10249</td>
+                            <td>81</td>
+                            <td>6</td>
+                            <td>1996-07-05</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>10250</td>
+                            <td>34</td>
+                            <td>4</td>
+                            <td>1996-07-08</td>
+                            <td>2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p>மற்றும் "Employees" அட்டவணையிலிருந்து ஒரு தேர்வு:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>EmployeeID</th>
+                            <th>LastName</th>
+                            <th>FirstName</th>
+                            <th>BirthDate</th>
+                            <th>Photo</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Davolio</td>
+                            <td>Nancy</td>
+                            <td>1968-12-08</td>
+                            <td>EmpID1.pic</td>
+                            <td>Education includes a BA....</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Fuller</td>
+                            <td>Andrew</td>
+                            <td>1952-02-19</td>
+                            <td>EmpID2.pic</td>
+                            <td>Andrew received his BTS....</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Leverling</td>
+                            <td>Janet</td>
+                            <td>1963-08-30</td>
+                            <td>EmpID3.pic</td>
+                            <td>Janet has a BS degree....</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- More HAVING Examples -->
+        <section class="content-section" id="more-having-examples">
+            <h2>மேலும் HAVING எடுத்துக்காட்டுகள்</h2>
+            
+            <p>பின்வரும் SQL கூற்று 10 க்கும் மேற்பட்ட ஆர்டர்களைப் பதிவு செய்த ஊழியர்களை பட்டியலிடுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM (Orders
+INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID)
+GROUP BY LastName
+HAVING COUNT(Orders.OrderID) > 10;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL கூற்று "Davolio" அல்லது "Fuller" ஊழியர்கள் 25 க்கும் மேற்பட்ட ஆர்டர்களைப் பதிவு செய்திருந்தால் பட்டியலிடுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM Orders
+INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+WHERE LastName = 'Davolio' OR LastName = 'Fuller'
+GROUP BY LastName
+HAVING COUNT(Orders.OrderID) > 25;</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> 10 க்கும் மேற்பட்ட ஆர்டர்களைப் பதிவு செய்த ஊழியர்களை பட்டியலிட சரியான தொடரியலைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders</div>
+                            <div class="option-feedback correct">✓ சரி! இது தேர்ந்தெடுக்கப்பட வேண்டிய நெடுவரிசைகளை சரியாக குறிப்பிடுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">FROM</div>
+                            <div class="option-feedback correct">✓ சரி! FROM என்பது அட்டவணைகளைக் குறிப்பிடப் பயன்படும் முக்கிய சொல்லாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">(Orders INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID)</div>
+                            <div class="option-feedback correct">✓ சரி! இது Orders மற்றும் Employees அட்டவணைகளை சரியாக இணைக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">GROUP BY LastName</div>
+                            <div class="option-feedback correct">✓ சரி! GROUP BY கடைசிப் பெயரால் தரவை தொகுக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">HAVING</div>
+                            <div class="option-feedback correct">✓ சரி! HAVING ஒருங்கிணைந்த செயல்பாட்டில் நிபந்தனையைச் சேர்க்கப் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">COUNT(Orders.OrderID) > 10</div>
+                            <div class="option-feedback correct">✓ சரி! இது 10 க்கும் மேற்பட்ட ஆர்டர்களைக் கொண்ட ஊழியர்களை மட்டும் தேர்ந்தெடுக்கும் நிபந்தனையாகும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MySQL GROUP BY Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MySQL EXISTS Operator.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#having-clause">MySQL HAVING கிளாஸ்</a></li>
+                    <li><a href="#demo-database">டெமோ தரவுத்தளம்</a></li>
+                    <li><a href="#having-examples">HAVING எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#more-having-examples">மேலும் HAVING எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Testing - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20Animations.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Security.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Testing</h2>
+<p>Angular-இல் சோதனை முறைகளைக் கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Testing</h2>
+<p>சோதனை செய்வது components மற்றும் services-ஐ lightweight அமைப்புகளுடன் சரிபார்க்கிறது.</p>
+</section>
+
+<!-- Testing Essentials -->
+<section class="content-section" id="essentials">
+<h2>Testing Essentials</h2>
+<p><strong>Component & services:</strong> DOM-style சரிபார்ப்புகள் மற்றும் lightweight அமைப்புகளுடன் சோதிக்கவும் (NgModules தேவையில்லை).</p>
+<p><strong>TestBed (lite):</strong> components-ஐ அவற்றின் providers-உடன் திறமையாக உருவாக்கவும்.</p>
+<p><strong>Pure logic:</strong> எளிதான சோதனைக்காக pure functions-இல் logic-ஐ வைக்கவும்.</p>
+<p><strong>Mocks:</strong> தேவைக்கேற்ப HTTP மற்றும் router-ஐ mock செய்யவும்.</p>
+
+<div class="code-example">
+<h3>Disable Animations in Tests</h3>
+<pre><code>// Disable animations in tests for stability
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+
+bootstrapApplication(App, { providers: [provideNoopAnimations()] });</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">💡</span>Jassif Team Notes:</h4>
+<p>Components and Services பற்றி காண்க.</p>
+<p>சிறிய, நிர்ணயமான சோதனைகளைப் பயன்படுத்தவும்.</p>
+<p>Unit tests-இல் HTTP மற்றும் router-ஐ mock செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Component Smoke Test -->
+<section class="content-section" id="smoke-test">
+<h2>Component Smoke Test</h2>
+<div class="code-example">
+<h3>Simple Component Test</h3>
+<pre><code>@Component({ standalone: true, template: `&lt;p&gt;{{ add(2,3) }}&lt;/p&gt;` })
+class App { add(a:number,b:number){ return a+b; } }</code></pre>
+</div>
+
+<div class="code-example">
+<h3>Complete Example</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+
+function add(a: number, b: number) { return a + b; }
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Testing Smoke&lt;/h3&gt;
+    &lt;p&gt;2 + 3 = {{ add(2,3) }} (expect 5)&lt;/p&gt;
+  `
+})
+class App { add = add; }
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">📝</span>Example Explained:</h4>
+<p><strong>Interpolation {{ expression }}:</strong> Angular component-க்கு எதிரான வெளிப்பாட்டை மதிப்பிடுகிறது மற்றும் முடிவை DOM-இல் உரையாக செருகுகிறது.</p>
+<p><strong>"expect 5":</strong> டெம்ப்ளேட்டில் உள்ள சொற்றொடர் வாசகருக்கான விளக்க உரை, சோதனை உறுதிப்படுத்தல் அல்ல.</p>
+<p><strong>Real assertions:</strong> Unit tests-இல், முடிவுகளைச் சரிபார்க்க expect(actual).toBe(expected) (அல்லது toEqual(expected)) பயன்படுத்தவும்.</p>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">⚡</span>Testing Tips:</h4>
+<p>provideNoopAnimations() மூலம் சோதனைகளில் அனிமேஷன்களை முடக்கவும்.</p>
+<p>கூறு நிலை மூலம் DOM-ஐ இயக்கவும்; கையேடு DOM அழைப்புகளைத் தவிர்க்கவும்.</p>
+<p>தேவைப்படும்போது மட்டுமே மாற்றத்தைக் கண்டறியவும் (எ.கா., உள்ளீடுகளைப் புதுப்பித்த பிறகு).</p>
+</div>
+</section>
+
+<!-- Test Strategies -->
+<section class="content-section" id="test-strategies">
+<h2>Test Strategies</h2>
+<ul>
+<li><strong>Unit test</strong> pure functions நேரடியாக விரைவான கருத்துக்கு.</li>
+<li><strong>Shallow component tests</strong> டெம்ப்ளேட் நடத்தைக்கு.</li>
+<li><strong>Integration tests</strong> நடத்தை components-ஐக் கடக்கும்போது சேர்க்கவும்.</li>
+</ul>
+
+<div class="code-example">
+<h3>Async Testing Example</h3>
+<pre><code>import { fakeAsync, tick } from '@angular/core/testing';
+
+it('waits for async work', fakeAsync(() => {
+  let done = false;
+  setTimeout(() => done = true, 10);  
+  tick(10);
+  expect(done).toBeTrue();
+}));</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>Async Test Explained:</h4>
+<p><strong>expect(actual):</strong> சோதனை செய்யப்படும் உண்மையான மதிப்புடன் ஒரு உறுதிப்படுத்தலை உருவாக்குகிறது. கடுமையான சமத்துவத்திற்கு (===) toBe(expected), ஆழமான கட்டமைப்பு சமத்துவத்திற்கு toEqual(expected) மற்றும் பூலியன் சரிபார்ப்புகளுக்கு toBeTrue()/toBeFalse() பயன்படுத்தவும்.</p>
+<p><strong>fakeAsync(testFn):</strong> நேரத்தை நிர்ணயமாக முன்னேற்ற முடியும் என்பதால் testFn-ஐ போலி async மண்டலத்தில் இயக்குகிறது.</p>
+<p><strong>tick(ms):</strong> நிலுவையில் உள்ள டைமர்கள் மற்றும் மைக்ரோடாஸ்க்களை வெளியேற்றுவதற்கு ms மில்லி விநாடிகளால் மெய்நிகர் கடிகாரத்தை முன்னேற்றுகிறது.</p>
+<p><strong>Alternatives:</strong> waitForAsync(testFn) நிலுவையில் உள்ள async வேலையை முடித்த பிறகு சோதனையை நிறைவு செய்கிறது; whenStable() எந்த பணிகளும் எஞ்சியிருக்காதபோது தீர்க்கிறது.</p>
+</div>
+</section>
+
+<!-- HTTP Testing -->
+<section class="content-section" id="http-testing">
+<h2>HTTP Testing</h2>
+<div class="code-example">
+<h3>HTTP Testing (Conceptual)</h3>
+<pre><code>// HTTP testing (conceptual)
+import { TestBed } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+TestBed.configureTestingModule({ imports: [HttpClientTestingModule] });
+const http = TestBed.inject(HttpClient);
+const httpMock = TestBed.inject(HttpTestingController);
+
+http.get('/api/todos/1').subscribe(data => expect(data).toBeTruthy());
+httpMock.expectOne('/api/todos/1').flush({ id: 1, title: 'Test' });
+httpMock.verify();</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">🔄</span>HTTP Testing Explained:</h4>
+<p><strong>HttpClientTestingModule:</strong> HttpClient-க்கு ஒரு mock backend வழங்குகிறது, எனவே உண்மையான நெட்வொர்க் அழைப்புகள் செய்யப்படுவதில்லை.</p>
+<p><strong>HttpTestingController:</strong> HttpClient மூலம் செய்யப்படும் HTTP கோரிக்கைகளைப் பரிசோதிக்கவும், பொருந்தவும் மற்றும் பதிலளிக்கவும் உங்களை அனுமதிக்கிறது.</p>
+<p><strong>expectOne(match):</strong> match (URL சரம், RegExp, அல்லது predicate) பொருந்தும் சரியாக ஒரு நிலுவையில் உள்ள கோரிக்கை இருப்பதாக உறுதிப்படுத்துகிறது மற்றும் ஒரு TestRequest-ஐ வழங்குகிறது.</p>
+<p><strong>flush(body, options?):</strong> கொடுக்கப்பட்ட body மற்றும் விருப்பமான options (எ.கா., status, statusText, headers) உடன் பொருந்திய கோரிக்கைக்கு ஒரு mock பதிலை அனுப்புகிறது.</p>
+<p><strong>verify():</strong> முடிவில் பொருந்தாத அல்லது நிலுவையில் உள்ள கோரிக்கைகள் இருந்தால் சோதனை தோல்வியடையும்.</p>
+</div>
+</section>
+
+<!-- Testing Guidelines -->
+<section class="content-section" id="guidelines">
+<h2>Testing Guidelines</h2>
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-check-circle"></i>
+<h4>Best Practices</h4>
+</div>
+<p><strong>HTTP:</strong> கோரிக்கைகளை mock செய்ய HttpClientTestingModule மற்றும் HttpTestingController பயன்படுத்தவும்.</p>
+<p><strong>Router:</strong> உண்மையான வழிசெலுத்தலைத் தவிர்க்க router சோதனை utilities பயன்படுத்தவும்.</p>
+<p><strong>Async:</strong> டைமர்களுக்குப் பதிலாக fakeAsync/tick அல்லது waitForAsync/whenStable பயன்படுத்தவும்.</p>
+<p><strong>Queries:</strong> சிறிய CSS-க்கு மேல் நிலையான selectors மற்றும் role/text queries பயன்படுத்தவும்.</p>
+</div>
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-times-circle"></i>
+<h4>Avoid</h4>
+</div>
+<p><strong>Real HTTP calls</strong> in unit tests</p>
+<p><strong>Manual DOM manipulation</strong> instead of component state</p>
+<p><strong>Unstable CSS selectors</strong> for element queries</p>
+<p><strong>Real timers</strong> in async tests</p>
+</div>
+</div>
+
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-vial"></i>
+<div>
+<strong>Unit Tests:</strong> சிறிய, தனிமைப்படுத்தப்பட்ட சோதனைகள் வேகமான கருத்துக்கு
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-layer-group"></i>
+<div>
+<strong>Integration Tests:</strong> பல கூறுகளுக்கு இடையில் தொடர்புகளைச் சரிபார்க்கவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-rocket"></i>
+<div>
+<strong>Performance:</strong> சோதனைகள் வேகமாக இயங்க வேண்டும் (வினாடிகளில்)
+</div>
+</div>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Learning Exercise</h2>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>Which module do you import to mock HTTP requests in Angular unit tests?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">HttpClientTestingModule</div>
+<div class="option-feedback correct">✓ Correct! HttpClientTestingModule is used to mock HTTP requests in Angular unit tests</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">HttpClientModule</div>
+<div class="option-feedback incorrect">✗ Incorrect! HttpClientModule is for actual HTTP requests, not mocking</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">FormsModule</div>
+<div class="option-feedback incorrect">✗ Incorrect! FormsModule is for form handling, not HTTP mocking</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20Animations.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Security.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education in Tamil.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">Angular Testing</a></li>
+<li><a href="#essentials">Testing Essentials</a></li>
+<li><a href="#smoke-test">Component Smoke Test</a></li>
+<li><a href="#test-strategies">Test Strategies</a></li>
+<li><a href="#http-testing">HTTP Testing</a></li>
+<li><a href="#guidelines">Testing Guidelines</a></li>
+<li><a href="#exercise">Exercise</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contact</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Location &amp; Hours</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

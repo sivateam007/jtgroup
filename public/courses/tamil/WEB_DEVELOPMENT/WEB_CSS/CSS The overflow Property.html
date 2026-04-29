@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS The overflow Property - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Overflow examples styling */
+        .overflow-demo-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 2px solid #e9ecef;
+        }
+        
+        .demo-label {
+            font-weight: bold;
+            color: var(--git-color);
+            margin-bottom: 10px;
+        }
+        
+        .demo-box {
+            width: 300px;
+            height: 150px;
+            border: 2px solid #3498db;
+            background-color: white;
+            margin: 15px 0;
+            padding: 15px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        
+        .demo-text {
+            font-size: 0.95rem;
+            color: #333;
+        }
+        
+        .overflow-visible {
+            overflow: visible;
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .overflow-scroll {
+            overflow: scroll;
+        }
+        
+        .overflow-auto {
+            overflow: auto;
+        }
+        
+        .overflow-x-hidden {
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 120px;
+            white-space: nowrap;
+        }
+        
+        .overflow-y-scroll {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 120px;
+        }
+        
+        /* Scrollbar styling */
+        .demo-box::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        .demo-box::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .demo-box::-webkit-scrollbar-thumb {
+            background: var(--git-color);
+            border-radius: 4px;
+        }
+        
+        .demo-box::-webkit-scrollbar-thumb:hover {
+            background: #d1402a;
+        }
+        
+        /* Code examples */
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .code-example h3 {
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .code-example pre {
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        
+        /* Properties table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .properties-table th {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .properties-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .properties-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .properties-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Exercise styling */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20The%20z-index%20Property.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Float.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS The overflow Property</h2>
+            <p>பெரிய உள்ளடக்கத்தைக் கையாளும் முறையைக் கட்டுப்படுத்துங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS The overflow Property -->
+        <section class="content-section" id="overflow-property">
+            <h2>CSS The overflow Property</h2>
+            
+            <p>CSS overflow பண்பானது ஒரு பகுதியில் பொருந்த முடியாத அளவுக்கு பெரிய உள்ளடக்கத்திற்கு என்ன நடக்கிறது என்பதைக் கட்டுப்படுத்துகிறது.</p>
+            
+            <p>ஒரு உறுப்பின் உள்ளடக்கம் மிகவும் பெரியதாக இருந்தால் உள்ளடக்கத்தை வெட்டுவதா அல்லது உருளும் பட்டைகளைச் சேர்க்கவா என்பதை இது குறிப்பிடுகிறது.</p>
+            
+            <p>overflow பண்பு பின்வரும் மதிப்புகளைக் கொண்டுள்ளது:</p>
+            
+            <ul>
+                <li>visible - இயல்புநிலை. overflow வெட்டப்படாது. உள்ளடக்கம் உறுப்பின் பெட்டிக்கு வெளியே ரெண்டர் செய்யப்படுகிறது</li>
+                <li>hidden - overflow வெட்டப்படுகிறது, மீதமுள்ள உள்ளடக்கம் மறைக்கப்படுகிறது</li>
+                <li>scroll - உருளும் பட்டைகள் சேர்க்கப்படுகின்றன. அனைத்து உள்ளடக்கத்தையும் காண பயனர் உருள வேண்டும்</li>
+                <li>auto - scroll போன்றது, ஆனால் தேவைப்படும்போது மட்டுமே உருளும் பட்டைகளைச் சேர்க்கிறது</li>
+            </ul>
+            
+            <p>இங்கே, overflow இல் உருளும் பட்டைகள் சேர்க்கப்படுகின்றன:</p>
+            
+            <div class="overflow-demo-container">
+                <div class="demo-label">overflow: scroll</div>
+                <div class="demo-box overflow-scroll">
+                    <div class="demo-text">
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS overflow: visible -->
+        <section class="content-section" id="overflow-visible">
+            <h2>CSS overflow: visible</h2>
+            
+            <p>இயல்பாக, overflow காண்பிக்கப்படுகிறது, அதாவது அது வெட்டப்படவில்லை மற்றும் உறுப்பின் பெட்டிக்கு வெளியே ரெண்டர் செய்யப்படுகிறது:</p>
+            
+            <div class="overflow-demo-container">
+                <div class="demo-label">overflow: visible (இயல்புநிலை)</div>
+                <div class="demo-box overflow-visible">
+                    <div class="demo-text">
+                        நீங்கள் தளவமைப்பை சிறப்பாகக் கட்டுப்படுத்த விரும்பும்போது overflow பண்பைப் பயன்படுத்தலாம். overflow பண்பானது உள்ளடக்கம் ஒரு உறுப்பின் பெட்டியை விஞ்சினால் என்ன நடக்கும் என்பதைக் குறிப்பிடுகிறது.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div {
+  width: 200px;
+  height: 65px;
+  background-color: coral;
+  overflow: visible;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS overflow: hidden -->
+        <section class="content-section" id="overflow-hidden">
+            <h2>CSS overflow: hidden</h2>
+            
+            <p>hidden மதிப்புடன், overflow வெட்டப்படுகிறது, மீதமுள்ள உள்ளடக்கம் மறைக்கப்படுகிறது:</p>
+            
+            <div class="overflow-demo-container">
+                <div class="demo-label">overflow: hidden</div>
+                <div class="demo-box overflow-hidden">
+                    <div class="demo-text">
+                        நீங்கள் தளவமைப்பை சிறப்பாகக் கட்டுப்படுத்த விரும்பும்போது overflow பண்பைப் பயன்படுத்தலாம். overflow பண்பானது உள்ளடக்கம் ஒரு உறுப்பின் பெட்டியை விஞ்சினால் என்ன நடக்கும் என்பதைக் குறிப்பிடுகிறது.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div {
+  overflow: hidden;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS overflow: scroll -->
+        <section class="content-section" id="overflow-scroll">
+            <h2>CSS overflow: scroll</h2>
+            
+            <p>scroll மதிப்புடன், கிடைமட்ட மற்றும் செங்குத்து உருளும் பட்டைகள் எப்போதும் சேர்க்கப்படும். அனைத்து உள்ளடக்கத்தையும் காண பயனர் உருள வேண்டும்:</p>
+            
+            <div class="overflow-demo-container">
+                <div class="demo-label">overflow: scroll</div>
+                <div class="demo-box overflow-scroll">
+                    <div class="demo-text">
+                        நீங்கள் தளவமைப்பை சிறப்பாகக் கட்டுப்படுத்த விரும்பும்போது overflow பண்பைப் பயன்படுத்தலாம். overflow பண்பானது உள்ளடக்கம் ஒரு உறுப்பின் பெட்டியை விஞ்சினால் என்ன நடக்கும் என்பதைக் குறிப்பிடுகிறது.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div {
+  overflow: scroll;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS overflow: auto -->
+        <section class="content-section" id="overflow-auto">
+            <h2>CSS overflow: auto</h2>
+            
+            <p>auto மதிப்பு scroll போன்றது, ஆனால் தேவைப்படும்போது மட்டுமே உருளும் பட்டைகளைச் சேர்க்கிறது:</p>
+            
+            <div class="overflow-demo-container">
+                <div class="demo-label">overflow: auto</div>
+                <div class="demo-box overflow-auto">
+                    <div class="demo-text">
+                        நீங்கள் தளவமைப்பை சிறப்பாகக் கட்டுப்படுத்த விரும்பும்போது overflow பண்பைப் பயன்படுத்தலாம். overflow பண்பானது உள்ளடக்கம் ஒரு உறுப்பின் பெட்டியை விஞ்சினால் என்ன நடக்கும் என்பதைக் குறிப்பிடுகிறது.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div {
+  overflow: auto;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS overflow-x and overflow-y -->
+        <section class="content-section" id="overflow-xy">
+            <h2>CSS overflow-x and overflow-y</h2>
+            
+            <p>overflow-x மற்றும் overflow-y பண்புகள் உள்ளடக்கத்தின் overflow ஐ கிடைமட்டமாக அல்லது செங்குத்தாக (அல்லது இரண்டும்) மாற்ற வேண்டுமா என்பதைக் குறிப்பிடுகின்றன:</p>
+            
+            <ul>
+                <li>overflow-x உள்ளடக்கத்தின் இடது/வலது விளிம்புகளுடன் என்ன செய்ய வேண்டும் என்பதைக் குறிப்பிடுகிறது.</li>
+                <li>overflow-y உள்ளடக்கத்தின் மேல்/கீழ் விளிம்புகளுடன் என்ன செய்ய வேண்டும் என்பதைக் குறிப்பிடுகிறது.</li>
+            </ul>
+            
+            <div class="overflow-demo-container">
+                <div class="demo-label">overflow-x: hidden (கிடைமட்ட உருளும் பட்டை மறைக்கப்பட்டது)</div>
+                <div class="demo-box overflow-x-hidden">
+                    <div class="demo-text">
+                        இது மிக நீண்ட கிடைமட்ட உள்ளடக்கம் ஆகும், இது கிடைமட்டமாக சுருக்கப்படும். இது மிக நீண்ட கிடைமட்ட உள்ளடக்கம் ஆகும், இது கிடைமட்டமாக சுருக்கப்படும். இது மிக நீண்ட கிடைமட்ட உள்ளடக்கம் ஆகும், இது கிடைமட்டமாக சுருக்கப்படும்.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="overflow-demo-container">
+                <div class="demo-label">overflow-y: scroll (செங்குத்து உருளும் பட்டை சேர்க்கப்பட்டது)</div>
+                <div class="demo-box overflow-y-scroll">
+                    <div class="demo-text">
+                        நீங்கள் தளவமைப்பை சிறப்பாகக் கட்டுப்படுத்த விரும்பும்போது overflow பண்பைப் பயன்படுத்தலாம். overflow பண்பானது உள்ளடக்கம் ஒரு உறுப்பின் பெட்டியை விஞ்சினால் என்ன நடக்கும் என்பதைக் குறிப்பிடுகிறது. overflow-x மற்றும் overflow-y பண்புகள் உள்ளடக்கத்தின் overflow ஐ கிடைமட்டமாக அல்லது செங்குத்தாக (அல்லது இரண்டும்) மாற்ற வேண்டுமா என்பதைக் குறிப்பிடுகின்றன. overflow-x உள்ளடக்கத்தின் இடது/வலது விளிம்புகளுடன் என்ன செய்ய வேண்டும் என்பதைக் குறிப்பிடுகிறது. overflow-y உள்ளடக்கத்தின் மேல்/கீழ் விளிம்புகளுடன் என்ன செய்ய வேண்டும் என்பதைக் குறிப்பிடுகிறது.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div {
+  overflow-x: hidden; /* கிடைமட்ட உருளும் பட்டையை மறைக்கவும் */
+  overflow-y: scroll; /* செங்குத்து உருளும் பட்டையைச் சேர்க்கவும் */
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <p>overflow பண்பு எதைக் கட்டுப்படுத்துகிறது?</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> overflow பண்பு எதைக் கட்டுப்படுத்துகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">உறுப்புக்குள் உரையின் சீரமைப்பு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது text-align பண்பின் பணியாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு உறுப்பில் பொருந்த முடியாத அளவுக்கு பெரிய உள்ளடக்கத்திற்கு என்ன நடக்கிறது</div>
+                            <div class="option-feedback correct">✓ சரி! overflow பண்பானது உள்ளடக்கம் ஒரு உறுப்பில் பொருந்தாதபோது என்ன செய்ய வேண்டும் என்பதைக் கட்டுப்படுத்துகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">உறுப்பின் அளவு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது width மற்றும் height பண்புகளின் பணியாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">உறுப்பின் காண்பித்தல்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது display மற்றும் visibility பண்புகளின் பணியாகும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- All CSS Overflow Properties -->
+        <section class="content-section" id="overflow-properties">
+            <h2>All CSS Overflow Properties</h2>
+            
+            <p>Overflow தொடர்பான அனைத்து CSS பண்புகளும்:</p>
+            
+            <table class="properties-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>overflow</td>
+                    <td>உள்ளடக்கம் ஒரு உறுப்பின் பெட்டியை விஞ்சினால் என்ன நடக்கும் என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>overflow-anchor</td>
+                    <td>உருளல் நங்கூரத்தை அணைக்க முடியும்</td>
+                </tr>
+                <tr>
+                    <td>overflow-x</td>
+                    <td>உள்ளடக்கம் உறுப்பின் உள்ளடக்கப் பகுதியை விஞ்சினால் இடது/வலது விளிம்புகளுடன் என்ன செய்ய வேண்டும் என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>overflow-y</td>
+                    <td>உள்ளடக்கம் உறுப்பின் உள்ளடக்கப் பகுதியை விஞ்சினால் மேல்/கீழ் விளிம்புகளுடன் என்ன செய்ய வேண்டும் என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>overflow-wrap</td>
+                    <td>உள்ளடக்கம் அதன் கொள்கலனை விஞ்சினால் நீண்ட சொற்களுடன் கூடிய வரிகளை உலாவி உடைக்க முடியுமா இல்லையா என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> பயனுள்ள உதவிக்குறிப்புகள்:</h4>
+                <p>1. overflow: hidden படங்கள் அல்லது வீடியோக்களை துண்டிக்காமல் வெட்டுவதற்கு பயனுள்ளதாக இருக்கும்<br>
+                2. overflow: auto பயனர் அனுபவத்திற்கு சிறந்தது - தேவைப்படும் போது மட்டுமே உருளும் பட்டைகள்<br>
+                3. overflow-x மற்றும் overflow-y ஒன்றாக பயன்படுத்தலாம் வெவ்வேறு திசைகளில் வெவ்வேறு நடத்தைகளைக் குறிப்பிட<br>
+                4. overflow: scroll எப்போதும் உருளும் பட்டைகளைக் காட்டும், உள்ளடக்கம் விஞ்சாவிட்டாலும் கூட</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20The%20z-index%20Property.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Float.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#overflow-property">The overflow Property</a></li>
+                    <li><a href="#overflow-visible">overflow: visible</a></li>
+                    <li><a href="#overflow-hidden">overflow: hidden</a></li>
+                    <li><a href="#overflow-scroll">overflow: scroll</a></li>
+                    <li><a href="#overflow-auto">overflow: auto</a></li>
+                    <li><a href="#overflow-xy">overflow-x & overflow-y</a></li>
+                    <li><a href="#exercises">Exercise</a></li>
+                    <li><a href="#overflow-properties">Overflow Properties</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Stored Procedures for SQL Server - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--git-color);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Syntax Comparison */
+        .syntax-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .syntax-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .syntax-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .syntax-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .syntax-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            margin: 2rem 0;
+        }
+        
+        .responsive-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--git-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .parameter-highlight {
+            color: #8be9fd;
+            font-weight: bold;
+        }
+        
+        .keyword {
+            color: #ff79c6;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .benefits-grid,
+            .syntax-comparison,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .syntax-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .responsive-table {
+                font-size: 0.8rem;
+            }
+            
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL NULL Functions.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL Comments.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Stored Procedures for SQL Server</h2>
+            <p>மீண்டும் மீண்டும் பயன்படுத்தக்கூடிய SQL குறியீட்டைச் சேமிக்கும் சேமிக்கப்பட்ட நடைமுறைகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is Stored Procedure -->
+        <section class="content-section" id="what-is-sp">
+            <h2>சேமிக்கப்பட்ட நடைமுறை என்றால் என்ன?</h2>
+            
+            <p>ஒரு சேமிக்கப்பட்ட நடைமுறை என்பது நீங்கள் சேமிக்கக்கூடிய தயாரிக்கப்பட்ட SQL குறியீடாகும், இதனால் குறியீட்டை மீண்டும் மீண்டும் பயன்படுத்தலாம்.</p>
+            
+            <p>எனவே நீங்கள் மீண்டும் மீண்டும் எழுதும் SQL வினவல் இருந்தால், அதை ஒரு சேமிக்கப்பட்ட நடைமுறையாக சேமித்து, அதை இயக்க அதை அழைக்கவும்.</p>
+            
+            <p>நீங்கள் ஒரு சேமிக்கப்பட்ட நடைமுறைக்கு அளவுருக்களை அனுப்பலாம், இதனால் அனுப்பப்படும் அளவுரு மதிப்பின் அடிப்படையில் சேமிக்கப்பட்ட நடைமுறை செயல்பட முடியும்.</p>
+        </section>
+
+        <!-- Stored Procedure Benefits -->
+        <section class="content-section" id="sp-benefits">
+            <h2>சேமிக்கப்பட்ட நடைமுறைகளின் நன்மைகள்</h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <h4>மீள் பயன்பாடு</h4>
+                    <p>குறியீட்டை மீண்டும் மீண்டும் எழுத வேண்டியதில்லை, அதை மீண்டும் பயன்படுத்தலாம்</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h4>செயல்திறன்</h4>
+                    <p>முன்-கompile செய்யப்பட்ட குறியீடு வேகமாக இயங்கும்</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>பாதுகாப்பு</h4>
+                    <p>நேரடி அட்டவணை அணுகலைத் தடுக்கலாம்</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h4>பிணைய செயல்திறன்</h4>
+                    <p>குறைந்த நெட்வொர்க் போக்குவரத்து</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stored Procedure Syntax -->
+        <section class="content-section" id="sp-syntax">
+            <h2>சேமிக்கப்பட்ட நடைமுறை தொடரியல்</h2>
+            
+            <div class="syntax-comparison">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-plus-circle"></i>
+                        <h4>உருவாக்குதல்</h4>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code><span class="keyword">CREATE PROCEDURE</span> procedure_name
+<span class="keyword">AS</span>
+sql_statement
+<span class="keyword">GO</span>;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-play-circle"></i>
+                        <h4>இயக்குதல்</h4>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code><span class="keyword">EXEC</span> procedure_name;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் உள்ள "Customers" அட்டவணையிலிருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CustomerID</th>
+                                <th>CustomerName</th>
+                                <th>ContactName</th>
+                                <th>City</th>
+                                <th>PostalCode</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Alfreds Futterkiste</td>
+                                <td>Maria Anders</td>
+                                <td>Berlin</td>
+                                <td>12209</td>
+                                <td>Germany</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Ana Trujillo Emparedados y helados</td>
+                                <td>Ana Trujillo</td>
+                                <td>México D.F.</td>
+                                <td>05021</td>
+                                <td>Mexico</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Antonio Moreno Taquería</td>
+                                <td>Antonio Moreno</td>
+                                <td>México D.F.</td>
+                                <td>05023</td>
+                                <td>Mexico</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Around the Horn</td>
+                                <td>Thomas Hardy</td>
+                                <td>London</td>
+                                <td>WA1 1DP</td>
+                                <td>UK</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Berglunds snabbköp</td>
+                                <td>Christina Berglund</td>
+                                <td>Luleå</td>
+                                <td>S-958 22</td>
+                                <td>Sweden</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stored Procedure Examples -->
+        <section class="content-section" id="sp-examples">
+            <h2>சேமிக்கப்பட்ட நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>அடிப்படை எடுத்துக்காட்டு</h3>
+            <p>பின்வரும் SQL அறிக்கை "Customers" அட்டவணையிலிருந்து அனைத்து பதிவுகளையும் தேர்ந்தெடுக்கும் "SelectAllCustomers" என்ற சேமிக்கப்பட்ட நடைமுறையை உருவாக்குகிறது:</p>
+            
+            <div class="code-example">
+                <h4>உருவாக்குதல்</h4>
+                <pre><code><span class="keyword">CREATE PROCEDURE</span> SelectAllCustomers
+<span class="keyword">AS</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers
+<span class="keyword">GO</span>;</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h4>இயக்குதல்</h4>
+                <pre><code><span class="keyword">EXEC</span> SelectAllCustomers;</code></pre>
+            </div>
+            
+            <h3>ஒரு அளவுருவுடன் சேமிக்கப்பட்ட நடைமுறை</h3>
+            <p>பின்வரும் SQL அறிக்கை "Customers" அட்டவணையிலிருந்து ஒரு குறிப்பிட்ட நகரத்திலிருந்து வாடிக்கையாளர்களைத் தேர்ந்தெடுக்கும் ஒரு சேமிக்கப்பட்ட நடைமுறையை உருவாக்குகிறது:</p>
+            
+            <div class="code-example">
+                <h4>உருவாக்குதல்</h4>
+                <pre><code><span class="keyword">CREATE PROCEDURE</span> SelectAllCustomers <span class="parameter-highlight">@City nvarchar(30)</span>
+<span class="keyword">AS</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers <span class="keyword">WHERE</span> City = <span class="parameter-highlight">@City</span>
+<span class="keyword">GO</span>;</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h4>இயக்குதல்</h4>
+                <pre><code><span class="keyword">EXEC</span> SelectAllCustomers <span class="parameter-highlight">@City = 'London'</span>;</code></pre>
+            </div>
+            
+            <h3>பல அளவுருக்களுடன் சேமிக்கப்பட்ட நடைமுறை</h3>
+            <p>பல அளவுருக்களை அமைப்பது மிகவும் எளிதானது. ஒவ்வொரு அளவுரு மற்றும் தரவு வகையையும் காற்புள்ளியால் பிரிக்கப்பட்ட பட்டியலிடவும்.</p>
+            
+            <div class="code-example">
+                <h4>உருவாக்குதல்</h4>
+                <pre><code><span class="keyword">CREATE PROCEDURE</span> SelectAllCustomers 
+    <span class="parameter-highlight">@City nvarchar(30)</span>, 
+    <span class="parameter-highlight">@PostalCode nvarchar(10)</span>
+<span class="keyword">AS</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers 
+<span class="keyword">WHERE</span> City = <span class="parameter-highlight">@City</span> 
+    <span class="keyword">AND</span> PostalCode = <span class="parameter-highlight">@PostalCode</span>
+<span class="keyword">GO</span>;</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h4>இயக்குதல்</h4>
+                <pre><code><span class="keyword">EXEC</span> SelectAllCustomers 
+    <span class="parameter-highlight">@City = 'London'</span>, 
+    <span class="parameter-highlight">@PostalCode = 'WA1 1DP'</span>;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>சேமிக்கப்பட்ட நடைமுறைகள் சிக்கலான வணிக தர்க்கத்தை காப்பகப்படுத்தவும், செயல்திறனை மேம்படுத்தவும், பாதுகாப்பை மேம்படுத்தவும் உதவுகின்றன. அவை பயன்பாட்டு குறியீட்டிலிருந்து தரவுத்தள தர்க்கத்தை பிரிக்கின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>புதிய வாடிக்கையாளர் சேர்க்கை</h3>
+                    <p>சரிபார்ப்புகளுடன் புதிய வாடிக்கையாளரைச் சேர்க்கும் நடைமுறை</p>
+                    <div class="code-block small">
+                        <pre><code>CREATE PROCEDURE AddCustomer
+    @Name nvarchar(50),
+    @Email nvarchar(100)
+AS
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM Customers WHERE Email = @Email)
+    INSERT INTO Customers (Name, Email) VALUES (@Name, @Email)
+END</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>விற்பனை அறிக்கை</h3>
+                    <p>குறிப்பிட்ட காலகட்டத்திற்கான விற்பனைத் தரவைப் பெறுதல்</p>
+                    <div class="code-block small">
+                        <pre><code>CREATE PROCEDURE GetSalesReport
+    @StartDate date,
+    @EndDate date
+AS
+SELECT * FROM Orders 
+WHERE OrderDate BETWEEN @StartDate AND @EndDate</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>தரவு பராமரிப்பு</h3>
+                    <p>பழைய பதிவுகளைக் காப்பிட்டு நீக்குதல்</p>
+                    <div class="code-block small">
+                        <pre><code>CREATE PROCEDURE ArchiveOldOrders
+    @ArchiveDate date
+AS
+BEGIN
+    INSERT INTO OrderArchive SELECT * FROM Orders 
+    WHERE OrderDate < @ArchiveDate
+    DELETE FROM Orders WHERE OrderDate < @ArchiveDate
+END</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL Server-ல் சேமிக்கப்பட்ட நடைமுறையின் முதன்மை நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தரவுத்தளத்தில் அட்டவணைப்படுத்தலை மேம்படுத்த</div>
+                            <div class="option-feedback incorrect">✗ தவறு! அட்டவணைப்படுத்தல் தனி செயல்பாடாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">மீண்டும் பயன்படுத்தக்கூடிய SQL குறியீட்டை மீண்டும் மீண்டும் பயன்படுத்த சேமிக்க</div>
+                            <div class="option-feedback correct">✓ சரி! சேமிக்கப்பட்ட நடைமுறைகளின் முதன்மை நோக்கம் மீண்டும் பயன்படுத்தக்கூடிய SQL குறியீட்டை சேமித்து மீண்டும் பயன்படுத்துவதாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணைகளை தானாகவே உருவாக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! அட்டவணைகள் CREATE TABLE உரையால் உருவாக்கப்படுகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">வினவல்களில் NULL மதிப்புகளைக் கையாள</div>
+                            <div class="option-feedback incorrect">✗ தவறு! NULL மதிப்புகள் ISNULL() அல்லது COALESCE() போன்ற செயல்பாடுகளால் கையாளப்படுகின்றன</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL NULL Functions.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL Comments.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-sp">சேமிக்கப்பட்ட நடைமுறை</a></li>
+                    <li><a href="#sp-benefits">நன்மைகள்</a></li>
+                    <li><a href="#sp-syntax">தொடரியல்</a></li>
+                    <li><a href="#sp-examples">எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

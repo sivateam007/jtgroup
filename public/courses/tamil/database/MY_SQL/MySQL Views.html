@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL Views - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MySQL Working With Dates.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MySQL Data Types.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MySQL Views</h2>
+            <p>MySQL இல் VIEW களை உருவாக்கவும் நிர்வகிக்கவும் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- MySQL CREATE VIEW Statement -->
+        <section class="content-section" id="create-view">
+            <h2>MySQL CREATE VIEW Statement</h2>
+            
+            <p>SQL இல், ஒரு VIEW என்பது ஒரு SQL அறிக்கையின் முடிவு-தொகுப்பை அடிப்படையாகக் கொண்ட ஒரு மெய்நிகர் அட்டவணையாகும்.</p>
+            
+            <p>ஒரு VIEW வரிசைகள் மற்றும் நெடுவரிசைகளைக் கொண்டுள்ளது, ஒரு உண்மையான அட்டவணையைப் போலவே. ஒரு VIEW இல் உள்ள புலங்கள் தரவுத்தளத்தில் உள்ள ஒன்று அல்லது அதற்கு மேற்பட்ட உண்மையான அட்டவணைகளிலிருந்து வரும் புலங்களாகும்.</p>
+            
+            <p>நீங்கள் SQL அறிக்கைகள் மற்றும் செயல்பாடுகளை ஒரு VIEW க்கு சேர்க்கலாம் மற்றும் தரவு ஒரு ஒற்றை அட்டவணையிலிருந்து வருவது போன்று தரவை வழங்கலாம்.</p>
+            
+            <p>ஒரு VIEW, CREATE VIEW அறிக்கையுடன் உருவாக்கப்படுகிறது.</p>
+        </section>
+
+        <!-- CREATE VIEW Syntax -->
+        <section class="content-section" id="view-syntax">
+            <h2>CREATE VIEW தொடரியல்</h2>
+            
+            <div class="code-example">
+                <pre><code>CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>ஒரு VIEW எப்போதும் இற்றைப்படுத்தப்பட்ட தரவைக் காட்டுகிறது! பயனர் அதைக் கேட்கும் ஒவ்வொரு முறையும் தரவுத்தள இயந்திரம் VIEW ஐ மீண்டும் உருவாக்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- MySQL CREATE VIEW Examples -->
+        <section class="content-section" id="view-examples">
+            <h2>MySQL CREATE VIEW எடுத்துக்காட்டுகள்</h2>
+            
+            <p>பின்வரும் SQL பிரேசிலில் இருந்து அனைத்து வாடிக்கையாளர்களையும் காட்டும் ஒரு VIEW ஐ உருவாக்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>CREATE VIEW [Brazil Customers] AS
+SELECT CustomerName, ContactName
+FROM Customers
+WHERE Country = 'Brazil';</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள VIEW ஐ நாம் பின்வருமாறு கேட்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT * FROM [Brazil Customers];</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL "Products" அட்டவணையில் உள்ள ஒவ்வொரு தயாரிப்பையும் சராசரி விலையை விட அதிக விலையுடன் தேர்ந்தெடுக்கும் ஒரு VIEW ஐ உருவாக்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>CREATE VIEW [Products Above Average Price] AS
+SELECT ProductName, Price
+FROM Products
+WHERE Price > (SELECT AVG(Price) FROM Products);</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள VIEW ஐ நாம் பின்வருமாறு கேட்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT * FROM [Products Above Average Price];</code></pre>
+            </div>
+        </section>
+
+        <!-- MySQL Updating a View -->
+        <section class="content-section" id="updating-view">
+            <h2>MySQL இல் VIEW ஐப் புதுப்பித்தல்</h2>
+            
+            <p>ஒரு VIEW ஐ CREATE OR REPLACE VIEW அறிக்கையுடன் புதுப்பிக்க முடியும்.</p>
+            
+            <h3>CREATE OR REPLACE VIEW தொடரியல்</h3>
+            
+            <div class="code-example">
+                <pre><code>CREATE OR REPLACE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL "Brazil Customers" VIEW க்கு "City" நெடுவரிசையைச் சேர்க்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>CREATE OR REPLACE VIEW [Brazil Customers] AS
+SELECT CustomerName, ContactName, City
+FROM Customers
+WHERE Country = 'Brazil';</code></pre>
+            </div>
+        </section>
+
+        <!-- MySQL Dropping a View -->
+        <section class="content-section" id="dropping-view">
+            <h2>MySQL இல் VIEW ஐ நீக்குதல்</h2>
+            
+            <p>ஒரு VIEW, DROP VIEW அறிக்கையுடன் நீக்கப்படும்.</p>
+            
+            <h3>DROP VIEW தொடரியல்</h3>
+            
+            <div class="code-example">
+                <pre><code>DROP VIEW view_name;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL "Brazil Customers" VIEW ஐ நீக்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>DROP VIEW [Brazil Customers];</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் தொடரியல் குறியீட்டை அர்த்தமுள்ளதாக ஆக்க சரியான முக்கிய சொற்களைத் தேர்ந்தெடுக்கவும்:</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">CREATE TABLE Norwegians AS SELECT Firstname, Lastname FROM Persons WHERE Country = 'Norway';</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது TABLE உருவாக்குகிறது, VIEW அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">CREATE VIEW Norwegians AS SELECT Firstname, Lastname FROM Persons WHERE Country = 'Norway';</div>
+                            <div class="option-feedback correct">✓ சரி! இது "Norwegians" என்ற பெயரில் ஒரு VIEW உருவாக்குகிறது, இது நோர்வேயில் இருந்து நபர்களைக் காட்டுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">CREATE DATABASE Norwegians AS SELECT Firstname, Lastname FROM Persons WHERE Country = 'Norway';</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது DATABASE உருவாக்குகிறது, VIEW அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">CREATE INDEX Norwegians AS SELECT Firstname, Lastname FROM Persons WHERE Country = 'Norway';</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது INDEX உருவாக்குகிறது, VIEW அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MySQL Working With Dates.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MySQL Data Types.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#create-view">CREATE VIEW Statement</a></li>
+                    <li><a href="#view-syntax">CREATE VIEW Syntax</a></li>
+                    <li><a href="#view-examples">CREATE VIEW Examples</a></li>
+                    <li><a href="#updating-view">VIEW ஐப் புதுப்பித்தல்</a></li>
+                    <li><a href="#dropping-view">VIEW ஐ நீக்குதல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

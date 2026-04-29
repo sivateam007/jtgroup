@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full stack Development AngularJS MCQ Quiz | JT group of Institution</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Jassif Team Quiz Header */
+        .jassif-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--git-color);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .team-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Quiz Hero */
+        .quiz-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quiz-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .quiz-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Question Selection Grid - RED COLOR FOR HARD */
+        .question-selection-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        /* Question number button with Hard level color (RED) */
+        .question-number-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number-btn:hover {
+            border-color: var(--git-color);
+            transform: translateY(-3px);
+        }
+
+        .question-number-btn.active {
+            background: #dc3545; /* RED for Hard */
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .question-number-btn.answered {
+            background: #f8d7da; /* Light red for answered */
+            border-color: #dc3545;
+            color: var(--dark);
+        }
+
+        /* Difficulty level indicator - RED for Hard */
+        .difficulty-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 8px 8px 0 0;
+            background-color: #dc3545; /* Red for Hard */
+        }
+
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+
+        .current-question-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .quiz-info {
+            display: none;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--git-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        .quiz-option.selected {
+            border-color: var(--secondary);
+            background: #e8f4fc;
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--accent);
+            background: #f8d7da;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected .option-letter {
+            background: var(--secondary);
+        }
+
+        .quiz-option.correct .option-letter {
+            background: var(--success);
+        }
+
+        .quiz-option.incorrect .option-letter {
+            background: var(--accent);
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-btn.prev {
+            background: #667eea;
+        }
+
+        .quiz-btn.submit {
+            background: var(--success);
+        }
+
+        /* Results Container */
+        .results-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .results-score {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--git-color);
+            margin: 1rem 0;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+        }
+
+        .results-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--git-color);
+            margin-top: 0.5rem;
+        }
+
+        .quiz-btn.restart {
+            background: var(--git-color);
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: black;
+            padding: 0;
+        }
+
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .team-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quiz-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .question-selection-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .question-number-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo" class="logo-image">
+                <h1>JT GROUP OF INSTITUTION</h1>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="home-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-tachometer-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- Header with Logo -->
+    <header class="jassif-header">
+        <div class="header-container">
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <img src="/assets/images/jt_logo.jpeg" alt="Jassif Team Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">Jt group of Institution</div>
+                    <div class="logo-sub">FULL STACK DEVELOPMENT COURSE - ANGULAR.JS QUESTIONS</div>
+                </div>
+            </a>
+            <div class="team-info">
+                <div class="team-badge">
+                    <i class="fab fa-angular"></i>
+                   FULL STACK DEVELOPER Course
+                </div>
+                <div class="team-badge">
+                    <i class="fas fa-question-circle"></i>
+                  Angular.JS MCQ Quiz
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Hero Section -->
+    <section class="quiz-hero">
+        <div class="quiz-hero-content">
+            <h2>AngularJS MCQ Quiz Questions</h2>
+            <p>Test your advanced AngularJS knowledge with 30 multiple-choice questions in Tamil. All questions are marked with red indicator in selection tab.</p>
+            <div class="quiz-badges">
+                <span class="info-badge level"><i class="fas fa-signal"></i> Hard Level</span>
+                <span class="info-badge"><i class="fas fa-clock"></i> 30-35 min</span>
+                <span class="info-badge"><i class="fas fa-question-circle"></i> 30 Questions</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Question Selection Grid - RED COLOR HERE -->
+    <section class="question-selection-section">
+        <div class="section-title">
+            <h2>AngularJS Questions</h2>
+            <p>All questions are Full stack level. Click on any question number to jump directly to it.</p>
+        </div>
+        
+        <div class="question-selection-grid" id="questionSelectionGrid">
+            <!-- Question numbers will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Main Quiz Container -->
+    <main class="quiz-container">
+        <!-- Quiz Interface -->
+        <div class="quiz-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="current-question-number" id="questionNumber">
+                    Question 1 of 30
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <!-- Question -->
+            <div class="question-text" id="questionText">
+                AngularJS-இல் digest cycle performance optimization-ஐ எப்படி implement செய்யலாம்?
+            </div>
+            
+            <!-- Options -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="quiz-footer">
+                <button class="quiz-btn prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="quiz-btn next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="quiz-btn submit" id="submitBtn" style="display: none;">
+                    <i class="fas fa-paper-plane"></i> Submit Quiz
+                </button>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div class="results-container" id="resultsContainer">
+            <h2 class="section-title">AngularJS Hard Quiz Results</h2>
+            <div class="results-score" id="finalScore">0/30</div>
+            <div class="results-message" id="resultMessage">
+                Your performance message will appear here.
+            </div>
+            
+            <div class="results-details">
+                <div class="result-card">
+                    <h4><i class="fas fa-check-circle"></i> Correct Answers</h4>
+                    <div class="result-value" id="correctCount">0</div>
+                </div>
+                <div class="result-card">
+                    <h4><i class="fas fa-percentage"></i> Percentage</h4>
+                    <div class="result-value" id="percentage">0%</div>
+                </div>
+                <div class="result-card">
+                    <h4><i class="fas fa-trophy"></i> Performance</h4>
+                    <div class="result-value" id="performance">Advanced</div>
+                </div>
+            </div>
+            
+            <div class="results-actions">
+                <p>Review your answers or try the quiz again.</p>
+                <button class="quiz-btn restart" id="restartBtn">
+                    <i class="fas fa-redo"></i> Restart Hard Quiz
+                </button>
+            </div>
+             <!-- Certificate Button -->
+ <div class="results-actions">
+                
+                <button class="quiz-btn restart" id="restartBtn" onclick="certificate()">
+                    <i class="fas fa-paper-plane"></i> NEXT QUESTION PAPER
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <div class="footer-logo-image">
+                <img src="logo.jpg" alt="Jassif Team Logo">
+            </div>
+            <div>Jassif Team - AngularJS Course</div>
+        </div>
+        <div class="footer-text">
+            &copy; 2024 Jassif Team. All rights reserved. | Hard Level AngularJS MCQ Quiz
+        </div>
+    </footer>
+
+    <script>
+        // AngularJS Hard Level Quiz data in Tamil - 30 QUESTIONS
+        const quizData = [
+            { 
+                question: "AngularJS-இல் digest cycle performance optimization-ஐ எப்படி implement செய்யலாம்?", 
+                options: [
+                    "Debounce ng-model updates",
+                    "One-time binding use செய்ய",
+                    "Limit $watch expressions",
+                    "மேலே உள்ள அனைத்தும்"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் custom $digest cycle implementation considerations?", 
+                options: [
+                    "TTL (Time To Live) limits",
+                    "Infinite loop prevention",
+                    "Performance implications",
+                    "All considerations"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $$watchers vs $$asyncQueue vs $$postDigestQueue?", 
+                options: [
+                    "Different queue mechanisms",
+                    "Execution timing differences",
+                    "Priority-based processing",
+                    "All distinctions"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $applyAsync vs $evalAsync vs $$postDigest?", 
+                options: [
+                    "Different async execution strategies",
+                    "Digest cycle coordination",
+                    "Performance trade-offs",
+                    "All differences"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் manual dirty checking implementation?", 
+                options: [
+                    "Custom $watch functions",
+                    "Object.observe alternatives",
+                    "Change detection strategies",
+                    "All approaches"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் scope inheritance performance optimization?", 
+                options: [
+                    "Prototypal inheritance implications",
+                    "Watcher propagation patterns",
+                    "Memory leak prevention",
+                    "All optimizations"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் digest cycle deadlock scenarios?", 
+                options: [
+                    "Circular dependency detection",
+                    "Async operation coordination",
+                    "Timeout/resolve patterns",
+                    "All scenarios"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $digest vs $apply vs $timeout timing differences?", 
+                options: [
+                    "Execution context variations",
+                    "Error handling strategies",
+                    "Performance characteristics",
+                    "All differences"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் watcher deregistration strategies?", 
+                options: [
+                    "Manual cleanup requirements",
+                    "Memory leak prevention",
+                    "Destroy event handling",
+                    "All strategies"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் digest cycle profiling techniques?", 
+                options: [
+                    "Performance monitoring tools",
+                    "Watcher count analysis",
+                    "Digest duration measurement",
+                    "All techniques"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் compile phase optimization strategies?", 
+                options: [
+                    "Template pre-compilation",
+                    "Directive priority management",
+                    "Transclusion performance",
+                    "All strategies"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் link phase performance considerations?", 
+                options: [
+                    "DOM manipulation timing",
+                    "Event handler registration",
+                    "Scope watcher initialization",
+                    "All considerations"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $$ phase methods usage precautions?", 
+                options: [
+                    "Private API stability concerns",
+                    "Version compatibility risks",
+                    "Performance implications",
+                    "All precautions"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் digest cycle vs zone.js comparison?", 
+                options: [
+                    "Different change detection approaches",
+                    "Performance characteristics",
+                    "Error handling differences",
+                    "All comparisons"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் manual scope.$destroy() implementation?", 
+                options: [
+                    "Watcher cleanup procedures",
+                    "Event listener removal",
+                    "Child scope destruction",
+                    "All procedures"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $$asyncQueue vs $$postDigestQueue execution order?", 
+                options: [
+                    "Queue processing priorities",
+                    "Timing synchronization issues",
+                    "Race condition prevention",
+                    "All considerations"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $evalAsync within $watch functions?", 
+                options: [
+                    "Infinite loop prevention",
+                    "Performance optimization",
+                    "Change detection coordination",
+                    "All considerations"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் manual $$phase management?", 
+                options: [
+                    "$apply() vs $digest() decisions",
+                    "Phase transition handling",
+                    "Error recovery strategies",
+                    "All management aspects"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $watch deregistration performance impact?", 
+                options: [
+                    "Memory cleanup timing",
+                    "Garbage collection implications",
+                    "Watcher array management",
+                    "All impacts"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் digest cycle TTL (Time To Live) configuration?", 
+                options: [
+                    "Infinite loop prevention",
+                    "Performance tuning",
+                    "Default value considerations",
+                    "All configuration aspects"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $scope.$new() performance considerations?", 
+                options: [
+                    "Isolate scope creation overhead",
+                    "Prototypal inheritance chain",
+                    "Memory allocation patterns",
+                    "All considerations"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $$watchersCount monitoring strategies?", 
+                options: [
+                    "Performance profiling tools",
+                    "Memory leak detection",
+                    "Optimization metrics",
+                    "All strategies"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $digest cycle vs $apply error handling?", 
+                options: [
+                    "Exception propagation differences",
+                    "Recovery mechanism variations",
+                    "User experience implications",
+                    "All handling aspects"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் manual scope.$applyAsync() implementation?", 
+                options: [
+                    "Request batching strategies",
+                    "Digest cycle optimization",
+                    "UI rendering coordination",
+                    "All implementations"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $$postDigest vs $timeout(0) timing?", 
+                options: [
+                    "Execution order guarantees",
+                    "Browser event loop integration",
+                    "Performance characteristics",
+                    "All timing aspects"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் digest cycle interruption strategies?", 
+                options: [
+                    "Error boundary implementation",
+                    "Recovery procedure design",
+                    "User notification mechanisms",
+                    "All strategies"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $watch deregistration during digest?", 
+                options: [
+                    "Array mutation considerations",
+                    "Iterator invalidation issues",
+                    "Safe removal patterns",
+                    "All considerations"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் $$asyncQueue vs $q integration?", 
+                options: [
+                    "Promise resolution timing",
+                    "Digest cycle coordination",
+                    "Error propagation handling",
+                    "All integration aspects"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் manual $$applyAsyncId management?", 
+                options: [
+                    "Request debouncing implementation",
+                    "Memory leak prevention",
+                    "Performance optimization",
+                    "All management aspects"
+                ], 
+                correct: 3
+            },
+            { 
+                question: "AngularJS-இல் digest cycle vs manual change detection?", 
+                options: [
+                    "Performance trade-off analysis",
+                    "Use case suitability",
+                    "Implementation complexity",
+                    "All comparisons"
+                ], 
+                correct: 3
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let isQuizSubmitted = false;
+
+        // DOM elements
+        const questionSelectionGrid = document.getElementById('questionSelectionGrid');
+        const quizCard = document.getElementById('quizCard');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const questionNumberElement = document.getElementById('questionNumber');
+        const questionTextElement = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressBar = document.getElementById('progressBar');
+        const finalScoreElement = document.getElementById('finalScore');
+        const resultMessageElement = document.getElementById('resultMessage');
+        const correctCountElement = document.getElementById('correctCount');
+        const percentageElement = document.getElementById('percentage');
+        const performanceElement = document.getElementById('performance');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Initialize question selection grid with RED color (hard level)
+        function initializeQuestionGrid() {
+            questionSelectionGrid.innerHTML = '';
+            quizData.forEach((question, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'question-number-btn';
+                btn.dataset.index = index;
+                
+                // Add RED difficulty indicator (ALL questions are hard)
+                const difficultyIndicator = document.createElement('div');
+                difficultyIndicator.className = 'difficulty-indicator';
+                btn.appendChild(difficultyIndicator);
+                
+                // Add question number
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'question-number';
+                numberSpan.textContent = index + 1;
+                btn.appendChild(numberSpan);
+                
+                if (index === 0) {
+                    btn.classList.add('active');
+                }
+                
+                if (userAnswers[index] !== null) {
+                    btn.classList.add('answered');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    updateQuestionGrid();
+                });
+                
+                questionSelectionGrid.appendChild(btn);
+            });
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const buttons = document.querySelectorAll('.question-number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                
+                if (userAnswers[index] !== null) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = quizData[currentQuestionIndex];
+            
+            // Update question number
+            questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            
+            // Update question text
+            questionTextElement.textContent = question.question;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                
+                // Check if this option was previously selected
+                if (userAnswers[currentQuestionIndex] === index) {
+                    optionElement.classList.add('selected');
+                }
+                
+                // Only show correct/incorrect if quiz is submitted
+                if (isQuizSubmitted && userAnswers[currentQuestionIndex] === index) {
+                    if (index === question.correct) {
+                        optionElement.classList.add('correct');
+                    } else {
+                        optionElement.classList.add('incorrect');
+                    }
+                }
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update navigation buttons
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.style.display = currentQuestionIndex < quizData.length - 1 ? 'block' : 'none';
+            submitBtn.style.display = currentQuestionIndex === quizData.length - 1 ? 'block' : 'none';
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            if (isQuizSubmitted) return;
+            
+            // Remove selected class from all options
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            const selectedOption = document.querySelectorAll('.quiz-option')[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            // Store the answer
+            userAnswers[currentQuestionIndex] = optionIndex;
+            
+            // Check if answer is correct
+            const question = quizData[currentQuestionIndex];
+            if (optionIndex === question.correct) {
+                if (!question.answered) {
+                    score++;
+                    question.answered = true;
+                }
+            } else {
+                if (question.answered) {
+                    score--;
+                    question.answered = false;
+                }
+            }
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        submitBtn.addEventListener('click', submitQuiz);
+
+        // Submit the quiz
+        function submitQuiz() {
+            isQuizSubmitted = true;
+            
+            const totalQuestions = quizData.length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Update results
+            finalScoreElement.textContent = `${score}/${totalQuestions}`;
+            correctCountElement.textContent = score;
+            percentageElement.textContent = `${percentage}%`;
+            
+            // Determine performance level - Adjusted for Hard level
+            let performance = '';
+            let message = '';
+            
+            if (percentage >= 90) {
+                performance = 'AngularJS Guru';
+                message = 'அற்புதம்! நீங்கள் AngularJS மேம்பட்ட கருத்துக்களை முழுமையாக தெரிந்துள்ளீர்கள்!';
+            } else if (percentage >= 70) {
+                performance = 'Expert';
+                message = 'சிறப்பு! AngularJS மேம்பட்ட கருத்துக்கள் பற்றி மிகச் சிறந்த புரிதல் உள்ளது.';
+            } else if (percentage >= 50) {
+                performance = 'Advanced';
+                message = 'நல்ல முயற்சி! AngularJS மேம்பட்ட கருத்துக்கள் பற்றி நல்ல புரிதல் உள்ளது.';
+            } else {
+                performance = 'Intermediate';
+                message = 'தொடர்ந்து பயிற்சி செய்யுங்கள்! AngularJS மேம்பட்ட கருத்துக்களை மீண்டும் பாருங்கள்.';
+            }
+            
+            performanceElement.textContent = performance;
+            resultMessageElement.textContent = message;
+            
+            // Show results container
+            quizCard.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            // Show correct/incorrect answers
+            loadQuestion();
+        }
+
+        // Restart quiz
+        restartBtn.addEventListener('click', () => {
+            // Reset quiz state
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            isQuizSubmitted = false;
+            
+            // Reset answered flag for all questions
+            quizData.forEach(question => {
+                question.answered = false;
+            });
+            
+            // Reset UI
+            resultsContainer.style.display = 'none';
+            quizCard.style.display = 'block';
+            
+            // Reload first question
+            loadQuestion();
+            initializeQuestionGrid();
+        });
+
+        // Initialize the quiz
+        initializeQuestionGrid();
+        loadQuestion();
+         // Certificate function
+          function certificate() {
+            window.location.href = 'NODE_JS_Q.html';
+        }
+    </script>
+    <script>
+        function logout() {
+            fetch('/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include'
+            }).then(() => {
+                window.location.href = '/app/login.html';
+            });
+        }
+    </script>
+</body>
+</html>
+

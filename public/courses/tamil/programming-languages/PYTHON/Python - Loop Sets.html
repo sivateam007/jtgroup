@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python - Loop Sets - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        .loop-example {
+            background: linear-gradient(135deg, #9370DB, #8A2BE2);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+        
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .method-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 5px solid #9370DB;
+        }
+        
+        .method-icon {
+            font-size: 2rem;
+            color: #9370DB;
+            margin-bottom: 1rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+
+        .exercise-icon {
+            margin-right: 10px;
+        }
+
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+            color: white !important;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1rem;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(5px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+            padding-right: 1rem;
+            color: white;
+            font-weight: 500;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.9rem;
+            text-align: right;
+            min-width: 250px;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .correct {
+            color: #28a745 !important;
+        }
+
+        .incorrect {
+            color: #dc3545 !important;
+        }
+
+        /* Responsive adjustments for exercise sections */
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.8rem;
+                text-align: left;
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .option-card {
+                padding: 1.2rem;
+                min-height: auto;
+            }
+        }
+        
+        .note-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .warning-note {
+            background: rgba(220, 53, 69, 0.1);
+            border-left: 4px solid #dc3545;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: #9370DB;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .loop-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .loop-type-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python%20-%20Remove%20Set%20Items.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python%20-%20Join%20Sets.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python - Loop Sets</h2>
+            <p>Python செட் உருப்படிகள் வழியாக சுழலுதல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Set உருப்படிகள் வழியாக சுழலுதல்</h2>
+            
+            <div class="loop-example">
+                myset = {"apple", "banana", "cherry"}<br>
+                for item in myset:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;print(item)<br>
+                # வெளியீடு: banana, apple, cherry (வரிசை மாறுபடலாம்)
+            </div>
+            
+            <p><strong>for loop பயன்படுத்தி set உருப்படிகள் வழியாக நீங்கள் சுழலலாம்.</strong></p>
+            
+            <div class="note-box">
+                <h4><i class="fas fa-lightbulb"></i> முக்கிய குறிப்பு:</h4>
+                <p>Sets வரிசைப்படுத்தப்படாதவை (unordered), எனவே set உருப்படிகள் வழியாக சுழலும் போது, உருப்படிகள் எந்த வரிசையில் கிடைக்கும் என்பதை உறுதிப்படுத்த முடியாது. இது sets இன் அடிப்படை பண்புகளில் ஒன்றாகும்.</p>
+            </div>
+        </section>
+
+        <!-- Basic Loop Example -->
+        <section class="content-section" id="basic-loop">
+            <h2>அடிப்படை Loop எடுத்துக்காட்டு</h2>
+            
+            <p>Set வழியாக சுழன்று, மதிப்புகளை அச்சிடவும்:</p>
+            
+            <div class="code-block">
+                # for loop பயன்படுத்தி set வழியாக சுழலுதல்:<br>
+                thisset = {"apple", "banana", "cherry"}<br><br>
+                for x in thisset:<br>
+                &nbsp;&nbsp;print(x)<br><br>
+                # சாத்தியமான வெளியீடு:<br>
+                # banana<br>
+                # apple<br>
+                # cherry
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔄</span> for loop வேலை செய்யும் விதம்:</h4>
+                <ol>
+                    <li><code>for</code> keyword set இல் உள்ள ஒவ்வொரு உருப்படியையும் ஒவ்வொன்றாக எடுக்கிறது</li>
+                    <li>ஒவ்வொரு முறையும், தற்போதைய உருப்படி <code>x</code> மாறியில் சேமிக்கப்படுகிறது</li>
+                    <li>Loop உடல் (indented block) ஒவ்வொரு உருப்படிக்கும் செயல்படுத்தப்படுகிறது</li>
+                    <li>Set இல் உள்ள அனைத்து உருப்படிகளும் செயலாக்கப்பட்ட பிறகு loop முடிகிறது</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Loop Characteristics -->
+        <section class="content-section" id="loop-characteristics">
+            <h2>Set Looping இன் பண்புகள்</h2>
+            
+            <div class="method-grid">
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <h4>வரிசைப்படுத்தப்படாதது</h4>
+                    <p>உருப்படிகள் எந்த வரிசையில் வரும் என்பது உறுதியற்றது</p>
+                </div>
+                
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h4>குறியீடு இல்லை</h4>
+                    <p>உருப்படிகளை குறியீடு மூலம் அணுக முடியாது</p>
+                </div>
+                
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <h4>அனைத்து உருப்படிகளும்</h4>
+                    <p>Set இல் உள்ள ஒவ்வொரு உருப்படியும் சரியாக ஒரு முறை செயலாக்கப்படும்</p>
+                </div>
+            </div>
+            
+            <div class="code-block">
+                # வெவ்வேறு வரிசைகளைக் காண்பிக்கும் எடுத்துக்காட்டு:<br>
+                fruits = {"apple", "banana", "cherry", "orange", "mango"}<br>
+                <br>
+                print("முதல் முறை:")<br>
+                for fruit in fruits:<br>
+                &nbsp;&nbsp;print(fruit)<br>
+                <br>
+                print("\nஇரண்டாம் முறை:")<br>
+                for fruit in fruits:<br>
+                &nbsp;&nbsp;print(fruit)<br>
+                # இரண்டு முறைகளும் வெவ்வேறு வரிசையில் வெளியீடு தரலாம்
+            </div>
+        </section>
+
+        <!-- Loop with Index -->
+        <section class="content-section" id="loop-with-index">
+            <h2>குறியீட்டுடன் Loop செய்தல்</h2>
+            
+            <p>Set உருப்படிகளை குறியீடுடன் அணுக முடியாது என்பதால், நீங்கள் <code>enumerate()</code> செயல்பாட்டைப் பயன்படுத்தலாம்:</p>
+            
+            <div class="code-block">
+                # enumerate() பயன்படுத்தி குறியீட்டுடன் loop செய்தல்:<br>
+                thisset = {"apple", "banana", "cherry"}<br><br>
+                for index, value in enumerate(thisset):<br>
+                &nbsp;&nbsp;print(f"Index: {index}, Value: {value}")<br><br>
+                # சாத்தியமான வெளியீடு:<br>
+                # Index: 0, Value: banana<br>
+                # Index: 1, Value: apple<br>
+                # Index: 2, Value: cherry
+            </div>
+            
+            <div class="warning-note">
+                <h4><i class="fas fa-exclamation-triangle"></i> முக்கிய குறிப்பு:</h4>
+                <p><code>enumerate()</code> இல் உள்ள குறியீடுகள் set இல் உள்ள உருப்படிகளின் நிலையைக் குறிக்காது. அவை 0, 1, 2,... என்று loop செய்யும் போது தானாக உருவாகும் எண்களாகும். Set இன் உண்மையான குறியீடுகள் இல்லை.</p>
+            </div>
+        </section>
+
+        <!-- Loop Types and Techniques -->
+        <section class="content-section" id="loop-techniques">
+            <h2>Loop வகைகள் மற்றும் நுட்பங்கள்</h2>
+            
+            <div class="loop-types-grid">
+                <div class="loop-type-card">
+                    <h4>அடிப்படை for loop</h4>
+                    <div class="code-block" style="padding: 0.8rem; font-size: 0.8rem;">
+                        for item in myset:<br>
+                        &nbsp;&nbsp;print(item)
+                    </div>
+                </div>
+                
+                <div class="loop-type-card">
+                    <h4>குறியீட்டுடன் loop</h4>
+                    <div class="code-block" style="padding: 0.8rem; font-size: 0.8rem;">
+                        for i, item in enumerate(myset):<br>
+                        &nbsp;&nbsp;print(f"{i}: {item}")
+                    </div>
+                </div>
+                
+                <div class="loop-type-card">
+                    <h4>தொகை கணக்கீடு</h4>
+                    <div class="code-block" style="padding: 0.8rem; font-size: 0.8rem;">
+                        total = 0<br>
+                        for num in number_set:<br>
+                        &nbsp;&nbsp;total += num<br>
+                        print(total)
+                    </div>
+                </div>
+                
+                <div class="loop-type-card">
+                    <h4>நிபந்தனை உடன் loop</h4>
+                    <div class="code-block" style="padding: 0.8rem; font-size: 0.8rem;">
+                        for item in myset:<br>
+                        &nbsp;&nbsp;if len(item) > 5:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;print(item)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>செயல்பாட்டு எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>தரவு செயலாக்கம்</h4>
+                    <div class="code-block">
+                        # செட் உருப்படிகளை செயலாக்குதல்:<br>
+                        user_ages = {25, 30, 22, 35, 28}<br>
+                        total_age = 0<br>
+                        <br>
+                        for age in user_ages:<br>
+                        &nbsp;&nbsp;total_age += age<br>
+                        &nbsp;&nbsp;print(f"Age: {age}")<br>
+                        <br>
+                        average_age = total_age / len(user_ages)<br>
+                        print(f"Average age: {average_age}")
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>உருப்படி பட்டியலாக்கம்</h4>
+                    <div class="code-block">
+                        # செட் உருப்படிகளை பட்டியலாக்குதல்:<br>
+                        products = {"laptop", "mouse", "keyboard", "monitor"}<br>
+                        product_list = []<br>
+                        <br>
+                        print("Available products:")<br>
+                        for i, product in enumerate(products, 1):<br>
+                        &nbsp;&nbsp;product_list.append(product)<br>
+                        &nbsp;&nbsp;print(f"{i}. {product.capitalize()}")<br>
+                        <br>
+                        print(f"\nTotal products: {len(product_list)}")
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning by Exercises -->
+        <section class="content-section" id="learning-exercises">
+            <h2>பயிற்சிகள் மூலம் கற்றல்</h2>
+            
+            <p>இந்த டுடோரியலில் உள்ள பல அத்தியாயங்கள் உங்கள் அறிவு நிலையைச் சரிபார்க்கக்கூடிய பயிற்சியுடன் முடிகின்றன.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> செட் உருப்படிகள் வழியாக சுழலுவதற்கான சரியான தொடரியல் எது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">for x in {'apple', 'banana', 'cherry'}:<br>&nbsp;&nbsp;print(x)</div>
+                            <div class="option-feedback correct" style="display: none;">✓ சரி! இது Python இல் செட் வழியாக சுழலுவதற்கான சரியான தொடரியல். குறிப்பு: for loop வரியின் முடிவில் colon (:) உள்ளது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">for x in {'apple', 'banana', 'cherry'}<br>&nbsp;&nbsp;print(x)</div>
+                            <div class="option-feedback incorrect" style="display: none;">✗ தவறு! for loop வரியின் முடிவில் colon (:) காணவில்லை. இது Python இல் SyntaxError ஐ உருவாக்கும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">foreach x in {'apple', 'banana', 'cherry'}<br>&nbsp;&nbsp;print(x)</div>
+                            <div class="option-feedback incorrect" style="display: none;">✗ தவறு! Python இல் 'foreach' keyword இல்லை. Python 'for' keyword ஐ மட்டுமே பயன்படுத்துகிறது</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="nav-tab next" id="checkAnswer" style="border: none; cursor: pointer;">
+                        <span>பதிலை சரிபார்க்கவும்</span>
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                    <button class="nav-tab prev" id="resetExercise" style="border: none; cursor: pointer; margin-left: 10px;">
+                        <i class="fas fa-redo"></i>
+                        <span>மீட்டமைக்க</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Loop Patterns -->
+        <section class="content-section" id="loop-patterns">
+            <h2>பொதுவான Loop வடிவங்கள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>வடிவம்</th>
+                            <th>விளக்கம்</th>
+                            <th>உதாரணம்</th>
+                            <th>பயன்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>எளிய அணுகல்</strong></td>
+                            <td>ஒவ்வொரு உருப்படியையும் அணுகுதல்</td>
+                            <td><code>for item in set: print(item)</code></td>
+                            <td>அனைத்து உருப்படிகளையும் அச்சிடுதல்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தொகை கணக்கீடு</strong></td>
+                            <td>உருப்படிகளின் தொகையைக் கணக்கிடுதல்</td>
+                            <td><code>total = sum(item for item in set)</code></td>
+                            <td>எண் தரவைச் செயலாக்குதல்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>வடிகட்டுதல்</strong></td>
+                            <td>நிபந்தனைகளின் அடிப்படையில் உருப்படிகளை வடிகட்டுதல்</td>
+                            <td><code>[item for item in set if condition]</code></td>
+                            <td>குறிப்பிட்ட உருப்படிகளைத் தேர்ந்தெடுத்தல்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>மாற்றுதல்</strong></td>
+                            <td>உருப்படிகளை வேறு வடிவத்திற்கு மாற்றுதல்</td>
+                            <td><code>{func(item) for item in set}</code></td>
+                            <td>தரவை மாற்றியமைத்தல்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Set Loop vs Other Collections -->
+        <section class="content-section" id="loop-comparison">
+            <h2>Set Loop vs பிற சேகரிப்புகள்</h2>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>Set Loop</h4>
+                    <div class="code-block">
+                        # வரிசைப்படுத்தப்படாதது<br>
+                        myset = {"a", "b", "c"}<br>
+                        for item in myset:<br>
+                        &nbsp;&nbsp;print(item)<br>
+                        # வெளியீடு வரிசை: b, a, c (மாறுபடலாம்)
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>List Loop</h4>
+                    <div class="code-block">
+                        # வரிசைப்படுத்தப்பட்டது<br>
+                        mylist = ["a", "b", "c"]<br>
+                        for item in mylist:<br>
+                        &nbsp;&nbsp;print(item)<br>
+                        # வெளியீடு வரிசை: a, b, c (எப்போதும் இதுவே)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box" style="margin-top: 2rem;">
+                <h4><span class="tip-icon">📊</span> முக்கிய வேறுபாடுகள்:</h4>
+                <ul>
+                    <li><strong>Set:</strong> வரிசைப்படுத்தப்படாதது - loop வரிசை உறுதியற்றது</li>
+                    <li><strong>List:</strong> வரிசைப்படுத்தப்பட்டது - loop வரிசை உறுதியானது</li>
+                    <li><strong>Dictionary:</strong> key-value ஜோடிகள் - keys அல்லது values வழியாக loop செய்யலாம்</li>
+                    <li><strong>Tuple:</strong> List போன்றது, ஆனால் மாற்ற முடியாதது</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Performance Considerations -->
+        <section class="content-section" id="performance">
+            <h2>செயல்திறன் கருத்துகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>செயல்பாடு</th>
+                            <th>Set Loop</th>
+                            <th>List Loop</th>
+                            <th>பரிந்துரை</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>உருப்படிகளை அணுகுதல்</strong></td>
+                            <td>O(n) - அனைத்து உருப்படிகளும்</td>
+                            <td>O(n) - அனைத்து உருப்படிகளும்</td>
+                            <td>இரண்டும் ஒரே மாதிரியானவை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>உள்ளதா எனச் சரிபார்த்தல்</strong></td>
+                            <td>O(1) - loop இல் சோதனை</td>
+                            <td>O(n) - loop இல் சோதனை</td>
+                            <td>Set சிறந்தது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>நினைவக பயன்பாடு</strong></td>
+                            <td>அதிகம் (hash table)</td>
+                            <td>குறைவு (array)</td>
+                            <td>List சிறந்தது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தனித்த மதிப்புகள்</strong></td>
+                            <td>ஏற்கனவே உறுதி செய்யப்பட்டது</td>
+                            <td>மேனுவல் சரிபார்ப்பு தேவை</td>
+                            <td>Set சிறந்தது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த பயிற்சிகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>வரிசையை நம்பாதீர்கள்:</strong> Set உருப்படிகள் எந்த வரிசையில் வரும் என்பதை எதிர்பார்க்காதீர்கள்
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>enumerate() பயன்படுத்தவும்:</strong> குறியீடு தேவைப்பட்டால் enumerate() பயன்படுத்தவும்
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>தனித்த மதிப்புகள்:</strong> நகல்களை அகற்ற set பயன்படுத்தவும்
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>சரிபார்ப்பு:</strong> Loop செய்வதற்கு முன் set காலியாக இல்லை என்பதைச் சரிபார்க்கவும்
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="code-block">
+                # Set Looping சுருக்கம்:<br>
+                fruits = {"apple", "banana", "cherry"}<br>
+                <br>
+                # 1. அடிப்படை for loop<br>
+                for fruit in fruits:<br>
+                &nbsp;&nbsp;print(fruit)<br>
+                <br>
+                # 2. குறியீட்டுடன் loop<br>
+                for i, fruit in enumerate(fruits):<br>
+                &nbsp;&nbsp;print(f"{i}: {fruit}")<br>
+                <br>
+                # 3. நிபந்தனை உடன் loop<br>
+                for fruit in fruits:<br>
+                &nbsp;&nbsp;if 'a' in fruit:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;print(fruit)<br>
+                <br>
+                # நினைவில் கொள்ள: Sets வரிசைப்படுத்தப்படாதவை!
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python%20-%20Remove%20Set%20Items.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python%20-%20Join%20Sets.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Set Looping அறிமுகம்</a></li>
+                    <li><a href="#basic-loop">அடிப்படை Loop</a></li>
+                    <li><a href="#loop-characteristics">Loop பண்புகள்</a></li>
+                    <li><a href="#loop-with-index">குறியீட்டுடன் Loop</a></li>
+                    <li><a href="#loop-techniques">Loop நுட்பங்கள்</a></li>
+                    <li><a href="#practical-examples">செயல்பாட்டு எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#learning-exercises">பயிற்சிகள்</a></li>
+                    <li><a href="#loop-patterns">Loop வடிவங்கள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction - Shows only ONE correct answer
+        const checkAnswerBtn = document.getElementById('checkAnswer');
+        const resetBtn = document.getElementById('resetExercise');
+        let answerShown = false;
+
+        checkAnswerBtn.addEventListener('click', function() {
+            if (!answerShown) {
+                // Hide all feedback first
+                document.querySelectorAll('.option-feedback').forEach(feedback => {
+                    feedback.style.display = 'none';
+                });
+                
+                // Find and show only the correct answer
+                const correctOption = document.querySelector('.option-card[data-correct="true"]');
+                if (correctOption) {
+                    const correctFeedback = correctOption.querySelector('.option-feedback');
+                    correctFeedback.style.display = 'block';
+                    answerShown = true;
+                    
+                    // Change button text
+                    checkAnswerBtn.innerHTML = '<span>பதில் காட்டப்பட்டது</span> <i class="fas fa-eye"></i>';
+                    checkAnswerBtn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                }
+            }
+        });
+
+        resetBtn.addEventListener('click', function() {
+            // Hide all feedback
+            document.querySelectorAll('.option-feedback').forEach(feedback => {
+                feedback.style.display = 'none';
+            });
+            
+            // Reset button state
+            answerShown = false;
+            checkAnswerBtn.innerHTML = '<span>பதிலை சரிபார்க்கவும்</span> <i class="fas fa-check-circle"></i>';
+            checkAnswerBtn.style.background = 'linear-gradient(135deg, var(--git-color), #e74c3c)';
+        });
+
+        // Optional: Add click to individual options (shows only correct answer when clicked)
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                if (!answerShown) {
+                    // Hide all feedback
+                    document.querySelectorAll('.option-feedback').forEach(feedback => {
+                        feedback.style.display = 'none';
+                    });
+                    
+                    // Show only the correct answer
+                    const correctOption = document.querySelector('.option-card[data-correct="true"]');
+                    if (correctOption) {
+                        const correctFeedback = correctOption.querySelector('.option-feedback');
+                        correctFeedback.style.display = 'block';
+                        answerShown = true;
+                        
+                        // Change button text
+                        checkAnswerBtn.innerHTML = '<span>பதில் காட்டப்பட்டது</span> <i class="fas fa-eye"></i>';
+                        checkAnswerBtn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                    }
+                }
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

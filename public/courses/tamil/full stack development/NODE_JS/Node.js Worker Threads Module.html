@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Worker Threads Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Cluster Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Microservices.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Worker Threads Module</h2>
+            <p>Node.js இல் உண்மையான பல-நூல் திறன்களைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What are Worker Threads? -->
+        <section class="content-section" id="what-are-worker-threads">
+            <h2>Worker Threads என்றால் என்ன?</h2>
+            
+            <p>Worker Threads என்பது Node.js இல் அறிமுகப்படுத்தப்பட்ட ஒரு அம்சமாகும் (முதலில் v10.5.0 இல் சோதனை அம்சமாகவும் v12 இல் நிலைப்படுத்தப்பட்டதாகவும்) இது JavaScript குறியீட்டை பல CPU கோர்களில் இணையாக இயக்க அனுமதிக்கிறது.</p>
+            
+            <p>தனி Node.js செயல்முறைகளை உருவாக்கும் child_process அல்லது cluster தொகுதிகளைப் போலன்றி, Worker Threads நினைவகத்தைப் பகிர்ந்து கொள்ளலாம் மற்றும் உண்மையான இணையான JavaScript குறியீட்டை இயக்கலாம்.</p>
+            
+            <p>Node.js Worker Threads தொகுதி CPU-தீவிர பணிகளுக்கான Node.js இன் ஒற்றை-நூல் தன்மையின் வரம்புகளைக் கையாள்கிறது.</p>
+            
+            <p>Node.js அதன் அசிங்க்ரோனஸ் இவெண்ட் லூப்பிற்கு நன்றி I/O-பௌண்ட் செயல்பாடுகளில் சிறந்து விளங்கும் போது, முக்கிய நூலைத் தடுக்கக்கூடிய CPU-பௌண்ட் பணிகளில் அது போராடலாம் மற்றும் பயன்பாட்டு செயல்திறனை பாதிக்கலாம்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>Worker Threads உலாவிகளில் உள்ள Web Workers க்கு மாறுபட்டவை, இருப்பினும் அவை ஒத்த கருத்துகளைப் பகிர்ந்து கொள்கின்றன. Node.js Worker Threads குறிப்பாக Node.js இயக்கநேர சூழலுக்காக வடிவமைக்கப்பட்டுள்ளன.</p>
+            </div>
+        </section>
+
+        <!-- When to Use Worker Threads -->
+        <section class="content-section" id="when-to-use">
+            <h2>Worker Threads ஐ எப்போது பயன்படுத்துவது</h2>
+            
+            <p>Worker Threads மிகவும் பயனுள்ளதாக இருக்கும்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-microchip"></i>
+                    <span>CPU-தீவிர செயல்பாடுகள் (பெரிய கணக்கீடுகள், தரவு செயலாக்கம்)</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-cogs"></i>
+                    <span>தரவின் இணை செயலாக்கம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-stopwatch"></i>
+                    <span>முக்கிய நூலைத் தடுக்கக்கூடிய செயல்பாடுகள்</span>
+                </div>
+            </div>
+            
+            <p>இவை தேவையில்லை:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item negative">
+                    <i class="fas fa-hdd"></i>
+                    <span>I/O-பௌண்ட் செயல்பாடுகள் (கோப்பு அமைப்பு, நெட்வொர்க்)</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-sync"></i>
+                    <span>ஏற்கனவே அசிங்க்ரோனஸ் APIகளைப் பயன்படுத்தும் செயல்பாடுகள்</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-bolt"></i>
+                    <span>விரைவாக நிறைவடையும் எளிய பணிகள்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Importing the Worker Threads Module -->
+        <section class="content-section" id="importing">
+            <h2>Worker Threads தொகுதியை இறக்குமதி செய்தல்</h2>
+            
+            <p>Worker Threads தொகுதி Node.js இல் இயல்பாகச் சேர்க்கப்பட்டுள்ளது. உங்கள் ஸ்கிரிப்ட்டில் அதைத் தேவைப்படுவதன் மூலம் பயன்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const {
+  Worker,
+  isMainThread,
+  parentPort,
+  workerData
+} = require('worker_threads');</code></pre>
+            </div>
+        </section>
+
+        <!-- Key Components -->
+        <section class="content-section" id="key-components">
+            <h2>முக்கிய கூறுகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>கூறு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Worker</strong></td>
+                            <td>புதிய தொழிலாளர் நூல்களை உருவாக்குவதற்கான வகுப்பு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>isMainThread</strong></td>
+                            <td>குறியீடு முக்கிய நூலில் இயங்கினால் true ஆகவும், தொழிலாளரில் இயங்கினால் false ஆகவும் இருக்கும் பூலியன்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>parentPort</strong></td>
+                            <td>இந்த நூல் ஒரு தொழிலாளராக இருந்தால், இது பெற்றோர் நூலுடன் தொடர்பு கொள்ள அனுமதிக்கும் ஒரு MessagePort ஆகும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>workerData</strong></td>
+                            <td>தொழிலாளர் நூலை உருவாக்கும் போது அனுப்பப்பட்ட தரவு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MessageChannel</strong></td>
+                            <td>ஒரு தொடர்பு சேனலை உருவாக்குகிறது (இணைக்கப்பட்ட MessagePort பொருள்களின் ஜோடி)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MessagePort</strong></td>
+                            <td>நூல்களுக்கு இடையே செய்திகளை அனுப்புவதற்கான இடைமுகம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>threadId</strong></td>
+                            <td>தற்போதைய நூலுக்கான தனித்துவமான அடையாளங்காட்டி</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Creating Your First Worker Thread -->
+        <section class="content-section" id="first-worker">
+            <h2>உங்கள் முதல் Worker Thread ஐ உருவாக்குதல்</h2>
+            
+            <p>முக்கிய நூல் CPU-தீவிர பணியைச் செய்ய ஒரு தொழிலாளரை உருவாக்கும் ஒரு எளிய எடுத்துக்காட்டை உருவாக்குவோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>// main.js
+const { Worker } = require('worker_threads');
+
+// Function to create a new worker
+function runWorker(workerData) {
+  return new Promise((resolve, reject) => {
+    // Create a new worker
+    const worker = new Worker('./worker.js', { workerData });
+    
+    // Listen for messages from the worker
+    worker.on('message', resolve);
+    
+    // Listen for errors
+    worker.on('error', reject);
+    
+    // Listen for worker exit
+    worker.on('exit', (code) => {
+      if (code !== 0) {
+        reject(new Error(`Worker stopped with exit code ${code}`));
+      }
+    });
+  });
+}
+
+// Run the worker
+async function run() {
+  try {
+    // Send data to the worker and get the result
+    const result = await runWorker('Hello from main thread!');
+    console.log('Worker result:', result);
+  } catch (err) {
+    console.error('Worker error:', err);
+  }
+}
+
+run().catch(err => console.error(err));</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// worker.js
+const { parentPort, workerData } = require('worker_threads');
+
+// Receive message from the main thread
+console.log('Worker received:', workerData);
+
+// Simulate CPU-intensive task
+function performCPUIntensiveTask() {
+  // Simple example: Sum up to a large number
+  let result = 0;
+  for (let i = 0; i < 1_000_000; i++) {
+    result += i;
+  }
+  return result;
+}
+
+// Perform the task
+const result = performCPUIntensiveTask();
+
+// Send the result back to the main thread
+parentPort.postMessage({
+  receivedData: workerData,
+  calculatedSum: result
+});</code></pre>
+            </div>
+            
+            <p>இந்த எடுத்துக்காட்டில்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-plus"></i>
+                    <span>முக்கிய நூல் சில ஆரம்ப தரவுகளுடன் ஒரு தொழிலாளரை உருவாக்குகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-calculator"></i>
+                    <span>தொழிலாளர் CPU-தீவிர கணக்கீட்டைச் செய்கிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>தொழிலாளர் முக்கிய நூலுக்கு முடிவை அனுப்புகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>முக்கிய நூல் பெற்று முடிவைச் செயலாக்குகிறது</span>
+                </div>
+            </div>
+            
+            <h3>எடுத்துக்காட்டில் முக்கிய கருத்துகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <span>Worker constructor தொழிலாளர் ஸ்கிரிப்ட்டின் பாதையையும் விருப்பங்கள் பொருளையும் எடுக்கும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span>workerData விருப்பம் தொழிலாளருக்கு ஆரம்ப தரவை அனுப்ப பயன்படுகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-comments"></i>
+                    <span>தொழிலாளர் parentPort.postMessage() ஐப் பயன்படுத்தி முக்கிய நூலுடன் தொடர்பு கொள்கிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-life-ring"></i>
+                    <span>நிகழ்வு கையாளிகள் (message, error, exit) தொழிலாளர் வாழ்க்கைச் சுழற்சியை நிர்வகிக்க பயன்படுகின்றன</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Communication Between Threads -->
+        <section class="content-section" id="communication">
+            <h2>நூல்களுக்கு இடையே தொடர்பு</h2>
+            
+            <p>தொழிலாளர் நூல்கள் செய்திகளை அனுப்புவதன் மூலம் தொடர்பு கொள்கின்றன.</p>
+            
+            <p>தொடர்பு இரு-திசையாக உள்ளது, அதாவது முக்கிய நூல் மற்றும் தொழிலாளர்கள் இருவரும் செய்திகளை அனுப்பலாம் மற்றும் பெறலாம்.</p>
+            
+            <h3>முக்கிய நூலில் இருந்து தொழிலாளருக்கு</h3>
+            
+            <div class="code-example">
+                <pre><code>// main.js
+const { Worker } = require('worker_threads');
+
+// Create a worker
+const worker = new Worker('./message_worker.js');
+
+// Send messages to the worker
+worker.postMessage('Hello worker!');
+worker.postMessage({ type: 'task', data: [1, 2, 3, 4, 5] });
+
+// Receive messages from the worker
+worker.on('message', (message) => {
+  console.log('Main thread received:', message);
+});
+
+// Handle worker completion
+worker.on('exit', (code) => {
+  console.log(`Worker exited with code ${code}`);
+});</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// message_worker.js
+const { parentPort } = require('worker_threads');
+
+// Receive messages from the main thread
+parentPort.on('message', (message) => {
+  console.log('Worker received:', message);
+  
+  // Process different message types
+  if (typeof message === 'object' && message.type === 'task') {
+    const result = processTask(message.data);
+    parentPort.postMessage({ type: 'result', data: result });
+  } else {
+    // Echo the message back
+    parentPort.postMessage(`Worker echoing: ${message}`);
+  }
+});
+
+// Example task processor
+function processTask(data) {
+  if (Array.isArray(data)) {
+    return data.map(x => x * 2);
+  }
+  return null;
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💬</span> குறிப்பு:</h4>
+                <p>நூல்களுக்கு இடையே அனுப்பப்படும் செய்திகள் மதிப்பின் மூலம் நகலெடுக்கப்படுகின்றன (தொடரப்படுகின்றன), குறிப்பின் மூலம் பகிரப்படவில்லை.</p>
+                <p>இதன் பொருள் நீங்கள் ஒரு நூலில் இருந்து மற்றொரு நூலுக்கு ஒரு பொருளை அனுப்பும் போது, ஒரு நூலில் உள்ள பொருளில் ஏற்படும் மாற்றங்கள் மற்ற நூலில் உள்ள நகலை பாதிக்காது.</p>
+            </div>
+        </section>
+
+        <!-- CPU-Intensive Task Example -->
+        <section class="content-section" id="cpu-intensive">
+            <h2>CPU-தீவிர பணி எடுத்துக்காட்டு</h2>
+            
+            <p>CPU-பௌண்ட் பணிகளுக்கு தொழிலாளர் நூல்களைப் பயன்படுத்துவதன் நன்மையை நிரூபிக்கும் மிகவும் நடைமுறை எடுத்துக்காட்டு இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>// fibonacci.js
+const { Worker, isMainThread, parentPort, workerData } = require('worker_threads');
+
+// Recursive Fibonacci function (deliberately inefficient to simulate CPU load)
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+if (isMainThread) {
+  // This code runs in the main thread
+  
+  // Function to run a worker
+  function runFibonacciWorker(n) {
+    return new Promise((resolve, reject) => {
+      const worker = new Worker(__filename, { workerData: n });
+      worker.on('message', resolve);
+      worker.on('error', reject);
+      worker.on('exit', (code) => {
+        if (code !== 0) {
+          reject(new Error(`Worker stopped with exit code ${code}`));
+        }
+      });
+    });
+  }
+  
+  // Measure execution time with and without workers
+  async function run() {
+    const numbers = [40, 41, 42, 43];
+    
+    // Using a single thread (blocking)
+    console.time('Single thread');
+    for (const n of numbers) {
+      console.log(`Fibonacci(${n}) = ${fibonacci(n)}`);
+    }
+    console.timeEnd('Single thread');
+    
+    // Using worker threads (parallel)
+    console.time('Worker threads');
+    const results = await Promise.all(
+      numbers.map(n => runFibonacciWorker(n))
+    );
+    for (let i = 0; i < numbers.length; i++) {
+      console.log(`Fibonacci(${numbers[i]}) = ${results[i]}`);
+    }
+    console.timeEnd('Worker threads');
+  }
+  
+  run().catch(err => console.error(err));
+} else {
+  // This code runs in worker threads
+  
+  // Calculate Fibonacci number
+  const result = fibonacci(workerData);
+  
+  // Send the result back to the main thread
+  parentPort.postMessage(result);
+}</code></pre>
+            </div>
+            
+            <p>இந்த எடுத்துக்காட்டு ஒற்றை-நூல் அணுகுமுறை மற்றும் தொழிலாளர் நூல்களுடன் கூடிய பல-நூல் அணுகுமுறை இரண்டையும் பயன்படுத்தி Fibonacci எண்களைக் கணக்கிடுகிறது.</p>
+            
+            <p>பல-கோர் CPU இல், Fibonacci எண்களை இணையாகக் கணக்கிட பல CPU கோர்களைப் பயன்படுத்தக்கூடியதால் தொழிலாளர் நூல்கள் பதிப்பு கணிசமாக வேகமாக இருக்க வேண்டும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>தொழிலாளர் நூல்கள் CPU-பௌண்ட் பணிகளுக்கான செயல்திறனைக் கணிசமாக மேம்படுத்தக்கூடும் என்றாலும், அவை உருவாக்கம் மற்றும் தொடர்புக்கான மேலோட்டத்தைக் கொண்டுள்ளன. மிகச் சிறிய பணிகளுக்கு, இந்த மேலோட்டம் நன்மைகளை விட அதிகமாக இருக்கலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Sharing Data with Worker Threads -->
+        <section class="content-section" id="sharing-data">
+            <h2>Worker Threads உடன் தரவைப் பகிர்தல்</h2>
+            
+            <p>நூல்களுக்கு இடையே தரவைப் பகிர பல வழிகள் உள்ளன:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-copy"></i>
+                    <span><strong>நகல்களை அனுப்புதல்:</strong> postMessage() ஐப் பயன்படுத்தும் போது இயல்புநிலை நடத்தை</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span><strong>உரிமையை மாற்றுதல்:</strong> postMessage() இன் transferList அளவுருவைப் பயன்படுத்துதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>நினைவகத்தைப் பகிர்தல்:</strong> SharedArrayBuffer ஐப் பயன்படுத்துதல்</span>
+                </div>
+            </div>
+            
+            <h3>ArrayBuffers ஐ மாற்றுதல்</h3>
+            
+            <p>நீங்கள் ஒரு ArrayBuffer ஐ மாற்றும் போது, தரவை நகலெடுக்காமல், பஃப்பரின் உரிமையை ஒரு நூலில் இருந்து மற்றொரு நூலுக்கு மாற்றுகிறீர்கள். பெரிய தரவுக்கு இது மிகவும் திறமையானது:</p>
+            
+            <div class="code-example">
+                <pre><code>// transfer_main.js
+const { Worker } = require('worker_threads');
+
+// Create a large buffer
+const buffer = new ArrayBuffer(100 * 1024 * 1024); // 100MB
+const view = new Uint8Array(buffer);
+
+// Fill with data
+for (let i = 0; i < view.length; i++) {
+  view[i] = i % 256;
+}
+
+console.log('Buffer created in main thread');
+console.log('Buffer byteLength before transfer:', buffer.byteLength);
+
+// Create a worker and transfer the buffer
+const worker = new Worker('./transfer_worker.js');
+worker.on('message', (message) => {
+  console.log('Message from worker:', message);
+  
+  // After transfer, the buffer is no longer usable in main thread
+  console.log('Buffer byteLength after transfer:', buffer.byteLength);
+});
+
+// Transfer ownership of the buffer to the worker
+worker.postMessage({ buffer }, [buffer]);</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// transfer_worker.js
+const { parentPort } = require('worker_threads');
+
+parentPort.on('message', ({ buffer }) => {
+  const view = new Uint8Array(buffer);
+  
+  // Calculate sum to verify data
+  let sum = 0;
+  for (let i = 0; i < view.length; i++) {
+    sum += view[i];
+  }
+  
+  console.log('Buffer received in worker');
+  console.log('Buffer byteLength in worker:', buffer.byteLength);
+  console.log('Sum of all values:', sum);
+  
+  // Send confirmation back
+  parentPort.postMessage('Buffer processed successfully');
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔄</span> குறிப்பு:</h4>
+                <p>ஒரு ArrayBuffer ஐ மாற்றிய பின், அசல் பஃப்பர் பயன்படுத்த முடியாததாகிறது (அதன் byteLength 0 ஆகிறது).</p>
+                <p>பெறும் நூல் பஃப்பருக்கு முழு அணுகலைப் பெறுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Sharing Memory with SharedArrayBuffer -->
+        <section class="content-section" id="shared-memory">
+            <h2>SharedArrayBuffer உடன் நினைவகத்தைப் பகிர்தல்</h2>
+            
+            <p>நகலெடுத்தல் அல்லது மாற்றுவது இல்லாமல் நூல்களுக்கு இடையே தரவைப் பகிர வேண்டிய சூழ்நிலைகளுக்கு, SharedArrayBuffer பல நூல்களில் இருந்து ஒரே நினைவகத்தை அணுக ஒரு வழியை வழங்குகிறது.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🔒</span> எச்சரிக்கை:</h4>
+                <p>SharedArrayBuffer Spectre பாதிப்புகள் தொடர்பான பாதுகாப்பு பரிசீலனைகள் காரணமாக சில Node.js பதிப்புகளில் முடக்கப்பட்டிருக்கலாம். தேவைப்பட்டால் அதை எவ்வாறு இயக்குவது என்பது குறித்து உங்கள் Node.js பதிப்பு ஆவணங்களைச் சரிபார்க்கவும்.</p>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// shared_main.js
+const { Worker } = require('worker_threads');
+
+// Create a shared buffer
+const sharedBuffer = new SharedArrayBuffer(4 * 10); // 10 Int32 values
+const sharedArray = new Int32Array(sharedBuffer);
+
+// Initialize the shared array
+for (let i = 0; i < sharedArray.length; i++) {
+  sharedArray[i] = i;
+}
+
+console.log('Initial shared array in main thread:', [...sharedArray]);
+
+// Create a worker that will update the shared memory
+const worker = new Worker('./shared_worker.js', {
+  workerData: { sharedBuffer }
+});
+
+worker.on('message', (message) => {
+  console.log('Message from worker:', message);
+  console.log('Updated shared array in main thread:', [...sharedArray]);
+  
+  // The changes made in the worker are visible here
+  // because we're accessing the same memory
+});</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// shared_worker.js
+const { parentPort, workerData } = require('worker_threads');
+const { sharedBuffer } = workerData;
+
+// Create a new view on the shared buffer
+const sharedArray = new Int32Array(sharedBuffer);
+
+console.log('Initial shared array in worker:', [...sharedArray]);
+
+// Modify the shared memory
+for (let i = 0; i < sharedArray.length; i++) {
+  // Double each value
+  sharedArray[i] = sharedArray[i] * 2;
+}
+
+console.log('Updated shared array in worker:', [...sharedArray]);
+
+// Notify the main thread
+parentPort.postMessage('Shared memory updated');</code></pre>
+            </div>
+        </section>
+
+        <!-- Synchronizing Access with Atomics -->
+        <section class="content-section" id="atomics">
+            <h2>Atomics உடன் அணுகலை ஒத்திசைத்தல்</h2>
+            
+            <p>பல நூல்கள் பகிரப்பட்ட நினைவகத்தை அணுகும் போது, போட்டி நிலைமைகளைத் தடுக்க அணுகலை ஒத்திசைக்க ஒரு வழி உங்களுக்குத் தேவை.</p>
+            
+            <p>Atomics பொருள் பகிரப்பட்ட நினைவக வரிசைகளில் அணு செயல்பாடுகளுக்கான முறைகளை வழங்குகிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>// atomics_main.js
+const { Worker } = require('worker_threads');
+
+// Create a shared buffer with control flags and data
+const sharedBuffer = new SharedArrayBuffer(4 * 10);
+const sharedArray = new Int32Array(sharedBuffer);
+
+// Initialize values
+sharedArray[0] = 0; // Control flag: 0 = main thread's turn, 1 = worker's turn
+sharedArray[1] = 0; // Data value to increment
+
+// Create workers
+const workerCount = 4;
+const workerIterations = 10;
+const workers = [];
+
+console.log(`Creating ${workerCount} workers with ${workerIterations} iterations each`);
+
+for (let i = 0; i < workerCount; i++) {
+  const worker = new Worker('./atomics_worker.js', {
+    workerData: { sharedBuffer, id: i, iterations: workerIterations }
+  });
+  
+  workers.push(worker);
+  
+  worker.on('exit', () => {
+    console.log(`Worker ${i} exited`);
+    
+    // If all workers have exited, show final value
+    if (workers.every(w => w.threadId === -1)) {
+      console.log(`Final value: ${sharedArray[1]}`);
+      console.log(`Expected value: ${workerCount * workerIterations}`);
+    }
+  });
+}
+
+// Signal to the first worker to start
+Atomics.store(sharedArray, 0, 1);
+Atomics.notify(sharedArray, 0);</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// atomics_worker.js
+const { parentPort, workerData } = require('worker_threads');
+const { sharedBuffer, id, iterations } = workerData;
+
+// Create a typed array from the shared memory
+const sharedArray = new Int32Array(sharedBuffer);
+
+for (let i = 0; i < iterations; i++) {
+  // Wait for this worker's turn
+  while (Atomics.load(sharedArray, 0) !== id + 1) {
+    // Wait for notification
+    Atomics.wait(sharedArray, 0, Atomics.load(sharedArray, 0));
+  }
+  
+  // Increment the shared counter
+  const currentValue = Atomics.add(sharedArray, 1, 1);
+  console.log(`Worker ${id} incremented counter to ${currentValue + 1}`);
+  
+  // Signal to the next worker
+  const nextWorkerId = (id + 1) % (iterations === 0 ? 1 : iterations);
+  Atomics.store(sharedArray, 0, nextWorkerId + 1);
+  Atomics.notify(sharedArray, 0);
+}
+
+// Exit the worker
+parentPort.close();</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚡</span> குறிப்பு:</h4>
+                <p>Atomics பொருள் load, store, add, wait, மற்றும் notify போன்ற முறைகளை பகிரப்பட்ட நினைவகத்திற்கான அணுகலை ஒத்திசைக்கவும் நூல்களுக்கு இடையே ஒருங்கிணைப்பு வடிவங்களை செயல்படுத்தவும் வழங்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Creating a Worker Pool -->
+        <section class="content-section" id="worker-pool">
+            <h2>Worker Pool ஐ உருவாக்குதல்</h2>
+            
+            <p>பெரும்பாலான பயன்பாடுகளுக்கு, பல பணிகளை ஒரே நேரத்தில் கையாள ஒரு தொழிலாளர் குளத்தை உருவாக்க விரும்புவீர்கள்.</p>
+            
+            <p>ஒரு எளிய தொழிலாளர் குளத்தின் செயலாக்கம் இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>// worker_pool.js
+const { Worker } = require('worker_threads');
+const os = require('os');
+const path = require('path');
+
+class WorkerPool {
+  constructor(workerScript, numWorkers = os.cpus().length) {
+    this.workerScript = workerScript;
+    this.numWorkers = numWorkers;
+    this.workers = [];
+    this.freeWorkers = [];
+    this.tasks = [];
+    
+    // Initialize workers
+    this._initialize();
+  }
+  
+  _initialize() {
+    // Create all workers
+    for (let i = 0; i < this.numWorkers; i++) {
+      this._createWorker();
+    }
+  }
+  
+  _createWorker() {
+    const worker = new Worker(this.workerScript);
+    
+    worker.on('message', (result) => {
+      // Get the current task
+      const { resolve } = this.tasks.shift();
+      
+      // Resolve the task with the result
+      resolve(result);
+      
+      // Add this worker back to the free workers pool
+      this.freeWorkers.push(worker);
+      
+      // Process the next task if any
+      this._processQueue();
+    });
+    
+    worker.on('error', (err) => {
+      // If a worker errors, terminate it and create a new one
+      console.error(`Worker error: ${err}`);
+      this._removeWorker(worker);
+      this._createWorker();
+      
+      // Process the next task
+      if (this.tasks.length > 0) {
+        const { reject } = this.tasks.shift();
+        reject(err);
+        this._processQueue();
+      }
+    });
+    
+    worker.on('exit', (code) => {
+      if (code !== 0) {
+        console.error(`Worker exited with code ${code}`);
+        this._removeWorker(worker);
+        this._createWorker();
+      }
+    });
+    
+    // Add to free workers
+    this.workers.push(worker);
+    this.freeWorkers.push(worker);
+  }
+  
+  _removeWorker(worker) {
+    // Remove from the workers arrays
+    this.workers = this.workers.filter(w => w !== worker);
+    this.freeWorkers = this.freeWorkers.filter(w => w !== worker);
+  }
+  
+  _processQueue() {
+    // If there are tasks and free workers, process the next task
+    if (this.tasks.length > 0 && this.freeWorkers.length > 0) {
+      const { taskData } = this.tasks[0];
+      const worker = this.freeWorkers.pop();
+      worker.postMessage(taskData);
+    }
+  }
+  
+  // Run a task on a worker
+  runTask(taskData) {
+    return new Promise((resolve, reject) => {
+      const task = { taskData, resolve, reject };
+      this.tasks.push(task);
+      this._processQueue();
+    });
+  }
+  
+  // Close all workers when done
+  close() {
+    for (const worker of this.workers) {
+      worker.terminate();
+    }
+  }
+}
+
+module.exports = WorkerPool;</code></pre>
+            </div>
+            
+            <p>தொழிலாளர் குளத்தைப் பயன்படுத்துதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>// pool_usage.js
+const WorkerPool = require('./worker_pool');
+const path = require('path');
+
+// Create a worker pool with the worker script
+const pool = new WorkerPool(path.resolve(__dirname, 'pool_worker.js'));
+
+// Function to run tasks on the pool
+async function runTasks() {
+  const tasks = [
+    { type: 'fibonacci', data: 40 },
+    { type: 'factorial', data: 15 },
+    { type: 'prime', data: 10000000 },
+    { type: 'fibonacci', data: 41 },
+    { type: 'factorial', data: 16 },
+    { type: 'prime', data: 20000000 },
+    { type: 'fibonacci', data: 42 },
+    { type: 'factorial', data: 17 },
+  ];
+  
+  console.time('All tasks');
+  
+  try {
+    // Run all tasks in parallel
+    const results = await Promise.all(
+      tasks.map(task => {
+        console.time(`Task: ${task.type}(${task.data})`);
+        return pool.runTask(task)
+          .then(result => {
+            console.timeEnd(`Task: ${task.type}(${task.data})`);
+            return result;
+          });
+      })
+    );
+    
+    // Log results
+    for (let i = 0; i < tasks.length; i++) {
+      console.log(`${tasks[i].type}(${tasks[i].data}) = ${results[i].result}`);
+    }
+  } catch (err) {
+    console.error('Error running tasks:', err);
+  } finally {
+    console.timeEnd('All tasks');
+    pool.close();
+  }
+}
+
+runTasks().catch(console.error);</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// pool_worker.js
+const { parentPort } = require('worker_threads');
+
+// Fibonacci function
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Factorial function
+function factorial(n) {
+  if (n <= 1) return 1;
+  return n * factorial(n - 1);
+}
+
+// Prime count function
+function countPrimes(max) {
+  const sieve = new Uint8Array(max);
+  let count = 0;
+  
+  for (let i = 2; i < max; i++) {
+    if (!sieve[i]) {
+      count++;
+      for (let j = i * 2; j < max; j += i) {
+        sieve[j] = 1;
+      }
+    }
+  }
+  
+  return count;
+}
+
+// Handle messages from the main thread
+parentPort.on('message', (task) => {
+  const { type, data } = task;
+  let result;
+  
+  // Perform different calculations based on task type
+  switch (type) {
+    case 'fibonacci':
+      result = fibonacci(data);
+      break;
+    case 'factorial':
+      result = factorial(data);
+      break;
+    case 'prime':
+      result = countPrimes(data);
+      break;
+    default:
+      throw new Error(`Unknown task type: ${type}`);
+  }
+  
+  // Send the result back
+  parentPort.postMessage({ result });
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🏊</span> குறிப்பு:</h4>
+                <p>இந்த தொழிலாளர் குள செயலாக்கம் பணி திட்டமிடல், தொழிலாளர் பிழைகள் மற்றும் தானியங்கி தொழிலாளர் மாற்றத்தைக் கையாள்கிறது.</p>
+                <p>இது உண்மையான-உலக பயன்பாடுகளுக்கு ஒரு நல்ல தொடக்க புள்ளியாகும், ஆனால் தொழிலாளர் நேரக்கெடு மற்றும் முன்னுரிமைப்படுத்தப்பட்ட பணிகள் போன்ற அம்சங்களுடன் விரிவாக்கப்படலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Practical Application: Image Processing -->
+        <section class="content-section" id="image-processing">
+            <h2>நடைமுறை பயன்பாடு: பட செயலாக்கம்</h2>
+            
+            <p>பட செயலாக்கம் தொழிலாளர் நூல்களுக்கு ஒரு சிறந்த பயன்பாட்டு வழக்காகும், ஏனெனில் இது CPU-தீவிரமானது மற்றும் எளிதில் இணையாக்கப்படக்கூடியது.</p>
+            
+            <p>இணையான பட செயலாக்கத்தின் ஒரு எடுத்துக்காட்டு இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>// image_main.js
+const { Worker } = require('worker_threads');
+const path = require('path');
+const fs = require('fs');
+
+// Function to process an image in a worker
+function processImageInWorker(imagePath, options) {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker('./image_worker.js', {
+      workerData: {
+        imagePath,
+        options
+      }
+    });
+    
+    worker.on('message', resolve);
+    worker.on('error', reject);
+    worker.on('exit', (code) => {
+      if (code !== 0) {
+        reject(new Error(`Worker stopped with exit code ${code}`));
+      }
+    });
+  });
+}
+
+// Main function to process multiple images in parallel
+async function processImages() {
+  const images = [
+    { path: 'image1.jpg', options: { grayscale: true } },
+    { path: 'image2.jpg', options: { blur: 5 } },
+    { path: 'image3.jpg', options: { sharpen: 10 } },
+    { path: 'image4.jpg', options: { resize: { width: 800, height: 600 } } }
+  ];
+  
+  console.time('Image processing');
+  
+  try {
+    // Process all images in parallel
+    const results = await Promise.all(
+      images.map(img => processImageInWorker(img.path, img.options))
+    );
+    
+    console.log('All images processed successfully');
+    console.log('Results:', results);
+  } catch (err) {
+    console.error('Error processing images:', err);
+  }
+  
+  console.timeEnd('Image processing');
+}
+
+// Note: This is a conceptual example.
+// In a real application, you would use an image processing library like sharp or jimp
+// and provide actual image files.
+// processImages().catch(console.error);
+console.log('Image processing example (not actually running)');</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// image_worker.js
+const { parentPort, workerData } = require('worker_threads');
+const { imagePath, options } = workerData;
+
+// In a real application, you would import an image processing library here
+// const sharp = require('sharp');
+
+// Simulate image processing
+function processImage(imagePath, options) {
+  console.log(`Processing image: ${imagePath} with options:`, options);
+  
+  // Simulate processing time based on options
+  let processingTime = 500; // Base time in ms
+  
+  if (options.grayscale) processingTime += 200;
+  if (options.blur) processingTime += options.blur * 50;
+  if (options.sharpen) processingTime += options.sharpen * 30;
+  if (options.resize) processingTime += 300;
+  
+  // Simulate the actual processing
+  return new Promise(resolve => {
+    setTimeout(() => {
+      // Return simulated result
+      resolve({
+        imagePath,
+        outputPath: `processed_${imagePath}`,
+        processing: options,
+        dimensions: options.resize || { width: 1024, height: 768 },
+        size: Math.floor(Math.random() * 1000000) + 500000 // Random file size
+      });
+    }, processingTime);
+  });
+}
+
+// Process the image and send the result back
+processImage(imagePath, options)
+  .then(result => {
+    parentPort.postMessage(result);
+  })
+  .catch(err => {
+    throw err;
+  });</code></pre>
+            </div>
+        </section>
+
+        <!-- Worker Threads vs. Child Process and Cluster -->
+        <section class="content-section" id="comparison">
+            <h2>Worker Threads vs. Child Process மற்றும் Cluster</h2>
+            
+            <p>Worker Threads ஐ மற்ற Node.js ஒரே நேரத்தில் இயங்கும் வழிமுறைகளுடன் ஒப்பிடுவது முக்கியம்:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>Worker Threads</th>
+                            <th>Child Process</th>
+                            <th>Cluster</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>பகிரப்பட்ட நினைவகம்</strong></td>
+                            <td>ஆம் (SharedArrayBuffer மூலம்)</td>
+                            <td>இல்லை (IPC மட்டும்)</td>
+                            <td>இல்லை (IPC மட்டும்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>வள பயன்பாடு</strong></td>
+                            <td>குறைந்தது (பகிரப்பட்ட V8 நிகழ்வு)</td>
+                            <td>அதிகம் (தனி செயல்முறைகள்)</td>
+                            <td>அதிகம் (தனி செயல்முறைகள்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தொடக்க நேரம்</strong></td>
+                            <td>வேகமானது</td>
+                            <td>மெதுவானது</td>
+                            <td>மெதுவானது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தனிமைப்படுத்தல்</strong></td>
+                            <td>குறைந்தது (இவெண்ட் லூப்பைப் பகிர்கிறது)</td>
+                            <td>அதிகம் (முழு செயல்முறை தனிமைப்படுத்தல்)</td>
+                            <td>அதிகம் (முழு செயல்முறை தனிமைப்படுத்தல்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தோல்வி தாக்கம்</strong></td>
+                            <td>பெற்றோர் நூலை பாதிக்கலாம்</td>
+                            <td>குழந்தை செயல்முறைக்கு மட்டுப்படுத்தப்பட்டது</td>
+                            <td>தொழிலாளர் செயல்முறைக்கு மட்டுப்படுத்தப்பட்டது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>சிறந்தது</strong></td>
+                            <td>CPU-தீவிர பணிகள்</td>
+                            <td>வெவ்வேறு நிரல்களை இயக்குதல்</td>
+                            <td>பயன்பாடுகளை அளவிடுதல்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Worker Threads ஐ எப்போது பயன்படுத்துவது</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-calculator"></i>
+                    <span>CPU-பௌண்ட் பணிகள் எண் கணக்கீடு, பட செயலாக்கம் அல்லது சுருக்கம் போன்றவை</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span>சிறந்த செயல்திறனுக்கு பகிரப்பட்ட நினைவகம் தேவைப்படும் போது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <span>ஒரு Node.js நிகழ்வுக்குள் இணையான JavaScript குறியீட்டை இயக்க வேண்டிய போது</span>
+                </div>
+            </div>
+            
+            <h3>Child Process ஐ எப்போது பயன்படுத்துவது</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-terminal"></i>
+                    <span>வெளிப்புற நிரல்கள் அல்லது கட்டளைகளை இயக்குதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-language"></i>
+                    <span>வெவ்வேறு மொழிகளில் பணிகளை இயக்குதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>முக்கிய செயல்முறை மற்றும் தோற்றுவிக்கப்பட்ட செயல்முறைகளுக்கு இடையே வலுவான தனிமைப்படுத்தல் தேவைப்படும் போது</span>
+                </div>
+            </div>
+            
+            <h3>Cluster ஐ எப்போது பயன்படுத்துவது</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-server"></i>
+                    <span>பல கோர்களில் HTTP சேவையகத்தை அளவிடுதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>உள்வரும் இணைப்புகளை சுமை சமநிலைப்படுத்துதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>பயன்பாட்டு நெகிழ்வுத்தன்மை மற்றும் இயக்க நேரத்தை மேம்படுத்துதல்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>நூல்களை அதிகமாகப் பயன்படுத்த வேண்டாம்:</strong> முக்கிய நூலைத் தடுக்கக்கூடிய CPU-தீவிர பணிகளுக்கு மட்டுமே தொழிலாளர் நூல்களைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-weight-hanging"></i>
+                    <span><strong>மேலோட்டத்தைக் கவனியுங்கள்:</strong> நூல்களை உருவாக்குவதற்கு மேலோட்டம் உள்ளது. மிகக் குறுகிய பணிகளுக்கு, இந்த மேலோட்டம் நன்மைகளை விட அதிகமாக இருக்கலாம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-recycle"></i>
+                    <span><strong>தொழிலாளர் குளத்தைப் பயன்படுத்தவும்:</strong> ஒவ்வொரு பணிக்கும் தொழிலாளர்களை உருவாக்கி அழிப்பதற்குப் பதிலாக பல பணிகளுக்கு தொழிலாளர்களை மீண்டும் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span><strong>தரவு பரிமாற்றத்தைக் குறைக்கவும்:</strong> பெரிய அளவிலான தரவுகளுடன் பணிபுரியும் போது ArrayBuffer உடன் உரிமையை மாற்றவும் அல்லது SharedArrayBuffer ஐப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bug"></i>
+                    <span><strong>பிழைகளை சரியாகக் கையாளவும்:</strong> தொழிலாளர்களிடமிருந்து பிழைகளை எப்போதும் பிடிக்கவும் மற்றும் தொழிலாளர் தோல்விகளுக்கான உத்தியைக் கொண்டிருங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-heartbeat"></i>
+                    <span><strong>தொழிலாளர் வாழ்க்கைச் சுழற்சிகளைக் கண்காணிக்கவும்:</strong> தொழிலாளர் ஆரோக்கியத்தைக் கண்காணித்து அவை கிராஷ் செய்தால் மீண்டும் தொடங்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-lock"></i>
+                    <span><strong>பொருத்தமான ஒத்திசைவைப் பயன்படுத்தவும்:</strong> பகிரப்பட்ட நினைவகத்திற்கான அணுகலை ஒருங்கிணைக்க Atomics ஐப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-chart-line"></i>
+                    <span><strong>உங்கள் தீர்வை benchmark செய்யுங்கள்:</strong> நூல்கள் உண்மையில் உதவுகின்றனவா என்பதை உறுதிப்படுத்த செயல்திறன் மேம்பாட்டை எப்போதும் அளவிடவும்</span>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>நூலிடல் உங்கள் குறியீட்டிற்கு சிக்கலைச் சேர்க்கிறது. இணையான இயக்கத்திற்கான உண்மையான தேவை இருக்கும்போது மட்டுமே தொழிலாளர் நூல்களைப் பயன்படுத்தவும். I/O-பௌண்ட் செயல்பாடுகளுக்கு, Node.js இன் உள்ளமைக்கப்பட்ட அசிங்க்ரோனஸ் APIகள் பொதுவாக மிகவும் திறமையானவை.</p>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>Worker Threads தொகுதி Node.js இல் உண்மையான பல-நூல் திறன்களை வழங்குகிறது, CPU-தீவிர பணிகளை முக்கிய இவெண்ட் லூப்பைத் தடுக்காமல் இணையாக இயக்க இயலுமைப்படுத்துகிறது.</p>
+            
+            <p>இந்த பயிற்சியில், நாங்கள் மூடியுள்ளோம்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <span>தொழிலாளர் நூல்கள் என்றால் என்ன மற்றும் அவை எப்போது பயன்படுத்தப்பட வேண்டும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-comments"></i>
+                    <span>நூல்களுக்கு இடையே செய்திகளை அனுப்புதல் மற்றும் பெறுதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-microchip"></i>
+                    <span>CPU-தீவிர பணிகளுக்கான நடைமுறை எடுத்துக்காட்டுகள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>தரவை மாற்றுதல் மற்றும் பகிரப்பட்ட நினைவகத்தைப் பயன்படுத்துதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span>SharedArrayBuffer மூலம் நூல்களுக்கு இடையே தரவைப் பகிர்தல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-lock"></i>
+                    <span>Atomics உடன் நூல் அணுகலை ஒத்திசைத்தல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-users"></i>
+                    <span>திறமையான பணி மேலாண்மைக்கான மீண்டும் பயன்படுத்தக்கூடிய தொழிலாளர் குளத்தை உருவாக்குதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-image"></i>
+                    <span>இணையான பட செயலாக்கம் போன்ற நடைமுறை பயன்பாடுகள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>மற்ற Node.js ஒரே நேரத்தில் இயங்கும் மாதிரிகளுடன் ஒப்பீடு</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>தொழிலாளர் நூல்களை திறம்பட பயன்படுத்துவதற்கான சிறந்த நடைமுறைகள்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான வகுப்பு பெயரை தேர்வு செய்யவும்.</h4>
+                <p>The ______ object is used to create a new worker thread in Node.js.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Thread</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "Thread" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகுப்பு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">WorkerPool</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "WorkerPool" என்பது ஒரு பயனர்-வரையறுக்கப்பட்ட வகுப்பாகும், Node.js இல் உள்ளமைக்கப்பட்ட வகுப்பு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">Worker</div>
+                            <div class="option-feedback correct">✓ சரி! "Worker" வகுப்பு Node.js இல் ஒரு புதிய தொழிலாளர் நூலை உருவாக்க பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ThreadPool</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "ThreadPool" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகுப்பு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Cluster Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Microservices.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-are-worker-threads">Worker Threads</a></li>
+                    <li><a href="#first-worker">முதல் Worker Thread</a></li>
+                    <li><a href="#sharing-data">தரவைப் பகிர்தல்</a></li>
+                    <li><a href="#worker-pool">Worker Pool</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

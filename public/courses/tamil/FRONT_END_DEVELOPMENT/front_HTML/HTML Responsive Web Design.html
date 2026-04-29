@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Responsive Web Design - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .responsive-image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .responsive-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid var(--git-color);
+        }
+        
+        .image-caption {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .viewport-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .viewport-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px solid var(--git-color);
+        }
+        
+        .viewport-card h4 {
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .code-example pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        .content-section ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .content-section li {
+            margin-bottom: 0.8rem;
+            padding-left: 1rem;
+        }
+        
+        .content-section li:before {
+            content: '•';
+            color: var(--git-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        .demo-box {
+            background: #f8f9fa;
+            border: 2px dashed var(--git-color);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .demo-title {
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .demo-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .demo-column {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-width: 200px;
+        }
+        
+        .demo-column h4 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .w3css-demo {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .w3css-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .w3css-column {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Media query for responsive demo */
+        @media screen and (max-width: 800px) {
+            .demo-content {
+                flex-direction: column;
+            }
+            
+            .demo-column {
+                width: 100%;
+            }
+            
+            .w3css-row {
+                flex-direction: column;
+            }
+        }
+        
+        .live-demo-box {
+            background: white;
+            border: 3px solid var(--git-color);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .live-demo-box:before {
+            content: 'நேரடி சோதனை';
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            background: var(--git-color);
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .responsive-text-demo {
+            font-size: 10vw;
+            color: var(--git-color);
+            margin: 1rem 0;
+            transition: font-size 0.3s ease;
+        }
+        
+        .vmin-demo {
+            width: 50vmin;
+            height: 50vmin;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 2rem auto;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML%20Layout%20Elements%20and%20Techniques.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML%20Computer%20Code%20Elements.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML Responsive Web Design</h2>
+            <p>அனைத்து சாதனங்களிலும் நன்றாகத் தோற்றமளிக்கும் வலைத்தளங்களை உருவாக்குதல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML Responsive Web Design</h2>
+            
+            <p>Responsive web design என்பது அனைத்து சாதனங்களிலும் நன்றாகத் தோற்றமளிக்கும் வலைப்பக்கங்களை உருவாக்குவதாகும்!</p>
+            
+            <p>ஒரு responsive web design வெவ்வேறு திரை அளவுகள் மற்றும் viewport-களுக்கு தானாகவே சரியாகும்[citation:1].</p>
+            
+            <!-- Image added as requested -->
+            <div class="responsive-image-container">
+                <img src="img17.png" alt="Responsive Web Design Illustration">
+                <p class="image-caption">ஒரு responsive web design வெவ்வேறு திரை அளவுகள் மற்றும் viewport-களுக்கு தானாகவே சரியாகும்</p>
+            </div>
+        </section>
+
+        <!-- What is Responsive Web Design -->
+        <section class="content-section" id="what-is-rwd">
+            <h2>Responsive Web Design</h2>
+            <h3>Responsive Web Design என்றால் என்ன?</h3>
+            
+            <p>Responsive Web Design என்பது HTML மற்றும் CSS ஐப் பயன்படுத்தி ஒரு வலைத்தளத்தை தானாகவே மறுஅளவிடுதல், மறைத்தல், சுருக்குதல் அல்லது விரிவாக்குதல் ஆகும், இது அனைத்து சாதனங்களிலும் (desktop-கள், tablet-கள் மற்றும் phone-கள்) நன்றாகத் தோற்றமளிக்கும் வகையில் செய்யப்படுகிறது:</p>
+        </section>
+
+        <!-- Setting The Viewport -->
+        <section class="content-section" id="setting-viewport">
+            <h2>Viewport அமைத்தல்</h2>
+            
+            <p>ஒரு responsive வலைத்தளத்தை உருவாக்க, உங்கள் அனைத்து வலைப்பக்கங்களிலும் பின்வரும் &lt;meta&gt; குறிச்சொல்லைச் சேர்க்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+            </div>
+            
+            <p>இது உங்கள் பக்கத்தின் viewport ஐ அமைக்கும், இது பக்கத்தின் பரிமாணங்கள் மற்றும் அளவிடுதலைக் கட்டுப்படுத்த உலாவிக்கு வழிமுறைகளை வழங்கும்[citation:2].</p>
+            
+            <p>viewport meta குறிச்சொல் இல்லாத ஒரு வலைப்பக்கத்தின் எடுத்துக்காட்டு மற்றும் viewport meta குறிச்சொல்லுடன் கூடிய அதே வலைப்பக்கம் இங்கே:</p>
+            
+            <!-- Image added as requested -->
+            <div class="responsive-image-container">
+                <img src="img16.png" alt="Viewport Meta Tag Comparison">
+                <p class="image-caption">viewport meta குறிச்சொல் இல்லாத ஒரு வலைப்பக்கத்தின் எடுத்துக்காட்டு மற்றும் viewport meta குறிச்சொல்லுடன் கூடிய அதே வலைப்பக்கம்</p>
+            </div>
+            
+            <div class="viewport-comparison">
+                <div class="viewport-card">
+                    <h4>viewport meta குறிச்சொல் இல்லாமல்:</h4>
+                    <p>பார்வைப்பகுதி மெட்டா குறிச்சொல் இல்லாமல் உள்ளடக்கம் சரியாக அளவிடப்படாது</p>
+                </div>
+                
+                <div class="viewport-card">
+                    <h4>viewport meta குறிச்சொல்லுடன்:</h4>
+                    <p>பார்வைப்பகுதி மெட்டா குறிச்சொல்லுடன் உள்ளடக்கம் சாதன அகலத்திற்கு ஏற்ப சரியாக அளவிடப்படுகிறது</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-mobile-alt tip-icon"></i> உதவிக்குறிப்பு:</h4>
+                <p>நீங்கள் இந்தப் பக்கத்தை ஒரு தொலைபேசி அல்லது டேப்லெட்டில் உலாவுகிறீர்கள் என்றால், வித்தியாசத்தைக் காண மேலே உள்ள இரண்டு இணைப்புகளையும் கிளிக் செய்யலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Responsive Images -->
+        <section class="content-section" id="responsive-images">
+            <h2>Responsive படங்கள்</h2>
+            
+            <p>Responsive படங்கள் என்பது எந்தவொரு உலாவி அளவிற்கும் சரியாக பொருந்தும் வகையில் அளவிடக்கூடிய படங்கள் ஆகும்.</p>
+            
+            <h3>width பண்புகளைப் பயன்படுத்துதல்</h3>
+            <p>CSS width பண்பு 100% ஆக அமைக்கப்பட்டால், படம் responsive ஆக இருக்கும் மற்றும் மேலும் கீழும் அளவிடும்:</p>
+            
+            <!-- Image added as requested -->
+            <div class="responsive-image-container">
+                <img src="img19.png" alt="Image with width: 100%">
+                <p class="image-caption">CSS width பண்பு 100% ஆக அமைக்கப்பட்டால், படம் responsive ஆக இருக்கும் மற்றும் மேலும் கீழும் அளவிடும்</p>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;img src="img_girl.jpg" style="width:100%;"&gt;</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள எடுத்துக்காட்டில், படம் அதன் அசல் அளவை விட பெரிதாக அளவிடப்படலாம் என்பதைக் கவனிக்கவும். பல சந்தர்ப்பங்களில், max-width பண்புகளைப் பயன்படுத்துவது ஒரு சிறந்த தீர்வாக இருக்கும்.</p>
+            
+            <h3>max-width பண்புகளைப் பயன்படுத்துதல்</h3>
+            <p>max-width பண்பு 100% ஆக அமைக்கப்பட்டால், படம் தேவைப்பட்டால் குறைக்கப்படும், ஆனால் அதன் அசல் அளவை விட பெரிதாக அளவிடப்படாது:</p>
+            
+            <!-- Image added as requested -->
+            <div class="responsive-image-container">
+                <img src="img20.png" alt="Image with max-width: 100%">
+                <p class="image-caption">max-width பண்பு 100% ஆக அமைக்கப்பட்டால், படம் தேவைப்பட்டால் குறைக்கப்படும், ஆனால் அதன் அசல் அளவை விட பெரிதாக அளவிடப்படாது</p>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;img src="img_girl.jpg" style="max-width:100%;height:auto;"&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Show Different Images Depending on Browser Width -->
+        <section class="content-section" id="picture-element">
+            <h2>உலாவி அகலத்தைப் பொறுத்து வெவ்வேறு படங்களைக் காட்டுதல்</h2>
+            
+            <p>HTML &lt;picture&gt; உறுப்பு வெவ்வேறு உலாவி சாளர அளவுகளுக்கு வெவ்வேறு படங்களை வரையறுக்க உங்களை அனுமதிக்கிறது.</p>
+            
+            <p>கீழே உள்ள படம் அகலத்தைப் பொறுத்து எவ்வாறு மாறுகிறது என்பதைப் பார்க்க உலாவி சாளரத்தை மறுஅளவிடவும்:</p>
+            
+            <!-- Image added as requested -->
+            <div class="responsive-image-container">
+                <img src="img21.png" alt="Picture Element Example">
+                <p class="image-caption">கீழே உள்ள படம் அகலத்தைப் பொறுத்து எவ்வாறு மாறுகிறது என்பதைப் பார்க்க உலாவி சாளரத்தை மறுஅளவிடவும்</p>
+            </div>
+            
+            <div class="demo-box">
+                <h3 class="demo-title">மலர்கள்</h3>
+                <div style="text-align: center; margin: 1rem 0;">
+                    <div style="width: 100%; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #ff9a9e, #fad0c4); padding: 2rem; border-radius: 10px;">
+                        <p style="color: #333; font-style: italic;">[படம் திரை அகலத்தின் அடிப்படையில் மாறுகிறது]</p>
+                        <p style="color: #666; font-size: 0.9rem;">மொபைலில் சிறிய மலர் படம், டெஸ்க்டாபில் பெரிய மலர் படம்</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;picture&gt;
+  &lt;source srcset="img_smallflower.jpg" media="(max-width: 600px)"&gt;
+  &lt;source srcset="img_flowers.jpg" media="(max-width: 1500px)"&gt;
+  &lt;source srcset="flowers.jpg"&gt;
+  &lt;img src="img_smallflower.jpg" alt="Flowers"&gt;
+&lt;/picture&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Responsive Text Size -->
+        <section class="content-section" id="responsive-text">
+            <h2>Responsive உரை அளவு</h2>
+            
+            <p>உரை அளவை "vw" அலகுடன் அமைக்கலாம், இது "viewport width" என்று பொருள்[citation:1][citation:4].</p>
+            
+            <p>அந்த வழியில் உரை அளவு உலாவி சாளரத்தின் அளவைப் பின்பற்றும்:</p>
+            
+            <div class="live-demo-box">
+                <h3 class="demo-title">வணக்கம் உலகம்</h3>
+                <div class="responsive-text-demo">வணக்கம் உலகம்</div>
+                <p>உரை அளவு எவ்வாறு அளவிடுகிறது என்பதைப் பார்க்க உலாவி சாளரத்தை மறுஅளவிடவும்.</p>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;h1 style="font-size:10vw"&gt;Hello World&lt;/h1&gt;</code></pre>
+            </div>
+            
+            <p>Viewport என்பது உலாவி சாளர அளவு. 1vw = viewport அகலத்தில் 1%. viewport 50cm அகலமாக இருந்தால், 1vw என்பது 0.5cm[citation:1].</p>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-info-circle tip-icon"></i> Viewport அலகுகளைப் புரிந்துகொள்ளுதல்:</h4>
+                <p>"vw" அலகு CSS இல் உள்ள பல viewport-அடிப்படையிலான அலகுகளில் ஒன்றாகும். மற்ற அலகுகளில் vh (viewport height), vmin (viewport இன் சிறிய பரிமாணத்தில் 1%) மற்றும் vmax (viewport இன் பெரிய பரிமாணத்தில் 1%) ஆகியவை அடங்கும்[citation:4][citation:8]. உண்மையான responsive வடிவமைப்புகளை உருவாக்க இந்த அலகுகள் அவசியம்.</p>
+            </div>
+        </section>
+
+        <!-- Media Queries -->
+        <section class="content-section" id="media-queries">
+            <h2>Media Queries</h2>
+            
+            <p>உரை மற்றும் படங்களை மறுஅளவிடுவதற்கு கூடுதலாக, responsive வலைப்பக்கங்களில் media queries ஐப் பயன்படுத்துவதும் பொதுவானது.</p>
+            
+            <p>Media queries மூலம் வெவ்வேறு உலாவி அளவுகளுக்கு முற்றிலும் வெவ்வேறு பாணிகளை வரையறுக்கலாம்.</p>
+            
+            <p>எடுத்துக்காட்டு: பெரிய திரைகளில் கீழே உள்ள மூன்று div உறுப்புகள் கிடைமட்டமாக காட்சியளிக்கும் மற்றும் சிறிய திரைகளில் செங்குத்தாக அடுக்கப்படும் என்பதைப் பார்க்க உலாவி சாளரத்தை மறுஅளவிடவும்:</p>
+            
+            <div class="demo-box">
+                <div class="demo-content">
+                    <div class="demo-column">
+                        <h4>இடது பட்டி</h4>
+                        <p>இடது பட்டிக்கான உள்ளடக்கம்</p>
+                    </div>
+                    
+                    <div class="demo-column" style="background: #e3f2fd;">
+                        <h4>முதன்மை உள்ளடக்கம்</h4>
+                        <p>முதன்மை உள்ளடக்கப் பகுதி</p>
+                    </div>
+                    
+                    <div class="demo-column">
+                        <h4>வலது உள்ளடக்கம்</h4>
+                        <p>வலது பக்கப் பட்டி உள்ளடக்கம்</p>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">சிறிய திரைகளில் நெடுவரிசைகள் அடுக்கப்படுவதைப் பார்க்க உலாவியை மறுஅளவிடவும்</p>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;style&gt;
+.left, .right {
+  float: left;
+  width: 20%; /* இயல்புநிலையில் அகலம் 20% */
+}
+
+.main {
+  float: left;
+  width: 60%; /* இயல்புநிலையில் அகலம் 60% */
+}
+
+/* 800px இல் ஒரு breakpoint சேர்க்க media query ஐப் பயன்படுத்தவும்: */
+@media screen and (max-width: 800px) {
+  .left, .main, .right {
+    width: 100%; /* viewport 800px அல்லது சிறியதாக இருக்கும் போது அகலம் 100% */
+  }
+}
+&lt;/style&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-book tip-icon"></i> உதவிக்குறிப்பு:</h4>
+                <p>Media Queries மற்றும் Responsive Web Design பற்றி மேலும் அறிய, எங்கள் RWD டுடோரியலைப் படிக்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- Responsive Web Page - Full Example -->
+        <section class="content-section" id="full-example">
+            <h2>Responsive வலைப்பக்கம் - முழு எடுத்துக்காட்டு</h2>
+            
+            <p>ஒரு responsive வலைப்பக்கம் பெரிய டெஸ்க்டாப் திரைகளிலும் சிறிய மொபைல் தொலைபேசிகளிலும் நன்றாகத் தோற்றமளிக்க வேண்டும்.</p>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> Jassif Team Spaces பற்றி எப்போதாவது கேள்விப்பட்டிருக்கிறீர்களா?</h4>
+                <p>இங்கே நீங்கள் புதிதாக உங்கள் வலைத்தளத்தை உருவாக்கலாம் அல்லது ஒரு டெம்ப்ளேட்டைப் பயன்படுத்தலாம்.</p>
+                <p style="color: #ffd700; font-weight: bold;">* credit card தேவையில்லை</p>
+            </div>
+        </section>
+
+        <!-- Responsive Web Design - Frameworks -->
+        <section class="content-section" id="frameworks">
+            <h2>Responsive Web Design - Frameworks</h2>
+            
+            <p>அனைத்து பிரபலமான CSS Frameworks responsive design ஐ வழங்குகின்றன.</p>
+            
+            <p>அவை இலவசம் மற்றும் பயன்படுத்த எளிதானது.</p>
+            
+            <h3>W3.CSS</h3>
+            <p>W3.CSS என்பது நவீன CSS framework ஆகும், இது இயல்பாகவே டெஸ்க்டாப், டேப்லெட் மற்றும் மொபைல் வடிவமைப்புக்கு ஆதரவை வழங்குகிறது.</p>
+            
+            <p>W3.CSS ஒத்த CSS frameworks-ஐ விட சிறியது மற்றும் வேகமானது.</p>
+            
+            <p>W3.CSS jQuery அல்லது வேறு எந்த JavaScript நூலகத்திலிருந்தும் சுயாதீனமாக இருக்க வடிவமைக்கப்பட்டுள்ளது.</p>
+            
+            <div class="w3css-demo">
+                <h3 style="color: white; text-align: center;">W3.CSS சோதனை</h3>
+                <p style="text-align: center; margin-bottom: 1rem;">பக்கத்தை மறுஅளவிடவும், responsiveness ஐப் பார்க்கவும்!</p>
+                
+                <div class="w3css-row">
+                    <div class="w3css-column">
+                        <h4>லண்டன்</h4>
+                        <p>லண்டன் இங்கிலாந்தின் தலைநகரம்.</p>
+                        <p>இது ஐக்கிய இராச்சியத்தில் மிக அதிக மக்கள் தொகை கொண்ட நகரமாகும், 13 மில்லியனுக்கும் அதிகமான மக்கள் தொகை கொண்ட பெருநகரப் பகுதியுடன்.</p>
+                    </div>
+                    
+                    <div class="w3css-column">
+                        <h4>பாரிஸ்</h4>
+                        <p>பாரிஸ் பிரான்ஸின் தலைநகரம்.</p>
+                        <p>பாரிஸ் பகுதி ஐரோப்பாவில் மிகப்பெரிய மக்கள் தொகை மையங்களில் ஒன்றாகும், 12 மில்லியனுக்கும் அதிகமான மக்கள் தொகையுடன்.</p>
+                    </div>
+                    
+                    <div class="w3css-column">
+                        <h4>டோக்கியோ</h4>
+                        <p>டோக்கியோ ஜப்பானின் தலைநகரம்.</p>
+                        <p>இது பெரிய டோக்கியோ பகுதியின் மையமாகும், மேலும் உலகில் மிக அதிக மக்கள் தொகை கொண்ட பெருநகரப் பகுதியாகும்.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;W3.CSS&lt;/title&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;link rel="stylesheet" href="https://www.jassifteam.com/w3css/4/w3.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class="w3-container w3-green"&gt;
+  &lt;h1&gt;Jassif Team Demo&lt;/h1&gt;
+  &lt;p&gt;இந்த responsive பக்கத்தை மறுஅளவிடவும்!&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="w3-row-padding"&gt;
+  &lt;div class="w3-third"&gt;
+    &lt;h2&gt;லண்டன்&lt;/h2&gt;
+    &lt;p&gt;லண்டன் இங்கிலாந்தின் தலைநகரம்.&lt;/p&gt;
+    &lt;p&gt;இது ஐக்கிய இராச்சியத்தில் மிக அதிக மக்கள் தொகை கொண்ட நகரமாகும்,
+    13 மில்லியனுக்கும் அதிகமான மக்கள் தொகை கொண்ட பெருநகரப் பகுதியுடன்.&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div class="w3-third"&gt;
+    &lt;h2&gt;பாரிஸ்&lt;/h2&gt;
+    &lt;p&gt;பாரிஸ் பிரான்ஸின் தலைநகரம்.&lt;/p&gt;
+    &lt;p&gt;பாரிஸ் பகுதி ஐரோப்பாவில் மிகப்பெரிய மக்கள் தொகை மையங்களில் ஒன்றாகும்,
+    12 மில்லியனுக்கும் அதிகமான மக்கள் தொகையுடன்.&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div class="w3-third"&gt;
+    &lt;h2&gt;டோக்கியோ&lt;/h2&gt;
+    &lt;p&gt;டோக்கியோ ஜப்பானின் தலைநகரம்.&lt;/p&gt;
+    &lt;p&gt;இது பெரிய டோக்கியோ பகுதியின் மையமாகும்,
+    மேலும் உலகில் மிக அதிக மக்கள் தொகை கொண்ட பெருநகரப் பகுதியாகும்.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <p>W3.CSS பற்றி மேலும் அறிய, எங்கள் W3.CSS டுடோரியலைப் படிக்கவும்.</p>
+            
+            <h3>பூட்ஸ்ட்ராப்</h3>
+            <p>மற்றொரு பிரபலமான CSS framework பூட்ஸ்ட்ராப் ஆகும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;title&gt;Bootstrap 5 Example&lt;/title&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class="container-fluid p-5 bg-primary text-white text-center"&gt;
+  &lt;h1&gt;எனது முதல் பூட்ஸ்ட்ராப் பக்கம்&lt;/h1&gt;
+  &lt;p&gt;இந்த responsive பக்கத்தை மறுஅளவிடவும், விளைவைப் பார்க்கவும்!&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="container mt-5"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-sm-4"&gt;
+      &lt;h3&gt;நெடுவரிசை 1&lt;/h3&gt;
+      &lt;p&gt;லொரேம் இப்சம்...&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-4"&gt;
+      &lt;h3&gt;நெடுவரிசை 2&lt;/h3&gt;
+      &lt;p&gt;லொரேம் இப்சம்...&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-4"&gt;
+      &lt;h3&gt;நெடுவரிசை 3&lt;/h3&gt;
+      &lt;p&gt;லொரேம் இப்சம்...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            
+            <p>பூட்ஸ்ட்ராப் பற்றி மேலும் அறிய, எங்கள் பூட்ஸ்ட்ராப் டுடோரியலுக்குச் செல்லவும்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> viewport-இன் சதவீதமாக உரையை அளவிடும் CSS எழுத்துரு அளவு அலகு உள்ளது, அந்த அலகு எது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">px</div>
+                            <div class="option-feedback correct">✓ சரி! ஆனால் px என்பது முழுமையான அலகு, viewport உறவினர் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">em</div>
+                            <div class="option-feedback correct">✓ சரி! ஆனால் em என்பது பெற்றோர் எழுத்துரு அளவுக்கு உறவினர், viewport உறவினர் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">vw</div>
+                            <div class="option-feedback incorrect">✗ தவறு! உண்மையில், vw என்பதே சரியான பதில். இது "viewport width" என்பதைக் குறிக்கிறது மற்றும் viewport அகலத்தில் 1% ஐக் குறிக்கிறது[citation:1][citation:4].</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">vp</div>
+                            <div class="option-feedback correct">✓ சரி! ஆனால் vp என்பது செல்லுபடியாகும் CSS அலகு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-graduation-cap tip-icon"></i> கற்றல் சரிபார்ப்பு:</h4>
+                <p>சரியான பதில் <strong>vw</strong> (viewport width). இந்த அலகு viewport-இன் அகலத்தில் 1% ஐக் குறிக்கிறது. மற்ற viewport-அடிப்படையிலான அலகுகளில் vh (viewport height), vmin (viewport-இன் சிறிய பரிமாணத்தில் 1%) மற்றும் vmax (viewport-இன் பெரிய பரிமாணத்தில் 1%) ஆகியவை அடங்கும்[citation:4][citation:8]. உண்மையான responsive typography மற்றும் layouts உருவாக்க இந்த அலகுகள் அவசியம்.</p>
+            </div>
+            
+            <!-- Additional viewport units demo -->
+            <div class="demo-box">
+                <h3 class="demo-title">Viewport அலகுகள் சோதனை</h3>
+                <p>வெவ்வேறு viewport அலகுகள் எவ்வாறு செயல்படுகின்றன என்பதைப் பார்க்க உங்கள் உலாவி சாளரத்தை மறுஅளவிட முயற்சிக்கவும்:</p>
+                
+                <div class="vmin-demo">
+                    இந்த பெட்டி 50vmin × 50vmin<br>
+                    (சிறிய viewport பரிமாணத்தில் 50%)
+                </div>
+                
+                <p style="text-align: center; margin-top: 1rem;">
+                    <small>vmin = viewport-இன் சிறிய பரிமாணத்தில் 1% (அகலம் அல்லது உயரம்)<br>
+                    vmax = viewport-இன் பெரிய பரிமாணத்தில் 1%[citation:8]</small>
+                </p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML%20Layout%20Elements%20and%20Techniques.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML%20Computer%20Code%20Elements.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#introduction">HTML Responsive Design</a></li>
+                    <li><a href="#setting-viewport">Setting Viewport</a></li>
+                    <li><a href="#responsive-images">Responsive Images</a></li>
+                    <li><a href="#responsive-text">Responsive Text</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">எங்களைத் தொடர்பு கொள்ளவும்</a></li>
+                    <li><a href="#">இடம் & நேரங்கள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>எங்களைப் பின்தொடரவும்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    const feedback = c.querySelector('.option-feedback');
+                    feedback.style.display = 'block';
+                    
+                    // Highlight correct/wrong answers
+                    if(c.getAttribute('data-correct') === 'true') {
+                        c.style.borderColor = '#28a745';
+                        c.style.background = 'rgba(40, 167, 69, 0.1)';
+                    } else {
+                        c.style.borderColor = '#dc3545';
+                        c.style.background = 'rgba(220, 53, 69, 0.1)';
+                    }
+                });
+                
+                // Show alert message
+                if(isCorrect) {
+                    alert('🎉 சரி! "vw" அலகு viewport அகலத்தின் சதவீதமாக உரையை அளவிடுகிறது. 1vw = viewport அகலத்தில் 1%[citation:1].');
+                } else {
+                    alert('❌ தவறு! சரியான பதில் "vw" (viewport width). இந்த அலகு viewport அகலத்தில் 1% ஐக் குறிக்கிறது[citation:4].');
+                }
+            });
+        });
+        
+        // Update responsive text size based on viewport
+        function updateResponsiveText() {
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            const demoText = document.querySelector('.responsive-text-demo');
+            if(demoText) {
+                // Calculate font size based on viewport width
+                const baseSize = 10; // 10vw as in the example
+                const calculatedSize = (vw * baseSize) / 100;
+                
+                // Limit minimum and maximum font sizes
+                const minSize = 20;
+                const maxSize = 100;
+                const finalSize = Math.max(minSize, Math.min(calculatedSize, maxSize));
+                
+                demoText.style.fontSize = `${finalSize}px`;
+            }
+        }
+        
+        // Update on resize
+        window.addEventListener('resize', updateResponsiveText);
+        updateResponsiveText(); // Initial call
+        
+        // Update vmin demo box
+        function updateVminDemo() {
+            const vminBox = document.querySelector('.vmin-demo');
+            if(vminBox) {
+                const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+                const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+                const vmin = Math.min(vw, vh);
+                const size = (vmin * 50) / 100;
+                
+                vminBox.innerHTML = `இந்த பெட்டி 50vmin × 50vmin<br>(தற்போதைய viewport-இன் அடிப்படையில் ${Math.round(size)}px)`;
+            }
+        }
+        
+        window.addEventListener('resize', updateVminDemo);
+        updateVminDemo();
+        
+        // Image fallback handling
+        document.querySelectorAll('.responsive-image-container img').forEach(img => {
+            img.onerror = function() {
+                const altText = this.alt || 'Responsive Design Image';
+                this.src = `https://via.placeholder.com/800x400/3498db/ffffff?text=${encodeURIComponent(altText)}`;
+            };
+        });
+        
+        // Interactive media query demo
+        const demoColumns = document.querySelectorAll('.demo-column');
+        function updateMediaQueryDemo() {
+            const width = window.innerWidth;
+            
+            demoColumns.forEach((column, index) => {
+                if(width <= 800) {
+                    // Stack vertically on small screens
+                    column.style.width = '100%';
+                    column.style.marginBottom = '1rem';
+                    column.style.transition = 'all 0.3s ease';
+                } else {
+                    // Display horizontally on large screens
+                    column.style.width = '';
+                    column.style.marginBottom = '';
+                }
+            });
+        }
+        
+        window.addEventListener('resize', updateMediaQueryDemo);
+        updateMediaQueryDemo();
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

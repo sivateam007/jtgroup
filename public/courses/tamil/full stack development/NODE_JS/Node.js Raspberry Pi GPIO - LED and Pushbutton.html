@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Raspberry Pi GPIO - LED and Pushbutton - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Raspberry Pi - Blinking LED.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Raspberry Pi GPIO - Flowing LEDs.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Raspberry Pi GPIO - LED and Pushbutton</h2>
+            <p>Raspberry Pi இல் உள்ளீடு மற்றும் வெளியீடு இரண்டையும் பயன்படுத்தி LED மற்றும் புஷ் பட்டனைக் கட்டுப்படுத்த கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Using both Input and Output -->
+        <section class="content-section" id="input-output">
+            <h2>உள்ளீடு மற்றும் வெளியீடு இரண்டையும் பயன்படுத்துதல்</h2>
+            
+            <p>முந்தைய அத்தியாயத்தில் ஒரு Raspberry Pi மற்றும் அதன் GPIO ஐப் பயன்படுத்தி ஒரு LED ஐ ஒளிரச் செய்வது எப்படி என்று கற்றுக்கொண்டோம்.</p>
+            
+            <p>அதற்காக நாம் ஒரு GPIO பின்னை "வெளியீடு" ஆகப் பயன்படுத்தினோம்.</p>
+            
+            <p>இந்த அத்தியாயத்தில் நாம் மற்றொரு GPIO பின்னை "உள்ளீடு" ஆகப் பயன்படுத்துவோம்.</p>
+            
+            <p>5 விநாடிகள் ஒளிர்வதற்குப் பதிலாக, பிரெட்போர்டுடன் இணைக்கப்பட்ட ஒரு பொத்தானை நீங்கள் அழுத்தும் போது LED எரிய வேண்டும்.</p>
+        </section>
+
+        <!-- What do we need? -->
+        <section class="content-section" id="requirements">
+            <h2>எங்களுக்கு என்ன தேவை?</h2>
+            
+            <p>இந்த அத்தியாயத்தில் நாம் ஒரு புஷ் பட்டனுடன் ஒரு LED விளக்கைக் கட்டுப்படுத்தும் ஒரு எளிய உதாரணத்தை உருவாக்குவோம்.</p>
+            
+            <p>இதற்கு உங்களுக்கு தேவை:</p>
+            
+            <ul>
+                <li>A Raspberry Pi with Raspian, internet, SSH, with Node.js installed</li>
+                <li>The onoff module for Node.js</li>
+                <li>1 x Breadboard</li>
+                <li>1 x 68 Ohm resistor</li>
+                <li>1 x 1k Ohm resistor</li>
+                <li>1 x Through Hole LED</li>
+                <li>1 x Push Button</li>
+                <li>4 x Female to male jumper wires</li>
+                <li>1 x Male to Male jumper wires</li>
+            </ul>
+            
+            <p>வெவ்வேறு கூறுகளின் விளக்கங்களுக்கு மேலே உள்ள பட்டியலில் உள்ள இணைப்புகளைக் கிளிக் செய்யவும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>நீங்கள் பயன்படுத்தும் LED வகையைப் பொறுத்து உங்களுக்குத் தேவையான மின்தடை நாம் பயன்படுத்துவதிலிருந்து வேறுபட்டிருக்கலாம். பெரும்பாலான சிறிய LED க்களுக்கு ஒரு சிறிய மின்தடை மட்டுமே தேவை, சுமார் 200-500 ஓம்கள். நீங்கள் பயன்படுத்தும் சரியான மதிப்பு பொதுவாக முக்கியமானது அல்ல, ஆனால் மின்தடையின் மதிப்பு சிறியதாக இருந்தால், LED பிரகாசமாக ஒளிரும்.</p>
+            </div>
+            
+            <p>இந்த அத்தியாயத்தில் நாம் கடந்த அத்தியாயத்தில் கட்டிய சுற்றுகளின் அடிப்படையில் கட்டுவோம், எனவே மேலே உள்ள பட்டியலில் சில பகுதிகள் உங்களுக்குத் தெரிந்திருக்கும்.</p>
+        </section>
+
+        <!-- Building the Circuit -->
+        <section class="content-section" id="building-circuit">
+            <h2>சுற்றுகளைக் கட்டும் பணி</h2>
+            
+            <p>இப்போது எங்கள் பிரெட்போர்டில் சுற்றுகளைக் கட்ட வேண்டிய நேரம் வந்துவிட்டது. கடந்த அத்தியாயத்தில் நாம் உருவாக்கிய சுற்றுகளை தொடக்கப் புள்ளியாகப் பயன்படுத்துவோம்.</p>
+            
+            <p>நீங்கள் மின்னணுவியலில் புதியவராக இருந்தால், Raspberry Pi க்கான மின்சாரத்தை அணைக்க பரிந்துரைக்கிறோம். மேலும் அதைச் சேதப்படுத்தாமல் இருக்க ஆன்டி-ஸ்டேடிக் பாய அல்லது கிரவுண்டிங் பட்டா பயன்படுத்தவும்.</p>
+            
+            <p>Raspberry Pi ஐ சரியாக அணைக்க கட்டளையைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ sudo shutdown -h now</code></pre>
+            </div>
+            
+            <p>Raspberry Pi இல் LED கள் ஒளிர்வதை நிறுத்திய பிறகு, Raspberry Pi இலிருந்து பவர் பிளக்கை வெளியே இழுக்கவும் (அல்லது அது இணைக்கப்பட்டுள்ள பவர் ஸ்ட்ரிப்பை அணைக்கவும்).</p>
+            
+            <p>சரியாக அணைக்காமல் பிளக்கை இழுப்பது நினைவக கார்ட்டின் ஊழலை ஏற்படுத்தக்கூடும்.</p>
+
+            <div style="text-align: center; margin: 2rem 0;">
+                <img src="img5.png" alt="Raspberry Pi 3 with Breadboard. LED and Button circuit" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <p style="margin-top: 1rem; font-style: italic; color: #666;">Raspberry Pi 3 with Breadboard. LED and Button circuit</p>
+            </div>
+            
+            <p>மேலே உள்ள சுற்றுகளின் விளக்கப்படத்தைப் பாருங்கள்.</p>
+            
+            <p>கடந்த அத்தியாயத்தில் நாம் உருவாக்கிய சுற்றுகளுடன் தொடங்குவோம்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-plug"></i>
+                    <span><strong>Raspberry Pi இல்:</strong> ஒரு ஜம்பர் கம்பியின் பெண் காலை 5V பவர் பின்னுடன் இணைக்கவும். எங்கள் எடுத்துக்காட்டில் நாம் Physical Pin 2 (5V, row 1, right column) ஐப் பயன்படுத்தினோம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-th"></i>
+                    <span><strong>பிரெட்போர்டில்:</strong> 5V பவருடன் இணைக்கப்பட்ட ஜம்பர் கம்பியின் ஆண் காலை வலது பக்கத்தில் உள்ள பவர் பஸில் இணைக்கவும். உங்கள் பிரெட்போர்டின் அந்த முழு நெடுவரிசையும் இணைக்கப்பட்டுள்ளது, எனவே எந்த வரிசை என்பது முக்கியமல்ல. எங்கள் எடுத்துக்காட்டில் நாம் அதை row 1 உடன் இணைத்துள்ளோம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-toggle-on"></i>
+                    <span><strong>பிரெட்போர்டில்:</strong> புஷ் பட்டனை ட்ரென்ச் முழுவதும் பொருந்தும் வகையில் இணைக்கவும். எங்கள் எடுத்துக்காட்டில் அது rows 13 மற்றும் 15, columns E மற்றும் F உடன் இணைகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span><strong>பிரெட்போர்டில்:</strong> 1k ohm மின்தடையின் ஒரு காலை வலது பக்கத்தில் உள்ள கிரவுண்ட் பஸ் நெடுவரிசையில் இணைக்கவும், மற்றும் மற்ற காலை புஷ் பட்டனின் வலது பக்க கால்களில் ஒன்றுடன் இணைக்கும் வலது பக்க Tie-Point வரிசையில் இணைக்கவும். எங்கள் எடுத்துக்காட்டில் நாம் ஒரு பக்கத்தை Tie-Point row 13, column J உடன் இணைத்துள்ளோம், மற்றும் மற்ற பக்கத்தை அருகிலுள்ள கிரவுண்ட் பஸ் துளையுடன் இணைத்துள்ளோம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span><strong>பிரெட்போர்டில்:</strong> வலது பவர் பஸிலிருந்து ஒரு ஆண்-க்கு-ஆண் ஜம்பர் கம்பியை புஷ் பட்டனின் மற்ற காலுடன் இணைக்கும் வலது Tie-Point வரிசையில் இணைக்கவும். எங்கள் எடுத்துக்காட்டில் நாம் ஒரு பக்கத்தை Tie-Point row 15, column J உடன் இணைத்துள்ளோம், மற்றும் மற்ற பக்கத்தை அருகிலுள்ள பவர் பஸ் துளையுடன் இணைத்துள்ளோம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-microchip"></i>
+                    <span><strong>Raspberry Pi இல்:</strong> ஒரு ஜம்பர் கம்பியின் பெண் காலை ஒரு GPIO பின்னுடன் இணைக்கவும். எங்கள் எடுத்துக்காட்டில் நாம் Physical Pin 11 (GPIO 17, row 6, left column) ஐப் பயன்படுத்தினோம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-th"></i>
+                    <span><strong>பிரெட்போர்டில்:</strong> கிரவுண்ட் இணைப்பு காலுக்கு நேரடியாக எதிரே உள்ள புஷ் பட்டன் காலுடன் இடது Tie-Point வரிசையில் ஜம்பர் கம்பியின் ஆண் காலை இணைக்கவும். எங்கள் எடுத்துக்காட்டில் நாம் அதை row 13, column A உடன் இணைத்துள்ளோம்</span>
+                </div>
+            </div>
+            
+            <p>உங்கள் சுற்று இப்போது முழுமையாக இருக்க வேண்டும், மேலும் உங்கள் இணைப்புகள் மேலே உள்ள விளக்கப்படத்தைப் போலவே இருக்க வேண்டும்.</p>
+            
+            <p>இப்போது Raspberry Pi ஐ துவக்குவதற்கும், அதனுடன் தொடர்பு கொள்ள Node.js ஸ்கிரிப்டை எழுதுவதற்கும் நேரம் வந்துவிட்டது.</p>
+        </section>
+
+        <!-- Raspberry Pi and Node.js LED and Button Script -->
+        <section class="content-section" id="button-script">
+            <h2>Raspberry Pi மற்றும் Node.js LED மற்றும் பட்டன் ஸ்கிரிப்ட்</h2>
+            
+            <p>"nodetest" அடைவிற்குச் சென்று, "buttonled.js" என்ற புதிய கோப்பை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ nano buttonled.js</code></pre>
+            </div>
+            
+            <p>கோப்பு இப்போது திறக்கப்பட்டு உள்ளமைக்கப்பட்ட Nano Editor உடன் திருத்தப்படலாம்.</p>
+            
+            <p>பின்வருவனவற்றை எழுதவும் அல்லது ஒட்டவும்:</p>
+            
+            <div class="code-example">
+                <h3>buttonled.js</h3>
+                <pre><code>var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+let LED = new Gpio(4, 'out'); //use GPIO pin 4 as output
+let pushButton = new Gpio(17, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
+
+pushButton.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
+  if (err) { //if an error
+    console.error('There was an error', err); //output error message to console
+  return;
+  }
+  LED.writeSync(value); //turn LED on or off depending on the button state (0 or 1)
+});
+
+function unexportOnClose() { //function to run when exiting program
+  LED.writeSync(0); // Turn LED off
+  LED.unexport(); // Unexport LED GPIO to free resources
+  pushButton.unexport(); // Unexport Button GPIO to free resources
+};
+
+process.on('SIGINT', unexportOnClose); //function to run when user closes using ctrl+c</code></pre>
+            </div>
+            
+            <p>குறியீட்டைச் சேமிக்க "Ctrl+x" ஐ அழுத்தவும். "y" உடன் உறுதிப்படுத்தவும், மற்றும் பெயரை "Enter" உடன் உறுதிப்படுத்தவும்.</p>
+            
+            <p>குறியீட்டை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ node buttonled.js</code></pre>
+            </div>
+            
+            <p>இப்போது நீங்கள் பொத்தானை அழுத்தும் போது LED எரிய வேண்டும், மேலும் அதை விடுவிக்கும் போது அணைய வேண்டும்.</p>
+            
+            <p>Ctrl+c உடன் நிரலை முடிக்கவும்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Raspberry Pi இல் பொத்தான் உள்ளீட்டைக் கையாள Node.js இல் onoff தொகுதியில் எந்த முறை பயன்படுத்தப்படுகிறது? தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">listen()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "listen()" என்பது onoff தொகுதியில் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">observe()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "observe()" என்பது onoff தொகுதியில் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">watch()</div>
+                            <div class="option-feedback correct">✓ சரி! "watch()" முறை பொத்தான் உள்ளீட்டைக் கையாள onoff தொகுதியில் பயன்படுத்தப்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">monitor()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "monitor()" என்பது onoff தொகுதியில் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Raspberry Pi - Blinking LED.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Raspberry Pi GPIO - Flowing LEDs.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#input-output">உள்ளீடு மற்றும் வெளியீடு</a></li>
+                    <li><a href="#requirements">தேவைகள்</a></li>
+                    <li><a href="#building-circuit">சுற்றுகளைக் கட்டுதல்</a></li>
+                    <li><a href="#button-script">LED மற்றும் பட்டன் ஸ்கிரிப்ட்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL CREATE TABLE Statement - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Data Types Grid */
+        .datatypes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .datatype-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--git-color);
+        }
+        
+        .datatype-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .datatype-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .datatype-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .datatype-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            margin: 2rem 0;
+        }
+        
+        .responsive-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--git-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .empty-cell {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .table-flow {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            margin: 0.5rem;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step-arrow {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin: 0 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .datatypes-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .datatype-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .flow-steps {
+                flex-direction: column;
+            }
+            
+            .step-arrow {
+                transform: rotate(90deg);
+                margin: 1rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .responsive-table {
+                font-size: 0.8rem;
+            }
+            
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL BACKUP DATABASE for SQL Server.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL DROP TABLE Statement.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL CREATE TABLE Statement</h2>
+            <p>தரவுத்தளத்தில் புதிய அட்டவணையை உருவாக்க CREATE TABLE அறிக்கையைப் பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is CREATE TABLE -->
+        <section class="content-section" id="what-is-create-table">
+            <h2>SQL CREATE TABLE அறிக்கை</h2>
+            
+            <p>CREATE TABLE அறிக்கை தரவுத்தளத்தில் புதிய அட்டவணையை உருவாக்க பயன்படுகிறது.</p>
+            
+            <div class="table-flow">
+                <h3>அட்டவணை உருவாக்கம் பணிப்பாய்வு</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <p>அட்டவணை பெயரை வரையறுக்கவும்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <p>நெடுவரிசைகள் மற்றும் தரவு வகைகளை வரையறுக்கவும்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <p>CREATE TABLE அறிக்கையை இயக்கு</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <p>அட்டவணை உருவாக்கப்படுகிறது</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CREATE TABLE Syntax -->
+        <section class="content-section" id="create-table-syntax">
+            <h2>CREATE TABLE தொடரியல்</h2>
+            
+            <div class="syntax-box">
+                <pre><code>CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+   ....
+);</code></pre>
+            </div>
+            
+            <p>நெடுவரிசை அளவுருக்கள் அட்டவணையின் நெடுவரிசைகளின் பெயர்களைக் குறிப்பிடுகின்றன.</p>
+            
+            <p>தரவு வகை அளவுரு நெடுவரிசை வைத்திருக்கக்கூடிய தரவின் வகையைக் குறிப்பிடுகிறது (எ.கா. varchar, integer, date, முதலியன).</p>
+        </section>
+
+        <!-- Common Data Types -->
+        <section class="content-section" id="data-types">
+            <h2>பொதுவான தரவு வகைகள்</h2>
+            
+            <div class="datatypes-grid">
+                <div class="datatype-card">
+                    <div class="datatype-header">
+                        <i class="fas fa-text-height"></i>
+                        <h4>VARCHAR</h4>
+                    </div>
+                    <p>மாறி நீள சரம்</p>
+                    <div class="code-block small">
+                        <pre><code>varchar(255)</code></pre>
+                    </div>
+                    <p><strong>பயன்:</strong> பெயர்கள், முகவரிகள்</p>
+                </div>
+                
+                <div class="datatype-card">
+                    <div class="datatype-header">
+                        <i class="fas fa-hashtag"></i>
+                        <h4>INT</h4>
+                    </div>
+                    <p>முழு எண்கள்</p>
+                    <div class="code-block small">
+                        <pre><code>int</code></pre>
+                    </div>
+                    <p><strong>பயன்:</strong> ID, வயது, அளவுகள்</p>
+                </div>
+                
+                <div class="datatype-card">
+                    <div class="datatype-header">
+                        <i class="fas fa-calendar"></i>
+                        <h4>DATE</h4>
+                    </div>
+                    <p>தேதி மதிப்புகள்</p>
+                    <div class="code-block small">
+                        <pre><code>date</code></pre>
+                    </div>
+                    <p><strong>பயன்:</strong> பிறந்த தேதி, ஆர்டர் தேதி</p>
+                </div>
+                
+                <div class="datatype-card">
+                    <div class="datatype-header">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h4>DECIMAL</h4>
+                    </div>
+                    <p>தசம எண்கள்</p>
+                    <div class="code-block small">
+                        <pre><code>decimal(10,2)</code></pre>
+                    </div>
+                    <p><strong>பயன்:</strong> விலைகள், பணத் தொகைகள்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CREATE TABLE Example -->
+        <section class="content-section" id="create-table-example">
+            <h2>SQL CREATE TABLE எடுத்துக்காட்டு</h2>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு ஐந்து நெடுவரிசைகளைக் கொண்ட "Persons" என்ற அட்டவணையை உருவாக்குகிறது: PersonID, LastName, FirstName, Address, and City:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>CREATE TABLE Persons (
+    PersonID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+);</code></pre>
+            </div>
+            
+            <p>PersonID நெடுவரிசை int வகையில் உள்ளது மற்றும் ஒரு முழு எண்ணை வைத்திருக்கும்.</p>
+            
+            <p>LastName, FirstName, Address, and City நெடுவரிசைகள் varchar வகையில் உள்ளன மற்றும் எழுத்துக்களை வைத்திருக்கும், மேலும் இந்த புலங்களுக்கான அதிகபட்ச நீளம் 255 எழுத்துக்கள் ஆகும்.</p>
+            
+            <p>காலி "Persons" அட்டவணை இப்போது இப்படி இருக்கும்:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>PersonID</th>
+                                <th>LastName</th>
+                                <th>FirstName</th>
+                                <th>Address</th>
+                                <th>City</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="empty-cell">காலி</td>
+                                <td class="empty-cell">காலி</td>
+                                <td class="empty-cell">காலி</td>
+                                <td class="empty-cell">காலி</td>
+                                <td class="empty-cell">காலி</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>காலி "Persons" அட்டவணையை இப்போது SQL INSERT INTO அறிக்கையுடன் தரவுகளால் நிரப்பலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Create Table Using Another Table -->
+        <section class="content-section" id="create-from-existing">
+            <h2>மற்றொரு அட்டவணையைப் பயன்படுத்தி அட்டவணையை உருவாக்குதல்</h2>
+            
+            <p>ஏற்கனவே உள்ள அட்டவணையின் நகல் CREATE TABLE ஐப் பயன்படுத்தியும் உருவாக்கப்படலாம்.</p>
+            
+            <p>புதிய அட்டவணைக்கு அதே நெடுவரிசை வரையறைகள் கிடைக்கும். அனைத்து நெடுவரிசைகளையும் அல்லது குறிப்பிட்ட நெடுவரிசைகளையும் தேர்ந்தெடுக்கலாம்.</p>
+            
+            <p>ஏற்கனவே உள்ள அட்டவணையைப் பயன்படுத்தி புதிய அட்டவணையை உருவாக்கினால், புதிய அட்டவணை பழைய அட்டவணையிலிருந்து இருக்கும் மதிப்புகளால் நிரப்பப்படும்.</p>
+            
+            <div class="syntax-box">
+                <h3>தொடரியல்</h3>
+                <pre><code>CREATE TABLE new_table_name AS
+    SELECT column1, column2,...
+    FROM existing_table_name
+    WHERE ....;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL "TestTable" என்ற புதிய அட்டவணையை உருவாக்குகிறது ("Customers" அட்டவணையின் நகல்):</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>CREATE TABLE TestTable AS
+SELECT customername, contactname
+FROM customers;</code></pre>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>பயனர்கள் அட்டவணை</h3>
+                    <p>பயனர் மேலாண்மை அமைப்புக்கான அட்டவணை</p>
+                    <div class="code-block small">
+                        <pre><code>CREATE TABLE Users (
+    UserID int,
+    Username varchar(50),
+    Email varchar(100),
+    Password varchar(255),
+    CreatedDate date
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>தயாரிப்புகள் அட்டவணை</h3>
+                    <p>இ-காமர்ஸ் தளத்திற்கான தயாரிப்பு அட்டவணை</p>
+                    <div class="code-block small">
+                        <pre><code>CREATE TABLE Products (
+    ProductID int,
+    ProductName varchar(255),
+    Price decimal(10,2),
+    Category varchar(100),
+    StockQuantity int
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <h3>ஆர்டர்கள் அட்டவணை</h3>
+                    <p>விற்பனை ஆர்டர்களைக் கையாள்வதற்கான அட்டவணை</p>
+                    <div class="code-block small">
+                        <pre><code>CREATE TABLE Orders (
+    OrderID int,
+    CustomerID int,
+    OrderDate date,
+    TotalAmount decimal(10,2),
+    Status varchar(50)
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL CREATE TABLE அறிக்கையின் முதன்மை நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">தரவுத்தளத்தில் புதிய அட்டவணையை உருவாக்க</div>
+                            <div class="option-feedback correct">✓ சரி! CREATE TABLE அறிக்கையின் முதன்மை நோக்கம் தரவுத்தளத்தில் புதிய அட்டவணையை உருவாக்குவதாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையில் தரவைச் செருக</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது INSERT INTO அறிக்கைக்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையை இணைக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது JOIN அறிக்கைக்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தரவுத்தளத்திலிருந்து அட்டவணையை நீக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது DROP TABLE அறிக்கைக்கானது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL BACKUP DATABASE for SQL Server.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL DROP TABLE Statement.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-create-table">CREATE TABLE அறிக்கை</a></li>
+                    <li><a href="#create-table-syntax">CREATE TABLE தொடரியல்</a></li>
+                    <li><a href="#data-types">தரவு வகைகள்</a></li>
+                    <li><a href="#create-from-existing">மற்றொரு அட்டவணையிலிருந்து உருவாக்குதல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

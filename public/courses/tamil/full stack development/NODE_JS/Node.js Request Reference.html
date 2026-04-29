@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Request Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Agent Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Response Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Request Reference</h2>
+            <p>Node.js இல் HTTP கோரிக்கை பொருள்களைப் பயன்படுத்தி வெளிப்புற சேவைகளுடன் தொடர்பு கொள்ள கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- HTTP Request Object -->
+        <section class="content-section" id="request-object">
+            <h2>HTTP கோரிக்கை பொருள்</h2>
+            
+            <p>HTTP கோரிக்கை பொருள் உள்நாட்டில் Node.js மூலம் உருவாக்கப்பட்டு HTTP கோரிக்கைகளைச் செய்யும் போது கோரிக்கை நிகழ்வு callback க்கு முதல் அளவுருவாக அனுப்பப்படுகிறது. HTTP சேவையகங்களுடன் பயன்படுத்தப்படும் போது client இலிருந்து வரும் செய்தியை அல்லது HTTP clients உடன் பயன்படுத்தப்படும் போது வெளிச்செல்லும் செய்தியை இது குறிக்கிறது.</p>
+            
+            <p>Node.js இல் இரண்டு முக்கிய வகையான கோரிக்கை பொருள்கள் உள்ளன:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>http.ClientRequest</h4>
+                    </div>
+                    <p>வெளிப்புற HTTP கோரிக்கைகளைச் செய்யும் போது உருவாக்கப்பட்டது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-down"></i>
+                        <h4>http.IncomingMessage</h4>
+                    </div>
+                    <p>client கோரிக்கைகளைக் கையாளும் போது சேவையகத்தால் பெறப்பட்டது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ClientRequest Object -->
+        <section class="content-section" id="clientrequest-object">
+            <h2>ClientRequest பொருள்</h2>
+            
+            <p>http.ClientRequest பொருள் http.request() அல்லது http.get() அழைக்கப்படும் போது உருவாக்கப்பட்ட Writable Stream இன் ஒரு instance ஆகும். இது நீங்கள் ஒரு சேவையகத்திற்கு அனுப்பும் வெளிப்புற HTTP கோரிக்கையைக் குறிக்கிறது.</p>
+            
+            <h3>ClientRequest உருவாக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// ஒரு client கோரிக்கையை உருவாக்கு
+const req = http.request({
+  hostname: 'example.com',
+  port: 80,
+  path: '/',
+  method: 'GET'
+}, (res) => {
+  // பதிலைக் கையாள (IncomingMessage)
+  console.log(`Status: ${res.statusCode}`);
+});
+
+// கோரிக்கையை முடி
+req.end();</code></pre>
+            </div>
+        </section>
+
+        <!-- ClientRequest Properties -->
+        <section class="content-section" id="clientrequest-properties">
+            <h2>ClientRequest பண்புகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>request.aborted</strong></td>
+                            <td>கோரிக்கை கைவிடப்பட்டதா என்பதைக் குறிக்கும் boolean</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.connection</strong></td>
+                            <td>அடிப்படை socket க்கான குறிப்பு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.socket</strong></td>
+                            <td>அடிப்படை socket க்கான குறிப்பு. request.connection இன் alias</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.finished</strong></td>
+                            <td>கோரிக்கை தரவை அனுப்புவது முடிந்ததா என்பதைக் குறிக்கும் boolean</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.path</strong></td>
+                            <td>கோரிக்கை பாதை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.method</strong></td>
+                            <td>கோரிக்கை முறை (GET, POST, முதலியன)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.host</strong></td>
+                            <td>கோரிக்கை host</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ClientRequest Methods -->
+        <section class="content-section" id="clientrequest-methods">
+            <h2>ClientRequest முறைகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>request.abort()</strong></td>
+                            <td>கோரிக்கையை கைவிடப்பட்டதாகக் குறிக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.destroy([error])</strong></td>
+                            <td>கோரிக்கையை அழிக்கிறது. விருப்பமாக அனுப்பப்பட்ட பிழையை வெளியிடுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.end([data[, encoding]][, callback])</strong></td>
+                            <td>கோரிக்கையை அனுப்புவதை முடிக்கிறது. உடலின் எந்தப் பகுதிகளும் அனுப்பப்படவில்லை என்றால், அவற்றை ஸ்ட்ரீமுக்கு flush செய்யும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.flushHeaders()</strong></td>
+                            <td>கோரிக்கை தலைப்புகளை flush செய்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.getHeader(name)</strong></td>
+                            <td>வரிசையில் உள்ள ஆனால் இன்னும் அனுப்பப்படாத தலைப்பின் மதிப்பைப் பெறுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.removeHeader(name)</strong></td>
+                            <td>அனுப்புவதற்கு வரிசையில் உள்ள தலைப்பை அகற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.setHeader(name, value)</strong></td>
+                            <td>தலைப்புகள் பொருளுக்கு ஒரு தனி தலைப்பு மதிப்பை அமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.setNoDelay([noDelay])</strong></td>
+                            <td>socket இன் noDelay விருப்பத்தை அமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.setSocketKeepAlive([enable][, initialDelay])</strong></td>
+                            <td>socket இன் keepAlive விருப்பத்தை அமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.setTimeout(timeout[, callback])</strong></td>
+                            <td>கோரிக்கைக்கான timeout மதிப்பை அமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>request.write(chunk[, encoding][, callback])</strong></td>
+                            <td>உடலின் ஒரு chunk ஐ அனுப்புகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ClientRequest Events -->
+        <section class="content-section" id="clientrequest-events">
+            <h2>ClientRequest நிகழ்வுகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>நிகழ்வு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>'abort'</strong></td>
+                            <td>கோரிக்கை கைவிடப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'connect'</strong></td>
+                            <td>ஒரு சேவையகம் CONNECT முறையுடன் ஒரு கோரிக்கைக்குப் பதிலளிக்கும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'continue'</strong></td>
+                            <td>சேவையகம் '100 Continue' HTTP பதிலை அனுப்பும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'information'</strong></td>
+                            <td>சேவையகம் 1xx பதிலை அனுப்பும் போது வெளியிடப்படுகிறது (101 Upgrade தவிர)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'response'</strong></td>
+                            <td>இந்தக் கோரிக்கைக்கு ஒரு பதில் பெறப்படும் போது வெளியிடப்படுகிறது. இந்த நிகழ்வு ஒருமுறை மட்டுமே வெளியிடப்படும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'socket'</strong></td>
+                            <td>இந்தக் கோரிக்கைக்கு ஒரு socket ஒதுக்கப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'timeout'</strong></td>
+                            <td>கோரிக்கை timeout ஆகும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'upgrade'</strong></td>
+                            <td>சேவையகம் upgrade உடன் பதிலளிக்கும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'close'</strong></td>
+                            <td>கோரிக்கை மூடப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'error'</strong></td>
+                            <td>பிழை ஏற்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- IncomingMessage Object -->
+        <section class="content-section" id="incomingmessage-object">
+            <h2>IncomingMessage பொருள்</h2>
+            
+            <p>http.IncomingMessage பொருள் ஒரு HTTP சேவையகத்தால் உருவாக்கப்பட்டு 'request' நிகழ்வுக்கு முதல் வாதமாக அனுப்பப்படுகிறது. இது ஒரு உள்வரும் செய்தியைக் குறிக்கிறது, பொதுவாக client இலிருந்து ஒரு கோரிக்கை அல்லது சேவையகத்திலிருந்து ஒரு பதில்.</p>
+            
+            <h3>சேவையகத்தில் IncomingMessage ஐ அணுகுதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// HTTP சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  // 'req' ஒரு IncomingMessage பொருள்
+  console.log(`Received ${req.method} request for ${req.url}`);
+  res.end('Hello World');
+});
+
+server.listen(8080);</code></pre>
+            </div>
+        </section>
+
+        <!-- IncomingMessage Properties -->
+        <section class="content-section" id="incomingmessage-properties">
+            <h2>IncomingMessage பண்புகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>message.headers</strong></td>
+                            <td>கோரிக்கை/பதில் தலைப்புகள் பொருள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.httpVersion</strong></td>
+                            <td>client அனுப்பிய HTTP பதிப்பு (எ.க., '1.1', '1.0')</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.method</strong></td>
+                            <td>கோரிக்கை முறை ஒரு சரமாக (கோரிக்கை பொருள்களுக்கு மட்டும்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.rawHeaders</strong></td>
+                            <td>அவை பெறப்பட்டதைப் போலவே raw கோரிக்கை/பதில் தலைப்புகள் பட்டியல்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.rawTrailers</strong></td>
+                            <td>அவை பெறப்பட்டதைப் போலவே raw கோரிக்கை/பதில் trailer keys மற்றும் values</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.socket</strong></td>
+                            <td>இணைப்புடன் தொடர்புடைய net.Socket பொருள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.statusCode</strong></td>
+                            <td>HTTP பதில் நிலை குறியீடு (பதில் பொருள்களுக்கு மட்டும்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.statusMessage</strong></td>
+                            <td>HTTP பதில் நிலை செய்தி (பதில் பொருள்களுக்கு மட்டும்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.trailers</strong></td>
+                            <td>கோரிக்கை/பதில் trailer தலைப்புகள் பொருள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.url</strong></td>
+                            <td>கோரிக்கை URL சரம் (கோரிக்கை பொருள்களுக்கு மட்டும்)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- IncomingMessage Methods -->
+        <section class="content-section" id="incomingmessage-methods">
+            <h2>IncomingMessage முறைகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>message.destroy([error])</strong></td>
+                            <td>செய்தியை அழிக்கிறது. விருப்பமாக அனுப்பப்பட்ட பிழையை வெளியிடுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.setTimeout(msecs, callback)</strong></td>
+                            <td>socket இன் timeout மதிப்பை அமைக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Basic GET Request Example -->
+        <section class="content-section" id="get-request">
+            <h2>அடிப்படை GET கோரிக்கை எடுத்துக்காட்டு</h2>
+            
+            <p>GET கோரிக்கையைச் செய்ய http.get() ஐப் பயன்படுத்தும் ஒரு அடிப்படை எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// ஒரு எளிய GET கோரிக்கையைச் செய்யவும்
+http.get('http://example.com', (res) => {
+  const { statusCode } = res;
+  const contentType = res.headers['content-type'];
+  
+  console.log(`Status Code: ${statusCode}`);
+  console.log(`Content-Type: ${contentType}`);
+  
+  let error;
+  if (statusCode !== 200) {
+    error = new Error(`Request Failed. Status Code: ${statusCode}`);
+  } else if (!/^text\/html/.test(contentType)) {
+    error = new Error(`Invalid content-type. Expected text/html but received ${contentType}`);
+  }
+  
+  if (error) {
+    console.error(error.message);
+    // நினைவகத்தை விடுவிக்க பதில் தரவை உட்கொள்ளவும்
+    res.resume();
+    return;
+  }
+  
+  res.setEncoding('utf8');
+  let rawData = '';
+  
+  // வரும் போது பதில் தரவைச் சேகரிக்கவும்
+  res.on('data', (chunk) => { rawData += chunk; });
+  
+  // முழுமையான பதிலைச் செயலாக்கவும்
+  res.on('end', () => {
+    try {
+      console.log(`Response length: ${rawData.length} characters`);
+      console.log('First 100 characters:');
+      console.log(rawData.substring(0, 100) + '...');
+    } catch (e) {
+      console.error(e.message);
+    }
+  });
+}).on('error', (e) => {
+  console.error(`Got error: ${e.message}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- POST Request Example -->
+        <section class="content-section" id="post-request">
+            <h2>POST கோரிக்கை எடுத்துக்காட்டு</h2>
+            
+            <p>தரவுடன் POST கோரிக்கையைச் செய்தல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// POST கோரிக்கையில் அனுப்ப வேண்டிய தரவு
+const postData = JSON.stringify({
+  'name': 'John Doe',
+  'email': 'john@example.com',
+  'message': 'Hello from Node.js HTTP client!'
+});
+
+// கோரிக்கை விருப்பங்கள்
+const options = {
+  hostname: 'postman-echo.com',
+  port: 80,
+  path: '/post',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Length': Buffer.byteLength(postData)
+  }
+};
+
+// கோரிக்கையை உருவாக்கு
+const req = http.request(options, (res) => {
+  console.log(`STATUS: ${res.statusCode}`);
+  console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+  
+  res.setEncoding('utf8');
+  let responseData = '';
+  
+  res.on('data', (chunk) => {
+    responseData += chunk;
+  });
+  
+  res.on('end', () => {
+    console.log('Response body:');
+    
+    try {
+      // JSON ஆக parse செய்ய முயற்சி
+      const parsedData = JSON.parse(responseData);
+      console.log(JSON.stringify(parsedData, null, 2));
+    } catch (e) {
+      // JSON இல்லையென்றால், உரையாகக் காட்டு
+      console.log(responseData);
+    }
+  });
+});
+
+req.on('error', (e) => {
+  console.error(`Problem with request: ${e.message}`);
+});
+
+// கோரிக்கை உடலுக்கு தரவை எழுது
+req.write(postData);
+
+// கோரிக்கையை முடி
+req.end();</code></pre>
+            </div>
+        </section>
+
+        <!-- Handling Request Headers -->
+        <section class="content-section" id="request-headers">
+            <h2>கோரிக்கை தலைப்புகளைக் கையாளுதல்</h2>
+            
+            <p>கோரிக்கை தலைப்புகளுடன் பணிபுரிதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// கோரிக்கை தலைப்புகளை நிரூபிக்க ஒரு சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  // கோரிக்கை தகவலைக் காட்டு
+  console.log(`Request received: ${req.method} ${req.url}`);
+  console.log(`HTTP Version: ${req.httpVersion}`);
+  
+  // நிலையான தலைப்புகளைக் காட்டு
+  console.log('\nStandard Headers:');
+  const stdHeaders = ['host', 'user-agent', 'accept', 'accept-language', 'content-type', 'content-length'];
+  stdHeaders.forEach(header => {
+    if (req.headers[header]) {
+      console.log(`${header}: ${req.headers[header]}`);
+    }
+  });
+  
+  // raw தலைப்புகளைக் காட்டு (name-value ஜோடிகள்)
+  console.log('\nRaw Headers:');
+  for (let i = 0; i < req.rawHeaders.length; i += 2) {
+    console.log(`${req.rawHeaders[i]}: ${req.rawHeaders[i+1]}`);
+  }
+  
+  // பதிலை உருவாக்கு
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  
+  // தலைப்புகள் தகவலுடன் பதிலை அனுப்பு
+  res.end(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Request Headers</title>
+    </head>
+    <body>
+      <h1>Your Request Headers</h1>
+      <pre>${JSON.stringify(req.headers, null, 2)}</pre>
+    </body>
+    </html>
+  `);
+});
+
+// சேவையகத்தைத் தொடங்கு
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+  
+  // தலைப்புகளை நிரூபிக்க ஒரு கோரிக்கையைச் செய்யவும்
+  const req = http.request({
+    hostname: 'localhost',
+    port: PORT,
+    path: '/headers-demo',
+    method: 'GET',
+    headers: {
+      'User-Agent': 'Node.js HTTP Client',
+      'X-Custom-Header': 'Custom Value',
+      'Accept': 'text/html,application/json'
+    }
+  }, (res) => {
+    res.resume(); // பதில் தரவை உட்கொள்
+  });
+  
+  req.on('error', (e) => {
+    console.error(`Demo request error: ${e.message}`);
+  });
+  
+  req.end();
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- File Upload Example -->
+        <section class="content-section" id="file-upload">
+            <h2>கோப்பு பதிவேற்ற எடுத்துக்காட்டு</h2>
+            
+            <p>கோப்பைப் பதிவேற்ற கோரிக்கையைப் பயன்படுத்துதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+// பதிவேற்றத்திற்கான மாதிரி கோப்பை உருவாக்கு
+const sampleFile = path.join(__dirname, 'upload-sample.txt');
+fs.writeFileSync(sampleFile, 'This is a sample file for upload demonstration.\n'.repeat(10));
+
+// multipart form-data boundary மற்றும் body உருவாக்கும் செயல்பாடு
+function createMultipartFormData(fields, files) {
+  const boundary = `----NodeJSUploadExample${Math.random().toString(16).substr(2)}`;
+  let body = '';
+  
+  // வழக்கமான fields சேர்க்கவும்
+  Object.keys(fields).forEach(field => {
+    body += `--${boundary}\r\n`;
+    body += `Content-Disposition: form-data; name="${field}"\r\n\r\n`;
+    body += `${fields[field]}\r\n`;
+  });
+  
+  // கோப்புகளைச் சேர்க்கவும்
+  Object.keys(files).forEach(fileField => {
+    const filePath = files[fileField];
+    const filename = path.basename(filePath);
+    const fileContent = fs.readFileSync(filePath);
+    
+    body += `--${boundary}\r\n`;
+    body += `Content-Disposition: form-data; name="${fileField}"; filename="${filename}"\r\n`;
+    body += `Content-Type: application/octet-stream\r\n\r\n`;
+    body += fileContent.toString() + '\r\n';
+  });
+  
+  // இறுதி boundary சேர்க்கவும்
+  body += `--${boundary}--\r\n`;
+  
+  return {
+    boundary,
+    body
+  };
+}
+
+// form தரவைத் தயார் செய்யவும்
+const formData = createMultipartFormData(
+  {
+    name: 'Node.js Upload Example',
+    description: 'Uploading a file using HTTP client request'
+  },
+  {
+    file: sampleFile
+  }
+);
+
+// கோரிக்கை விருப்பங்கள்
+const options = {
+  hostname: 'httpbin.org',
+  port: 80,
+  path: '/post',
+  method: 'POST',
+  headers: {
+    'Content-Type': `multipart/form-data; boundary=${formData.boundary}`,
+    'Content-Length': Buffer.byteLength(formData.body)
+  }
+};
+
+// கோரிக்கையை உருவாக்கு
+const req = http.request(options, (res) => {
+  console.log(`Upload Status: ${res.statusCode}`);
+  
+  let responseData = '';
+  res.setEncoding('utf8');
+  
+  res.on('data', (chunk) => {
+    responseData += chunk;
+  });
+  
+  res.on('end', () => {
+    console.log('Upload Response:');
+    try {
+      const response = JSON.stringify(JSON.parse(responseData), null, 2);
+      console.log(response);
+    } catch (e) {
+      console.log(responseData);
+    }
+    
+    // மாதிரி கோப்பை சுத்தம் செய்யவும்
+    fs.unlinkSync(sampleFile);
+    console.log('Sample file removed');
+  });
+});
+
+req.on('error', (e) => {
+  console.error(`Upload error: ${e.message}`);
+});
+
+// form தரவை அனுப்பவும்
+req.write(formData.body);
+req.end();
+
+console.log('Uploading file...');</code></pre>
+            </div>
+        </section>
+
+        <!-- Handling Request Timeouts -->
+        <section class="content-section" id="request-timeouts">
+            <h2>கோரிக்கை Timeouts ஐக் கையாளுதல்</h2>
+            
+            <p>கோரிக்கை timeouts ஐ அமைத்தல் மற்றும் கையாளுதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// timeout உடன் ஒரு கோரிக்கையை உருவாக்கு
+const req = http.request({
+  hostname: 'example.com',
+  port: 80,
+  path: '/',
+  method: 'GET',
+  timeout: 8080 // 3 second timeout
+}, (res) => {
+  console.log(`STATUS: ${res.statusCode}`);
+  res.resume(); // பதில் தரவை உட்கொள்
+});
+
+// timeout நிகழ்வைக் கையாளவும்
+req.on('timeout', () => {
+  console.log('Request timed out after 3 seconds');
+  req.abort(); // கோரிக்கையை கைவிடவும்
+});
+
+// abort() காரணமாக ஏற்படும் பிழைகள் உட்பட பிழைகளைக் கையாளவும்
+req.on('error', (err) => {
+  console.error(`Request error: ${err.message}`);
+});
+
+// கோரிக்கையை முடி
+req.end();</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>பிழை கையாளுதல்:</strong> HTTP கோரிக்கைகளுக்கு எப்போதும் error நிகழ்வு handler ஐ இணைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>பதில் தரவை உட்கொள்ளவும்:</strong> உங்களுக்குத் தேவையில்லையென்றாலும் எப்போதும் பதில் தரவை உட்கொள்ளவும், நினைவக கசிவுகளைத் தடுக்க</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-clock"></i>
+                    <span><strong>Timeouts அமைக்கவும்:</strong> தொங்கும் கோரிக்கைகளைத் தடுக்க பொருத்தமான timeouts அமைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-ruler"></i>
+                    <span><strong>Content-Length:</strong> தரவு சரியாக அனுப்பப்படுவதை உறுதிப்படுத்த POST/PUT கோரிக்கைகளுக்கு எப்போதும் Content-Length ஐக் குறிப்பிடவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>கோரிக்கையை முடிக்கவும்:</strong> கோரிக்கையை அனுப்புவதை முடிக்க எப்போதும் request.end() ஐ அழைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-redo"></i>
+                    <span><strong>திருப்பிவிடுதல்களைக் கையாளவும்:</strong> Node.js தானாகவே திருப்பிவிடுதல்களைப் பின்பற்றாது என்பதை அறிந்து கொள்ளுங்கள் - நீங்கள் அவற்றைக் கையாள வேண்டும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync-alt"></i>
+                    <span><strong>இணைப்புகளை மீண்டும் பயன்படுத்தவும்:</strong> அதே சேவையகத்திற்கு பல கோரிக்கைகளுக்கு keepAlive உடன் தனிப்பயன் Agent ஐப் பயன்படுத்தவும்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் வெளிப்புற HTTP கோரிக்கைகளைச் செய்ய பயன்படுத்தப்படும் சரியான கோரிக்கை வகையைத் தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.OutgoingRequest</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.OutgoingRequest" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">http.ClientRequest</div>
+                            <div class="option-feedback correct">✓ சரி! "http.ClientRequest" என்பது Node.js இல் வெளிப்புற HTTP கோரிக்கைகளைச் செய்ய பயன்படும் சரியான கோரிக்கை வகையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.ExternalRequest</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.ExternalRequest" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.RequestObject</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.RequestObject" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Agent Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Response Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#request-object">கோரிக்கை பொருள்</a></li>
+                    <li><a href="#clientrequest-properties">ClientRequest பண்புகள்</a></li>
+                    <li><a href="#clientrequest-methods">ClientRequest முறைகள்</a></li>
+                    <li><a href="#incomingmessage-properties">IncomingMessage பண்புகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

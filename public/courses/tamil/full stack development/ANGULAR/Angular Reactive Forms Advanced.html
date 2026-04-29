@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Reactive Forms Advanced - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20HTTP%20Interceptors.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20State%20Management.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Reactive Forms Advanced</h2>
+<p>ஆங்குலர் ரியாக்டிவ் படிவங்கள் மேம்பட்டம் - சிக்கலான தரவு மாதிரியாக்கம் மற்றும் சரியான நேர சரிபார்ப்பு</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction Section -->
+<section class="content-section" id="introduction">
+<h2>ஆங்குலர் ரியாக்டிவ் படிவங்கள் மேம்பட்டம்</h2>
+<p>மேம்பட்ட ரியாக்டிவ் படிவங்கள் FormGroup/FormArray உடன் சிக்கலான தரவை மாதிரியாக்குகின்றன, ஒத்திசை/அசிங்க்ரோனஸ் சரிபார்ப்பாளர்களை இணைக்கின்றன மற்றும் patchValue மற்றும் updateOn உடன் திறம்பட புதுப்பிக்கின்றன; எதிர்வினை தர்க்கத்திற்கு valueChanges/statusChanges ஐக் கவனிக்கவும்.</p>
+</section>
+
+<!-- Reactive Forms Advanced Essentials -->
+<section class="content-section" id="essentials">
+<h2>ரியாக்டிவ் படிவங்கள் மேம்பட்ட அடிப்படைகள்</h2>
+
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-sitemap"></i>
+<h4>கட்டமைப்பு</h4>
+</div>
+<p>சிக்கலான படிவங்களை மாதிரியாக்க FormGroup மற்றும் FormArray பயன்படுத்தவும்.</p>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-check-circle"></i>
+<h4>சரிபார்ப்பு</h4>
+</div>
+<p>கட்டுப்பாடு மற்றும் குழு நிலைகளில் ஒத்திசை மற்றும் அசிங்க்ரோனஸ் சரிபார்ப்பாளர்களை இணைக்கவும்.</p>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-sync-alt"></i>
+<h4>புதுப்பிப்புகள்</h4>
+</div>
+<p>பகுதி புதுப்பிப்புகளுக்கு patchValue பயன்படுத்தவும்; setValue முழு வடிவத்தைக் கோருகிறது.</p>
+</div>
+</div>
+
+<div class="code-example">
+<h3>ரியாக்டிவ் படிவங்கள் மேம்பட்ட எடுத்துக்காட்டு</h3>
+<pre><code>import { FormBuilder, Validators, FormArray } from '@angular/forms';
+
+fb.group({
+  name: ['', Validators.required],
+  tags: fb.array([ fb.group({ label: ['Angular'] }) ])
+});
+
+// வரிசையைச் சேர்க்கவும்
+(form.get('tags') as FormArray).push(fb.group({ label: [''] }));</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-list-check tip-icon"></i>எடுத்துக்காட்டு விளக்கம்:</h4>
+<ul>
+<li><strong>fb.group({...}):</strong> கட்டுப்பாடுகள் மற்றும் சரிபார்ப்பாளர்களுடன் ஒரு FormGroup உருவாக்குகிறது.</li>
+<li><strong>FormArray:</strong> டைனமிக் வரிசைகளுக்கான கட்டுப்பாடுகள்/குழுக்களின் வரிசைப்படுத்தப்பட்ட பட்டியலை வைத்திருக்கிறது.</li>
+<li><strong>வரிசையைத் தள்ளவும்:</strong> (form.get('tags') as FormArray).push(fb.group({ label: [''] })) ஒரு புதிய குழுவைச் சேர்க்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-link warning-icon"></i>தொடர்புடையவை:</h4>
+<ul>
+<li>படிவங்கள் மற்றும் சேவைகள் & DI ஆகியவற்றைப் பார்க்கவும்.</li>
+<li>வழிகளில் மீண்டும் பயன்படுத்துவதற்காக படிவ நிலையை ஒரு சேவையில் வைத்திருக்கவும்.</li>
+<li><strong>setValue vs patchValue:</strong> setValue முழு வடிவத்தைக் கோருகிறது; patchValue ஒரு துணைக்குழுவைப் புதுப்பிக்கிறது.</li>
+<li>கட்டுப்பாடு மற்றும் குழு நிலைகளில் சரிபார்ப்பு செய்யவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Nested Groups and Arrays -->
+<section class="content-section" id="nested-groups">
+<h2>கூடிய குழுக்கள் மற்றும் வரிசைகள்</h2>
+<p>கட்டமைப்பு மற்றும் மறுபயன்பாட்டிற்காக தொடர்புடைய கட்டுப்பாடுகளைக் குழுவாக்கவும்.</p>
+<p>டைனமிக் பட்டியல்களுக்கு FormArray பயன்படுத்தவும். FormArray என்பது கட்டுப்பாடுகளின் வரிசைப்படுத்தப்பட்ட பட்டியலாகும், அதன் நீளம் இயக்க நேரத்தில் மாறக்கூடியது.</p>
+
+<div class="code-example">
+<h3>FormArray எடுத்துக்காட்டு</h3>
+<pre><code>const tags = fb.array([ fb.group({ label: ['Angular'] }) ]);
+tags.push(fb.group({ label: [''] }));</code></pre>
+</div>
+
+<div class="code-example">
+<h3>முழுமையான எடுத்துக்காட்டு</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { JsonPipe, CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, JsonPipe],
+  template: `
+    &lt;h3&gt;Advanced Reactive Form&lt;/h3&gt;
+    &lt;form [formGroup]="form" (ngSubmit)="submit()"&gt;
+      &lt;input placeholder="Name" formControlName="name"&gt;
+      &lt;div formArrayName="tags"&gt;
+        &lt;div *ngFor="let t of tags.controls; let i = index" [formGroupName]="i"&gt;
+          &lt;input placeholder="Tag" formControlName="label"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button type="button" (click)="addTag()"&gt;Add Tag&lt;/button&gt;
+      &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;pre&gt;{{ form.value | json }}&lt;/pre&gt;
+  `
+})
+class App {
+  fb = new FormBuilder();
+  form = this.fb.group({
+    name: ['', Validators.required],
+    tags: this.fb.array([this.fb.group({ label: ['Angular'] })])
+  });
+  get tags(): FormArray { return this.form.get('tags') as FormArray; }
+  addTag() { this.tags.push(this.fb.group({ label: [''] })); }
+  submit() { alert(JSON.stringify(this.form.value)); }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-info-circle tip-icon"></i>எடுத்துக்காட்டு விளக்கம்:</h4>
+<ul>
+<li><strong>[formGroup]:</strong> படிவ மாதிரியை டெம்ப்ளேட்டுடன் இணைக்கிறது.</li>
+<li><strong>formArrayName:</strong> tags வரிசையைச் சுட்டிக்காட்டுகிறது; ஒவ்வொரு வரிசையும் [formGroupName]="i" பயன்படுத்துகிறது.</li>
+<li><strong>கெட்டர் + தள்ளுதல்:</strong> tags getter FormArray தருகிறது; addTag() ஒரு புதிய குழுவைத் தள்ளுகிறது.</li>
+<li><strong>சமர்ப்பிக்க:</strong> form.value ஐப் படிக்கிறது, இது கூடிய குழு/வரிசை கட்டமைப்பைப் பிரதிபலிக்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i>பைண்டிங் உதவிக்குறிப்புகள்:</h4>
+<ul>
+<li><strong>சீரான வடிவங்கள்:</strong> ஒரு FormArray க்கு ஒரே கட்டுப்பாட்டு வடிவத்துடன் குழுக்களைத் தள்ளவும்; பழமையானவற்றையும் குழுக்களையும் கலக்கத் தவிர்க்கவும்.</li>
+<li><strong>டைனமிக் பட்டியல்கள்:</strong> *ngFor உடன் வழங்கும்போது, வரிசைகளைச் சேர்க்க/நீக்கும்போது உள்ளீடுகளை நிலையானதாக வைத்திருக்க trackBy பயன்படுத்தவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Validation Strategies -->
+<section class="content-section" id="validation">
+<h2>சரிபார்ப்பு மூலோபாயங்கள்</h2>
+<p>பெரும்பாலான விதிகளுக்கு ஒத்திசை சரிபார்ப்பாளர்களைப் பயன்படுத்தவும்; அவை விரைவானவை மற்றும் எளிமையானவை.</p>
+<p>சேவையக சரிபார்ப்புகள்/தனிப்பட்ட தன்மைக்கு அசிங்க்ரோனஸ் சரிபார்ப்பாளர்களைப் பயன்படுத்தவும்; அவை ஒத்திசை சரிபார்ப்பாளர்களுக்குப் பிறகு இயங்கும்.</p>
+<p>சரிபார்ப்பை இலகுவாக வைத்திருக்கவும் மற்றும் அசிங்க்ரோனஸ் சரிபார்ப்புகளுக்கு முன் உள்ளீடுகளை debounce செய்யவும்.</p>
+
+<div class="code-example">
+<h3>தனிப்பயன் சரிபார்ப்பாளர் எடுத்துக்காட்டு</h3>
+<pre><code>import { AbstractControl, ValidationErrors } from '@angular/forms';
+
+function banned(value: string[]): (c: AbstractControl) => ValidationErrors | null {
+  return (c) => value.includes(c.value) ? { banned: true } : null;
+}
+
+fb.control('', [Validators.required, banned(['admin'])]);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-code tip-icon"></i>எடுத்துக்காட்டு விளக்கம்:</h4>
+<ul>
+<li><strong>சரிபார்ப்பாளர் தொழிற்சாலை:</strong> banned([...]) ஒரு செயல்பாட்டைத் தருகிறது (c: AbstractControl) => ValidationErrors | null.</li>
+<li><strong>கட்டுப்பாட்டு-நிலை:</strong> Validators.required போன்ற ஒத்திசை சரிபார்ப்பாளர்கள் மற்றும் தனிப்பயன் விதிகளை ஒரு கட்டுப்பாட்டில் இணைக்கவும்.</li>
+</ul>
+</div>
+
+<div class="code-example">
+<h3>குழு-நிலை சரிபார்ப்பாளர் மற்றும் updateOn</h3>
+<pre><code>import { AbstractControl, ValidationErrors } from '@angular/forms';
+
+function samePassword(group: AbstractControl): ValidationErrors | null {
+  const pass = group.get('pass')?.value;
+  const confirm = group.get('confirm')?.value;
+  return pass === confirm ? null : { mismatch: true };
+}
+
+const form = fb.group(
+  { pass: [''], confirm: [''] },
+  { validators: samePassword, updateOn: 'blur' }
+);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-list-check tip-icon"></i>வழிகாட்டுதல்கள்:</h4>
+<ul>
+<li><strong>குழு-நிலை சரிபார்ப்பாளர்கள்:</strong> குறுக்கு-புல விதிகளுக்கு (எ.கா., கடவுச்சொல் பொருத்தம்) பயன்படுத்தவும்.</li>
+<li><strong>updateOn உடன் சரக்கைக் குறைக்கவும்:</strong> பொருத்தமானபோது updateOn: 'blur' | 'submit' (அந்த நிகழ்வு வரை சரிபார்ப்பு/மதிப்பு மாற்றங்களை தாமதப்படுத்தவும்) பயன்படுத்தவும்.</li>
+<li><strong>touched/dirty அடிப்படையில் பிழைகளைக் காட்டவும்:</strong> சத்தமான பயனர் அனுபவத்தைத் தவிர்க்க.</li>
+<li><strong>அசிங்க்ரோனஸ் சரிபார்ப்பாளர்கள்:</strong> விரைவாகவும் ரத்து செய்யக்கூடியதாகவும் இருக்க வேண்டும்; சேவையக சரிபார்ப்புகளைத் தொடங்குவதற்கு முன் உள்ளீடுகளை debounce செய்யவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Form Update Strategies -->
+<section class="content-section" id="update-strategies">
+<h2>படிவ புதுப்பிப்பு மூலோபாயங்கள்</h2>
+
+<div class="comparison-table">
+<table>
+<thead>
+<tr>
+<th>முறை</th>
+<th>தொடரியல்</th>
+<th>பயன்பாடு</th>
+<th>எச்சரிக்கை</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setValue</td>
+<td>form.setValue(fullObject)</td>
+<td>முழு படிவத்தைப் புதுப்பிக்க</td>
+<td>முழு வடிவம் தேவை; பகுதி புதுப்பிப்புகளுக்கு தோல்வி</td>
+</tr>
+<tr>
+<td>patchValue</td>
+<td>form.patchValue(partialObject)</td>
+<td>பகுதி புதுப்பிப்புகள்</td>
+<td>இல்லாத புலங்களை பாதுகாப்பாகப் புறக்கணிக்கிறது</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>form.reset(initialState)</td>
+<td>படிவத்தை மீட்டமைக்க</td>
+<td>நிலை/தொடுதலை மீட்டமைக்கிறது</td>
+</tr>
+<tr>
+<td>updateOn: 'blur'</td>
+<td>fb.group(..., {updateOn: 'blur'})</td>
+<td>சரிபார்ப்பைக் குறைக்க</td>
+<td>மதிப்பு மாற்றங்கள் blur வரை தாமதமாகும்</td>
+</tr>
+<tr>
+<td>updateOn: 'submit'</td>
+<td>fb.group(..., {updateOn: 'submit'})</td>
+<td>அதிகபட்ச செயல்திறன்</td>
+<td>சமர்ப்பிக்கும் வரை எந்த சரிபார்ப்பும் இல்லை</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i>ஜாஸிஃப் குழு பரிந்துரை:</h4>
+<ul>
+<li><strong>பெரும்பாலான புதுப்பிப்புகளுக்கு patchValue பயன்படுத்தவும்:</strong> இது பாதுகாப்பானது மற்றும் குறைவான பிழைகளைக் கொண்டுள்ளது.</li>
+<li><strong>சிக்கலான படிவங்களுக்கு updateOn: 'blur' பயன்படுத்தவும்:</strong> ஒவ்வொரு விசை அழுத்தத்திலும் சரிபார்ப்பைத் தவிர்க்கிறது.</li>
+<li><strong>valueChanges க்கு கவனம் செலுத்துங்கள்:</strong> எதிர்வினை தர்க்கத்திற்காக, ஆனால் சூழ்நிலை சார்ந்த unsubscribe.</li>
+<li><strong>படிவ நிலையை சேவைகளில் வைத்திருக்கவும்:</strong> வழிசெலுத்தல் முழுவதும் படிவ நிலையைப் பாதுகாக்க.</li>
+</ul>
+</div>
+</section>
+
+<!-- Advanced Form Patterns -->
+<section class="content-section" id="advanced-patterns">
+<h2>மேம்பட்ட படிவ முறைகள்</h2>
+
+<div class="examples-grid">
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-history"></i>
+</div>
+<h4>படிவ நிலை மீட்டமைப்பு</h4>
+<p>பயனர் வெளியேறிய பிறகு படிவ தரவைப் பாதுகாக்கவும்.</p>
+<pre class="small-code">form.patchValue(savedState)</pre>
+</div>
+
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-sliders-h"></i>
+</div>
+<h4>டைனமிக் சரிபார்ப்பு</h4>
+<p>பிற புல மதிப்புகளின் அடிப்படையில் சரிபார்ப்பு விதிகளை மாற்றவும்.</p>
+<pre class="small-code">control.setValidators([...])</pre>
+</div>
+
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-code-branch"></i>
+</div>
+<h4>படிவ பகுதி</h4>
+<p>மறுபயன்பாட்டிற்காக கூடிய படிவ குழுக்களைக் கூறுகளாகப் பிரிக்கவும்.</p>
+<pre class="small-code">@Component({ selector: 'address-form' })</pre>
+</div>
+
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-chart-line"></i>
+</div>
+<h4>எதிர்வினை கண்காணிப்பு</h4>
+<p>valueChanges மற்றும் statusChanges ஐப் பயன்படுத்தி படிவ மாற்றங்களைக் கண்காணிக்கவும்.</p>
+<pre class="small-code">form.valueChanges.subscribe(...)</pre>
+</div>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>பயிற்சி</h2>
+<p>ரியாக்டிவ் படிவங்களில் டைனமிக் பட்டியல்களுக்கு எந்த கட்டமைப்பு சிறந்தது?</p>
+
+<div class="exercise-box">
+<h4><i class="fas fa-question-circle exercise-icon"></i>சரியான பதிலைத் தேர்ந்தெடுக்கவும்:</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">FormArray</div>
+<div class="option-feedback correct">✓ சரி! FormArray டைனமிக் பட்டியல்களுக்கு சிறந்தது. இது கட்டுப்பாடுகள் அல்லது குழுக்களின் வரிசைப்படுத்தப்பட்ட பட்டியலை வைத்திருக்கிறது, அதன் நீளம் இயக்க நேரத்தில் மாறக்கூடியது, டேக்குகள், உருப்படிகள் அல்லது டைனமிக் வரிசைகள் போன்றவற்றுக்கு ஏற்றது.</div>
+</div>
+</div>
+
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">FormGroup</div>
+<div class="option-feedback incorrect">✗ தவறு! FormGroup நிலையான, அறியப்பட்ட புலங்களின் தொகுப்பிற்கு சிறந்தது. இது டைனமிக் பட்டியல்களுக்கு உகந்ததல்ல, ஏனெனில் அதன் கட்டமைப்பு இயக்க நேரத்தில் மாறாது.</div>
+</div>
+</div>
+
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">FormControl</div>
+<div class="option-feedback incorrect">✗ தவறு! FormControl ஒற்றை உள்ளீட்டு மதிப்புக்கு மட்டுமே. இது பல உருப்படிகளைக் கொண்ட பட்டியல்களைக் கையாள முடியாது. பல உருப்படிகளுக்கு FormArray பயன்படுத்தவும்.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20HTTP%20Interceptors.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20State%20Management.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education in Tamil.</p>
+</div>
+<div class="footer-column">
+<h3>விரைவு இணைப்புகள்</h3>
+<ul>
+<li><a href="#introduction">அறிமுகம்</a></li>
+<li><a href="#essentials">அடிப்படைகள்</a></li>
+<li><a href="#nested-groups">கூடிய குழுக்கள்</a></li>
+<li><a href="#validation">சரிபார்ப்பு மூலோபாயங்கள்</a></li>
+<li><a href="#update-strategies">புதுப்பிப்பு மூலோபாயங்கள்</a></li>
+<li><a href="#advanced-patterns">மேம்பட்ட முறைகள்</a></li>
+<li><a href="#exercise">பயிற்சி</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>தொடர்பு</h3>
+<ul>
+<li><a href="#">எங்களைப் பற்றி</a></li>
+<li><a href="#">தொடர்பு கொள்ளுங்கள்</a></li>
+<li><a href="#">இருப்பிடம் & நேரம்</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>எங்களைப் பின்தொடருங்கள்</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2024 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

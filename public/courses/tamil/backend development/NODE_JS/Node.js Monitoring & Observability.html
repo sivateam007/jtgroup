@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Monitoring & Observability - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Logging.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Performance Diagnostics.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Monitoring & Observability</h2>
+            <p>Node.js பயன்பாடுகளின் கண்காணிப்பு மற்றும் கண்காணிப்பு தொழில்நுட்பங்களைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to Observability -->
+        <section class="content-section" id="introduction">
+            <h2>கண்காணிப்பு அறிமுகம்</h2>
+            
+            <p>Node.js பயன்பாடுகளில் கண்காணிப்பு என்பது கணினி நடத்தையைப் புரிந்துகொள்ள அளவீடுகள் மற்றும் பதிவுகளைச் சேகரித்து பகுப்பாய்வு செய்வதை உள்ளடக்குகிறது.</p>
+            
+            <h3>கண்காணிப்பின் முக்கிய தூண்கள்</h3>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>அளவீடுகள்</h4>
+                    </div>
+                    <p>கணினி செயல்திறன் மற்றும் ஆரோக்கியத்தின் எண்ணியல் அளவீடுகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h4>பதிவுகள்</h4>
+                    </div>
+                    <p>கணினியில் நிகழும் நிகழ்வுகள் மற்றும் செயல்பாடுகளின் விரிவான பதிவுகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-project-diagram"></i>
+                        <h4>சுவடுகள்</h4>
+                    </div>
+                    <p>பல சேவைகள் வழியாக கோரிக்கைகளின் பாதையைக் கண்காணித்தல்</p>
+                </div>
+            </div>
+            
+            <p>அளவீடுகள், பதிவுகள் மற்றும் சுவடுகள் (பெரும்பாலும் "கண்காணிப்பின் மூன்று தூண்கள்" என்று அழைக்கப்படுகின்றன) உங்கள் கணினியின் ஆரோக்கியம் மற்றும் செயல்திறனின் வெவ்வேறு ஆனால் நிரப்பு காட்சிகளை வழங்குகின்றன.</p>
+        </section>
+
+        <!-- Application Metrics Collection -->
+        <section class="content-section" id="metrics-collection">
+            <h2>பயன்பாட்டு அளவீடுகள் சேகரிப்பு</h2>
+            
+            <h3>Prometheus கிளையண்டைப் பயன்படுத்துதல்</h3>
+            
+            <h4>அடிப்படை அளவீடுகள் சேகரிப்பு</h4>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const client = require('prom-client');
+
+// Create a Registry to register the metrics
+const register = new client.Registry();
+
+// Add a default label which is added to all metrics
+register.setDefaultLabels({
+  app: 'nodejs-monitoring-demo'
+});
+
+// Enable collection of default metrics
+client.collectDefaultMetrics({ register });
+
+// Create a custom metric
+const httpRequestDurationMicroseconds = new client.Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'Duration of HTTP requests in seconds',
+  labelNames: ['method', 'route', 'code'],
+  buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10] // buckets for response time
+});
+
+const app = express();
+
+// Custom middleware to track request duration
+app.use((req, res, next) => {
+  const end = httpRequestDurationMicroseconds.startTimer();
+  res.on('finish', () => {
+    end({ method: req.method, route: req.path, code: res.statusCode });
+  });
+  next();
+});
+
+// Expose metrics endpoint
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
+});
+
+// Example route
+app.get('/', (req, res) => {
+  res.send('Hello, Observability!');
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Key Metrics to Monitor -->
+        <section class="content-section" id="key-metrics">
+            <h2>கண்காணிக்க வேண்டிய முக்கிய அளவீடுகள்</h2>
+            
+            <h3>கணினி அளவீடுகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-microchip"></i>
+                    <span>CPU பயன்பாடு</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span>நினைவக பயன்பாடு (Heap & RSS)</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync"></i>
+                    <span>இவெண்ட் லூப் பின்தங்கல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>குப்பை சேகரிப்பு</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <span>செயலில் உள்ள கைப்பிடிகள்/கோரிக்கைகள்</span>
+                </div>
+            </div>
+            
+            <h3>பயன்பாட்டு அளவீடுகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>கோரிக்கை விகிதம் & காலம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>பிழை விகிதங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span>தரவுத்தள வினவல் செயல்திறன்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span>캐시 வெற்றி/தவறு விகிதங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-stream"></i>
+                    <span>வரிசை நீளங்கள்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Distributed Tracing -->
+        <section class="content-section" id="distributed-tracing">
+            <h2>விநியோகிக்கப்பட்ட சுவடு</h2>
+            
+            <p>விநியோகிக்கப்பட்ட சுவடு மைக்ரோசர்விசஸ் கட்டமைப்பில் பல சேவைகள் வழியாக பாயும் போது கோரிக்கைகளைக் கண்காணிக்க உதவுகிறது.</p>
+            
+            <h3>OpenTelemetry அமைப்பு</h3>
+            
+            <div class="code-example">
+                <pre><code>// Install required packages
+// npm install @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-http
+// npm install @opentelemetry/exporter-trace-otlp-http
+
+const { NodeSDK } = require('@opentelemetry/sdk-node');
+const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
+const { Resource } = require('@opentelemetry/resources');
+const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions');
+
+const sdk = new NodeSDK({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'my-service',
+    [SemanticResourceAttributes.SERVICE_VERSION]: '1.0.0',
+  }),
+  traceExporter: new OTLPTraceExporter({
+    url: 'http://collector:4318/v1/traces',
+  }),
+  instrumentations: [getNodeAutoInstrumentations()],
+});
+
+sdk.start()
+  .then(() => console.log('Tracing initialized'))
+  .catch((error) => console.log('Error initializing tracing', error));</code></pre>
+            </div>
+        </section>
+
+        <!-- Logging Best Practices -->
+        <section class="content-section" id="logging-best-practices">
+            <h2>பதிவு சிறந்த நடைமுறைகள்</h2>
+            
+            <h3>Pino உடன் கட்டமைக்கப்பட்ட பதிவு</h3>
+            
+            <div class="code-example">
+                <pre><code>const pino = require('pino');
+const express = require('express');
+const pinoHttp = require('pino-http');
+
+const logger = pino({
+  level: process.env.LOG_LEVEL || 'info',
+  formatters: {
+    level: (label) => ({ level: label.toUpperCase() }),
+  },
+});
+
+const app = express();
+
+// HTTP request logging middleware
+app.use(pinoHttp({
+  logger,
+  customLogLevel: function (res, err) {
+    if (res.statusCode >= 400 && res.statusCode < 500) {
+      return 'warn';
+    } else if (res.statusCode >= 500 || err) {
+      return 'error';
+    }
+    return 'info';
+  },
+}));
+
+app.get('/', (req, res) => {
+  req.log.info('Processing request');
+  res.json({ status: 'ok' });
+});
+
+app.listen(3000, () => {
+  logger.info('Server started on port 3000');
+});</code></pre>
+            </div>
+            
+            <h3>பதிவு வளப்படுத்தல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Add context to logs
+app.use((req, res, next) => {
+  const childLogger = logger.child({
+    requestId: req.id,
+    userId: req.user?.id || 'anonymous',
+    path: req.path,
+    method: req.method
+  });
+  req.log = childLogger;
+  next();
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Alerting and Visualization -->
+        <section class="content-section" id="alerting-visualization">
+            <h2>எச்சரிக்கை மற்றும் காட்சிப்படுத்தல்</h2>
+            
+            <h3>Grafana டாஷ்போர்டு எடுத்துக்காட்டு</h3>
+            
+            <p>Grafana டாஷ்போர்டுகளுடன் உங்கள் அளவீடுகளைக் காட்சிப்படுத்தவும். பொதுவான அளவீடுகளுக்கான எடுத்துக்காட்டு வினவல்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code># Node.js Memory Usage (RSS in MB)
+process_resident_memory_bytes{job="nodejs"} / 1024 / 1024
+
+# Request Duration (p99 in ms)
+histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) * 1000
+
+# Error Rate
+sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m]))</code></pre>
+            </div>
+            
+            <h3>எச்சரிக்கை விதிகள் (Prometheus)</h3>
+            
+            <div class="code-example">
+                <pre><code>groups:
+- name: nodejs
+  rules:
+  - alert: HighErrorRate
+    expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High error rate on {{ $labels.instance }}"</code></pre>
+            </div>
+        </section>
+
+        <!-- Production Monitoring Tools -->
+        <section class="content-section" id="monitoring-tools">
+            <h2>உற்பத்தி கண்காணிப்பு கருவிகள்</h2>
+            
+            <h3>திறந்த மூலம்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Prometheus + Grafana</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-search"></i>
+                    <span>Elasticsearch + Fluentd + Kibana (EFK)</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>Jaeger</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Loki</span>
+                </div>
+            </div>
+            
+            <h3>வணிகம்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-dog"></i>
+                    <span>Datadog</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-chart-line"></i>
+                    <span>New Relic</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dynatrace</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-cogs"></i>
+                    <span>AppDynamics</span>
+                </div>
+            </div>
+            
+            <h3>கிளவுட் நேட்டிவ்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fab fa-aws"></i>
+                    <span>AWS CloudWatch</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fab fa-google"></i>
+                    <span>Google Cloud Operations</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fab fa-microsoft"></i>
+                    <span>Azure Monitor</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-satellite-dish"></i>
+                    <span>OpenTelemetry Collector</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">✅</span> செய்ய வேண்டியவை:</h4>
+                <ul>
+                    <li>சீரான வடிவங்களுடன் கட்டமைக்கப்பட்ட பதிவைப் பயன்படுத்தவும்</li>
+                    <li>கணினி மற்றும் பயன்பாட்டு அளவீடுகள் இரண்டையும் கண்காணிக்கவும்</li>
+                    <li>SLOகளின் (சேவை நிலை குறிக்கோள்கள்) அடிப்படையில் எச்சரிக்கைகளை அமைக்கவும்</li>
+                    <li>மைக்ரோசர்விசஸ்களுக்கு விநியோகிக்கப்பட்ட சுவட்டைப் பயன்படுத்தவும்</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">❌</span> செய்ய வேண்டாம்:</h4>
+                <ul>
+                    <li>உணர்திறன் தகவலைப் பதிவு செய்ய வேண்டாம்</li>
+                    <li>அளவீடுகளில் உயர்-கார்டினாலிட்டி லேபிள்களைத் தவிர்க்கவும்</li>
+                    <li>பிழைத்திருத்தத்திற்காக பதிவுகளை மட்டும் நம்ப வேண்டாம்</li>
+                    <li>எச்சரிக்கை சோர்வைத் தவிர்க்கவும் - செயல்படுத்தக்கூடிய எச்சரிக்கைகளில் கவனம் செலுத்துங்கள்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான தொகுப்பு பெயரை தேர்வு செய்யவும்.</h4>
+                <p>The ______ package is commonly used for logging in Node.js applications.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">express</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "express" என்பது வலை பயன்பாடுகளை உருவாக்க பயன்படும் ஒரு வலை கட்டமைப்பாகும், பதிவு நூலகம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">mongoose</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "mongoose" என்பது MongoDB க்கான ODM நூலகமாகும், பதிவு நூலகம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">pino</div>
+                            <div class="option-feedback correct">✓ சரி! "pino" என்பது அதன் உயர் செயல்திறன் மற்றும் கட்டமைக்கப்பட்ட பதிவு திறன்களுக்காக Node.js பயன்பாடுகளில் பொதுவாகப் பயன்படுத்தப்படும் ஒரு பதிவு நூலகமாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">axios</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "axios" என்பது HTTP கோரிக்கைகளைச் செய்ய பயன்படும் ஒரு நூலகமாகும், பதிவு நூலகம் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Logging.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Performance Diagnostics.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">கண்காணிப்பு அறிமுகம்</a></li>
+                    <li><a href="#metrics-collection">அளவீடுகள் சேகரிப்பு</a></li>
+                    <li><a href="#distributed-tracing">விநியோகிக்கப்பட்ட சுவடு</a></li>
+                    <li><a href="#logging-best-practices">பதிவு நடைமுறைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

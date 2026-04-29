@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL NULL Functions - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MySQL CASE Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MySQL Comments.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MySQL NULL Functions</h2>
+            <p>MySQL இல் IFNULL() மற்றும் COALESCE() செயல்பாடுகளைப் பயன்படுத்தி NULL மதிப்புகளைக் கையாள கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- MySQL IFNULL() and COALESCE() Functions -->
+        <section class="content-section" id="null-functions">
+            <h2>MySQL IFNULL() மற்றும் COALESCE() செயல்பாடுகள்</h2>
+            
+            <p>பின்வரும் "Products" அட்டவணையைப் பாருங்கள்:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>P_Id</th>
+                            <th>ProductName</th>
+                            <th>UnitPrice</th>
+                            <th>UnitsInStock</th>
+                            <th>UnitsOnOrder</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Jarlsberg</td>
+                            <td>10.45</td>
+                            <td>16</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Mascarpone</td>
+                            <td>32.56</td>
+                            <td>23</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Gorgonzola</td>
+                            <td>15.67</td>
+                            <td>9</td>
+                            <td>20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p>"UnitsOnOrder" நெடுவரிசை விருப்பமானது என்றும், NULL மதிப்புகளைக் கொண்டிருக்கலாம் என்றும் வைத்துக்கொள்வோம்.</p>
+            
+            <p>பின்வரும் SELECT கூற்றைப் பாருங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT ProductName, UnitPrice * (UnitsInStock + UnitsOnOrder)
+FROM Products;</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள எடுத்துக்காட்டில், "UnitsOnOrder" மதிப்புகளில் ஏதேனும் NULL ஆக இருந்தால், முடிவு NULL ஆக இருக்கும்.</p>
+        </section>
+
+        <!-- MySQL IFNULL() Function -->
+        <section class="content-section" id="ifnull-function">
+            <h2>MySQL IFNULL() செயல்பாடு</h2>
+            
+            <p>MySQL IFNULL() செயல்பாடு ஒரு வெளிப்பாடு NULL ஆக இருந்தால் மாற்று மதிப்பை வழங்க உங்களை அனுமதிக்கிறது.</p>
+            
+            <p>மதிப்பு NULL ஆக இருந்தால் கீழே உள்ள எடுத்துக்காட்டு 0 ஐ வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT ProductName, UnitPrice * (UnitsInStock + IFNULL(UnitsOnOrder, 0))
+FROM Products;</code></pre>
+            </div>
+        </section>
+
+        <!-- MySQL COALESCE() Function -->
+        <section class="content-section" id="coalesce-function">
+            <h2>MySQL COALESCE() செயல்பாடு</h2>
+            
+            <p>அல்லது நாம் COALESCE() செயல்பாட்டைப் பயன்படுத்தலாம், இது போன்றது:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT ProductName, UnitPrice * (UnitsInStock + COALESCE(UnitsOnOrder, 0))
+FROM Products;</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> மாற்று மதிப்பை வழங்குவதன் மூலம் NULL மதிப்புகளைக் கையாள MySQL இல் பயன்படுத்தப்படும் செயல்பாடு எது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">NULL()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! NULL() என்பது MySQL இல் ஒரு செல்லுபடியாகும் செயல்பாடு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ISNULL()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ISNULL() என்பது SQL Server இல் பயன்படுத்தப்படும் செயல்பாடு, MySQL இல் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">IFNULL()</div>
+                            <div class="option-feedback correct">✓ சரி! IFNULL() செயல்பாடு ஒரு வெளிப்பாடு NULL ஆக இருந்தால் மாற்று மதிப்பை வழங்கப் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">NVL()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! NVL() என்பது Oracle இல் பயன்படுத்தப்படும் செயல்பாடு, MySQL இல் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MySQL CASE Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MySQL Comments.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#null-functions">MySQL NULL செயல்பாடுகள்</a></li>
+                    <li><a href="#ifnull-function">IFNULL() செயல்பாடு</a></li>
+                    <li><a href="#coalesce-function">COALESCE() செயல்பாடு</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

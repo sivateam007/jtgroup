@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL ALTER TABLE Statement - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Operations Grid */
+        .operations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .operation-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .operation-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .operation-card.add {
+            border-top: 4px solid #28a745;
+        }
+        
+        .operation-card.drop {
+            border-top: 4px solid #dc3545;
+        }
+        
+        .operation-card.modify {
+            border-top: 4px solid #007bff;
+        }
+        
+        .operation-card.rename {
+            border-top: 4px solid #ffc107;
+        }
+        
+        .operation-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .operation-card.add .operation-icon {
+            color: #28a745;
+        }
+        
+        .operation-card.drop .operation-icon {
+            color: #dc3545;
+        }
+        
+        .operation-card.modify .operation-icon {
+            color: #007bff;
+        }
+        
+        .operation-card.rename .operation-icon {
+            color: #ffc107;
+        }
+        
+        /* Database Systems Grid */
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .system-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--git-color);
+        }
+        
+        .system-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .system-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .system-card h4 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            margin: 2rem 0;
+        }
+        
+        .responsive-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--git-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .empty-cell {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .new-column {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .operations-grid,
+            .systems-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .responsive-table {
+                font-size: 0.8rem;
+            }
+            
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL DROP TABLE Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL Constraints.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL ALTER TABLE Statement</h2>
+            <p>ஏற்கனவே உள்ள அட்டவணையில் நெடுவரிசைகளைச் சேர்க்க, நீக்க அல்லது மாற்ற ALTER TABLE அறிக்கையைப் பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is ALTER TABLE -->
+        <section class="content-section" id="what-is-alter-table">
+            <h2>SQL ALTER TABLE அறிக்கை</h2>
+            
+            <p>ALTER TABLE அறிக்கை ஏற்கனவே உள்ள அட்டவணையில் நெடுவரிசைகளைச் சேர்க்க, நீக்க அல்லது மாற்ற பயன்படுகிறது.</p>
+            
+            <p>ALTER TABLE அறிக்கை ஏற்கனவே உள்ள அட்டவணையில் பல்வேறு கட்டுப்பாடுகளைச் சேர்ப்பதற்கும் நீக்குவதற்கும் பயன்படுகிறது.</p>
+        </section>
+
+        <!-- ALTER TABLE Operations -->
+        <section class="content-section" id="alter-table-operations">
+            <h2>ALTER TABLE செயல்பாடுகள்</h2>
+            
+            <div class="operations-grid">
+                <div class="operation-card add">
+                    <div class="operation-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h3>நெடுவரிசை சேர்த்தல்</h3>
+                    <p>அட்டவணையில் புதிய நெடுவரிசையைச் சேர்க்க</p>
+                    <div class="syntax-box">
+                        <pre><code>ALTER TABLE table_name
+ADD column_name datatype;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="operation-card drop">
+                    <div class="operation-icon">
+                        <i class="fas fa-minus-circle"></i>
+                    </div>
+                    <h3>நெடுவரிசை நீக்குதல்</h3>
+                    <p>அட்டவணையில் உள்ள நெடுவரிசையை நீக்க</p>
+                    <div class="syntax-box">
+                        <pre><code>ALTER TABLE table_name
+DROP COLUMN column_name;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="operation-card modify">
+                    <div class="operation-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>தரவு வகை மாற்றம்</h3>
+                    <p>நெடுவரிசையின் தரவு வகையை மாற்ற</p>
+                    <div class="syntax-box">
+                        <pre><code>-- SQL Server
+ALTER TABLE table_name
+ALTER COLUMN column_name datatype;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="operation-card rename">
+                    <div class="operation-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h3>நெடுவரிசை மறுபெயரிடல்</h3>
+                    <p>நெடுவரிசையின் பெயரை மாற்ற</p>
+                    <div class="syntax-box">
+                        <pre><code>-- SQL Server
+EXEC sp_rename 'table.old_name', 'new_name', 'COLUMN';</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ALTER TABLE - ADD Column -->
+        <section class="content-section" id="add-column">
+            <h2>ALTER TABLE - ADD Column</h2>
+            
+            <p>அட்டவணையில் ஒரு நெடுவரிசையைச் சேர்க்க, பின்வரும் தொடரியலைப் பயன்படுத்தவும்:</p>
+            
+            <div class="syntax-box">
+                <pre><code>ALTER TABLE table_name
+ADD column_name datatype;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL "Customers" அட்டவணையில் "Email" நெடுவரிசையைச் சேர்க்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>ALTER TABLE Customers
+ADD Email varchar(255);</code></pre>
+            </div>
+        </section>
+
+        <!-- ALTER TABLE - DROP COLUMN -->
+        <section class="content-section" id="drop-column">
+            <h2>ALTER TABLE - DROP COLUMN</h2>
+            
+            <p>அட்டவணையில் ஒரு நெடுவரிசையை நீக்க, பின்வரும் தொடரியலைப் பயன்படுத்தவும் (சில தரவுத்தள அமைப்புகள் நெடுவரிசையை நீக்குவதை அனுமதிக்காது என்பதைக் கவனிக்கவும்):</p>
+            
+            <div class="syntax-box">
+                <pre><code>ALTER TABLE table_name
+DROP COLUMN column_name;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL "Customers" அட்டவணையிலிருந்து "Email" நெடுவரிசையை நீக்குகிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>ALTER TABLE Customers
+DROP COLUMN Email;</code></pre>
+            </div>
+        </section>
+
+        <!-- Database Systems Comparison -->
+        <section class="content-section" id="db-systems">
+            <h2>வெவ்வேறு தரவுத்தள அமைப்புகள்</h2>
+            
+            <div class="systems-grid">
+                <div class="system-card">
+                    <div class="system-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h4>SQL Server</h4>
+                    <p>தரவு வகை மாற்றம்</p>
+                    <div class="code-block small">
+                        <pre><code>ALTER TABLE table_name
+ALTER COLUMN column_name datatype;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>MySQL</h4>
+                    <p>தரவு வகை மாற்றம்</p>
+                    <div class="code-block small">
+                        <pre><code>ALTER TABLE table_name
+MODIFY COLUMN column_name datatype;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-icon">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h4>Oracle</h4>
+                    <p>தரவு வகை மாற்றம்</p>
+                    <div class="code-block small">
+                        <pre><code>ALTER TABLE table_name
+MODIFY column_name datatype;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-icon">
+                        <i class="fas fa-windows"></i>
+                    </div>
+                    <h4>MS Access</h4>
+                    <p>தரவு வகை மாற்றம்</p>
+                    <div class="code-block small">
+                        <pre><code>ALTER TABLE table_name
+ALTER COLUMN column_name datatype;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete Example -->
+        <section class="content-section" id="complete-example">
+            <h2>SQL ALTER TABLE முழு எடுத்துக்காட்டு</h2>
+            
+            <p>"Persons" அட்டவணையைப் பாருங்கள்:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>LastName</th>
+                                <th>FirstName</th>
+                                <th>Address</th>
+                                <th>City</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Hansen</td>
+                                <td>Ola</td>
+                                <td>Timoteivn 10</td>
+                                <td>Sandnes</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Svendson</td>
+                                <td>Tove</td>
+                                <td>Borgvn 23</td>
+                                <td>Sandnes</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Pettersen</td>
+                                <td>Kari</td>
+                                <td>Storgt 20</td>
+                                <td>Stavanger</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <h3>நெடுவரிசை சேர்த்தல்</h3>
+            <p>இப்போது "Persons" அட்டவணையில் "DateOfBirth" என்ற நெடுவரிசையைச் சேர்க்க விரும்புகிறோம்.</p>
+            
+            <div class="code-example">
+                <pre><code>ALTER TABLE Persons
+ADD DateOfBirth date;</code></pre>
+            </div>
+            
+            <p>புதிய நெடுவரிசை, "DateOfBirth", date வகையில் உள்ளது மற்றும் ஒரு தேதியை வைத்திருக்கும். "Persons" அட்டவணை இப்போது இப்படி இருக்கும்:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>LastName</th>
+                                <th>FirstName</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th class="new-column">DateOfBirth</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Hansen</td>
+                                <td>Ola</td>
+                                <td>Timoteivn 10</td>
+                                <td>Sandnes</td>
+                                <td class="empty-cell">காலி</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Svendson</td>
+                                <td>Tove</td>
+                                <td>Borgvn 23</td>
+                                <td>Sandnes</td>
+                                <td class="empty-cell">காலி</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Pettersen</td>
+                                <td>Kari</td>
+                                <td>Storgt 20</td>
+                                <td>Stavanger</td>
+                                <td class="empty-cell">காலி</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <h3>தரவு வகை மாற்றம்</h3>
+            <p>இப்போது "Persons" அட்டவணையில் "DateOfBirth" நெடுவரிசையின் தரவு வகையை மாற்ற விரும்புகிறோம்.</p>
+            
+            <div class="code-example">
+                <pre><code>ALTER TABLE Persons
+ALTER COLUMN DateOfBirth year;</code></pre>
+            </div>
+            
+            <h3>நெடுவரிசை நீக்குதல்</h3>
+            <p>அடுத்து, "Persons" அட்டவணையில் "DateOfBirth" நெடுவரிசையை நீக்க விரும்புகிறோம்.</p>
+            
+            <div class="code-example">
+                <pre><code>ALTER TABLE Persons
+DROP COLUMN DateOfBirth;</code></pre>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>புதிய தகவல் சேர்த்தல்</h3>
+                    <p>பயனர் அட்டவணையில் தொலைபேசி எண்ணைச் சேர்த்தல்</p>
+                    <div class="code-block small">
+                        <pre><code>ALTER TABLE Users
+ADD PhoneNumber varchar(15);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>தரவு வகை மேம்படுத்தல்</h3>
+                    <p>முகவரி புலத்தின் அளவை அதிகரித்தல்</p>
+                    <div class="code-block small">
+                        <pre><code>ALTER TABLE Customers
+ALTER COLUMN Address varchar(500);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <h3>காலாவதி தகவல் நீக்குதல்</h3>
+                    <p>பயன்பாட்டில் இல்லாத நெடுவரிசையை நீக்குதல்</p>
+                    <div class="code-block small">
+                        <pre><code>ALTER TABLE Products
+DROP COLUMN OldCategory;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span>'Employees' அட்டவணையில் 'Email' என்ற புதிய நெடுவரிசையைச் சேர்க்க எந்த SQL அறிக்கை பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ALTER TABLE Employees ADD COLUMN Email varchar(255);</div>
+                            <div class="option-feedback incorrect">✗ தவறு! COLUMN keyword is not used in SQL Server for ADD operation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ALTER Employees ADD COLUMN Email varchar(255);</div>
+                            <div class="option-feedback incorrect">✗ தவறு! TABLE keyword is missing after ALTER</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ALTER TABLE Employees ADD Email varchar(255);</div>
+                            <div class="option-feedback correct">✓ சரி! இது SQL Server-ல் புதிய நெடுவரிசையைச் சேர்க்க சரியான தொடரியல்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">MODIFY TABLE Employees ADD COLUMN Email varchar(255);</div>
+                            <div class="option-feedback incorrect">✗ தவறு! MODIFY TABLE என்பது சரியான SQL கட்டளை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL DROP TABLE Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL Constraints.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-alter-table">ALTER TABLE அறிக்கை</a></li>
+                    <li><a href="#alter-table-operations">ALTER TABLE செயல்பாடுகள்</a></li>
+                    <li><a href="#add-column">நெடுவரிசை சேர்த்தல்</a></li>
+                    <li><a href="#drop-column">நெடுவரிசை நீக்குதல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

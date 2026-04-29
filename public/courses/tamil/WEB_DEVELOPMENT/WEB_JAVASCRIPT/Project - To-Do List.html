@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - To-Do List - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Project-specific styles */
+        .todo-project {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .todo-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .todo-input-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .todo-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .todo-input:focus {
+            outline: none;
+            border-color: var(--git-color);
+        }
+        
+        .todo-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .todo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .todo-btn.secondary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .todo-list {
+            list-style: none;
+            margin: 2rem 0;
+            padding: 0;
+        }
+        
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+            transition: all 0.3s;
+        }
+        
+        .todo-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .todo-text {
+            flex: 1;
+            font-size: 1.1rem;
+        }
+        
+        .todo-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .todo-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .todo-remove:hover {
+            background: #c82333;
+            transform: scale(1.1);
+        }
+        
+        .todo-clear {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .message-box {
+            margin-top: 1rem;
+            padding: 10px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            min-height: 40px;
+            color: var(--git-color);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Project%20-%20Event%20Listener.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Project%20-%20Modal%20Popup.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Project - To-Do List</h2>
+            <p>செய்ய வேண்டிய பட்டியல் திட்டம்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Project Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Project - To-Do List</h2>
+            
+            <p>செய்ய வேண்டிய பட்டியல்</p>
+            
+            <!-- Interactive To-Do List Project -->
+            <div class="todo-project">
+                <div class="todo-header">
+                    <h2>செய்ய வேண்டிய பட்டியல்</h2>
+                </div>
+                
+                <div class="todo-input-section">
+                    <input type="text" id="task" class="todo-input" placeholder="புதிய பணி">
+                    <button class="todo-btn" onclick="addTask()">சேர்க்க</button>
+                </div>
+                
+                <ul class="todo-list" id="list"></ul>
+                
+                <button class="todo-btn secondary todo-clear" onclick="clearAll()">அனைத்தையும் அழி</button>
+                
+                <div class="message-box" id="message"></div>
+            </div>
+            
+            <p>இந்த திட்டத்தில் நீங்கள் ஒரு செய்ய வேண்டிய பட்டியலை உருவாக்குவீர்கள்.</p>
+            
+            <p>நீங்கள் பணிகளைச் சேர்க்கலாம், பணிகளை நீக்கலாம் மற்றும் அனைத்து பணிகளையும் அழிக்கலாம்.</p>
+            
+            <p>பணிகள் localStorage இல் உள்ள ஒரு வரிசையில் சேமிக்கப்படும்.</p>
+        </section>
+
+        <!-- You Will Learn -->
+        <section class="content-section" id="learn">
+            <h2>நீங்கள் கற்றுக் கொள்வீர்கள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>வரிசையில் உருப்படிகளைச் சேமித்தல்</h4>
+                    </div>
+                    <p>ஒரு வரிசையில் உருப்படிகளை எவ்வாறு சேமிப்பது</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-trash-alt"></i>
+                        <h4>வரிசையிலிருந்து உருப்படிகளை நீக்குதல்</h4>
+                    </div>
+                    <p>ஒரு வரிசையிலிருந்து உருப்படிகளை எவ்வாறு நீக்குவது</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-list"></i>
+                        <h4>JavaScript பயன்படுத்தி பட்டியலைக் காட்டுதல்</h4>
+                    </div>
+                    <p>JavaScript ஐப் பயன்படுத்தி பட்டியலை எவ்வாறு காட்டுவது</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>localStorage மூலம் தரவைச் சேமித்தல் மற்றும் ஏற்றுதல்</h4>
+                    </div>
+                    <p>localStorage ஐப் பயன்படுத்தி தரவை எவ்வாறு சேமித்து ஏற்றுவது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- First: Create the HTML -->
+        <section class="content-section" id="create-html">
+            <h2>முதலில்: HTML உருவாக்குதல்</h2>
+            
+            <p>முதலில் பின்வரும் உறுப்புகளுடன் ஒரு HTML பக்கத்தை உருவாக்கவும்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-keyboard"></i>
+                    <div>ஒரு உள்ளீட்டுப் புலம் id="task" உடன்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-plus-circle"></i>
+                    <div>addTask() ஐ அழைக்க ஒரு பொத்தான்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-list-ul"></i>
+                    <div>id="list" உடன் ஒரு வரிசைப்படுத்தப்படாத பட்டியல்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-broom"></i>
+                    <div>clearAll() ஐ அழைக்க ஒரு பொத்தான்</div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;To-Do List&lt;/h2&gt;
+
+&lt;input id="task" placeholder="New task"&gt;
+&lt;button onclick="addTask()"&gt;Add&lt;/button&gt;
+&lt;ul id="list"&gt;&lt;/ul&gt;
+&lt;button onclick="clearAll()"&gt;Clear All&lt;/button&gt;
+
+&lt;script&gt;
+// Create a task Array
+let tasks = [];
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Add a Display Function -->
+        <section class="content-section" id="display-function">
+            <h2>ஒரு காட்சி செயல்பாட்டைச் சேர்க்கவும்</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <p>displayTasks() செயல்பாடு பட்டியலைப் புதுப்பித்து காட்டுகிறது.</p>
+                <pre><code>// Function to display the list
+function displayTasks() {
+  let html = "";
+  for (let i = 0; i < tasks.length; i++) {
+    html += "&lt;li&gt;" + tasks[i] +
+    " &lt;button onclick='removeTask(" + i + ")'&gt;x&lt;/button&gt;&lt;/li&gt;";
+  }
+  document.getElementById("list").innerHTML = html;
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📌</span> குறிப்பு:</h4>
+                <p>பட்டியல் மாறும் போதெல்லாம் displayTasks() செயல்பாடு அழைக்கப்பட வேண்டும்.</p>
+            </div>
+        </section>
+
+        <!-- Add an Add Task Function -->
+        <section class="content-section" id="add-task-function">
+            <h2>பணி சேர்க்கும் செயல்பாட்டைச் சேர்க்கவும்</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>// Function to Add a task
+function addTask() {
+  let taskInput = document.getElementById("task");
+  let text = taskInput.value;
+  if (text === "") {
+    return;
+  }
+  tasks.push(text);
+  taskInput.value = "";
+  saveTasks();
+  displayTasks();
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Add a Remove Task Function -->
+        <section class="content-section" id="remove-task-function">
+            <h2>பணி நீக்கும் செயல்பாட்டைச் சேர்க்கவும்</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <p>குறியீட்டு மூலம் பணியை நீக்கவும்:</p>
+                <pre><code>// Function to Remove a task
+function removeTask(i) {
+  tasks.splice(i, 1);
+  saveTasks();
+  displayTasks();
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚙️</span> குறிப்பு:</h4>
+                <p>வரிசை முறை splice(i, 1) i நிலையில் 1 உருப்படியை நீக்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Add a Clear All Function -->
+        <section class="content-section" id="clear-all-function">
+            <h2>அனைத்தையும் அழிக்கும் செயல்பாட்டைச் சேர்க்கவும்</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <p>எல்லாவற்றையும் நீக்கவும்:</p>
+                <pre><code>// Function to Clear all tasks
+function clearAll() {
+  tasks = [];
+  saveTasks();
+  displayTasks();
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Function to Save a Task -->
+        <section class="content-section" id="save-function">
+            <h2>பணியை சேமிக்கும் செயல்பாடு</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <p>localStorage இல் சேமிக்கவும்:</p>
+                <pre><code>// Function to Save tasks
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💾</span> குறிப்பு:</h4>
+                <p>வரிசைகளை localStorage இல் சேமிக்க, JSON.stringify() ஐப் பயன்படுத்தி அவற்றை உரையாக மாற்றுகிறோம்.</p>
+            </div>
+        </section>
+
+        <!-- Function to Load the Tasks -->
+        <section class="content-section" id="load-function">
+            <h2>பணிகளை ஏற்றும் செயல்பாடு</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <p>localStorage இலிருந்து பணிகளை ஏற்றவும்:</p>
+                <pre><code>// Function to Load tasks
+function loadTasks() {
+  let saved = localStorage.getItem("tasks");
+  if (saved !== null) {
+    tasks = JSON.parse(saved);
+  }
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📂</span> குறிப்பு:</h4>
+                <p>வரிசைகளை ஏற்ற, JSON.parse() ஐப் பயன்படுத்தி அவற்றை மீண்டும் மாற்றுகிறோம்.</p>
+            </div>
+        </section>
+
+        <!-- Final Project -->
+        <section class="content-section" id="final-project">
+            <h2>இறுதி திட்டம்</h2>
+            
+            <h3>இறுதி HTML</h3>
+            <div class="code-example">
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;To-Do List&lt;/h2&gt;
+
+&lt;input id="task" placeholder="New task"&gt;
+&lt;button onclick="addTask()"&gt;Add&lt;/button&gt;
+&lt;ul id="list"&gt;&lt;/ul&gt;
+&lt;button onclick="clearAll()"&gt;Clear All&lt;/button&gt;
+
+&lt;script&gt;
+// JavaScript goes here
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <h3>இறுதி JavaScript</h3>
+            <div class="code-example">
+                <pre><code>// Create a task Array
+let tasks = [];
+
+// Function to Display tasks
+function displayTasks() {
+  let html = "";
+  for (let i = 0; i < tasks.length; i++) {
+    html += "&lt;li&gt;" + tasks[i] +
+    " &lt;button onclick='removeTask(" + i + ")'&gt;x&lt;/button&gt;&lt;/li&gt;";
+  }
+  document.getElementById("list").innerHTML = html;
+}
+
+// Function to Add a task
+function addTask() {
+  let taskInput = document.getElementById("task");
+  let text = taskInput.value;
+  if (text === "") {
+    return;
+  }
+  tasks.push(text);
+  taskInput.value = "";
+  saveTasks();
+  displayTasks();
+}
+
+// Function to Remove a task
+function removeTask(i) {
+  tasks.splice(i, 1);
+  saveTasks();
+  displayTasks();
+}
+
+// Function to Clear all tasks
+function clearAll() {
+  tasks = [];
+  saveTasks();
+  displayTasks();
+}
+
+// Function to Save tasks
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Function to Load tasks
+function loadTasks() {
+  let saved = localStorage.getItem("tasks");
+  if (saved !== null) {
+    tasks = JSON.parse(saved);
+  }
+}
+
+// Load and display tasks when page loads
+loadTasks();
+displayTasks();</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercises -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சிகள்</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🏋️</span> பயிற்சி 1</h4>
+                <p>பயனர் காலி பணியைச் சேர்க்க முயற்சித்தால் எச்சரிக்கையைக் காட்டவும்.</p>
+            </div>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🏋️</span> பயிற்சி 2</h4>
+                <p>பணியைச் சேர்க்க பயனர் Enter விசையை அழுத்த அனுமதிக்கவும்.</p>
+            </div>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🏋️</span> பயிற்சி 3</h4>
+                <p>ஒவ்வொரு மாற்றத்திற்கும் பிறகு பணிகளை தானாக சேமிக்கவும் (ஏற்கனவே செய்யப்பட்டது).</p>
+                <p>சேமிக்கும் போது "Saved!" செய்தியைக் காட்டவும்.</p>
+            </div>
+        </section>
+
+        <!-- Bonus Challenges -->
+        <section class="content-section" id="bonus-challenges">
+            <h2>போனஸ் சவால்கள் (நிலை உயர்த்தல்)</h2>
+            
+            <p>திட்டத்தை மேம்படுத்த முயற்சிக்கவும்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>பணிகளை முடிந்ததாகக் குறிக்கவும் (✔)</h4>
+                    </div>
+                    <p>பணிகளை முடிந்ததாகக் குறிக்கும் வசதி</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-filter"></i>
+                        <h4>பணிகளை வடிகட்டவும்: அனைத்தும் / செயலில் உள்ளவை / முடிந்தவை</h4>
+                    </div>
+                    <p>பணிகளை வகைப்படுத்தும் வசதி</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-edit"></i>
+                        <h4>"பணியைத் திருத்து" செயல்பாட்டைச் சேர்க்கவும்</h4>
+                    </div>
+                    <p>பணிகளைத் திருத்தும் வசதி</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sort-alpha-down"></i>
+                        <h4>அகரவரிசையில் பணிகளை வரிசைப்படுத்தவும்</h4>
+                    </div>
+                    <p>பணிகளை வரிசைப்படுத்தும் வசதி</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- JavaScript Projects -->
+        <section class="content-section" id="javascript-projects">
+            <h2>JavaScript திட்டங்கள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-calculator"></i>
+                        <h4>JavaScript Counter</h4>
+                    </div>
+                    <p>localStorage இல் மீட்டெடுத்து சேமிக்கும் எண்ணிக்கை திட்டம்.</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-headphones"></i>
+                        <h4>JavaScript Event Listener</h4>
+                    </div>
+                    <p>onclick க்கு பதிலாக event listener ஐப் பயன்படுத்தும் எண்ணிக்கை திட்டம்.</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tasks"></i>
+                        <h4>JavaScript To-Do List</h4>
+                    </div>
+                    <p>local storage இல் உள்ள ஒரு வரிசையில் சேமிக்கப்பட்ட செய்ய வேண்டிய பட்டியல்.</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-window-maximize"></i>
+                        <h4>JavaScript Modal Popup</h4>
+                    </div>
+                    <p>பக்கத்தின் மேல் தோன்றும் மாதிரி பாப்-அப் சாளரம்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Project%20-%20Event%20Listener.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Project%20-%20Modal%20Popup.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Project அறிமுகம்</a></li>
+                    <li><a href="#learn">கற்றுக் கொள்வீர்கள்</a></li>
+                    <li><a href="#create-html">HTML உருவாக்குதல்</a></li>
+                    <li><a href="#display-function">காட்சி செயல்பாடு</a></li>
+                    <li><a href="#add-task-function">பணி சேர்க்கும் செயல்பாடு</a></li>
+                    <li><a href="#remove-task-function">பணி நீக்கும் செயல்பாடு</a></li>
+                    <li><a href="#save-function">சேமிக்கும் செயல்பாடு</a></li>
+                    <li><a href="#load-function">ஏற்றும் செயல்பாடு</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                    <li><a href="#bonus-challenges">போனஸ் சவால்கள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // To-Do List Project JavaScript
+        document.addEventListener("DOMContentLoaded", function() {
+            // Create a task Array
+            let tasks = [];
+            
+            // Use element variables
+            const taskInput = document.getElementById("task");
+            const listEl = document.getElementById("list");
+            const messageEl = document.getElementById("message");
+            
+            // Allow Enter key to add task
+            taskInput.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    addTask();
+                }
+            });
+            
+            // Load and display tasks when page loads
+            loadTasks();
+            displayTasks();
+            
+            // Function to display tasks
+            function displayTasks() {
+                let html = "";
+                for (let i = 0; i < tasks.length; i++) {
+                    html += `
+                        <div class="todo-item">
+                            <span class="todo-text">${tasks[i]}</span>
+                            <div class="todo-actions">
+                                <button class="todo-remove" onclick='removeTask(${i})'>
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                listEl.innerHTML = html;
+            }
+            
+            // Function to show message
+            function showMessage(text) {
+                messageEl.innerHTML = text;
+                setTimeout(function() {
+                    messageEl.innerHTML = "";
+                }, 2000);
+            }
+            
+            // Function to add a task
+            function addTask() {
+                let text = taskInput.value.trim();
+                if (text === "") {
+                    showMessage("பணி காலியாக இருக்க முடியாது!");
+                    return;
+                }
+                tasks.push(text);
+                taskInput.value = "";
+                saveTasks();
+                displayTasks();
+                showMessage("பணி சேர்க்கப்பட்டது!");
+            }
+            
+            // Function to remove a task
+            function removeTask(i) {
+                tasks.splice(i, 1);
+                saveTasks();
+                displayTasks();
+                showMessage("பணி நீக்கப்பட்டது!");
+            }
+            
+            // Function to clear all tasks
+            function clearAll() {
+                if (tasks.length === 0) {
+                    showMessage("நீக்குவதற்கு பணிகள் இல்லை!");
+                    return;
+                }
+                tasks = [];
+                saveTasks();
+                displayTasks();
+                showMessage("அனைத்து பணிகளும் அழிக்கப்பட்டன!");
+            }
+            
+            // Function to save tasks
+            function saveTasks() {
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+            }
+            
+            // Function to load tasks
+            function loadTasks() {
+                let saved = localStorage.getItem("tasks");
+                if (saved !== null) {
+                    tasks = JSON.parse(saved);
+                }
+            }
+            
+            // Make functions global for onclick attributes
+            window.addTask = addTask;
+            window.clearAll = clearAll;
+            window.removeTask = removeTask;
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

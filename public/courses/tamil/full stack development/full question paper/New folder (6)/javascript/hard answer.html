@@ -1,0 +1,1163 @@
+﻿<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Hard Level - Answer Key | Jassif Team</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional Quiz-specific styles - EXACT SAME AS hard answer.html */
+        
+        /* Jassif Team Quiz Header */
+        .jassif-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--git-color); /* SAME AS hard answer.html */
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .team-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Quiz Hero - SAME COLOR AS hard answer.html */
+        .quiz-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quiz-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .quiz-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Question Selection Grid - ONLY RED CHANGES HERE */
+        .question-selection-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        /* ONLY CHANGE: Question number button with Hard level color (RED) */
+        .question-number-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number-btn:hover {
+            border-color: var(--git-color);
+            transform: translateY(-3px);
+        }
+
+        .question-number-btn.active {
+            background: #dc3545; /* ONLY CHANGE: RED for Hard */
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .question-number-btn.answered {
+            background: #f8d7da; /* Light red for answered */
+            border-color: #dc3545;
+            color: var(--dark);
+        }
+
+        /* ONLY CHANGE: Difficulty level indicator - RED for Hard */
+        .difficulty-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 8px 8px 0 0;
+            background-color: #dc3545; /* ONLY CHANGE: Red for Hard */
+        }
+
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Quiz Container - SAME AS hard answer.html */
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color); /* SAME */
+        }
+
+        .current-question-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* REMOVED: Quiz info section */
+        .quiz-info {
+            display: none;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--git-color); /* SAME */
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        /* ANSWER KEY MODIFICATION: Show correct/incorrect colors immediately on click */
+        .quiz-option.selected.correct {
+            border-color: #27ae60; /* GREEN for correct */
+            background: #d4edda;
+        }
+
+        .quiz-option.selected.incorrect {
+            border-color: var(--accent);
+            background: #f8d7da;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected.correct .option-letter {
+            background: #27ae60; /* GREEN */
+        }
+
+        .quiz-option.selected.incorrect .option-letter {
+            background: var(--accent);
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: var(--git-color); /* SAME */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-btn.prev {
+            background: #667eea;
+        }
+
+        .quiz-btn.submit {
+            background: var(--success);
+        }
+
+        /* Results Container - HIDDEN FOR ANSWER KEY */
+        .results-container {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: black;
+            padding: 0;
+        }
+
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Answer Feedback Section */
+        .answer-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .answer-feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #27ae60; /* GREEN */
+            color: #155724;
+        }
+
+        .answer-feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid var(--accent);
+            color: #721c24;
+        }
+
+        .feedback-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .team-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quiz-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .question-selection-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .question-number-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="jassif-header">
+        <div class="header-container">
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <img src="logo.jpg" alt="Jassif Team Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">JASSIF TEAM</div>
+                    <div class="logo-sub">JAVASCRIPT COURSE - HARD ANSWER KEY</div>
+                </div>
+            </a>
+            <div class="team-info">
+                <div class="team-badge">
+                    <i class="fab fa-js"></i>
+                    JavaScript Course
+                </div>
+                <div class="team-badge">
+                    <i class="fas fa-key"></i>
+                    Hard Answer Key
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Hero Section - SAME COLOR AS hard answer.html -->
+    <section class="quiz-hero">
+        <div class="quiz-hero-content">
+            <h2>JavaScript Hard Level - Answer Key</h2>
+            <p>Click on any option to see if it's correct (green) or incorrect (red). Learn all 30 hard JavaScript questions.</p>
+            <div class="quiz-badges">
+                <span class="info-badge level"><i class="fas fa-signal"></i> Hard Level</span>
+                <span class="info-badge"><i class="fas fa-question-circle"></i> 30 Questions</span>
+                <span class="info-badge"><i class="fas fa-check-circle"></i> Interactive Answers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Question Selection Grid - RED COLOR HERE ONLY -->
+    <section class="question-selection-section">
+        <div class="section-title">
+            <h2>Hard Level Questions - Answer Key</h2>
+            <p>Click on any question number to jump directly to it. Click options to see answers.</p>
+        </div>
+        
+        <div class="question-selection-grid" id="questionSelectionGrid">
+            <!-- Question numbers will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Main Quiz Container -->
+    <main class="quiz-container">
+        <!-- Quiz Interface -->
+        <div class="quiz-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="current-question-number" id="questionNumber">
+                    Question 1 of 30
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <!-- Question -->
+            <div class="question-text" id="questionText">
+                JavaScript Event Loop-à®‡à®©à¯ architecture à®Žà®ªà¯à®ªà®Ÿà®¿ à®µà¯‡à®²à¯ˆ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯?
+            </div>
+            
+            <!-- Options -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+
+            <!-- Answer Feedback -->
+            <div class="answer-feedback" id="answerFeedback">
+                <!-- Feedback will be inserted here -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="quiz-footer">
+                <button class="quiz-btn prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="quiz-btn next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <div class="footer-logo-image">
+                <img src="logo.jpg" alt="Jassif Team Logo">
+            </div>
+            <div>Jassif Team - JavaScript Course Answer Key</div>
+        </div>
+        <div class="footer-text">
+            &copy; 2024 Jassif Team. All rights reserved. | Hard Level JavaScript Answer Key
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript Hard Level Answer Key Data - 30 QUESTIONS WITH EXPLANATIONS
+        const quizData = [
+            { 
+                question: "JavaScript Event Loop-à®‡à®©à¯ architecture à®Žà®ªà¯à®ªà®Ÿà®¿ à®µà¯‡à®²à¯ˆ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "Call Stack, Callback Queue, Microtask Queue interaction",
+                    "Single-threaded with heap and stack",
+                    "Multi-threaded execution",
+                    "Parallel processing model"
+                ], 
+                correct: 0,
+                explanation: "JavaScript Event Loop Call Stack, Callback Queue (Task Queue), à®®à®±à¯à®±à¯à®®à¯ Microtask Queue (Job Queue)-à®‡à®©à¯ interaction-à®†à®²à¯ à®µà¯‡à®²à¯ˆ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯. Call Stack empty à®†à®©à®¾à®²à¯ Microtask Queue-à® à®®à¯à®¤à®²à®¿à®²à¯ process à®šà¯†à®¯à¯à®¯à¯à®®à¯, à®ªà®¿à®±à®•à¯ Callback Queue."
+            },
+            { 
+                question: "Microtask Queue (Job Queue)-à®‡à®²à¯ à®Žà®¤à¯ à®šà¯‡à®°à¯à®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "Promises callbacks",
+                    "MutationObserver callbacks",
+                    "queueMicrotask() callbacks",
+                    "à®®à¯‡à®²à¯‡ à®‰à®³à¯à®³ à®…à®©à¯ˆà®¤à¯à®¤à¯à®®à¯"
+                ], 
+                correct: 3,
+                explanation: "Microtask Queue-à®‡à®²à¯ Promises callbacks (.then, .catch, .finally), MutationObserver callbacks, à®®à®±à¯à®±à¯à®®à¯ queueMicrotask() callbacks à®šà¯‡à®°à¯à®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®•à®¿à®©à¯à®±à®©. à®‡à®µà¯ˆ Callback Queue-à® à®µà®¿à®Ÿ high priority."
+            },
+            { 
+                question: "JavaScript Engine-à®‡à®©à¯ Just-In-Time (JIT) compilation à®Žà®ªà¯à®ªà®Ÿà®¿ à®µà¯‡à®²à¯ˆ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "Interprets code initially, then compiles hot functions",
+                    "Compiles all code immediately",
+                    "Only interprets, never compiles",
+                    "Compiles only once"
+                ], 
+                correct: 0,
+                explanation: "JIT compilation initially code-à® interpret à®šà¯†à®¯à¯à®¯à¯à®®à¯, à®ªà®¿à®±à®•à¯ frequently executed ('hot') functions-à® compile à®šà¯†à®¯à¯à®¯à¯à®®à¯. à®‡à®¤à¯ optimization-à®•à¯à®•à¯ profile data à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Promise.race() à®®à®±à¯à®±à¯à®®à¯ Promise.any()-à®•à¯à®•à¯ à®‡à®Ÿà¯ˆà®¯à¯‡ à®‰à®³à¯à®³ à®µà®¿à®¤à¯à®¤à®¿à®¯à®¾à®šà®®à¯?", 
+                options: [
+                    "race settles when first settles, any settles when first fulfills",
+                    "any settles when first settles, race settles when first fulfills",
+                    "Both are same",
+                    "race ignores rejections, any doesn't"
+                ], 
+                correct: 0,
+                explanation: "Promise.race() first promise settles (fulfills or rejects) à®†à®©à®¾à®²à¯ settle à®†à®•à¯à®®à¯. Promise.any() first promise fulfills à®†à®©à®¾à®²à¯ settle à®†à®•à¯à®®à¯ (all reject à®†à®©à®¾à®²à¯ AggregateError)."
+            },
+            { 
+                question: "Web Workers-à®‡à®²à¯ postMessage() performance consideration à®Žà®©à¯à®©?", 
+                options: [
+                    "Structured Clone Algorithm overhead",
+                    "No overhead",
+                    "Serialization cost only",
+                    "Memory duplication automatically"
+                ], 
+                correct: 0,
+                explanation: "postMessage() Structured Clone Algorithm à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®•à®¿à®±à®¤à¯, à®‡à®¤à¯ object-à® serialize/deserialize à®šà¯†à®¯à¯à®¯à¯à®®à¯. Large objects à®…à®²à¯à®²à®¤à¯ frequent messages performance impact à®à®±à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®®à¯."
+            },
+            { 
+                question: "SharedArrayBuffer-à®‡à®©à¯ security considerations à®Žà®µà¯ˆ?", 
+                options: [
+                    "Spectre/Meltdown vulnerabilities",
+                    "Cross-origin isolation required",
+                    "COOP/COEP headers needed",
+                    "à®®à¯‡à®²à¯‡ à®‰à®³à¯à®³ à®…à®©à¯ˆà®¤à¯à®¤à¯à®®à¯"
+                ], 
+                correct: 3,
+                explanation: "SharedArrayBuffer Spectre/Meltdown-à®ªà¯‹à®©à¯à®± side-channel attacks-à®•à¯à®•à¯ vulnerable. Cross-origin isolation, COOP (Cross-Origin Opener Policy), COEP (Cross-Origin Embedder Policy) headers required."
+            },
+            { 
+                question: "FinalizationRegistry API à®Žà®¤à®±à¯à®•à®¾à®•?", 
+                options: [
+                    "Garbage collection callbacks",
+                    "Memory leak detection",
+                    "Resource cleanup",
+                    "All of the above"
+                ], 
+                correct: 3,
+                explanation: "FinalizationRegistry garbage collection-à®•à¯à®•à¯ registered objects collected à®†à®•à¯à®®à¯ à®ªà¯‹à®¤à¯ callbacks execute à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. Resource cleanup à®®à®±à¯à®±à¯à®®à¯ memory leak detection-à®•à¯à®•à¯ à®ªà®¯à®©à¯à®³à¯à®³à®¤à®¾à®• à®‡à®°à¯à®•à¯à®•à¯à®®à¯."
+            },
+            { 
+                question: "WeakRef-à®‰à®Ÿà®©à¯ deref() method à®Žà®ªà¯à®ªà¯‹à®¤à¯ undefined return à®šà¯†à®¯à¯à®¯à¯à®®à¯?", 
+                options: [
+                    "When object is garbage collected",
+                    "When object exists",
+                    "Always returns object",
+                    "Never returns undefined"
+                ], 
+                correct: 0,
+                explanation: "WeakRef.deref() object garbage collection à®†à®•à®¾à®¤à¯ à®‡à®°à¯à®¨à¯à®¤à®¾à®²à¯ object reference return à®šà¯†à®¯à¯à®¯à¯à®®à¯, garbage collection à®†à®©à®¾à®²à¯ undefined return à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "WebAssembly (Wasm) JavaScript-à®‰à®Ÿà®©à¯ integrate à®šà¯†à®¯à¯à®¯ à®Žà®ªà¯à®ªà®Ÿà®¿?", 
+                options: [
+                    "WebAssembly.instantiate()",
+                    "WebAssembly.compile()",
+                    "WebAssembly.validate()",
+                    "à®®à¯‡à®²à¯‡ à®‰à®³à¯à®³ à®…à®©à¯ˆà®¤à¯à®¤à¯à®®à¯"
+                ], 
+                correct: 3,
+                explanation: "WebAssembly JavaScript-à®‰à®Ÿà®©à¯ integrate à®šà¯†à®¯à¯à®¯: instantiate() (load and instantiate), compile() (compile only), validate() (validate bytes). Wasm modules JavaScript functions call à®šà¯†à®¯à¯à®¯ à®®à¯à®Ÿà®¿à®¯à¯à®®à¯."
+            },
+            { 
+                question: "JavaScript module loading-à®‡à®©à¯ 'tree shaking' à®Žà®¤à®±à¯à®•à®¾à®•?", 
+                options: [
+                    "Remove unused code during bundling",
+                    "Optimize tree structures",
+                    "Shake DOM tree",
+                    "Memory optimization"
+                ], 
+                correct: 0,
+                explanation: "Tree shaking bundling process-à®‡à®²à¯ unused code remove à®šà¯†à®¯à¯à®¯à¯à®®à¯. ES6 static import/export analysis à®šà¯†à®¯à¯à®¤à¯, unused exports eliminate à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯. Bundle size à®•à¯à®±à¯ˆà®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "import() dynamic import-à®‡à®©à¯ return type à®Žà®©à¯à®©?", 
+                options: [
+                    "Promise that resolves to module",
+                    "Module object directly",
+                    "Callback function",
+                    "Event emitter"
+                ], 
+                correct: 0,
+                explanation: "import() dynamic import Promise return à®šà¯†à®¯à¯à®¯à¯à®®à¯, module object-à®‰à®Ÿà®©à¯ resolve à®†à®•à¯à®®à¯. à®‡à®¤à¯ runtime-à®‡à®²à¯ conditionally modules load à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Top-level await-à®‡à®©à¯ restriction à®Žà®©à¯à®©?", 
+                options: [
+                    "Only in ES modules",
+                    "Works everywhere",
+                    "Only in CommonJS",
+                    "Only in browsers"
+                ], 
+                correct: 0,
+                explanation: "Top-level await ES modules-à®‡à®²à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯ supported. CommonJS modules-à®‡à®²à¯ allowed à®‡à®²à¯à®²à¯ˆ. Module loading block à®šà¯†à®¯à¯à®¯à¯à®®à¯, careful-à®†à®• à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯."
+            },
+            { 
+                question: "Error.captureStackTrace()-à®‡à®©à¯ à®ªà®¯à®©à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "Custom error stack traces",
+                    "Error suppression",
+                    "Stack trace optimization",
+                    "Memory leak prevention"
+                ], 
+                correct: 0,
+                explanation: "Error.captureStackTrace() custom error objects-à®•à¯à®•à¯ stack traces create à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. Target object à®®à®±à¯à®±à¯à®®à¯ optional constructor function arguments à®†à®•æŽ¥å— à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "Proxy revocable proxy-à®‰à®Ÿà®©à¯ revoke() method effect à®Žà®©à¯à®©?", 
+                options: [
+                    "All proxy operations throw",
+                    "Target object deleted",
+                    "Proxy becomes transparent",
+                    "No effect"
+                ], 
+                correct: 0,
+                explanation: "Proxy.revocable() revocable proxy create à®šà¯†à®¯à¯à®¯à¯à®®à¯. revoke() call à®šà¯†à®¯à¯à®¤à®¾à®²à¯ à®…à®©à¯ˆà®¤à¯à®¤à¯ proxy operations TypeError throw à®šà¯†à®¯à¯à®¯à¯à®®à¯. Target object unaffected."
+            },
+            { 
+                question: "Reflect.ownKeys() à®®à®±à¯à®±à¯à®®à¯ Object.keys()-à®•à¯à®•à¯ à®‡à®Ÿà¯ˆà®¯à¯‡ à®‰à®³à¯à®³ à®µà®¿à®¤à¯à®¤à®¿à®¯à®¾à®šà®®à¯?", 
+                options: [
+                    "ownKeys includes symbols, keys doesn't",
+                    "keys includes symbols, ownKeys doesn't",
+                    "Both are same",
+                    "ownKeys excludes enumerable properties"
+                ], 
+                correct: 0,
+                explanation: "Reflect.ownKeys() all own property keys (strings and symbols) return à®šà¯†à®¯à¯à®¯à¯à®®à¯. Object.keys() enumerable own string properties à®®à®Ÿà¯à®Ÿà¯à®®à¯ return à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "JavaScript engine optimizations: 'Hidden Classes' à®Žà®¤à®±à¯à®•à®¾à®•?", 
+                options: [
+                    "Property access optimization",
+                    "Function inlining",
+                    "Type speculation",
+                    "Garbage collection"
+                ], 
+                correct: 0,
+                explanation: "Hidden Classes (Shapes) property access optimize à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®©à¯à®±à®©. Similar objects same hidden class share à®šà¯†à®¯à¯à®¯à¯à®®à¯, property access inline cache-à®‡à®²à¯ store à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "'Inline Caching' optimization à®Žà®ªà¯à®ªà®Ÿà®¿ à®µà¯‡à®²à¯ˆ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "Caches property lookups based on object shape",
+                    "Caches function results",
+                    "Caches DOM queries",
+                    "Caches network requests"
+                ], 
+                correct: 0,
+                explanation: "Inline Caching property lookups cache à®šà¯†à®¯à¯à®¯à¯à®®à¯. Object shape (hidden class) check à®šà¯†à®¯à¯à®¤à¯, cached property offset use à®šà¯†à®¯à¯à®¯à¯à®®à¯. Shape mismatch à®†à®©à®¾à®²à¯ cache miss à®®à®±à¯à®±à¯à®®à¯ re-optimization."
+            },
+            { 
+                question: "ArrayBuffer transfer-à®‡à®©à¯ à®ªà®¯à®©à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "Zero-copy transfer between contexts",
+                    "Faster serialization",
+                    "Memory duplication",
+                    "Automatic garbage collection"
+                ], 
+                correct: 0,
+                explanation: "ArrayBuffer transfer zero-copy transfer between execution contexts (workers, iframes). Original buffer neutered à®†à®•à¯à®®à¯, new context-à®•à¯à®•à¯ transfer à®†à®•à¯à®®à¯. Performance critical operations-à®•à¯à®•à¯."
+            },
+            { 
+                question: "MessageChannel API à®Žà®¤à®±à¯à®•à®¾à®•?", 
+                options: [
+                    "Communication between browsing contexts",
+                    "Worker communication",
+                    "Port-based messaging",
+                    "All of the above"
+                ], 
+                correct: 3,
+                explanation: "MessageChannel API two-way communication channel create à®šà¯†à®¯à¯à®¯à¯à®®à¯. Ports message exchange à®šà¯†à®¯à¯à®¯à¯à®®à¯. Workers, iframes, à®®à®±à¯à®±à¯à®®à¯ same document contexts-à®•à¯à®•à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®²à®¾à®®à¯."
+            },
+            { 
+                question: "AbortController-à®‰à®Ÿà®©à¯ signal.aborted property à®Žà®ªà¯à®ªà¯‹à®¤à¯ true?", 
+                options: [
+                    "After abort() called",
+                    "Always false",
+                    "When request completes",
+                    "On error"
+                ], 
+                correct: 0,
+                explanation: "AbortController.signal.aborted abort() call à®šà¯†à®¯à¯à®¤ à®ªà®¿à®±à®•à¯ true à®†à®•à¯à®®à¯. abort() signal-à®•à¯à®•à¯ abort reason set à®šà¯†à®¯à¯à®¯à¯à®®à¯, signal listeners notify à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "ResizeObserver Entry-à®‡à®²à¯ contentRect vs contentBoxSize à®µà®¿à®¤à¯à®¤à®¿à®¯à®¾à®šà®®à¯?", 
+                options: [
+                    "contentRect for legacy, contentBoxSize for modern",
+                    "Both are same",
+                    "contentBoxSize for legacy, contentRect for modern",
+                    "No difference"
+                ], 
+                correct: 0,
+                explanation: "contentRect legacy support-à®•à¯à®•à¯ (deprecated), contentBoxSize modern approach (array of ResizeObserverSize objects). contentBoxSize devicePixelRatio consider à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "Performance.measureUserAgentSpecificMemory()-à®‡à®©à¯ à®ªà®¯à®©à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "Memory usage estimation",
+                    "Performance monitoring",
+                    "Memory leak detection",
+                    "All of the above"
+                ], 
+                correct: 3,
+                explanation: "Performance.measureUserAgentSpecificMemory() JavaScript memory usage estimate à®šà¯†à®¯à¯à®¯à¯à®®à¯. Memory leaks detect à®šà¯†à®¯à¯à®¯à¯à®®à¯. Origin Trial-à®†à®• à®‰à®³à¯à®³à®¤à¯, Chrome-à®‡à®²à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯ available."
+            },
+            { 
+                question: "WebGL 2.0-à®•à¯à®•à¯ WebGL 1.0-à® à®µà®¿à®Ÿ à®‰à®³à¯à®³ à®®à¯à®•à¯à®•à®¿à®¯ feature à®Žà®©à¯à®©?", 
+                options: [
+                    "Compute shaders",
+                    "Transform feedback",
+                    "Multiple render targets",
+                    "All of the above"
+                ], 
+                correct: 3,
+                explanation: "WebGL 2.0 WebGL 1.0-à® à®µà®¿à®Ÿ advanced features: compute shaders (GPGPU), transform feedback (vertex shader output capture), multiple render targets (MRT)."
+            },
+            { 
+                question: "WebGPU vs WebGL performance advantage à®Žà®©à¯à®©?", 
+                options: [
+                    "Lower-level API access",
+                    "Multi-threading support",
+                    "Better shader language",
+                    "All of the above"
+                ], 
+                correct: 3,
+                explanation: "WebGPU WebGL-à® à®µà®¿à®Ÿ: lower-level hardware access, multi-threading support, modern shader language (WGSL), compute shaders, better performance."
+            },
+            { 
+                question: "navigator.storage.estimate()-à®‡à®©à¯ return object properties?", 
+                options: [
+                    "usage and quota",
+                    "used and total",
+                    "size and limit",
+                    "current and max"
+                ], 
+                correct: 0,
+                explanation: "navigator.storage.estimate() Promise return à®šà¯†à®¯à¯à®¯à¯à®®à¯ { usage, quota } properties à®‰à®Ÿà®©à¯ object-à®‰à®Ÿà®©à¯ resolve à®†à®•à¯à®®à¯. usage: bytes used, quota: total bytes available."
+            },
+            { 
+                question: "BroadcastChannel vs SharedWorker communication difference?", 
+                options: [
+                    "BroadcastChannel for same-origin tabs, SharedWorker for scripts",
+                    "Both are same",
+                    "SharedWorker for tabs, BroadcastChannel for workers",
+                    "No communication possible"
+                ], 
+                correct: 0,
+                explanation: "BroadcastChannel same-origin browsing contexts (tabs, windows, iframes) communication. SharedWorker multiple scripts (different tabs) single worker share à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "queueMicrotask() vs Promise.resolve().then() performance?", 
+                options: [
+                    "queueMicrotask slightly faster",
+                    "Promise faster",
+                    "Both same speed",
+                    "Depends on browser"
+                ], 
+                correct: 0,
+                explanation: "queueMicrotask() Promise.resolve().then()-à® à®µà®¿à®Ÿ slightly faster, à®à®©à¯†à®©à®¿à®²à¯ Promise overhead à®‡à®²à¯à®²à¯ˆ. à®†à®©à®¾à®²à¯ difference marginal, consistency à®®à¯à®•à¯à®•à®¿à®¯à®®à¯."
+            },
+            { 
+                question: "JavaScript 'Temporal' API-à®‡à®©à¯ à®®à¯à®•à¯à®•à®¿à®¯ à®¨à®©à¯à®®à¯ˆ?", 
+                options: [
+                    "Better date/time handling",
+                    "Immutable date objects",
+                    "Timezone support",
+                    "All of the above"
+                ], 
+                correct: 3,
+                explanation: "Temporal API modern date/time manipulation: immutable objects, better timezone support, calendar systems, parsing/formatting. Date object problems solve à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Intl.Segmenter API à®Žà®¤à®±à¯à®•à®¾à®•?", 
+                options: [
+                    "Text segmentation (graphemes, words, sentences)",
+                    "String splitting",
+                    "Text encoding",
+                    "Character counting"
+                ], 
+                correct: 0,
+                explanation: "Intl.Segmenter API text segmentation: graphemes (user-perceived characters), words, sentences. Different languages-à®•à¯à®•à¯ locale-aware segmentation."
+            },
+            { 
+                question: "WebXR Device API-à®‡à®©à¯ à®®à¯à®•à¯à®•à®¿à®¯ capability à®Žà®©à¯à®©?", 
+                options: [
+                    "Virtual Reality (VR) support",
+                    "Augmented Reality (AR) support",
+                    "Mixed Reality (MR) support",
+                    "All of the above"
+                ], 
+                correct: 3,
+                explanation: "WebXR Device API VR, AR, MR devices access à®šà¯†à®¯à¯à®¯à¯à®®à¯. Headset tracking, controller input, rendering contexts. Immersive web experiences create à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let answeredQuestions = new Array(quizData.length).fill(false);
+
+        // DOM elements
+        const questionSelectionGrid = document.getElementById('questionSelectionGrid');
+        const questionNumberElement = document.getElementById('questionNumber');
+        const questionTextElement = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const answerFeedback = document.getElementById('answerFeedback');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+
+        // Initialize question selection grid with RED color
+        function initializeQuestionGrid() {
+            questionSelectionGrid.innerHTML = '';
+            quizData.forEach((question, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'question-number-btn';
+                btn.dataset.index = index;
+                
+                // Add RED difficulty indicator
+                const difficultyIndicator = document.createElement('div');
+                difficultyIndicator.className = 'difficulty-indicator';
+                btn.appendChild(difficultyIndicator);
+                
+                // Add question number
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'question-number';
+                numberSpan.textContent = index + 1;
+                btn.appendChild(numberSpan);
+                
+                if (index === 0) {
+                    btn.classList.add('active');
+                }
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    updateQuestionGrid();
+                });
+                
+                questionSelectionGrid.appendChild(btn);
+            });
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const buttons = document.querySelectorAll('.question-number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = quizData[currentQuestionIndex];
+            
+            // Update question number
+            questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            
+            // Update question text
+            questionTextElement.textContent = question.question;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.dataset.optionIndex = index;
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Clear feedback
+            answerFeedback.style.display = 'none';
+            answerFeedback.className = 'answer-feedback';
+            answerFeedback.innerHTML = '';
+            
+            // Update navigation buttons
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            const question = quizData[currentQuestionIndex];
+            const optionElements = document.querySelectorAll('.quiz-option');
+            
+            // Remove any previous selection classes
+            optionElements.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Mark the selected option
+            const selectedOption = optionElements[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            // Check if answer is correct
+            if (optionIndex === question.correct) {
+                selectedOption.classList.add('correct');
+                showFeedback(true, question.explanation);
+            } else {
+                selectedOption.classList.add('incorrect');
+                // Also show the correct answer
+                const correctOption = optionElements[question.correct];
+                correctOption.classList.add('correct');
+                showFeedback(false, question.explanation);
+            }
+            
+            // Mark question as answered
+            if (!answeredQuestions[currentQuestionIndex]) {
+                answeredQuestions[currentQuestionIndex] = true;
+                updateQuestionGrid();
+            }
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect, explanation) {
+            answerFeedback.className = `answer-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            const icon = isCorrect ? 'fa-check-circle' : 'fa-times-circle';
+            const message = isCorrect ? 'à®šà®°à®¿à®¯à®¾à®© à®µà®¿à®Ÿà¯ˆ!' : 'à®¤à®µà®±à®¾à®© à®µà®¿à®Ÿà¯ˆ!';
+            
+            answerFeedback.innerHTML = `
+                <div>
+                    <i class="fas ${icon} feedback-icon"></i>
+                    <strong>${message}</strong> ${explanation}
+                </div>
+            `;
+            
+            answerFeedback.style.display = 'block';
+            
+            // Scroll feedback into view
+            answerFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        // Initialize the answer key
+        initializeQuestionGrid();
+        loadQuestion();
+    </script>
+</body>
+</html>

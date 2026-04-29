@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Items - Order - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .accessibility-note {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            border-left: 6px solid #ff6b6b;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            color: #333;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.2);
+        }
+        
+        .accessibility-note h4 {
+            color: #d63031;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Grid order styling */
+        .grid-example {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .order-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 1rem 0;
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        
+        .order-item {
+            background-color: #f1f1f1;
+            border: 2px solid #ddd;
+            padding: 20px;
+            font-size: 24px;
+            text-align: center;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            position: relative;
+        }
+        
+        .order-item:before {
+            content: 'HTML order: ' attr(data-html-order);
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 12px;
+            font-weight: normal;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .order-item:after {
+            content: 'Visual order: ' attr(data-visual-order);
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 12px;
+            font-weight: normal;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .item1-bg { background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); }
+        .item2-bg { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .item3-bg { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .item4-bg { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .item5-bg { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .item6-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid #f0f0f0;
+        }
+        
+        .comparison-box h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--git-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+        
+        .html-list, .visual-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .html-list li, .visual-list li {
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .html-list li:nth-child(1) { background: #6a11cb; color: white; }
+        .html-list li:nth-child(2) { background: #f093fb; color: white; }
+        .html-list li:nth-child(3) { background: #4facfe; color: white; }
+        .html-list li:nth-child(4) { background: #43e97b; color: white; }
+        .html-list li:nth-child(5) { background: #fa709a; color: white; }
+        .html-list li:nth-child(6) { background: #667eea; color: white; }
+        
+        .visual-list li:nth-child(1) { background: #4facfe; color: white; }
+        .visual-list li:nth-child(2) { background: #43e97b; color: white; }
+        .visual-list li:nth-child(3) { background: #6a11cb; color: white; }
+        .visual-list li:nth-child(4) { background: #fa709a; color: white; }
+        .visual-list li:nth-child(5) { background: #667eea; color: white; }
+        .visual-list li:nth-child(6) { background: #f093fb; color: white; }
+        
+        @media (max-width: 768px) {
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Grid%20Items%20-%20Alignment.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%2012-Column%20Grid%20Layout.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Grid Items - Order</h2>
+            <p>CSS கிரிட் உருப்படிகளின் காட்சி வரிசையைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Grid Items - Order Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>கிரிட் உருப்படிகளின் காட்சி வரிசையை அமைத்தல்</h2>
+            
+            <p>CSS order பண்பு கிரிட் உருப்படிகளின் காட்சி வரிசையை வரையறுக்கப் பயன்படுத்தப்படுகிறது.</p>
+            
+            <p>HTML மூலக் குறியீட்டில் உள்ள முதல் கிரிட் உருப்படி கிரிட் கொண்டெய்னரில் முதல் உருப்படியாக தோன்ற வேண்டியதில்லை.</p>
+            
+            <div class="comparison-container">
+                <div class="comparison-box">
+                    <h4>HTML மூல வரிசை</h4>
+                    <ul class="html-list">
+                        <li>Item 1 (order: 3)</li>
+                        <li>Item 2 (order: 6)</li>
+                        <li>Item 3 (order: 1)</li>
+                        <li>Item 4 (order: 2)</li>
+                        <li>Item 5 (order: 4)</li>
+                        <li>Item 6 (order: 5)</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-box">
+                    <h4>காட்சி வரிசை (order பயன்படுத்திய பின்)</h4>
+                    <ul class="visual-list">
+                        <li>Item 3 (order: 1)</li>
+                        <li>Item 4 (order: 2)</li>
+                        <li>Item 1 (order: 3)</li>
+                        <li>Item 5 (order: 4)</li>
+                        <li>Item 6 (order: 5)</li>
+                        <li>Item 2 (order: 6)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example Section -->
+        <section class="content-section" id="example">
+            <h2>எடுத்துக்காட்டு</h2>
+            
+            <div class="grid-example">
+                <h4>கிரிட் உருப்படிகளின் காட்சி வரிசையை அமைத்தல்:</h4>
+                
+                <div class="code-example">
+                    <pre><code>.item1 {order: 3;}
+.item2 {order: 6;}
+.item3 {order: 1;}
+.item4 {order: 2;}
+.item5 {order: 4;}
+.item6 {order: 5;}</code></pre>
+                </div>
+                
+                <p><strong>முடிவு:</strong></p>
+                <div class="order-demo">
+                    <div class="order-item item1-bg" style="order: 3;" data-html-order="1" data-visual-order="3">1</div>
+                    <div class="order-item item2-bg" style="order: 6;" data-html-order="2" data-visual-order="6">2</div>
+                    <div class="order-item item3-bg" style="order: 1;" data-html-order="3" data-visual-order="1">3</div>
+                    <div class="order-item item4-bg" style="order: 2;" data-html-order="4" data-visual-order="2">4</div>
+                    <div class="order-item item5-bg" style="order: 4;" data-html-order="5" data-visual-order="4">5</div>
+                    <div class="order-item item6-bg" style="order: 5;" data-html-order="6" data-visual-order="5">6</div>
+                </div>
+                
+                <div class="tip-box" style="margin-top: 1rem;">
+                    <h4><span class="tip-icon">🔍</span> கவனிக்க:</h4>
+                    <p>HTML மூல வரிசை: 1, 2, 3, 4, 5, 6</p>
+                    <p>காட்சி வரிசை (order பயன்படுத்திய பின்): 3, 4, 1, 5, 6, 2</p>
+                    <p>குறைந்த order மதிப்பு உள்ள உருப்படிகள் முதலில் வரும் (order: 1 முதலில் வரும்)</p>
+                </div>
+            </div>
+            
+            <div class="accessibility-note">
+                <h4><span class="tip-icon">♿</span> அணுகல் குறிப்பு:</h4>
+                <p><strong>order பண்பு காட்சி மறுசீரமைப்பை வழங்குகிறது, ஆனால் இது DOM இல் உள்ள உறுப்புகளின் தருக்க வரிசையை மாற்றாது.</strong></p>
+                <p>இது திரை வாசிப்பிகள் போன்ற உதவி தொழில்நுட்பங்களைப் பயன்படுத்தி தளத்தில் செல்லும் பயனர்களைப் பாதிக்கும், ஏனெனில் உள்ளடக்கம் காட்சியாக வழங்கப்படும் வரிசையை விட வேறு வரிசையில் வாசிக்கப்படும்.</p>
+                <p><strong>பரிந்துரை:</strong> முக்கியமான உள்ளடக்க வரிசையை மாற்ற order பண்பைப் பயன்படுத்துவதைத் தவிர்க்கவும். இது பார்வையற்ற பயனர்களுக்கு குழப்பத்தை ஏற்படுத்தும்.</p>
+            </div>
+        </section>
+
+        <!-- How Order Property Works -->
+        <section class="content-section" id="how-it-works">
+            <h2>Order பண்பு எவ்வாறு செயல்படுகிறது</h2>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>இயல்புநிலை நடத்தை</h4>
+                    <ul>
+                        <li>அனைத்து கிரிட் உருப்படிகளும் order: 0 மதிப்பைக் கொண்டுள்ளன</li>
+                        <li>HTML மூல வரிசையின் அடிப்படையில் வரிசைப்படுத்தப்படுகின்றன</li>
+                        <li>சம order மதிப்பு உள்ள உருப்படிகள் HTML வரிசையில் தோன்றும்</li>
+                    </ul>
+                </div>
+                
+                <div class="code-column">
+                    <h4>Order பண்பைப் பயன்படுத்தும் போது</h4>
+                    <ul>
+                        <li>கிரிட் உருப்படிகள் அவற்றின் order மதிப்பின் அடிப்படையில் வரிசைப்படுத்தப்படுகின்றன</li>
+                        <li>குறைந்த order மதிப்பு முதலில் வரும்</li>
+                        <li>எதிர்மறை order மதிப்புகள் அனுமதிக்கப்படுகின்றன</li>
+                        <li>சம order மதிப்பு உள்ள உருப்படிகள் HTML வரிசையில் தோன்றும்</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> order பண்பு மதிப்புகள்:</h4>
+                <ul>
+                    <li><strong>இயல்புநிலை:</strong> 0</li>
+                    <li><strong>எதிர்மறை மதிப்புகள்:</strong> அனுமதிக்கப்படுகின்றன (-1, -2, போன்றவை)</li>
+                    <li><strong>நேர்மறை மதிப்புகள்:</strong> அனுமதிக்கப்படுகின்றன (1, 2, 3, போன்றவை)</li>
+                    <li><strong>சம order:</strong> HTML மூல வரிசையைப் பின்பற்றும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Practical Use Cases -->
+        <section class="content-section" id="use-cases">
+            <h2>நடைமுறை பயன்பாட்டு நிகழ்வுகள்</h2>
+            
+            <div class="comparison-container">
+                <div class="comparison-box">
+                    <h4>சரியான பயன்பாடு</h4>
+                    <ul>
+                        <li>மொபைல் லேஅவுட்டுகளில் உள்ளடக்கத்தை மறுசீரமைத்தல்</li>
+                        <li>விளம்பரங்களை அடிப்படை உள்ளடக்கத்திற்குப் பிறகு வைத்தல்</li>
+                        <li>சிறிய காட்சி மாற்றங்கள்</li>
+                        <li>தொடு அல்லாத காட்சி விளைவுகள்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-box">
+                    <h4>தவறான பயன்பாடு</h4>
+                    <ul>
+                        <li>முக்கிய உள்ளடக்க வரிசையை மாற்றுதல்</li>
+                        <li>அணுகல் சிக்கல்களை ஏற்படுத்துதல்</li>
+                        <li>SEO பிரச்சினைகள்</li>
+                        <li>தேடல் எஞ்சின் குழப்பம்</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🏆</span> சிறந்த நடைமுறை:</h4>
+                <p>Order பண்பைப் பயன்படுத்தும் போது:</p>
+                <ul>
+                    <li>முக்கிய உள்ளடக்க வரிசையை மாற்றாதீர்கள்</li>
+                    <li>அணுகலை சோதிக்கவும் (திரை வாசிப்பிகள்)</li>
+                    <li>சிறிய, காட்சி மாற்றங்களுக்கு மட்டுமே பயன்படுத்தவும்</li>
+                    <li>எப்போதும் HTML இல் அர்த்தமுள்ள வரிசையை வைத்திருங்கள்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>CSS கிரிட் ஆர்டர் பயிற்சி</h2>
+            
+            <p>கிரிட் உருப்படிகளின் order பண்பு பற்றிய உங்கள் அறிவை இந்தப் பயிற்சி சோதிக்கும்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> ஒரு கிரிட் உருப்படி காட்சி லேஅவுட்டில் முதலில் தோன்றுவதற்கு என்ன order மதிப்பு தேவை?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அதிகபட்ச order மதிப்பு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! அதிகபட்ச order மதிப்பு கடைசியாக வரும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">order: auto</div>
+                            <div class="option-feedback incorrect">✗ தவறு! order பண்புக்கு auto மதிப்பு இல்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">குறைந்த order மதிப்பு (எ.கா., order: 1 அல்லது order: -1)</div>
+                            <div class="option-feedback correct">✓ சரி! கிரிட் உருப்படிகள் அவற்றின் order மதிப்பின் ஏறுவரிசையில் வரிசைப்படுத்தப்படுகின்றன. குறைந்த order மதிப்பு முதலில் வரும்.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">order: first</div>
+                            <div class="option-feedback incorrect">✗ தவறு! first என்பது order பண்புக்கு சட்டபூர்வமான மதிப்பு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Grid%20Items%20-%20Alignment.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%2012-Column%20Grid%20Layout.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">காட்சி வரிசை அறிமுகம்</a></li>
+                    <li><a href="#example">எடுத்துக்காட்டு</a></li>
+                    <li><a href="#how-it-works">order பண்பு செயல்பாடு</a></li>
+                    <li><a href="#use-cases">நடைமுறை பயன்பாடுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

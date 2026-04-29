@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js API Authentication Guide - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js RESTful API.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js with Frontend Frameworks.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js API Authentication Guide</h2>
+            <p>உங்கள் Node.js APIகளைப் பாதுகாக்க முழுமையான அங்கீகார முறைகள் மற்றும் பாதுகாப்பு சிறந்த நடைமுறைகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is API Authentication -->
+        <section class="content-section" id="what-is-auth">
+            <h2>API அங்கீகாரம் என்றால் என்ன?</h2>
+            
+            <p>API அங்கீகாரம் என்பது உங்கள் Node.js APIகளை அணுகும் வாடிக்கையாளர்களின் அடையாளத்தை சரிபார்க்கும் செயல்முறையாகும்.</p>
+            
+            <p>இந்த விரிவான வழிகாட்டி பல்வேறு அங்கீகார முறைகள், பாதுகாப்பு சிறந்த நடைமுறைகள் மற்றும் செயல்படுத்தல் வடிவங்களை உள்ளடக்கியது, இது உங்கள் Node.js பயன்பாடுகளை திறம்பட பாதுகாக்க உதவுகிறது.</p>
+        </section>
+
+        <!-- Why API Authentication Matters -->
+        <section class="content-section" id="why-auth-matters">
+            <h2>API அங்கீகாரம் ஏன் முக்கியமானது</h2>
+            
+            <p>இன்றைய இணைக்கப்பட்ட உலகில், API பாதுகாப்பு விருப்பமானது அல்ல - இது ஒரு அவசியமாகும். சரியான அங்கீகாரம் உங்களுக்கு உதவுகிறது:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>பாதுகாப்பு நன்மைகள்</h4>
+                    </div>
+                    <ul>
+                        <li><strong>அணுகல் கட்டுப்பாடு:</strong> அங்கீகரிக்கப்பட்ட பயனர்களுக்கு மட்டுமே API அணுகலை கட்டுப்படுத்தவும்</li>
+                        <li><strong>தரவு பாதுகாப்பு:</strong> அங்கீகரிக்கப்படாத அணுகலிலிருந்து உணர்திறன் தகவல்களைப் பாதுகாக்கவும்</li>
+                        <li><strong>அடையாள சரிபார்ப்பு:</strong> பயனர்கள் யார் என்று கூறுகிறார்களோ அதை உறுதிப்படுத்தவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>வணிக நன்மைகள்</h4>
+                    </div>
+                    <ul>
+                        <li><strong>பயன்பாட்டு பகுப்பாய்வு:</strong> பயனர்/பயன்பாட்டின்படி API பயன்பாட்டைக் கண்காணிக்கவும்</li>
+                        <li><strong>மொனடிசேஷன்:</strong> பயன்பாட்டை அடிப்படையாகக் கொண்ட பில்லிங் மாதிரிகளை செயல்படுத்தவும்</li>
+                        <li><strong>இணக்க தன்மை:</strong> ஒழுங்குமுறை தேவைகளைப் பூர்த்தி செய்யவும் (GDPR, HIPAA, முதலியன)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Authentication Methods Overview -->
+        <section class="content-section" id="auth-methods-overview">
+            <h2>அங்கீகார முறைகள் கண்ணோட்டம்</h2>
+            
+            <p>வெவ்வேறு அங்கீகார முறைகள் வெவ்வேறு பயன்பாட்டு வழக்குகளுக்கு சேவை செய்கின்றன. இங்கே ஒரு விரைவான ஒப்பீடு:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>சிறந்தது</th>
+                            <th>சிக்கலான தன்மை</th>
+                            <th>பாதுகாப்பு நிலை</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Session-Based</strong></td>
+                            <td>பாரம்பரிய வலை பயன்பாடுகள்</td>
+                            <td>குறைந்த</td>
+                            <td>நடுத்தர</td>
+                        </tr>
+                        <tr>
+                            <td><strong>JWT (Token-Based)</strong></td>
+                            <td>SPAs, மொபைல் பயன்பாடுகள்</td>
+                            <td>நடுத்தர</td>
+                            <td>அதிக</td>
+                        </tr>
+                        <tr>
+                            <td><strong>API Keys</strong></td>
+                            <td>சேவையகம்-க்கு-சேவையகம்</td>
+                            <td>குறைந்த</td>
+                            <td>குறைந்த-நடுத்தர</td>
+                        </tr>
+                        <tr>
+                            <td><strong>OAuth 2.0</strong></td>
+                            <td>மூன்றாம் தரப்பு அணுகல்</td>
+                            <td>அதிக</td>
+                            <td>மிக அதிக</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Session-Based Authentication -->
+        <section class="content-section" id="session-auth">
+            <h2>Session-Based அங்கீகாரம்</h2>
+            
+            <p>Session-based அங்கீகாரம் பயனர் நிலையை பராமரிக்க குக்கீகளைப் பயன்படுத்துகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const app = express();
+
+// Parse request bodies
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configure sessions
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000 } // 24 hours
+}));
+
+// Sample user database
+const users = [
+  { id: 1, username: 'user1', password: 'password1' }
+];
+
+// Login route
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+ 
+  // Find user
+  const user = users.find(u => u.username === username && u.password === password);
+ 
+  if (!user) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+ 
+  // Store user information in session (excluding password)
+  req.session.user = {
+    id: user.id,
+    username: user.username
+  };
+ 
+  res.json({ message: 'Login successful', user: req.session.user });
+});
+
+// Protected route
+app.get('/profile', (req, res) => {
+  // Check if user is logged in
+  if (!req.session.user) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+ 
+  res.json({ message: 'Profile accessed', user: req.session.user });
+});
+
+// Logout route
+app.post('/logout', (req, res) => {
+  // Destroy session
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Logout failed' });
+    }
+    res.json({ message: 'Logout successful' });
+  });
+});
+
+// Start server
+app.listen(8080, () => {
+  console.log('Server running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Token-Based Authentication (JWT) -->
+        <section class="content-section" id="jwt-auth">
+            <h2>Token-Based அங்கீகாரம் (JWT)</h2>
+            
+            <p>JSON Web Tokens (JWT) ஒரு நிலையற்ற அங்கீகார பொறிமுறையை வழங்குகின்றன, இது கச்சிதமானது மற்றும் சுய-கொண்டுள்ளது.</p>
+            
+            <p>Session-based அங்கீகாரத்தைப் போலல்லாமல், token-based அங்கீகாரம் (JWT) ஒரு சேவையகம் அமர்வு தரவை சேமிக்க தேவையில்லை.</p>
+            
+            <p>இது நிலையற்ற API கட்டமைப்பு மற்றும் மைக்ரோசர்விசுகளுக்கு ஏற்றது.</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.json());
+
+const JWT_SECRET = 'your-jwt-secret-key';
+
+// Sample user database
+const users = [
+  { id: 1, username: 'user1', password: 'password1', role: 'user' }
+];
+
+// Login route - generate token
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Find user
+  const user = users.find(u => u.username === username && u.password === password);
+
+  if (!user) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+
+  // Create payload for JWT
+  const payload = {
+    id: user.id,
+    username: user.username,
+    role: user.role
+  };
+
+  // Sign token
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+
+  res.json({ message: 'Login successful', token });
+});
+
+// Middleware for JWT verification
+const authenticateJWT = (req, res, next) => {
+  // Get auth header - The Authorization header is commonly used to send authentication tokens
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
+
+  // Extract token from "Bearer <token>"
+  const token = authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Token missing' });
+  }
+
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    // Attach user to request
+    req.user = decoded;
+
+    next();
+  } catch (error) {
+    return res.status(403).json({ message: 'Invalid or expired token' });
+  }
+};
+
+// Protected route
+app.get('/profile', authenticateJWT, (req, res) => {
+  res.json({ message: 'Profile accessed', user: req.user });
+});
+
+// Role-based route
+app.get('/admin', authenticateJWT, (req, res) => {
+  // Check if user has admin role
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied: admin role required' });
+  }
+
+  res.json({ message: 'Admin panel accessed' });
+});
+
+// Start server
+app.listen(8080, () => {
+  console.log('Server running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- OAuth 2.0 Authentication -->
+        <section class="content-section" id="oauth-auth">
+            <h2>OAuth 2.0 அங்கீகாரம்</h2>
+            
+            <p>OAuth 2.0 என்பது அங்கீகாரத்திற்கான தொழில் தர நெறிமுறையாகும், இது HTTP சேவைகளில் பயனர் கணக்குகளுக்கு வரையறுக்கப்பட்ட அணுகலைப் பெற பயன்பாடுகளை இயக்குகிறது.</p>
+            
+            <p>இது பயனர் அங்கீகாரத்தை பயனர் கணக்கை வைத்திருக்கும் சேவைக்கு ஒப்படைப்பதன் மூலம் வேலை செய்கிறது.</p>
+            
+            <h3>OAuth 2.0 ஃப்ளோ கண்ணோட்டம்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-mouse-pointer"></i>
+                    <span>பயனர் உங்கள் பயன்பாட்டில் "Login with [Provider]" ஐக் கிளிக் செய்கிறார்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>பயனர் வழங்குநரின் உள்நுழைவு பக்கத்திற்கு திருப்பி விடப்படுகிறார்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-user-check"></i>
+                    <span>பயனர் அங்கீகரிக்கப்பட்டு உங்கள் பயன்பாட்டிற்கு அங்கீகாரம் அளிக்கிறார்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-redo"></i>
+                    <span>வழங்குநர் ஒரு அங்கீகார குறியீட்டுடன் உங்கள் பயன்பாட்டிற்கு திருப்பி விடுகிறார்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>உங்கள் பயன்பாடு குறியீட்டை அணுகல் டோக்கனுக்கு பரிமாறுகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span>உங்கள் பயன்பாடு இப்போது பயனரின் தரவை அணுகலாம் (அங்கீகரிக்கப்பட்ட நோக்கத்திற்குள்)</span>
+                </div>
+            </div>
+            
+            <h3>Passport.js உடன் செயல்படுத்தல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const session = require('express-session');
+const app = express();
+
+// Configure sessions for OAuth 2.0
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: process.env.NODE_ENV === 'production' }
+}));
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Configure Google OAuth 2.0 strategy
+passport.use(new GoogleStrategy({
+    clientID: 'YOUR_GOOGLE_CLIENT_ID',
+    clientSecret: 'YOUR_GOOGLE_CLIENT_SECRET',
+    callbackURL: 'http://localhost:8080/auth/google/callback'
+  },
+  (accessToken, refreshToken, profile, done) => {
+    // In a real app, you'd find or create a user in your database
+    const user = {
+      id: profile.id,
+      displayName: profile.displayName,
+      email: profile.emails[0].value,
+      provider: 'google'
+    };
+   
+    return done(null, user);
+  }
+));
+
+// Serialize user for session
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+// Deserialize user from session
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+// Routes for Google OAuth
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    // Successful authentication
+    res.redirect('/profile');
+  }
+);
+
+// Middleware to check authentication
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+};
+
+// Protected route
+app.get('/profile', isAuthenticated, (req, res) => {
+  res.json({ user: req.user });
+});
+
+// Logout route
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
+// Start server
+app.listen(8080, () => {
+  console.log('Server running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- API Key Authentication -->
+        <section class="content-section" id="api-key-auth">
+            <h2>API Key அங்கீகாரம்</h2>
+            
+            <p>API விசைகள் உங்கள் APIக்கு வாடிக்கையாளர்களை அங்கீகரிக்க ஒரு எளிய வழியாகும்.</p>
+            
+            <p>சேவையகம்-க்கு-சேவையகம் தகவல்தொடர்புக்கு அல்லது பயனர் சூழல் இல்லாமல் அழைக்கும் திட்டத்தை அடையாளம் காண வேண்டிய போது அவை மிகவும் பொருத்தமானவை.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔑</span> API விசைகளுக்கான சிறந்த நடைமுறைகள்:</h4>
+                <ul>
+                    <li>விசைகளை பாதுகாப்பாக சேமிக்கவும் (சூழல் மாறிகள், ரகசிய மேலாண்மை சேவைகள்)</li>
+                    <li>விசைகளை தவறாமல் சுழற்றவும்</li>
+                    <li>விசை வெளிப்பாட்டைத் தடுக்க HTTPS ஐப் பயன்படுத்தவும்</li>
+                    <li>ஒரு விசைக்கு விகிதம் கட்டுப்பாட்டை செயல்படுத்தவும்</li>
+                </ul>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const app = express();
+
+// Sample API keys database
+const apiKeys = [
+  { key: 'api-key-1', owner: 'client1', permissions: ['read'] },
+  { key: 'api-key-2', owner: 'client2', permissions: ['read', 'write'] }
+];
+
+// Middleware for API key authentication
+const authenticateApiKey = (req, res, next) => {
+  // Get API key from header or query parameter
+  const apiKey = req.headers['x-api-key'] || req.query.api_key;
+ 
+  if (!apiKey) {
+    return res.status(401).json({ message: 'API key missing' });
+  }
+ 
+  // Find API key in database
+  const keyData = apiKeys.find(k => k.key === apiKey);
+ 
+  if (!keyData) {
+    return res.status(403).json({ message: 'Invalid API key' });
+  }
+ 
+  // Attach key data to request
+  req.apiKeyData = keyData;
+ 
+  next();
+};
+
+// Protected route with API key
+app.get('/data', authenticateApiKey, (req, res) => {
+  res.json({
+    message: 'Data accessed',
+    client: req.apiKeyData.owner,
+    data: { example: 'API data' }
+  });
+});
+
+// Route requiring specific permission
+app.post('/data', authenticateApiKey, (req, res) => {
+  // Check if client has write permission
+  if (!req.apiKeyData.permissions.includes('write')) {
+    return res.status(403).json({ message: 'Insufficient permissions' });
+  }
+ 
+  res.json({ message: 'Data created successfully' });
+});
+
+// Start server
+app.listen(8080, () => {
+  console.log('Server running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Basic Authentication -->
+        <section class="content-section" id="basic-auth">
+            <h2>Basic அங்கீகாரம்</h2>
+            
+            <p>HTTP Basic அங்கீகாரம் Authorization தலைப்பில் குறியிடப்பட்ட சான்றுகளைப் பயன்படுத்துகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const app = express();
+
+// Sample user database
+const users = [
+  { username: 'user1', password: 'password1' }
+];
+
+// Basic authentication middleware
+const basicAuth = (req, res, next) => {
+  // Get Authorization header
+  const authHeader = req.headers.authorization;
+ 
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
+    // If no credentials provided, request authentication
+    res.setHeader('WWW-Authenticate', 'Basic realm="API Authentication"');
+    return res.status(401).json({ message: 'Authentication required' });
+  }
+ 
+  // Extract and decode credentials
+  const encodedCredentials = authHeader.split(' ')[1];
+  const decodedCredentials = Buffer.from(encodedCredentials, 'base64').toString('utf-8');
+  const [username, password] = decodedCredentials.split(':');
+ 
+  // Validate credentials
+  const user = users.find(u => u.username === username && u.password === password);
+ 
+  if (!user) {
+    res.setHeader('WWW-Authenticate', 'Basic realm="API Authentication"');
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+ 
+  // Attach user to request
+  req.user = { username: user.username };
+ 
+  next();
+};
+
+// Protected route
+app.get('/api/data', basicAuth, (req, res) => {
+  res.json({
+    message: 'Data accessed',
+    user: req.user.username,
+    data: { example: 'Sensitive data' }
+  });
+});
+
+// Start server
+app.listen(8080, () => {
+  console.log('Server running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Multi-Factor Authentication (MFA) -->
+        <section class="content-section" id="mfa-auth">
+            <h2>Multi-Factor Authentication (MFA)</h2>
+            
+            <p>நேரம்-அடிப்படையிலான ஒரு-முறை கடவுச்சொற்கள் (TOTP) மூலம் கூடுதல் பாதுகாப்பு அடுக்கைச் சேர்த்தல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const bodyParser = require('body-parser');
+const speakeasy = require('speakeasy');
+const QRCode = require('qrcode');
+const jwt = require('jsonwebtoken');
+const app = express();
+
+app.use(bodyParser.json());
+
+// In-memory database (use a real database in production)
+const users = [];
+const JWT_SECRET = 'your-jwt-secret-key';
+
+// Step 1: Register a user and set up MFA
+app.post('/register', (req, res) => {
+  const { username, password } = req.body;
+ 
+  // Check if user already exists
+  if (users.find(u => u.username === username)) {
+    return res.status(400).json({ message: 'Username already exists' });
+  }
+ 
+  // Generate secret for TOTP
+  const secret = speakeasy.generateSecret({
+    name: `MyApp:${username}`
+  });
+ 
+  // Create user
+  const newUser = {
+    id: users.length + 1,
+    username,
+    password, // In production, hash passwords!
+    mfaSecret: secret.base32,
+    mfaEnabled: false
+  };
+ 
+  users.push(newUser);
+ 
+  // Generate QR code for TOTP setup
+  QRCode.toDataURL(secret.otpauth_url, (err, dataUrl) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error generating QR code' });
+    }
+   
+    res.json({
+      message: 'User registered. Please set up MFA.',
+      user: {
+        id: newUser.id,
+        username: newUser.username
+      },
+      mfaSecret: secret.base32,
+      qrCode: dataUrl
+    });
+  });
+});
+
+// Step 2: Verify and enable MFA
+app.post('/verify-mfa', (req, res) => {
+  const { username, token } = req.body;
+ 
+  // Find user
+  const user = users.find(u => u.username === username);
+ 
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+ 
+  // Verify token against user's secret
+  const verified = speakeasy.totp.verify({
+    secret: user.mfaSecret,
+    encoding: 'base32',
+    token
+  });
+ 
+  if (!verified) {
+    return res.status(400).json({ message: 'Invalid MFA token' });
+  }
+ 
+  // Enable MFA for user
+  user.mfaEnabled = true;
+ 
+  res.json({ message: 'MFA enabled successfully' });
+});
+
+// Step 3: Login with MFA
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+ 
+  // Find user
+  const user = users.find(u => u.username === username && u.password === password);
+ 
+  if (!user) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+ 
+  // Check if MFA is enabled
+  if (user.mfaEnabled) {
+    return res.json({
+      message: 'Password verified. MFA token required.',
+      requireMFA: true,
+      userId: user.id
+    });
+  }
+ 
+  // If MFA not enabled, generate token directly
+  const token = jwt.sign(
+    { id: user.id, username: user.username },
+    JWT_SECRET,
+    { expiresIn: '1h' }
+  );
+ 
+  res.json({ message: 'Login successful', token });
+});
+
+// Step 4: Verify MFA token and complete login
+app.post('/verify-login', (req, res) => {
+  const { userId, mfaToken } = req.body;
+ 
+  // Find user
+  const user = users.find(u => u.id === userId);
+ 
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+ 
+  // Verify MFA token
+  const verified = speakeasy.totp.verify({
+    secret: user.mfaSecret,
+    encoding: 'base32',
+    token: mfaToken
+  });
+ 
+  if (!verified) {
+    return res.status(401).json({ message: 'Invalid MFA token' });
+  }
+ 
+  // Generate JWT token
+  const token = jwt.sign(
+    { id: user.id, username: user.username },
+    JWT_SECRET,
+    { expiresIn: '1h' }
+  );
+ 
+  res.json({ message: 'Login successful', token });
+});
+
+// Start server
+app.listen(8080, () => {
+  console.log('Server running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Security Best Practices -->
+        <section class="content-section" id="security-best-practices">
+            <h2>பாதுகாப்பு சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> முக்கியமானது:</h4>
+                <p>அங்கீகாரத்தை செயல்படுத்தும் போது பாதுகாப்பு விருப்பமானது அல்ல. உங்கள் பயன்பாடு மற்றும் பயனர்களைப் பாதுகாக்க இந்த சிறந்த நடைமுறைகளைப் பின்பற்றவும்.</p>
+            </div>
+            
+            <h3>கடவுச்சொல் பாதுகாப்பு</h3>
+            <ul>
+                <li><strong>எப்போதும் வெற்று உரை கடவுச்சொற்களை சேமிக்க வேண்டாம்</strong> - bcrypt அல்லது Argon2 போன்ற வலுவான ஹாஷிங் அல்காரிதம்களை எப்போதும் பயன்படுத்தவும்</li>
+                <li><strong>வலுவான கடவுச்சொற்களைக் கட்டாயப்படுத்தவும்</strong> - குறைந்தபட்ச நீளம், சிறப்பு எழுத்துக்கள் மற்றும் எண்கள் தேவை</li>
+                <li><strong>கடவுச்சொல் சுழற்சியை செயல்படுத்தவும்</strong> - பயனர்களை காலமுறையில் கடவுச்சொற்களை மாற்றும்படி கேட்கவும்</li>
+            </ul>
+            
+            <h3>டோக்கன் பாதுகாப்பு</h3>
+            <ul>
+                <li><strong>குறுகிய கால அணுகல் டோக்கன்களைப் பயன்படுத்தவும்</strong> - 15-60 நிமிடங்கள் பொதுவானது</li>
+                <li><strong>ரிஃப்ரெஷ் டோக்கன்களை செயல்படுத்தவும்</strong> - மீண்டும் அங்கீகாரம் இல்லாமல் புதிய அணுகல் டோக்கன்களைப் பெறுவதற்கு</li>
+                <li><strong>டோக்கன்களை பாதுகாப்பாக சேமிக்கவும்</strong> - வலை பயன்பாடுகளுக்கு HTTP-மட்டும், பாதுகாப்பான, அதே-தள குக்கீகளைப் பயன்படுத்தவும்</li>
+            </ul>
+            
+            <h3>பொது பாதுகாப்பு</h3>
+            <ul>
+                <li><strong>எப்போதும் HTTPS ஐப் பயன்படுத்தவும்</strong> - அனைத்து போக்குவரத்தையும் குறியாக்கம் செய்யவும்</li>
+                <li><strong>விகிதம் கட்டுப்பாட்டை செயல்படுத்தவும்</strong> - ப்ரூட் ஃபோர்ஸ் தாக்குதல்களைத் தடுக்கவும்</li>
+                <li><strong>பாதுகாப்பு தலைப்புகளைப் பயன்படுத்தவும்</strong> - CSP, X-Content-Type-Options, X-Frame-Options போன்றவை</li>
+                <li><strong>பதிவு செய்து கண்காணிக்கவும்</strong> - அங்கீகார முயற்சிகளின் ஆடிட் பதிவுகளை வைத்திருங்கள்</li>
+            </ul>
+            
+            <h3>OAuth 2.0 பாதுகாப்பு</h3>
+            <ul>
+                <li><strong>PKCE ஐப் பயன்படுத்தவும்</strong> - பொது வாடிக்கையாளர்களுக்கு (மொபைல்/நேட்டிவ் பயன்பாடுகள்)</li>
+                <li><strong>திருப்பி விடும் URIகளை சரிபார்க்கவும்</strong> - திறந்த திருப்பி விடும் பாதிப்புகளைத் தடுக்கவும்</li>
+                <li><strong>வாடிக்கையாளர் ரகசியங்களை பாதுகாப்பாக சேமிக்கவும்</strong> - பதிப்பு கட்டுப்பாட்டில் ஒருபோதும் இல்லை</li>
+            </ul>
+            
+            <h3>எடுத்துக்காட்டு: bcrypt உடன் பாதுகாப்பான கடவுச்சொல் ஹாஷிங்</h3>
+            
+            <div class="code-example">
+                <pre><code>const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+// Hashing a password
+async function hashPassword(plainPassword) {
+  return await bcrypt.hash(plainPassword, saltRounds);
+}
+
+// Verifying a password
+async function verifyPassword(plainPassword, hashedPassword) {
+  return await bcrypt.compare(plainPassword, hashedPassword);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Combining Authentication Methods -->
+        <section class="content-section" id="combining-auth">
+            <h2>அங்கீகார முறைகளை இணைத்தல்</h2>
+            
+            <p>நிஜ உலக பயன்பாடுகளில், நீங்கள் பெரும்பாலும் பல அங்கீகார முறைகளை இணைக்க வேண்டும்:</p>
+            
+            <div class="code-example">
+                <pre><code>// JWT authentication with API rate limiting and refresh tokens
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.json());
+
+// Configure rate limiting
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 attempts per window
+  message: 'Too many login attempts, please try again later'
+});
+
+// JWT configuration
+const JWT_SECRET = 'your-jwt-secret-key';
+const JWT_REFRESH_SECRET = 'your-refresh-token-secret';
+
+// Token storage (use a database in production)
+const tokenBlacklist = new Set();
+const refreshTokens = new Set();
+
+// Login route with rate limiting
+app.post('/login', loginLimiter, (req, res) => {
+  const { username, password } = req.body;
+ 
+  // Authentication logic (simplified)
+  if (username !== 'user1' || password !== 'password1') {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+ 
+  // Generate tokens
+  const accessToken = jwt.sign(
+    { id: 1, username },
+    JWT_SECRET,
+    { expiresIn: '15m' } // Short-lived access token
+  );
+ 
+  const refreshToken = jwt.sign(
+    { id: 1, username },
+    JWT_REFRESH_SECRET,
+    { expiresIn: '7d' } // Longer-lived refresh token
+  );
+ 
+  // Store refresh token
+  refreshTokens.add(refreshToken);
+ 
+  res.json({
+    message: 'Login successful',
+    accessToken,
+    refreshToken
+  });
+});
+
+// Refresh token route
+app.post('/refresh-token', (req, res) => {
+  const { refreshToken } = req.body;
+ 
+  if (!refreshToken) {
+    return res.status(401).json({ message: 'Refresh token required' });
+  }
+ 
+  // Check if token exists and is not blacklisted
+  if (!refreshTokens.has(refreshToken)) {
+    return res.status(403).json({ message: 'Invalid refresh token' });
+  }
+ 
+  try {
+    // Verify refresh token
+    const decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET);
+   
+    // Generate new access token
+    const accessToken = jwt.sign(
+      { id: decoded.id, username: decoded.username },
+      JWT_SECRET,
+      { expiresIn: '15m' }
+    );
+   
+    res.json({
+      message: 'Token refreshed',
+      accessToken
+    });
+  } catch (error) {
+    // Remove invalid refresh token
+    refreshTokens.delete(refreshToken);
+   
+    return res.status(403).json({ message: 'Invalid or expired refresh token' });
+  }
+});
+
+// JWT verification middleware
+const authenticateJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+ 
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Authorization header required' });
+  }
+ 
+  const token = authHeader.split(' ')[1];
+ 
+  // Check if token is blacklisted
+  if (tokenBlacklist.has(token)) {
+    return res.status(403).json({ message: 'Token revoked' });
+  }
+ 
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(403).json({ message: 'Invalid or expired token' });
+  }
+};
+
+// Logout route
+app.post('/logout', authenticateJWT, (req, res) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader.split(' ')[1];
+  const { refreshToken } = req.body;
+ 
+  // Blacklist the current access token
+  tokenBlacklist.add(token);
+ 
+  // Remove refresh token if provided
+  if (refreshToken) {
+    refreshTokens.delete(refreshToken);
+  }
+ 
+  res.json({ message: 'Logout successful' });
+});
+
+// Protected route
+app.get('/protected', authenticateJWT, (req, res) => {
+  res.json({
+    message: 'Protected resource accessed',
+    user: req.user
+  });
+});
+
+// Start server
+app.listen(8080, () => {
+  console.log('Server running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- HTTP Headers for Authentication -->
+        <section class="content-section" id="http-headers">
+            <h2>அங்கீகாரத்திற்கான HTTP தலைப்புகள்</h2>
+            
+            <p>API அங்கீகாரத்தை செயல்படுத்தும் போது, பயன்படுத்தப்படும் HTTP தலைப்புகள் முக்கியமானவை:</p>
+            
+            <ul>
+                <li><strong>Authorization தலைப்பு:</strong> இது பெரும்பாலான API அங்கீகார உத்திகளில் அங்கீகார டோக்கன்களை அனுப்ப பயன்படும் நிலையான HTTP தலைப்பாகும், இதில் JWT, OAuth மற்றும் Basic Auth ஆகியவை அடங்கும்</li>
+                <li><strong>பொதுவான வடிவம்:</strong> JWT மற்றும் OAuth 2.0 க்கு Authorization: Bearer &lt;token&gt;</li>
+                <li><strong>Basic Auth க்கான வடிவம்:</strong> Authorization: Basic &lt;base64-encoded-credentials&gt;</li>
+            </ul>
+        </section>
+
+        <!-- Authentication Strategies for Different API Types -->
+        <section class="content-section" id="auth-strategies">
+            <h2>வெவ்வேறு API வகைகளுக்கான அங்கீகார உத்திகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>API வகை</th>
+                            <th>பரிந்துரைக்கப்பட்ட அங்கீகாரம்</th>
+                            <th>கருத்தில் கொள்ள வேண்டியவை</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>பொது API</strong></td>
+                            <td>API விசைகள்</td>
+                            <td>செயல்படுத்த எளிதானது, பயன்பாட்டைக் கண்காணிக்க சிறந்தது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>சேவை-க்கு-சேவை API</strong></td>
+                            <td>JWT (நிலையற்ற) அல்லது பரஸ்பர TLS</td>
+                            <td>குறைந்தபட்ச மேல்நிலை, அதிக பாதுகாப்பு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>மொபைல்/வலை பயன்பாடு API</strong></td>
+                            <td>OAuth 2.0 + JWT</td>
+                            <td>நல்ல பயனர் அனுபவம், மூன்றாம் தரப்பு அங்கீகாரத்தை கையாள்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ஒற்றை-பக்கம் பயன்பாடு API</strong></td>
+                            <td>ரிஃப்ரெஷ் டோக்கன்களுடன் JWT</td>
+                            <td>முன்-முனை கட்டமைப்புகளுடன் நன்றாக வேலை செய்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IoT சாதனம் API</strong></td>
+                            <td>வாடிக்கையாளர் சான்றிதழ்கள் அல்லது API விசைகள்</td>
+                            <td>வரையறுக்கப்பட்ட சாதன திறன்களை கையாள்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="content-section" id="conclusion">
+            <h2>முடிவுரை</h2>
+            
+            <p>நீங்கள் இப்போது Node.js APIகளுக்கான அத்தியாவசிய அங்கீகார முறைகளை ஆராய்ந்துள்ளீர்கள். நாங்கள் உள்ளடக்கியவற்றின் விரைவான மறுபரிசீலனை இங்கே:</p>
+            
+            <h3>அங்கீகார முறைகள்</h3>
+            <ul>
+                <li><strong>Session-based</strong> - சேவையக-பக்க அமர்வுகளைப் பயன்படுத்தும் பாரம்பரிய அணுகுமுறை</li>
+                <li><strong>JWT Tokens</strong> - விநியோகிக்கப்பட்ட அமைப்புகளுக்கான நிலையற்ற டோக்கன்கள்</li>
+                <li><strong>OAuth 2.0</strong> - மூன்றாம் தரப்பு அங்கீகாரத்திற்கான தொழில் தரநிலை</li>
+                <li><strong>API Keys</strong> - சேவையகம்-க்கு-சேவையகம் தகவல்தொடர்புக்கான எளிய அங்கீகாரம்</li>
+            </ul>
+            
+            <h3>பாதுகாப்பு அத்தியாவசியங்கள்</h3>
+            <ul>
+                <li>எப்போதும் HTTPS ஐப் பயன்படுத்தவும்</li>
+                <li>கடவுச்சொற்களை bcrypt/Argon2 உடன் ஹாஷ் செய்யவும்</li>
+                <li>குறுகிய கால டோக்கன்களைப் பயன்படுத்தவும்</li>
+                <li>விகிதம் கட்டுப்பாட்டை செயல்படுத்தவும்</li>
+            </ul>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான HTTP தலைப்பு பெயரை இழுத்து விடவும்.</h4>
+                <p>அங்கீகார டோக்கன்களை அனுப்ப பொதுவாக <strong>______</strong> தலைப்பு பயன்படுத்தப்படுகிறது.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Authentication</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "Authentication" தலைப்பு அங்கீகார டோக்கன்களை அனுப்ப பொதுவாக பயன்படுத்தப்படுவதில்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">X-Auth-Token</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "X-Auth-Token" ஒரு தனிப்பயன் தலைப்பாகும், ஆனால் நிலையான தலைப்பு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">Authorization</div>
+                            <div class="option-feedback correct">✓ சரி! "Authorization" தலைப்பு JWT, OAuth மற்றும் Basic Auth உட்பட பெரும்பாலான API அங்கீகார உத்திகளில் அங்கீகார டோக்கன்களை அனுப்ப பொதுவாக பயன்படும் நிலையான HTTP தலைப்பாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">X-API-Key</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "X-API-Key" தலைப்பு API விசை அங்கீகாரத்திற்கு பயன்படுத்தப்படுகிறது, ஆனால் பொதுவான அங்கீகார டோக்கன்களுக்கு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js RESTful API.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js with Frontend Frameworks.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-auth">API அங்கீகாரம் என்றால் என்ன</a></li>
+                    <li><a href="#session-auth">Session-Based அங்கீகாரம்</a></li>
+                    <li><a href="#jwt-auth">JWT அங்கீகாரம்</a></li>
+                    <li><a href="#oauth-auth">OAuth 2.0 அங்கீகாரம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

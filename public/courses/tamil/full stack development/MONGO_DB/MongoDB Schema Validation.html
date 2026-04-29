@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Schema Validation - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Indexing & Search.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MongoDB Data API.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MongoDB Schema Validation</h2>
+            <p>ஸ்கீமா சரிபார்ப்பைப் புரிந்துகொள்வது</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Schema Validation -->
+        <section class="content-section" id="schema-validation">
+            <h2>Schema Validation</h2>
+            
+            <p>இயல்பாக MongoDB ஒரு நெகிழ்வான ஸ்கீமாவைக் கொண்டுள்ளது. இதன் பொருள் ஆரம்பத்தில் கடுமையான ஸ்கீமா சரிபார்ப்பு அமைக்கப்படவில்லை.</p>
+            
+            <p>ஒரு கலெக்ஷனில் உள்ள அனைத்து ஆவணங்களும் ஒரே மாதிரியான கட்டமைப்பைப் பகிர்ந்து கொள்கின்றன என்பதை உறுதிப்படுத்த ஸ்கீமா சரிபார்ப்பு விதிகளை உருவாக்கலாம்.</p>
+        </section>
+
+        <!-- Schema Validation Details -->
+        <section class="content-section" id="validation-details">
+            <h2>Schema Validation</h2>
+            
+            <p>MongoDB JSON Schema சரிபார்ப்பை ஆதரிக்கிறது. $jsonSchema ஆபரேட்டர் எங்கள் ஆவண கட்டமைப்பை வரையறுக்க அனுமதிக்கிறது.</p>
+        </section>
+
+        <!-- Example -->
+        <section class="content-section" id="example">
+            <h2>எடுத்துக்காட்டு</h2>
+            
+            <div class="code-example">
+                <pre><code>db.createCollection("posts", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [ "title", "body" ],
+      properties: {
+        title: {
+          bsonType: "string",
+          description: "Title of post - Required."
+        },
+        body: {
+          bsonType: "string",
+          description: "Body of post - Required."
+        },
+        category: {
+          bsonType: "string",
+          description: "Category of post - Optional."
+        },
+        likes: {
+          bsonType: "int",
+          description: "Post like count. Must be an integer - Optional."
+        },
+        tags: {
+          bsonType: ["string"],
+          description: "Must be an array of strings - Optional."
+        },
+        date: {
+          bsonType: "date",
+          description: "Must be a date - Optional."
+        }
+      }
+    }
+  }
+})</code></pre>
+            </div>
+            
+            <p>இது தற்போதைய தரவுத்தளத்தில் posts கலெக்ஷனை உருவாக்கும் மற்றும் கலெக்ஷனுக்கான JSON Schema சரிபார்ப்பு தேவைகளைக் குறிப்பிடும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                <p>இந்த ஸ்கீமா சரிபார்ப்பு விதிகள் பின்வருவனவற்றை உறுதி செய்கின்றன:</p>
+                <ul>
+                    <li><strong>title</strong> மற்றும் <strong>body</strong> புலங்கள் கட்டாயமாகும் (required)</li>
+                    <li><strong>title</strong> மற்றும் <strong>body</strong> சரம் வகையாக இருக்க வேண்டும்</li>
+                    <li><strong>category</strong> விருப்பமானது மற்றும் சரம் வகையாக இருக்க வேண்டும்</li>
+                    <li><strong>likes</strong> விருப்பமானது மற்றும் முழு எண் வகையாக இருக்க வேண்டும்</li>
+                    <li><strong>tags</strong> விருப்பமானது மற்றும் சரங்களின் வரிசையாக இருக்க வேண்டும்</li>
+                    <li><strong>date</strong> விருப்பமானது மற்றும் தேதி வகையாக இருக்க வேண்டும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MongoDB இல் ஸ்கீமா சரிபார்ப்பை வரையறுக்க எந்த ஆபரேட்டர் பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">$validateSchema</div>
+                            <div class="option-feedback incorrect">✗ தவறு! $validateSchema என்பது செல்லுபடியாகும் ஆபரேட்டர் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">$schema</div>
+                            <div class="option-feedback incorrect">✗ தவறு! $schema என்பது செல்லுபடியாகும் ஆபரேட்டர் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">$jsonSchema</div>
+                            <div class="option-feedback correct">✓ சரி! $jsonSchema ஆபரேட்டர் JSON Schema சரிபார்ப்பை வரையறுக்க பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">$documentSchema</div>
+                            <div class="option-feedback incorrect">✗ தவறு! $documentSchema என்பது செல்லுபடியாகும் ஆபரேட்டர் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Indexing & Search.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MongoDB Data API.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#schema-validation">Schema Validation</a></li>
+                    <li><a href="#validation-details">ஸ்கீமா சரிபார்ப்பு விவரங்கள்</a></li>
+                    <li><a href="#example">எடுத்துக்காட்டு</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

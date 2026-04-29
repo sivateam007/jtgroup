@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS AJAX - $http - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="AngularJS Services.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="AngularJS Tables.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>AngularJS AJAX - $http</h2>
+            <p>AngularJS $http சேவையைப் பயன்படுத்தி தரவுகளை படிக்கவும்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>AngularJS AJAX - $http</h2>
+            
+            <p>$http என்பது தொலை தரவு சேவையகங்களில் இருந்து தரவுகளைப் படிக்க AngularJS வழங்கும் ஒரு சேவையாகும்.</p>
+        </section>
+
+        <!-- AngularJS $http -->
+        <section class="content-section" id="http-service">
+            <h2>AngularJS $http</h2>
+            
+            <p>AngularJS $http சேவை சேவையகத்திற்கு கோரிக்கையை அனுப்பி, பதிலைத் திரும்பப் பெறுகிறது.</p>
+            
+            <h3>உதாரணம்</h3>
+            
+            <p>சேவையகத்திற்கு எளிய கோரிக்கையை அனுப்பி, முடிவை தலைப்பில் காண்பிக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;div ng-app="myApp" ng-controller="myCtrl"&gt;
+
+&lt;p&gt;இன்றைய வரவேற்பு செய்தி:&lt;/p&gt;
+&lt;h1&gt;{{myWelcome}}&lt;/h1&gt;
+
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+  $http.get("welcome.htm")
+  .then(function(response) {
+    $scope.myWelcome = response.data;
+  });
+});
+&lt;/script&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Methods -->
+        <section class="content-section" id="methods">
+            <h2>முறைகள்</h2>
+            
+            <p>மேலே உள்ள உதாரணம் $http சேவையின் .get முறையைப் பயன்படுத்துகிறது.</p>
+            
+            <p>.get முறை $http சேவையின் குறுகிய முறையாகும்.</p>
+            
+            <p>பல குறுகிய முறைகள் உள்ளன:</p>
+            
+            <ul>
+                <li>.delete()</li>
+                <li>.get()</li>
+                <li>.head()</li>
+                <li>.jsonp()</li>
+                <li>.patch()</li>
+                <li>.post()</li>
+                <li>.put()</li>
+            </ul>
+            
+            <p>மேலே உள்ள முறைகள் அனைத்தும் $http சேவையை அழைப்பதன் குறுகிய வழிகளாகும்:</p>
+            
+            <h3>உதாரணம்</h3>
+            
+            <div class="code-example">
+                <pre><code>var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+  $http({
+    method : "GET",
+    url : "welcome.htm"
+  }).then(function mySuccess(response) {
+    $scope.myWelcome = response.data;
+  }, function myError(response) {
+    $scope.myWelcome = response.statusText;
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள உதாரணம் ஒரு பொருளை வாதமாகப் பயன்படுத்தி $http சேவையை செயல்படுத்துகிறது.</p>
+            
+            <p>இந்த பொருள் HTTP முறை, URL, வெற்றியடைந்தால் என்ன செய்ய வேண்டும் மற்றும் தோல்வியடைந்தால் என்ன செய்ய வேண்டும் என்பதைக் குறிப்பிடுகிறது.</p>
+        </section>
+
+        <!-- Properties -->
+        <section class="content-section" id="properties">
+            <h2>பண்புகள்</h2>
+            
+            <p>சேவையகத்திலிருந்து வரும் பதில் பின்வரும் பண்புகளைக் கொண்ட ஒரு பொருளாகும்:</p>
+            
+            <ul>
+                <li><strong>.config</strong> - கோரிக்கையை உருவாக்க பயன்படுத்தப்படும் பொருள்</li>
+                <li><strong>.data</strong> - சேவையகத்திலிருந்து வரும் பதிலைக் கொண்ட ஒரு சரம் அல்லது பொருள்</li>
+                <li><strong>.headers</strong> - தலைப்பு தகவலைப் பெற பயன்படுத்த வேண்டிய செயல்பாடு</li>
+                <li><strong>.status</strong> - HTTP நிலையை வரையறுக்கும் எண்</li>
+                <li><strong>.statusText</strong> - HTTP நிலையை வரையறுக்கும் சரம்</li>
+            </ul>
+            
+            <h3>உதாரணம்</h3>
+            
+            <div class="code-example">
+                <pre><code>var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+  $http.get("welcome.htm")
+  .then(function(response) {
+    $scope.content = response.data;
+    $scope.statuscode = response.status;
+    $scope.statustext = response.statusText;
+  });
+});</code></pre>
+            </div>
+            
+            <p>பிழைகளைக் கையாள, .then முறையில் இன்னும் ஒரு செயல்பாட்டைச் சேர்க்கவும்:</p>
+            
+            <h3>உதாரணம்</h3>
+            
+            <div class="code-example">
+                <pre><code>var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+  $http.get("wrongfilename.htm")
+  .then(function(response) {
+    // முதல் செயல்பாடு வெற்றியைக் கையாளுகிறது
+    $scope.content = response.data;
+  }, function(response) {
+    // இரண்டாவது செயல்பாடு பிழையைக் கையாளுகிறது
+    $scope.content = "ஏதோ தவறு நடந்தது";
+  });
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- JSON -->
+        <section class="content-section" id="json">
+            <h2>JSON</h2>
+            
+            <p>பதிலிலிருந்து பெறும் தரவு JSON வடிவத்தில் இருக்கும் என்று எதிர்பார்க்கப்படுகிறது.</p>
+            
+            <p>JSON என்பது தரவைக் கொண்டு செல்ல சிறந்த வழியாகும், மேலும் இது AngularJS அல்லது வேறு எந்த JavaScript இலும் பயன்படுத்த எளிதானது.</p>
+            
+            <h3>உதாரணம்:</h3>
+            
+            <p>சேவையகத்தில் 15 வாடிக்கையாளர்களைக் கொண்ட JSON பொருளைத் திரும்பத் தரும் ஒரு கோப்பு உள்ளது, இவை அனைத்தும் records என்ற அணியில் பொதியப்பட்டுள்ளன.</p>
+            
+            <p>JSON பொருளைப் பார்க்க இங்கே கிளிக் செய்யவும்.</p>
+            
+            <h3>உதாரணம்</h3>
+            
+            <p>ng-repeat உத்தரவு ஒரு அணியின் வழியாகச் சுழல்வதற்கு சிறந்தது:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;div ng-app="myApp" ng-controller="customersCtrl"&gt;
+
+&lt;ul&gt;
+  &lt;li ng-repeat="x in myData"&gt;
+    {{ x.Name + ', ' + x.Country }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+  $http.get("customers.php").then(function(response) {
+    $scope.myData = response.data.records;
+  });
+});
+&lt;/script&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> பயன்பாடு விளக்கம்:</h4>
+                <p>பயன்பாடு customersCtrl கட்டுப்படுத்தியை வரையறுக்கிறது, இது $scope மற்றும் $http பொருளைக் கொண்டுள்ளது.</p>
+                <p>$http என்பது வெளிப்புற தரவைக் கோருவதற்கான ஒரு XMLHttpRequest பொருளாகும்.</p>
+                <p>$http.get() JSON தரவை https://www.jassifteam.com/angularjs/customers.php இலிருந்து படிக்கிறது.</p>
+                <p>வெற்றியில், கட்டுப்படுத்தி, நோக்கத்தில், சேவையகத்திலிருந்து JSON தரவைக் கொண்ட myData என்ற பண்பை உருவாக்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <p>கீழே உள்ள பயிற்சியில் $http சேவையைப் பற்றிய உங்கள் புரிதலை சோதிக்கவும்:</p>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-code exercise-icon"></i> $http சேவை பயிற்சி</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">$http என்பது சேவையகத்துடன் தொடர்பு கொள்ள AngularJS வழங்கும் சேவையாகும்</div>
+                            <div class="option-feedback correct">✓ சரி! $http தொலை தரவு சேவையகங்களுடன் தொடர்பு கொள்ள பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">$http என்பது ஒரு தனி JavaScript நூலகமாகும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! $http என்பது AngularJS இன் ஒருங்கிணைந்த பகுதியாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">.then() முறை வெற்றி மற்றும் பிழை செயல்பாடுகளைக் கையாள பயன்படுகிறது</div>
+                            <div class="option-feedback correct">✓ சரி! .then() இரண்டு செயல்பாடுகளை ஏற்கும் - வெற்றி மற்றும் பிழை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">$http GET முறை மட்டுமே JSON தரவைப் பெற முடியும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! $http பல முறைகளைக் கொண்டுள்ளது: GET, POST, PUT, DELETE போன்றவை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="AngularJS Services.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="AngularJS Tables.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#introduction">அறிமுகம்</a></li>
+                    <li><a href="#http-service">$http சேவை</a></li>
+                    <li><a href="#methods">முறைகள்</a></li>
+                    <li><a href="#properties">பண்புகள்</a></li>
+                    <li><a href="#json">JSON</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">தொடர்பு கொள்ள</a></li>
+                    <li><a href="#">இடம் & நேரம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>எங்களைப் பின்தொடருங்கள்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

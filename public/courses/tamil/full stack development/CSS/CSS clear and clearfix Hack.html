@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS clear and clearfix Hack - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Clear and clearfix demos */
+        .demo-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 2px solid #e9ecef;
+        }
+        
+        .demo-label {
+            font-weight: bold;
+            color: var(--git-color);
+            margin-bottom: 10px;
+        }
+        
+        /* Clear property demo */
+        .clear-demo-box {
+            border: 2px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            background-color: white;
+            border-radius: 5px;
+        }
+        
+        .float-left-box {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            margin-right: 15px;
+            border-radius: 5px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .float-right-box {
+            float: right;
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            margin-left: 15px;
+            border-radius: 5px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .content-box {
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .clear-left {
+            clear: left;
+        }
+        
+        .clear-right {
+            clear: right;
+        }
+        
+        .clear-both {
+            clear: both;
+        }
+        
+        /* Clearfix demo */
+        .clearfix-demo-container {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .clearfix-demo {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .container-box {
+            border: 3px solid #2c3e50;
+            padding: 15px;
+            background-color: #ecf0f1;
+            margin-bottom: 15px;
+        }
+        
+        .float-box {
+            float: left;
+            width: 120px;
+            height: 120px;
+            background-color: #9b59b6;
+            color: white;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .tall-float {
+            height: 180px;
+            background-color: #e67e22;
+        }
+        
+        .container-text {
+            background-color: #34495e;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        /* Clearfix hack */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        
+        /* Code examples */
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .code-example h3 {
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .code-example pre {
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        
+        /* Properties table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .properties-table th {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .properties-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .properties-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .properties-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Exercise styling */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Float.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Float%20Examples.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS clear and clearfix Hack</h2>
+            <p>மிதக்கும் உறுப்புகளைக் கையாளும் முறைகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS clear Property -->
+        <section class="content-section" id="clear-property">
+            <h2>The CSS clear Property</h2>
+            
+            <p>clear பண்பானது மிதக்கும் உறுப்புக்கு அடுத்ததாக இருக்கும் உறுப்புக்கு என்ன நடக்க வேண்டும் என்பதைக் குறிப்பிடுகிறது.</p>
+            
+            <p>clear பண்பானது உறுப்புகள் மிதக்கும் உள்ளடக்கத்தைச் சுற்றி அல்லது அருகில் இணைவதைத் தடுக்கிறது.</p>
+            
+            <p>இந்த பண்பு பின்வரும் மதிப்புகளில் ஒன்றைக் கொண்டிருக்கலாம்:</p>
+            
+            <ul>
+                <li>none - இயல்புநிலை. உறுப்புகள் எந்தப் பக்கத்திலும் மிதக்க அனுமதிக்கிறது</li>
+                <li>left - உறுப்பு அதன் இடது பக்கத்தில் மிதக்கும் உறுப்புகளுக்குக் கீழே தள்ளப்படுகிறது</li>
+                <li>right - உறுப்பு அதன் வலது பக்கத்தில் மிதக்கும் உறுப்புகளுக்குக் கீழே தள்ளப்படுகிறது</li>
+                <li>both - உறுப்பு இடது மற்றும் வலது இரண்டு பக்கங்களிலும் மிதக்கும் உறுப்புகளுக்குக் கீழே தள்ளப்படுகிறது</li>
+                <li>inherit - உறுப்பு அதன் பெற்றோரிலிருந்து clear மதிப்பைப் பெறுகிறது</li>
+            </ul>
+        </section>
+
+        <!-- Example -->
+        <section class="content-section" id="clear-example">
+            <h2>Example</h2>
+            
+            <p>இங்கே, clear: left; div2 ஐ மிதக்கும் div1 க்குக் கீழே, அதன் இடது பக்கத்தில் தள்ளுகிறது:</p>
+            
+            <div class="demo-container">
+                <div class="demo-label">clear: left example</div>
+                <div class="clear-demo-box">
+                    <div class="float-left-box">div1<br>float: left</div>
+                    <div class="content-box clear-left">div2<br>clear: left</div>
+                </div>
+                
+                <div class="demo-label">clear: right example</div>
+                <div class="clear-demo-box">
+                    <div class="float-right-box">div1<br>float: right</div>
+                    <div class="content-box clear-right">div2<br>clear: right</div>
+                </div>
+                
+                <div class="demo-label">clear: both example</div>
+                <div class="clear-demo-box">
+                    <div class="float-left-box">div1<br>float: left</div>
+                    <div class="float-right-box">div2<br>float: right</div>
+                    <div class="content-box clear-both">div3<br>clear: both</div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div1 {
+  float: left;
+}
+
+div2 {
+  clear: left;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- The CSS clearfix Hack -->
+        <section class="content-section" id="clearfix-hack">
+            <h2>The CSS clearfix Hack</h2>
+            
+            <p>ஒரு மிதக்கும் உறுப்பு கொள்கலன் உறுப்பை விட உயரமாக இருந்தால், அது அதன் கொள்கலனுக்கு வெளியே "வழிந்தோடும்". இந்தச் சிக்கலைத் தீர்க்க clearfix hack ஐச் சேர்க்கலாம்:</p>
+            
+            <div class="clearfix-demo-container">
+                <div class="clearfix-demo">
+                    <div class="demo-label">Without Clearfix</div>
+                    <div class="container-box">
+                        <div class="float-box tall-float">மிதக்கும் பெட்டி (உயரமானது)</div>
+                        <div class="container-text">கொள்கலன் உரை</div>
+                    </div>
+                    <p class="demo-note">மிதக்கும் பெட்டி கொள்கலனுக்கு வெளியே வழிந்தோடுகிறது</p>
+                </div>
+                
+                <div class="clearfix-demo">
+                    <div class="demo-label">With Clearfix</div>
+                    <div class="container-box clearfix">
+                        <div class="float-box tall-float">மிதக்கும் பெட்டி (உயரமானது)</div>
+                        <div class="container-text">கொள்கலன் உரை</div>
+                    </div>
+                    <p class="demo-note">Clearfix கொள்கலனை மிதக்கும் உறுப்பை உள்ளடக்க விரிவடையச் செய்கிறது</p>
+                </div>
+            </div>
+            
+            <p>clearfix hack என்பது ::after போலி-உறுப்பை உள்ளடக்கியது, மேலும் பெற்றோர் கொள்கலன் தனது மிதக்கும் குழந்தை உறுப்புகளை சரியாக உள்ளடக்குவதை உறுதிப்படுத்த பயன்படுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔍</span> Example explained:</h4>
+                <p><strong>.clearfix::after</strong> - class="clearfix" உடைய எந்த உறுப்புக்கும் உள்ளடக்கத்திற்குப் பிறகு உருவாக்கப்படும் போலி-உறுப்பை இலக்காக்குகிறது<br>
+                <strong>content: ""</strong> - போலி-உறுப்பு காணக்கூடிய உள்ளடக்கம் இல்லை என்றாலும் ரெண்டர் செய்யப்படுவதை உறுதிப்படுத்துகிறது<br>
+                <strong>clear: both</strong> - இது இடது மற்றும் வலது இரண்டு மிதப்புகளையும் அழிக்கிறது, மிதக்கும் உறுப்புகளுக்குக் கீழே பின்வரும் எந்த உள்ளடக்கத்தையும் தள்ளுகிறது, மேலும் பெற்றோர் கொள்கலன் அவற்றை உள்ளடக்க விரிவடைய கட்டாயப்படுத்துகிறது<br>
+                <strong>display: table</strong> - இது ஒரு புதிய தொகுதி வடிவமைப்பு சூழலை உருவாக்குகிறது, இது மிதப்புகளை உள்ளடக்க உதவுகிறது</p>
+            </div>
+            
+            <p>போலி-உறுப்புகள் பற்றி மேலும் அடுத்த பாடத்தில் கற்றுக்கொள்வீர்கள்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <p>clear பண்பு எதைக் குறிப்பிடுகிறது?</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> clear பண்பு எதைக் குறிப்பிடுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">மிதக்கும் உறுப்புகளின் சீரமைப்பு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது float பண்பின் பணியாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">மிதக்கும் உறுப்புக்கு அடுத்ததாக இருக்கும் உறுப்புக்கு என்ன நடக்க வேண்டும்</div>
+                            <div class="option-feedback correct">✓ சரி! clear பண்பானது மிதக்கும் உறுப்புக்கு அடுத்ததாக இருக்கும் உறுப்பின் நடத்தையைக் கட்டுப்படுத்துகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">மிதக்கும் உறுப்புகளின் அளவு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது width மற்றும் height பண்புகளின் பணியாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">மிதக்கும் உறுப்புகளின் காண்பித்தல்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது display மற்றும் visibility பண்புகளின் பணியாகும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Properties -->
+        <section class="content-section" id="css-properties">
+            <h2>CSS Properties</h2>
+            
+            <p>மிதப்பு மற்றும் தெளிவு தொடர்பான CSS பண்புகள்:</p>
+            
+            <table class="properties-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>clear</td>
+                    <td>மிதக்கும் உறுப்புக்கு அடுத்ததாக இருக்கும் உறுப்புக்கு என்ன நடக்க வேண்டும் என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>float</td>
+                    <td>உறுப்பு இடது, வலது அல்லது எதுவாகவும் மிதக்க வேண்டுமா இல்லையா என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> பயனுள்ள உதவிக்குறிப்புகள்:</h4>
+                <p>1. clear: both பயன்படுத்தி அனைத்து மிதப்புகளையும் தெளிவாக்க முடியும்<br>
+                2. clearfix hack என்பது நவீன CSS இல் float கொள்கலன்களுக்கான பொதுவான தீர்வாகும்<br>
+                3. flexbox அல்லது grid போன்ற நவீன தளவமைப்பு முறைகள் float ஐ விட சிறந்த விருப்பங்களாக இருக்கலாம்<br>
+                4. clear பண்பானது float அல்லது position வைக்கப்பட்ட உறுப்புகளில் மட்டுமே செயல்படுகிறது</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Float.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Float%20Examples.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#clear-property">The clear Property</a></li>
+                    <li><a href="#clear-example">clear Example</a></li>
+                    <li><a href="#clearfix-hack">clearfix Hack</a></li>
+                    <li><a href="#exercises">Exercise</a></li>
+                    <li><a href="#css-properties">CSS Properties</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Generators - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python%20Recursion.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python%20range.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python Generators</h2>
+            <p>பைத்தான் ஜெனரேட்டர்கள் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Python - ஜெனரேட்டர்கள்</h2>
+            
+            <p>ஜெனரேட்டர்கள் அவற்றின் இயக்கத்தை இடைநிறுத்தி மீண்டும் தொடக்கக்கூடிய செயல்பாடுகள்.</p>
+        </section>
+
+        <!-- What are Generators -->
+        <section class="content-section" id="what-are-generators">
+            <h3>ஜெனரேட்டர்கள் என்றால் என்ன?</h3>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-pause-circle"></i>
+                        <h4>இடைநிறுத்தும் திறன்</h4>
+                    </div>
+                    <p><strong>சிறப்பம்சம்:</strong> இயக்கத்தை இடைநிறுத்தி மீண்டும் தொடங்கும்</p>
+                    <p><strong>முக்கியச்சொல்:</strong> <code>yield</code></p>
+                    <p><strong>நன்மை:</strong> நினைவக திறமை</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>மெதுவான மதிப்பீடு</h4>
+                    </div>
+                    <p><strong>சிறப்பம்சம்:</strong> தேவைக்கேற்ப மதிப்புகளை உருவாக்குகிறது</p>
+                    <p><strong>வழிமுறை:</strong> Lazy Evaluation</p>
+                    <p><strong>நன்மை:</strong> பெரிய தரவுகளுக்கு ஏற்றது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-infinity"></i>
+                        <h4>முடிவிலா வரிசைகள்</h4>
+                    </div>
+                    <p><strong>சிறப்பம்சம்:</strong> முடிவில்லாத வரிசைகளை உருவாக்கும்</p>
+                    <p><strong>எடுத்துக்காட்டு:</strong> Fibonacci sequence</p>
+                    <p><strong>நன்மை:</strong> நினைவகத்தை முழுமையாக பயன்படுத்தாது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Basic Generator Example -->
+        <section class="content-section" id="basic-example">
+            <h3>ஜெனரேட்டர் செயல்பாடு</h3>
+            
+            <p>ஒரு ஜெனரேட்டர் செயல்பாடு அழைக்கப்படும்போது, அது ஒரு ஜெனரேட்டர் பொருளைத் தரும், இது ஒரு இட்டரேட்டர் ஆகும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🏁</span> உதவிக்குறிப்பு:</h4>
+                <p>செயல்பாட்டிற்குள் உள்ள குறியீடு இன்னும் செயல்படுத்தப்படவில்லை, அது தொகுக்கப்பட்டது மட்டுமே. நீங்கள் ஜெனரேட்டரை மீண்டும் இயக்கும் போது மட்டுமே செயல்பாடு செயல்படுத்தப்படும்.</p>
+            </div>
+            
+            <h4>எடுத்துக்காட்டு</h4>
+            <p>ஒரு எளிய ஜெனரேட்டர் செயல்பாடு:</p>
+            
+            <div class="code-example">
+                <pre><code>def my_generator():
+    yield 1
+    yield 2
+    yield 3
+
+for value in my_generator():
+    print(value)</code></pre>
+            </div>
+            
+            <div class="comparison-card">
+                <div class="comparison-header">
+                    <i class="fas fa-play-circle"></i>
+                    <h4>இயக்க படிப்படியாக:</h4>
+                </div>
+                <p><strong>படி 1:</strong> <code>my_generator()</code> அழைக்கப்படுகிறது → ஜெனரேட்டர் பொருள் திரும்பும்</p>
+                <p><strong>படி 2:</strong> for லூப் <code>next()</code> ஐ அழைக்கிறது</p>
+                <p><strong>படி 3:</strong> முதல் <code>yield 1</code> சந்திக்கப்படுகிறது → 1 திரும்பும்</p>
+                <p><strong>படி 4:</strong> அடுத்த <code>next()</code> அழைப்பு → <code>yield 2</code> சந்திக்கப்படுகிறது</p>
+                <p><strong>படி 5:</strong> மூன்றாவது <code>next()</code> அழைப்பு → <code>yield 3</code> சந்திக்கப்படுகிறது</p>
+                <p><strong>வெளியீடு:</strong> 1, 2, 3 (ஒவ்வொரு வரியிலும்)</p>
+            </div>
+        </section>
+
+        <!-- The yield Keyword -->
+        <section class="content-section" id="yield-keyword">
+            <h3><code>yield</code> முக்கியச்சொல்</h3>
+            
+            <p><code>yield</code> முக்கியச்சொல் ஒரு செயல்பாட்டை ஜெனரேட்டராக ஆக்குகிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔄</span> குறிப்பு:</h4>
+                <p><code>yield</code> சந்திக்கப்படும் போது, செயல்பாட்டின் நிலை சேமிக்கப்பட்டு, மதிப்பு திரும்பும். அடுத்த முறை ஜெனரேட்டர் அழைக்கப்படும் போது, அது விட்ட இடத்திலிருந்து தொடர்கிறது.</p>
+            </div>
+            
+            <h4>எடுத்துக்காட்டு</h4>
+            <p>எண்களை வழங்கும் ஜெனரேட்டர்:</p>
+            
+            <div class="code-example">
+                <pre><code>def count_up_to(n):
+    count = 1
+    while count <= n:
+        yield count
+        count += 1
+
+for num in count_up_to(5):
+    print(num)</code></pre>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-undo"></i>
+                        <h4><code>yield</code> vs <code>return</code></h4>
+                    </div>
+                    <p><strong><code>return</code>:</strong> செயல்பாட்டை முடிக்கிறது</p>
+                    <p><strong><code>yield</code>:</strong> செயல்பாட்டை இடைநிறுத்துகிறது</p>
+                    <p><strong><code>return</code>:</strong> ஒரு முறை மட்டுமே அழைக்க முடியும்</p>
+                    <p><strong><code>yield</code>:</strong> பல முறை அழைக்க முடியும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-memory"></i>
+                        <h4>நிலை பாதுகாப்பு</h4>
+                    </div>
+                    <p><strong>உள்ளூர் மாறிகள்:</strong> சேமிக்கப்படுகின்றன</p>
+                    <p><strong>நிரல் காட்டி:</strong> சேமிக்கப்படுகிறது</p>
+                    <p><strong>அடைப்பு மாறிகள்:</strong> சேமிக்கப்படுகின்றன</p>
+                    <p><strong>மறு தொடக்கம்:</strong> சரியாக இருக்கும்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Memory Efficiency -->
+        <section class="content-section" id="memory-efficiency">
+            <h3>நினைவக திறமை</h3>
+            
+            <p>ஜெனரேட்டர்கள் நினைவக-திறமையானவை, ஏனெனில் அவை எல்லாவற்றையும் நினைவகத்தில் சேமிக்காமல் பறக்கும்போது மதிப்புகளை உருவாக்குகின்றன.</p>
+            
+            <h4>எடுத்துக்காட்டு</h4>
+            <p>பெரிய வரிசைகளுக்கான ஜெனரேட்டர்:</p>
+            
+            <div class="code-example">
+                <pre><code>def large_sequence(n):
+    for i in range(n):
+        yield i
+
+# இது நினைவகத்தில் ஒரு மில்லியன் எண்களை உருவாக்காது
+gen = large_sequence(1000000)
+print(next(gen))  # Output: 0
+print(next(gen))  # Output: 1
+print(next(gen))  # Output: 2</code></pre>
+            </div>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>பட்டியல் அணுகுமுறை</h4>
+                    <div class="code-example">
+                        <pre><code># நினைவகத்தில் பட்டியல் உருவாக்குகிறது
+numbers = [i for i in range(1000000)]
+# அனைத்து 1 மில்லியன் எண்களும் நினைவகத்தில் உள்ளன
+print(numbers[0])  # 0
+print(numbers[1])  # 1
+print(numbers[2])  # 2</code></pre>
+                    </div>
+                    <p><strong>நினைவக பயன்பாடு:</strong> அதிகம்</p>
+                    <p><strong>தொடக்கம் வேகம்:</strong> மெதுவானது</p>
+                    <p><strong>பயன்பாடு:</strong> சிறிய தரவுகள்</p>
+                </div>
+                
+                <div class="code-column">
+                    <h4>ஜெனரேட்டர் அணுகுமுறை</h4>
+                    <div class="code-example">
+                        <pre><code># நினைவகத்தில் பட்டியல் உருவாக்காது
+def numbers_gen(n):
+    for i in range(n):
+        yield i
+
+gen = numbers_gen(1000000)
+# ஒரு நேரத்தில் ஒரு எண் மட்டுமே நினைவகத்தில் உள்ளது
+print(next(gen))  # 0
+print(next(gen))  # 1
+print(next(gen))  # 2</code></pre>
+                    </div>
+                    <p><strong>நினைவக பயன்பாடு:</strong> குறைவு</p>
+                    <p><strong>தொடக்கம் வேகம்:</strong> வேகமானது</p>
+                    <p><strong>பயன்பாடு:</strong> பெரிய தரவுகள்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Using next() with Generators -->
+        <section class="content-section" id="using-next">
+            <h3><code>next()</code> பயன்படுத்தி ஜெனரேட்டர்கள்</h3>
+            
+            <p>நீங்கள் <code>next()</code> செயல்பாட்டைப் பயன்படுத்தி ஒரு ஜெனரேட்டரை கைமுறையாக மீண்டும் இயக்கலாம்:</p>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>எடுத்துக்காட்டு 1: கைமுறை மறு இயக்கம்</h4>
+                    
+                    <div class="code-example" style="margin: 1rem 0;">
+                        <pre><code>def simple_gen():
+    yield "Emil"
+    yield "Tobias"
+    yield "Linus"
+
+gen = simple_gen()
+print(next(gen))  # Output: Emil
+print(next(gen))  # Output: Tobias
+print(next(gen))  # Output: Linus</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <h4>எடுத்துக்காட்டு 2: StopIteration</h4>
+                    
+                    <div class="code-example" style="margin: 1rem 0;">
+                        <pre><code>def simple_gen():
+    yield 1
+    yield 2
+
+gen = simple_gen()
+print(next(gen))  # Output: 1
+print(next(gen))  # Output: 2
+# print(next(gen))  # StopIteration error
+
+# பிழையை கையாளுதல்
+gen = simple_gen()
+try:
+    print(next(gen))
+    print(next(gen))
+    print(next(gen))  # StopIteration
+except StopIteration:
+    print("Generator exhausted")</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Generator Expressions -->
+        <section class="content-section" id="generator-expressions">
+            <h3>ஜெனரேட்டர் வெளிப்பாடுகள்</h3>
+            
+            <p>பட்டியல் காம்ப்ரிஹென்ஷன்களைப் போலவே, சதுர அடைப்புக்குறிகளுக்குப் பதிலாக அடைப்புக்குறிகளைப் பயன்படுத்தி ஜெனரேட்டர் வெளிப்பாடுகளை உருவாக்கலாம்:</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>பட்டியல் காம்ப்ரிஹென்ஷன்</h4>
+                    <div class="code-example">
+                        <pre><code># பட்டியல் காம்ப்ரிஹென்ஷன் - பட்டியலை உருவாக்குகிறது
+list_comp = [x * x for x in range(5)]
+print(list_comp)
+# Output: [0, 1, 4, 9, 16]
+print(type(list_comp))
+# Output: &lt;class 'list'&gt;</code></pre>
+                    </div>
+                    <p><strong>நினைவகம்:</strong> அனைத்து உருப்படிகளும் நினைவகத்தில் உள்ளன</p>
+                    <p><strong>பயன்பாடு:</strong> சிறிய தரவுகள்</p>
+                </div>
+                
+                <div class="code-column">
+                    <h4>ஜெனரேட்டர் வெளிப்பாடு</h4>
+                    <div class="code-example">
+                        <pre><code># ஜெனரேட்டர் வெளிப்பாடு - ஜெனரேட்டரை உருவாக்குகிறது
+gen_exp = (x * x for x in range(5))
+print(gen_exp)
+# Output: &lt;generator object &lt;genexpr&gt; at 0x...&gt;
+print(type(gen_exp))
+# Output: &lt;class 'generator'&gt;
+print(list(gen_exp))
+# Output: [0, 1, 4, 9, 16]</code></pre>
+                    </div>
+                    <p><strong>நினைவகம்:</strong> ஒரு நேரத்தில் ஒரு உருப்படி மட்டுமே</p>
+                    <p><strong>பயன்பாடு:</strong> பெரிய தரவுகள்</p>
+                </div>
+            </div>
+            
+            <h4>நடைமுறை எடுத்துக்காட்டு</h4>
+            
+            <div class="code-example">
+                <pre><code># பட்டியல் இல்லாமல் சதுரங்களின் கூட்டுத்தொகையைக் கணக்கிடுதல்
+total = sum(x * x for x in range(10))
+print(total)  # Output: 285
+
+# இது பின்வரும் விட சிறந்தது:
+# total = sum([x * x for x in range(10)])  # பட்டியலை உருவாக்குகிறது</code></pre>
+            </div>
+        </section>
+
+        <!-- Fibonacci Sequence Generator -->
+        <section class="content-section" id="fibonacci-generator">
+            <h3>Fibonacci வரிசை ஜெனரேட்டர்</h3>
+            
+            <p>Fibonacci வரிசையை உருவாக்க ஜெனரேட்டர்களைப் பயன்படுத்தலாம். இது நினைவகம் தீர்ந்துவிடாமல் காலவரையின்றி மதிப்புகளை உருவாக்கத் தொடரும்:</p>
+            
+            <div class="code-example">
+                <pre><code>def fibonacci():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+# முதல் 10 Fibonacci எண்களைப் பெறவும்
+gen = fibonacci()
+for i in range(10):
+    print(f"Fibonacci({i}): {next(gen)}")</code></pre>
+            </div>
+            
+            <div class="comparison-card">
+                <div class="comparison-header">
+                    <i class="fas fa-infinity"></i>
+                    <h4>முடிவிலா ஜெனரேட்டர் நன்மைகள்:</h4>
+                </div>
+                <p><strong>நினைவகம்:</strong> ஒரு நேரத்தில் 2 எண்கள் மட்டுமே நினைவகத்தில் உள்ளன</p>
+                <p><strong>நெகிழ்வுத்தன்மை:</strong> எத்தனை எண்கள் தேவை என்பதை தீர்மானிக்க முடியும்</p>
+                <p><strong>நிறுத்துதல்:</strong> எந்த நேரத்திலும் நிறுத்தலாம்</p>
+                <p><strong>மறுதொடக்கம்:</strong> புதிய ஜெனரேட்டரை உருவாக்கலாம்</p>
+            </div>
+        </section>
+
+        <!-- Generator Methods -->
+        <section class="content-section" id="generator-methods">
+            <h3>ஜெனரேட்டர் முறைகள்</h3>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4><code>send()</code> முறை</h4>
+                    <p><code>send()</code> முறை நீங்கள் ஜெனரேட்டருக்கு ஒரு மதிப்பை அனுப்ப அனுமதிக்கிறது:</p>
+                    
+                    <div class="code-example" style="margin: 1rem 0;">
+                        <pre><code>def echo_generator():
+    while True:
+        received = yield
+        print("Received:", received)
+
+gen = echo_generator()
+next(gen)  # ஜெனரேட்டரைத் தொடங்கவும்
+gen.send("Hello")   # Received: Hello
+gen.send("World")   # Received: World
+gen.send("Python")  # Received: Python</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <h4><code>close()</code> முறை</h4>
+                    <p><code>close()</code> முறை ஜெனரேட்டரை நிறுத்துகிறது:</p>
+                    
+                    <div class="code-example" style="margin: 1rem 0;">
+                        <pre><code>def my_gen():
+    try:
+        yield 1
+        yield 2
+        yield 3
+    finally:
+        print("Generator closed")
+
+gen = my_gen()
+print(next(gen))  # Output: 1
+gen.close()       # Output: Generator closed
+# print(next(gen))  # StopIteration error</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <h4><code>throw()</code> முறை</h4>
+                    <p><code>throw()</code> முறை ஜெனரேட்டருக்குள் ஒரு விதிவிலக்கை எறிய அனுமதிக்கிறது:</p>
+                    
+                    <div class="code-example" style="margin: 1rem 0;">
+                        <pre><code>def my_gen():
+    try:
+        yield 1
+        yield 2
+    except ValueError:
+        print("ValueError caught in generator")
+
+gen = my_gen()
+print(next(gen))  # Output: 1
+gen.throw(ValueError, "Test error")  # Output: ValueError caught in generator</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real-World Example -->
+        <section class="content-section" id="real-world-example">
+            <h3>நிஜ உலக பயன்பாட்டு எடுத்துக்காட்டு</h3>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>பெரிய கோப்பு செயலாக்கம்</h4>
+                    
+                    <div class="code-example" style="margin: 1rem 0;">
+                        <pre><code>def read_large_file(file_path):
+    """பெரிய கோப்பை வரி வரியாகப் படிக்கும் ஜெனரேட்டர்"""
+    with open(file_path, 'r') as file:
+        for line in file:
+            yield line.strip()
+
+# பயன்பாடு:
+# for line in read_large_file('huge_file.txt'):
+#     process_line(line)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <h4>தரவு குழாய்</h4>
+                    
+                    <div class="code-example" style="margin: 1rem 0;">
+                        <pre><code>def number_generator(n):
+    for i in range(n):
+        yield i
+
+def square_generator(numbers):
+    for num in numbers:
+        yield num * num
+
+def filter_even(numbers):
+    for num in numbers:
+        if num % 2 == 0:
+            yield num
+
+# ஜெனரேட்டர் குழாய்
+pipeline = filter_even(square_generator(number_generator(10)))
+print(list(pipeline))  # [0, 4, 16, 36, 64]</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சி</h2>
+            
+            <p>பின்வரும் குறியீட்டின் வெளியீடு என்னவாக இருக்கும்?</p>
+            
+            <div class="code-example" style="margin: 1rem 0;">
+                <pre><code>def number_generator():
+    yield 10
+    yield 20
+    yield 30
+
+gen = number_generator()
+print(next(gen))
+print(next(gen))
+result = sum(gen)
+print(result)</code></pre>
+            </div>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பயிற்சி கேள்வி:</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">10, 20, 60</div>
+                            <div class="option-feedback incorrect">✗ தவறு! sum(gen) மீதமுள்ள உருப்படியை மட்டுமே கூட்டுகிறது (30). ஏற்கனவே 10 மற்றும் 20 பயன்படுத்தப்பட்டன.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">10, 20, 30</div>
+                            <div class="option-feedback correct">✓ சரி! முதல் next() 10 ஐத் தரும், இரண்டாவது next() 20 ஐத் தரும். sum(gen) மீதமுள்ள உருப்படியை (30) கூட்டும், ஏனெனில் ஜெனரேட்டர்கள் அவற்றின் நிலையை நினைவில் வைத்திருக்கும்.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">10, 20, 0</div>
+                            <div class="option-feedback incorrect">✗ தவறு! sum(gen) காலி இல்லை. ஜெனரேட்டர் இன்னும் ஒரு உருப்படியை (30) கொண்டுள்ளது, இது sum() மூலம் பயன்படுத்தப்படும்.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Error ஏற்படும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இந்த குறியீட்டில் பிழை இல்லை. அனைத்து செயல்பாடுகளும் செல்லுபடியாகும், ஏனெனில் sum() ஒரு ஜெனரேட்டரை ஏற்கும்.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h3>சிறந்த நடைமுறைகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>பெரிய தரவுகளுக்கு ஜெனரேட்டர்களைப் பயன்படுத்தவும்:</strong> நினைவக திறனுக்காக
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>காம்ப்ரிஹென்ஷன்களுக்கு ஜெனரேட்டர் வெளிப்பாடுகளைப் பயன்படுத்தவும்:</strong> <code>(x for x in iterable)</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>தரவு குழாய்களுக்கு ஜெனரேட்டர்களைப் பயன்படுத்தவும்:</strong> பல உருமாற்றங்களை இணைக்க
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>
+                        <strong>ஒரு ஜெனரேட்டரை ஒரு முறைக்கு மேல் மீண்டும் இயக்க வேண்டாம்:</strong> அவை தீர்ந்துவிட்டால், மீண்டும் உருவாக்கவும்
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>முடிவிலா வரிசைகளுக்கு ஜெனரேட்டர்களைப் பயன்படுத்தவும்:</strong> Fibonacci போன்றவை
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>கோப்பு செயலாக்கத்திற்கு ஜெனரேட்டர்களைப் பயன்படுத்தவும்:</strong> ஒரு நேரத்தில் ஒரு வரி
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python%20Recursion.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python%20range.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">ஜெனரேட்டர்கள் அறிமுகம்</a></li>
+                    <li><a href="#what-are-generators">ஜெனரேட்டர்கள் என்றால் என்ன</a></li>
+                    <li><a href="#basic-example">அடிப்படை எடுத்துக்காட்டு</a></li>
+                    <li><a href="#yield-keyword">yield முக்கியச்சொல்</a></li>
+                    <li><a href="#memory-efficiency">நினைவக திறமை</a></li>
+                    <li><a href="#using-next">next() பயன்பாடு</a></li>
+                    <li><a href="#generator-expressions">ஜெனரேட்டர் வெளிப்பாடுகள்</a></li>
+                    <li><a href="#fibonacci-generator">Fibonacci ஜெனரேட்டர்</a></li>
+                    <li><a href="#generator-methods">ஜெனரேட்டர் முறைகள்</a></li>
+                    <li><a href="#real-world-example">நிஜ உலக எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                    <li><a href="#best-practices">சிறந்த நடைமுறைகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

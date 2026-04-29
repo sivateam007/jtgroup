@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Responsive Flexbox - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Image Gallery Styles */
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+        
+        .gallery-item {
+            flex: 1 0 200px;
+            max-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-caption {
+            padding: 15px;
+            background: white;
+            text-align: center;
+        }
+        
+        /* Demo Flex Container */
+        .demo-flex-container {
+            display: flex;
+            gap: 10px;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #ddd;
+        }
+        
+        .demo-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            flex: 1;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 600px) {
+            .demo-flex-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS Flex Items.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS Grid Layout.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Responsive Flexbox</h2>
+            <p>பதிலளிக்கும் Flexbox வடிவமைப்புகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Responsive Flexbox Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Responsive Flexbox</h2>
+            
+            <p>CSS Media Queries அத்தியாயத்தில் இருந்து நீங்கள் கற்றுக்கொண்டது போல், வெவ்வேறு திரை அளவுகள் மற்றும் சாதனங்களுக்கு வெவ்வேறு வடிவமைப்புகளை உருவாக்க media queries-ஐப் பயன்படுத்தலாம்.</p>
+            
+            <p>உதாரணமாக, பெரிய திரை அளவுகளுக்கு மூன்று-நெடுவரிசை வடிவமைப்பையும், சிறிய திரை அளவுகளுக்கு (தொலைபேசிகள் போன்றவை) ஒரு-நெடுவரிசை வடிவமைப்பையும் உருவாக்க விரும்பினால், ஒரு குறிப்பிட்ட breakpoint-ல் flex-direction-ஐ row-லிருந்து column-க்கு மாற்றலாம் (கீழே உள்ள எடுத்துக்காட்டில் 600px):</p>
+            
+            <div class="demo-flex-container">
+                <div class="demo-item">1</div>
+                <div class="demo-item">2</div>
+                <div class="demo-item">3</div>
+            </div>
+            
+            <p class="tip-text" style="text-align: center; font-style: italic; color: #666;">
+                பிரௌசர் சாளரத்தின் அளவை மாற்றி விளைவைக் காண்க.
+            </p>
+        </section>
+
+        <!-- Example 1: flex-direction change -->
+        <section class="content-section" id="example1">
+            <h2>எடுத்துக்காட்டு 1: flex-direction மாற்றம்</h2>
+            
+            <div class="code-example">
+                <pre><code>.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-item {
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+/* மூன்று-நெடுவரிசை வடிவமைப்புக்கு பதிலாக ஒரு நெடுவரிசை வடிவமைப்பை உருவாக்கவும் */
+@media (max-width: 600px) {
+  .flex-container {
+    flex-direction: column;
+  }
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                <p>600px-க்குக் கீழே உள்ள திரை அளவுகளுக்கு, flex-direction-ஐ column-க்கு மாற்றுகிறோம், இதனால் உருப்படிகள் செங்குத்தாக அடுக்கப்படுகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Example 2: flex property change -->
+        <section class="content-section" id="example2">
+            <h2>எடுத்துக்காட்டு 2: flex பண்பு மாற்றம்</h2>
+            
+            <p>மற்றொரு வழி என்னவென்றால், வெவ்வேறு திரை அளவுகளுக்கு வெவ்வேறு வடிவமைப்புகளை உருவாக்க flex items-ன் flex பண்பின் சதவீதத்தை மாற்றுவதாகும். இந்த எடுத்துக்காட்டு செயல்பட flex container-ல் flex-wrap: wrap; சேர்க்க வேண்டும் என்பதை கவனிக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-item {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+  font-size: 30px;
+  flex: 33.3%;
+}
+
+/* மூன்று-நெடுவரிசை வடிவமைப்புக்கு பதிலாக ஒரு நெடுவரிசை வடிவமைப்பை உருவாக்கவும் */
+@media (max-width: 600px) {
+  .flex-item {
+    flex: 100%;
+  }
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📱</span> மொபைல் மாற்றம்:</h4>
+                <p>600px-க்குக் கீழே, ஒவ்வொரு flex item-உம் 100% அகலத்தை எடுத்துக்கொள்கிறது, இதனால் அவை செங்குத்தாக அடுக்கப்படுகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Responsive Image Gallery -->
+        <section class="content-section" id="gallery">
+            <h2>Flexbox-ஐப் பயன்படுத்தி Responsive Image Gallery</h2>
+            
+            <p>இங்கே, நாங்கள் பதிலளிக்கும் படத் தொகுப்பை உருவாக்க media queries-ஐ flexbox-உடன் இணைந்து பயன்படுத்துகிறோம்:</p>
+            
+            <div class="image-gallery">
+                <div class="gallery-item">
+                    <img src="3.jpg" alt="Gallery Image 3">
+                    <div class="gallery-caption">
+                        <h4>படம் 3</h4>
+                        <p>Flexbox வடிவமைப்பு</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="4.jpg" alt="Gallery Image 4">
+                    <div class="gallery-caption">
+                        <h4>படம் 4</h4>
+                        <p>Responsive வடிவமைப்பு</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="5.jpg" alt="Gallery Image 5">
+                    <div class="gallery-caption">
+                        <h4>படம் 5</h4>
+                        <p>மொபைல் உகந்தது</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="6.jpg" alt="Gallery Image 6">
+                    <div class="gallery-caption">
+                        <h4>படம் 6</h4>
+                        <p>டெப்லாப் வடிவமைப்பு</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎨</span> வடிவமைப்பு குறிப்பு:</h4>
+                <p>இந்த படத் தொகுப்பு தானாகவே வெவ்வேறு திரை அளவுகளுக்கு பொருந்தும். பெரிய திரைகளில் பல நெடுவரிசைகள் மற்றும் சிறிய திரைகளில் ஒரு நெடுவரிசையைக் காண்பிக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Responsive Website -->
+        <section class="content-section" id="website">
+            <h2>Flexbox-ஐப் பயன்படுத்தி Responsive வலைத்தளம்</h2>
+            
+            <p>நெகிழ்வான வழிசெலுத்தல் பட்டை மற்றும் நெகிழ்வான உள்ளடக்கம் கொண்ட பதிலளிக்கும் வலைத்தளத்தை உருவாக்க flexbox-ஐப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Header/logo Title */
+.header {
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+}
+
+/* Style the top navigation bar */
+.navbar {
+  display: flex;
+  background-color: #333;
+}
+
+/* Style the navigation bar links */
+.navbar a {
+  color: white;
+  padding: 14px 20px;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Change color on hover */
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Column container */
+.row {  
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+  flex: 30%;
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+/* Main column */
+.main {
+  flex: 70%;
+  background-color: white;
+  padding: 20px;
+}
+
+/* Responsive layout - when the screen is less than 700px wide, 
+make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+  .row, .navbar {   
+    flex-direction: column;
+  }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;!-- Header --&gt;
+&lt;div class="header"&gt;
+  &lt;h1&gt;My Website&lt;/h1&gt;
+  &lt;p&gt;With a flexible layout.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Navigation Bar --&gt;
+&lt;div class="navbar"&gt;
+  &lt;a href="#"&gt;Link&lt;/a&gt;
+  &lt;a href="#"&gt;Link&lt;/a&gt;
+  &lt;a href="#"&gt;Link&lt;/a&gt;
+  &lt;a href="#"&gt;Link&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;!-- The flexible grid (content) --&gt;
+&lt;div class="row"&gt;
+  &lt;div class="side"&gt;
+    &lt;h2&gt;About Me&lt;/h2&gt;
+    &lt;p&gt;Some text about me..&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="main"&gt;
+    &lt;h2&gt;TITLE HEADING&lt;/h2&gt;
+    &lt;p&gt;Some text..&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பயிற்சி:</h4>
+                <p>மொபைல் சாதனங்களுக்கு flex container-ஐ செங்குத்து நெடுவரிசையாக மாற்ற சரியான media query-ஐத் தேர்ந்தெடுக்கவும்.</p>
+                
+                <div class="code-example">
+                    <pre><code>.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+/* சரியான media query-ஐச் சேர்க்கவும் */
+ {
+  .flex-container {
+    flex-direction: column;
+  }
+}</code></pre>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">@media (min-width: 600px)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! min-width 600px-க்கு மேல் உள்ள திரைகளுக்குப் பொருந்தும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">@media (max-width: 600px)</div>
+                            <div class="option-feedback correct">✓ சரி! max-width 600px-க்குக் கீழே உள்ள திரைகளுக்கு மொபைல் வடிவமைப்பைப் பயன்படுத்துகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">@media screen and (width: 600px)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது சரியாக 600px அகலம் உள்ள திரைகளுக்கு மட்டுமே பொருந்தும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">@media (orientation: portrait)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது உறுதியாகப் பொருந்தாது - டெப்லாப் கூட portrait orientation-ஐக் கொண்டிருக்கலாம்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>Responsive Flexbox சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>மொபைல்-முதல் அணுகுமுறை:</strong> சிறிய திரைகளுக்கு வடிவமைத்து தொடங்குங்கள், பின்னர் மீடியா குவேரிகளைப் பயன்படுத்தி பெரிய திரைகளுக்கு அதிகரிக்கவும்.
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>flex-wrap பயன்படுத்தவும்:</strong> சிறிய திரைகளில் உருப்படிகள் வரிசைப்படுத்தப்படுவதை உறுதிப்படுத்த flex-wrap: wrap; பயன்படுத்தவும்.
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>பொதுவான breakpoints:</strong> பொதுவாகப் பயன்படுத்தப்படும் breakpoints: 600px (மொபைல்), 768px (டேப்லெட்), 992px (டெப்ளாப்), 1200px (பெரிய திரைகள்).
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <strong>நிலையான அகலங்களைத் தவிர்க்கவும்:</strong> நிலையான பிக்சல் அகலங்களை விட சதவீதங்கள் அல்லது flex அலகுகளைப் பயன்படுத்தவும்.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS Flex Items.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS Grid Layout.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#introduction">Responsive Flexbox</a></li>
+                    <li><a href="#example1">எடுத்துக்காட்டு 1</a></li>
+                    <li><a href="#example2">எடுத்துக்காட்டு 2</a></li>
+                    <li><a href="#gallery">படத் தொகுப்பு</a></li>
+                    <li><a href="#website">Responsive வலைத்தளம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                    <li><a href="#best-practices">சிறந்த நடைமுறைகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">தொடர்பு கொள்ள</a></li>
+                    <li><a href="#">இடம் & நேரங்கள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>பின்தொடருங்கள்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Responsive demo - resize message
+        window.addEventListener('resize', function() {
+            const demoContainer = document.querySelector('.demo-flex-container');
+            if (demoContainer) {
+                const isMobile = window.innerWidth <= 600;
+                const message = isMobile ? "📱 மொபைல் முறை: செங்குத்து நெடுவரிசை" : "🖥️ டெப்ளாப் முறை: கிடைமட்ட வரிசை";
+                console.log(message);
+            }
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

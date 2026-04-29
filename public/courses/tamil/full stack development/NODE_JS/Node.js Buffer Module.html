@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Buffer Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Streams.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Crypto Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Buffer Module</h2>
+            <p>Node.js இல் பைனரி தரவைக் கையாள Buffer தொகுதியைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is the Buffer Module? -->
+        <section class="content-section" id="what-is-buffer">
+            <h2>Buffer தொகுதி என்றால் என்ன?</h2>
+            
+            <p>Node.js இல் Buffer தொகுதி பைனரி தரவைக் கையாள பயன்படுகிறது.</p>
+            
+            <p>Buffers முழு எண்களின் வரிசைகளைப் போன்றவை, ஆனால் நிலையான நீளம் கொண்டவை மற்றும் V8 JavaScript இயந்திரத்திற்கு வெளியே உள்ள மூல நினைவக ஒதுக்கீடுகளுக்கு ஒத்திருக்கும்.</p>
+            
+            <p>Node.js Buffer வகுப்பை ஒரு உலகளாவிய பொருளாக வழங்குகிறது, எனவே நீங்கள் அதை வெளிப்படையாக தேவைப்படுத்தவோ இறக்குமதி செய்யவோ தேவையில்லை.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>Node.js v6.0.0 முதல், Buffer கட்டமைப்பான் புதிய Buffer முறைகளுக்கு ஆதரவாக கைவிடப்பட்டது.</p>
+                <p>கட்டமைப்பாளரைப் பயன்படுத்துவது துவக்கப்படாத நினைவகத்தின் காரணமாக பாதுகாப்பு பாதிப்புகளுக்கு வழிவகுக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Getting Started with Buffers -->
+        <section class="content-section" id="getting-started">
+            <h2>Buffers உடன் தொடங்குதல்</h2>
+            
+            <p>Node.js இல் Buffers பைனரி தரவை நேரடியாக கையாள பயன்படுகின்றன.</p>
+            
+            <p>அவை முழு எண்களின் வரிசைகளைப் போன்றவை, ஆனால் அளவில் நிலையானவை மற்றும் V8 குவிப்பிற்கு வெளியே உள்ள மூல நினைவக ஒதுக்கீடுகளைக் குறிக்கின்றன.</p>
+            
+            <h3>அடிப்படை Buffer எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code>// Create a buffer from a string
+const buf = Buffer.from('Hello, Node.js!');
+
+// Buffers can be converted to strings
+console.log(buf.toString()); // 'Hello, Node.js!'
+
+// Access individual bytes
+console.log(buf[0]); // 72 (ASCII for 'H')
+
+// Buffers have a fixed length
+console.log(buf.length); // 15</code></pre>
+            </div>
+        </section>
+
+        <!-- Creating Buffers -->
+        <section class="content-section" id="creating-buffers">
+            <h2>Buffers உருவாக்குதல்</h2>
+            
+            <p>Node.js இல் buffers உருவாக்க பல வழிகள் உள்ளன, ஒவ்வொன்றும் வெவ்வேறு செயல்திறன் மற்றும் பாதுகாப்பு பண்புகளைக் கொண்டுள்ளன:</p>
+            
+            <h3>1. Buffer.alloc()</h3>
+            
+            <p>குறிப்பிட்ட அளவின் புதிய Buffer ஐ உருவாக்குகிறது, பூஜ்ஜியங்களுடன் துவக்கப்படுகிறது.</p>
+            
+            <p>பழைய தரவு எதுவும் இல்லை என்பதை உறுதி செய்வதால், இது புதிய buffer உருவாக்குவதற்கான மிகவும் பாதுகாப்பான வழியாகும்.</p>
+            
+            <div class="code-example">
+                <pre><code>// Create a buffer of 10 bytes filled with zeros
+const buffer1 = Buffer.alloc(10);
+console.log(buffer1);</code></pre>
+            </div>
+            
+            <h3>2. Buffer.allocUnsafe()</h3>
+            
+            <p>குறிப்பிட்ட அளவின் புதிய Buffer ஐ உருவாக்குகிறது, ஆனால் நினைவகத்தை துவக்காது.</p>
+            
+            <p>இது Buffer.alloc() ஐ விட வேகமானது, ஆனால் பழைய அல்லது உணர்திறன் தரவைக் கொண்டிருக்கலாம்.</p>
+            
+            <p>பாதுகாப்பு ஒரு கவலையாக இருந்தால், பயன்படுத்துவதற்கு முன்பு எப்போதும் buffer ஐ நிரப்பவும்.</p>
+            
+            <div class="code-example">
+                <pre><code>// Create an uninitialized buffer of 10 bytes
+const buffer2 = Buffer.allocUnsafe(10);
+console.log(buffer2);
+
+// Fill the buffer with zeros for security
+buffer2.fill(0);
+console.log(buffer2);</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>Buffer.allocUnsafe() என்பது Buffer.alloc() ஐ விட வேகமானது, ஆனால் உணர்திறன் தரவை வெளிப்படுத்தும்.</p>
+                <p>நீங்கள் பாதுகாப்பு தாக்கங்களைப் புரிந்துகொண்டு, உடனடியாக முழு buffer ஐ நிரப்ப திட்டமிட்டால் மட்டுமே அதைப் பயன்படுத்தவும்.</p>
+            </div>
+            
+            <h3>3. Buffer.from()</h3>
+            
+            <p>சரங்கள், வரிசைகள் அல்லது ArrayBuffer போன்ற பல்வேறு மூலங்களிலிருந்து புதிய Buffer ஐ உருவாக்குகிறது. இது இருக்கும் தரவிலிருந்து buffers உருவாக்குவதற்கான மிகவும் நெகிழ்வான வழியாகும்.</p>
+            
+            <div class="code-example">
+                <pre><code>// Create a buffer from a string
+const buffer3 = Buffer.from('Hello, World!');
+console.log(buffer3);
+
+console.log(buffer3.toString());
+
+// Create a buffer from an array of integers
+const buffer4 = Buffer.from([65, 66, 67, 68, 69]);
+console.log(buffer4);
+
+console.log(buffer4.toString());
+
+// Create a buffer from another buffer
+const buffer5 = Buffer.from(buffer4);
+console.log(buffer5);</code></pre>
+            </div>
+        </section>
+
+        <!-- Using Buffers -->
+        <section class="content-section" id="using-buffers">
+            <h2>Buffers பயன்படுத்துதல்</h2>
+            
+            <h3>Buffers க்கு எழுதுதல்</h3>
+            
+            <p>பல்வேறு முறைகளைப் பயன்படுத்தி ஒரு buffer க்கு தரவை எழுதலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>// Create an empty buffer
+const buffer = Buffer.alloc(10);
+
+// Write a string to the buffer
+buffer.write('Hello');
+console.log(buffer);
+
+console.log(buffer.toString());
+
+// Write bytes at specific positions
+buffer[5] = 44; // ASCII for ','
+buffer[6] = 32; // ASCII for space
+buffer.write('Node', 7);
+console.log(buffer.toString());</code></pre>
+            </div>
+            
+            <h3>Buffers இலிருந்து படித்தல்</h3>
+            
+            <p>பல்வேறு முறைகளைப் பயன்படுத்தி ஒரு buffer இலிருந்து தரவைப் படிக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>// Create a buffer from a string
+const buffer = Buffer.from('Hello, Node.js!');
+
+// Read the entire buffer as a string
+console.log(buffer.toString());
+
+// Read a portion of the buffer (start at position 7, end before position 11)
+console.log(buffer.toString('utf8', 7, 11));
+
+// Read a single byte
+console.log(buffer[0]);
+
+// Convert the ASCII code to a character
+console.log(String.fromCharCode(buffer[0]));</code></pre>
+            </div>
+            
+            <h3>Buffers வழியாக மறு செய்கை</h3>
+            
+            <p>Buffers வரிசைகளைப் போலவே மீண்டும் செய்யப்படலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>// Create a buffer from a string
+const buffer = Buffer.from('Hello');
+
+// Iterate using for...of loop
+for (const byte of buffer) {
+  console.log(byte);
+}
+
+// Iterate using forEach
+buffer.forEach((byte, index) => {
+  console.log(`Byte at position ${index}: ${byte}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Buffer Methods -->
+        <section class="content-section" id="buffer-methods">
+            <h2>Buffer முறைகள்</h2>
+            
+            <h3>Buffer.compare()</h3>
+            
+            <p>இரண்டு buffers ஐ ஒப்பிட்டு, முதல் ஒன்று இரண்டாவதை விட முன்னால் வருகிறதா, பின்னால் வருகிறதா அல்லது அதே போன்றதா என்பதைக் குறிக்கும் எண்ணை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const buffer1 = Buffer.from('ABC');
+const buffer2 = Buffer.from('BCD');
+const buffer3 = Buffer.from('ABC');
+
+console.log(Buffer.compare(buffer1, buffer2));
+console.log(Buffer.compare(buffer2, buffer1));
+console.log(Buffer.compare(buffer1, buffer3));</code></pre>
+            </div>
+            
+            <h3>buffer.copy()</h3>
+            
+            <p>ஒரு buffer இலிருந்து மற்றொன்றுக்கு தரவை நகலெடுக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>// Create source and target buffers
+const source = Buffer.from('Hello, World!');
+const target = Buffer.alloc(source.length);
+
+// Copy from source to target
+source.copy(target);
+
+console.log(target.toString());
+
+// Create a target buffer for partial copy
+const partialTarget = Buffer.alloc(5);
+
+// Copy only part of the source (starting at index 7)
+source.copy(partialTarget, 0, 7);
+
+console.log(partialTarget.toString());</code></pre>
+            </div>
+            
+            <h3>buffer.slice()</h3>
+            
+            <p>அசல் போன்ற அதே நினைவகத்தைக் குறிக்கும் புதிய buffer ஐ உருவாக்குகிறது, ஆனால் ஆஃப்செட் மற்றும் கொடுக்கப்பட்ட முடிவிற்கு வெட்டப்பட்டது:</p>
+            
+            <div class="code-example">
+                <pre><code>const buffer = Buffer.from('Hello, World!');
+
+// Create a slice from position 7 to the end
+const slice = buffer.slice(7);
+console.log(slice.toString());
+
+// Create a slice from position 0 to 5
+const slice2 = buffer.slice(0, 5);
+console.log(slice2.toString());
+
+// Important: slices share memory with original buffer
+slice[0] = 119; // ASCII for 'w' (lowercase)
+console.log(slice.toString());
+console.log(buffer.toString());</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>buffer.slice() அதே நினைவகத்தின் காட்சியை உருவாக்குவதால், அசல் buffer அல்லது slice ஐ மாற்றியமைப்பது மற்றொன்றை பாதிக்கும்.</p>
+            </div>
+            
+            <h3>buffer.toString()</h3>
+            
+            <p>குறிப்பிட்ட குறியாக்கத்தைப் பயன்படுத்தி ஒரு buffer ஐ சரமாக குறிவிலக்கிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const buffer = Buffer.from('Hello, World!');
+
+// Default encoding is UTF-8
+console.log(buffer.toString());
+
+// Specify encoding
+console.log(buffer.toString('utf8'));
+
+// Decode only a portion of the buffer
+console.log(buffer.toString('utf8', 0, 5));
+
+// Using different encodings
+const hexBuffer = Buffer.from('48656c6c6f', 'hex');
+console.log(hexBuffer.toString());
+
+const base64Buffer = Buffer.from('SGVsbG8=', 'base64');
+console.log(base64Buffer.toString());</code></pre>
+            </div>
+            
+            <h3>buffer.equals()</h3>
+            
+            <p>உள்ளடக்கம் சமத்துவத்திற்காக இரண்டு buffers ஐ ஒப்பிடுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const buffer1 = Buffer.from('Hello');
+const buffer2 = Buffer.from('Hello');
+const buffer3 = Buffer.from('World');
+
+console.log(buffer1.equals(buffer2));
+
+console.log(buffer1.equals(buffer3));
+
+console.log(buffer1 === buffer2);</code></pre>
+            </div>
+        </section>
+
+        <!-- Working with Encodings -->
+        <section class="content-section" id="encodings">
+            <h2>குறியாக்கங்களுடன் பணிபுரிதல்</h2>
+            
+            <p>Buffers சரங்கள் மற்றும் பைனரி தரவிற்கு இடையே மாற்றும் போது பல்வேறு குறியாக்கங்களுடன் வேலை செய்கின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>// Create a string
+const str = 'Hello, World!';
+
+// Convert to different encodings
+const utf8Buffer = Buffer.from(str, 'utf8');
+console.log('UTF-8:', utf8Buffer);
+
+const base64Str = utf8Buffer.toString('base64');
+console.log('Base64 string:', base64Str);
+
+const hexStr = utf8Buffer.toString('hex');
+console.log('Hex string:', hexStr);
+
+// Convert back to original
+const fromBase64 = Buffer.from(base64Str, 'base64').toString('utf8');
+console.log('From Base64:', fromBase64);
+
+const fromHex = Buffer.from(hexStr, 'hex').toString('utf8');
+console.log('From Hex:', fromHex);</code></pre>
+            </div>
+            
+            <h3>Node.js இல் ஆதரிக்கப்படும் குறியாக்கங்கள்:</h3>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>குறியாக்கம்</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>utf8</strong></td>
+                            <td>மல்டி-பைட் குறியாக்கப்பட்ட யூனிகோட் எழுத்துகள் (இயல்புநிலை)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ascii</strong></td>
+                            <td>ASCII எழுத்துகள் மட்டுமே (7-பிட்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>latin1</strong></td>
+                            <td>லேட்டின்-1 குறியாக்கம் (ISO 8859-1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>base64</strong></td>
+                            <td>Base64 குறியாக்கம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>hex</strong></td>
+                            <td>ஹெக்ஸாடெசிமல் குறியாக்கம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>binary</strong></td>
+                            <td>பைனரி குறியாக்கம் (கைவிடப்பட்டது)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ucs2/utf16le</strong></td>
+                            <td>2 அல்லது 4 பைட்டுகள், லிட்டில்-எண்டியன் குறியாக்கப்பட்ட யூனிகோட் எழுத்துகள்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Advanced Buffer Operations -->
+        <section class="content-section" id="advanced-operations">
+            <h2>மேம்பட்ட Buffer செயல்பாடுகள்</h2>
+            
+            <h3>Buffers இணைத்தல்</h3>
+            
+            <p>Buffer.concat() ஐப் பயன்படுத்தி பல buffers ஐ ஒன்றாக இணைக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const buf1 = Buffer.from('Hello, ');
+const buf2 = Buffer.from('Node.js!');
+
+// Concatenate buffers
+const combined = Buffer.concat([buf1, buf2]);
+console.log(combined.toString()); // 'Hello, Node.js!'
+
+// With a maximum length parameter
+const partial = Buffer.concat([buf1, buf2], 5);
+console.log(partial.toString()); // 'Hello'</code></pre>
+            </div>
+            
+            <h3>Buffers இல் தேடுதல்</h3>
+            
+            <p>Buffers மதிப்புகள் அல்லது வரிசைகளைத் தேடுவதற்கான முறைகளை வழங்குகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>const buf = Buffer.from('Hello, Node.js is awesome!');
+
+// Find the first occurrence of a value
+console.log(buf.indexOf('Node')); // 7
+
+// Check if buffer contains a value
+console.log(buf.includes('awesome')); // true
+
+// Find the last occurrence of a value
+console.log(buf.lastIndexOf('e')); // 24</code></pre>
+            </div>
+        </section>
+
+        <!-- Buffer and Streams -->
+        <section class="content-section" id="buffer-streams">
+            <h2>Buffer மற்றும் Streams</h2>
+            
+            <p>Buffers திறந்த தரவு செயலாக்கத்திற்காக streams உடன் பொதுவாகப் பயன்படுத்தப்படுகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const { Transform } = require('stream');
+
+// Create a transform stream that processes data in chunks
+const transformStream = new Transform({
+  transform(chunk, encoding, callback) {
+   // Process each chunk (which is a Buffer)
+   const processed = chunk.toString().toUpperCase();
+   this.push(Buffer.from(processed));
+   callback();
+  }
+});
+
+// Create a read stream from a file
+const readStream = fs.createReadStream('input.txt');
+
+// Create a write stream to a file
+const writeStream = fs.createWriteStream('output.txt');
+
+// Process the file in chunks
+readStream.pipe(transformStream).pipe(writeStream);</code></pre>
+            </div>
+        </section>
+
+        <!-- Buffer and File System -->
+        <section class="content-section" id="buffer-filesystem">
+            <h2>Buffer மற்றும் கோப்பு முறைமை</h2>
+            
+            <p>Buffers கோப்பு முறைமை செயல்பாடுகளுக்கு பொதுவாகப் பயன்படுத்தப்படுகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+
+// Write buffer to file
+const writeBuffer = Buffer.from('Hello, Node.js!');
+fs.writeFile('buffer.txt', writeBuffer, (err) => {
+  if (err) throw err;
+  console.log('File written successfully');
+
+  // Read file into buffer
+  fs.readFile('buffer.txt', (err, data) => {
+    if (err) throw err;
+    
+    // 'data' is a buffer
+    console.log('Read buffer:', data);
+    console.log('Buffer content:', data.toString());
+
+    // Read only part of the file into a buffer
+    const smallBuffer = Buffer.alloc(5);
+    fs.open('buffer.txt', 'r', (err, fd) => {
+      if (err) throw err;
+
+      // Read 5 bytes starting at position 7
+      fs.read(fd, smallBuffer, 0, 5, 7, (err, bytesRead, buffer) => {
+        if (err) throw err;
+
+        console.log('Partial read:', buffer.toString());
+        // Output: Node.
+
+        fs.close(fd, (err) => {
+          if (err) throw err;
+        });
+      });
+    });
+  });
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Buffer Performance Considerations -->
+        <section class="content-section" id="performance">
+            <h2>Buffer செயல்திறன் பரிசீலனைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>நினைவக பயன்பாடு:</strong> Buffers JavaScript குவிப்பிற்கு வெளியே நினைவகத்தைப் பயன்படுத்துகின்றன, இது ஒரு நன்மையாகவும் (குறைந்த குப்பை சேகரிப்பு அழுத்தம்) மற்றும் ஒரு தீமையாகவும் (கவனமாக நிர்வகிக்கப்பட வேண்டும்) இருக்கலாம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span><strong>ஒதுக்கீடு:</strong> Buffer.allocUnsafe() என்பது Buffer.alloc() ஐ விட வேகமானது, ஆனால் பாதுகாப்பு பரிசீலனைகளுடன் வருகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span><strong>சரம் மாற்றம்:</strong> பெரிய buffers ஐ சரங்களாக மாற்றுவது அல்லது நேர்மாறாக விலை உயர்ந்ததாக இருக்கலாம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-swimming-pool"></i>
+                    <span><strong>பூல் செய்தல்:</strong> சிறிய buffers ஐ அடிக்கடி உருவாக்கும் பயன்பாடுகளுக்கு, ஒதுக்கீடு மேல்நிலை குறைக்க ஒரு buffer பூலை செயல்படுத்த கருதுங்கள்</span>
+                </div>
+            </div>
+            
+            <h3>Buffer பூல் செயலாக்கம்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Simple buffer pool implementation
+class BufferPool {
+  constructor(bufferSize = 1024, poolSize = 10) {
+    this.bufferSize = bufferSize;
+    this.pool = Array(poolSize).fill().map(() => Buffer.alloc(bufferSize));
+    this.used = Array(poolSize).fill(false);
+  }
+
+  // Get a buffer from the pool
+  get() {
+    const index = this.used.indexOf(false);
+    if (index === -1) {
+       // Pool is full, create a new buffer
+       console.log('Pool full, allocating new buffer');
+       return Buffer.alloc(this.bufferSize);
+    }
+    this.used[index] = true;
+    return this.pool[index];
+  }
+
+  // Return a buffer to the pool
+  release(buffer) {
+    const index = this.pool.indexOf(buffer);
+    if (index !== -1) {
+       // Zero the buffer for security
+       buffer.fill(0);
+       this.used[index] = false;
+    }
+  }
+}
+
+// Usage example
+const pool = new BufferPool(10, 3); // 3 buffers of 10 bytes each
+
+const buf1 = pool.get();
+const buf2 = pool.get();
+const buf3 = pool.get();
+const buf4 = pool.get(); // This will allocate a new buffer
+
+buf1.write('Hello');
+console.log(buf1.toString()); // Hello
+
+// Return buf1 to the pool
+pool.release(buf1);
+
+// Get another buffer (should reuse buf1)
+const buf5 = pool.get();
+console.log(buf5.toString()); // Should be empty (zeros)</code></pre>
+            </div>
+        </section>
+
+        <!-- Buffer Security Considerations -->
+        <section class="content-section" id="security">
+            <h2>Buffer பாதுகாப்பு பரிசீலனைகள்</h2>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🔒</span> பாதுகாப்பு எச்சரிக்கை:</h4>
+                <p>Buffers நினைவகத்திலிருந்து உணர்திறன் தரவைக் கொண்டிருக்கலாம்.</p>
+                <p>Buffers கையாளும் போது எப்போதும் எச்சரிக்கையாக இருங்கள், குறிப்பாக அவை பயனர்களுக்கு வெளிப்படுத்தப்படலாம் அல்லது பதிவு செய்யப்படலாம்.</p>
+            </div>
+            
+            <h3>சிறந்த நடைமுறைகள்:</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>செயல்திறன் முக்கியமானது மற்றும் நீங்கள் உடனடியாக buffer ஐ நிரப்பும் வரை Buffer.allocUnsafe() ஐப் பயன்படுத்துவதைத் தவிர்க்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-eraser"></i>
+                    <span>அவை உணர்திறன் தகவல்களைக் கொண்டிருந்தால், பயன்படுத்திய பின் buffers ஐ பூஜ்ஜிய-நிரப்பவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Buffer நிகழ்வுகள் அல்லது slices பகிர்ந்து கொள்ளும் போது கவனமாக இருங்கள், ஏனெனில் மாற்றங்கள் அனைத்து குறிப்புகளிலும் பிரதிபலிக்கப்படுகின்றன</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>வெளிப்புற மூலங்களிலிருந்து பைனரி தரவைப் பெறும் போது buffer உள்ளீடுகளை சரிபார்க்கவும்</span>
+                </div>
+            </div>
+            
+            <h3>உணர்திறன் தரவைப் பாதுகாப்பாக கையாளுதல்:</h3>
+            
+            <div class="code-example">
+                <pre><code>// Example: Safely handling sensitive data
+function processPassword(password) {
+  // Create a buffer to hold the password
+  const passwordBuffer = Buffer.from(password);
+
+  // Process the password (e.g., hashing)
+  const hashedPassword = hashPassword(passwordBuffer);
+
+  // Zero out the original password buffer for security
+  passwordBuffer.fill(0);
+
+  return hashedPassword;
+}
+
+// Simple hashing function for demonstration
+function hashPassword(buffer) {
+  // In a real application, you would use a cryptographic hash function
+  // This is a simplified example
+  let hash = 0;
+  for (let i = 0; i < buffer.length; i++) {
+    hash = ((hash << 5) - hash) + buffer[i];
+    hash |= 0; // Convert to 32-bit integer
+  }
+  return hash.toString(16);
+}
+
+// Usage
+const password = 'secret123';
+const hashedPassword = processPassword(password);
+console.log('Hashed password:', hashedPassword);</code></pre>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>Node.js Buffer வகுப்பு பைனரி தரவுடன் வேலை செய்வதற்கான ஒரு அத்தியாவசிய கருவியாகும். நினைவில் கொள்ள வேண்டிய முக்கிய புள்ளிகள்:</p>
+            
+            <ul>
+                <li>Buffers JavaScript இல் பைனரி தரவைக் கையாள ஒரு வழியை வழங்குகின்றன</li>
+                <li>buffers உருவாக்க Buffer.alloc(), Buffer.from(), மற்றும் Buffer.allocUnsafe() ஐப் பயன்படுத்தவும்</li>
+                <li>Buffers write(), toString(), slice(), மற்றும் copy() போன்ற முறைகளுடன் கையாளப்படலாம்</li>
+                <li>Buffers UTF-8, Base64, மற்றும் Hex உட்பட பல்வேறு குறியாக்கங்களை ஆதரிக்கின்றன</li>
+                <li>Buffers கோப்பு I/O, நெட்வொர்க் செயல்பாடுகள் மற்றும் பைனரி தரவு செயலாக்கத்தில் பொதுவாகப் பயன்படுத்தப்படுகின்றன</li>
+                <li>Buffers உடன் பணிபுரியும் போது செயல்திறன் மற்றும் பாதுகாப்பு தாக்கங்களைக் கருதுங்கள்</li>
+            </ul>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் முறைகளில் எது ஒரு சரத்திலிருந்து Buffer உருவாக்க பயன்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Buffer.alloc()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Buffer.alloc() ஒரு குறிப்பிட்ட அளவு buffer ஐ உருவாக்குகிறது, ஆனால் சரத்திலிருந்து அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">Buffer.from()</div>
+                            <div class="option-feedback correct">✓ சரி! Buffer.from() ஒரு சரத்திலிருந்து Buffer உருவாக்க பயன்படும் சரியான முறையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Buffer.create()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "Buffer.create()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">new Buffer()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "new Buffer()" கட்டமைப்பான் பாதுகாப்பு காரணங்களுக்காக கைவிடப்பட்டது மற்றும் புதிய பயன்பாடுகளில் பயன்படுத்தப்படக்கூடாது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Streams.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Crypto Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-buffer">Buffer தொகுதி என்றால் என்ன?</a></li>
+                    <li><a href="#creating-buffers">Buffers உருவாக்குதல்</a></li>
+                    <li><a href="#buffer-methods">Buffer முறைகள்</a></li>
+                    <li><a href="#security">பாதுகாப்பு பரிசீலனைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

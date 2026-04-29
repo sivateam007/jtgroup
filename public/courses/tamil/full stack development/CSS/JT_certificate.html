@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Certificate of Achievement</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        font-family: "Georgia", serif;
+    }
+
+    .certificate {
+        width: 1000px;
+        height: 700px;
+        margin: 40px auto;
+        background: #fffaf0;
+        padding: 40px;
+        position: relative;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+        border-radius: 12px;
+        border: 10px solid transparent;
+        background-clip: padding-box;
+    }
+
+    /* Gradient Outer Border */
+    .certificate::before {
+        content: "";
+        position: absolute;
+        top: -12px;
+        left: -12px;
+        right: -12px;
+        bottom: -12px;
+        background: linear-gradient(45deg, #c9a227, #f5e28c, #c9a227);
+        z-index: -1;
+        border-radius: 16px;
+    }
+
+    /* Logo */
+    .logo {
+        position: absolute;
+        top: 30px;
+        left: 40px;
+    }
+
+    .logo img {
+        height: 80px;
+    }
+
+    /* Certificate Number */
+    .cert-no {
+        position: absolute;
+        top: 35px;
+        right: 40px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #1e3c72;
+    }
+
+    /* Header */
+    .header {
+        text-align: center;
+        margin-top: 60px;
+    }
+
+    .header h1 {
+        font-size: 52px;
+        letter-spacing: 4px;
+        color: #1e3c72;
+        margin-bottom: 8px;
+    }
+
+    .header h3 {
+        font-weight: normal;
+        color: #c9a227;
+        letter-spacing: 2px;
+    }
+
+    /* Content */
+    .content {
+        text-align: center;
+        margin-top: 70px;
+        padding: 0 80px;
+    }
+
+    .content h2 {
+        font-size: 38px;
+        margin: 25px 0;
+        color: #2a5298;
+        text-transform: uppercase;
+        border-bottom: 2px solid #c9a227;
+        display: inline-block;
+        padding-bottom: 6px;
+    }
+
+    .content p {
+        font-size: 20px;
+        line-height: 1.8;
+        color: #333;
+    }
+
+    /* Footer */
+    .footer {
+        position: absolute;
+        bottom: 70px;
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .signature img {
+        height: 60px;
+    }
+
+    .signature p {
+        margin: 2px;
+        font-size: 14px;
+    }
+
+    .seal img {
+        height: 100px;
+        opacity: 0.9;
+    }
+
+    .qr {
+        text-align: center;
+    }
+
+    .qr p {
+        font-size: 12px;
+        margin-top: 5px;
+        color: #555;
+    }
+
+    /* Date */
+    .date-time {
+        position: absolute;
+        bottom: 30px;
+        right: 40px;
+        font-size: 15px;
+        color: #1e3c72;
+    }
+    
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #certificate, #certificate * {
+        visibility: visible;
+    }
+
+    #certificate {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    button {
+        display: none;
+    }
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="certificate">
+
+    <!-- Logo -->
+    <div class="logo">
+        <img src="jt_logo.jpeg" alt="Company Logo">
+    </div>
+
+    <!-- Certificate Number -->
+    <div class="cert-no">
+        Certificate No: <span id="certificateNumber"></span>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>CERTIFICATE</h1>
+        <h3>OF ACHIEVEMENT</h3>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <p>This certificate is proudly presented to</p>
+        <h2 id="studentName">Student Name</h2>
+        <p>
+            For successfully completing the program and demonstrating
+            outstanding performance and dedication.
+        </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+
+        <div class="signature">
+            <img src="jt_sign.jpeg" alt="Signature">
+            <p><strong>Authorized Signature</strong></p>
+            <p>Director</p>
+            <p>JT group of institution</p>
+        </div>
+
+        <div class="seal">
+            <img src="jt_seal.jpeg" alt="Company Seal">
+        </div>
+
+        <div class="qr">
+            <div id="qrcode">
+              
+            </div>
+            <p>Scan to website</p>
+        </div>
+
+    </div>
+
+    <div class="date-time">
+        Issued on: <strong><span id="currentDateTime"></span></strong>
+    </div>
+
+</div>
+<button onclick="printPage()">🖨 Print / Download PDF</button>
+
+
+<script>
+    
+    // Student Name Prompt
+    let name = prompt("Enter Student Name:");
+    if (name && name.trim() !== "") {
+        document.getElementById("studentName").textContent = name;
+    }
+
+    // Date & Time
+    const now = new Date();
+    const pad = n => n.toString().padStart(2, '0');
+
+    // Certificate Number
+    const certNumber = `CERT-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+    document.getElementById("certificateNumber").textContent = certNumber;
+
+    // Display Date
+    document.getElementById("currentDateTime").textContent =
+        now.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+            
+        });
+
+    // QR Code
+    new QRCode(document.getElementById("qrcode"), {
+        text: `https://www.jtgroupofinstitution.com`,
+        width: 90,
+        height: 90
+    });
+    
+function printPage() {
+    window.print();
+}
+
+
+          
+</script>
+
+</body>
+</html>

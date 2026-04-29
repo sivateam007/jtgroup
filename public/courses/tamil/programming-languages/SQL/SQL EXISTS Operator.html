@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL EXISTS Operator - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL HAVING Clause.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL ANY and ALL Operators.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL EXISTS Operator</h2>
+            <p>Subquery-ல் எந்த பதிவும் உள்ளதா என சோதிக்க EXISTS operator பற்றி அறிந்து கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is EXISTS Operator -->
+        <section class="content-section" id="what-is-exists">
+            <h2>SQL EXISTS Operator என்றால் என்ன?</h2>
+            
+            <p>EXISTS operator ஒரு subquery-ல் எந்த பதிவும் உள்ளதா என சோதிக்கப் பயன்படுகிறது.</p>
+            
+            <p>Subquery ஒன்று அல்லது அதற்கு மேற்பட்ட பதிவுகளை திருப்பித் தந்தால் EXISTS operator TRUE-ஐ தரும்.</p>
+            
+            <div class="code-example">
+                <h3>EXISTS தொடரியல்</h3>
+                <pre><code class="command-input">SELECT column_name(s)
+FROM table_name
+WHERE EXISTS
+(SELECT column_name FROM table_name WHERE condition);</code></pre>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் "Products" அட்டவணையில் இருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="code-example">
+                <h3>Products அட்டவணை</h3>
+                <pre><code>+-----------+------------------------------+------------+------------+-----------------------+-------+
+| ProductID | ProductName                  | SupplierID | CategoryID | Unit                  | Price |
++-----------+------------------------------+------------+------------+-----------------------+-------+
+| 1         | Chais                        | 1          | 1          | 10 boxes x 20 bags    | 18    |
+| 2         | Chang                        | 1          | 1          | 24 - 12 oz bottles    | 19    |
+| 3         | Aniseed Syrup                | 1          | 2          | 12 - 550 ml bottles   | 10    |
+| 4         | Chef Anton's Cajun Seasoning | 2          | 2          | 48 - 6 oz jars        | 22    |
+| 5         | Chef Anton's Gumbo Mix       | 2          | 2          | 36 boxes              | 21.35 |
++-----------+------------------------------+------------+------------+-----------------------+-------+</code></pre>
+            </div>
+            
+            <p>மற்றும் "Suppliers" அட்டவணையில் இருந்து ஒரு தேர்வு:</p>
+            
+            <div class="code-example">
+                <h3>Suppliers அட்டவணை</h3>
+                <pre><code>+------------+-----------------------------+-------------------+---------------------+-------------+------------+---------+
+| SupplierID | SupplierName                | ContactName       | Address             | City         | PostalCode | Country |
++------------+-----------------------------+-------------------+---------------------+-------------+------------+---------+
+| 1          | Exotic Liquid               | Charlotte Cooper  | 49 Gilbert St.      | London       | EC1 4SD    | UK      |
+| 2          | New Orleans Cajun Delights  | Shelley Burke     | P.O. Box 78934      | New Orleans  | 70117      | USA     |
+| 3          | Grandma Kelly's Homestead   | Regina Murphy     | 707 Oxford Rd.      | Ann Arbor    | 48104      | USA     |
+| 4          | Tokyo Traders               | Yoshi Nagase      | 9-8 Sekimai...      | Tokyo        | 100        | Japan   |
++------------+-----------------------------+-------------------+---------------------+-------------+------------+---------+</code></pre>
+            </div>
+        </section>
+
+        <!-- SQL EXISTS Examples -->
+        <section class="content-section" id="exists-examples">
+            <h2>SQL EXISTS உதாரணங்கள்</h2>
+            
+            <p>பின்வரும் SQL statement TRUE-ஐ திருப்பித் தந்து, தயாரிப்பு விலை 20-க்கும் குறைவாக உள்ள சப்ளையர்களை பட்டியலிடுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT SupplierName
+FROM Suppliers
+WHERE EXISTS (SELECT ProductName FROM Products 
+WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>SupplierName</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Exotic Liquid</div>
+                    </div>
+                    <div class="table-row">
+                        <div>New Orleans Cajun Delights</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p>பின்வரும் SQL statement TRUE-ஐ திருப்பித் தந்து, தயாரிப்பு விலை 22-க்கு சமமாக உள்ள சப்ளையர்களை பட்டியலிடுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT SupplierName
+FROM Suppliers
+WHERE EXISTS (SELECT ProductName FROM Products 
+WHERE Products.SupplierID = Suppliers.supplierID AND Price = 22);</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>SupplierName</div>
+                    </div>
+                    <div class="table-row">
+                        <div>New Orleans Cajun Delights</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How EXISTS Works -->
+        <section class="content-section" id="how-exists-works">
+            <h2>EXISTS எவ்வாறு வேலை செய்கிறது</h2>
+            
+            <div class="visual-container">
+                <div class="exists-flow">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>முதன்மை Query தொடங்குகிறது</h4>
+                            <p>Suppliers அட்டவணையில் இருந்து ஒவ்வொரு வரிசையும் பார்க்கப்படுகிறது</p>
+                            <div class="code-snippet">
+                                <code>SELECT SupplierName FROM Suppliers</code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Subquery இயக்கப்படுகிறது</h4>
+                            <p>ஒவ்வொரு Supplier-க்கும் Products அட்டவணையில் பொருந்தக்கூடிய பதிவுகள் சோதிக்கப்படுகின்றன</p>
+                            <div class="code-snippet">
+                                <code>WHERE EXISTS (SELECT ... WHERE Products.SupplierID = Suppliers.supplierID)</code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>முடிவு மதிப்பீடு செய்யப்படுகிறது</h4>
+                            <p>Subquery ஒன்று அல்லது அதற்கு மேற்பட்ட வரிசைகளை திருப்பித் தந்தால் EXISTS TRUE-ஐ தரும்</p>
+                            <div class="result-evaluation">
+                                <div class="result-true">✓ Subquery வரிசைகளை தரும் → TRUE</div>
+                                <div class="result-false">✗ Subquery வரிசைகளை தராது → FALSE</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>இறுதி முடிவு</h4>
+                            <p>TRUE-ஐ தந்த Suppliers மட்டும் இறுதி முடிவில் சேர்க்கப்படுகின்றன</p>
+                            <div class="code-snippet">
+                                <code>SupplierName மட்டும் திருப்பித் தரப்படும்</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXISTS vs IN Comparison -->
+        <section class="content-section" id="exists-vs-in">
+            <h2>EXISTS vs IN ஒப்பீடு</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>EXISTS Operator</h4>
+                    </div>
+                    <ul>
+                        <li><strong>boolean</strong> மதிப்பை தரும் (TRUE/FALSE)</li>
+                        <li>Subquery முடிவுகளின் <strong>இருப்பை</strong> சோதிக்கிறது</li>
+                        <li>முதல் பொருந்தும் பதிவைக் கண்டுபிடித்தவுடன் <strong>நிறுத்துகிறது</strong></li>
+                        <li>பெரிய தரவுத்தளங்களுக்கு <strong>மேலும் திறமையானது</strong></li>
+                        <li>Correlated subqueries-உடன் நன்றாக வேலை செய்கிறது</li>
+                    </ul>
+                    <div class="code-block small">
+                        <pre><code>SELECT name
+FROM customers c
+WHERE EXISTS (
+    SELECT 1 
+    FROM orders o 
+    WHERE o.customer_id = c.id
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-list"></i>
+                        <h4>IN Operator</h4>
+                    </div>
+                    <ul>
+                        <li>மதிப்புகளின் <strong>பட்டியலை</strong> சோதிக்கிறது</li>
+                        <li>மதிப்பு பட்டியலில் <strong>உள்ளதா</strong> என சோதிக்கிறது</li>
+                        <li><strong>அனைத்து</strong> முடிவுகளையும் மதிப்பீடு செய்கிறது</li>
+                        <li>சிறிய மதிப்புப் பட்டியல்களுக்கு ஏற்றது</li>
+                        <li>Static value lists-உடன் நன்றாக வேலை செய்கிறது</li>
+                    </ul>
+                    <div class="code-block small">
+                        <pre><code>SELECT name
+FROM customers
+WHERE id IN (
+    SELECT customer_id 
+    FROM orders
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>ஆர்டர் இடுத்த வாடிக்கையாளர்கள்</h3>
+                    <p>குறைந்தது ஒரு ஆர்டர் இடுத்துள்ள வாடிக்கையாளர்களைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT CustomerName
+FROM Customers c
+WHERE EXISTS (
+    SELECT 1 
+    FROM Orders o 
+    WHERE o.CustomerID = c.CustomerID
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3>தயாரிப்புகள் விற்கப்பட்ட சப்ளையர்கள்</h3>
+                    <p>குறைந்தது ஒரு தயாரிப்பை விற்ற சப்ளையர்களைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT SupplierName
+FROM Suppliers s
+WHERE EXISTS (
+    SELECT 1 
+    FROM Products p 
+    WHERE p.SupplierID = s.SupplierID
+    AND p.UnitsInStock > 0
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>பணியாளர் சேமிப்புகள்</h3>
+                    <p>குறைந்தது ஒரு சேமிப்பைக் கொண்ட பணியாளர்களைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT EmployeeName
+FROM Employees e
+WHERE EXISTS (
+    SELECT 1 
+    FROM Territories t 
+    WHERE t.EmployeeID = e.EmployeeID
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOT EXISTS -->
+        <section class="content-section" id="not-exists">
+            <h2>NOT EXISTS Operator</h2>
+            
+            <p>NOT EXISTS operator EXISTS-ன் எதிர்மறையாகும். Subquery பதிவுகளை திருப்பித் தராதபோது TRUE-ஐ தரும்.</p>
+            
+            <div class="code-example">
+                <h3>NOT EXISTS உதாரணம்</h3>
+                <pre><code class="command-input">SELECT SupplierName
+FROM Suppliers
+WHERE NOT EXISTS (SELECT ProductName FROM Products 
+WHERE Products.SupplierID = Suppliers.supplierID);</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>SupplierName</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Grandma Kelly's Homestead</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Tokyo Traders</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> பயன்பாடு:</h4>
+                <p>NOT EXISTS மூலம் எந்த தயாரிப்புகளும் இல்லாத சப்ளையர்களைக் கண்டறியலாம். இது "missing records" கண்டறிய பயனுள்ளதாக இருக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Performance Benefits -->
+        <section class="content-section" id="performance">
+            <h2>செயல்திறன் நன்மைகள்</h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>முதல் பொருந்தும் பதிவில் நிறுத்துகிறது</h4>
+                    <p>EXISTS முதல் பொருந்தும் பதிவைக் கண்டுபிடித்தவுடன் subquery-ன் செயல்பாட்டை நிறுத்துகிறது</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>குறைந்த மெமரி பயன்பாடு</h4>
+                    <p>முழு முடிவு தொகுப்பை சேமிக்க தேவையில்லை, boolean மதிப்பு மட்டுமே தேவை</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>திறமையான குறியீட்டு பயன்பாடு</h4>
+                    <p>EXISTS correlated subqueries-ல் indexes-ஐ திறமையாகப் பயன்படுத்தும்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> SQL EXISTS operator என்ன செய்கிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு subquery ஒன்று அல்லது அதற்கு மேற்பட்ட பதிவுகளை திருப்பித் தருகிறதா என சோதிக்கிறது</div>
+                            <div class="option-feedback correct">✓ சரி! EXISTS operator ஒரு subquery பதிவுகளை திருப்பித் தருகிறதா என சோதிக்கிறது மற்றும் boolean மதிப்பை தரும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">பல queries-ன் முடிவுகளை இணைக்கிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது UNION operator-ன் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">பொதுவான நெடுவரிசையின் அடிப்படையில் இரண்டு அட்டவணைகளை இணைக்கிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது JOIN-ன் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நிபந்தனையின் அடிப்படையில் வரிசைகளை வடிகட்டுகிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது WHERE clause-ன் வேலை, EXISTS ஒரு special conditional operator</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL HAVING Clause.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL ANY and ALL Operators.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-exists">EXISTS Operator என்றால் என்ன?</a></li>
+                    <li><a href="#exists-examples">EXISTS உதாரணங்கள்</a></li>
+                    <li><a href="#exists-vs-in">EXISTS vs IN</a></li>
+                    <li><a href="#not-exists">NOT EXISTS</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .visual-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .exists-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(52, 152, 219, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .step-number {
+            background: var(--git-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        .step-content p {
+            margin: 0 0 1rem 0;
+            color: #666;
+        }
+        
+        .code-snippet {
+            background: #2d2d2d;
+            border-radius: 5px;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-snippet code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .result-evaluation {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .result-true, .result-false {
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .result-true {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            border: 1px solid #2ecc71;
+        }
+        
+        .result-false {
+            background: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            border: 1px solid #e74c3c;
+        }
+        
+        .flow-arrow {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .flow-arrow i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .comparison-card li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .example-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .benefit-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        /* Result Box */
+        .result-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+        }
+        
+        .result-box h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .table-data {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .table-row {
+            display: grid;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .table-row.header {
+            background: var(--git-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .table-row > div {
+            padding: 0.8rem;
+            text-align: center;
+            border-right: 1px solid #ddd;
+        }
+        
+        .table-row > div:last-child {
+            border-right: none;
+        }
+        
+        .table-row.header > div {
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Exercise Styles */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid,
+            .examples-grid,
+            .benefits-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .step-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .visual-container {
+                padding: 1rem;
+            }
+            
+            .flow-step {
+                padding: 1rem;
+            }
+            
+            .code-snippet {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL LIMIT Clause - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .data-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MySQL DELETE Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MySQL MIN() and MAX() Functions.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MySQL LIMIT Clause</h2>
+            <p>MySQL LIMIT விதி</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- LIMIT Clause Section -->
+        <section class="content-section" id="limit-clause">
+            <h2>MySQL LIMIT விதி</h2>
+            
+            <p>LIMIT விதி திரும்பப் பெற வேண்டிய பதிவுகளின் எண்ணிக்கையைக் குறிப்பிட பயன்படுகிறது.</p>
+            
+            <p>ஆயிரக்கணக்கான பதிவுகளைக் கொண்ட பெரிய அட்டவணைகளில் LIMIT விதி பயனுள்ளதாக இருக்கிறது. பெரிய எண்ணிக்கையிலான பதிவுகளைத் திருப்பித் தருவது செயல்திறனைப் பாதிக்கும்.</p>
+        </section>
+
+        <!-- LIMIT Syntax -->
+        <section class="content-section" id="limit-syntax">
+            <h2>LIMIT தொடரமைப்பு</h2>
+            
+            <div class="code-example">
+                <pre><code>SELECT column_name(s)
+FROM table_name
+WHERE condition
+LIMIT number;</code></pre>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>டெமோ தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் உள்ள "Customers" அட்டவணையில் இருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>CustomerID</th>
+                        <th>CustomerName</th>
+                        <th>ContactName</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>PostalCode</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Maria Anders</td>
+                        <td>Obere Str. 57</td>
+                        <td>Berlin</td>
+                        <td>12209</td>
+                        <td>Germany</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ana Trujillo Emparedados y helados</td>
+                        <td>Ana Trujillo</td>
+                        <td>Avda. de la Constitución 2222</td>
+                        <td>México D.F.</td>
+                        <td>05021</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Antonio Moreno Taquería</td>
+                        <td>Antonio Moreno</td>
+                        <td>Mataderos 2312</td>
+                        <td>México D.F.</td>
+                        <td>05023</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Around the Horn</td>
+                        <td>Thomas Hardy</td>
+                        <td>120 Hanover Sq.</td>
+                        <td>London</td>
+                        <td>WA1 1DP</td>
+                        <td>UK</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Berglunds snabbköp</td>
+                        <td>Christina Berglund</td>
+                        <td>Berguvsvägen 8</td>
+                        <td>Luleå</td>
+                        <td>S-958 22</td>
+                        <td>Sweden</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- MySQL LIMIT Examples -->
+        <section class="content-section" id="limit-examples">
+            <h2>MySQL LIMIT எடுத்துக்காட்டுகள்</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை "Customers" அட்டவணையில் இருந்து முதல் மூன்று பதிவுகளைத் தேர்ந்தெடுக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: உங்கள் சொந்த SQL சர்வரைப் பெறுங்கள்</h3>
+                <pre><code>SELECT * FROM Customers
+LIMIT 3;</code></pre>
+            </div>
+            
+            <p>பதிவுகள் 4 - 6 (சேர்க்கை) ஐத் தேர்ந்தெடுக்க விரும்பினால் என்ன செய்வது?</p>
+            
+            <p>MySQL இதைக் கையாள ஒரு வழியை வழங்குகிறது: OFFSET ஐப் பயன்படுத்துவதன் மூலம்.</p>
+            
+            <p>கீழே உள்ள SQL கோரிக்கை "3 பதிவுகளை மட்டும் திருப்பித் தரவும், பதிவு 4 இல் தொடங்கவும் (OFFSET 3)" என்று கூறுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>SELECT * FROM Customers
+LIMIT 3 OFFSET 3;</code></pre>
+            </div>
+        </section>
+
+        <!-- ADD a WHERE CLAUSE -->
+        <section class="content-section" id="where-clause">
+            <h2>WHERE விதியைச் சேர்க்கவும்</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை country "Germany" ஆக உள்ள "Customers" அட்டவணையில் இருந்து முதல் மூன்று பதிவுகளைத் தேர்ந்தெடுக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>SELECT * FROM Customers
+WHERE Country='Germany'
+LIMIT 3;</code></pre>
+            </div>
+        </section>
+
+        <!-- ADD an ORDER BY CLAUSE -->
+        <section class="content-section" id="order-by-clause">
+            <h2>ORDER BY விதியைச் சேர்க்கவும்</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை தேர்விலிருந்து முதல் மூன்று பதிவுகளைத் திருப்பித் தருவதற்கு முன் வாடிக்கையாளர்களை country மூலம் வரிசைப்படுத்துகிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>SELECT * FROM Customers
+ORDER BY Country
+LIMIT 3;</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வருவனவற்றில் எது சரியான SQL அறிக்கையாகும்:</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">SELECT * FROM Customers LIMIT 5</div>
+                            <div class="option-feedback correct">✓ சரி! இது சரியான SQL தொடரமைப்பாகும் - SELECT அறிக்கையின் முடிவில் LIMIT விதி வருகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">LIMIT 5;SELECT * FROM Customers</div>
+                            <div class="option-feedback incorrect">✗ தவறு! LIMIT விதி SELECT அறிக்கையின் முடிவில் மட்டுமே வர முடியும், தொடக்கத்தில் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SELECT LIMT 5 * FROM Customers</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது தவறான தொடரமைப்பு. "LIMIT" என்று எழுதப்பட்டுள்ளது (LIMT அல்ல) மற்றும் அது SELECT அறிக்கையின் முடிவில் வர வேண்டும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MySQL DELETE Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MySQL MIN() and MAX() Functions.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#limit-clause">LIMIT விதி</a></li>
+                    <li><a href="#limit-syntax">LIMIT தொடரமைப்பு</a></li>
+                    <li><a href="#limit-examples">LIMIT எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#where-clause">WHERE விதியுடன்</a></li>
+                    <li><a href="#order-by-clause">ORDER BY விதியுடன்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

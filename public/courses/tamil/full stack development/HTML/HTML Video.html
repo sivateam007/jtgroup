@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Video - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Video styling */
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .video-demo {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .video-preview {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin: 1rem 0;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .video-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        .video-example {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--git-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .browser-support {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .browser-item {
+            text-align: center;
+            min-width: 100px;
+        }
+        
+        .browser-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .chrome { background: #4285f4; }
+        .edge { background: #0078d7; }
+        .firefox { background: #ff7139; }
+        .safari { background: #000000; }
+        .opera { background: #ff1b2d; }
+        
+        .version-badge {
+            background: var(--git-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 0.3rem;
+        }
+        
+        .format-support {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .format-item {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .supported-yes {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .supported-no {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .demo-video {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: block;
+            margin: 1rem auto;
+        }
+        
+        .js-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .js-btn {
+            padding: 8px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .js-btn:hover {
+            background: #d62c1a;
+        }
+        
+        .js-btn.play { background: #28a745; }
+        .js-btn.pause { background: #ffc107; color: #333; }
+        .js-btn.stop { background: #dc3545; }
+        .js-btn.mute { background: #6c757d; }
+        
+        @media (max-width: 768px) {
+            .video-container {
+                flex-direction: column;
+            }
+            
+            .browser-support {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .format-support {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML Multimedia.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML Audio.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML Video</h2>
+            <p>HTML வீடியோவைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- HTML Video Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML வீடியோ</h2>
+            
+            <p>HTML &lt;video&gt; உறுப்பு வலைப்பக்கத்தில் ஒரு வீடியோவைக் காட்ட பயன்படுகிறது.</p>
+            
+            <div class="video-container">
+                <div class="video-demo">
+                    <h3>வீடியோ எடுத்துக்காட்டு</h3>
+                    <div class="video-preview">
+                        <video id="mainVideo" width="300" height="169" controls class="demo-video">
+                            <source src="video1.mp4" type="video/mp4">
+                            உங்கள் உலாவி வீடியோ குறிச்சொல்லை ஆதரிக்கவில்லை.
+                        </video>
+                    </div>
+                    <p style="text-align: center; font-style: italic;">Big Buck Bunny நன்றி</p>
+                </div>
+                
+                <div class="video-demo">
+                    <h3>&lt;video&gt; உறுப்பு</h3>
+                    <p>HTML இல் வீடியோவைக் காட்ட, &lt;video&gt; உறுப்பைப் பயன்படுத்தவும்:</p>
+                    
+                    <div class="video-code">
+                        &lt;video width="320" height="240" controls&gt;<br>
+                        &nbsp;&nbsp;&lt;source src="video1.mp4" type="video/mp4"&gt;<br>
+                        &nbsp;&nbsp;&lt;source src="movie.ogg" type="video/ogg"&gt;<br>
+                        &nbsp;&nbsp;உங்கள் உலாவி வீடியோ குறிச்சொல்லை ஆதரிக்கவில்லை.<br>
+                        &lt;/video&gt;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works -->
+        <section class="content-section" id="how-it-works">
+            <h2>இது எப்படி செயல்படுகிறது</h2>
+            
+            <div class="video-example">
+                <h3>முக்கிய பண்புக்கூறுகள்:</h3>
+                <div class="comparison-section" style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                    <div style="flex: 1; min-width: 250px; background: white; padding: 1.2rem; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h4 style="color: var(--git-color);">controls</h4>
+                        <p>வீடியோ கட்டுப்பாடுகளைச் சேர்க்கிறது, பிளே, பாஸ் மற்றும் வால்யூம் போன்றவை</p>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 250px; background: white; padding: 1.2rem; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h4 style="color: var(--git-color);">width & height</h4>
+                        <p>வீடியோவின் அகலம் மற்றும் உயரத்தை அமைக்கிறது. அமைக்கப்படவில்லை என்றால், வீடியோ ஏற்றப்படும் போது பக்கம் சிமிட்டலாம்</p>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 250px; background: white; padding: 1.2rem; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h4 style="color: var(--git-color);">&lt;source&gt;</h4>
+                        <p>மாற்று வீடியோ கோப்புகளைக் குறிப்பிட அனுமதிக்கிறது. உலாவி முதல் அறியப்பட்ட வடிவத்தைப் பயன்படுத்தும்</p>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <h4><span class="tip-icon">💡</span> முக்கிய குறிப்பு:</h4>
+                    <p>&lt;video&gt; மற்றும் &lt;/video&gt; குறிச்சொற்களுக்கு இடையே உள்ள உரை &lt;video&gt; உறுப்பை ஆதரிக்காத உலாவிகளில் மட்டுமே காட்டப்படும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HTML <video> Autoplay -->
+        <section class="content-section" id="autoplay">
+            <h2>HTML &lt;video&gt; Autoplay</h2>
+            
+            <p>வீடியோவை தானாகத் தொடங்க, autoplay பண்புக்கூறைப் பயன்படுத்தவும்:</p>
+            
+            <div class="video-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <div class="video-code">
+                    &lt;video width="320" height="240" autoplay&gt;<br>
+                    &nbsp;&nbsp;&lt;source src="video1.mp4" type="video/mp4"&gt;<br>
+                    &nbsp;&nbsp;&lt;source src="movie.ogg" type="video/ogg"&gt;<br>
+                    &nbsp;&nbsp;உங்கள் உலாவி வீடியோ குறிச்சொல்லை ஆதரிக்கவில்லை.<br>
+                    &lt;/video&gt;
+                </div>
+                
+                <div class="warning-box">
+                    <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                    <p>Chromium உலாவிகள் பெரும்பாலான சந்தர்ப்பங்களில் autoplay ஐ அனுமதிப்பதில்லை. இருப்பினும், நிச்சயமாக autoplay எப்போதும் அனுமதிக்கப்படுகிறது.</p>
+                </div>
+                
+                <p>உங்கள் வீடியோ தானாக விளையாடத் தொடங்குவதற்கு autoplay க்குப் பிறகு muted ஐச் சேர்க்கவும் (ஆனால் முட்கிரிக்கப்பட்டது):</p>
+                
+                <div class="video-code">
+                    &lt;video width="320" height="240" autoplay muted&gt;<br>
+                    &nbsp;&nbsp;&lt;source src="video1.mp4" type="video/mp4"&gt;<br>
+                    &nbsp;&nbsp;&lt;source src="movie.ogg" type="video/ogg"&gt;<br>
+                    &nbsp;&nbsp;உங்கள் உலாவி வீடியோ குறிச்சொல்லை ஆதரிக்கவில்லை.<br>
+                    &lt;/video&gt;
+                </div>
+                
+                <div class="video-preview">
+                    <video id="autoplayVideo" width="300" height="169" muted controls class="demo-video">
+                        <source src="video1.mp4" type="video/mp4">
+                        உங்கள் உலாவி வீடியோ குறிச்சொல்லை ஆதரிக்கவில்லை.
+                    </video>
+                </div>
+                <div style="text-align: center; margin-top: 0.5rem;">
+                    <button id="toggleAutoplay" class="js-btn" style="background: #6c757d;">
+                        Autoplay Demo (Muted)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2>உலாவி ஆதரவு</h2>
+            
+            <p>அட்டவணையில் உள்ள எண்கள் &lt;video&gt; உறுப்பை முழுமையாக ஆதரிக்கும் முதல் உலாவி பதிப்பைக் குறிக்கின்றன.</p>
+            
+            <div class="browser-support">
+                <div class="browser-item">
+                    <div class="browser-icon chrome">
+                        <i class="fab fa-chrome"></i>
+                    </div>
+                    <div>Chrome</div>
+                    <div class="version-badge">4.0</div>
+                </div>
+                
+                <div class="browser-item">
+                    <div class="browser-icon edge">
+                        <i class="fab fa-edge"></i>
+                    </div>
+                    <div>Edge</div>
+                    <div class="version-badge">9.0</div>
+                </div>
+                
+                <div class="browser-item">
+                    <div class="browser-icon firefox">
+                        <i class="fab fa-firefox-browser"></i>
+                    </div>
+                    <div>Firefox</div>
+                    <div class="version-badge">3.5</div>
+                </div>
+                
+                <div class="browser-item">
+                    <div class="browser-icon safari">
+                        <i class="fab fa-safari"></i>
+                    </div>
+                    <div>Safari</div>
+                    <div class="version-badge">4.0</div>
+                </div>
+                
+                <div class="browser-item">
+                    <div class="browser-icon opera">
+                        <i class="fab fa-opera"></i>
+                    </div>
+                    <div>Opera</div>
+                    <div class="version-badge">10.5</div>
+                </div>
+            </div>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>உறுப்பு</th>
+                            <th><i class="fab fa-chrome"></i> Chrome</th>
+                            <th><i class="fab fa-edge"></i> Edge</th>
+                            <th><i class="fab fa-firefox-browser"></i> Firefox</th>
+                            <th><i class="fab fa-safari"></i> Safari</th>
+                            <th><i class="fab fa-opera"></i> Opera</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>&lt;video&gt;</td>
+                            <td>4.0</td>
+                            <td>9.0</td>
+                            <td>3.5</td>
+                            <td>4.0</td>
+                            <td>10.5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- HTML Video Formats -->
+        <section class="content-section" id="video-formats">
+            <h2>HTML வீடியோ வடிவங்கள்</h2>
+            
+            <p>மூன்று ஆதரிக்கப்பட்ட வீடியோ வடிவங்கள் உள்ளன: MP4, WebM, மற்றும் Ogg. வெவ்வேறு வடிவங்களுக்கான உலாவி ஆதரவு:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>உலாவி</th>
+                            <th>MP4</th>
+                            <th>WebM</th>
+                            <th>Ogg</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fab fa-edge"></i> Edge</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-yes">YES</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fab fa-chrome"></i> Chrome</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-yes">YES</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fab fa-firefox-browser"></i> Firefox</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-yes">YES</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fab fa-safari"></i> Safari</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-no">NO</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fab fa-opera"></i> Opera</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-yes">YES</td>
+                            <td class="supported-yes">YES</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- HTML Video - Media Types -->
+        <section class="content-section" id="media-types">
+            <h2>HTML வீடியோ - மீடியா வகைகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>கோப்பு வடிவம்</th>
+                            <th>மீடியா வகை</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MP4</td>
+                            <td>video/mp4</td>
+                        </tr>
+                        <tr>
+                            <td>WebM</td>
+                            <td>video/webm</td>
+                        </tr>
+                        <tr>
+                            <td>Ogg</td>
+                            <td>video/ogg</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📁</span> type பண்புக்கூறு:</h4>
+                <p>&lt;source&gt; உறுப்பில் type பண்புக்கூறு முக்கியமானது. இது உலாவிக்கு வீடியோ வடிவத்தைக் கூறுகிறது, இதனால் உலாவி அதை விளையாட முடியுமா என்று சீக்கிரமாக முடிவு செய்ய முடியும்.</p>
+            </div>
+        </section>
+
+        <!-- HTML Video - Methods, Properties, and Events -->
+        <section class="content-section" id="dom-methods">
+            <h2>HTML வீடியோ - முறைகள், பண்புகள் மற்றும் நிகழ்வுகள்</h2>
+            
+            <p>HTML DOM &lt;video&gt; உறுப்புக்கான முறைகள், பண்புகள் மற்றும் நிகழ்வுகளை வரையறுக்கிறது.</p>
+            
+            <p>இது வீடியோக்களை ஏற்றவும், விளையாடவும், நிறுத்தவும், மேலும் கால அளவு மற்றும் வால்யூமை அமைக்கவும் உங்களை அனுமதிக்கிறது.</p>
+            
+            <p>வீடியோ விளையாடத் தொடங்கும்போது, நிறுத்தப்படும்போது போன்றவற்றை உங்களுக்கு அறிவிக்கக்கூடிய DOM நிகழ்வுகளும் உள்ளன.</p>
+            
+            <h3>எடுத்துக்காட்டு: JavaScript பயன்படுத்துதல்</h3>
+            
+            <div class="video-example">
+                <div class="video-preview">
+                    <video id="jsVideo" width="300" height="169" class="demo-video">
+                        <source src="video1.mp4" type="video/mp4">
+                        உங்கள் உலாவி வீடியோ குறிச்சொல்லை ஆதரிக்கவில்லை.
+                    </video>
+                </div>
+                
+                <div class="js-controls">
+                    <button id="playBtn" class="js-btn play">
+                        <i class="fas fa-play"></i> Play
+                    </button>
+                    <button id="pauseBtn" class="js-btn pause">
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                    <button id="stopBtn" class="js-btn stop">
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                    <button id="muteBtn" class="js-btn mute">
+                        <i class="fas fa-volume-mute"></i> Mute/Unmute
+                    </button>
+                    <button id="bigBtn" class="js-btn">
+                        <i class="fas fa-expand"></i> Big
+                    </button>
+                    <button id="smallBtn" class="js-btn">
+                        <i class="fas fa-compress"></i> Small
+                    </button>
+                    <button id="normalBtn" class="js-btn">
+                        <i class="fas fa-undo"></i> Normal
+                    </button>
+                </div>
+                
+                <div style="text-align: center; margin-top: 1rem;">
+                    <div id="videoStatus" style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; font-size: 0.9rem;">
+                        வீடியோ நிலை: தயாராக உள்ளது
+                    </div>
+                </div>
+                
+                <p style="text-align: center; font-style: italic; margin-top: 1rem;">Video courtesy of Big Buck Bunny.</p>
+                
+                <div class="video-code">
+                    // JavaScript எடுத்துக்காட்டு<br>
+                    var video = document.getElementById("jsVideo");<br>
+                    <br>
+                    // விளையாடு பொத்தான்<br>
+                    document.getElementById("playBtn").onclick = function() {<br>
+                    &nbsp;&nbsp;video.play();<br>
+                    };<br>
+                    <br>
+                    // நிறுத்து பொத்தான்<br>
+                    document.getElementById("pauseBtn").onclick = function() {<br>
+                    &nbsp;&nbsp;video.pause();<br>
+                    };
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔗</span> DOM குறிப்பு:</h4>
+                <p>முழு DOM குறிப்பிற்கு, எங்கள் HTML Audio/Video DOM Reference ஐப் பார்வையிடவும்.</p>
+            </div>
+        </section>
+
+        <!-- HTML Video Tags -->
+        <section class="content-section" id="video-tags">
+            <h2>HTML வீடியோ குறிச்சொற்கள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>குறிச்சொல்</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>&lt;video&gt;</td>
+                            <td>ஒரு வீடியோ அல்லது திரைப்படத்தை வரையறுக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td>&lt;source&gt;</td>
+                            <td>&lt;video&gt; மற்றும் &lt;audio&gt; போன்ற மீடியா உறுப்புகளுக்கு பல மீடியா வளங்களை வரையறுக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td>&lt;track&gt;</td>
+                            <td>மீடியா பிளேயர்களில் உரை தடங்களை வரையறுக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🎯</span> முக்கிய புள்ளிகள்:</h4>
+                <ul>
+                    <li>வீடியோவை எப்போதும் ஒன்றுக்கு மேற்பட்ட வடிவத்தில் வழங்கவும் (MP4, WebM, Ogg)</li>
+                    <li>width மற்றும் height பண்புக்கூறுகளை எப்போதும் சேர்க்கவும்</li>
+                    <li>உலாவி இணக்கத்திற்காக controls பண்புக்கூறைச் சேர்க்கவும்</li>
+                    <li>autoplay ஐப் பயன்படுத்தும் போது எப்போதும் muted ஐச் சேர்க்கவும்</li>
+                    <li>&lt;source&gt; உறுப்பில் type பண்புக்கூறைக் குறிப்பிடவும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML Multimedia.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML Audio.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">வீடியோ அறிமுகம்</a></li>
+                    <li><a href="#how-it-works">இது எப்படி செயல்படுகிறது</a></li>
+                    <li><a href="#autoplay">Autoplay</a></li>
+                    <li><a href="#browser-support">உலாவி ஆதரவு</a></li>
+                    <li><a href="#video-formats">வீடியோ வடிவங்கள்</a></li>
+                    <li><a href="#media-types">மீடியா வகைகள்</a></li>
+                    <li><a href="#dom-methods">DOM முறைகள்</a></li>
+                    <li><a href="#video-tags">வீடியோ குறிச்சொற்கள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Video JavaScript Controls
+        document.addEventListener('DOMContentLoaded', function() {
+            // Main video
+            const mainVideo = document.getElementById('mainVideo');
+            
+            // Autoplay demo
+            const autoplayVideo = document.getElementById('autoplayVideo');
+            const toggleAutoplayBtn = document.getElementById('toggleAutoplay');
+            
+            toggleAutoplayBtn.addEventListener('click', function() {
+                if (autoplayVideo.paused) {
+                    autoplayVideo.play();
+                    this.innerHTML = '<i class="fas fa-pause"></i> Pause Autoplay';
+                } else {
+                    autoplayVideo.pause();
+                    this.innerHTML = '<i class="fas fa-play"></i> Play Autoplay';
+                }
+            });
+            
+            // JavaScript controls demo
+            const jsVideo = document.getElementById('jsVideo');
+            const playBtn = document.getElementById('playBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const muteBtn = document.getElementById('muteBtn');
+            const bigBtn = document.getElementById('bigBtn');
+            const smallBtn = document.getElementById('smallBtn');
+            const normalBtn = document.getElementById('normalBtn');
+            const videoStatus = document.getElementById('videoStatus');
+            
+            // Play button
+            playBtn.addEventListener('click', function() {
+                jsVideo.play();
+                updateVideoStatus('விளையாடுகிறது...');
+            });
+            
+            // Pause button
+            pauseBtn.addEventListener('click', function() {
+                jsVideo.pause();
+                updateVideoStatus('நிறுத்தப்பட்டது');
+            });
+            
+            // Stop button
+            stopBtn.addEventListener('click', function() {
+                jsVideo.pause();
+                jsVideo.currentTime = 0;
+                updateVideoStatus('நிறுத்தப்பட்டது');
+            });
+            
+            // Mute button
+            muteBtn.addEventListener('click', function() {
+                jsVideo.muted = !jsVideo.muted;
+                if (jsVideo.muted) {
+                    this.innerHTML = '<i class="fas fa-volume-up"></i> Unmute';
+                    updateVideoStatus('முட்கிரிக்கப்பட்டது');
+                } else {
+                    this.innerHTML = '<i class="fas fa-volume-mute"></i> Mute';
+                    updateVideoStatus('விளையாடுகிறது...');
+                }
+            });
+            
+            // Big button
+            bigBtn.addEventListener('click', function() {
+                jsVideo.style.width = '100%';
+                jsVideo.style.maxWidth = '100%';
+                updateVideoStatus('பெரிய அளவு');
+            });
+            
+            // Small button
+            smallBtn.addEventListener('click', function() {
+                jsVideo.style.width = '200px';
+                jsVideo.style.maxWidth = '200px';
+                updateVideoStatus('சிறிய அளவு');
+            });
+            
+            // Normal button
+            normalBtn.addEventListener('click', function() {
+                jsVideo.style.width = '300px';
+                jsVideo.style.maxWidth = '320px';
+                updateVideoStatus('இயல்புநிலை அளவு');
+            });
+            
+            // Video event listeners
+            jsVideo.addEventListener('play', function() {
+                updateVideoStatus('விளையாடுகிறது...');
+            });
+            
+            jsVideo.addEventListener('pause', function() {
+                updateVideoStatus('நிறுத்தப்பட்டது');
+            });
+            
+            jsVideo.addEventListener('ended', function() {
+                updateVideoStatus('முடிந்தது');
+            });
+            
+            jsVideo.addEventListener('volumechange', function() {
+                if (jsVideo.muted) {
+                    updateVideoStatus('முட்கிரிக்கப்பட்டது');
+                } else {
+                    updateVideoStatus('வால்யூம்: ' + Math.round(jsVideo.volume * 100) + '%');
+                }
+            });
+            
+            function updateVideoStatus(status) {
+                videoStatus.textContent = 'வீடியோ நிலை: ' + status;
+                videoStatus.style.background = '#d4edda';
+                videoStatus.style.color = '#155724';
+                videoStatus.style.border = '1px solid #c3e6cb';
+                
+                setTimeout(() => {
+                    videoStatus.style.background = '#f8f9fa';
+                    videoStatus.style.color = '#333';
+                    videoStatus.style.border = '1px solid #ddd';
+                }, 2000);
+            }
+            
+            // Fallback for missing video file
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.addEventListener('error', function() {
+                    const parent = this.parentElement;
+                    parent.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: #666;">
+                            <i class="fas fa-video-slash" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                            <p>வீடியோ கோப்பு கிடைக்கவில்லை</p>
+                            <p style="font-size: 0.9rem;">video1.mp4 கோப்பு இந்த டெமோவிற்கு தேவைப்படுகிறது</p>
+                        </div>
+                    `;
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

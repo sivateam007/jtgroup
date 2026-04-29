@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Container - Align Grid Content - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Alignment styling */
+        .grid-example {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .alignment-container {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            margin: 1rem 0;
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        
+        .alignment-item {
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            padding: 20px;
+            font-size: 24px;
+            text-align: center;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            font-weight: bold;
+            min-height: 60px;
+        }
+        
+        .alignment-demo {
+            background: #f0f8ff;
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            margin: 1rem 0;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .demo-label {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #3498db;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .property-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .property-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--git-color);
+        }
+        
+        .value-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .value-tag {
+            background: #e9ecef;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .drag-drop-exercise {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            margin: 2rem 0;
+        }
+        
+        .code-block {
+            background: rgba(0,0,0,0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+        }
+        
+        .drag-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .drag-option {
+            background: rgba(255,255,255,0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: move;
+            user-select: none;
+            transition: all 0.3s;
+        }
+        
+        .drag-option:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .code-placeholder {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 4px;
+            border: 2px dashed rgba(255,255,255,0.5);
+            min-width: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Grid%20Gap.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Grid%20Items.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Grid Container - Align Grid Content</h2>
+            <p>CSS கிரிட் உள்ளடக்க சீரமைப்பைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Grid Container - Align Grid Content Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS கிரிட் கொண்டெய்னர் - கிரிட் உள்ளடக்க சீரமைப்பு</h2>
+            
+            <p>கிரிட் கொண்டெய்னருக்குள் பின்வரும் பண்புகளுடன் கிரிட் உள்ளடக்க சீரமைப்பை வரையறுக்கலாம்:</p>
+            
+            <div class="property-grid">
+                <div class="property-card">
+                    <h4>justify-content</h4>
+                    <p>முதன்மை அச்சில் (கிடைமட்டமாக) அனைத்து கிடைக்கும் இடத்தையும் பயன்படுத்தாத போது கிரிட் உள்ளடக்கத்தை சீரமைக்கிறது</p>
+                </div>
+                
+                <div class="property-card">
+                    <h4>align-content</h4>
+                    <p>குறுக்கு அச்சில் (செங்குத்தாக) அனைத்து கிடைக்கும் இடத்தையும் பயன்படுத்தாத போது கிரிட் உள்ளடக்கத்தை சீரமைக்கிறது</p>
+                </div>
+                
+                <div class="property-card">
+                    <h4>place-content</h4>
+                    <p>align-content மற்றும் justify-content பண்புகளுக்கான சுருக்கப் பண்பு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The CSS justify-content Property -->
+        <section class="content-section" id="justify-content">
+            <h2>CSS justify-content பண்பு</h2>
+            
+            <p>justify-content பண்பு முதன்மை அச்சில் (கிடைமட்டமாக) அனைத்து கிடைக்கும் இடத்தையும் பயன்படுத்தாத போது கிரிட் உள்ளடக்கத்தை சீரமைக்கப் பயன்படுகிறது.</p>
+            
+            <p>இந்த பண்பு பின்வரும் மதிப்புகளில் ஒன்றைக் கொண்டிருக்கலாம்:</p>
+            
+            <div class="value-list">
+                <span class="value-tag">space-evenly</span>
+                <span class="value-tag">space-around</span>
+                <span class="value-tag">space-between</span>
+                <span class="value-tag">center</span>
+                <span class="value-tag">start</span>
+                <span class="value-tag">end</span>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>justify-content பண்பு எந்த விளைவையும் கொள்ள, கிரிட் உள்ளடக்கத்தின் மொத்த அகலம் கொண்டெய்னரின் அகலத்தை விட குறைவாக இருக்க வேண்டும்.</p>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">space-evenly</div>
+                <p>space-evenly மதிப்பு கிரிட் உருப்படிகளை அவற்றைச் சுற்றி சம இடைவெளியுடன் காட்டுகிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  justify-content: space-evenly;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="justify-content: space-evenly; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">space-around</div>
+                <p>space-around மதிப்பு கிரிட் உருப்படிகளை அவற்றைச் சுற்றி இடைவெளியுடன் காட்டுகிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  justify-content: space-around;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="justify-content: space-around; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">space-between</div>
+                <p>space-between மதிப்பு கிரிட் உருப்படிகளை அவற்றுக்கிடையே இடைவெளியுடன் காட்டுகிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  justify-content: space-between;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="justify-content: space-between; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">center</div>
+                <p>center மதிப்பு கிரிட் உருப்படிகளை கொண்டெய்னரின் நடுவில் வைக்கிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  justify-content: center;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="justify-content: center; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">start</div>
+                <p>start மதிப்பு கிரிட் உருப்படிகளை கொண்டெய்னரின் தொடக்கத்தில் வைக்கிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  justify-content: start;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="justify-content: start; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">end</div>
+                <p>end மதிப்பு கிரிட் உருப்படிகளை கொண்டெய்னரின் முடிவில் வைக்கிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  justify-content: end;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="justify-content: end; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The CSS align-content Property -->
+        <section class="content-section" id="align-content">
+            <h2>CSS align-content பண்பு</h2>
+            
+            <p>align-content பண்பு குறுக்கு அச்சில் (செங்குத்தாக) அனைத்து கிடைக்கும் இடத்தையும் பயன்படுத்தாத போது கிரிட் உள்ளடக்கத்தை சீரமைக்கப் பயன்படுகிறது.</p>
+            
+            <p>இந்த பண்பு பின்வரும் மதிப்புகளில் ஒன்றைக் கொண்டிருக்கலாம்:</p>
+            
+            <div class="value-list">
+                <span class="value-tag">space-evenly</span>
+                <span class="value-tag">space-around</span>
+                <span class="value-tag">space-between</span>
+                <span class="value-tag">center</span>
+                <span class="value-tag">start</span>
+                <span class="value-tag">end</span>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>align-content பண்பு எந்த விளைவையும் கொள்ள, கிரிட் உள்ளடக்கத்தின் மொத்த உயரம் கொண்டெய்னரின் உயரத்தை விட குறைவாக இருக்க வேண்டும்.</p>
+                <p>பின்வரும் எடுத்துக்காட்டுகளில், align-content பண்பை சிறப்பாக விளக்க 300 பிக்சல் உயரம் கொண்ட கொண்டெய்னரைப் பயன்படுத்துகிறோம்.</p>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">center</div>
+                <p>center மதிப்பு கிரிட் உருப்படிகளை கொண்டெய்னரின் நடுவில் வைக்கிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  height: 300px;
+  align-content: center;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="align-content: center; height: 200px; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">space-evenly</div>
+                <p>space-evenly உடன், கிரிட் கோடுகள் கிரிட் கொண்டெய்னரில் சமமாக விநியோகிக்கப்படுகின்றன, மேல், கீழ் மற்றும் இடையில் சம இடைவெளியுடன்:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  height: 300px;
+  align-content: space-evenly;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="align-content: space-evenly; height: 200px; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">space-around</div>
+                <p>space-around உடன், கிரிட் கோடுகளுக்கிடையேயான இடைவெளி சமமாக இருக்கும், ஆனால் முதல் கிரிட் உருப்படிக்கு முன்னும் கடைசி கிரிட் உருப்படிக்குப் பின்னும் உள்ள இடைவெளி கிரிட் கோடுகளுக்கிடையேயான இடைவெளியில் பாதியாக அமைக்கப்படும்:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  height: 300px;
+  align-content: space-around;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="align-content: space-around; height: 200px; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">space-between</div>
+                <p>space-between உடன், கிரிட் கோடுகளுக்கிடையேயான இடைவெளி சமமாக இருக்கும், ஆனால் முதல் கிரிட் உருப்படி கொண்டெய்னரின் தொடக்க விளிம்புடன் சரியாகவும், கடைசி கிரிட் உருப்படி கொண்டெய்னரின் முடிவு விளிம்புடன் சரியாகவும் இருக்கும்:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  height: 300px;
+  align-content: space-between;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="align-content: space-between; height: 200px; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">start</div>
+                <p>start மதிப்பு கிரிட் உருப்படிகளை கொண்டெய்னரின் தொடக்கத்தில் வைக்கிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  height: 300px;
+  align-content: start;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="align-content: start; height: 200px; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">end</div>
+                <p>end மதிப்பு கிரிட் உருப்படிகளை கொண்டெய்னரின் முடிவில் வைக்கிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  height: 300px;
+  align-content: end;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="align-content: end; height: 200px; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The CSS place-content Property -->
+        <section class="content-section" id="place-content">
+            <h2>CSS place-content பண்பு</h2>
+            
+            <p>place-content பண்பு align-content மற்றும் justify-content பண்புகளுக்கான சுருக்கப் பண்பாகும்.</p>
+            
+            <p>place-content க்கு இரண்டு மதிப்புகள் இருந்தால்:</p>
+            <ul>
+                <li><strong>place-content: start center;</strong> - align-content மதிப்பு 'start' மற்றும் justify-content மதிப்பு 'center'</li>
+            </ul>
+            
+            <p>place-content க்கு ஒரு மதிப்பு இருந்தால்:</p>
+            <ul>
+                <li><strong>place-content: end;</strong> - align-content மற்றும் justify-content இரண்டின் மதிப்பும் 'end'</li>
+            </ul>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>place-content பண்பு எந்த விளைவையும் கொள்ள, கிரிட் உருப்படியின் மொத்த உயரம் மற்றும் அகலம் கொண்டெய்னரின் உயரம் மற்றும் அகலத்தை விட குறைவாக இருக்க வேண்டும்.</p>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">center</div>
+                <p>center மதிப்பு கிரிட் உருப்படிகளை கொண்டெய்னரின் நடுவில் வைக்கிறது (செங்குத்தாகவும் கிடைமட்டமாகவும்):</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  height: 300px;
+  place-content: center;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="place-content: center; height: 200px; width: 400px; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+            
+            <div class="alignment-demo">
+                <div class="demo-label">end space-between</div>
+                <p>end space-between மதிப்பு கிரிட் கோடுகளை கிரிட் கொண்டெய்னரின் கீழ் பக்கமாக சீரமைக்கிறது, மற்றும் கிரிட் உருப்படிகளை கிடைமட்டமாக அவற்றுக்கிடையே ஒரே இடைவெளியுடன் சீரமைக்கிறது:</p>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  height: 300px;
+  place-content: end space-between;
+}</code></pre>
+                </div>
+                <div class="alignment-container" style="place-content: end space-between; height: 200px; width: 400px; grid-template-columns: repeat(3, 100px);">
+                    <div class="alignment-item">1</div>
+                    <div class="alignment-item">2</div>
+                    <div class="alignment-item">3</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>CSS கிரிட் சீரமைப்பு பயிற்சி</h2>
+            
+            <p>கிரிட் உள்ளடக்க சீரமைப்பு பற்றிய உங்கள் அறிவை இந்தப் பயிற்சி சோதிக்கும்:</p>
+            
+            <div class="drag-drop-exercise">
+                <h4><span class="exercise-icon">🧩</span> இழுத்து விடுதல் பயிற்சி</h4>
+                <p>கொண்டெய்னரை கிரிட் கொண்டெய்னராக மாற்ற சரியான மதிப்பை இழுத்து விடவும்.</p>
+                
+                <div class="code-block">
+                    <code>
+                        .grid-container {<br>
+                        &nbsp;&nbsp;<span class="code-placeholder" id="property-drop">பண்பு</span>: <span class="code-placeholder" id="value-drop">மதிப்பு</span>;<br>
+                        }
+                    </code>
+                </div>
+                
+                <div class="drag-options">
+                    <div class="drag-option" draggable="true" data-type="property" data-value="display">display</div>
+                    <div class="drag-option" draggable="true" data-type="property" data-value="position">position</div>
+                    <div class="drag-option" draggable="true" data-type="value" data-value="grid">grid</div>
+                    <div class="drag-option" draggable="true" data-type="value" data-value="flex">flex</div>
+                    <div class="drag-option" draggable="true" data-type="value" data-value="block">block</div>
+                    <div class="drag-option" draggable="true" data-type="value" data-value="inline-grid">inline-grid</div>
+                </div>
+                
+                <div class="exercise-box" style="background: rgba(0,0,0,0.2); margin-top: 2rem;">
+                    <h4><span class="tip-icon">✅</span> சரியான பதில்:</h4>
+                    <p>கிரிட் கொண்டெய்னரை உருவாக்க, <strong>display: grid;</strong> அல்லது <strong>display: inline-grid;</strong> பயன்படுத்த வேண்டும்.</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கிய குறிப்பு:</h4>
+                <p><strong>justify-content</strong> மற்றும் <strong>align-content</strong> ஆகியவை கிரிட் உருப்படிகளை ஒட்டுமொத்தமாக சீரமைக்கப் பயன்படுகின்றன. தனிப்பட்ட கிரிட் உருப்படிகளை சீரமைக்க <strong>justify-items</strong> மற்றும் <strong>align-items</strong> பயன்படுத்தப்படுகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Grid%20Gap.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Grid%20Items.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">சீரமைப்பு அறிமுகம்</a></li>
+                    <li><a href="#justify-content">justify-content</a></li>
+                    <li><a href="#align-content">align-content</a></li>
+                    <li><a href="#place-content">place-content</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Drag and drop functionality for exercise
+        const dragOptions = document.querySelectorAll('.drag-option');
+        const propertyDrop = document.getElementById('property-drop');
+        const valueDrop = document.getElementById('value-drop');
+        
+        let draggedItem = null;
+        
+        // Drag events for options
+        dragOptions.forEach(option => {
+            option.addEventListener('dragstart', function(e) {
+                draggedItem = this;
+                e.dataTransfer.setData('text/plain', this.dataset.value);
+                this.style.opacity = '0.5';
+            });
+            
+            option.addEventListener('dragend', function() {
+                this.style.opacity = '1';
+                draggedItem = null;
+            });
+        });
+        
+        // Drop events for placeholders
+        [propertyDrop, valueDrop].forEach(dropZone => {
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = 'rgba(255,255,255,0.3)';
+            });
+            
+            dropZone.addEventListener('dragleave', function() {
+                this.style.backgroundColor = 'rgba(255,255,255,0.1)';
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                
+                if (draggedItem) {
+                    const dataType = draggedItem.dataset.type;
+                    const dropZoneId = this.id;
+                    
+                    // Check if dropping in correct zone
+                    if ((dataType === 'property' && dropZoneId === 'property-drop') ||
+                        (dataType === 'value' && dropZoneId === 'value-drop')) {
+                        this.textContent = draggedItem.dataset.value;
+                        
+                        // Check if answer is correct
+                        if (propertyDrop.textContent === 'display' && 
+                            (valueDrop.textContent === 'grid' || valueDrop.textContent === 'inline-grid')) {
+                            // Show success message
+                            const successBox = document.querySelector('.exercise-box');
+                            successBox.style.display = 'block';
+                        }
+                    }
+                }
+            });
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL PRIMARY KEY Constraint - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MySQL UNIQUE Constraint.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MySQL FOREIGN KEY Constraint.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MySQL PRIMARY KEY Constraint</h2>
+            <p>MySQL இல் PRIMARY KEY கட்டுப்பாட்டைப் பயன்படுத்தி அட்டவணையில் ஒவ்வொரு பதிவையும் தனித்துவமாக அடையாளம் காண கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- MySQL PRIMARY KEY Constraint -->
+        <section class="content-section" id="primary-key-constraint">
+            <h2>MySQL PRIMARY KEY கட்டுப்பாடு</h2>
+            
+            <p>PRIMARY KEY கட்டுப்பாடு ஒரு அட்டவணையில் ஒவ்வொரு பதிவையும் தனித்துவமாக அடையாளம் காட்டுகிறது.</p>
+            
+            <p>Primary keys க்கு UNIQUE மதிப்புகள் இருக்க வேண்டும், மற்றும் NULL மதிப்புகளைக் கொண்டிருக்க முடியாது.</p>
+            
+            <p>ஒரு அட்டவணைக்கு ஒரே ஒரு primary key மட்டுமே இருக்க முடியும்; மற்றும் அட்டவணையில், இந்த primary key ஒற்றை அல்லது பல நெடுவரிசைகளைக் (புலங்கள்) கொண்டிருக்கலாம்.</p>
+        </section>
+
+        <!-- PRIMARY KEY on CREATE TABLE -->
+        <section class="content-section" id="primary-key-create">
+            <h2>CREATE TABLE இல் PRIMARY KEY</h2>
+            
+            <p>பின்வரும் SQL "Persons" அட்டவணை உருவாக்கப்படும் போது "ID" நெடுவரிசையில் PRIMARY KEY ஐ உருவாக்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (ID)
+);</code></pre>
+            </div>
+            
+            <p>ஒரு PRIMARY KEY கட்டுப்பாட்டிற்கு பெயரிட அனுமதிக்க, மற்றும் பல நெடுவரிசைகளில் PRIMARY KEY கட்டுப்பாட்டை வரையறுக்க, பின்வரும் SQL தொடரியலைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)
+);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>மேலே உள்ள எடுத்துக்காட்டில் ஒரே ஒரு PRIMARY KEY (PK_Person) மட்டுமே உள்ளது. இருப்பினும், primary key இன் மதிப்பு இரண்டு நெடுவரிசைகளால் (ID + LastName) ஆனது.</p>
+            </div>
+        </section>
+
+        <!-- PRIMARY KEY on ALTER TABLE -->
+        <section class="content-section" id="primary-key-alter">
+            <h2>ALTER TABLE இல் PRIMARY KEY</h2>
+            
+            <p>அட்டவணை ஏற்கனவே உருவாக்கப்பட்ட பிறகு "ID" நெடுவரிசையில் PRIMARY KEY கட்டுப்பாட்டை உருவாக்க, பின்வரும் SQL ஐப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>ALTER TABLE Persons
+ADD PRIMARY KEY (ID);</code></pre>
+            </div>
+            
+            <p>ஒரு PRIMARY KEY கட்டுப்பாட்டிற்கு பெயரிட அனுமதிக்க, மற்றும் பல நெடுவரிசைகளில் PRIMARY KEY கட்டுப்பாட்டை வரையறுக்க, பின்வரும் SQL தொடரியலைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>ALTER TABLE Persons
+ADD CONSTRAINT PK_Person PRIMARY KEY (ID,LastName);</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>நீங்கள் ALTER TABLE ஐப் பயன்படுத்தி primary key ஐச் சேர்த்தால், primary key நெடுவரிசை(கள்) NULL மதிப்புகளைக் கொண்டிருக்கக்கூடாது என்று அறிவிக்கப்பட்டிருக்க வேண்டும் (அட்டவணை முதலில் உருவாக்கப்பட்ட போது).</p>
+            </div>
+        </section>
+
+        <!-- DROP a PRIMARY KEY Constraint -->
+        <section class="content-section" id="drop-primary-key">
+            <h2>PRIMARY KEY கட்டுப்பாட்டை நீக்குதல்</h2>
+            
+            <p>ஒரு PRIMARY KEY கட்டுப்பாட்டை நீக்க, பின்வரும் SQL ஐப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>ALTER TABLE Persons
+DROP PRIMARY KEY;</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> உண்மை அல்லது பொய்:</h4>
+                <p>Primary keys க்கு UNIQUE மதிப்புகள் இருக்க வேண்டும், மற்றும் NULL மதிப்புகளைக் கொண்டிருக்க முடியாது.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">உண்மை</div>
+                            <div class="option-feedback correct">✓ சரி! PRIMARY KEY கட்டுப்பாடு தனித்துவ மதிப்புகளைக் கொண்டிருக்க வேண்டும் மற்றும் NULL மதிப்புகளைக் கொண்டிருக்க முடியாது. இது PRIMARY KEY இன் அடிப்படை பண்புகளில் ஒன்றாகும்.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">பொய்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! PRIMARY KEY கட்டுப்பாடு தனித்துவ மதிப்புகளைக் கொண்டிருக்க வேண்டும் மற்றும் NULL மதிப்புகளைக் கொண்டிருக்க முடியாது. இது PRIMARY KEY இன் அடிப்படை வரையறையாகும்.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MySQL UNIQUE Constraint.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MySQL FOREIGN KEY Constraint.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#primary-key-constraint">MySQL PRIMARY KEY கட்டுப்பாடு</a></li>
+                    <li><a href="#primary-key-create">CREATE TABLE இல் PRIMARY KEY</a></li>
+                    <li><a href="#primary-key-alter">ALTER TABLE இல் PRIMARY KEY</a></li>
+                    <li><a href="#drop-primary-key">PRIMARY KEY நீக்குதல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

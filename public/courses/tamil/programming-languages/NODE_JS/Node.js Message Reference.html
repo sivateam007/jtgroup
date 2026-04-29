@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Message Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Response Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Interface Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Message Reference</h2>
+            <p>Node.js HTTP செய்தி பொருள்கள் மற்றும் அவற்றின் பண்புகள் மற்றும் முறைகள் பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- HTTP Message Object -->
+        <section class="content-section" id="message-object">
+            <h2>HTTP செய்தி பொருள்</h2>
+            
+            <p>http.IncomingMessage பொருள் http.Server அல்லது http.ClientRequest மூலம் உருவாக்கப்பட்டு முறையே 'request' மற்றும் 'response' நிகழ்வுகளுக்கு முதல் வாதமாக அனுப்பப்படுகிறது. இது பதில் நிலை, தலைப்புகள் மற்றும் தரவை அணுக பயன்படுகிறது.</p>
+            
+            <p>இந்த செய்தி பொருள் இரண்டையும் குறிக்கிறது:</p>
+            
+            <ul>
+                <li>சேவையகத்தால் பெறப்பட்ட HTTP கோரிக்கை ('request' நிகழ்வுக்கு அனுப்பப்பட்டது)</li>
+                <li>கிளையன்ட் மூலம் பெறப்பட்ட HTTP பதில் ('response' நிகழ்வுக்கு அனுப்பப்பட்டது)</li>
+            </ul>
+            
+            <p>இது Readable Stream இடைமுகத்தை செயல்படுத்துகிறது, இது செய்தி உடலை நுகர உங்களை அனுமதிக்கிறது.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-server"></i>
+                        <h4>சேவையக பக்க செய்தி</h4>
+                    </div>
+                    <p>கோரிக்கை தகவல்கள், தலைப்புகள் மற்றும் உடல் தரவை அணுகுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-desktop"></i>
+                        <h4>கிளையன்ட் பக்க செய்தி</h4>
+                    </div>
+                    <p>பதில் தகவல்கள், நிலை குறியீடுகள் மற்றும் உடல் தரவை அணுகுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-stream"></i>
+                        <h4>ஸ்ட்ரீம் இடைமுகம்</h4>
+                    </div>
+                    <p>Readable Stream இடைமுகத்தை செயல்படுத்துகிறது, தரவை திறம்பட கையாள உதவுகிறது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Message Properties -->
+        <section class="content-section" id="message-properties">
+            <h2>செய்தி பண்புகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>message.complete</strong></td>
+                            <td>முழு செய்தியும் பெறப்பட்டு பாகுபடுத்தப்பட்டதா என்பதைக் குறிக்கும் பூலியன்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.headers</strong></td>
+                            <td>கோரிக்கை/பதில் தலைப்புகள் பொருள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.httpVersion</strong></td>
+                            <td>கிளையன்ட் அனுப்பிய HTTP பதிப்பு. பொதுவாக '1.0' அல்லது '1.1'</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.method</strong></td>
+                            <td>கோரிக்கை முறை ஒரு சரமாக (எ.கா., 'GET', 'POST'). http.Server இலிருந்து கோரிக்கை செய்திகளுக்கு மட்டுமே செல்லுபடியாகும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.rawHeaders</strong></td>
+                            <td>அவை பெறப்பட்டதைப் போலவே மூல கோரிக்கை/பதில் தலைப்புகள் பட்டியல். ஒற்றைப்படை உள்ளீடுகள் விசை பெயர்கள், இரட்டைப்படை உள்ளீடுகள் மதிப்புகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.rawTrailers</strong></td>
+                            <td>அவை பெறப்பட்டதைப் போலவே மூல கோரிக்கை/பதில் டிரெய்லர் விசைகள் மற்றும் மதிப்புகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.socket</strong></td>
+                            <td>இணைப்புடன் தொடர்புடைய net.Socket பொருள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.statusCode</strong></td>
+                            <td>HTTP பதில் நிலை குறியீடு. http.ClientRequest இலிருந்து பதில் செய்திகளுக்கு மட்டுமே செல்லுபடியாகும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.statusMessage</strong></td>
+                            <td>HTTP பதில் நிலை செய்தி. http.ClientRequest இலிருந்து பதில் செய்திகளுக்கு மட்டுமே செல்லுபடியாகும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.trailers</strong></td>
+                            <td>கோரிக்கை/பதில் டிரெய்லர் தலைப்புகள் பொருள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.url</strong></td>
+                            <td>கோரிக்கை URL சரம். http.Server இலிருந்து கோரிக்கை செய்திகளுக்கு மட்டுமே செல்லுபடியாகும்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Message Methods -->
+        <section class="content-section" id="message-methods">
+            <h2>செய்தி முறைகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>message.destroy([error])</strong></td>
+                            <td>இந்த செய்தியைப் பெற்ற சாக்கெட்டில் destroy() ஐ அழைக்கிறது. error வழங்கப்பட்டால், ஒரு 'error' நிகழ்வு உமிழப்படும் மற்றும் பிழை ஒரு வாதமாக அனுப்பப்படும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message.setTimeout(msecs, callback)</strong></td>
+                            <td>socket.setTimeout(msecs, callback) ஐ அழைக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Message as a Readable Stream -->
+        <section class="content-section" id="readable-stream">
+            <h2>Readable Stream ஆக செய்தி</h2>
+            
+            <p>http.IncomingMessage Readable Stream இடைமுகத்தை செயல்படுத்துகிறது, இது செய்தி உடலை நுகர உங்களை அனுமதிக்கிறது.</p>
+            
+            <p>http.IncomingMessage Readable Stream இடைமுகத்தை செயல்படுத்துவதால், இது read(), pipe() போன்ற அனைத்து ஸ்ட்ரீம் முறைகளையும் 'data', 'end', மற்றும் 'error' போன்ற நிகழ்வுகளையும் உள்ளடக்கியது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> ஸ்ட்ரீம் நன்மைகள்:</h4>
+                <ul>
+                    <li><strong>நினைவக திறன்:</strong> பெரிய தரவை துண்டுகளாக செயலாக்குகிறது</li>
+                    <li><strong>பின்னழுத்தம் கையாளுதல்:</strong> தரவு ஓட்டத்தை தானாகவே கட்டுப்படுத்துகிறது</li>
+                    <li><strong>திறன்:</strong> தரவு கிடைக்கும் விரைவில் செயலாக்கத்தை தொடங்குகிறது</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Examples -->
+        <section class="content-section" id="examples">
+            <h2>எடுத்துக்காட்டுகள்</h2>
+
+            <!-- Server-side Message -->
+            <div class="example-section" id="server-side">
+                <h3>சேவையக பக்க செய்தி (கோரிக்கை)</h3>
+                
+                <p>இந்த எடுத்துக்காட்டு சேவையக பக்கத்தில் IncomingMessage பொருளைக் கையாளுவதை நிரூபிக்கிறது:</p>
+                
+                <div class="code-example">
+                    <pre><code>const http = require('http');
+const url = require('url');
+
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+  // 'req' is the IncomingMessage object
+  
+  // Basic message properties
+  console.log('HTTP Version:', req.httpVersion);
+  console.log('Method:', req.method);
+  console.log('URL:', req.url);
+  
+  // Parse the URL
+  const parsedUrl = url.parse(req.url, true);
+  console.log('Pathname:', parsedUrl.pathname);
+  console.log('Query:', parsedUrl.query);
+  
+  // Headers
+  console.log('Headers:', req.headers);
+  console.log('User-Agent:', req.headers['user-agent']);
+  
+  // Raw headers with keys and values as separate array elements
+  console.log('Raw Headers:', req.rawHeaders);
+  
+  // Socket information
+  console.log('Remote Address:', req.socket.remoteAddress);
+  console.log('Remote Port:', req.socket.remotePort);
+  
+  // Reading the message body (if any)
+  let body = [];
+  req.on('data', (chunk) => {
+    body.push(chunk);
+  });
+  
+  req.on('end', () => {
+    body = Buffer.concat(body).toString();
+    console.log('Request body:', body);
+    
+    // Now that we have the body, send a response
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      httpVersion: req.httpVersion,
+      method: req.method,
+      url: req.url,
+      headers: req.headers,
+      body: body || null
+    }));
+  });
+  
+  // Handle errors
+  req.on('error', (err) => {
+    console.error('Request error:', err);
+    res.statusCode = 400;
+    res.end('Error: ' + err.message);
+  });
+});
+
+// Start server
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+  
+  // Make a test request
+  http.request({
+    hostname: 'localhost',
+    port: PORT,
+    path: '/test?param1=value1¶m2=value2',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Custom-Header': 'Custom Value'
+    }
+  }, (res) => {
+    res.resume(); // Consume response data
+  }).end('{"message":"Hello from the client!"}');
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- Client-side Message -->
+            <div class="example-section" id="client-side">
+                <h3>கிளையன்ட் பக்க செய்தி (பதில்)</h3>
+                
+                <p>இந்த எடுத்துக்காட்டு கிளையன்ட் பக்கத்தில் IncomingMessage பொருளைக் கையாளுவதை நிரூபிக்கிறது:</p>
+                
+                <div class="code-example">
+                    <pre><code>const http = require('http');
+
+// Make an HTTP request
+const req = http.request('http://example.com', (res) => {
+  // 'res' is the IncomingMessage object (response)
+  
+  // Basic message properties
+  console.log('Status Code:', res.statusCode);
+  console.log('Status Message:', res.statusMessage);
+  console.log('HTTP Version:', res.httpVersion);
+  
+  // Headers
+  console.log('Headers:', res.headers);
+  console.log('Content-Type:', res.headers['content-type']);
+  console.log('Raw Headers:', res.rawHeaders);
+  
+  // Socket information
+  console.log('Remote Address:', res.socket.remoteAddress);
+  console.log('Remote Port:', res.socket.remotePort);
+  
+  // Reading the message body
+  let body = [];
+  
+  // Data events emit when chunks of the body are received
+  res.on('data', (chunk) => {
+    body.push(chunk);
+    console.log('Received chunk of', chunk.length, 'bytes');
+  });
+  
+  // End event is emitted when the entire body has been received
+  res.on('end', () => {
+    body = Buffer.concat(body).toString();
+    console.log('Body length:', body.length);
+    console.log('Body preview:', body.substring(0, 100) + '...');
+    
+    // Check trailers (if any)
+    console.log('Trailers:', res.trailers);
+    console.log('Raw Trailers:', res.rawTrailers);
+    
+    // Check if message is complete
+    console.log('Message complete:', res.complete);
+  });
+  
+  // Handle message errors
+  res.on('error', (err) => {
+    console.error('Response error:', err);
+  });
+});
+
+// Handle request errors
+req.on('error', (err) => {
+  console.error('Request error:', err);
+});
+
+// End the request
+req.end();</code></pre>
+                </div>
+            </div>
+
+            <!-- Handling Message Body with Streams -->
+            <div class="example-section" id="stream-handling">
+                <h3>ஸ்ட்ரீம்களுடன் செய்தி உடலைக் கையாளுதல்</h3>
+                
+                <p>இந்த எடுத்துக்காட்டு கோப்பு பதிவேற்றங்களை கையாள ஒரு சேவையகத்தை உருவாக்கி, செய்தி உடலை நேரடியாக ஒரு கோப்புக்கு ஸ்ட்ரீம் செய்கிறது:</p>
+                
+                <div class="code-example">
+                    <pre><code>const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+// Create a server to handle file uploads
+const server = http.createServer((req, res) => {
+  if (req.method === 'POST' && req.url === '/upload') {
+    // Create a write stream to a file
+    const filePath = path.join(__dirname, 'uploaded-file.txt');
+    const fileStream = fs.createWriteStream(filePath);
+    
+    // Pipe the request body directly to the file
+    req.pipe(fileStream);
+    
+    // Handle completion
+    fileStream.on('finish', () => {
+      // Get file stats to check size
+      fs.stat(filePath, (err, stats) => {
+        if (err) {
+          console.error('Error getting file stats:', err);
+          res.writeHead(500, {'Content-Type': 'text/plain'});
+          res.end('Error processing upload');
+          return;
+        }
+        
+        // Send response
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({
+          success: true,
+          message: 'File uploaded successfully',
+          size: stats.size,
+          path: filePath
+        }));
+        
+        console.log(`File uploaded to ${filePath}`);
+        console.log(`File size: ${stats.size} bytes`);
+        
+        // Clean up the file after a delay
+        setTimeout(() => {
+          fs.unlink(filePath, (err) => {
+            if (err) console.error('Error removing uploaded file:', err);
+            else console.log('Uploaded file removed');
+          });
+        }, 5000);
+      });
+    });
+    
+    // Handle errors
+    fileStream.on('error', (err) => {
+      console.error('File write error:', err);
+      res.writeHead(500, {'Content-Type': 'text/plain'});
+      res.end('Error saving file');
+    });
+    
+    req.on('error', (err) => {
+      console.error('Request error:', err);
+      fileStream.destroy(err);
+    });
+  }
+  else if (req.method === 'GET' && req.url === '/') {
+    // Provide a simple HTML form for uploading
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>File Upload Example</title>
+      </head>
+      <body>
+        <h1>Upload a Text File</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+          <input type="file" name="file" accept=".txt">
+          <button type="submit">Upload</button>
+        </form>
+        <p>Note: This is a simple example. A real implementation would need to parse multipart form data.</p>
+      </body>
+      </html>
+    `);
+  }
+  else {
+    // Handle all other requests
+    res.writeHead(404, {'Content-Type': 'text/plain'});
+    res.end('Not Found');
+  }
+});
+
+// Start server
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+  
+  // Make a test upload
+  setTimeout(() => {
+    const req = http.request({
+      hostname: 'localhost',
+      port: PORT,
+      path: '/upload',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    }, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        console.log('Upload response:', data);
+      });
+    });
+    
+    req.on('error', (e) => {
+      console.error('Test request error:', e.message);
+    });
+    
+    // Write some content to upload
+    req.write('This is a test file content uploaded using http.request.\n');
+    req.write('It demonstrates streaming data to the server.\n');
+    req.end();
+  }, 1000);
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- Handling Message Trailers -->
+            <div class="example-section" id="trailers">
+                <h3>செய்தி டிரெய்லர்களைக் கையாளுதல்</h3>
+                
+                <p>இந்த எடுத்துக்காட்டு HTTP டிரெய்லர்களை (செய்தி உடலுக்குப் பிறகு வரும் தலைப்புகள்) கையாளுவதை நிரூபிக்கிறது:</p>
+                
+                <div class="code-example">
+                    <pre><code>const http = require('http');
+const zlib = require('zlib');
+
+// Create an HTTP server that sends trailers
+const server = http.createServer((req, res) => {
+  // Inform the client we'll be sending trailers
+  res.writeHead(200, {
+    'Content-Type': 'text/plain',
+    'Transfer-Encoding': 'chunked', // Required for trailers
+    'Trailer': 'Content-MD5, X-Response-Time' // Declare which trailers will be sent
+  });
+  
+  // Write some response data
+  res.write('Beginning of the response\n');
+  
+  // Simulate processing time
+  setTimeout(() => {
+    res.write('Middle of the response\n');
+    
+    setTimeout(() => {
+      // Final part of the body
+      res.write('End of the response\n');
+      
+      // Add trailers
+      res.addTrailers({
+        'Content-MD5': 'e4e68fb7bd0e697a0ae8f1bb342846d3', // Would normally be the hash of the body
+        'X-Response-Time': `${Date.now() - req.start}ms` // Processing time
+      });
+      
+      // End the response
+      res.end();
+    }, 500);
+  }, 500);
+});
+
+// Track request start time
+server.on('request', (req) => {
+  req.start = Date.now();
+});
+
+// Start server
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+  
+  // Make a request to test trailers
+  http.get(`http://localhost:${PORT}`, (res) => {
+    console.log('Response status:', res.statusCode);
+    console.log('Response headers:', res.headers);
+    
+    // Check if trailers are declared
+    if (res.headers.trailer) {
+      console.log('Trailer headers declared:', res.headers.trailer);
+    }
+    
+    // Read the response body
+    let body = '';
+    
+    res.on('data', (chunk) => {
+      body += chunk;
+      console.log('Received chunk:', chunk.toString());
+    });
+    
+    // The 'end' event is emitted when the entire body has been received
+    res.on('end', () => {
+      console.log('Complete response body:', body);
+      console.log('Trailers received:', res.trailers);
+      
+      // Server should close after test is complete
+      server.close();
+    });
+  }).on('error', (err) => {
+    console.error('Request error:', err);
+  });
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- Handling Large Messages with Flow Control -->
+            <div class="example-section" id="flow-control">
+                <h3>ஓட்டக் கட்டுப்பாட்டுடன் பெரிய செய்திகளைக் கையாளுதல்</h3>
+                
+                <p>இந்த எடுத்துக்காட்டு ஓட்டக் கட்டுப்பாட்டுடன் பெரிய செய்தி உடல்களைக் கையாளுவதை நிரூபிக்கிறது:</p>
+                
+                <div class="code-example">
+                    <pre><code>const http = require('http');
+
+// Create a server to handle large uploads with flow control
+const server = http.createServer((req, res) => {
+  if (req.method === 'POST' && req.url === '/large-upload') {
+    // Set up variables to track data
+    let dataSize = 0;
+    let chunks = 0;
+    
+    // Switch to pause mode (by default it's in flowing mode)
+    req.pause();
+    
+    console.log('Incoming large upload - using flow control');
+    
+    // Process data in chunks
+    function processNextChunk() {
+      // Resume the stream to get more data
+      req.resume();
+      
+      // Set a timeout to pause after a bit
+      setTimeout(() => {
+        // Pause the stream again
+        req.pause();
+        
+        console.log(`Processed chunk ${++chunks}, total ${dataSize} bytes so far`);
+        
+        // If there's more data to process, schedule the next chunk
+        // Otherwise, wait for 'end' event to finish
+        if (!req.complete) {
+          // Schedule next chunk processing
+          setTimeout(processNextChunk, 100);
+        }
+      }, 100); // Process for 100ms, then pause
+    }
+    
+    // Listen for data events
+    req.on('data', (chunk) => {
+      dataSize += chunk.length;
+    });
+    
+    // Handle request end
+    req.on('end', () => {
+      console.log(`Upload complete: ${dataSize} bytes received in ${chunks} chunks`);
+      
+      // Send a response
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.end(JSON.stringify({
+        success: true,
+        bytesReceived: dataSize,
+        chunks: chunks
+      }));
+    });
+    
+    // Handle errors
+    req.on('error', (err) => {
+      console.error('Request error:', err);
+      
+      res.writeHead(500, {'Content-Type': 'text/plain'});
+      res.end('Error processing upload: ' + err.message);
+    });
+    
+    // Start processing
+    processNextChunk();
+  }
+  else {
+    // Handle other requests
+    res.writeHead(404, {'Content-Type': 'text/plain'});
+    res.end('Not Found');
+  }
+});
+
+// Start server
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+  
+  // Create a test client to simulate large upload
+  console.log('Simulating large upload...');
+  
+  const req = http.request({
+    hostname: 'localhost',
+    port: PORT,
+    path: '/large-upload',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/octet-stream'
+    }
+  }, (res) => {
+    // Handle response
+    let responseData = '';
+    
+    res.on('data', (chunk) => {
+      responseData += chunk;
+    });
+    
+    res.on('end', () => {
+      console.log('Server response:', responseData);
+      
+      // Close the server after the test
+      server.close();
+    });
+  });
+  
+  req.on('error', (err) => {
+    console.error('Upload request error:', err);
+  });
+  
+  // Generate and send a large body in chunks
+  function sendChunk(i, total) {
+    if (i >= total) {
+      // All chunks sent, end the request
+      req.end();
+      return;
+    }
+    
+    // Create a 10KB chunk
+    const chunk = Buffer.alloc(10240);
+    chunk.fill(65 + (i % 26)); // Fill with repeating letters
+    
+    // Write the chunk
+    const canContinue = req.write(chunk);
+    
+    // Log progress
+    if (i % 10 === 0) {
+      console.log(`Sent chunk ${i}/${total} (${i * 10240} bytes)`);
+    }
+    
+    // If we can continue writing, schedule next chunk
+    if (canContinue) {
+      // Schedule next chunk
+      setImmediate(() => sendChunk(i + 1, total));
+    } else {
+      // If backpressure is applied, wait for drain event
+      console.log('Backpressure applied, waiting for drain');
+      req.once('drain', () => {
+        console.log('Drained, continuing upload');
+        sendChunk(i + 1, total);
+      });
+    }
+  }
+  
+  // Start sending chunks (50 chunks = ~500KB)
+  sendChunk(0, 50);
+});</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>முழுமையான செய்திகளைச் சரிபார்க்கவும்:</strong> முழு செய்தியும் பெறப்பட்டுள்ளதா என்பதை உறுதிப்படுத்த message.complete ஐப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>பிழைகளைக் கையாளவும்:</strong> செய்தி பொருள்களில் 'error' நிகழ்வை எப்போதும் கேளுங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>ஓட்டக் கட்டுப்பாடு:</strong> பெரிய செய்திகளுக்கு, தரவு ஓட்டத்தைக் கட்டுப்படுத்த pause() மற்றும் resume() ஐப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-stream"></i>
+                    <span><strong>ஸ்ட்ரீம் செயலாக்கம்:</strong> செய்தி உடல்களின் திறனான செயலாக்கத்திற்கு pipe() போன்ற ஸ்ட்ரீம் முறைகளைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>நினைவக மேலாண்மை:</strong> பெரிய செய்திகளுக்கு, முழு செய்தியையும் நினைவகத்தில் ஏற்றுவதற்குப் பதிலாக துண்டுகளில் தரவைச் செயலாக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <span><strong>URL பாகுபடுத்துதல்:</strong> request.url இலிருந்து URL சரங்களைப் பாகுபடுத்த url தொகுதியைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-heading"></i>
+                    <span><strong>தலைப்பு கையாளுதல்:</strong> HTTP தலைப்புகள் case-insensitive என்பதை அறிந்து கொள்ளுங்கள், ஆனால் Node.js அவற்றை சிறிய எழுத்துக்களாக மாற்றுகிறது</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் HTTP கோரிக்கை மற்றும் பதில் செய்திகளைக் குறிக்கும் பொருள் எது? தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.ServerMessage</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.ServerMessage" என்பது Node.js இல் ஒரு செல்லுபடியாகும் பொருள் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.RequestObject</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.RequestObject" என்பது Node.js இல் ஒரு செல்லுபடியாகும் பொருள் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">http.IncomingMessage</div>
+                            <div class="option-feedback correct">✓ சரி! "http.IncomingMessage" என்பது Node.js இல் HTTP கோரிக்கை மற்றும் பதில் செய்திகளைக் குறிக்கும் சரியான பொருளாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.MessageHandler</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.MessageHandler" என்பது Node.js இல் ஒரு செல்லுபடியாகும் பொருள் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Response Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Interface Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#message-object">HTTP செய்தி பொருள்</a></li>
+                    <li><a href="#message-properties">செய்தி பண்புகள்</a></li>
+                    <li><a href="#message-methods">செய்தி முறைகள்</a></li>
+                    <li><a href="#examples">எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

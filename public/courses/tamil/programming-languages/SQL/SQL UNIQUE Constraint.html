@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL UNIQUE Constraint - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles specific to this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Syntax Grid */
+        .syntax-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .syntax-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .syntax-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .syntax-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .syntax-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .comparison-grid,
+            .syntax-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .syntax-header,
+            .comparison-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL NOT NULL Constraint.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL PRIMARY KEY Constraint.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL UNIQUE Constraint</h2>
+            <p>UNIQUE கட்டுப்பாட்டைப் பற்றி அறிந்து, அதை எவ்வாறு பயன்படுத்துவது என்பதைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is UNIQUE Constraint -->
+        <section class="content-section" id="what-is-unique">
+            <h2>SQL UNIQUE Constraint என்றால் என்ன?</h2>
+            
+            <p>UNIQUE கட்டுப்பாடு ஒரு நெடுவரிசையில் உள்ள அனைத்து மதிப்புகளும் வெவ்வேறாக இருப்பதை உறுதி செய்கிறது.</p>
+            
+            <p>UNIQUE மற்றும் PRIMARY KEY கட்டுப்பாடுகள் இரண்டும் ஒரு நெடுவரிசை அல்லது நெடுவரிசைகளின் தொகுப்பிற்கு தனித்துவத்தை உறுதி செய்கின்றன.</p>
+            
+            <p>ஒரு PRIMARY KEY கட்டுப்பாடு தானாகவே UNIQUE கட்டுப்பாட்டைக் கொண்டுள்ளது.</p>
+            
+            <p>இருப்பினும், ஒரு அட்டவணைக்கு பல UNIQUE கட்டுப்பாடுகள் இருக்கலாம், ஆனால் ஒரு அட்டவணைக்கு ஒரே ஒரு PRIMARY KEY கட்டுப்பாடு மட்டுமே இருக்க முடியும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கியமான குறிப்பு:</h4>
+                <p>UNIQUE கட்டுப்பாடு NULL மதிப்புகளை அனுமதிக்கிறது, ஆனால் PRIMARY KEY கட்டுப்பாடு NULL மதிப்புகளை அனுமதிக்காது.</p>
+            </div>
+        </section>
+
+        <!-- SQL UNIQUE Constraint on CREATE TABLE -->
+        <section class="content-section" id="create-table">
+            <h2>CREATE TABLE-ல் SQL UNIQUE Constraint</h2>
+            
+            <p>"Persons" அட்டவணை உருவாக்கப்படும் போது "ID" நெடுவரிசையில் UNIQUE கட்டுப்பாட்டை உருவாக்க பின்வரும் SQL பயன்படுத்தப்படுகிறது:</p>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>SQL Server / Oracle / MS Access:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>CREATE TABLE Persons (
+    ID int NOT NULL UNIQUE,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>MySQL:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    UNIQUE (ID)
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>UNIQUE கட்டுப்பாட்டிற்கு பெயரிடுதல் மற்றும் பல நெடுவரிசைகளில் வரையறுத்தல்</h3>
+            
+            <p>UNIQUE கட்டுப்பாட்டிற்கு பெயரிடவும், பல நெடுவரிசைகளில் UNIQUE கட்டுப்பாட்டை வரையறுக்கவும், பின்வரும் SQL தொடரியலைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>MySQL / SQL Server / Oracle / MS Access:</h3>
+                <pre><code>CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT UC_Person UNIQUE (ID,LastName)
+);</code></pre>
+            </div>
+        </section>
+
+        <!-- SQL UNIQUE Constraint on ALTER TABLE -->
+        <section class="content-section" id="alter-table">
+            <h2>ALTER TABLE-ல் SQL UNIQUE Constraint</h2>
+            
+            <p>அட்டவணை ஏற்கனவே உருவாக்கப்பட்ட பிறகு "ID" நெடுவரிசையில் UNIQUE கட்டுப்பாட்டை உருவாக்க, பின்வரும் SQL-ஐப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>MySQL / SQL Server / Oracle / MS Access:</h3>
+                <pre><code>ALTER TABLE Persons
+ADD UNIQUE (ID);</code></pre>
+            </div>
+            
+            <h3>UNIQUE கட்டுப்பாட்டிற்கு பெயரிடுதல் மற்றும் பல நெடுவரிசைகளில் வரையறுத்தல்</h3>
+            
+            <p>UNIQUE கட்டுப்பாட்டிற்கு பெயரிடவும், பல நெடுவரிசைகளில் UNIQUE கட்டுப்பாட்டை வரையறுக்கவும், பின்வரும் SQL தொடரியலைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>MySQL / SQL Server / Oracle / MS Access:</h3>
+                <pre><code>ALTER TABLE Persons
+ADD CONSTRAINT UC_Person UNIQUE (ID,LastName);</code></pre>
+            </div>
+        </section>
+
+        <!-- DROP a UNIQUE Constraint -->
+        <section class="content-section" id="drop-unique">
+            <h2>UNIQUE கட்டுப்பாட்டை நீக்குதல்</h2>
+            
+            <p>UNIQUE கட்டுப்பாட்டை நீக்க, பின்வரும் SQL-ஐப் பயன்படுத்தவும்:</p>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>MySQL:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>ALTER TABLE Persons
+DROP INDEX UC_Person;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>SQL Server / Oracle / MS Access:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>ALTER TABLE Persons
+DROP CONSTRAINT UC_Person;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIQUE vs PRIMARY KEY -->
+        <section class="content-section" id="unique-vs-primary">
+            <h2>UNIQUE vs PRIMARY KEY</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-fingerprint"></i>
+                        <h4>UNIQUE Constraint</h4>
+                    </div>
+                    <ul>
+                        <li>பல UNIQUE கட்டுப்பாடுகள் இருக்கலாம்</li>
+                        <li>NULL மதிப்புகளை அனுமதிக்கிறது</li>
+                        <li>தனித்துவத்தை உறுதி செய்கிறது</li>
+                        <li>க்ளஸ்டர்ட் இன்டெக்ஸ் அல்ல</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-key"></i>
+                        <h4>PRIMARY KEY</h4>
+                    </div>
+                    <ul>
+                        <li>ஒரே ஒரு PRIMARY KEY மட்டுமே</li>
+                        <li>NULL மதிப்புகளை அனுமதிக்காது</li>
+                        <li>தனித்துவத்தை உறுதி செய்கிறது</li>
+                        <li>க்ளஸ்டர்ட் இன்டெக்ஸ் ஆகும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>மின்னஞ்சல் முகவரிகள்</h3>
+                    <p>ஒவ்வொரு பயனருக்கும் தனித்துவமான மின்னஞ்சல் முகவரி</p>
+                    <div class="code-example">
+                        <pre><code>CREATE TABLE Users (
+    UserID int PRIMARY KEY,
+    Email varchar(255) UNIQUE,
+    UserName varchar(255)
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3>பயனர் பெயர்கள்</h3>
+                    <p>தனித்துவமான பயனர் பெயர்கள்</p>
+                    <div class="code-example">
+                        <pre><code>CREATE TABLE Users (
+    UserID int PRIMARY KEY,
+    Username varchar(50) UNIQUE NOT NULL,
+    Password varchar(255)
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>தயாரிப்பு குறியீடுகள்</h3>
+                    <p>தனித்துவமான தயாரிப்பு SKU குறியீடுகள்</p>
+                    <div class="code-example">
+                        <pre><code>CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    SKU varchar(20) UNIQUE NOT NULL,
+    ProductName varchar(255)
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL UNIQUE கட்டுப்பாடு எதை உறுதி செய்கிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நெடுவரிசை NULL மதிப்புகளை கொண்டிருக்க முடியாது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது NOT NULL கட்டுப்பாட்டின் நோக்கம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நெடுவரிசையில் உள்ள அனைத்து மதிப்புகளும் வெவ்வேறாக இருக்கும்</div>
+                            <div class="option-feedback correct">✓ சரி! UNIQUE கட்டுப்பாடு ஒரு நெடுவரிசையில் அனைத்து மதிப்புகளும் தனித்துவமாக இருப்பதை உறுதி செய்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நெடுவரிசை எப்போதும் ஒரு மதிப்பைக் கொண்டிருக்க வேண்டும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது NOT NULL கட்டுப்பாட்டின் நோக்கம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நெடுவரிசை ஒரு foreign key ஆகும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! UNIQUE கட்டுப்பாடு foreign key உடன் நேரடியாக தொடர்புடையது அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL NOT NULL Constraint.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL PRIMARY KEY Constraint.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-unique">UNIQUE Constraint என்றால் என்ன?</a></li>
+                    <li><a href="#create-table">CREATE TABLE-ல் UNIQUE</a></li>
+                    <li><a href="#alter-table">ALTER TABLE-ல் UNIQUE</a></li>
+                    <li><a href="#unique-vs-primary">UNIQUE vs PRIMARY KEY</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

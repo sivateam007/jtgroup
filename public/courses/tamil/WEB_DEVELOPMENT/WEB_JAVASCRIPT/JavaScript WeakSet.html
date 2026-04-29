@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript WeakSet - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* WeakSet visualization */
+        .weakset-visual {
+            background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .weakset-visual:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .weakset-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .weakness-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* Comparison table */
+        .comparison-table-container {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .comparison-table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table-container th {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table-container td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .comparison-table-container tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .comparison-table-container tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .check-mark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .cross-mark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        /* Garbage collection animation */
+        .gc-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .object-box {
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: all 0.5s;
+            position: relative;
+        }
+        
+        .object-box.removed {
+            transform: scale(0);
+            opacity: 0;
+        }
+        
+        .arrow {
+            font-size: 1.5rem;
+            color: #666;
+            margin: 0 10px;
+        }
+        
+        .gc-text {
+            position: absolute;
+            bottom: -25px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20Set%20Logic.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20Set%20Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript WeakSet</h2>
+            <p>பலவீனமான குறிப்புகளின் தொகுப்பு</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>WeakSet பொருள்</h2>
+            
+            <div class="weakset-visual">
+                <div class="weakness-badge">பலவீனமான குறிப்புகள்</div>
+                <div class="weakset-content">
+                    <h4 style="color: white; margin-bottom: 1rem;">JavaScript WeakSet</h4>
+                    <p style="color: white;">ஒரு JavaScript WeakSet என்பது மதிப்புகளின் தொகுப்பாகும், அங்கு மதிப்புகள் பொருள்களாக இருக்க வேண்டும்.</p>
+                    <p style="color: white;">ஒரு WeakSet அதன் மதிப்புகளுக்கு பலவீனமான குறிப்புகளை வைத்திருக்கிறது.</p>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h4>மதிப்பு சேர்த்தல்</h4>
+                    <div class="code-example" style="margin-top: 1rem; font-size: 0.9rem;">
+                        <pre><code>let mySet = new WeakSet();
+let myObj = {fname:"John", lname:"Doe"};
+mySet.add(myObj);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>மதிப்பு சோதனை</h4>
+                    <div class="code-example" style="margin-top: 1rem; font-size: 0.9rem;">
+                        <pre><code>let answer = mySet.has(myObj);
+// true அல்லது false தரும்</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <h4>மதிப்பு நீக்குதல்</h4>
+                    <div class="code-example" style="margin-top: 1rem; font-size: 0.9rem;">
+                        <pre><code>mySet.delete(myObj);
+// பொருள் நீக்கப்படும்</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples -->
+        <section class="content-section" id="examples">
+            <h2>எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>எடுத்துக்காட்டு 1: WeakSet உருவாக்குதல் மற்றும் சோதனை</h3>
+            <div class="code-example">
+                <pre><code>// WeakSet உருவாக்கு
+let mySet = new WeakSet();
+
+// பொருள் உருவாக்கு
+let myObj = {fname:"John", lname:"Doe"};
+
+// பொருளைச் சேர்
+mySet.add(myObj);
+
+// mySet இல் myObj உள்ளதா?
+let answer = mySet.has(myObj);</code></pre>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு 2: WeakSet இலிருந்து நீக்குதல்</h3>
+            <div class="code-example">
+                <pre><code>// WeakSet உருவாக்கு
+let mySet = new WeakSet();
+
+// பொருள் உருவாக்கு
+let myObj = {fname:"John", lname:"Doe"};
+
+// பொருளைச் சேர்
+mySet.add(myObj);
+
+// பொருளை நீக்கு
+mySet.delete(myObj);
+
+// mySet இல் myObj உள்ளதா?
+let answer = mySet.has(myObj);</code></pre>
+            </div>
+        </section>
+
+        <!-- Garbage Collection -->
+        <section class="content-section" id="garbage-collection">
+            <h2>கழிவு சேகரிப்பு</h2>
+            
+            <p>JavaScript கழிவு சேகரிப்பு என்று அழைக்கப்படும் நினைவக மேலாண்மை வழிமுறையைப் பயன்படுத்துகிறது.</p>
+            
+            <p>முதன்மை செயல்பாடுகள்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>நினைவக வளங்களின் திறமையான பயன்பாட்டை உறுதிப்படுத்துதல்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>பயன்பாட்டில் இல்லாத மாறிகள் ஆக்கிரமித்த நினைவகத்தை மீட்டெடுத்தல்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>நினைவக கசிவுகளைத் தடுத்தல்</div>
+                </div>
+            </div>
+            
+            <div class="gc-animation">
+                <div class="object-box">Object</div>
+                <div class="arrow">→</div>
+                <div class="object-box removed">Object</div>
+                <div class="gc-text">குறிப்புகள் இல்லாத பொருட்கள் கழிவு சேகரிக்கப்படுகின்றன</div>
+            </div>
+        </section>
+
+        <!-- Weak References -->
+        <section class="content-section" id="weak-references">
+            <h2>பலவீனமான குறிப்புகள்</h2>
+            
+            <p>வழக்கமான Set போலல்லாமல், ஒரு WeakSet அதன் மதிப்புகள் கழிவு சேகரிக்கப்படுவதைத் தடுக்காது.</p>
+            
+            <p>ஒரு மதிப்பு (ஒரு பொருள்) ஒரு நிரலில் குறிப்புகள் இல்லையென்றால், அது கழிவு சேகரிப்புக்கு தகுதியானதாகிறது.</p>
+            
+            <p>மதிப்பு கழிவு சேகரிக்கப்படும்போது, அது WeakSet இலிருந்து அகற்றப்படும்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>// WeakSet உருவாக்கு
+let mySet = new WeakSet();
+
+// பொருள் உருவாக்கு
+let myObj = {fname:"John", lname:"Doe"};
+
+// பொருளைச் சேர்
+mySet.add(myObj);
+
+// நினைவகத்திலிருந்து பொருளை அகற்று
+myObj = null;
+
+// இப்போது mySet இல் உள்ள myObj கழிவு சேகரிக்கப்படும்</code></pre>
+            </div>
+        </section>
+
+        <!-- Values Must Be Objects -->
+        <section class="content-section" id="values-must-be-objects">
+            <h2>மதிப்புகள் பொருள்களாக இருக்க வேண்டும்</h2>
+            
+            <p>முதன்மை மதிப்புகள் WeakSet இல் மதிப்புகளாக இருக்க முடியாது.</p>
+            
+            <p>மதிப்புகள் பொருள்களாக இருக்க வேண்டும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">❌</span> தவறானது:</h4>
+                <div class="code-example" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); margin-top: 1rem;">
+                    <pre><code>let weakSet = new WeakSet();
+weakSet.add(42);          // பிழை!
+weakSet.add("Hello");     // பிழை!
+weakSet.add(true);        // பிழை!</code></pre>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">✅</span> சரியானது:</h4>
+                <div class="code-example" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); margin-top: 1rem;">
+                    <pre><code>let weakSet = new WeakSet();
+weakSet.add({name: "John"});     // சரி!
+weakSet.add([1, 2, 3]);          // சரி!
+weakSet.add(new Date());         // சரி!</code></pre>
+                </div>
+            </div>
+            
+            <p>இந்த கட்டுப்பாடு கழிவு சேகரிப்பு வழிமுறையுடன் தொடர்புடையது; முதன்மை மதிப்புகள் பொருள்களைப் போல கழிவு சேகரிக்கப்படுவதில்லை.</p>
+        </section>
+
+        <!-- Tracking Objects -->
+        <section class="content-section" id="tracking-objects">
+            <h2>பொருள்களைக் கண்காணித்தல்</h2>
+            
+            <p>ஒரு WeakSet என்பது ஒரு Set போன்றது, ஆனால் அது பொருள்களை மட்டுமே சேமிக்கிறது, மேலும் அவற்றை பலவீனமாக வைத்திருக்கிறது. ஒரு பொருளுக்கு வேறு குறிப்புகள் இல்லையென்றால், அது தானாகவே கழிவு சேகரிக்கப்படும்.</p>
+            
+            <p>இது கூடுதல் தரவை (எண்ணிக்கைகள் போன்ற) சேமிக்காமல் பொருள்களைக் கண்காணிக்க பயனுள்ளதாக இருக்கிறது.</p>
+            
+            <h3>வருகையாளர்களைக் கண்காணித்தல்:</h3>
+            <div class="code-example">
+                <pre><code>let text = "";
+
+// நபர்களைக் கண்காணிக்க WeakSet உருவாக்கு
+const persons = new WeakSet();
+
+// வருகையாளர் பொருள்கள்
+const John = {name:"John", age:40};
+const Paul = {name:"Paul", age:41};
+const Ringo = {name:"Ringo", age:42};
+const George = {name:"George", age:43};
+
+// வருகைகளைக் கண்காணி
+track(Paul);
+track(Ringo);
+track(Paul);
+
+// வருகையாளர்களைக் கண்காணிக்க செயல்பாடு
+function track(visitor) {
+  if (persons.has(visitor)) {
+    text += visitor.name + " is visiting again.<br>";
+  } else {
+    persons.add(visitor);
+    text += visitor.name + ", age" + visitor.age +", is visiting for the first time<br>";
+  }
+}</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">📌</span> குறிப்பு:</h4>
+                <p>நீங்கள் வருகைகளையும் எண்ணிக்கையும் வைத்திருக்க விரும்பினால்:</p>
+                <p>WeakMap ஐப் பயன்படுத்த முயற்சிக்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- Automatic Cleanup -->
+        <section class="content-section" id="automatic-cleanup">
+            <h2>தானியங்கி சுத்திகரிப்பு</h2>
+            
+            <p>நீங்கள் ஒரு வருகையாளர் பொருளுக்கான அனைத்து குறிப்புகளையும் அகற்றினால்:</p>
+            
+            <h3>வருகையாளர்களைக் கண்காணித்தல்:</h3>
+            <div class="code-example">
+                <pre><code>John = null;
+
+// John க்கான உள்ளீடு இப்போது WeakMap (persons) இலிருந்து அகற்றப்படும்</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🧹</span> தானியங்கி சுத்திகரிப்பு:</h4>
+                <p>WeakSet மெமரி மேலாண்மையை எளிதாக்குகிறது. நீங்கள் பொருள்களை நீக்க வேண்டியதில்லை - அவை தானாகவே கழிவு சேகரிக்கப்படும்.</p>
+            </div>
+        </section>
+
+        <!-- Not Iterable -->
+        <section class="content-section" id="not-iterable">
+            <h2>மறு செய்கை செய்ய முடியாதது</h2>
+            
+            <p>WeakSets மறு செய்கை செய்ய முடியாதவை.</p>
+            
+            <p>நீங்கள் for சுழற்சிகள், forEach(), அல்லது values() மூலம் மதிப்புகள் வழியாக மறு செய்கை செய்ய முடியாது.</p>
+            
+            <p>நீங்கள் அளவை அணுக முடியாது. WeakSets க்கு size பண்பு இல்லை.</p>
+            
+            <div class="comparison-table-container">
+                <table>
+                    <tr>
+                        <th>செயல்பாடு</th>
+                        <th>Set</th>
+                        <th>WeakSet</th>
+                    </tr>
+                    <tr>
+                        <td>மறு செய்கை (for...of)</td>
+                        <td class="check-mark">✓ ஆதரிக்கிறது</td>
+                        <td class="cross-mark">✗ ஆதரிக்காது</td>
+                    </tr>
+                    <tr>
+                        <td>forEach() முறை</td>
+                        <td class="check-mark">✓ ஆதரிக்கிறது</td>
+                        <td class="cross-mark">✗ ஆதரிக்காது</td>
+                    </tr>
+                    <tr>
+                        <td>size பண்பு</td>
+                        <td class="check-mark">✓ ஆதரிக்கிறது</td>
+                        <td class="cross-mark">✗ ஆதரிக்காது</td>
+                    </tr>
+                    <tr>
+                        <td>ஸ்ப்ரெட் ஆபரேட்டர் (...)</td>
+                        <td class="check-mark">✓ ஆதரிக்கிறது</td>
+                        <td class="cross-mark">✗ ஆதரிக்காது</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Limited Methods -->
+        <section class="content-section" id="limited-methods">
+            <h2>வரையறுக்கப்பட்ட முறைகள்</h2>
+            
+            <p>ஒரு WeakSet குறைந்தபட்சம், நினைவக பாதுகாப்பானது மற்றும் தனிப்பட்ட மற்றும் திறமையாக பொருள்களைக் கண்காணிக்க கட்டமைக்கப்பட்டது.</p>
+            
+            <p>WeakSet வரையறுக்கப்பட்ட முறைகளை வழங்குகிறது:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-plus-square"></i>
+                        <h4>new WeakSet()</h4>
+                    </div>
+                    <p>புதிய WeakSet பொருளை உருவாக்குகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-plus"></i>
+                        <h4>add(object)</h4>
+                    </div>
+                    <p>WeakSet க்கு ஒரு பொருளைச் சேர்க்கிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-trash"></i>
+                        <h4>delete(object)</h4>
+                    </div>
+                    <p>WeakSet பொருளை அகற்றுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>has(object)</h4>
+                    </div>
+                    <p>ஒரு பொருள் WeakSet இல் இருந்தால் true தரும்</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🚫</span> WeakSet இல் இல்லை:</h4>
+                <div class="best-practice-list">
+                    <div class="practice-item negative">
+                        <i class="fas fa-times-circle"></i>
+                        <div>size பண்பு</div>
+                    </div>
+                    
+                    <div class="practice-item negative">
+                        <i class="fas fa-times-circle"></i>
+                        <div>ஸ்ப்ரெட் ஆபரேட்டர் (...)</div>
+                    </div>
+                    
+                    <div class="practice-item negative">
+                        <i class="fas fa-times-circle"></i>
+                        <div>clear() முறை</div>
+                    </div>
+                    
+                    <div class="practice-item negative">
+                        <i class="fas fa-times-circle"></i>
+                        <div>தர்க்க முறைகள் (union, difference, intersection)</div>
+                    </div>
+                    
+                    <div class="practice-item negative">
+                        <i class="fas fa-times-circle"></i>
+                        <div>மறு செய்கை முறைகள் (forEach, keys, values, entries)</div>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem;">மேலே உள்ளவை வடிவமைப்பு மூலம்: பொருள்கள் கழிவு சேகரிப்பில் மறைந்துவிடக்கூடும், அவற்றை மறு செய்கை செய்வது அல்லது எண்ணுவது அர்த்தமற்றது.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>WeakSet பயிற்சி</h2>
+            
+            <p>JavaScript WeakSet இன் கருத்துகளைப் புரிந்துகொள்வதை இந்த பயிற்சி சோதிக்கிறது.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் கூற்றுகளில் எது WeakSet பற்றி சரியானது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">WeakSet இல் எந்த மதிப்புகளும் இருக்கலாம்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! WeakSet இல் பொருள்கள் மட்டுமே இருக்க முடியும், முதன்மை மதிப்புகள் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">WeakSet பலவீனமான குறிப்புகளை வைத்திருக்கிறது</div>
+                            <div class="option-feedback correct">✓ சரி! WeakSet அதன் மதிப்புகளுக்கு பலவீனமான குறிப்புகளை வைத்திருக்கிறது, அதனால் அவை கழிவு சேகரிக்கப்படலாம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">WeakSet க்கு size பண்பு உள்ளது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! WeakSet க்கு size பண்பு இல்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">WeakSet இல் forEach() முறை உள்ளது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! WeakSet மறு செய்கை செய்ய முடியாதது, forEach() இல்லை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learn More -->
+        <section class="content-section" id="learn-more">
+            <h2>மேலும் அறிய</h2>
+            
+            <p>WeakSet பற்றிய மேலும் விரிவான தகவலுக்கு:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>JavaScript Sets</h4>
+                    </div>
+                    <p>Sets அறிமுகம் மற்றும் அடிப்படைகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tools"></i>
+                        <h4>JavaScript Set Methods</h4>
+                    </div>
+                    <p>அடிப்படை Set முறைகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-project-diagram"></i>
+                        <h4>JavaScript Set Logic</h4>
+                    </div>
+                    <p>Set தர்க்க முறைகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-book"></i>
+                        <h4>JavaScript Set Reference</h4>
+                    </div>
+                    <p>முழுமையான Set குறிப்பு</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🗺️</span> JavaScript Maps:</h4>
+                <p>WeakSet போன்றே, WeakMap களும் உள்ளன. அவை விசை-மதிப்பு ஜோடிகளை பலவீனமான குறிப்புகளுடன் சேமிக்கின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2>உலாவி ஆதரவு</h2>
+            
+            <p>WeakSet ஒரு ES6 அம்சமாகும்.</p>
+            
+            <p>ES6 ஜூன் 2017 முதல் அனைத்து நவீன உலாவிகளிலும் முழுமையாக ஆதரிக்கப்படுகிறது:</p>
+            
+            <div class="comparison-table-container">
+                <table>
+                    <tr>
+                        <th>உலாவி</th>
+                        <th>பதிப்பு</th>
+                        <th>வெளியீட்டு தேதி</th>
+                    </tr>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>51</td>
+                        <td>May 2016</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>15</td>
+                        <td>Apr 2017</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>54</td>
+                        <td>Jun 2017</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>10</td>
+                        <td>Sep 2016</td>
+                    </tr>
+                    <tr>
+                        <td>Opera</td>
+                        <td>38</td>
+                        <td>Jun 2016</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20Set%20Logic.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20Set%20Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">WeakSet அறிமுகம்</a></li>
+                    <li><a href="#garbage-collection">கழிவு சேகரிப்பு</a></li>
+                    <li><a href="#weak-references">பலவீனமான குறிப்புகள்</a></li>
+                    <li><a href="#tracking-objects">பொருள்களைக் கண்காணித்தல்</a></li>
+                    <li><a href="#not-iterable">மறு செய்கை செய்ய முடியாதது</a></li>
+                    <li><a href="#limited-methods">வரையறுக்கப்பட்ட முறைகள்</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Garbage collection animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const objectBoxes = document.querySelectorAll('.object-box');
+            if (objectBoxes.length >= 2) {
+                setTimeout(() => {
+                    objectBoxes[1].classList.add('removed');
+                }, 1000);
+                
+                // Reset animation every 3 seconds
+                setInterval(() => {
+                    objectBoxes[1].classList.remove('removed');
+                    setTimeout(() => {
+                        objectBoxes[1].classList.add('removed');
+                    }, 1000);
+                }, 3000);
+            }
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Functions Quiz - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .quiz-options {
+            margin: 1rem 0;
+        }
+        
+        .quiz-option {
+            background: white;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: all 0.3s;
+        }
+        
+        .quiz-option:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+        
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .quiz-explanation {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .quiz-result {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="javascript%20arrow%20functions.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="javascript%20objects.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript Functions Quiz</h2>
+            <p>ஜாவாஸ்கிரிப்ட் செயல்பாடுகள் பற்றிய உங்கள் அறிவை சோதிக்கவும்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>JavaScript Functions Quiz</h2>
+            <h3>உங்களை சோதிக்கவும்</h3>
+            
+            <p>ஜாவாஸ்கிரிப்ட் செயல்பாடுகள் பற்றிய உங்கள் அறிவை சோதிக்கவும்.</p>
+            
+            <p>இந்த வினாடி வினா டுடோரியல் அத்தியாயங்களில் நீங்கள் கற்றுக்கொண்ட அதே எடுத்துக்காட்டுகளைப் பயன்படுத்துகிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> வினாடி வினா வழிமுறைகள்:</h4>
+                <ul>
+                    <li>ஒவ்வொரு கேள்விக்கும் மூன்று விருப்பங்கள் உள்ளன</li>
+                    <li>ஒவ்வொரு விருப்பத்தையும் கிளிக் செய்து உங்கள் பதிலைச் சரிபார்க்கலாம்</li>
+                    <li>சரியான பதில் பச்சை நிறத்தில் காட்டப்படும்</li>
+                    <li>தவறான பதில் சிவப்பு நிறத்தில் காட்டப்படும்</li>
+                    <li>விளக்கம் அனைத்து விருப்பங்களையும் தேர்ந்தெடுத்த பிறகு காட்டப்படும்</li>
+                    <li>அனைத்து கேள்விகளுக்கும் பதிலளித்த பிறகு உங்கள் மதிப்பெண்ணைப் பார்க்கலாம்</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⏱️</span> நேரம்:</h4>
+                <p>இந்த வினாடி வினாவில் நேர வரம்பு இல்லை. ஒவ்வொரு கேள்வியையும் கவனமாகப் படித்து பதிலளிக்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- Question 1 -->
+        <section class="content-section" id="question1">
+            <div class="quiz-question">
+                <h3>கேள்வி 1</h3>
+                <p><code>text</code> மாறியில் என்ன திரும்பப் பெறப்படுகிறது?</p>
+                
+                <div class="code-example">
+                    <pre><code>function sayHello() {
+    return "Hello World";
+}
+
+let text = sayHello();</code></pre>
+                </div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false" data-q="1">
+                        A. sayHello
+                    </div>
+                    <div class="quiz-option" data-correct="true" data-q="1">
+                        B. Hello World
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="1">
+                        C. undefined
+                    </div>
+                </div>
+                
+                <div class="quiz-explanation" id="explanation1">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p>பதில்: <strong>B. Hello World</strong></p>
+                    <p>செயல்பாடு "Hello World" என்ற சரத்தைத் திருப்பித் தருகிறது.</p>
+                    <p><code>sayHello()</code> செயல்பாட்டை அழைக்கிறது, இது "Hello World" என்ற மதிப்பைத் திருப்பித் தருகிறது. இந்த மதிப்பு பின்னர் <code>text</code> மாறிக்கு ஒதுக்கப்படுகிறது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question 2 -->
+        <section class="content-section" id="question2">
+            <div class="quiz-question">
+                <h3>கேள்வி 2</h3>
+                <p>எந்த வரி செயல்பாட்டை அழைக்கிறது?</p>
+                
+                <div class="code-example">
+                    <pre><code>function test() {
+    return 5;
+}
+
+let x = test;
+let y = test();</code></pre>
+                </div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false" data-q="2">
+                        A. function test() { }
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="2">
+                        B. let x = test;
+                    </div>
+                    <div class="quiz-option" data-correct="true" data-q="2">
+                        C. let y = test();
+                    </div>
+                </div>
+                
+                <div class="quiz-explanation" id="explanation2">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p>பதில்: <strong>C. let y = test();</strong></p>
+                    <p>அடைப்புக்குறிகள் <code>()</code> செயல்பாட்டை இயக்குகின்றன.</p>
+                    <p><code>test</code> செயல்பாட்டைக் குறிக்கிறது, <code>test()</code> செயல்பாட்டை அழைக்கிறது (இயக்குகிறது).</p>
+                    <ul>
+                        <li><code>let x = test;</code> - செயல்பாட்டைக் குறிக்கிறது, அழைக்காது</li>
+                        <li><code>let y = test();</code> - செயல்பாட்டை அழைக்கிறது மற்றும் முடிவை சேமிக்கிறது</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question 3 -->
+        <section class="content-section" id="question3">
+            <div class="quiz-question">
+                <h3>கேள்வி 3</h3>
+                <p>கீழே உள்ள செயல்பாட்டில், <code>a</code> மற்றும் <code>b</code> என்ன?</p>
+                
+                <div class="code-example">
+                    <pre><code>function multiply(a, b) {
+    return a * b;
+}</code></pre>
+                </div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false" data-q="3">
+                        A. வாதங்கள்
+                    </div>
+                    <div class="quiz-option" data-correct="true" data-q="3">
+                        B. அளவுருக்கள்
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="3">
+                        C. திரும்பும் மதிப்புகள்
+                    </div>
+                </div>
+                
+                <div class="quiz-explanation" id="explanation3">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p>பதில்: <strong>B. அளவுருக்கள்</strong></p>
+                    <p>அளவுருக்கள் என்பது செயல்பாடு வரையறையில் பட்டியலிடப்பட்ட பெயர்கள்.</p>
+                    <p><strong>அளவுருக்கள்:</strong> செயல்பாடு வரையறையில் குறிப்பிடப்பட்ட மாறிகள் (<code>a</code>, <code>b</code>)</p>
+                    <p><strong>வாதங்கள்:</strong> செயல்பாடு அழைக்கப்படும் போது அளவுருக்களுக்கு வழங்கப்படும் உண்மையான மதிப்புகள்</p>
+                    <p><strong>திரும்பும் மதிப்புகள்:</strong> செயல்பாடு <code>return</code> அறிக்கையுடன் திருப்பித் தரும் மதிப்புகள்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question 4 -->
+        <section class="content-section" id="question4">
+            <div class="quiz-question">
+                <h3>கேள்வி 4</h3>
+                <p>இந்த செயல்பாட்டு அழைப்பால் என்ன திரும்பப் பெறப்படுகிறது?</p>
+                
+                <div class="code-example">
+                    <pre><code>function add(a, b) {
+    return a + b;
+}
+
+add(2, 3) * 10;</code></pre>
+                </div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false" data-q="4">
+                        A. 5
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="4">
+                        B. 10
+                    </div>
+                    <div class="quiz-option" data-correct="true" data-q="4">
+                        C. 50
+                    </div>
+                </div>
+                
+                <div class="quiz-explanation" id="explanation4">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p>பதில்: <strong>C. 50</strong></p>
+                    <p>செயல்பாடு 5 ஐத் திருப்பித் தருகிறது, பின்னர் அது 10 ஆல் பெருக்கப்படுகிறது.</p>
+                    <ol>
+                        <li><code>add(2, 3)</code> → 5 ஐத் திருப்பித் தருகிறது</li>
+                        <li><code>5 * 10</code> → 50 ஐக் கொடுக்கிறது</li>
+                    </ol>
+                    <p>செயல்பாட்டு அழைப்புகள் வெளிப்பாடுகளில் பயன்படுத்தப்படலாம், மேலும் அவை முதலில் மதிப்பிடப்படுகின்றன.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question 5 -->
+        <section class="content-section" id="question5">
+            <div class="quiz-question">
+                <h3>கேள்வி 5</h3>
+                <p>ஒரு செயல்பாட்டில் <code>return</code> அறிக்கை இல்லை என்றால் என்ன மதிப்பு திரும்பப் பெறப்படும்?</p>
+                
+                <div class="code-example">
+                    <pre><code>// எடுத்துக்காட்டு:
+function noReturn() {
+    let x = 10;
+    // எந்த return அறிக்கையும் இல்லை
+}
+
+let result = noReturn();</code></pre>
+                </div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false" data-q="5">
+                        A. null
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="5">
+                        B. false
+                    </div>
+                    <div class="quiz-option" data-correct="true" data-q="5">
+                        C. undefined
+                    </div>
+                </div>
+                
+                <div class="quiz-explanation" id="explanation5">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p>பதில்: <strong>C. undefined</strong></p>
+                    <p><code>return</code> இல்லாத செயல்பாடுகள் <code>undefined</code> ஐத் திருப்பித் தரும்.</p>
+                    <p><code>undefined</code> என்பது ஒரு மதிப்பு வரையறுக்கப்படவில்லை என்பதைக் குறிக்கிறது. ஒரு செயல்பாடு வெளிப்படையாக <code>return</code> அறிக்கையுடன் முடிவடையாவிட்டால், அது மறைமுகமாக <code>undefined</code> ஐத் திருப்பித் தரும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question 6 -->
+        <section class="content-section" id="question6">
+            <div class="quiz-question">
+                <h3>கேள்வி 6</h3>
+                <p>எந்த வகை செயல்பாட்டை அது வரையறுக்கப்படுவதற்கு முன்பே அழைக்க முடியும்?</p>
+                
+                <div class="code-example">
+                    <pre><code>// எடுத்துக்காட்டு:
+console.log(greet("John"));  // இது வேலை செய்யுமா?
+
+// வரையறை இங்கே வரும்...</code></pre>
+                </div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="true" data-q="6">
+                        A. செயல்பாடு அறிவிப்பு
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="6">
+                        B. செயல்பாட்டு வெளிப்பாடு
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="6">
+                        C. அம்புக்குறி செயல்பாடு
+                    </div>
+                </div>
+                
+                <div class="quiz-explanation" id="explanation6">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p>பதில்: <strong>A. செயல்பாடு அறிவிப்பு</strong></p>
+                    <p>செயல்பாடு அறிவிப்புகள் தலைக்கு மேலே உயர்த்தப்படுகின்றன.</p>
+                    <p><strong>தலைக்கு மேலே உயர்த்துதல் (Hoisting):</strong> ஜாவாஸ்கிரிப்ட் செயல்பாடு அறிவிப்புகளை அவை வரையறுக்கப்படும் இடத்திற்கு மேலே "தூக்கி" விடுகிறது, இதனால் அவை வரையறுக்கப்படுவதற்கு முன்பே அழைக்கப்படலாம்.</p>
+                    <p>செயல்பாட்டு வெளிப்பாடுகள் மற்றும் அம்புக்குறி செயல்பாடுகள் தூக்கப்படவில்லை - அவை வரையறுக்கப்பட்ட பிறகு மட்டுமே அழைக்கப்படலாம்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question 7 -->
+        <section class="content-section" id="question7">
+            <div class="quiz-question">
+                <h3>கேள்வி 7</h3>
+                <p>எந்த அம்புக்குறி செயல்பாடு சரியானது?</p>
+                
+                <div class="code-example">
+                    <pre><code>// எடுத்துக்காட்டுகள்:</code></pre>
+                </div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false" data-q="7">
+                        A. <code>const add = (a, b) => return a + b;</code>
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="7">
+                        B. <code>const add = a, b => a + b;</code>
+                    </div>
+                    <div class="quiz-option" data-correct="true" data-q="7">
+                        C. <code>const add = (a, b) => a + b;</code>
+                    </div>
+                </div>
+                
+                <div class="quiz-explanation" id="explanation7">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p>பதில்: <strong>C. <code>const add = (a, b) => a + b;</code></strong></p>
+                    <p>ஒரு வரியில் எழுதப்பட்டால் அம்புக்குறி செயல்பாடுகள் <code>return</code> இல்லாமல் வெளிப்பாடுகளைத் திருப்பித் தருகின்றன.</p>
+                    <p><strong>A தவறானது:</strong> மறைமுக திரும்புகையில் <code>return</code> முக்கிய சொல் அனுமதிக்கப்படாது</p>
+                    <p><strong>B தவறானது:</strong> பல அளவுருக்களுக்கு அடைப்புக்குறிகள் தேவை (<code>(a, b)</code>)</p>
+                    <p><strong>C சரியானது:</strong> சரியான தொடரியல் - அடைப்புக்குறிகள், அம்புக்குறி, மறைமுக திரும்புகை</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question 8 -->
+        <section class="content-section" id="question8">
+            <div class="quiz-question">
+                <h3>கேள்வி 8</h3>
+                <p>ஒரு பொருள் முறைக்குள் <code>this</code> எதைக் குறிக்கிறது?</p>
+                
+                <div class="code-example">
+                    <pre><code>const person = {
+    name: "John",
+    getName: function() {
+        return this.name;
+    }
+};</code></pre>
+                </div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false" data-q="8">
+                        A. செயல்பாட்டைத் தானே
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="8">
+                        B. உலகளாவிய பொருள்
+                    </div>
+                    <div class="quiz-option" data-correct="true" data-q="8">
+                        C. முறையைச் சொந்தமாக வைத்திருக்கும் பொருள்
+                    </div>
+                </div>
+                
+                <div class="quiz-explanation" id="explanation8">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p>பதில்: <strong>C. முறையைச் சொந்தமாக வைத்திருக்கும் பொருள்</strong></p>
+                    <p>ஒரு முறையில், <code>this</code> சொந்தமான பொருளைக் குறிக்கிறது.</p>
+                    <p>இந்த வழக்கில், <code>getName</code> என்பது <code>person</code> பொருளின் ஒரு முறையாகும், எனவே <code>this</code> <code>person</code> பொருளைக் குறிக்கிறது.</p>
+                    <p><code>person.getName()</code> அழைக்கப்படும் போது, <code>this.name</code> என்பது <code>"John"</code> ஆக மதிப்பிடப்படுகிறது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question 9 -->
+        <section class="content-section" id="question9">
+            <div class="quiz-question">
+                <h3>கேள்வி 9</h3>
+                <p>இந்த குறியீடு ஏன் எதிர்பார்க்கப்பட்டபடி வேலை செய்யாது?</p>
+                
+                <div class="code-example">
+                    <pre><code>const person = {
+    name: "John",
+    greet: () => this.name
+};</code></pre>
+                </div>
+                
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false" data-q="9">
+                        A. அம்புக்குறி செயல்பாடுகள் மதிப்புகளைத் திருப்பித் தர முடியாது
+                    </div>
+                    <div class="quiz-option" data-correct="true" data-q="9">
+                        B. அம்புக்குறி செயல்பாடுகளுக்கு அவற்றின் சொந்த <code>this</code> இல்லை
+                    </div>
+                    <div class="quiz-option" data-correct="false" data-q="9">
+                        C. பொருள் தொடரியல் தவறானது
+                    </div>
+                </div>
+                
+                <div class="quiz-explanation" id="explanation9">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p>பதில்: <strong>B. அம்புக்குறி செயல்பாடுகளுக்கு அவற்றின் சொந்த <code>this</code> இல்லை</strong></p>
+                    <p>அம்புக்குறி செயல்பாடுகள் அவற்றின் சுற்றுப்புற நோக்கத்திலிருந்து <code>this</code> ஐக் கைப்பற்றுகின்றன.</p>
+                    <p>அம்புக்குறி செயல்பாடுகளுக்கு அவற்றின் சொந்த <code>this</code> இல்லை - அவை "லெக்சிக்கல் ஸ்கோப்" இலிருந்து <code>this</code> ஐப் பெறுகின்றன. இந்த வழக்கில், <code>this</code> <code>person</code> பொருளைக் குறிக்காது, ஆனால் அதைச் சுற்றியுள்ள நோக்கத்தை (ஒருவேளை உலகளாவிய நோக்கம் அல்லது <code>undefined</code>) குறிக்கிறது.</p>
+                    <p>பொருள் முறைகளாக வழக்கமான செயல்பாடுகளைப் பயன்படுத்தவும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Result Section -->
+        <section class="content-section" id="quiz-result">
+            <h2>வினாடி வினா முடிவு</h2>
+            
+            <div class="quiz-result">
+                <h3>உங்கள் மதிப்பெண்</h3>
+                <div class="score-display" id="scoreDisplay">0/9</div>
+                <p id="resultMessage">வினாடி வினாவை முடிக்க அனைத்து கேள்விகளுக்கும் பதிலளிக்கவும்</p>
+                
+                <div style="margin-top: 2rem;">
+                    <button onclick="calculateScore()" style="padding: 12px 30px; background: white; color: #764ba2; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+                        <i class="fas fa-calculator"></i> மதிப்பெண்ணைக் கணக்கிடு
+                    </button>
+                    
+                    <button onclick="resetQuiz()" style="margin-left: 15px; padding: 12px 30px; background: rgba(255,255,255,0.2); color: white; border: 2px solid white; border-radius: 25px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s;">
+                        <i class="fas fa-redo"></i> மீண்டும் முயற்சி செய்
+                    </button>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📊</span> மதிப்பீடு வழிகாட்டி:</h4>
+                <ul>
+                    <li><strong>8-9 சரியானவை:</strong> சிறந்தது! ஜாவாஸ்கிரிப்ட் செயல்பாடுகள் பற்றி உங்களுக்கு நல்ல புரிதல் உள்ளது.</li>
+                    <li><strong>6-7 சரியானவை:</strong> நல்லது! முக்கிய கருத்துகளை நீங்கள் புரிந்துகொண்டீர்கள், ஆனால் சில விவரங்களை மீண்டும் பார்க்கலாம்.</li>
+                    <li><strong>4-5 சரியானவை:</strong> நடுத்தரம். செயல்பாடுகள் பற்றிய அடிப்படை கருத்துகளை மீண்டும் மதிப்பாய்வு செய்யவும்.</li>
+                    <li><strong>0-3 சரியானவை:</strong> டுடோரியல் அத்தியாயங்களை மீண்டும் மதிப்பாய்வு செய்யவும் மற்றும் மீண்டும் முயற்சிக்கவும்.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Answers Summary -->
+        <section class="content-section" id="answers-summary">
+            <h2>பதில்கள் சுருக்கம்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>கேள்வி</th>
+                            <th>சரியான பதில்</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>B</td>
+                            <td>செயல்பாடு "Hello World" சரத்தைத் திருப்பித் தருகிறது.</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>C</td>
+                            <td>அடைப்புக்குறிகள் <code>()</code> செயல்பாட்டை இயக்குகின்றன.</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>B</td>
+                            <td>அளவுருக்கள் என்பது செயல்பாடு வரையறையில் பட்டியலிடப்பட்ட பெயர்கள்.</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>C</td>
+                            <td>செயல்பாடு 5 ஐத் திருப்பித் தருகிறது, பின்னர் அது 10 ஆல் பெருக்கப்படுகிறது.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>C</td>
+                            <td><code>return</code> இல்லாத செயல்பாடுகள் <code>undefined</code> ஐத் திருப்பித் தரும்.</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>A</td>
+                            <td>செயல்பாடு அறிவிப்புகள் தலைக்கு மேலே உயர்த்தப்படுகின்றன.</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>C</td>
+                            <td>அம்புக்குறி செயல்பாடுகள் <code>return</code> இல்லாமல் வெளிப்பாடுகளைத் திருப்பித் தருகின்றன.</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>C</td>
+                            <td>ஒரு முறையில், <code>this</code> சொந்தமான பொருளைக் குறிக்கிறது.</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>B</td>
+                            <td>அம்புக்குறி செயல்பாடுகளுக்கு அவற்றின் சொந்த <code>this</code> இல்லை.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Next Steps -->
+        <section class="content-section" id="next-steps">
+            <h2>அடுத்த படிகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-book"></i>
+                    <div>
+                        <h4>நீங்கள் பெரும்பாலான கேள்விகளை சரியாக பதிலளித்திருந்தால்</h4>
+                        <p>ஜாவாஸ்கிரிப்ட் செயல்பாடுகள் பற்றிய உங்கள் அறிவு உறுதியானது. அடுத்த தலைப்புக்கு செல்ல தயாராக உள்ளீர்கள்.</p>
+                        <a href="javascript%20objects.html" class="nav-tab next" style="margin-top: 10px; padding: 8px 15px; display: inline-flex; align-items: center; gap: 10px;">
+                            <span>JavaScript Objects ஐ தொடர்ந்து படிக்கவும்</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-redo"></i>
+                    <div>
+                        <h4>நீங்கள் சில கேள்விகளை தவறாக பதிலளித்திருந்தால்</h4>
+                        <p>டுடோரியல் அத்தியாயங்களை மீண்டும் மதிப்பாய்வு செய்யவும். செயல்பாடுகள் பற்றிய புரிதல் ஜாவாஸ்கிரிப்ட் நிரலாக்கத்தின் அடிப்படை.</p>
+                        <a href="javascript%20functions.html" class="nav-tab prev" style="margin-top: 10px; padding: 8px 15px; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>JavaScript Functions ஐ மீண்டும் படிக்கவும்</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <div>
+                        <h4>பயிற்சி செய்யுங்கள்</h4>
+                        <p>செயல்பாடுகளைப் புரிந்துகொள்வது அடிப்படை நிரலாக்கத் திறன்களில் ஒன்றாகும். உங்கள் சொந்த செயல்பாடுகளை எழுதுவதன் மூலம் பயிற்சி செய்யுங்கள்.</p>
+                        <p>உங்கள் சொந்த கணக்கீடு செயல்பாடுகள், தகவல் செயலாக்கம் செயல்பாடுகள் மற்றும் உரை கையாளுதல் செயல்பாடுகளை உருவாக்க முயற்சிக்கவும்.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🎯</span> குறிப்பு:</h4>
+                <p>செயல்பாடுகளைப் புரிந்துகொள்வது ஜாவாஸ்கிரிப்ட்டில் தேர்ச்சி பெற அவசியம்.</p>
+                <p>விரைவாக முன்னேற உங்கள் சொந்த செயல்பாடுகளை எழுதப் பயிற்சி செய்யுங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Back to Functions -->
+        <section class="content-section" id="back-to-functions">
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔙</span> JavaScript Functions க்கு திரும்பு</h4>
+                <p>நீங்கள் செயல்பாடுகள் பற்றிய முக்கிய கருத்துகளை மீண்டும் மதிப்பாய்வு செய்ய விரும்பினால், செயல்பாடுகள் டுடோரியலுக்கு திரும்புக:</p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                    <a href="javascript%20functions.html" class="nav-tab prev" style="padding: 10px 20px;">
+                        <i class="fas fa-home"></i>
+                        <span>Functions Home</span>
+                    </a>
+                    <a href="javascript%20arrow%20functions.html" class="nav-tab next" style="padding: 10px 20px;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Arrow Functions</span>
+                    </a>
+                    <a href="javascript%20objects.html" class="nav-tab next" style="padding: 10px 20px;">
+                        <span>Objects</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="javascript%20arrow%20functions.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="javascript%20objects.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">வினாடி வினா அறிமுகம்</a></li>
+                    <li><a href="#question1">கேள்வி 1-3</a></li>
+                    <li><a href="#question4">கேள்வி 4-6</a></li>
+                    <li><a href="#question7">கேள்வி 7-9</a></li>
+                    <li><a href="#quiz-result">வினாடி வினா முடிவு</a></li>
+                    <li><a href="#answers-summary">பதில்கள் சுருக்கம்</a></li>
+                    <li><a href="#next-steps">அடுத்த படிகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Quiz interaction
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionNum = this.getAttribute('data-q');
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                
+                // Reset all options for this question
+                document.querySelectorAll(`.quiz-option[data-q="${questionNum}"]`).forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                });
+                
+                // Mark this option
+                if (isCorrect) {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    
+                    // Also show the correct answer
+                    document.querySelector(`.quiz-option[data-q="${questionNum}"][data-correct="true"]`).classList.add('correct');
+                }
+                
+                // Show explanation
+                document.getElementById(`explanation${questionNum}`).style.display = 'block';
+            });
+        });
+
+        // Calculate score
+        window.calculateScore = function() {
+            let score = 0;
+            const totalQuestions = 9;
+            
+            // Check each question
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selected = document.querySelector(`.quiz-option[data-q="${i}"].correct[data-correct="true"]`);
+                if (selected) {
+                    score++;
+                }
+            }
+            
+            // Update display
+            document.getElementById('scoreDisplay').textContent = `${score}/${totalQuestions}`;
+            
+            // Update message
+            let message = '';
+            if (score === totalQuestions) {
+                message = 'சிறந்தது! அனைத்து பதில்களும் சரியானவை!';
+                document.getElementById('scoreDisplay').style.color = '#28a745';
+            } else if (score >= 6) {
+                message = 'நல்லது! ஜாவாஸ்கிரிப்ட் செயல்பாடுகள் பற்றிய உங்கள் அறிவு நல்லது.';
+                document.getElementById('scoreDisplay').style.color = '#28a745';
+            } else if (score >= 4) {
+                message = 'நடுத்தரம். சில கருத்துகளை மீண்டும் மதிப்பாய்வு செய்யவும்.';
+                document.getElementById('scoreDisplay').style.color = '#ffc107';
+            } else {
+                message = 'டுடோரியல் அத்தியாயங்களை மீண்டும் மதிப்பாய்வு செய்யவும்.';
+                document.getElementById('scoreDisplay').style.color = '#dc3545';
+            }
+            
+            document.getElementById('resultMessage').textContent = message;
+            
+            // Scroll to result
+            document.getElementById('quiz-result').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // Reset quiz
+        window.resetQuiz = function() {
+            // Reset all options
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+            });
+            
+            // Hide all explanations
+            for (let i = 1; i <= 9; i++) {
+                document.getElementById(`explanation${i}`).style.display = 'none';
+            }
+            
+            // Reset score display
+            document.getElementById('scoreDisplay').textContent = '0/9';
+            document.getElementById('scoreDisplay').style.color = '';
+            document.getElementById('resultMessage').textContent = 'வினாடி வினாவை முடிக்க அனைத்து கேள்விகளுக்கும் பதிலளிக்கவும்';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Interactive quiz example
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add interactive code execution for question 4
+            const demoDiv = document.createElement('div');
+            demoDiv.className = 'code-example';
+            demoDiv.style.marginTop = '20px';
+            demoDiv.innerHTML = `
+                <h4>கேள்வி 4 இன் நிகழ்நேர சோதனை</h4>
+                <pre><code>function add(a, b) {
+    return a + b;
+}
+
+// முடிவு: <span id="liveResult">???</span></code></pre>
+                <button onclick="testQuestion4()" style="margin-top: 10px; padding: 8px 15px; background: var(--git-color); color: white; border: none; border-radius: 5px; cursor: pointer;">குறியீட்டை இயக்கு</button>
+            `;
+            
+            // Insert after question 4
+            const question4Section = document.getElementById('question4');
+            if (question4Section) {
+                question4Section.appendChild(demoDiv);
+            }
+
+            // Define the test function
+            window.testQuestion4 = function() {
+                function add(a, b) {
+                    return a + b;
+                }
+                
+                const result = add(2, 3) * 10;
+                document.getElementById('liveResult').textContent = result;
+                document.getElementById('liveResult').style.color = 'var(--success)';
+                document.getElementById('liveResult').style.fontWeight = 'bold';
+            };
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

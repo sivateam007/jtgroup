@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Templates: Attribute Binding with attr. - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Code styling for Angular */
+        .code-example .angular-keyword {
+            color: #dd0031;
+        }
+        
+        .code-example .angular-binding {
+            color: #1976d2;
+        }
+        
+        .code-example .html-tag {
+            color: #22863a;
+        }
+        
+        .code-example .attribute {
+            color: #6f42c1;
+        }
+        
+        .code-example .comment {
+            color: #6a737d;
+            font-style: italic;
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular Pipes in Templates.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Templates TrackBy with ngFor.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Templates: Attribute Binding with attr.</h2>
+<p>DOM பண்புகள் இல்லாதபோது HTML பண்புக்கூறுகளை பைண்டு செய்ய [attr.name] பயன்படுத்தவும்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Attribute Binding with attr. என்றால் என்ன?</h2>
+<p>HTML பண்புக்கூறுகளை அமைக்க [attr.name] பயன்படுத்தவும்.</p>
+<p>DOM பண்புகளுக்கு மேப்பிங் செய்யாத பண்புக்கூறுகளுக்கு (எ.கா., ARIA, colspan).</p>
+<p>பண்பு பைண்டிங்கிலிருந்து வேறுபட்டது.</p>
+</section>
+
+<!-- When to use Attribute Binding -->
+<section class="content-section" id="when-to-use">
+<h2>Attribute Binding எப்போது பயன்படுத்த வேண்டும்</h2>
+<p>தொடர்புடைய DOM பண்பு இல்லாதபோது.</p>
+<p>சாதாரண உறுப்பு பண்புகளுக்கு பண்பு பைண்டிங் பயன்படுத்தவும்.</p>
+<p>ARIA பண்புக்கூறுகள் மற்றும் colspan போன்ற அட்டவணை attr. ஆகியவற்றுடன் பொதுவாக பயன்படுத்தப்படுகிறது.</p>
+
+<div class="code-example">
+<pre><code><span class="html-tag">&lt;button</span> <span class="attribute">[attr.aria-label]</span>=<span class="angular-binding">"label"</span><span class="html-tag">&gt;</span>Click<span class="html-tag">&lt;/button&gt;</span></code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i>Code Explained</h4>
+<p><strong>[attr.aria-label]:</strong> கூறு மதிப்பைப் பயன்படுத்தி HTML aria-label பண்புக்கூறை அமைக்கிறது.</p>
+<p><strong>attr.:</strong> பொருந்தக்கூடிய DOM பண்பு இல்லாதபோது (எ.கா., ARIA, colspan) attr. விரும்பப்படுகிறது.</p>
+<p><strong>Property vs attribute:</strong> சாதாரண உறுப்பு பண்புகளுக்கு, பண்பு பைண்டிங் பயன்படுத்தவும் (எ.கா., [disabled]), attr. அல்ல.</p>
+</div>
+</section>
+
+<!-- Property vs Attribute Binding -->
+<section class="content-section" id="property-vs-attribute">
+<h2>Property Binding vs Attribute Binding</h2>
+<div class="comparison-table">
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Syntax</th>
+<th>When to Use</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Property Binding</strong></td>
+<td>[property]="value"</td>
+<td>DOM properties exist</td>
+<td>[disabled]="isDisabled"</td>
+</tr>
+<tr>
+<td><strong>Attribute Binding</strong></td>
+<td>[attr.attribute]="value"</td>
+<td>No DOM property exists</td>
+<td>[attr.colspan]="colSpanValue"</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-check-circle"></i>
+<h4>Property Binding</h4>
+</div>
+<p><strong>பயன்படுத்தவும்:</strong> உறுப்பு பண்புகளுக்கு (id, class, value)</p>
+<p><strong>உதாரணம்:</strong> &lt;input [value]="userName"&gt;</p>
+<p><strong>DOM ஆல் புதுப்பிக்கப்படுகிறது</strong></p>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-code"></i>
+<h4>Attribute Binding</h4>
+</div>
+<p><strong>பயன்படுத்தவும்:</strong> HTML பண்புக்கூறுகளுக்கு (colspan, aria-*)</p>
+<p><strong>உதாரணம்:</strong> &lt;td [attr.colspan]="colSpan"&gt;</p>
+<p><strong>HTML ஆல் புதுப்பிக்கப்படுகிறது</strong></p>
+</div>
+</div>
+</section>
+
+<!-- Example -->
+<section class="content-section" id="example">
+<h2>Example</h2>
+<p>attr. ஐப் பயன்படுத்தி பண்புக்கூறுகளை பைண்டு செய்யவும்:</p>
+
+<div class="code-example">
+<h3>Angular Component Example</h3>
+<pre><code><span class="angular-keyword">import</span> { bootstrapApplication } <span class="angular-keyword">from</span> <span class="angular-binding">'@angular/platform-browser'</span>;
+<span class="angular-keyword">import</span> { Component } <span class="angular-keyword">from</span> <span class="angular-binding">'@angular/core'</span>;
+
+<span class="angular-keyword">@Component</span>({
+  selector: <span class="angular-binding">'app-root'</span>,
+  standalone: <span class="angular-keyword">true</span>,
+  template: <span class="angular-binding">`
+    &lt;h3&gt;Attribute binding (attr.)&lt;/h3&gt;
+    &lt;button [attr.aria-label]="label" (click)="toggle()"&gt;Toggle label&lt;/button&gt;
+    &lt;table border="1" style="margin-top:8px"&gt;
+      &lt;tr&gt;&lt;th&gt;A&lt;/th&gt;&lt;th&gt;B&lt;/th&gt;&lt;th&gt;C&lt;/th&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td [attr.colspan]="wide ? 2 : 1"&gt;Row 1&lt;/td&gt;&lt;td&gt;Cell&lt;/td&gt;&lt;td&gt;Cell&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+  `</span>
+})
+<span class="angular-keyword">export class</span> App {
+  wide = <span class="angular-keyword">true</span>;
+  <span class="angular-keyword">get</span> label() { <span class="angular-keyword">return</span> <span class="angular-keyword">this</span>.wide ? <span class="angular-binding">'Table is wide'</span> : <span class="angular-binding">'Table is narrow'</span>; }
+  toggle() { <span class="angular-keyword">this</span>.wide = !<span class="angular-keyword">this</span>.wide; }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-code tip-icon"></i>Example Explained</h4>
+<p><strong>[attr.aria-label]="label":</strong> கூறின் லேபிள் பெறுநர் மூலம் திரும்பப் பெறப்பட்ட சரத்துடன் aria-label HTML பண்புக்கூறை பைண்டு செய்கிறது.</p>
+<p><strong>[attr.colspan]="wide ? 2 : 1":</strong> நிலையின் அடிப்படையில் அட்டவணை கலத்தின் colspan பண்புக்கூறை அமைக்கிறது. colspan ஒரு பண்புக்கூறு என்பதால், attr. பயன்படுத்தவும், எளிய DOM பண்பு அல்ல.</p>
+<p><strong>get label():</strong> தற்போதைய பரந்த மதிப்பிலிருந்து விளக்கமான சரத்தைக் கணக்கிடுகிறது.</p>
+<p><strong>toggle():</strong> லேபிள் மற்றும் கலம் span இரண்டையும் புதுப்பிக்க பரந்ததை மாற்றுகிறது.</p>
+</div>
+</section>
+
+<!-- Common Use Cases -->
+<section class="content-section" id="use-cases">
+<h2>Common Use Cases for Attribute Binding</h2>
+<div class="examples-grid">
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-universal-access"></i>
+</div>
+<h4>ARIA Attributes</h4>
+<p>அணுகல் சிறப்பியல்புகளுக்கு</p>
+<pre style="font-size: 0.9rem;">[attr.aria-label]="description"
+[attr.aria-hidden]="isHidden"</pre>
+</div>
+
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-table"></i>
+</div>
+<h4>Table Attributes</h4>
+<p>அட்டவணை பண்புக்கூறுகளுக்கு</p>
+<pre style="font-size: 0.9rem;">[attr.colspan]="columnSpan"
+[attr.rowspan]="rowSpan"</pre>
+</div>
+
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-tag"></i>
+</div>
+<h4>Custom Data Attributes</h4>
+<p>தனிப்பயன் தரவு பண்புக்கூறுகள்</p>
+<pre style="font-size: 0.9rem;">[attr.data-testid]="testId"
+[attr.data-cy]="cypressId"</pre>
+</div>
+</div>
+</section>
+
+<!-- Exercise -->
+<section class="content-section" id="exercise">
+<h2>Exercise</h2>
+<p>Which syntax binds to an HTML attribute (not a DOM property)?</p>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>HTML பண்புக்கூறுக்கு பைண்டு செய்யும் தொடரியல் எது? (DOM பண்பு அல்ல)</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">[attr.role]</div>
+<div class="option-feedback correct">✓ சரி! [attr.] தொடரியல் HTML பண்புக்கூறுகளை பைண்டு செய்ய பயன்படுகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">[role]</div>
+<div class="option-feedback incorrect">✗ தவறு! இது role DOM பண்புக்கு பைண்டு செய்கிறது, HTML பண்புக்கூறுக்கு அல்ல</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">(role)</div>
+<div class="option-feedback incorrect">✗ தவறு! இது role நிகழ்வுக்கான நிகழ்வு பைண்டிங்கைக் குறிக்கிறது</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i>Important Note</h4>
+<p>பண்பு பைண்டிங்கிற்கும் பண்புக்கூறு பைண்டிங்கிற்கும் இடையே உள்ள வேறுபாட்டை எப்போதும் புரிந்துகொள்ளுங்கள்:</p>
+<ul>
+<li><strong>Property binding:</strong> [property]="value" (DOM properties)</li>
+<li><strong>Attribute binding:</strong> [attr.attribute]="value" (HTML attributes)</li>
+</ul>
+</div>
+</section>
+
+<!-- Best Practices -->
+<section class="content-section" id="best-practices">
+<h2>Best Practices</h2>
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-check-circle"></i>
+<div>
+<h4>Use [attr.] for Accessibility</h4>
+<p>அணுகல் சிறப்பியல்புகளுக்கு எப்போதும் [attr.] பயன்படுத்தவும்: [attr.aria-label], [attr.aria-describedby]</p>
+</div>
+</div>
+
+<div class="practice-item positive">
+<i class="fas fa-check-circle"></i>
+<div>
+<h4>Check DOM Properties First</h4>
+<p>DOM பண்பு இருக்கும் வரை பண்பு பைண்டிங் பயன்படுத்தவும். பண்புக்கூறு பைண்டிங் கடைசி விருப்பமாக பயன்படுத்தவும்</p>
+</div>
+</div>
+
+<div class="practice-item negative">
+<i class="fas fa-times-circle"></i>
+<div>
+<h4>Avoid attr. for Standard Properties</h4>
+<p>id, class, value போன்ற நிலையான பண்புகளுக்கு [attr.id] போன்றவற்றைப் பயன்படுத்த வேண்டாம்</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular Pipes in Templates.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Templates TrackBy with ngFor.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education in Tamil.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">Attribute Binding என்றால் என்ன?</a></li>
+<li><a href="#when-to-use">எப்போது பயன்படுத்த வேண்டும்</a></li>
+<li><a href="#property-vs-attribute">Property vs Attribute</a></li>
+<li><a href="#example">உதாரணம்</a></li>
+<li><a href="#exercise">பயிற்சி</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Angular Topics</h3>
+<ul>
+<li><a href="Angular Pipes in Templates.html">Angular Pipes</a></li>
+<li><a href="#home">Attribute Binding</a></li>
+<li><a href="Angular Templates TrackBy with ngFor.html">TrackBy with *ngFor</a></li>
+<li><a href="#">Property Binding</a></li>
+<li><a href="#">Event Binding</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

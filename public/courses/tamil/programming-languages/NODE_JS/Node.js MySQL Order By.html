@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js MySQL Order By - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js MySQL Where.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js MySQL Delete.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js MySQL Order By</h2>
+            <p>Node.js ஐப் பயன்படுத்தி MySQL வினா முடிவுகளை ஏறுவரிசை மற்றும் இறங்குவரிசையில் வரிசைப்படுத்த கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Sort the Result -->
+        <section class="content-section" id="sort-result">
+            <h2>முடிவை வரிசைப்படுத்துதல்</h2>
+            
+            <p>முடிவை ஏறுவரிசை அல்லது இறங்குவரிசையில் வரிசைப்படுத்த ORDER BY அறிக்கையைப் பயன்படுத்தவும்.</p>
+            
+            <p>ORDER BY முக்கியச்சொல் முடிவை இயல்பாக ஏறுவரிசையில் வரிசைப்படுத்துகிறது. முடிவை இறங்குவரிசையில் வரிசைப்படுத்த, DESC முக்கியச்சொல்லைப் பயன்படுத்தவும்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>பெயரின் அடிப்படையில் அகரவரிசையில் முடிவை வரிசைப்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  con.query("SELECT * FROM customers ORDER BY name", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_db_orderby.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_db_orderby.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { id: 3, name: 'Amy', address: 'Apple st 652'},
+  { id: 11, name: 'Ben', address: 'Park Lane 38'},
+  { id: 7, name: 'Betty', address: 'Green Grass 1'},
+  { id: 13, name: 'Chuck', address: 'Main Road 989'},
+  { id: 4, name: 'Hannah', address: 'Mountain 21'},
+  { id: 1, name: 'John', address: 'Highway 71'},
+  { id: 5, name: 'Michael', address: 'Valley 345'},
+  { id: 2, name: 'Peter', address: 'Lowstreet 4'},
+  { id: 8, name: 'Richard', address: 'Sky st 331'},
+  { id: 6, name: 'Sandy', address: 'Ocean blvd 2'},
+  { id: 9, name: 'Susan', address: 'One way 98'},
+  { id: 10, name: 'Vicky', address: 'Yellow Garden 2'},
+  { id: 14, name: 'Viola', address: 'Sideway 1633'},
+  { id: 12, name: 'William', address: 'Central st 954'}
+]</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> ORDER BY முக்கிய குறிப்புகள்:</h4>
+                <ul>
+                    <li><strong>இயல்பு வரிசை:</strong> ORDER BY இயல்பாக ஏறுவரிசையில் வரிசைப்படுத்துகிறது</li>
+                    <li><strong>ASC முக்கியச்சொல்:</strong> ஏறுவரிசையை வெளிப்படையாகக் குறிப்பிட விருப்பமானது</li>
+                    <li><strong>பல நெடுவரிசைகள்:</strong> காற்புள்ளியால் பிரிக்கப்பட்ட பல நெடுவரிசைகளால் வரிசைப்படுத்தலாம்</li>
+                    <li><strong>தரவு வகைகள்:</strong> எண்கள், சரங்கள் மற்றும் தேதிகள் அனைத்தும் வரிசைப்படுத்தப்படலாம்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ORDER BY DESC -->
+        <section class="content-section" id="order-by-desc">
+            <h2>ORDER BY DESC</h2>
+            
+            <p>முடிவை இறங்குவரிசையில் வரிசைப்படுத்த DESC முக்கியச்சொல்லைப் பயன்படுத்தவும்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>பெயரின் அடிப்படையில் தலைகீழ் அகரவரிசையில் முடிவை வரிசைப்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  con.query("SELECT * FROM customers ORDER BY name DESC", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_db_orderby_desc.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_db_orderby_desc.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { id: 12, name: 'William', address: 'Central st 954'},
+  { id: 14, name: 'Viola', address: 'Sideway 1633'},
+  { id: 10, name: 'Vicky', address: 'Yellow Garden 2'},
+  { id: 9, name: 'Susan', address: 'One way 98'},
+  { id: 6, name: 'Sandy', address: 'Ocean blvd 2'},
+  { id: 8, name: 'Richard', address: 'Sky st 331'},
+  { id: 2, name: 'Peter', address: 'Lowstreet 4'},
+  { id: 5, name: 'Michael', address: 'Valley 345'},
+  { id: 1, name: 'John', address: 'Highway 71'},
+  { id: 4, name: 'Hannah', address: 'Mountain 21'},
+  { id: 13, name: 'Chuck', address: 'Main Road 989'},
+  { id: 7, name: 'Betty', address: 'Green Grass 1'},
+  { id: 11, name: 'Ben', address: 'Park Lane 38'},
+  { id: 3, name: 'Amy', address: 'Apple st 652'}
+]</code></pre>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sort-alpha-down"></i>
+                        <h4>ORDER BY ASC</h4>
+                    </div>
+                    <p><code>ORDER BY name ASC</code> - ஏறுவரிசை (A-Z, 0-9)</p>
+                    <ul>
+                        <li>இயல்பு வரிசை</li>
+                        <li>ASC விருப்பமானது</li>
+                        <li>சிறிய மதிப்புகள் முதலில்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sort-alpha-down-alt"></i>
+                        <h4>ORDER BY DESC</h4>
+                    </div>
+                    <p><code>ORDER BY name DESC</code> - இறங்குவரிசை (Z-A, 9-0)</p>
+                    <ul>
+                        <li>DESC தேவை</li>
+                        <li>பெரிய மதிப்புகள் முதலில்</li>
+                        <li>சமீபத்திய தேதிகள் முதலில்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multiple Column Sorting -->
+        <section class="content-section" id="multiple-columns">
+            <h2>பல நெடுவரிசை வரிசைப்படுத்துதல்</h2>
+            
+            <p>நீங்கள் பல நெடுவரிசைகளால் வரிசைப்படுத்தலாம், ஒவ்வொரு நெடுவரிசையும் வெவ்வேறு வரிசையில் இருக்கலாம்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>பெயரின் அடிப்படையில் ஏறுவரிசையில் வரிசைப்படுத்தவும், பின்னர் அதே பெயர்களுக்கு முகவரியின் அடிப்படையில் இறங்குவரிசையில் வரிசைப்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  con.query("SELECT * FROM customers ORDER BY name ASC, address DESC", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <h3>மேம்பட்ட பல நெடுவரிசை வரிசைப்படுத்தல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Multiple columns with different sort orders
+con.query("SELECT * FROM products ORDER BY category ASC, price DESC, name ASC", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Order by calculated fields
+con.query("SELECT *, (price * quantity) as total FROM orders ORDER BY total DESC", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Order by with WHERE clause
+con.query("SELECT * FROM customers WHERE id > 5 ORDER BY name ASC", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- ORDER BY with Different Data Types -->
+        <section class="content-section" id="data-types">
+            <h2>வெவ்வேறு தரவு வகைகளுடன் ORDER BY</h2>
+            
+            <h3>எண்களால் வரிசைப்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Order by numeric column ascending
+con.query("SELECT * FROM products ORDER BY price ASC", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Order by numeric column descending
+con.query("SELECT * FROM products ORDER BY price DESC", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Order by calculated numeric value
+con.query("SELECT *, (price * 0.9) as discounted_price FROM products ORDER BY discounted_price DESC", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+            
+            <h3>தேதிகளால் வரிசைப்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Order by date ascending (oldest first)
+con.query("SELECT * FROM orders ORDER BY order_date ASC", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Order by date descending (newest first)
+con.query("SELECT * FROM orders ORDER BY order_date DESC", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Order by timestamp
+con.query("SELECT * FROM logs ORDER BY created_at DESC", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- ORDER BY Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>ORDER BY சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>செயல்திறன்</h4>
+                    </div>
+                    <ul>
+                        <li>குறியீட்டு நெடுவரிசைகளால் வரிசைப்படுத்தவும்</li>
+                        <li>தேவையற்ற நெடுவரிசைகளைத் தேர்ந்தெடுப்பதைத் தவிர்க்கவும்</li>
+                        <li>பெரிய முடிவு செட்களுக்கு LIMIT ஐப் பயன்படுத்தவும்</li>
+                        <li>சிக்கலான வரிசைப்படுத்தலுக்கு முன் தரவை வடிகட்டவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sort"></i>
+                        <h4>வரிசைப்படுத்தல் உத்திகள்</h4>
+                    </div>
+                    <ul>
+                        <li>முதன்மை வரிசைப்படுத்தல் நெடுவரிசையை முதலில் வைக்கவும்</li>
+                        <li>இரண்டாம் நிலை வரிசைப்படுத்தலுக்கு குறைவான முக்கியத்துவம் வாய்ந்த நெடுவரிசைகளைப் பயன்படுத்தவும்</li>
+                        <li>தேதி நெடுவரிசைகளுக்கு DESC ஐப் பயன்படுத்தவும் (சமீபத்தியவை முதலில்)</li>
+                        <li>பெயர் நெடுவரிசைகளுக்கு ASC ஐப் பயன்படுத்தவும் (அகரவரிசை)</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>குறியீடு தரம்</h4>
+                    </div>
+                    <ul>
+                        <li>வரிசையை வெளிப்படையாகக் குறிப்பிடவும் (ASC அல்லது DESC)</li>
+                        <li>நெடுவரிசை பெயர்களை தெளிவாகக் குறிப்பிடவும்</li>
+                        <li>சிக்கலான ORDER BY கூற்றுகளை வடிவமைக்கவும்</li>
+                        <li>நிலையான குறியீட்டு மரபுகளைப் பின்பற்றவும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete Example -->
+        <section class="content-section" id="complete-example">
+            <h2>முழுமையான எடுத்துக்காட்டு</h2>
+            
+            <p>அனைத்து ORDER BY நுட்பங்களையும் உள்ளடக்கிய முழுமையான எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const mysql = require('mysql');
+
+// Create connection
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "company_db"
+});
+
+// Connect to MySQL
+con.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL:', err.message);
+    return;
+  }
+  
+  console.log('Connected to MySQL database');
+  
+  // Example 1: Basic ORDER BY ASC
+  console.log('\n1. Customers ordered by name (ASC):');
+  con.query("SELECT * FROM customers ORDER BY name ASC", (err, result) => {
+    if (err) {
+      console.error('Error in query 1:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 2: ORDER BY DESC
+  console.log('\n2. Customers ordered by name (DESC):');
+  con.query("SELECT * FROM customers ORDER BY name DESC", (err, result) => {
+    if (err) {
+      console.error('Error in query 2:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 3: Multiple column ordering
+  console.log('\n3. Customers ordered by name ASC, address DESC:');
+  con.query("SELECT * FROM customers ORDER BY name ASC, address DESC", (err, result) => {
+    if (err) {
+      console.error('Error in query 3:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 4: ORDER BY with WHERE and LIMIT
+  console.log('\n4. Top 5 customers with id > 5, ordered by name:');
+  con.query(
+    "SELECT * FROM customers WHERE id > 5 ORDER BY name ASC LIMIT 5",
+    (err, result) => {
+      if (err) {
+        console.error('Error in query 4:', err.message);
+        return;
+      }
+      console.log(result);
+      
+      // Close connection after all queries
+      setTimeout(() => {
+        con.end((err) => {
+          if (err) {
+            console.error('Error closing connection:', err.message);
+            return;
+          }
+          console.log('\nConnection closed');
+        });
+      }, 1000);
+    }
+  );
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MySQL வினாவின் முடிவுகளை வரிசைப்படுத்த பயன்படுத்தப்படும் சரியான SQL கூற்றைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SORT BY</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "SORT BY" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL கூற்று அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ARRANGE BY</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "ARRANGE BY" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL கூற்று அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ORDER BY</div>
+                            <div class="option-feedback correct">✓ சரி! "ORDER BY" என்பது MySQL வினாவின் முடிவுகளை வரிசைப்படுத்த பயன்படும் சரியான SQL கூற்றாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ORGANIZE BY</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "ORGANIZE BY" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL கூற்று அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js MySQL Where.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js MySQL Delete.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#sort-result">முடிவை வரிசைப்படுத்துதல்</a></li>
+                    <li><a href="#order-by-desc">ORDER BY DESC</a></li>
+                    <li><a href="#multiple-columns">பல நெடுவரிசை வரிசைப்படுத்துதல்</a></li>
+                    <li><a href="#data-types">வெவ்வேறு தரவு வகைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

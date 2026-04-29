@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Event Loop - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Architecture.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Asynchronous Programming.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Event Loop</h2>
+            <p>Node.js இன் நிகழ்வு வளையத்தைப் புரிந்துகொள்ளுங்கள் - தடையற்ற மற்றும் திறமையான I/O செயலாக்கத்தின் இதயம்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is Event Loop -->
+        <section class="content-section" id="what-is-event-loop">
+            <h2>நிகழ்வு வளையம் என்றால் என்ன?</h2>
+            
+            <p>நிகழ்வு வளையம்தான் Node.js ஐ தடையற்ற மற்றும் திறமையானதாக ஆக்குகிறது.</p>
+            
+            <p>இது அசிங்க்ரோனஸ் செயல்பாடுகளை கணினி அமைப்புக்கு ஒப்படைத்து, அவற்றின் முடிவுகளை கால்பேக்குகள் மூலம் செயலாக்குகிறது, இது Node.js க்கு ஒற்றை நூல் மூலம் ஆயிரக்கணக்கான ஒரேநேர இணைப்புகளை நிர்வகிக்க அனுமதிக்கிறது.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>தடையற்ற இயக்கம்</h4>
+                    </div>
+                    <p>நீண்ட I/O செயல்பாடுகள் முக்கிய நூலைத் தடுக்காது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h4>உயர் திறன்</h4>
+                    </div>
+                    <p>குறைந்த வளங்களுடன் அதிக செயல்திறன்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-users"></i>
+                        <h4>பல இணைப்புகள்</h4>
+                    </div>
+                    <p>ஆயிரக்கணக்கான ஒரேநேர இணைப்புகளை கையாளும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>கால்பேக் அடிப்படை</h4>
+                    </div>
+                    <p>கால்பேக்குகள் மூலம் செயல்பாடுகளை நிர்வகிக்கிறது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How Event Loop Works -->
+        <section class="content-section" id="how-event-loop-works">
+            <h2>நிகழ்வு வளையம் எவ்வாறு செயல்படுகிறது?</h2>
+            
+            <p>Node.js செயல்பாடுகளை கையாள பின்வரும் படிகளைப் பின்பற்றுகிறது:</p>
+            
+            <div class="architecture-flow">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>முக்கிய ஸ்கிரிப்டை இயக்கு</h3>
+                        <p>ஒத்திசைவு குறியீட்டை முதலில் இயக்குகிறது</p>
+                        <p>அனைத்து ஒத்திசைவு குறியீடும் உடனடியாக செயல்படுத்தப்படும்</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>மைக்ரோடாஸ்க்குகளை செயலாக்கு</h3>
+                        <p>Promises மற்றும் process.nextTick செயல்பாடுகள்</p>
+                        <p>இவை அதிக முன்னுரிமை கொண்டவை</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>டைமர்களை இயக்கு</h3>
+                        <p>setTimeout மற்றும் setInterval செயல்பாடுகள்</p>
+                        <p>குறிப்பிட்ட நேர தாமதங்களுக்குப் பிறகு இயக்கப்படும்</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>I/O கால்பேக்குகளை இயக்கு</h3>
+                        <p>கோப்பு முறைமை, நெட்வொர்க் செயல்பாடுகள்</p>
+                        <p>முடிந்த I/O செயல்பாடுகளின் கால்பேக்குகள்</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>setImmediate கால்பேக்குகளை செயலாக்கு</h3>
+                        <p>setImmediate() செயல்பாடுகள்</p>
+                        <p>I/O கால்பேக்குகளுக்குப் பிறகு உடனடியாக இயக்கப்படும்</p>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>மூடல் நிகழ்வுகளை கையாளு</h3>
+                        <p>socket.on('close') போன்ற நிகழ்வுகள்</p>
+                        <p>இணைப்பு மூடல்களை சுத்தம் செய்யும்</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Loop Order Example -->
+        <section class="content-section" id="event-loop-order">
+            <h2>எடுத்துக்காட்டு: நிகழ்வு வளைய வரிசை</h2>
+            
+            <div class="code-example">
+                <h3>குறியீடு:</h3>
+                <pre><code>console.log('First');
+setTimeout(() => console.log('Third'), 0);
+Promise.resolve().then(() => console.log('Second'));
+console.log('Fourth');</code></pre>
+            </div>
+            
+            <p>இது இயக்கும் வரிசையை நிரூபிக்கிறது:</p>
+            
+            <div class="execution-flow">
+                <div class="execution-step">
+                    <div class="step-badge">1</div>
+                    <div class="step-details">
+                        <h4>ஒத்திசைவு குறியீடு முதலில் இயங்கும்</h4>
+                        <p>'First', 'Fourth'</p>
+                    </div>
+                </div>
+                
+                <div class="execution-step">
+                    <div class="step-badge">2</div>
+                    <div class="step-details">
+                        <h4>மைக்ரோடாஸ்க்குகள் (Promises) அடுத்த கட்டத்திற்கு முன் இயங்கும்</h4>
+                        <p>'Second'</p>
+                    </div>
+                </div>
+                
+                <div class="execution-step">
+                    <div class="step-badge">3</div>
+                    <div class="step-details">
+                        <h4>டைமர்கள் கடைசியாக இயக்கப்படும்</h4>
+                        <p>'Third'</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கிய குறிப்பு:</h4>
+                <p>setTimeout இல் 0 மில்லி விநாடிகள் கூட குறிப்பிடப்பட்டாலும், அது ஒத்திசைவு குறியீட்டுக்குப் பிறகு மட்டுமே இயக்கப்படும், ஏனெனில் அது நிகழ்வு வளையத்தின் டைமர் கட்டத்திற்கு அனுப்பப்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Event Loop Phases -->
+        <section class="content-section" id="event-loop-phases">
+            <h2>நிகழ்வு வளைய கட்டங்கள்</h2>
+            
+            <p>நிகழ்வு வளையம் வெவ்வேறு வகையான கால்பேக்குகளை இந்த வரிசையில் செயலாக்குகிறது:</p>
+            
+            <div class="phases-grid">
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <i class="fas fa-clock"></i>
+                        <h3>டைமர்கள்</h3>
+                    </div>
+                    <p>setTimeout, setInterval</p>
+                    <div class="phase-priority">முதல் கட்டம்</div>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h3>I/O கால்பேக்குகள்</h3>
+                    </div>
+                    <p>முடிந்த I/O செயல்பாடுகள்</p>
+                    <div class="phase-priority">இரண்டாம் கட்டம்</div>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <i class="fas fa-search"></i>
+                        <h3>போல்</h3>
+                    </div>
+                    <p>புதிய I/O நிகழ்வுகளை மீட்டெடுக்கும்</p>
+                    <div class="phase-priority">மூன்றாம் கட்டம்</div>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>செக்</h3>
+                    </div>
+                    <p>setImmediate கால்பேக்குகள்</p>
+                    <div class="phase-priority">நான்காம் கட்டம்</div>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <i class="fas fa-times-circle"></i>
+                        <h3>மூடல்</h3>
+                    </div>
+                    <p>சுத்தம் கால்பேக்குகள் (socket.on('close') போன்றவை)</p>
+                    <div class="phase-priority">கடைசி கட்டம்</div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>ஒவ்வொரு கட்டத்திற்கும் இடையில், Node.js மைக்ரோடாஸ்க்குகள் (Promises) மற்றும் process.nextTick கால்பேக்குகளை இயக்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Event Loop Phases Example -->
+        <section class="content-section" id="phases-example">
+            <h2>எடுத்துக்காட்டு: நிகழ்வு வளைய கட்டங்கள்</h2>
+            
+            <div class="code-example">
+                <h3>குறியீடு:</h3>
+                <pre><code>console.log('1. Start');
+
+// Next tick queue
+process.nextTick(() => console.log('2. Next tick'));
+
+// Microtask queue (Promise)
+Promise.resolve().then(() => console.log('3. Promise'));
+
+// Timer phase
+setTimeout(() => console.log('4. Timeout'), 0);
+
+// Check phase
+setImmediate(() => console.log('5. Immediate'));
+
+console.log('6. End');</code></pre>
+            </div>
+            
+            <p>வெளியீடு இவ்வாறு இருக்கும்:</p>
+            
+            <div class="output-example">
+                <div class="output-line">1. Start</div>
+                <div class="output-line">6. End</div>
+                <div class="output-line highlight">2. Next tick</div>
+                <div class="output-line highlight">3. Promise</div>
+                <div class="output-line">4. Timeout</div>
+                <div class="output-line">5. Immediate</div>
+            </div>
+            
+            <div class="explanation-box">
+                <h4>முன்னுரிமை வரிசையை இது காட்டுகிறது:</h4>
+                <ul>
+                    <li><strong>ஒத்திசைவு குறியீடு</strong> - முதலில் இயங்கும்</li>
+                    <li><strong>process.nextTick</strong> - அதிக முன்னுரிமை</li>
+                    <li><strong>Promises</strong> - அடுத்த முன்னுரிமை</li>
+                    <li><strong>டைமர்கள்</strong> - நிகழ்வு வளைய கட்டங்களில்</li>
+                    <li><strong>செக் கட்டம்</strong> - கடைசியில்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Why Event Loop Important -->
+        <section class="content-section" id="why-important">
+            <h2>நிகழ்வு வளையம் ஏன் முக்கியமானது?</h2>
+            
+            <p>நிகழ்வு வளையம் Node.js க்கு ஒற்றை நூல் மூலம் ஆயிரக்கணக்கான ஒரேநேர இணைப்புகளை கையாள அனுமதிக்கிறது, இது இவற்றுக்கு சிறந்ததாக்குகிறது:</p>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>நிகழ்நேர பயன்பாடுகள்</h3>
+                    <p>உடனடி தகவல் பரிமாற்றம் தேவைப்படும் பயன்பாடுகள்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>APIகள் மற்றும் மைக்ரோசர்விசுகள்</h3>
+                    <p>பல கோரிக்கைகளை ஒரேநேரத்தில் கையாளும் சேவைகள்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-stream"></i>
+                    </div>
+                    <h3>தரவு ஸ்ட்ரீமிங்</h3>
+                    <p>பெரிய தரவுகளை துண்டுகளாக செயலாக்குதல்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>அரட்டை பயன்பாடுகள்</h3>
+                    <p>பல பயனர்களுக்கு உடனடி செய்தி அனுப்புதல்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="summary-points">
+                <div class="summary-card">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Node.js அசிங்க்ரோனஸ் செயல்பாடுகளை கையாள நிகழ்வு வளையத்தைப் பயன்படுத்துகிறது</p>
+                </div>
+                
+                <div class="summary-card">
+                    <i class="fas fa-sort-amount-up"></i>
+                    <p>வெவ்வேறு வகையான கால்பேக்குகள் வெவ்வேறு முன்னுரிமைகளைக் கொண்டுள்ளன</p>
+                </div>
+                
+                <div class="summary-card">
+                    <i class="fas fa-forward"></i>
+                    <p>மைக்ரோடாஸ்க்குகள் (Promises) அடுத்த நிகழ்வு வளைய கட்டத்திற்கு முன் இயங்கும்</p>
+                </div>
+                
+                <div class="summary-card">
+                    <i class="fas fa-chart-line"></i>
+                    <p>இந்த தடையற்ற மாதிரி உயர் ஒரேநேர இணைப்புகளை சாத்தியமாக்குகிறது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section id="exercise">
+            <div class="content-section">
+                <h2>பயிற்சி</h2>
+                
+                <div class="exercise-box">
+                    <h4><span class="exercise-icon">❓</span> சரியான சொல்லை தேர்ந்தெடுக்கவும்.</h4>
+                    <p>நிகழ்வு வளையம் Node.js க்கு <strong>______</strong> I/O செயல்பாடுகளை செய்ய அனுமதிக்கிறது.</p>
+                    
+                    <div class="options-grid">
+                        <div class="option-card" data-correct="true">
+                            <div class="option-content">
+                                <div class="option-text">தடையற்ற</div>
+                                <div class="option-feedback correct">✓ சரி! நிகழ்வு வளையம் Node.js க்கு தடையற்ற I/O செயல்பாடுகளை செய்ய அனுமதிக்கிறது</div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card" data-correct="false">
+                            <div class="option-content">
+                                <div class="option-text">ஒத்திசைவு</div>
+                                <div class="option-feedback incorrect">✗ தவறு! Node.js அசிங்க்ரோனஸ் மற்றும் தடையற்றது, ஒத்திசைவு அல்ல</div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card" data-correct="false">
+                            <div class="option-content">
+                                <div class="option-text">தடுக்கும்</div>
+                                <div class="option-feedback incorrect">✗ தவறு! Node.js இன் முக்கிய அம்சம் தடையற்ற I/O ஆகும்</div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-card" data-correct="false">
+                            <div class="option-content">
+                                <div class="option-text">வரிசைக்கிரமம்</div>
+                                <div class="option-feedback incorrect">✗ தவறு! Node.js இயற்கையாகவே அசிங்க்ரோனஸ் மற்றும் இணையானது</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Architecture.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Asynchronous Programming.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-event-loop">நிகழ்வு வளையம் என்றால் என்ன</a></li>
+                    <li><a href="#how-event-loop-works">எவ்வாறு செயல்படுகிறது</a></li>
+                    <li><a href="#event-loop-phases">நிகழ்வு வளைய கட்டங்கள்</a></li>
+                    <li><a href="#why-important">ஏன் முக்கியமானது</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <style>
+        /* Additional styles for this page */
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .phase-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .phase-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .phase-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .phase-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .phase-priority {
+            background: var(--git-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+        
+        .execution-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .execution-step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .step-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-details h4 {
+            margin: 0 0 0.3rem 0;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+        
+        .step-details p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .output-example {
+            background: #2d2d2d;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .output-line {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #444;
+        }
+        
+        .output-line.highlight {
+            color: #50fa7b;
+            font-weight: bold;
+        }
+        
+        .explanation-box {
+            background: #e3f2fd;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .explanation-box h4 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .explanation-box ul {
+            margin-left: 1.5rem;
+        }
+        
+        .explanation-box li {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .summary-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .summary-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .summary-card i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+        
+        .summary-card p {
+            margin: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Exercise Section Background - CORRECTED */
+        #exercise {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border-radius: 15px;
+            margin-bottom: 4rem;
+        }
+
+        #exercise .content-section {
+            background: transparent !important;
+            color: white !important;
+            box-shadow: none !important;
+            padding: 2.5rem !important;
+        }
+
+        #exercise .content-section h2 {
+            color: white !important;
+            border-bottom-color: #ffd700 !important;
+        }
+
+        #exercise .content-section * {
+            color: white !important;
+        }
+
+        #exercise .content-section .exercise-box {
+            background: transparent !important;
+            backdrop-filter: none;
+            border: none;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+        }
+
+        #exercise .content-section .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        #exercise .content-section .option-card {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: none !important;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        #exercise .content-section .option-card:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+            transform: translateX(10px);
+            border: none !important;
+        }
+
+        #exercise .content-section .option-card[data-correct="true"]:hover {
+            background: rgba(40, 167, 69, 0.3) !important;
+            border: none !important;
+        }
+
+        #exercise .content-section .option-card[data-correct="false"]:hover {
+            background: rgba(220, 53, 69, 0.3) !important;
+            border: none !important;
+        }
+        
+        /* Remove squares and borders from exercise */
+        #exercise .content-section .option-content {
+            display: block;
+        }
+        
+        #exercise .content-section .option-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        #exercise .content-section .option-feedback {
+            background: transparent !important;
+            border-left: none !important;
+            padding: 0.5rem 0 0 0;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        #exercise .content-section .exercise-box h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        #exercise .content-section .exercise-box p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Exercise hover styles */
+        .option-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .option-feedback {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .correct .option-feedback {
+            color: #90ee90 !important;
+        }
+        
+        .incorrect .option-feedback {
+            color: #ff6b6b !important;
+        }
+        
+        @media (max-width: 768px) {
+            .phases-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-points {
+                grid-template-columns: 1fr;
+            }
+            
+            .execution-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.8rem;
+            }
+            
+            #exercise .content-section .option-card:hover {
+                transform: translateX(5px);
+            }
+        }
+    </style>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

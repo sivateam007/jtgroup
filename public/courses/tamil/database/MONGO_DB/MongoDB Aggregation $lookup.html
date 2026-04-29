@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Aggregation $lookup - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MongoDB Aggregation $count.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MongoDB Aggregation $out.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MongoDB Aggregation $lookup</h2>
+            <p>கலெக்ஷன்களை இணைத்தல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Aggregation $lookup -->
+        <section class="content-section" id="aggregation-lookup">
+            <h2>Aggregation $lookup</h2>
+            
+            <p>இந்த ஒருங்கிணைப்பு நிலை ஒரே தரவுத்தளத்தில் உள்ள ஒரு கலெக்ஷனுடன் இடது வெளிப்புற இணைப்பைச் செய்கிறது.</p>
+            
+            <p>நான்கு தேவையான புலங்கள் உள்ளன:</p>
+        </section>
+
+        <!-- Required Fields -->
+        <section class="content-section" id="required-fields">
+            <h2>தேவையான புலங்கள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>புலம்</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>from</strong></td>
+                            <td>அதே தரவுத்தளத்தில் lookup செய்ய பயன்படுத்த வேண்டிய கலெக்ஷன்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>localField</strong></td>
+                            <td>முதன்மை கலெக்ஷனில் உள்ள புலம், இது from கலெக்ஷனில் ஒரு தனிப்பட்ட அடையாளங்காட்டியாகப் பயன்படுத்தப்படலாம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>foreignField</strong></td>
+                            <td>from கலெக்ஷனில் உள்ள புலம், இது முதன்மை கலெக்ஷனில் ஒரு தனிப்பட்ட அடையாளங்காட்டியாகப் பயன்படுத்தப்படலாம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>as</strong></td>
+                            <td>from கலெக்ஷனில் இருந்து பொருந்தக்கூடிய ஆவணங்களைக் கொண்டிருக்கும் புதிய புலத்தின் பெயர்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Example -->
+        <section class="content-section" id="example">
+            <h2>எடுத்துக்காட்டு</h2>
+            
+            <p>இந்த எடுத்துக்காட்டில், நாங்கள் "sample_mflix" தரவுத்தளத்தைப் பயன்படுத்துகிறோம், இது ஒருங்கிணைப்புகள் அறிமுகப் பிரிவில் இருந்து எங்கள் மாதிரி தரவில் இருந்து ஏற்றப்பட்டது.</p>
+            
+            <div class="code-example">
+                <pre><code>db.comments.aggregate([
+  {
+    $lookup: {
+      from: "movies",
+      localField: "movie_id",
+      foreignField: "_id",
+      as: "movie_details",
+    },
+  },
+  {
+    $limit: 1
+  }
+])</code></pre>
+            </div>
+            
+            <p>இது ஒவ்வொரு கருத்துக்கும் திரைப்படத் தரவைத் திரும்பப் பெறும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                <p>$lookup நிலை இரண்டு கலெக்ஷன்களை இணைக்க பயன்படுகிறது. இந்த எடுத்துக்காட்டில், comments கலெக்ஷன் movies கலெக்ஷனுடன் இணைக்கப்படுகிறது. comments கலெக்ஷனில் உள்ள movie_id புலம் movies கலெக்ஷனில் உள்ள _id புலத்துடன் பொருந்துகிறது. இணைக்கப்பட்ட தரவு movie_details என்ற புதிய புலத்தில் சேர்க்கப்படும்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MongoDB ஒருங்கிணைப்பில் $lookup நிலை எத்தனை தேவையான புலங்களைக் கொண்டுள்ளது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">இரண்டு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! $lookup நிலை இரண்டுக்கு மேற்பட்ட தேவையான புலங்களைக் கொண்டுள்ளது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">மூன்று</div>
+                            <div class="option-feedback incorrect">✗ தவறு! $lookup நிலை மூன்றுக்கு மேற்பட்ட தேவையான புலங்களைக் கொண்டுள்ளது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">நான்கு</div>
+                            <div class="option-feedback correct">✓ சரி! $lookup நிலை நான்கு தேவையான புலங்களைக் கொண்டுள்ளது: from, localField, foreignField, as</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஐந்து</div>
+                            <div class="option-feedback incorrect">✗ தவறு! $lookup நிலை நான்கு தேவையான புலங்களை மட்டுமே கொண்டுள்ளது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MongoDB Aggregation $count.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MongoDB Aggregation $out.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#aggregation-lookup">Aggregation $lookup</a></li>
+                    <li><a href="#required-fields">தேவையான புலங்கள்</a></li>
+                    <li><a href="#example">எடுத்துக்காட்டு</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

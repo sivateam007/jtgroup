@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Type Conversion - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .type-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .type-table th {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .type-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .type-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .type-table tr:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .type-table .unexpected {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .type-table .string-value {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20toString().html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20Errors.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript Type Conversion</h2>
+            <p>JavaScript வகை மாற்றங்களைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>JavaScript வகை மாற்றம்</h2>
+            <p>JavaScript மாறிகள் ஒரு புதிய மாறி மற்றும் மற்றொரு தரவு வகைக்கு மாற்றப்படலாம்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>JavaScript செயல்பாட்டின் மூலம்</h4>
+                    </div>
+                    <p>நிபுணத்துவ மாற்றம்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-robot"></i>
+                        <h4>JavaScript மூலம் தானாகவே</h4>
+                    </div>
+                    <p>தானியங்கி மாற்றம்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Converting Strings to Numbers -->
+        <section class="content-section" id="string-to-number">
+            <h2>சரங்களை எண்களாக மாற்றுதல்</h2>
+            <p>பொதுமுறை Number() ஒரு மாறியை (அல்லது மதிப்பை) எண்ணாக மாற்றுகிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📊</span> மாற்ற விதிகள்:</h4>
+                <ul>
+                    <li>ஒரு எண் சரம் ("3.14" போன்றது) எண்ணாக மாறும் (3.14 போன்றது)</li>
+                    <li>ஒரு காலி சரம் ("" போன்றது) 0 ஆக மாறும்</li>
+                    <li>ஒரு எண் அல்லாத சரம் ("John" போன்றது) NaN (எண் அல்ல) ஆக மாறும்</li>
+                </ul>
+            </div>
+            
+            <h3>எடுத்துக்காட்டுகள்</h3>
+            <p>இவை மாற்றப்படும்:</p>
+            <div class="code-example">
+                <pre><code>Number("3.14")    // 3.14
+Number(Math.PI)   // 3.141592653589793
+Number(" ")       // 0
+Number("")        // 0</code></pre>
+            </div>
+            
+            <p>இவை மாற்றப்படாது:</p>
+            <div class="code-example">
+                <pre><code>Number("99 88")   // NaN
+Number("John")    // NaN</code></pre>
+            </div>
+        </section>
+
+        <!-- Number Methods -->
+        <section class="content-section" id="number-methods">
+            <h2>எண் முறைகள்</h2>
+            <p>சரங்களை எண்களாக மாற்ற பயன்படுத்தக்கூடிய முறைகள்:</p>
+            
+            <table class="type-table">
+                <thead>
+                    <tr>
+                        <th>முறை</th>
+                        <th>விளக்கம்</th>
+                        <th>எடுத்துக்காட்டு</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Number()</strong></td>
+                        <td>அதன் வாதத்திலிருந்து மாற்றப்பட்ட எண்ணை வழங்குகிறது</td>
+                        <td>Number("123") → 123</td>
+                    </tr>
+                    <tr>
+                        <td><strong>parseFloat()</strong></td>
+                        <td>ஒரு சரத்தை பாகுபடுத்தி மிதவை புள்ளி எண்ணை வழங்குகிறது</td>
+                        <td>parseFloat("3.14") → 3.14</td>
+                    </tr>
+                    <tr>
+                        <td><strong>parseInt()</strong></td>
+                        <td>ஒரு சரத்தை பாகுபடுத்தி முழு எண்ணை வழங்குகிறது</td>
+                        <td>parseInt("3.14") → 3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Unary + Operator -->
+        <section class="content-section" id="unary-operator">
+            <h2>ஒருமை + ஆபரேட்டர்</h2>
+            <p>ஒருமை + ஆபரேட்டர் ஒரு மாறியை எண்ணாக மாற்ற பயன்படுத்தப்படலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>let y = "5";      // y ஒரு சரம்
+let x = + y;      // x ஒரு எண் (5)</code></pre>
+            </div>
+            
+            <p>மாறியை மாற்ற முடியாவிட்டால், அது இன்னும் ஒரு எண்ணாக மாறும், ஆனால் NaN (எண் அல்ல) மதிப்புடன்:</p>
+            
+            <div class="code-example">
+                <pre><code>let y = "John";   // y ஒரு சரம்
+let x = + y;      // x ஒரு எண் (NaN)</code></pre>
+            </div>
+        </section>
+
+        <!-- Converting Numbers to Strings -->
+        <section class="content-section" id="number-to-string">
+            <h2>எண்களை சரங்களாக மாற்றுதல்</h2>
+            <p>பொதுமுறை String() எண்களை சரங்களாக மாற்றலாம்.</p>
+            
+            <h3>எடுத்துக்காட்டுகள்</h3>
+            <div class="code-example">
+                <pre><code>String(x)         // எண் மாறி x இலிருந்து ஒரு சரத்தை வழங்குகிறது
+String(123)       // எண் மாறிலி 123 இலிருந்து ஒரு சரத்தை வழங்குகிறது
+String(100 + 23)  // வெளிப்பாட்டிலிருந்து ஒரு எண்ணிலிருந்து ஒரு சரத்தை வழங்குகிறது</code></pre>
+            </div>
+            
+            <p>Number முறை toString() அதையே செய்கிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>x.toString()
+(123).toString()
+(100 + 23).toString()</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔢</span> கூடுதல் எண் முறைகள்:</h4>
+                <ul>
+                    <li><strong>toExponential()</strong> - அதிவேகக் குறியீட்டைப் பயன்படுத்தி எழுதப்பட்ட ஒரு சரத்தை வழங்குகிறது</li>
+                    <li><strong>toFixed()</strong> - குறிப்பிட்ட தசமங்களின் எண்ணிக்கையுடன் எழுதப்பட்ட ஒரு சரத்தை வழங்குகிறது</li>
+                    <li><strong>toPrecision()</strong> - குறிப்பிட்ட நீளத்துடன் எழுதப்பட்ட ஒரு சரத்தை வழங்குகிறது</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Converting Dates to Numbers -->
+        <section class="content-section" id="date-to-number">
+            <h2>தேதிகளை எண்களாக மாற்றுதல்</h2>
+            <p>பொதுமுறை Number() தேதிகளை எண்களாக மாற்ற பயன்படுத்தப்படலாம்.</p>
+            
+            <div class="code-example">
+                <pre><code>d = new Date();
+Number(d)          // 1404568027739 போன்ற மதிப்பை வழங்குகிறது</code></pre>
+            </div>
+            
+            <p>தேதி முறை getTime() அதையே செய்கிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>d = new Date();
+d.getTime()        // 1404568027739 போன்ற மதிப்பை வழங்குகிறது</code></pre>
+            </div>
+        </section>
+
+        <!-- Converting Dates to Strings -->
+        <section class="content-section" id="date-to-string">
+            <h2>தேதிகளை சரங்களாக மாற்றுதல்</h2>
+            <p>பொதுமுறை String() தேதிகளை சரங்களாக மாற்றலாம்.</p>
+            
+            <div class="code-example">
+                <pre><code>String(Date())  // "Thu Jul 17 2014 15:38:19 GMT+0200" போன்ற சரத்தை வழங்குகிறது</code></pre>
+            </div>
+            
+            <p>Date முறை toString() அதையே செய்கிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>Date().toString()  // "Thu Jul 17 2014 15:38:19 GMT+0200" போன்ற சரத்தை வழங்குகிறது</code></pre>
+            </div>
+        </section>
+
+        <!-- Converting Booleans -->
+        <section class="content-section" id="boolean-conversion">
+            <h2>பூலியன்களை மாற்றுதல்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>பூலியன்களை எண்களாக</h4>
+                    </div>
+                    <div class="code-example" style="padding: 0.5rem; margin: 0.5rem 0; background: #f8f9fa;">
+                        <pre style="margin: 0;"><code>Number(false)     // 0
+Number(true)      // 1</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>பூலியன்களை சரங்களாக</h4>
+                    </div>
+                    <div class="code-example" style="padding: 0.5rem; margin: 0.5rem 0; background: #f8f9fa;">
+                        <pre style="margin: 0;"><code>String(false)     // "false"
+String(true)      // "true"</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <p>Boolean முறை toString() அதையே செய்கிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>false.toString()   // "false" ஐ வழங்குகிறது
+true.toString()    // "true" ஐ வழங்குகிறது</code></pre>
+            </div>
+        </section>
+
+        <!-- Automatic Type Conversion -->
+        <section class="content-section" id="automatic-conversion">
+            <h2>தானியங்கி வகை மாற்றம்</h2>
+            <p>JavaScript "தவறான" தரவு வகையில் செயல்பட முயற்சிக்கும் போது, அது மதிப்பை "சரியான" வகைக்கு மாற்ற முயற்சிக்கும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> கவனத்திற்கு:</h4>
+                <p>முடிவு எப்போதும் நீங்கள் எதிர்பார்ப்பதைப் போல இருக்காது!</p>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>5 + null    // 5 ஐ வழங்குகிறது         ஏனெனில் null 0 ஆக மாற்றப்படுகிறது
+"5" + null  // "5null" ஐ வழங்குகிறது   ஏனெனில் null "null" ஆக மாற்றப்படுகிறது
+"5" + 2     // "52" ஐ வழங்குகிறது      ஏனெனில் 2 "2" ஆக மாற்றப்படுகிறது
+"5" - 2     // 3 ஐ வழங்குகிறது         ஏனெனில் "5" 5 ஆக மாற்றப்படுகிறது
+"5" * "2"   // 10 ஐ வழங்குகிறது        ஏனெனில் "5" மற்றும் "2" 5 மற்றும் 2 ஆக மாற்றப்படுகின்றன</code></pre>
+            </div>
+        </section>
+
+        <!-- Automatic String Conversion -->
+        <section class="content-section" id="automatic-string">
+            <h2>தானியங்கி சரம் மாற்றம்</h2>
+            <p>நீங்கள் ஒரு பொருள் அல்லது மாறியை "வெளியீடு" செய்ய முயற்சிக்கும் போது, JavaScript தானாக மாறியின் toString() செயல்பாட்டை அழைக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>document.getElementById("demo").innerHTML = myVar;
+
+// myVar = {name:"Fjohn"} எனில்  // toString "[object Object]" ஆக மாற்றுகிறது
+// myVar = [1,2,3,4] எனில்       // toString "1,2,3,4" ஆக மாற்றுகிறது
+// myVar = new Date() எனில்      // toString "Fri Jul 18 2014 09:08:55 GMT+0200" ஆக மாற்றுகிறது</code></pre>
+            </div>
+            
+            <p>எண்கள் மற்றும் பூலியன்களும் மாற்றப்படுகின்றன, ஆனால் இது மிகவும் தெரியவில்லை:</p>
+            
+            <div class="code-example">
+                <pre><code>// myVar = 123 எனில்             // toString "123" ஆக மாற்றுகிறது
+// myVar = true எனில்            // toString "true" ஆக மாற்றுகிறது
+// myVar = false எனில்           // toString "false" ஆக மாற்றுகிறது</code></pre>
+            </div>
+        </section>
+
+        <!-- Type Conversion Table -->
+        <section class="content-section" id="conversion-table">
+            <h2>JavaScript வகை மாற்றம் அட்டவணை</h2>
+            <p>இந்த அட்டவணை வெவ்வேறு JavaScript மதிப்புகளை Number, String மற்றும் Boolean ஆக மாற்றுவதன் முடிவைக் காட்டுகிறது:</p>
+            
+            <table class="type-table">
+                <thead>
+                    <tr>
+                        <th>அசல் மதிப்பு</th>
+                        <th>எண்ணாக மாற்றப்பட்டது</th>
+                        <th>சரமாக மாற்றப்பட்டது</th>
+                        <th>பூலியனாக மாற்றப்பட்டது</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>false</td>
+                        <td>0</td>
+                        <td class="string-value">"false"</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>true</td>
+                        <td>1</td>
+                        <td class="string-value">"true"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="string-value">"0"</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td class="string-value">"1"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td class="string-value">"0"</td>
+                        <td>0</td>
+                        <td class="string-value">"0"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td class="string-value">"000"</td>
+                        <td>0</td>
+                        <td class="string-value">"000"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td class="string-value">"1"</td>
+                        <td>1</td>
+                        <td class="string-value">"1"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>NaN</td>
+                        <td>NaN</td>
+                        <td class="string-value">"NaN"</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>Infinity</td>
+                        <td>Infinity</td>
+                        <td class="string-value">"Infinity"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>-Infinity</td>
+                        <td>-Infinity</td>
+                        <td class="string-value">"-Infinity"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td class="string-value">""</td>
+                        <td>0</td>
+                        <td class="string-value">""</td>
+                        <td class="unexpected">false</td>
+                    </tr>
+                    <tr>
+                        <td class="string-value">"20"</td>
+                        <td>20</td>
+                        <td class="string-value">"20"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td class="string-value">"twenty"</td>
+                        <td class="unexpected">NaN</td>
+                        <td class="string-value">"twenty"</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>[ ]</td>
+                        <td class="unexpected">0</td>
+                        <td class="string-value">""</td>
+                        <td class="unexpected">true</td>
+                    </tr>
+                    <tr>
+                        <td>[20]</td>
+                        <td class="unexpected">20</td>
+                        <td class="string-value">"20"</td>
+                        <td class="unexpected">true</td>
+                    </tr>
+                    <tr>
+                        <td>[10,20]</td>
+                        <td class="unexpected">NaN</td>
+                        <td class="string-value">"10,20"</td>
+                        <td class="unexpected">true</td>
+                    </tr>
+                    <tr>
+                        <td>null</td>
+                        <td class="unexpected">0</td>
+                        <td class="string-value">"null"</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>undefined</td>
+                        <td class="unexpected">NaN</td>
+                        <td class="string-value">"undefined"</td>
+                        <td>false</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்புகள்:</h4>
+                <ul>
+                    <li>மேற்கோள்களில் உள்ள மதிப்புகள் சரம் மதிப்புகளைக் குறிக்கின்றன</li>
+                    <li>சிவப்பு மதிப்புகள் (சில) நிரலாளர்கள் எதிர்பார்க்காத மதிப்புகளைக் குறிக்கின்றன</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise Section (ONLY ONE) -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் குறியீட்டைக் கவனியுங்கள்:</h4>
+                <div class="code-example" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);">
+                    <pre><code style="color: white;">let x = Number(55.21);</code></pre>
+                </div>
+                <h4>x இன் மதிப்பு என்னவாக இருக்கும்?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">55</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Number() முழு எண்ணாக துண்டிக்காது, அது முழு மிதவை புள்ளி மதிப்பைத் தக்க வைத்துக் கொள்ளும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">55.2</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Number() தசம இடத்தை வட்டமிடாது, அது சரியான மதிப்பைத் தக்க வைத்துக் கொள்ளும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">55.21</div>
+                            <div class="option-feedback correct">✓ சரி! Number() செயல்பாடு எண்ணை அதன் முழு மிதவை புள்ளி மதிப்புடன் வழங்குகிறது, துண்டிக்கவோ அல்லது வட்டமிடவோ இல்லை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20toString().html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20Errors.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">வகை மாற்றம் அறிமுகம்</a></li>
+                    <li><a href="#string-to-number">சரம் → எண்</a></li>
+                    <li><a href="#number-to-string">எண் → சரம்</a></li>
+                    <li><a href="#date-to-number">தேதி → எண்</a></li>
+                    <li><a href="#date-to-string">தேதி → சரம்</a></li>
+                    <li><a href="#boolean-conversion">பூலியன் மாற்றம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Tuples - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .tuple-properties {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .property-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--git-color);
+            text-align: center;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .property-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .property-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .property-desc {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .collections-comparison {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .collections-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .collections-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .collections-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .collections-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .collections-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .tuple-visual {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .visual-row {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        
+        .visual-label {
+            min-width: 150px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .visual-items {
+            flex: 1;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .visual-item {
+            padding: 0.5rem 1rem;
+            background: var(--git-color);
+            color: white;
+            border-radius: 20px;
+            font-weight: 500;
+            border: 2px solid var(--git-color);
+        }
+        
+        .visual-item.locked {
+            background: #6c757d;
+            border-color: #6c757d;
+            position: relative;
+        }
+        
+        .visual-item.locked:after {
+            content: '🔒';
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python List Exercises.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python - Access Tuple Items.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python Tuples</h2>
+            <p>பைத்தான் டுபில்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Tuple Introduction -->
+        <section class="content-section" id="tuple-intro">
+            <h2>Tuple</h2>
+            
+            <p>டுபில்கள் ஒற்றை மாறியில் பல உருப்படிகளைச் சேமிக்கப் பயன்படுகின்றன.</p>
+            
+            <p>டுபில் என்பது பைத்தானில் தரவு தொகுப்புகளைச் சேமிக்கப் பயன்படுத்தப்படும் 4 உள்ளமைக்கப்பட்ட தரவு வகைகளில் ஒன்றாகும், மற்ற 3 பட்டியல், செட் மற்றும் அகராதி, அனைத்தும் வெவ்வேறு குணங்கள் மற்றும் பயன்பாட்டுடன்.</p>
+            
+            <p>டுபில் என்பது வரிசைப்படுத்தப்பட்ட மற்றும் மாற்ற முடியாத தொகுப்பாகும்.</p>
+            
+            <p>டுபில்கள் வட்ட அடைப்புக்குறிகளுடன் எழுதப்படுகின்றன.</p>
+            
+            <h3>Example</h3>
+            
+            <div class="code-example">
+                <pre><code>thistuple = ("apple", "banana", "cherry")
+print(thistuple)</code></pre>
+            </div>
+        </section>
+
+        <!-- Tuple Items -->
+        <section class="content-section" id="tuple-items">
+            <h2>Tuple Items</h2>
+            
+            <p>டுபில் உருப்படிகள் வரிசைப்படுத்தப்பட்டவை, மாற்ற முடியாதவை மற்றும் நகல் மதிப்புகளை அனுமதிக்கின்றன.</p>
+            
+            <p>டுபில் உருப்படிகள் குறியிடப்பட்டவை, முதல் உருப்படிக்கு குறியீடு [0], இரண்டாவது உருப்படிக்கு குறியீடு [1] போன்றவை.</p>
+        </section>
+
+        <!-- Tuple Properties -->
+        <section class="content-section" id="properties">
+            <h2>Tuple Properties</h2>
+            
+            <div class="tuple-properties">
+                <div class="property-card">
+                    <div class="property-icon">📋</div>
+                    <div class="property-title">Ordered</div>
+                    <div class="property-desc">உருப்படிகள் வரையறுக்கப்பட்ட வரிசையைக் கொண்டுள்ளன</div>
+                </div>
+                
+                <div class="property-card">
+                    <div class="property-icon">🔒</div>
+                    <div class="property-title">Unchangeable</div>
+                    <div class="property-desc">டுபில் உருவாக்கப்பட்ட பிறகு உருப்படிகளை மாற்ற முடியாது</div>
+                </div>
+                
+                <div class="property-card">
+                    <div class="property-icon">🔄</div>
+                    <div class="property-title">Allow Duplicates</div>
+                    <div class="property-desc">ஒரே மதிப்புடன் பல உருப்படிகளைக் கொண்டிருக்கலாம்</div>
+                </div>
+                
+                <div class="property-card">
+                    <div class="property-icon">#️⃣</div>
+                    <div class="property-title">Indexed</div>
+                    <div class="property-desc">உருப்படிகள் குறியீட்டு எண்களைக் கொண்டுள்ளன [0], [1], ...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ordered -->
+        <section class="content-section" id="ordered">
+            <h2>Ordered</h2>
+            
+            <p>டுபில்கள் வரிசைப்படுத்தப்பட்டவை என்று நாம் கூறும்போது, உருப்படிகள் வரையறுக்கப்பட்ட வரிசையைக் கொண்டுள்ளன, மேலும் அந்த வரிசை மாறாது என்று பொருள்.</p>
+        </section>
+
+        <!-- Unchangeable -->
+        <section class="content-section" id="unchangeable">
+            <h2>Unchangeable</h2>
+            
+            <p>டுபில்கள் மாற்ற முடியாதவை, அதாவது டுபில் உருவாக்கப்பட்ட பிறகு உருப்படிகளை மாற்றவோ, சேர்க்கவோ அல்லது நீக்கவோ முடியாது.</p>
+        </section>
+
+        <!-- Allow Duplicates -->
+        <section class="content-section" id="duplicates">
+            <h2>Allow Duplicates</h2>
+            
+            <p>டுபில்கள் குறியிடப்பட்டிருப்பதால், அவை ஒரே மதிப்புடன் உருப்படிகளைக் கொண்டிருக்கலாம்:</p>
+            
+            <h3>Example</h3>
+            
+            <div class="code-example">
+                <pre><code>thistuple = ("apple", "banana", "cherry", "apple", "cherry")
+print(thistuple)</code></pre>
+            </div>
+        </section>
+
+        <!-- Tuple Length -->
+        <section class="content-section" id="tuple-length">
+            <h2>Tuple Length</h2>
+            
+            <p>ஒரு டுபிலில் எத்தனை உருப்படிகள் உள்ளன என்பதை தீர்மானிக்க, len() செயல்பாட்டைப் பயன்படுத்தவும்:</p>
+            
+            <h3>Example</h3>
+            
+            <div class="code-example">
+                <pre><code>thistuple = ("apple", "banana", "cherry")
+print(len(thistuple))</code></pre>
+            </div>
+        </section>
+
+        <!-- Create Tuple With One Item -->
+        <section class="content-section" id="one-item">
+            <h2>Create Tuple With One Item</h2>
+            
+            <p>ஒரே ஒரு உருப்படியுடன் டுபில் உருவாக்க, நீங்கள் உருப்படிக்குப் பிறகு காற்புள்ளியைச் சேர்க்க வேண்டும், இல்லையெனில் பைத்தான் அதை டுபிலாக அங்கீகரிக்காது.</p>
+            
+            <h3>Example</h3>
+            
+            <div class="code-example">
+                <pre><code>thistuple = ("apple",)
+print(type(thistuple))
+
+#NOT a tuple
+thistuple = ("apple")
+print(type(thistuple))</code></pre>
+            </div>
+        </section>
+
+        <!-- Tuple Items - Data Types -->
+        <section class="content-section" id="data-types">
+            <h2>Tuple Items - Data Types</h2>
+            
+            <p>டுபில் உருப்படிகள் எந்த தரவு வகையிலும் இருக்கலாம்:</p>
+            
+            <h3>Example</h3>
+            
+            <div class="code-example">
+                <pre><code>tuple1 = ("apple", "banana", "cherry")
+tuple2 = (1, 5, 7, 9, 3)
+tuple3 = (True, False, False)</code></pre>
+            </div>
+            
+            <p>ஒரு டுபில் வெவ்வேறு தரவு வகைகளைக் கொண்டிருக்கலாம்:</p>
+            
+            <h3>Example</h3>
+            
+            <div class="code-example">
+                <pre><code>tuple1 = ("abc", 34, True, 40, "male")</code></pre>
+            </div>
+        </section>
+
+        <!-- type() -->
+        <section class="content-section" id="type-function">
+            <h2>type()</h2>
+            
+            <p>பைத்தானின் கண்ணோட்டத்தில், டுபில்கள் 'tuple' என்ற தரவு வகையுடன் கூடிய பொருள்களாக வரையறுக்கப்படுகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;class 'tuple'&gt;</code></pre>
+            </div>
+            
+            <h3>Example</h3>
+            
+            <div class="code-example">
+                <pre><code>mytuple = ("apple", "banana", "cherry")
+print(type(mytuple))</code></pre>
+            </div>
+        </section>
+
+        <!-- The tuple() Constructor -->
+        <section class="content-section" id="tuple-constructor">
+            <h2>The tuple() Constructor</h2>
+            
+            <p>டுபில் உருவாக்க tuple() கட்டமைப்பாளரைப் பயன்படுத்துவதும் சாத்தியமாகும்.</p>
+            
+            <h3>Example</h3>
+            
+            <div class="code-example">
+                <pre><code>thistuple = tuple(("apple", "banana", "cherry")) # note the double round-brackets
+print(thistuple)</code></pre>
+            </div>
+        </section>
+
+        <!-- Tuple Visual -->
+        <section class="content-section" id="tuple-visual">
+            <h2>Tuple Visualization</h2>
+            
+            <div class="tuple-visual">
+                <div class="visual-row">
+                    <div class="visual-label">Tuple Example:</div>
+                    <div class="visual-items">
+                        <div class="visual-item locked">"apple"</div>
+                        <div class="visual-item locked">"banana"</div>
+                        <div class="visual-item locked">"cherry"</div>
+                    </div>
+                </div>
+                
+                <div class="visual-row">
+                    <div class="visual-label">Index Positions:</div>
+                    <div class="visual-items">
+                        <div class="visual-item">[0]</div>
+                        <div class="visual-item">[1]</div>
+                        <div class="visual-item">[2]</div>
+                    </div>
+                </div>
+                
+                <div class="visual-row">
+                    <div class="visual-label">Properties:</div>
+                    <div class="visual-items">
+                        <div class="visual-item">Ordered</div>
+                        <div class="visual-item">Unchangeable</div>
+                        <div class="visual-item">Indexed</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Python Collections -->
+        <section class="content-section" id="collections">
+            <h2>Python Collections (Arrays)</h2>
+            
+            <p>பைத்தான் நிரலாக்க மொழியில் நான்கு தொகுப்பு தரவு வகைகள் உள்ளன:</p>
+            
+            <div class="collections-comparison">
+                <table class="collections-table">
+                    <thead>
+                        <tr>
+                            <th>Collection Type</th>
+                            <th>Ordered</th>
+                            <th>Changeable</th>
+                            <th>Duplicates</th>
+                            <th>Syntax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>List</strong></td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>["a", "b", "c"]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tuple</strong></td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                            <td>("a", "b", "c")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Set</strong></td>
+                            <td>No</td>
+                            <td>No*</td>
+                            <td>No</td>
+                            <td>{"a", "b", "c"}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dictionary</strong></td>
+                            <td>Yes**</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>{"a": 1, "b": 2}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p>* செட் உருப்படிகள் மாற்ற முடியாதவை, ஆனால் நீங்கள் விரும்பும் போது உருப்படிகளை நீக்கலாம் மற்றும்/அல்லது சேர்க்கலாம்.</p>
+            
+            <p>** பைத்தான் பதிப்பு 3.7 இலிருந்து, அகராதிகள் வரிசைப்படுத்தப்பட்டவை. பைத்தான் 3.6 மற்றும் அதற்கு முன்னர், அகராதிகள் வரிசைப்படுத்தப்படவில்லை.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>ஒரு தொகுப்பு வகையைத் தேர்ந்தெடுக்கும் போது, அந்த வகையின் பண்புகளைப் புரிந்துகொள்வது பயனுள்ளதாக இருக்கும். ஒரு குறிப்பிட்ட தரவுத் தொகுப்பிற்கு சரியான வகையைத் தேர்ந்தெடுப்பது அர்த்தத்தைத் தக்கவைத்துக்கொள்ளும், மேலும், இது திறமையை அல்லது பாதுகாப்பை அதிகரிக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> இவற்றில் எது ஒரு டுபில்?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">thistuple = ('apple', 'banana', 'cherry')</div>
+                            <div class="option-feedback correct">✓ சரி! வட்ட அடைப்புக்குறிகள் () டுபில்களை வரையறுக்கப் பயன்படுகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">thistuple = ['apple', 'banana', 'cherry']</div>
+                            <div class="option-feedback incorrect">✗ தவறு! சதுர அடைப்புக்குறிகள் [] பட்டியலை வரையறுக்கின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">thistuple = {'apple', 'banana', 'cherry'}</div>
+                            <div class="option-feedback incorrect">✗ தவறு! சுருள் அடைப்புக்குறிகள் {} செட்டை வரையறுக்கின்றன</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python List Exercises.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python - Access Tuple Items.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#tuple-intro">டுபில் அறிமுகம்</a></li>
+                    <li><a href="#tuple-items">டுபில் உருப்படிகள்</a></li>
+                    <li><a href="#properties">டுபில் பண்புகள்</a></li>
+                    <li><a href="#ordered">வரிசைப்படுத்தப்பட்டது</a></li>
+                    <li><a href="#unchangeable">மாற்ற முடியாதது</a></li>
+                    <li><a href="#duplicates">நகல்களை அனுமதிக்கிறது</a></li>
+                    <li><a href="#tuple-length">டுபில் நீளம்</a></li>
+                    <li><a href="#one-item">ஒரு உருப்படியுடன் டுபில் உருவாக்குதல்</a></li>
+                    <li><a href="#data-types">டுபில் உருப்படிகள் - தரவு வகைகள்</a></li>
+                    <li><a href="#type-function">type() செயல்பாடு</a></li>
+                    <li><a href="#tuple-constructor">tuple() கட்டமைப்பாளர்</a></li>
+                    <li><a href="#tuple-visual">டுபில் காட்சிப்படுத்தல்</a></li>
+                    <li><a href="#collections">பைத்தான் தொகுப்புகள்</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

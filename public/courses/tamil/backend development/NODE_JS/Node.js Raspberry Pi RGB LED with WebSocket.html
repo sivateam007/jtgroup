@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Raspberry Pi RGB LED with WebSocket - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js and Raspberry Pi - Webserver with WebSocket.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Raspberry Pi - Components.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Raspberry Pi RGB LED with WebSocket</h2>
+            <p>PWM மற்றும் WebSocket ஐப் பயன்படுத்தி RGB LED ஐக் கட்டுப்படுத்த கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Using Pulse-Width Modulation -->
+        <section class="content-section" id="pwm">
+            <h2>பல்ஸ்-விட்த் மாடுலேஷன் பயன்படுத்துதல்</h2>
+            
+            <p>முந்தைய அத்தியாயங்களில் WebSocket ஐ எவ்வாறு பயன்படுத்துவது மற்றும் GPIO ஐப் பயன்படுத்தி LED களை எரியச் செய்வது மற்றும் அணைப்பது எப்படி என்று கற்றுக்கொண்டோம்.</p>
+            
+            <p>இதில் நாம் ஒரு RGB LED ஐ, PWM (பல்ஸ்-விட்த் மாடுலேஷன்) உடன் பயன்படுத்துவோம், WebSocket வழியாக பயனர் உள்ளீட்டின் அடிப்படையில் வெவ்வேறு வண்ணங்களைக் காட்ட.</p>
+            
+            <p>ஒரு RGB LED என்பது 3 வெவ்வேறு வண்ணங்களைக் கொண்ட ஒரு LED ஆகும். இது ஒரு RED, GREEN மற்றும் BLUE LED (RGB LED) கொண்டுள்ளது.</p>
+            
+            <p>மற்றும் PWM ஐப் பயன்படுத்தி, 3 LED களின் தனிப்பட்ட வலிமையை அமைக்கலாம். இது ஒரு வண்ணத்தை அமைக்க அவற்றை கலக்க நம்மை அனுமதிக்கும்.</p>
+        </section>
+
+        <!-- What do we need? -->
+        <section class="content-section" id="requirements">
+            <h2>எங்களுக்கு என்ன தேவை?</h2>
+            
+            <p>இந்த அத்தியாயத்தில் நாம் ஒரு RGB LED ஐ ஒரு வலைப்பக்கத்தின் மூலம் WebSocket வழியாக கட்டுப்படுத்தும் ஒரு எடுத்துக்காட்டை உருவாக்குவோம்.</p>
+            
+            <p>இதற்கு உங்களுக்கு தேவை:</p>
+            
+            <ul>
+                <li>A Raspberry Pi with Raspian, internet, SSH, with Node.js installed</li>
+                <li>The pigpio module for Node.js</li>
+                <li>The socket.io module for Node.js</li>
+                <li>1 x Breadboard</li>
+                <li>3 x 220 Ohm resistor</li>
+                <li>1 x RGB LED (common anode or common cathode)</li>
+                <li>4 x Female to male jumper wires</li>
+            </ul>
+            
+            <p>வெவ்வேறு கூறுகளின் விளக்கங்களுக்கு மேலே உள்ள பட்டியலில் உள்ள இணைப்புகளைக் கிளிக் செய்யவும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>நீங்கள் பயன்படுத்தும் LED வகையைப் பொறுத்து உங்களுக்குத் தேவையான மின்தடை நாம் பயன்படுத்துவதிலிருந்து வேறுபட்டிருக்கலாம். பெரும்பாலான சிறிய LED க்களுக்கு ஒரு சிறிய மின்தடை மட்டுமே தேவை, சுமார் 200-500 ஓம்கள். நீங்கள் பயன்படுத்தும் சரியான மதிப்பு பொதுவாக முக்கியமானது அல்ல, ஆனால் மின்தடையின் மதிப்பு சிறியதாக இருந்தால், LED பிரகாசமாக ஒளிரும்.</p>
+            </div>
+        </section>
+
+        <!-- Install the pigpio Module -->
+        <section class="content-section" id="install-pigpio">
+            <h2>pigpio தொகுதியை நிறுவவும்</h2>
+            
+            <p>முன்னதாக, நாம் "onoff" தொகுதியைப் பயன்படுத்தினோம், இது எரியச் செய்வதற்கும் அணைப்பதற்கும் மட்டுமே சிறப்பாக வேலை செய்கிறது. இப்போது நாம் LED களின் வலிமையை அமைக்க விரும்புகிறோம், எனவே இன்னும் கொஞ்சம் செயல்பாட்டுடன் ஒரு GPIO தொகுதி தேவை.</p>
+            
+            <p>நாம் "pigpio" Node.js தொகுதியைப் பயன்படுத்துவோம், ஏனெனில் இது PWM ஐ அனுமதிக்கிறது.</p>
+            
+            <p>PWM உடன் ஒரு LED இன் வலிமையை 0 முதல் 255 வரை அமைக்கலாம்.</p>
+            
+            <p>"pigpio" Node.js தொகுதி pigpio C நூலகத்தை அடிப்படையாகக் கொண்டது.</p>
+            
+            <p>நீங்கள் Raspbian இன் "Lite" பதிப்பைப் பயன்படுத்துகிறீர்கள் என்றால், இது பெரும்பாலும் சேர்க்கப்படவில்லை மற்றும் கைமுறையாக நிறுவப்பட வேண்டும்.</p>
+            
+            <p>உங்கள் கணினி தொகுப்பு பட்டியலைப் புதுப்பிக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ sudo apt-get update</code></pre>
+            </div>
+            
+            <p>pigpio C நூலகத்தை நிறுவவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ sudo apt-get install pigpio</code></pre>
+            </div>
+            
+            <p>இப்போது நாம் npm ஐப் பயன்படுத்தி "pigpio" Node.js தொகுதியை நிறுவலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ npm install pigpio</code></pre>
+            </div>
+            
+            <p>இப்போது "pigpio" தொகுதி நிறுவப்பட்டிருக்க வேண்டும் மற்றும் Raspberry Pi இன் GPIO உடன் தொடர்பு கொள்ள அதைப் பயன்படுத்தலாம்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> குறிப்பு:</h4>
+                <p>"pigpio" தொகுதி pigpio C நூலகத்தைப் பயன்படுத்துவதால், இது வன்பொருள் புற உபகரணங்களை (GPIO போன்றவை) அணுக ரூட்/சூடோ சலுகைகள் தேவை.</p>
+            </div>
+        </section>
+
+        <!-- Building the Circuit -->
+        <section class="content-section" id="building-circuit">
+            <h2>சுற்றுகளைக் கட்டும் பணி</h2>
+            
+            <p>இப்போது எங்கள் பிரெட்போர்டில் சுற்றுகளைக் கட்ட வேண்டிய நேரம் வந்துவிட்டது.</p>
+            
+            <p>நீங்கள் மின்னணுவியலில் புதியவராக இருந்தால், Raspberry Pi க்கான மின்சாரத்தை அணைக்க பரிந்துரைக்கிறோம். மேலும் அதைச் சேதப்படுத்தாமல் இருக்க ஆன்டி-ஸ்டேடிக் பாய அல்லது கிரவுண்டிங் பட்டா பயன்படுத்தவும்.</p>
+            
+            <p>Raspberry Pi ஐ சரியாக அணைக்க கட்டளையைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ sudo shutdown -h now</code></pre>
+            </div>
+            
+            <p>Raspberry Pi இல் LED கள் ஒளிர்வதை நிறுத்திய பிறகு, Raspberry Pi இலிருந்து பவர் பிளக்கை வெளியே இழுக்கவும் (அல்லது அது இணைக்கப்பட்டுள்ள பவர் ஸ்ட்ரிப்பை அணைக்கவும்).</p>
+            
+            <p>சரியாக அணைக்காமல் பிளக்கை இழுப்பது நினைவக கார்ட்டின் ஊழலை ஏற்படுத்தக்கூடும்.</p>
+            
+            <p>இந்த சுற்றுகளைக் கட்டுவதில் உங்களிடம் பொதுவான அனோட் உள்ளதா, அல்லது பொதுவான கேதோட் உள்ளதா, RGB LED என்பது முக்கியம்:</p>
+            
+            <p>உங்கள் வழங்குநருடன் சரிபார்க்கலாம், அல்லது அதை நீங்களே சோதிக்கலாம்:</p>
+            
+            <p>GND மற்றும் 3.3V பின்னுடன் கேபிள்களை இணைக்கவும். RGB LED இன் நீளமான காலுடன் GND ஐ இணைக்கவும் மற்றும் 3.3 V ஐ வேறு எந்த காலுடனும் இணைக்கவும். அது எரிந்தால், உங்கள் RGB LED க்கு பொதுவான கேதோட் உள்ளது. இல்லையென்றால், அதற்கு பொதுவான அனோட் உள்ளது.</p>
+            
+            <h3>சுற்றுகளைக் கட்டுதல் - பொதுவான கேதோட்</h3>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <div style="background: #f0f0f0; padding: 2rem; border-radius: 10px;">
+                    <p style="font-style: italic; color: #666;">Building the Circuit - Common Cathode diagram would be here</p>
+                </div>
+            </div>
+            
+            <h3>சுற்றுகளைக் கட்டுதல் - பொதுவான அனோட்</h3>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <div style="background: #f0f0f0; padding: 2rem; border-radius: 10px;">
+                    <p style="font-style: italic; color: #666;">Building the Circuit - Common Anode diagram would be here</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Raspberry Pi and Node.js RGB LED and WebSocket Script -->
+        <section class="content-section" id="rgb-script">
+            <h2>Raspberry Pi மற்றும் Node.js RGB LED மற்றும் WebSocket ஸ்கிரிப்ட்</h2>
+            
+            <p>"nodetest" அடைவிற்குச் சென்று, "rgbws.js" என்ற புதிய கோப்பை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ nano rgbws.js</code></pre>
+            </div>
+            
+            <p>கோப்பு இப்போது திறக்கப்பட்டு உள்ளமைக்கப்பட்ட Nano Editor உடன் திருத்தப்படலாம்.</p>
+            
+            <p>பின்வருவனவற்றை எழுதவும் அல்லது ஒட்டவும்:</p>
+            
+            <h3>rgbws.js</h3>
+            
+            <div class="code-example">
+                <pre><code>const Gpio = require('pigpio').Gpio;
+const http = require('http').createServer(handler);
+const fs = require('fs');
+const io = require('socket.io')(http);
+const path = require('path');
+
+// Use GPIO pins for RGB LED (adjust based on your wiring)
+const redLed = new Gpio(17, {mode: Gpio.OUTPUT});
+const greenLed = new Gpio(27, {mode: Gpio.OUTPUT});
+const blueLed = new Gpio(22, {mode: Gpio.OUTPUT});
+
+// Set initial color to off
+let currentColor = { red: 0, green: 0, blue: 0 };
+
+http.listen(8080, () => {
+  console.log('WebSocket server running on port 8080');
+});
+
+function handler(req, res) {
+  let filePath = req.url === '/' ? '/public/rgb.html' : '/public' + req.url;
+  
+  fs.readFile(__dirname + filePath, (err, data) => {
+    if (err) {
+      res.writeHead(404, {'Content-Type': 'text/html'});
+      return res.end('404 Not Found');
+    }
+    
+    const ext = path.extname(filePath);
+    let contentType = 'text/html';
+    
+    switch (ext) {
+      case '.css':
+        contentType = 'text/css';
+        break;
+      case '.js':
+        contentType = 'text/javascript';
+        break;
+    }
+    
+    res.writeHead(200, {'Content-Type': contentType});
+    res.write(data);
+    return res.end();
+  });
+}
+
+// Function to set RGB color with PWM
+function setRGBColor(red, green, blue) {
+  // For Common Cathode RGB LED (direct PWM)
+  redLed.pwmWrite(red);
+  greenLed.pwmWrite(green);
+  blueLed.pwmWrite(blue);
+  
+  // For Common Anode RGB LED (inverted PWM)
+  // redLed.pwmWrite(255 - red);
+  // greenLed.pwmWrite(255 - green);
+  // blueLed.pwmWrite(255 - blue);
+  
+  currentColor = { red, green, blue };
+  console.log(`Color set to RGB(${red}, ${green}, ${blue})`);
+}
+
+io.sockets.on('connection', (socket) => {
+  console.log('Client connected');
+  
+  // Send current color to new client
+  socket.emit('currentColor', currentColor);
+  
+  socket.on('rgbLed', (colorData) => {
+    const red = Math.max(0, Math.min(255, colorData.red || 0));
+    const green = Math.max(0, Math.min(255, colorData.green || 0));
+    const blue = Math.max(0, Math.min(255, colorData.blue || 0));
+    
+    setRGBColor(red, green, blue);
+    
+    // Broadcast color change to all connected clients
+    socket.broadcast.emit('currentColor', currentColor);
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
+// Clean up on exit
+process.on('SIGINT', () => {
+  console.log('\nTurning off LEDs and cleaning up...');
+  redLed.pwmWrite(0);
+  greenLed.pwmWrite(0);
+  blueLed.pwmWrite(0);
+  
+  setTimeout(() => {
+    redLed.digitalWrite(0);
+    greenLed.digitalWrite(0);
+    blueLed.digitalWrite(0);
+    process.exit();
+  }, 100);
+});</code></pre>
+            </div>
+            
+            <h3>பொதுவான கேதோட் RGB LED பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Common Cathode Configuration
+// In the setRGBColor function, use direct PWM values:
+redLed.pwmWrite(red);
+greenLed.pwmWrite(green);  
+blueLed.pwmWrite(blue);
+
+// Wiring for Common Cathode:
+// - Longest pin (common cathode) to GND
+// - Red pin to GPIO 17 with 220Ω resistor
+// - Green pin to GPIO 27 with 220Ω resistor  
+// - Blue pin to GPIO 22 with 220Ω resistor</code></pre>
+            </div>
+            
+            <h3>பொதுவான அனோட் RGB LED பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Common Anode Configuration  
+// In the setRGBColor function, use inverted PWM values:
+redLed.pwmWrite(255 - red);
+greenLed.pwmWrite(255 - green);
+blueLed.pwmWrite(255 - blue);
+
+// Wiring for Common Anode:
+// - Longest pin (common anode) to 3.3V
+// - Red pin to GPIO 17 with 220Ω resistor
+// - Green pin to GPIO 27 with 220Ω resistor
+// - Blue pin to GPIO 22 with 220Ω resistor</code></pre>
+            </div>
+        </section>
+
+        <!-- Raspberry Pi and Node.js WebSocket UI -->
+        <section class="content-section" id="websocket-ui">
+            <h2>Raspberry Pi மற்றும் Node.js WebSocket UI</h2>
+            
+            <p>இப்போது WebSocket வழியாக பயனர் உள்ளீட்டை அனுமதிக்கும் HTML ஐச் சேர்க்க வேண்டிய நேரம் வந்துவிட்டது.</p>
+            
+            <p>இதற்கு நாங்கள் விரும்புகிறோம்:</p>
+            
+            <ul>
+                <li>3 வண்ண ஸ்லைடர்கள், ஒவ்வொரு வண்ணத்திற்கும் ஒன்று (RGB)</li>
+                <li>ஒரு வண்ண தேர்வு</li>
+                <li>தற்போதைய வண்ணத்தைக் காட்டும் ஒரு div</li>
+            </ul>
+            
+            <p>"public" என்ற கோப்புறைக்குச் செல்லவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~/nodetest $ cd public</code></pre>
+            </div>
+            
+            <p>மற்றும் ஒரு HTML கோப்பை, rgb.html உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~/nodetest/public $ nano rgb.html</code></pre>
+            </div>
+            
+            <h3>rgb.html:</h3>
+            
+            <div class="code-example">
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"&gt;
+&lt;style&gt;
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {opacity: 1;}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}
+#redSlider::-webkit-slider-thumb {background: red;}
+#redSlider::-moz-range-thumb {background: red;}
+#greenSlider::-webkit-slider-thumb {background: green;}
+#greenSlider::-moz-range-thumb {background: green;}
+#blueSlider::-webkit-slider-thumb {background: blue;}
+#blueSlider::-moz-range-thumb {background: blue;}
+&lt;/style&gt;
+&lt;body&gt;
+
+&lt;div class="w3-container"&gt;
+&lt;h1&gt;RGB Color&lt;/h1&gt;
+&lt;div class="w3-cell-row"&gt;
+&lt;div class="w3-container w3-cell w3-mobile"&gt;
+&lt;p&gt;&lt;input type="range" min="0" max="255" value="0" class="slider" id="redSlider"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;input type="range" min="0" max="255" value="0" class="slider" id="greenSlider"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;input type="range" min="0" max="255" value="0" class="slider" id="blueSlider"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="w3-container w3-cell w3-mobile" style="background-color:black" id="colorShow"&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Or pick a color: &lt;input type="color" id="pickColor"&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"&gt;&lt;/script&gt;
+&lt;script src="https://www.w3schools.com/lib/w3color.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+let socket = io(); //load socket.io-client and connect to the host that serves the page
+let rgb = w3color("rgb(0,0,0)"); //we use the w3color.js library to keep the color as an object
+window.addEventListener("load", function(){ //when page loads
+  let rSlider = document.getElementById("redSlider");
+  let gSlider = document.getElementById("greenSlider");
+  let bSlider = document.getElementById("blueSlider");
+  let picker = document.getElementById("pickColor");
+
+  rSlider.addEventListener("change", function() { //add event listener for when red slider changes
+    rgb.red = this.value; //update the RED color according to the slider
+    colorShow.style.backgroundColor = rgb.toRgbString(); //update the "Current color"
+    socket.emit("rgbLed", rgb); //send the updated color to RGB LED via WebSocket
+  });
+  gSlider.addEventListener("change", function() { //add event listener for when green slider changes
+    rgb.green = this.value; //update the GREEN color according to the slider
+    colorShow.style.backgroundColor = rgb.toRgbString(); //update the "Current color"
+    socket.emit("rgbLed", rgb); //send the updated color to RGB LED via WebSocket
+  });
+  bSlider.addEventListener("change", function() { //add event listener for when blue slider changes
+    rgb.blue = this.value;  //update the BLUE color according to the slider
+    colorShow.style.backgroundColor = rgb.toRgbString(); //update the "Current color"
+    socket.emit("rgbLed", rgb); //send the updated color to RGB LED via WebSocket
+  });
+  picker.addEventListener("input", function() { //add event listener for when colorpicker changes
+    rgb.red = w3color(this.value).red; //Update the RED color according to the picker
+    rgb.green = w3color(this.value).green; //Update the GREEN color according to the picker
+    rgb.blue = w3color(this.value).blue; //Update the BLUE color according to the picker
+    colorShow.style.backgroundColor = rgb.toRgbString();  //update the "Current color"
+    rSlider.value = rgb.red;  //Update the RED slider position according to the picker
+    gSlider.value = rgb.green;  //Update the GREEN slider position according to the picker
+    bSlider.value = rgb.blue;  //Update the BLUE slider position according to the picker
+   socket.emit("rgbLed", rgb);  //send the updated color to RGB LED via WebSocket
+  });
+});
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <p>"nodetest" கோப்புறைக்குத் திரும்பவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~/nodetest $ cd ..</code></pre>
+            </div>
+            
+            <p>குறியீட்டை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ sudo node rgbws.js</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> குறிப்பு:</h4>
+                <p>"pigpio" தொகுதி pigpio C நூலகத்தைப் பயன்படுத்துவதால், இது வன்பொருள் புற உபகரணங்களை (GPIO போன்றவை) அணுக ரூட்/சூடோ சலுகைகள் தேவை.</p>
+            </div>
+            
+            <p>http://[RaspberryPi_IP]:8080/ ஐப் பயன்படுத்தி ஒரு உலாவியில் வலைத்தளத்தைத் திறக்கவும்</p>
+            
+            <p>இப்போது பயனர் உள்ளீட்டைப் பொறுத்து RGB LED வண்ணம் மாற வேண்டும்.</p>
+            
+            <p>Ctrl+c உடன் நிரலை முடிக்கவும்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் PWM (பல்ஸ்-விட்த் மாடுலேஷன்) செயல்பாட்டிற்கு எந்த தொகுதி பொதுவாகப் பயன்படுத்தப்படுகிறது? தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">onoff தொகுதி</div>
+                            <div class="option-feedback incorrect">✗ தவறு! onoff தொகுதி PWM ஐ ஆதரிக்காது, இது எரிய/அணை செயல்பாடுகளுக்கு மட்டுமே</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">pigpio தொகுதி</div>
+                            <div class="option-feedback correct">✓ சரி! pigpio தொகுதி PWM செயல்பாட்டை ஆதரிக்கிறது மற்றும் RGB LED களுக்கு ஏற்றது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">gpio தொகுதி</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "gpio" என்பது Node.js இல் ஒரு செல்லுபடியாகும் தொகுதி அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">pwm தொகுதி</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "pwm" என்பது Node.js இல் ஒரு செல்லுபடியாகும் தொகுதி அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js and Raspberry Pi - Webserver with WebSocket.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Raspberry Pi - Components.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#pwm">PWM பயன்பாடு</a></li>
+                    <li><a href="#requirements">தேவைகள்</a></li>
+                    <li><a href="#install-pigpio">pigpio நிறுவுதல்</a></li>
+                    <li><a href="#building-circuit">சுற்றுகளைக் கட்டுதல்</a></li>
+                    <li><a href="#rgb-script">RGB ஸ்கிரிப்ட்</a></li>
+                    <li><a href="#websocket-ui">WebSocket UI</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - Modal Popup - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Project-specific styles */
+        .modal-project {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .modal-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-box {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #666;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .modal-close:hover {
+            background: #f0f0f0;
+            color: var(--git-color);
+        }
+        
+        .modal-content h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .modal-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-close-instructions {
+            margin-top: 2rem;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .modal-close-instructions h4 {
+            color: var(--git-color);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Project%20-%20To-Do%20List.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="certificate.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Project - Modal Popup</h2>
+            <p>மாதிரி பாப்-அப் சாளர திட்டம்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Project Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Project - Modal Popup</h2>
+            
+            <p>மாதிரி பாப்-அப்</p>
+            
+            <p>ஒரு மாதிரி என்பது பக்கத்தின் மேல் தோன்றும் ஒரு பாப்-அப் சாளரமாகும்.</p>
+            
+            <p>இந்த திட்டம் மூன்று வழிகளில் மூடக்கூடிய ஒரு மாதிரியை உருவாக்கும்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-times-circle"></i>
+                    <div>மூடு பொத்தானைக் கிளிக் செய்யவும் (x)</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-mouse-pointer"></i>
+                    <div>மாதிரிக்கு வெளியே கிளிக் செய்யவும்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-keyboard"></i>
+                    <div>Escape விசையை அழுத்தவும்</div>
+                </div>
+            </div>
+            
+            <!-- Interactive Modal Project -->
+            <div class="modal-project">
+                <h2>மாதிரி பாப்-அப்</h2>
+                
+                <button class="modal-btn" id="openBtn">மாதிரியைத் திறக்கவும்</button>
+                
+                <div id="modal" class="modal-overlay">
+                    <div class="modal-box">
+                        <button id="closeBtn" class="modal-close">×</button>
+                        <div class="modal-content">
+                            <h3>வணக்கம்!</h3>
+                            <p>இது ஒரு மாதிரி பாப்-அப் சாளரம்.</p>
+                            <p>இந்த மாதிரியை மூன்று வழிகளில் மூடலாம்:</p>
+                            <ul style="text-align: left; margin-left: 1.5rem;">
+                                <li>மேல் வலது மூலையில் உள்ள X பொத்தானைக் கிளிக் செய்யவும்</li>
+                                <li>மாதிரிக்கு வெளியே கிளிக் செய்யவும்</li>
+                                <li>உங்கள் விசைப்பலகையில் Escape விசையை அழுத்தவும்</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What You Will Learn -->
+        <section class="content-section" id="learn">
+            <h2>நீங்கள் கற்றுக் கொள்வீர்கள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-eye"></i>
+                        <h4>உறுப்புகளைக் காட்டுதல் மற்றும் மறைத்தல்</h4>
+                    </div>
+                    <p>உறுப்புகளை எவ்வாறு காட்டுவது மற்றும் மறைப்பது</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>JavaScript உடன் CSS வகுப்புகளைப் பயன்படுத்துதல்</h4>
+                    </div>
+                    <p>JavaScript உடன் CSS வகுப்புகளை எவ்வாறு பயன்படுத்துவது</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <h4>கிளிக் மற்றும் keydown நிகழ்வுகளைக் கையாளுதல்</h4>
+                    </div>
+                    <p>கிளிக் மற்றும் keydown நிகழ்வுகளை எவ்வாறு கையாளுவது</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>உறுப்புக்கு வெளியே கிளிக்களைக் கண்டறிதல்</h4>
+                    </div>
+                    <p>உறுப்புக்கு வெளியே கிளிக்களை எவ்வாறு கண்டறிவது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- First: Create the HTML -->
+        <section class="content-section" id="create-html">
+            <h2>முதலில்: HTML உருவாக்குதல்</h2>
+            
+            <p>முதலில் HTML பக்கத்தை உருவாக்கவும்</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-plus-square"></i>
+                    <div>id="openBtn" உடன் ஒரு பொத்தானைச் சேர்க்கவும்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-window-maximize"></i>
+                    <div>மாதிரி கட்டமைப்பைச் சேர்க்கவும்:</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-square"></i>
+                    <div>class="modal-overlay" உடன் ஒரு div ஐச் சேர்க்கவும்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-box"></i>
+                    <div>class="modal-box" உடன் ஒரு div ஐச் சேர்க்கவும்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-times"></i>
+                    <div>id="closeBtn" மற்றும் class="modal-close" உடன் ஒரு பொத்தானைச் சேர்க்கவும்</div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;style&gt;
+/* CSS will go here */
+&lt;/style&gt;
+
+&lt;body&gt;
+&lt;h2&gt;Modal Popup&lt;/h2&gt;
+
+&lt;button id="openBtn"&gt;Open Modal&lt;/button&gt;
+
+&lt;div id="modal" class="modal-overlay"&gt;
+  &lt;div class="modal-box"&gt;
+    &lt;button id="closeBtn" class="modal-close"&gt;×&lt;/button&gt;
+    &lt;h3&gt;Hello!&lt;/h3&gt;
+    &lt;p&gt;This is a modal popup.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// JavaScript will go here
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📌</span> குறிப்பு:</h4>
+                <p>மாதிரிக்கு இரண்டு பகுதிகள் உள்ளன:</p>
+                <ul>
+                    <li>மேலடுக்கு (பின்னணி)</li>
+                    <li>மாதிரி பெட்டி (உள்ளடக்கம்)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Then: Create the CSS -->
+        <section class="content-section" id="create-css">
+            <h2>பின்னர்: CSS உருவாக்குதல்</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;style&gt;
+/* The overlay (background) */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Show the modal */
+.modal-overlay.show {
+  display: block;
+}
+
+/* The modal box */
+.modal-box {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+}
+
+/* Close button */
+.modal-close {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  font-size: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+&lt;/style&gt;</code></pre>
+            </div>
+            
+            <h3>CSS விளக்கம்</h3>
+            
+            <p>இயல்பாக மாதிரியை மறைக்கவும்:</p>
+            <div class="code-example">
+                <pre><code>.modal-overlay { display: none; }</code></pre>
+            </div>
+            
+            <p>ஒரு வகுப்பைப் பயன்படுத்தி மாதிரியைக் காட்டவும்:</p>
+            <div class="code-example">
+                <pre><code>.modal-overlay.show { display: block; }</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚙️</span> குறிப்பு:</h4>
+                <p>JavaScript show வகுப்பைச் சேர்த்து நீக்கும்.</p>
+                
+                <div class="code-example" style="margin-top: 1rem; background: rgba(255,255,255,0.1);">
+                    <pre><code>function openModal() {
+  modal.classList.add("show");
+}
+
+function closeModal() {
+  modal.classList.remove("show");
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Then: Create the JavaScript -->
+        <section class="content-section" id="create-javascript">
+            <h2>பின்னர்: JavaScript உருவாக்குதல்</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>const modal = document.getElementById("modal");
+const openBtn = document.getElementById("openBtn");
+const closeBtn = document.getElementById("closeBtn");
+
+function openModal() {
+  modal.classList.add("show");
+}
+
+function closeModal() {
+  modal.classList.remove("show");
+}
+
+openBtn.addEventListener("click", openModal);
+closeBtn.addEventListener("click", closeModal);
+
+/* Close when clicking outside the modal box */
+modal.addEventListener("click", function (event) {
+  if (event.target === modal) {
+    closeModal();
+  }
+});
+
+/* Close when pressing Escape */
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    closeModal();
+  }
+});</code></pre>
+            </div>
+            
+            <h3>JavaScript விளக்கம்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <div>திறந்த பொத்தானை openModal() செயல்பாட்டுடன் இணைக்கவும்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <div>மூடு பொத்தானை closeModal() செயல்பாட்டுடன் இணைக்கவும்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <div>மாதிரிக்கு வெளியே கிளிக் செய்வதை closeModal() செயல்பாட்டுடன் இணைக்கவும்</div>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <div>Escape விசையை closeModal() செயல்பாட்டுடன் இணைக்கவும்</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connect Functions to Buttons -->
+        <section class="content-section" id="connect-buttons">
+            <h2>செயல்பாடுகளை பொத்தான்களுடன் இணைத்தல்</h2>
+            
+            <p>திறந்த பொத்தானை openModal() செயல்பாட்டுடன் addEventListener() உடன் இணைக்கவும்.</p>
+            
+            <p>மூடு பொத்தானை closeModal() செயல்பாட்டுடன் addEventListener() உடன் இணைக்கவும்.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>openBtn.addEventListener("click", openModal);
+closeBtn.addEventListener("click", closeModal);</code></pre>
+            </div>
+        </section>
+
+        <!-- Connect Function to Clicking Outside -->
+        <section class="content-section" id="connect-outside">
+            <h2>வெளியே கிளிக் செய்வதைச் செயல்பாட்டுடன் இணைத்தல்</h2>
+            
+            <p>கிளிக் மேலடுக்கில் நடந்ததா என்பதைச் சரிபார்க்கவும். அதை closeModal() உடன் இணைக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>modal.addEventListener("click", function (event) {
+  if (event.target === modal) {
+    closeModal();
+  }
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> குறிப்பு:</h4>
+                <p>event.target === modal என்றால்:</p>
+                <p>பயனர் மேலடுக்கில் கிளிக் செய்தார், மாதிரி பெட்டிக்குள் அல்ல.</p>
+            </div>
+        </section>
+
+        <!-- Connect Function to Escape Key -->
+        <section class="content-section" id="connect-escape">
+            <h2>Escape விசையைச் செயல்பாட்டுடன் இணைத்தல்</h2>
+            
+            <p>"Escape" விசை அழுத்தங்களைக் கேளுங்கள். அதை closeModal() உடன் இணைக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    closeModal();
+  }
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Common Mistakes -->
+        <section class="content-section" id="common-mistakes">
+            <h2>பொதுவான தவறுகள்</h2>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> மாதிரி வெளியே கிளிக் செய்யும் போது ஒருபோதும் மூடாது:</h4>
+                <p>event.target === modal என்பதைச் சரிபார்க்கவும் என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்.</p>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> Escape மாதிரி மறைக்கப்பட்டிருக்கும் போது கூட மூடுகிறது:</h4>
+                <p>இது சரி, ஆனால் அது திறந்திருக்கும் போது மட்டும் மூடுவதற்கு ஒரு சோதனையைச் சேர்க்கலாம்.</p>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> அனிமேஷனுடன் display: none ஐப் பயன்படுத்துதல்:</h4>
+                <p>ஃபேட் விளைவுகளை விரும்பினால், opacity ஐப் பயன்படுத்தவும் (போனஸ் சவால்).</p>
+            </div>
+        </section>
+
+        <!-- Bonus Challenges -->
+        <section class="content-section" id="bonus-challenges">
+            <h2>போனஸ் சவால்கள் (நிலை உயர்த்தல்)</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-film"></i>
+                        <h4>CSS பயன்படுத்தி ஃபேட்-இன் / ஃபேட்-அவுட் விளைவைச் சேர்க்கவும்</h4>
+                    </div>
+                    <p>மெதுவாகத் தோன்றி மறையும் விளைவு</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-universal-access"></i>
+                        <h4>மாதிரி திறக்கும் போது கவனத்தை மாதிரிக்கு நகர்த்தவும் (அணுகல்)</h4>
+                    </div>
+                    <p>அணுகலுக்கான கவன மேலாண்மை</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-lock"></i>
+                        <h4>கவனத்தை மாதிரிக்குள் சிக்கவைக்கவும் (மேம்பட்ட)</h4>
+                    </div>
+                    <p>மேம்பட்ட கவன மேலாண்மை</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-enter"></i>
+                        <h4>ஒரு பொத்தான் கவனம் செலுத்தும் போது Enter விசையுடன் மாதிரியை மூடவும்</h4>
+                    </div>
+                    <p>கூடுதல் விசைக் கட்டுப்பாடு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- JavaScript Projects -->
+        <section class="content-section" id="javascript-projects">
+            <h2>JavaScript திட்டங்கள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-calculator"></i>
+                        <h4>JavaScript Counter</h4>
+                    </div>
+                    <p>localStorage இல் மீட்டெடுத்து சேமிக்கும் எண்ணிக்கை திட்டம்.</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-headphones"></i>
+                        <h4>JavaScript Event Listener</h4>
+                    </div>
+                    <p>onclick க்கு பதிலாக event listener ஐப் பயன்படுத்தும் எண்ணிக்கை திட்டம்.</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tasks"></i>
+                        <h4>JavaScript To-Do List</h4>
+                    </div>
+                    <p>local storage இல் உள்ள ஒரு வரிசையில் சேமிக்கப்பட்ட செய்ய வேண்டிய பட்டியல்.</p>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-window-maximize"></i>
+                        <h4>JavaScript Modal Popup</h4>
+                    </div>
+                    <p>பக்கத்தின் மேல் தோன்றும் மாதிரி பாப்-அப் சாளரம்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Project%20-%20To-Do%20List.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="certificate.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Project அறிமுகம்</a></li>
+                    <li><a href="#learn">கற்றுக் கொள்வீர்கள்</a></li>
+                    <li><a href="#create-html">HTML உருவாக்குதல்</a></li>
+                    <li><a href="#create-css">CSS உருவாக்குதல்</a></li>
+                    <li><a href="#create-javascript">JavaScript உருவாக்குதல்</a></li>
+                    <li><a href="#connect-buttons">பொத்தான்களை இணைத்தல்</a></li>
+                    <li><a href="#connect-outside">வெளியே கிளிக் செய்தல்</a></li>
+                    <li><a href="#connect-escape">Escape விசை</a></li>
+                    <li><a href="#common-mistakes">பொதுவான தவறுகள்</a></li>
+                    <li><a href="#bonus-challenges">போனஸ் சவால்கள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Modal Project JavaScript
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById("modal");
+            const openBtn = document.getElementById("openBtn");
+            const closeBtn = document.getElementById("closeBtn");
+            
+            function openModal() {
+                modal.classList.add("show");
+            }
+            
+            function closeModal() {
+                modal.classList.remove("show");
+            }
+            
+            openBtn.addEventListener("click", openModal);
+            closeBtn.addEventListener("click", closeModal);
+            
+            // Close when clicking outside the modal box
+            modal.addEventListener("click", function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Close when pressing Escape
+            document.addEventListener("keydown", function(event) {
+                if (event.key === "Escape") {
+                    closeModal();
+                }
+            });
+            
+            // Make functions global for onclick attributes if needed
+            window.openModal = openModal;
+            window.closeModal = closeModal;
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

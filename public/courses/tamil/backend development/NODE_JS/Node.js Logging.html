@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Logging - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Deployment.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Monitoring & Observability.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Logging</h2>
+            <p>Node.js பயன்பாடுகளில் பதிவு மேலாண்மை மற்றும் கண்காணிப்பு தொழில்நுட்பங்களைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Why Logging Matters -->
+        <section class="content-section" id="why-logging">
+            <h2>பதிவு ஏன் முக்கியமானது</h2>
+            
+            <p>பயனுள்ள பதிவு பல காரணங்களுக்கு அவசியம்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bug"></i>
+                        <h4>பிழைத்திருத்தம்</h4>
+                    </div>
+                    <p>உங்கள் பயன்பாட்டிற்குள் என்ன நடக்கிறது என்பதைப் புரிந்துகொள்ளவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tools"></i>
+                        <h4>சிக்கல் தீர்த்தல்</h4>
+                    </div>
+                    <p>உற்பத்தி சூழல்களில் சிக்கல்களைக் கண்டறியவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>கண்காணிப்பு</h4>
+                    </div>
+                    <p>பயன்பாட்டு ஆரோக்கியம் மற்றும் செயல்திறனைக் கண்காணிக்கவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>தணிக்கை</h4>
+                    </div>
+                    <p>இணக்கமும் பாதுகாப்பும் குறித்த முக்கிய நிகழ்வுகளைப் பதிவுசெய்யவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h4>பகுப்பாய்வு</h4>
+                    </div>
+                    <p>பயன்பாட்டு பயன்பாடு மற்றும் நடத்தை பற்றிய தரவைச் சேகரிக்கவும்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Basic Logging with Console -->
+        <section class="content-section" id="basic-logging">
+            <h2>கன்சோல் மூலம் அடிப்படை பதிவு</h2>
+            
+            <p>Node.js அடிப்படை பதிவுக்காக உள்ளமைக்கப்பட்ட கன்சோல் முறைகளை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>// Basic logging
+console.log('Info message');
+console.error('Error message');
+console.warn('Warning message');
+console.debug('Debug message');
+
+// Log objects
+const user = { id: 1, name: 'John', roles: ['admin', 'user'] };
+console.log('User object:', user);
+
+// Table output for arrays or objects
+console.table([
+  { name: 'John', age: 30, role: 'admin' },
+  { name: 'Jane', age: 25, role: 'user' },
+  { name: 'Bob', age: 40, role: 'guest' }
+]);
+
+// Timing operations
+console.time('operation');
+// Perform some operations...
+for (let i = 0; i < 1000000; i++) {
+  // Do something
+}
+console.timeEnd('operation'); // Outputs: operation: 4.269ms
+
+// Grouping related logs
+console.group('User Processing');
+console.log('Loading user data...');
+console.log('Validating user...');
+console.log('Updating user profile...');
+console.groupEnd();
+
+// Stack trace
+console.trace('Trace message');</code></pre>
+            </div>
+        </section>
+
+        <!-- Console Limitations -->
+        <section class="content-section" id="console-limitations">
+            <h2>கன்சோல் வரம்புகள்</h2>
+            
+            <p>கன்சோல் வசதியானது என்றாலும், உற்பத்தி பயன்பாட்டிற்கு குறிப்பிடத்தக்க வரம்புகளைக் கொண்டுள்ளது:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item negative">
+                    <i class="fas fa-filter"></i>
+                    <span>வடிகட்டுதலுக்கு உள்ளமைக்கப்பட்ட பதிவு நிலைகள் இல்லை</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-sync"></i>
+                    <span>பதிவு சுழற்சி அல்லது கோப்பு மேலாண்மை இல்லை</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-code"></i>
+                    <span>JSON போன்ற கட்டமைக்கப்பட்ட வெளியீட்டு வடிவங்கள் இல்லை</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-plug"></i>
+                    <span>கண்காணிப்பு அமைப்புகளுடன் வரையறுக்கப்பட்ட ஒருங்கிணைப்பு</span>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>கன்சோல் முறைகள் டெர்மினல்கள்/கோப்புகளுக்கு வெளியீடு செய்யும் போது ஒத்திசைவாக இருக்கும் மற்றும் உற்பத்தியில் அடிக்கடி பயன்படுத்தப்பட்டால் செயல்திறனை பாதிக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Structured Logging -->
+        <section class="content-section" id="structured-logging">
+            <h2>கட்டமைக்கப்பட்ட பதிவு</h2>
+            
+            <p>கட்டமைக்கப்பட்ட பதிவு வடிவங்கள் ப்ளெயின் உரைக்கு பதிலாக தரவு பொருள்களாக (பொதுவாக JSON) பதிவு செய்திகளை வடிவமைக்கின்றன, அவற்றை பாகுபடுத்த, தேட மற்றும் பகுப்பாய்வு செய்வதை எளிதாக்குகின்றன.</p>
+            
+            <h3>கட்டமைக்கப்பட்ட பதிவின் நன்மைகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-robot"></i>
+                    <span>இயந்திர வாசிப்புக்கான சீரான வடிவம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-search"></i>
+                    <span>சிறந்த தேடல் மற்றும் வடிகட்டுதல் திறன்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span>பதிவு ஒருங்கிணைப்பு கருவிகளுடன் எளிமைப்படுத்தப்பட்ட ஒருங்கிணைப்பு</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-info-circle"></i>
+                    <span>மெட்டாடேட்டாவுடன் மேம்பட்ட சூழல்</span>
+                </div>
+            </div>
+            
+            <h3>கட்டமைக்கப்பட்ட பதிவு உள்ளீட்டின் எடுத்துக்காட்டு (JSON)</h3>
+            
+            <div class="code-example">
+                <pre><code>{
+  "timestamp": "2023-11-28T15:24:39.123Z",
+  "level": "error",
+  "message": "Failed to connect to database",
+  "service": "user-service",
+  "context": {
+    "requestId": "req-123-456",
+    "userId": "user-789",
+    "databaseHost": "db.example.com"
+  },
+  "error": {
+    "name": "ConnectionError",
+    "message": "Connection refused",
+    "stack": "..."
+  }
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Popular Node.js Logging Libraries -->
+        <section class="content-section" id="logging-libraries">
+            <h2>பிரபலமான Node.js பதிவு நூலகங்கள்</h2>
+            
+            <h3>Winston</h3>
+            
+            <p>Winston என்பது பல போக்குவரத்துகளுக்கு (வெளியீடுகள்) ஆதரவுடன் ஒரு பல்துறை பதிவு நூலகமாகும்:</p>
+            
+            <h4>அடிப்படை Winston அமைப்பு</h4>
+            
+            <div class="code-example">
+                <pre><code>const winston = require('winston');
+
+// Create a logger
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'user-service' },
+  transports: [
+    // Write logs to a file
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
+  ],
+});
+
+// If not in production, also log to the console
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.simple(),
+  }));
+}
+
+// Usage
+logger.log('info', 'Hello distributed log files!');
+logger.info('Hello again distributed logs');
+logger.error('Something went wrong', { additionalInfo: 'error details' });</code></pre>
+            </div>
+            
+            <h4>தனிப்பயன் Winston வடிவங்கள்</h4>
+            
+            <div class="code-example">
+                <pre><code>const winston = require('winston');
+const { format } = winston;
+const { combine, timestamp, label, printf } = format;
+
+// Custom format
+const myFormat = printf(({ level, message, label, timestamp }) => {
+  return `${timestamp} [${label}] ${level}: ${message}`;
+});
+
+const logger = winston.createLogger({
+  format: combine(
+    label({ label: 'API Service' }),
+    timestamp(),
+    myFormat
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+});
+
+logger.info('Application started');</code></pre>
+            </div>
+            
+            <h3>Pino</h3>
+            
+            <p>Pino என்பது உகந்த செயல்திறனுடன் குறைந்த மேலோட்ட பதிவாக்கியாக வடிவமைக்கப்பட்டுள்ளது:</p>
+            
+            <h4>அடிப்படை Pino அமைப்பு</h4>
+            
+            <div class="code-example">
+                <pre><code>const pino = require('pino');
+
+// Create a logger
+const logger = pino({
+  level: 'info',
+  timestamp: pino.stdTimeFunctions.isoTime,
+  base: { pid: process.pid, hostname: require('os').hostname() }
+});
+
+// Usage
+logger.info('Application started');
+logger.info({ user: 'john' }, 'User logged in');
+logger.error({ err: new Error('Connection failed') }, 'Database connection error');</code></pre>
+            </div>
+            
+            <h4>Express உடன் Pino</h4>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const pino = require('pino');
+const pinoHttp = require('pino-http');
+
+const app = express();
+const logger = pino();
+const httpLogger = pinoHttp({ logger });
+
+// Add request logging middleware
+app.use(httpLogger);
+
+app.get('/', (req, res) => {
+  req.log.info('User accessed homepage');
+  res.send('Hello World!');
+});
+
+app.get('/error', (req, res) => {
+  req.log.error('Something went wrong');
+  res.status(500).send('Error!');
+});
+
+app.listen(8080, () => {
+  logger.info('Server started on port 8080');
+});</code></pre>
+            </div>
+            
+            <h3>Bunyan</h3>
+            
+            <p>Bunyan என்பது பதிவுகளைக் காண CLI உடன் கூடிய கட்டமைக்கப்பட்ட பதிவு நூலகமாகும்:</p>
+            
+            <h4>அடிப்படை Bunyan அமைப்பு</h4>
+            
+            <div class="code-example">
+                <pre><code>const bunyan = require('bunyan');
+
+// Create a logger
+const logger = bunyan.createLogger({
+  name: 'myapp',
+  streams: [
+    {
+      level: 'info',
+      stream: process.stdout
+    },
+    {
+      level: 'error',
+      path: 'error.log'
+    }
+  ],
+  serializers: bunyan.stdSerializers
+});
+
+// Usage
+logger.info('Application started');
+logger.info({ user: 'john' }, 'User logged in');
+logger.error({ err: new Error('Connection failed') }, 'Database connection error');</code></pre>
+            </div>
+        </section>
+
+        <!-- Application Logging Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>பயன்பாட்டு பதிவு சிறந்த நடைமுறைகள்</h2>
+            
+            <h3>பதிவு நிலைகள்</h3>
+            
+            <p>பதிவு செய்திகளின் முக்கியத்துவம் மற்றும் அவசரத்தை வகைப்படுத்த பொருத்தமான பதிவு நிலைகளைப் பயன்படுத்தவும்:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>நிலை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>error</strong></td>
+                            <td>இயக்கநேர பிழைகள், விதிவிலக்குகள் மற்றும் கவனம் தேவைப்படும் தோல்விகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>warn</strong></td>
+                            <td>பயன்பாட்டை நிறுத்தாத ஆனால் சாத்தியமான சிக்கல்களைக் குறிக்கும் எச்சரிக்கை நிலைமைகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>info</strong></td>
+                            <td>பயன்பாட்டு நிகழ்வுகள் மற்றும் மைல்கற்கள் பற்றிய தகவல் செய்திகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>debug</strong></td>
+                            <td>வளர்ச்சியின் போது பயனுள்ள விரிவான கண்டறியும் தகவல்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>trace</strong></td>
+                            <td>மிகவும் விரிவான பிழைத்திருத்த தகவல் (முறை நுழைவு/வெளியேற்றம், மாறி மதிப்புகள்)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>என்ன பதிவு செய்வது</h3>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">✅</span> பதிவு செய்ய வேண்டியவை:</h4>
+                <ul>
+                    <li>பயன்பாட்டு தொடக்கம்/நிறுத்தம் நிகழ்வுகள்</li>
+                    <li>அங்கீகாரம் மற்றும் அங்கீகார நிகழ்வுகள்</li>
+                    <li>API கோரிக்கைகள் மற்றும் பதில்கள்</li>
+                    <li>தரவுத்தள செயல்பாடுகள் மற்றும் செயல்திறன் அளவீடுகள்</li>
+                    <li>சூழலுடன் கூடிய பிழைகள் மற்றும் விதிவிலக்குகள்</li>
+                    <li>வள பயன்பாடு மற்றும் செயல்திறன் அளவீடுகள்</li>
+                    <li>கட்டமைப்பு மாற்றங்கள்</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">❌</span> பதிவு செய்ய வேண்டாம்:</h4>
+                <ul>
+                    <li>கடவுச்சொற்கள், டோக்கன்கள், API விசைகள் அல்லது பிற சான்றுகள்</li>
+                    <li>சரியான பாதுகாப்பு இல்லாமல் தனிப்பட்ட அடையாளம் காணக்கூடிய தகவல் (PII)</li>
+                    <li>கிரெடிட் கார்டு எண்கள், சமூக பாதுகாப்பு எண்கள் அல்லது பிற உணர்திறன் தரவு</li>
+                    <li>அமர்வு IDகள் அல்லது குக்கீகள்</li>
+                    <li>குறியாக்க விசைகள்</li>
+                </ul>
+            </div>
+            
+            <h3>சூழல் பதிவு</h3>
+            
+            <p>சிக்கல் தீர்த்தலை எளிதாக்குவதற்காக ஒவ்வொரு பதிவு உள்ளீட்டிலும் தொடர்புடைய சூழலைச் சேர்க்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const winston = require('winston');
+
+// Create a base logger
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [new winston.transports.Console()]
+});
+
+// Create a child logger with request context
+function createRequestLogger(req) {
+  return logger.child({
+    requestId: req.id,
+    method: req.method,
+    url: req.url,
+    ip: req.ip,
+    userId: req.user ? req.user.id : 'anonymous'
+  });
+}
+
+// Usage in Express middleware
+app.use((req, res, next) => {
+  req.id = generateRequestId();
+  req.logger = createRequestLogger(req);
+  req.logger.info('Request received');
+
+  const start = Date.now();
+
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    req.logger.info({
+      statusCode: res.statusCode,
+      duration: duration
+    }, 'Request completed');
+  });
+
+  next();
+});
+
+function generateRequestId() {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Log Management and Analysis -->
+        <section class="content-section" id="log-management">
+            <h2>பதிவு மேலாண்மை மற்றும் பகுப்பாய்வு</h2>
+            
+            <h3>பதிவு சுழற்சி</h3>
+            
+            <p>பதிவு சுழற்சியை செயல்படுத்துவதன் மூலம் பதிவு கோப்புகள் மிகவும் பெரிதாக வளர்வதைத் தடுக்கவும்:</p>
+            
+            <h4>சுழலும் கோப்பு போக்குவரத்துடன் Winston</h4>
+            
+            <div class="code-example">
+                <pre><code>const winston = require('winston');
+require('winston-daily-rotate-file');
+
+const transport = new winston.transports.DailyRotateFile({
+  filename: 'application-%DATE%.log',
+  datePattern: 'YYYY-MM-DD',
+  zippedArchive: true,
+  maxSize: '20m',
+  maxFiles: '14d'
+});
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [
+    transport,
+    new winston.transports.Console()// Optional console transport
+  ]
+});
+
+logger.info('Hello rotated logs');</code></pre>
+            </div>
+            
+            <h3>மையப்படுத்தப்பட்ட பதிவு</h3>
+            
+            <p>பல சேவையகங்கள் அல்லது கொள்கலன்களில் இயங்கும் பயன்பாடுகளுக்கு, உங்கள் பதிவுகளை எளிதான பகுப்பாய்வுக்காக மையப்படுத்தவும்:</p>
+            
+            <h4>Elasticsearch போக்குவரத்துடன் Winston</h4>
+            
+            <div class="code-example">
+                <pre><code>const winston = require('winston');
+require('winston-elasticsearch');
+
+const esTransportOpts = {
+  level: 'info',
+  clientOpts: {
+    node: 'http://localhost:9200'
+  },
+  indexPrefix: 'app-logs'
+};
+
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Elasticsearch(esTransportOpts),
+    new winston.transports.Console()// Optional console transport
+  ]
+});
+
+logger.info('This log will go to Elasticsearch');</code></pre>
+            </div>
+            
+            <h3>பிரபலமான பதிவு மேலாண்மை அமைப்புகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-layer-group"></i>
+                    <span><strong>ELK Stack (Elasticsearch, Logstash, Kibana):</strong> விரிவான பதிவு ஸ்டாக்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span><strong>Graylog:</strong> பாதுகாப்பில் கவனம் செலுத்தும் மையப்படுத்தப்பட்ட பதிவு மேலாண்மை</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span><strong>Fluentd/Fluent Bit:</strong> பதிவு சேகரிப்பு மற்றும் அனுப்புதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-weight-hanging"></i>
+                    <span><strong>Loki:</strong> இலகுவான பதிவு ஒருங்கிணைப்பு அமைப்பு</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-building"></i>
+                    <span><strong>வணிக விருப்பங்கள்:</strong> Datadog, New Relic, Splunk, LogDNA, Loggly</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Logging in Production -->
+        <section class="content-section" id="production-logging">
+            <h2>உற்பத்தியில் பதிவு</h2>
+            
+            <h3>செயல்திறன் பரிசீலனைகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-sync"></i>
+                    <span>இவெண்ட் லூப்பைத் தடுக்காமல் இருக்க அசிங்க்ரோனஸ் பதிவைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-buffer"></i>
+                    <span>சிறந்த செயல்திறனுக்காக பதிவுகளை பஃப்பர் செய்யவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>உற்பத்தியில் அளவைக் குறைக்க பதிவு நிலைகளை சரிசெய்யவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>ஒவ்வொரு நிகழ்வையும் பதிவு செய்வதற்குப் பதிலாக உயர்-அளவிலான பதிவுகளை மாதிரி எடுக்கவும்</span>
+                </div>
+            </div>
+            
+            <h3>பாதுகாப்பு பரிசீலனைகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-shower"></i>
+                    <span>பதிவு செய்வதற்கு முன் உணர்திறன் தரவைத் தூய்மைப்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-lock"></i>
+                    <span>பொருத்தமான அனுமதிகளுடன் பதிவு கோப்புகளைப் பாதுகாக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-key"></i>
+                    <span>பதிவுகளை அனுப்பும் போது குறியாக்கத்தைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>பதிவு தரவுக்கான தக்கவைப்புக் கொள்கைகளைச் செயல்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-gavel"></i>
+                    <span>தொடர்புடைய ஒழுங்குமுறைகளுடன் (GDPR, HIPAA, முதலியன) இணக்கம் உள்ளதா என சரிபார்க்கவும்</span>
+                </div>
+            </div>
+            
+            <h3>தரவு தூய்மைப்படுத்தல் எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code>const winston = require('winston');
+
+// Custom format to sanitize sensitive data
+const sanitizeFormat = winston.format((info) => {
+  if (info.user && info.user.password) {
+    info.user.password = '[REDACTED]';
+  }
+
+  if (info.user && info.user.creditCard) {
+    info.user.creditCard = '[REDACTED]';
+  }
+
+  if (info.headers && info.headers.authorization) {
+    info.headers.authorization = '[REDACTED]';
+  }
+
+  return info;
+});
+
+const logger = winston.createLogger({
+  format: winston.format.combine(
+    sanitizeFormat(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console()
+  ]
+});
+
+// This sensitive data will be sanitized in the logs
+logger.info({
+  message: 'User registered',
+  user: {
+    name: 'John',
+    email: 'john@example.com',
+    password: 'secret123',
+    creditCard: '4111-1111-1111-1111'
+  },
+  headers: {
+    authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+  }
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Debugging with Logs -->
+        <section class="content-section" id="debugging">
+            <h2>பதிவுகளுடன் பிழைத்திருத்தம்</h2>
+            
+            <h3>Debug தொகுதி</h3>
+            
+            <p>debug தொகுதி நிபந்தனை பிழைத்திருத்த பதிவைச் சேர்க்க ஒரு இலகுவான வழியை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const debug = require('debug');
+
+// Create named debuggers
+const dbDebug = debug('app:db');
+const apiDebug = debug('app:api');
+const authDebug = debug('app:auth');
+
+// Usage
+dbDebug('Connected to database');
+apiDebug('API request received at /users');
+authDebug('User authenticated: %o', { id: 123, roles: ['admin'] });
+
+// Enable with environment variable:
+// DEBUG=app:* node app.js
+// or
+// DEBUG=app:db,app:auth node app.js</code></pre>
+            </div>
+            
+            <h3>தொடர்பு IDகள்</h3>
+            
+            <p>தொடர்பு IDகளைப் பயன்படுத்தி பல சேவைகளில் கோரிக்கைகளைக் கண்காணிக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const { v4: uuidv4 } = require('uuid');
+const winston = require('winston');
+const app = express();
+
+// Create a logger
+const logger = winston.createLogger({
+  transports: [new winston.transports.Console()],
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  )
+});
+
+// Correlation ID middleware
+app.use((req, res, next) => {
+  // Extract correlation ID from the request header or generate a new one
+  const correlationId = req.headers['x-correlation-id'] || uuidv4();
+
+  // Add it to the response headers
+  res.setHeader('x-correlation-id', correlationId);
+
+  // Add it to the request object
+  req.correlationId = correlationId;
+
+  // Create a request-specific logger
+  req.logger = logger.child({ correlationId });
+
+  req.logger.info({
+    message: 'Request received',
+    method: req.method,
+    url: req.url
+  });
+
+  next();
+});
+
+// Routes
+app.get('/', (req, res) => {
+  req.logger.info('Processing home request');
+  res.send('Hello World');
+});
+
+app.get('/error', (req, res) => {
+  req.logger.error('Error occurred in request');
+  res.status(500).send('Error');
+});
+
+app.listen(8080, () => {
+  logger.info('Server started on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>பயனுள்ள பதிவு Node.js பயன்பாடுகளை பிழைத்திருத்தம், கண்காணிப்பு மற்றும் சிக்கல் தீர்த்தலுக்கு முக்கியமானது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>சிறந்த தேடல் திறன் மற்றும் பகுப்பாய்வுக்காக JSON வடிவத்துடன் கட்டமைக்கப்பட்ட பதிவைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>உங்கள் தேவைகளின் அடிப்படையில் Winston, Pino, அல்லது Bunyan போன்ற பொருத்தமான பதிவு நூலகங்களைத் தேர்ந்தெடுக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>சிறந்த நடைமுறைகளைப் பயன்படுத்தவும்: சரியான பதிவு நிலைகளைப் பயன்படுத்தவும், சூழலைச் சேர்க்கவும் மற்றும் உணர்திறன் தரவைப் பாதுகாக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>உற்பத்தி சூழல்களுக்கு பதிவு சுழற்சி மற்றும் மையப்படுத்தப்பட்ட பதிவைச் செயல்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>உங்கள் பதிவு உத்தியை வடிவமைக்கும் போது செயல்திறன் மற்றும் பாதுகாப்பு தாக்கங்களைக் கருத்தில் கொள்ளவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>விநியோகிக்கப்பட்ட அமைப்புகளில் கோரிக்கைகளைக் கண்காணிக்க தொடர்பு IDகளைப் பயன்படுத்தவும்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான சொல்லை தேர்வு செய்யவும்.</h4>
+                <p>Logging ______ allows you to categorize messages by importance.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">formats</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "formats" என்பது பதிவு செய்திகளின் கட்டமைப்பைக் குறிக்கிறது, முக்கியத்துவத்தை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">transports</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "transports" என்பது பதிவுகள் எங்கு அனுப்பப்படுகின்றன என்பதைக் குறிக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">levels</div>
+                            <div class="option-feedback correct">✓ சரி! "Logging levels" என்பது செய்திகளை முக்கியத்துவத்தின் அடிப்படையில் வகைப்படுத்த உங்களை அனுமதிக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">contexts</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "contexts" என்பது கூடுதல் தகவலைச் சேர்க்கிறது, ஆனால் முக்கியத்துவத்தால் வகைப்படுத்தாது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Deployment.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Monitoring & Observability.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#why-logging">பதிவு ஏன் முக்கியமானது</a></li>
+                    <li><a href="#basic-logging">அடிப்படை பதிவு</a></li>
+                    <li><a href="#logging-libraries">பதிவு நூலகங்கள்</a></li>
+                    <li><a href="#best-practices">சிறந்த நடைமுறைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

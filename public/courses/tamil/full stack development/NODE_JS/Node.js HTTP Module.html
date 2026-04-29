@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js HTTP Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Publish a Package.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js HTTPS Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js HTTP Module</h2>
+            <p>Node.js இல் HTTP சேவையகங்கள் மற்றும் கிளையன்ட்களை உருவாக்க கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- The Built-in HTTP Module -->
+        <section class="content-section" id="built-in-http">
+            <h2>உள்ளமைக்கப்பட்ட HTTP தொகுதி</h2>
+            
+            <p>Node.js ஒரு சக்திவாய்ந்த உள்ளமைக்கப்பட்ட HTTP தொகுதியை உள்ளடக்கியது, இது HTTP சேவையகங்களை உருவாக்கவும் HTTP கோரிக்கைகளை செய்யவும் உங்களை அனுமதிக்கிறது.</p>
+            
+            <p>இந்த தொகுதி Node.js இல் வலை பயன்பாடுகள் மற்றும் APIகளை உருவாக்குவதற்கு அத்தியாவசியமானது.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-server"></i>
+                        <h4>HTTP சேவையகங்கள்</h4>
+                    </div>
+                    <p>கோரிக்கைகளை கையாளவும் பதில்களை அனுப்பவும் HTTP சேவையகங்களை உருவாக்கவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-globe"></i>
+                        <h4>HTTP கோரிக்கைகள்</h4>
+                    </div>
+                    <p>மற்ற சேவையகங்களுக்கு HTTP கோரிக்கைகளை செய்யவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>HTTP முறைகள்</h4>
+                    </div>
+                    <p>வெவ்வேறு HTTP முறைகளை கையாளவும் (GET, POST, PUT, DELETE, முதலியன)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Including the HTTP Module -->
+        <section class="content-section" id="including-http">
+            <h2>HTTP தொகுதியைச் சேர்த்தல்</h2>
+            
+            <p>HTTP தொகுதியைப் பயன்படுத்த, அதை உங்கள் பயன்பாட்டில் require() முறையைப் பயன்படுத்தி சேர்க்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>// Using CommonJS require (Node.js default)
+const http = require('http');
+
+// Or using ES modules (Node.js 14+ with "type": "module" in package.json)
+// import http from 'http';</code></pre>
+            </div>
+        </section>
+
+        <!-- Creating an HTTP Server -->
+        <section class="content-section" id="creating-server">
+            <h2>HTTP சேவையகத்தை உருவாக்குதல்</h2>
+            
+            <p>HTTP தொகுதியின் createServer() முறை ஒரு HTTP சேவையகத்தை உருவாக்குகிறது, இது குறிப்பிட்ட போர்ட்டில் கோரிக்கைகளைக் கேட்கிறது மற்றும் ஒவ்வொரு கோரிக்கைக்கும் ஒரு கால்பேக் செயல்பாட்டை இயக்குகிறது.</p>
+            
+            <h3>அடிப்படை HTTP சேவையக எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code>// Import the HTTP module
+const http = require('http');
+
+// Create a server object
+const server = http.createServer((req, res) => {
+  // Set the response HTTP header with HTTP status and Content type
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+
+  // Send the response body as 'Hello, World!'
+  res.end('Hello, World!\n');
+});
+
+// Define the port to listen on
+const PORT = 3000;
+
+// Start the server and listen on the specified port
+server.listen(PORT, 'localhost', () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});</code></pre>
+            </div>
+            
+            <h3>குறியீட்டைப் புரிந்துகொள்வது</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <span><strong>http.createServer()</strong> - ஒரு புதிய HTTP சேவையக நிகழ்வை உருவாக்குகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span><strong>கால்பேக் செயல்பாடு</strong> - இரண்டு அளவுருக்களுடன் ஒவ்வொரு கோரிக்கைக்கும் செயல்படுத்தப்படுகிறது: req - கோரிக்கை பொருள், res - பதில் பொருள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-heading"></i>
+                    <span><strong>res.writeHead()</strong> - பதில் நிலை குறியீடு மற்றும் தலைப்புகளை அமைக்கிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-paper-plane"></i>
+                    <span><strong>res.end()</strong> - பதிலை அனுப்புகிறது மற்றும் இணைப்பை முடிக்கிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-play"></i>
+                    <span><strong>server.listen()</strong> - குறிப்பிட்ட போர்ட்டில் சேவையகத்தைத் தொடங்குகிறது</span>
+                </div>
+            </div>
+            
+            <h3>சேவையகத்தை இயக்குதல்</h3>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🚀</span> சேவையகத்தை இயக்குவது எப்படி:</h4>
+                <ul>
+                    <li>குறியீட்டை server.js என்ற கோப்பில் சேமிக்கவும்</li>
+                    <li>Node.js ஐப் பயன்படுத்தி சேவையகத்தை இயக்கவும்: <code>node server.js</code></li>
+                    <li>பதிலைப் பார்க்க உங்கள் உலாவியில் http://localhost:3000 க்குச் செல்லவும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Working with HTTP Headers -->
+        <section class="content-section" id="http-headers">
+            <h2>HTTP தலைப்புகளுடன் பணிபுரிதல்</h2>
+            
+            <p>HTTP தலைப்புகள் உங்கள் பதிலுடன் கூடுதல் தகவல்களை அனுப்ப உங்களை அனுமதிக்கின்றன.</p>
+            
+            <p>நிலை குறியீடு மற்றும் பதில் தலைப்புகளை அமைக்க res.writeHead() முறை பயன்படுத்தப்படுகிறது.</p>
+            
+            <h3>பதில் தலைப்புகளை அமைத்தல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+const server = http.createServer((req, res) => {
+  // Set status code and multiple headers
+  res.writeHead(200, {
+    'Content-Type': 'text/html',
+    'X-Powered-By': 'Node.js',
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Set-Cookie': 'sessionid=abc123; HttpOnly'
+  });
+
+  res.end('<h1>Hello, World!</h1>');
+});
+
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000/');
+});</code></pre>
+            </div>
+            
+            <h3>பொதுவான HTTP நிலை குறியீடுகள்</h3>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>குறியீடு</th>
+                            <th>செய்தி</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>200</strong></td>
+                            <td>OK</td>
+                            <td>வெற்றிகரமான HTTP கோரிக்கைகளுக்கான நிலையான பதில்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>201</strong></td>
+                            <td>Created</td>
+                            <td>கோரிக்கை நிறைவேற்றப்பட்டு புதிய வளம் உருவாக்கப்பட்டது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>301</strong></td>
+                            <td>Moved Permanently</td>
+                            <td>வளம் ஒரு புதிய URL க்கு நகர்த்தப்பட்டது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>400</strong></td>
+                            <td>Bad Request</td>
+                            <td>கிளையன்ட் பிழையின் காரணமாக சேவையகம் கோரிக்கையை செயலாக்க முடியாது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>401</strong></td>
+                            <td>Unauthorized</td>
+                            <td>அங்கீகாரம் தேவைப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>404</strong></td>
+                            <td>Not Found</td>
+                            <td>கோரிக்கையிடப்பட்ட வளத்தைக் கண்டறிய முடியவில்லை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>500</strong></td>
+                            <td>Internal Server Error</td>
+                            <td>எதிர்பாராத நிலை எதிர்கொள்ளப்பட்டது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>கோரிக்கை தலைப்புகளைப் படித்தல்</h3>
+            
+            <p>req.headers பொருளைப் பயன்படுத்தி கோரிக்கை தலைப்புகளை அணுகலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+const server = http.createServer((req, res) => {
+  // Log all request headers
+  console.log('Request Headers:', req.headers);
+
+  // Get specific headers (case-insensitive)
+  const userAgent = req.headers['user-agent'];
+  const acceptLanguage = req.headers['accept-language'];
+
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end(`User-Agent: ${userAgent}\nAccept-Language: ${acceptLanguage}`);
+});
+
+server.listen(3000);</code></pre>
+            </div>
+        </section>
+
+        <!-- Working with URLs and Query Strings -->
+        <section class="content-section" id="urls-query">
+            <h2>URLகள் மற்றும் வினா சரங்களுடன் பணிபுரிதல்</h2>
+            
+            <p>Node.js URLகள் மற்றும் வினா சரங்களுடன் பணிபுரிய உள்ளமைக்கப்பட்ட தொகுதிகளை வழங்குகிறது, இது URL இன் வெவ்வேறு பகுதிகளைக் கையாளவும் வினா அளவுருக்களைப் பாகுபடுத்தவும் எளிதாக்குகிறது.</p>
+            
+            <h3>கோரிக்கை URL ஐ அணுகுதல்</h3>
+            
+            <p>req.url பண்பு கோரிக்கையிடப்பட்ட URL சரத்தைக் கொண்டுள்ளது, எந்தவொரு வினா அளவுருக்களையும் உள்ளடக்கியது.</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+const server = http.createServer((req, res) => {
+  // Get the URL and HTTP method
+  const { url, method } = req;
+
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end(`You made a ${method} request to ${url}`);
+});
+
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000/');
+});</code></pre>
+            </div>
+            
+            <h3>URL தொகுதியுடன் URLகளைப் பாகுபடுத்துதல்</h3>
+            
+            <p>url தொகுதி URL தீர்மானம் மற்றும் பாகுபடுத்தலுக்கான பயன்பாடுகளை வழங்குகிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const url = require('url');
+
+const server = http.createServer((req, res) => {
+  // Parse the URL
+  const parsedUrl = url.parse(req.url, true);
+
+  // Get different parts of the URL
+  const pathname = parsedUrl.pathname; // The path without query string
+  const query = parsedUrl.query; // The query string as an object
+
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({
+    pathname,
+    query,
+    fullUrl: req.url
+  }, null, 2));
+});
+
+server.listen(3000);</code></pre>
+            </div>
+            
+            <h3>வினா சரங்களுடன் பணிபுரிதல்</h3>
+            
+            <p>மேம்பட்ட வினா சரம் கையாளுதலுக்கு, நீங்கள் querystring தொகுப்பைப் பயன்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const { URL } = require('url');
+const querystring = require('querystring');
+
+const server = http.createServer((req, res) => {
+  // Using the newer URL API (Node.js 10+)
+  const baseURL = 'http://' + req.headers.host + '/';
+  const parsedUrl = new URL(req.url, baseURL);
+
+  // Get query parameters
+  const params = Object.fromEntries(parsedUrl.searchParams);
+
+  // Example of building a query string
+  const queryObj = {
+    name: 'John Doe',
+    age: 30,
+    interests: ['programming', 'music']
+  };
+  const queryStr = querystring.stringify(queryObj);
+
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({
+    path: parsedUrl.pathname,
+    params,
+    exampleQueryString: queryStr
+  }, null, 2));
+});
+
+server.listen(3000);</code></pre>
+            </div>
+        </section>
+
+        <!-- Handling Different HTTP Methods -->
+        <section class="content-section" id="http-methods">
+            <h2>வெவ்வேறு HTTP முறைகளைக் கையாளுதல்</h2>
+            
+            <p>RESTful APIகள் பொதுவாக வளங்களில் வெவ்வேறு செயல்பாடுகளைச் செய்ய வெவ்வேறு HTTP முறைகளைப் (GET, POST, PUT, DELETE, முதலியன) பயன்படுத்துகின்றன.</p>
+            
+            <p>Node.js HTTP சேவையகத்தில் வெவ்வேறு HTTP முறைகளைக் கையாளுவது எப்படி என்பது இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const { URL } = require('url');
+
+// In-memory data store (for demonstration)
+let todos = [
+  { id: 1, task: 'Learn Node.js', completed: false },
+  { id: 2, task: 'Build an API', completed: false }
+];
+
+const server = http.createServer((req, res) => {
+  const { method, url } = req;
+  const parsedUrl = new URL(url, `http://${req.headers.host}`);
+  const pathname = parsedUrl.pathname;
+
+  // Set CORS headers (for development)
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle preflight requests
+  if (method === 'OPTIONS') {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  // Route: GET /todos
+  if (method === 'GET' && pathname === '/todos') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(todos));
+  }
+  // Route: POST /todos
+  else if (method === 'POST' && pathname === '/todos') {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+
+    req.on('end', () => {
+      try {
+        const newTodo = JSON.parse(body);
+        newTodo.id = todos.length > 0 ? Math.max(...todos.map(t => t.id)) + 1 : 1;
+        todos.push(newTodo);
+        res.writeHead(201, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(newTodo));
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid JSON' }));
+      }
+    });
+  }
+
+  // Route: PUT /todos/:id
+  else if (method === 'PUT' && pathname.startsWith('/todos/')) {
+    const id = parseInt(pathname.split('/')[2]);
+    let body = '';
+
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+
+    req.on('end', () => {
+      try {
+        const updatedTodo = JSON.parse(body);
+        const index = todos.findIndex(t => t.id === id);
+
+        if (index === -1) {
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Todo not found' }));
+        } else {
+          todos[index] = { ...todos[index], ...updatedTodo };
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(todos[index]));
+        }
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid JSON' }));
+      }
+    });
+  }
+
+  // Route: DELETE /todos/:id
+  else if (method === 'DELETE' && pathname.startsWith('/todos/')) {
+    const id = parseInt(pathname.split('/')[2]);
+    const index = todos.findIndex(t => t.id === id);
+
+    if (index === -1) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Todo not found' }));
+    } else {
+      todos = todos.filter(t => t.id !== id);
+      res.writeHead(204);
+      res.end();
+    }
+  }
+
+  // 404 Not Found
+  else {
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Not Found' }));
+  }
+});
+
+const PORT = 3000;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔧</span> HTTP முறைகளுக்கான சிறந்த நடைமுறைகள்:</h4>
+                <ul>
+                    <li><strong>GET:</strong> ஒரு வளம் அல்லது வளங்களின் தொகுப்பைப் பெறவும் (idempotent ஆக இருக்க வேண்டும்)</li>
+                    <li><strong>POST:</strong> ஒரு புதிய வளத்தை உருவாக்கவும் (idempotent அல்ல)</li>
+                    <li><strong>PUT:</strong> ஏற்கனவே உள்ள வளத்தைப் புதுப்பிக்கவும் அல்லது இல்லையென்றால் உருவாக்கவும் (idempotent)</li>
+                    <li><strong>PATCH:</strong> ஒரு வளத்தை பகுதியாகப் புதுப்பிக்கவும்</li>
+                    <li><strong>DELETE:</strong> ஒரு வளத்தை அகற்றவும் (idempotent)</li>
+                    <li><strong>HEAD:</strong> பதில் உடல் இல்லாமல் GET போன்றது</li>
+                    <li><strong>OPTIONS:</strong> இலக்கு வளத்திற்கான தகவல்தொடர்பு விருப்பங்களை விவரிக்கவும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Streaming Responses -->
+        <section class="content-section" id="streaming">
+            <h2>ஸ்ட்ரீமிங் பதில்கள்</h2>
+            
+            <p>Node.js ஸ்ட்ரீம்கள் பெரிய அளவிலான தரவை திறம்பட கையாள சக்திவாய்ந்தவை. HTTP தொகுதி கோரிக்கை உடல்களைப் படிப்பதற்கும் பதில்களை எழுதுவதற்கும் ஸ்ட்ரீம்களுடன் நன்றாக வேலை செய்கிறது.</p>
+            
+            <h3>ஒரு பெரிய கோப்பை ஸ்ட்ரீம் செய்தல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+const server = http.createServer((req, res) => {
+  // Get the file path from the URL
+  const filePath = path.join(__dirname, req.url);
+
+  // Check if file exists
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      res.statusCode = 404;
+      res.end('File not found');
+      return;
+    }
+
+    // Get file stats
+    fs.stat(filePath, (err, stats) => {
+      if (err) {
+        res.statusCode = 500;
+        res.end('Server error');
+        return;
+      }
+
+      // Set appropriate headers
+      res.setHeader('Content-Length', stats.size);
+      res.setHeader('Content-Type', 'application/octet-stream');
+
+      // Create read stream and pipe to response
+      const stream = fs.createReadStream(filePath);
+
+      // Handle errors
+      stream.on('error', (err) => {
+        console.error('Error reading file:', err);
+        if (!res.headersSent) {
+          res.statusCode = 500;
+          res.end('Error reading file');
+        }
+      });
+
+      // Pipe the file to the response
+      stream.pipe(res);
+    });
+  });
+});
+
+const PORT = 3000;
+server.listen(PORT, () => {
+  console.log(`File server running at http://localhost:${PORT}/`);
+});</code></pre>
+            </div>
+            
+            <h3>ஸ்ட்ரீமிங்கின் நன்மைகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>நினைவக திறன்:</strong> எல்லாவற்றையும் நினைவகத்தில் ஏற்றுவதற்குப் பதிலாக துண்டுகளில் தரவைச் செயலாக்குகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span><strong>முதல் பைட்டுக்கு வேகமான நேரம்:</strong> தரவு கிடைக்கும் விரைவில் அனுப்பத் தொடங்குகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>பின்னழுத்தம் கையாளுதல்:</strong> வாசிப்பு ஸ்ட்ரீமை இடைநிறுத்துவதன் மூலம் மெதுவான கிளையன்ட்களை தானாகவே கையாளுகிறது</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் HTTP சேவையகத்தை உருவாக்க பயன்படுத்தப்படும் சரியான முறையைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.startServer()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.startServer()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.newServer()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.newServer()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">http.createServer()</div>
+                            <div class="option-feedback correct">✓ சரி! "http.createServer()" என்பது Node.js இல் HTTP சேவையகத்தை உருவாக்க பயன்படும் சரியான முறையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.initServer()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.initServer()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Publish a Package.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js HTTPS Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#built-in-http">உள்ளமைக்கப்பட்ட HTTP தொகுதி</a></li>
+                    <li><a href="#creating-server">HTTP சேவையகம் உருவாக்குதல்</a></li>
+                    <li><a href="#http-headers">HTTP தலைப்புகள்</a></li>
+                    <li><a href="#http-methods">HTTP முறைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

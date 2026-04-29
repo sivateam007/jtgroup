@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Function Expressions - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="javascript%20function%20arguments.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="javascript%20arrow%20functions.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript Function Expressions</h2>
+            <p>ஜாவாஸ்கிரிப்ட் செயல்பாட்டு வெளிப்பாடுகள் மற்றும் அவற்றின் பயன்பாடுகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is a Function Expression? -->
+        <section class="content-section" id="what-is">
+            <h2>What is a Function Expression?</h2>
+            
+            <p>ஜாவாஸ்கிரிப்ட் செயல்பாடுகள் <code>function</code> முக்கிய சொல்லுடன் வரையறுக்கப்படுகின்றன.</p>
+            
+            <p>ஒரு ஜாவாஸ்கிரிப்ட் செயல்பாட்டை ஒரு செயல்பாட்டு வெளிப்பாடாக வரையறுக்கலாம்.</p>
+            
+            <p>ஒரு <strong>செயல்பாட்டு வெளிப்பாடு</strong> என்பது ஒரு மாறியில் சேமிக்கப்பட்ட ஒரு செயல்பாடு.</p>
+            
+            <div class="code-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <pre><code>const x = function (a, b) { return a * b };</code></pre>
+            </div>
+            
+            <p>ஒரு செயல்பாட்டு வெளிப்பாடு ஒரு மாறியில் சேமிக்கப்பட்ட பிறகு, மாறி ஒரு செயல்பாடாகப் பயன்படுத்தப்படலாம்:</p>
+            
+            <div class="code-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <pre><code>const multiply = function (a, b) { return a * b };
+
+let z = multiply(4, 3);
+console.log(z);  // 12</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> முக்கியக் கருத்து:</h4>
+                <p>செயல்பாட்டு வெளிப்பாடுகள் ஜாவாஸ்கிரிப்ட்டில் "முதல்-வகுப்பு குடிமக்கள்" என்ற கருத்தை வெளிப்படுத்துகின்றன. இதன் பொருள்:</p>
+                <ul>
+                    <li>செயல்பாடுகளை மாறிகளில் சேமிக்கலாம்</li>
+                    <li>செயல்பாடுகளை மற்ற செயல்பாடுகளுக்கு வாதங்களாக அனுப்பலாம்</li>
+                    <li>செயல்பாடுகளை மற்ற செயல்பாடுகளிலிருந்து திருப்பித் தரலாம்</li>
+                    <li>செயல்பாடுகளை இயக்க நேரத்தில் உருவாக்கலாம்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Anonymous Functions -->
+        <section class="content-section" id="anonymous-functions">
+            <h2>அநாமதேய செயல்பாடுகள்</h2>
+            
+            <p>மேலே உள்ள செயல்பாடு உண்மையில் ஒரு <strong>அநாமதேய செயல்பாடு</strong> (பெயர் இல்லாத செயல்பாடு).</p>
+            
+            <p>மாறிகளில் சேமிக்கப்பட்ட செயல்பாடுகளுக்கு செயல்பாடு பெயர்கள் தேவையில்லை.</p>
+            
+            <div class="code-example">
+                <h4>எடுத்துக்காட்டு: அநாமதேய செயல்பாடு</h4>
+                <pre><code>const sayHello = function() {
+    return "Hello World";
+};
+
+console.log(sayHello());  // "Hello World"</code></pre>
+            </div>
+            
+            <p>மாறி பெயர் செயல்பாட்டை அழைக்கப் பயன்படுத்தப்படுகிறது.</p>
+            
+            <div class="code-example">
+                <h4>எடுத்துக்காட்டு: பெயரிடப்பட்ட செயல்பாட்டு வெளிப்பாடு</h4>
+                <pre><code>const add = function add(a, b) { 
+    return a + b;
+};</code></pre>
+                <p>இது ஒரு பெயரிடப்பட்ட செயல்பாட்டு வெளிப்பாடு. இந்த பெயர் டிபக்கிங்கிற்கு பயனுள்ளதாக இருக்கும்.</p>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">ℹ️</span> குறிப்பு:</h4>
+                <p>செயல்பாட்டு வெளிப்பாடுகள் பொதுவாக அநாமதேய செயல்பாடுகளை உருவாக்கப் பயன்படுத்தப்படுகின்றன.</p>
+                <p>மேலே உள்ள செயல்பாடு <code>sayHello</code> மாறியில் சேமிக்கப்பட்டுள்ளது.</p>
+                <p>அதை இயக்க, நீங்கள் <code>sayHello()</code> என்று அழைக்கிறீர்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Function Expressions Use Semicolons -->
+        <section class="content-section" id="semicolons">
+            <h2>செயல்பாட்டு வெளிப்பாடுகள் அரைப்புள்ளிகளைப் பயன்படுத்துகின்றன</h2>
+            
+            <p>ஒரு செயல்பாட்டு வெளிப்பாடு பொதுவாக ஒரு அறிக்கை.</p>
+            
+            <p>அதனால்தான் இது பொதுவாக ஒரு அரைப்புள்ளியுடன் முடிகிறது.</p>
+            
+            <div class="code-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <pre><code>const add = function(a, b) {
+    return a + b;
+};  // ← அரைப்புள்ளி</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> அரைப்புள்ளி விதி:</h4>
+                <ul>
+                    <li><strong>செயல்பாடு வரையறைகள்:</strong> பொதுவாக அரைப்புள்ளி தேவையில்லை</li>
+                    <li><strong>செயல்பாட்டு வெளிப்பாடுகள்:</strong> பொதுவாக அரைப்புள்ளி தேவை (மாறி ஒதுக்கீட்டு அறிவிப்பு என்பதால்)</li>
+                </ul>
+                <pre><code>// செயல்பாடு வரையறை - அரைப்புள்ளி தேவையில்லை
+function add(a, b) {
+    return a + b;
+}
+
+// செயல்பாட்டு வெளிப்பாடு - அரைப்புள்ளி தேவை
+const multiply = function(a, b) {
+    return a * b;
+};</code></pre>
+            </div>
+        </section>
+
+        <!-- Functions Stored in Variables -->
+        <section class="content-section" id="stored-in-variables">
+            <h2>மாறிகளில் சேமிக்கப்பட்ட செயல்பாடுகள்</h2>
+            
+            <p>ஒரு செயல்பாட்டு வெளிப்பாடு ஒரு மாறியில் சேமிக்கப்படுவதால், அதை ஒரு மதிப்பைப் போலப் பயன்படுத்தலாம்.</p>
+            
+            <p>இது மற்ற செயல்பாடுகளுக்கு செயல்பாடுகளை அனுப்பும் போது பயனுள்ளதாக இருக்கும் (callback கள்).</p>
+            
+            <div class="code-example">
+                <h4>எடுத்துக்காட்டு: செயல்பாட்டை வாதமாக அனுப்புதல்</h4>
+                <pre><code>function run(fn) {
+    return fn();
+}
+
+const sayHello = function() {
+    return "Hello";
+};
+
+let result = run(sayHello);
+console.log(result);  // "Hello"</code></pre>
+            </div>
+            
+            <p>ஒரு செயல்பாட்டு வெளிப்பாட்டை ஒரு மாறிக்கு ஒதுக்கலாம், மற்றொரு செயல்பாட்டிற்கு ஒரு வாதமாக அனுப்பலாம் அல்லது ஒரு செயல்பாட்டிலிருந்து திருப்பித் தரலாம்.</p>
+            
+            <div class="code-example">
+                <h4>மேலும் எடுத்துக்காட்டுகள்:</h4>
+                <pre><code>// 1. செயல்பாட்டை மாறிக்கு ஒதுக்குதல்
+const greet = function(name) {
+    return `Hello, ${name}!`;
+};
+
+// 2. செயல்பாட்டை வாதமாக அனுப்புதல்
+function processUser(callback) {
+    let user = { name: "John", age: 30 };
+    return callback(user);
+}
+
+const getUserInfo = function(user) {
+    return `${user.name} is ${user.age} years old`;
+};
+
+console.log(processUser(getUserInfo));  // "John is 30 years old"
+
+// 3. செயல்பாட்டை திருப்பித் தருதல்
+function createMultiplier(factor) {
+    return function(number) {
+        return number * factor;
+    };
+}
+
+const double = createMultiplier(2);
+const triple = createMultiplier(3);
+
+console.log(double(5));  // 10
+console.log(triple(5));  // 15</code></pre>
+            </div>
+        </section>
+
+        <!-- Functions vs. Function Expressions -->
+        <section class="content-section" id="functions-vs-expressions">
+            <h2>செயல்பாடுகள் vs செயல்பாட்டு வெளிப்பாடுகள்</h2>
+            
+            <p>ஜாவாஸ்கிரிப்ட் செயல்பாடுகள் <code>function</code> முக்கிய சொல்லுடன் வரையறுக்கப்படுகின்றன.</p>
+            
+            <p>ஜாவாஸ்கிரிப்ட் செயல்பாடுகளை வெவ்வேறு வழிகளில் வரையறுக்கலாம்.</p>
+            
+            <p>ஜாவாஸ்கிரிப்ட்டில், செயல்பாடு அறிவிப்புகள் மற்றும் செயல்பாட்டு வெளிப்பாடுகள் செயல்பாடுகளை வரையறுக்கும் வெவ்வேறு வழிகளைக் குறிக்கின்றன, அவற்றின் வெவ்வேறு தொடரியல் மற்றும் அவை எவ்வாறு கையாளப்படுகின்றன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>செயல்பாடு அறிவிப்புகள்</th>
+                            <th>செயல்பாட்டு வெளிப்பாடுகள்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>function add(a, b) {return a + b;}</code></td>
+                            <td><code>const add = function(a, b) {return a + b;};</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>function</code> முக்கிய சொல்</td>
+                            <td><code>function</code> முக்கிய சொல்</td>
+                        </tr>
+                        <tr>
+                            <td>ஒரு செயல்பாட்டு பெயர் தேவை</td>
+                            <td>செயல்பாட்டு பெயர் தேவையில்லை (அநாமதேய)</td>
+                        </tr>
+                        <tr>
+                            <td>அடைப்புக்குறிக்குள் அளவுருக்கள்</td>
+                            <td>அடைப்புக்குறிக்குள் அளவுருக்கள்</td>
+                        </tr>
+                        <tr>
+                            <td>குறியீடு தொகுதி அடைப்புக்குறிகள்</td>
+                            <td>குறியீடு தொகுதி அடைப்புக்குறிகள்</td>
+                        </tr>
+                        <tr>
+                            <td>அரைப்புள்ளி தேவையில்லை</td>
+                            <td>அரைப்புள்ளி தேவை (மாறி ஒதுக்கீடு என்பதால்)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚖️</span> இரண்டும் ஒரே மாதிரியாக வேலை செய்கின்றன:</h4>
+                <p>நீங்கள் அவற்றை அழைக்கும் போது இரண்டும் ஒரே மாதிரியாக வேலை செய்கின்றன. வித்தியாசம் அவை உங்கள் குறியீட்டில் கிடைக்கும் நேரம்.</p>
+            </div>
+        </section>
+
+        <!-- Hoisting -->
+        <section class="content-section" id="hoisting">
+            <h2>தலைக்கு மேலே உயர்த்துதல்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>செயல்பாடு அறிவிப்புகள்</h4>
+                    </div>
+                    <p>செயல்பாடு அறிவிப்புகள் அவை வரையறுக்கப்படுவதற்கு முன்பே அழைக்கப்படலாம்.</p>
+                    <pre><code>// இது வேலை செய்யும்
+let sum = add(2, 3);  // 5
+
+function add(a, b) {
+    return a + b;
+}</code></pre>
+                    <p>செயல்பாடு அறிவிப்புகள் அவற்றின் நோக்கத்தின் மேல் "தூக்கி விடப்படுகின்றன". இதன் பொருள் செயல்பாடு குறியீட்டில் வரையறுக்கப்படுவதற்கு முன்பே அழைக்கப்படலாம்.</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-times-circle"></i>
+                        <h4>செயல்பாட்டு வெளிப்பாடுகள்</h4>
+                    </div>
+                    <p>செயல்பாட்டு வெளிப்பாடுகள் அவை வரையறுக்கப்படுவதற்கு முன்பே அழைக்கப்பட முடியாது.</p>
+                    <pre><code>// இது பிழையை உருவாக்கும்
+let sum = add(2, 3);  // ⛔ பிழை!
+
+const add = function(a, b) {
+    return a + b;
+};</code></pre>
+                    <p>செயல்பாட்டு வெளிப்பாடுகள் செயல்படுத்தல் அவற்றின் வரையறையை அடையும் போது உருவாக்கப்படுகின்றன, மேலும் அந்த கட்டத்திற்கு முன்பே அழைக்க முடியாது.</p>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h4>உண்மையான பிழை எடுத்துக்காட்டு:</h4>
+                <pre><code>// இது பிழையை உருவாக்கும்
+console.log(greet("John"));  // ReferenceError
+
+const greet = function(name) {
+    return `Hello, ${name}!`;
+};
+
+// இது வேலை செய்யும்
+console.log(greet("John"));  // "Hello, John!"
+
+const greet = function(name) {
+    return `Hello, ${name}!`;
+};</code></pre>
+            </div>
+        </section>
+
+        <!-- Key Differences -->
+        <section class="content-section" id="key-differences">
+            <h2>முக்கிய வேறுபாடுகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>விஷயம்</th>
+                            <th>செயல்பாடு அறிவிப்புகள்</th>
+                            <th>செயல்பாட்டு வெளிப்பாடுகள்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>தொடரியல்</strong></td>
+                            <td>ஒரு பெயர் தேவை</td>
+                            <td>பெயர் தேவையில்லை (அநாமதேய)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தலைக்கு மேலே உயர்த்துதல்</strong></td>
+                            <td>தூக்கப்பட்டது (அழைப்புக்கு முன் பயன்படுத்தலாம்)</td>
+                            <td>தூக்கப்படவில்லை (வரையறுக்கப்பட்ட பிறகு மட்டுமே பயன்படுத்தலாம்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>நெகிழ்வுத்தன்மை</strong></td>
+                            <td>அவை எவ்வாறு மற்றும் எங்கு பயன்படுத்தப்படுகின்றன என்பதில் அதிக நெகிழ்வுத்தன்மையை வழங்குகின்றன</td>
+                            <td>மாறிகளுக்கு ஒதுக்க மற்றும் சுழல்களில் உருவாக்க அதிக நெகிழ்வுத்தன்மை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>அரைப்புள்ளி</strong></td>
+                            <td>தேவையில்லை</td>
+                            <td>தேவை (மாறி ஒதுக்கீடு என்பதால்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>பயன்பாடு</strong></td>
+                            <td>பொது-நோக்கம் செயல்பாடுகள்</td>
+                            <td>callback கள், event handlers, dynamic செயல்பாடுகள்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> நினைவில் கொள்ள:</h4>
+                <ul>
+                    <li><strong>தலைக்கு மேலே உயர்த்துதல்:</strong> செயல்பாடு அறிவிப்புகள் மட்டுமே முழுமையாக தூக்கப்படுகின்றன</li>
+                    <li><strong>அநாமதேய செயல்பாடுகள்:</strong> செயல்பாட்டு வெளிப்பாடுகள் பொதுவாக அநாமதேயமாக இருக்கும்</li>
+                    <li><strong>மாறி ஒதுக்கீடு:</strong> செயல்பாட்டு வெளிப்பாடுகள் எப்போதும் மாறிகளுக்கு ஒதுக்கப்படுகின்றன</li>
+                    <li><strong>காலப்போக்கில் உருவாக்கம்:</strong> செயல்பாட்டு வெளிப்பாடுகள் இயக்க நேரத்தில் உருவாக்கப்படலாம்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- When to Use Each -->
+        <section class="content-section" id="when-to-use">
+            <h2>எப்போது ஒவ்வொன்றையும் பயன்படுத்துவது</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4>பொது-நோக்கம் செயல்பாடுகளுக்கு செயல்பாடு அறிவிப்புகளைப் பயன்படுத்தவும்</h4>
+                        <p>முக்கியமான, மீண்டும் பயன்படுத்தக்கூடிய செயல்பாடுகளுக்கு செயல்பாடு அறிவிப்புகளைப் பயன்படுத்தவும்.</p>
+                        <pre><code>// செயல்பாடு அறிவிப்பு
+function calculateArea(width, height) {
+    return width * height;
+}
+
+// எங்கும் பயன்படுத்தலாம்
+console.log(calculateArea(10, 5));  // 50</code></pre>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4>செயல்பாடுகளை மாறிகளுக்கு ஒதுக்கும்போது செயல்பாட்டு வெளிப்பாடுகளைப் பயன்படுத்தவும்</h4>
+                        <p>செயல்பாடுகளை மாறிகளில் சேமிக்க வேண்டிய போது செயல்பாட்டு வெளிப்பாடுகளைப் பயன்படுத்தவும்.</p>
+                        <pre><code>// செயல்பாட்டு வெளிப்பாடு
+const greetUser = function(name) {
+    return `Hello, ${name}!`;
+};
+
+// மாறியாகப் பயன்படுத்தவும்
+console.log(greetUser("John"));  // "Hello, John!"</code></pre>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4>callback கள் மற்றும் event handlers இல் செயல்பாட்டு வெளிப்பாடுகளைப் பயன்படுத்தவும்</h4>
+                        <p>மற்ற செயல்பாடுகளுக்கு வாதங்களாக அனுப்பும் போது செயல்பாட்டு வெளிப்பாடுகளைப் பயன்படுத்தவும்.</p>
+                        <pre><code>// callback
+button.addEventListener('click', function() {
+    console.log('Button clicked!');
+});
+
+// event handler
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM is ready!');
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Later in this Tutorial -->
+        <section class="content-section" id="later-uses">
+            <h2>இந்த டுடோரியலில் பின்னர்</h2>
+            
+            <p>செயல்பாட்டு வெளிப்பாடுகள் உயர் நெகிழ்வுத்தன்மையை வழங்குகின்றன மற்றும் பல்வேறு நோக்கங்களுக்காக ஜாவாஸ்கிரிப்ட்டில் பரவலாகப் பயன்படுத்தப்படுகின்றன, மேலும் பின்வரும் அத்தியாயங்களில் நீங்கள் செயல்பாட்டு வெளிப்பாடுகளை மிகவும் அதிகமாகக் காண்பீர்கள்:</p>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h4>Callback கள்</h4>
+                    <p>மற்ற செயல்பாடுகளுக்கு செயல்பாடுகளை வாதங்களாக அனுப்புதல், event listeners அல்லது asynchronous செயல்பாடுகள் போன்றவை.</p>
+                    <pre><code>setTimeout(function() {
+    console.log('3 seconds passed');
+}, 3000);</code></pre>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4>Closures</h4>
+                    <p>செயல்பாட்டு வெளிப்பாடுகள் closures உருவாக்க உதவுகின்றன, இது செயல்பாடுகள் அவற்றின் கொண்ட நோக்கத்திலிருந்து மாறிகளை நினைவில் வைத்துக் கொள்ளவும் அணுகவும் அனுமதிக்கிறது.</p>
+                    <pre><code>function counter() {
+    let count = 0;
+    return function() {
+        return ++count;
+    };
+}</code></pre>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <h4>அம்புக்குறி செயல்பாடுகள்</h4>
+                    <p>சுருக்கமான அம்புக்குறி செயல்பாடு தொடரியல் (<code>=&gt;</code>) செயல்பாட்டு வெளிப்பாடுகளை எழுதுவதற்கான ஒரு நவீன வழி.</p>
+                    <pre><code>const add = (a, b) => a + b;</code></pre>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>IIFEs</h4>
+                    <p>அவை வரையறுக்கப்பட்டவுடன் இயங்கும் செயல்பாடுகள், பொதுவாக தனியார் நோக்கங்களை உருவாக்கவும் உலகளாவிய மாறி மோதல்களைத் தவிர்க்கவும் பயன்படுத்தப்படுகின்றன.</p>
+                    <pre><code>(function() {
+    // தனியார் நோக்கம்
+})();</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Mistakes -->
+        <section class="content-section" id="common-mistakes">
+            <h2>பொதுவான தவறுகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <h4>அரைப்புள்ளியை மறந்துவிடுதல்</h4>
+                        <p>செயல்பாட்டு வெளிப்பாடுகள் ஒரு அறிக்கையின் ஒரு பகுதியாகும் மற்றும் பொதுவாக <code>;</code> உடன் முடிவடையும்.</p>
+                        <pre><code>// தவறு:
+const add = function(a, b) {
+    return a + b;
+}  // அரைப்புள்ளி இல்லை
+
+// சரி:
+const add = function(a, b) {
+    return a + b;
+};  // அரைப்புள்ளி உள்ளது</code></pre>
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <h4>முன்கூட்டியே அழைத்தல்</h4>
+                        <p>ஒரு செயல்பாட்டு வெளிப்பாட்டை அது வரையறுக்கப்படுவதற்கு முன்பே அழைக்க முடியாது.</p>
+                        <pre><code>// தவறு:
+console.log(greet("John"));  // ReferenceError
+
+const greet = function(name) {
+    return `Hello, ${name}!`;
+};
+
+// சரி:
+const greet = function(name) {
+    return `Hello, ${name}!`;
+};
+
+console.log(greet("John"));  // "Hello, John!"</code></pre>
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <h4>குறிப்பு மற்றும் அழைப்பை குழப்புதல்</h4>
+                        <p><code>sayHello</code> என்பது செயல்பாடு. <code>sayHello()</code> செயல்பாட்டை அழைக்கிறது.</p>
+                        <pre><code>const sayHello = function() {
+    return "Hello";
+};
+
+// தவறு:
+let func = sayHello();  // func = "Hello" (செயல்பாட்டை அழைக்கிறது)
+// சரி:
+let func = sayHello;    // func = செயல்பாடு (செயல்பாட்டைக் குறிக்கிறது)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <h4>செயல்பாட்டு பெயர்கள் மற்றும் மாறிகளை குழப்புதல்</h4>
+                        <p>வெளிப்பாடுகளில், மாறி பெயர் செயல்பாட்டுக் குறிப்பு.</p>
+                        <pre><code>// தவறு:
+const multiply = function times(a, b) {
+    return a * b;
+};
+console.log(times(2, 3));  // ReferenceError: times is not defined
+
+// சரி:
+const multiply = function times(a, b) {
+    return a * b;
+};
+console.log(multiply(2, 3));  // 6 (மாறி பெயர் பயன்படுத்தவும்)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Single Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>செயல்பாட்டு வெளிப்பாடுகள் பயிற்சி</h2>
+            
+            <p><code>sayHello</code> மற்றும் <code>sayHello()</code> இடையே உள்ள வேறுபாடு என்ன?</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> <code>sayHello</code> மற்றும் <code>sayHello()</code> இடையே உள்ள வேறுபாடு என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">இரண்டும் ஒன்றே, வேறுபாடு இல்லை</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது முக்கியமான வேறுபாடு. <code>sayHello</code> செயல்பாட்டை குறிக்கிறது, <code>sayHello()</code> செயல்பாட்டை இயக்குகிறது.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text"><code>sayHello</code> செயல்பாட்டை இயக்குகிறது, <code>sayHello()</code> செயல்பாட்டை குறிக்கிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது தலைகீழாக உள்ளது. <code>sayHello</code> செயல்பாட்டை குறிக்கிறது, <code>sayHello()</code> செயல்பாட்டை இயக்குகிறது.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text"><code>sayHello</code> செயல்பாட்டை குறிக்கிறது, <code>sayHello()</code> செயல்பாட்டை இயக்குகிறது</div>
+                            <div class="option-feedback correct">✓ சரி! <code>sayHello</code> என்பது செயல்பாட்டின் மேற்கோளாகும் (செயல்பாட்டையே குறிக்கிறது). <code>sayHello()</code> என்பது செயல்பாட்டை அழைத்தல் (அதை இயக்குகிறது மற்றும் முடிவைத் திருப்பி அனுப்புகிறது).</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text"><code>sayHello</code> மாறி, <code>sayHello()</code> செயல்பாடு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! <code>sayHello</code> ஒரு மாறியாக இருக்கலாம் (செயல்பாட்டு வெளிப்பாட்டில்), ஆனால் அது செயல்பாட்டையும் குறிக்கும். வேறுபாடு அடைப்புக்குறிகளின் முன்னிலையில் உள்ளது.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> தீர்வு விளக்கம்:</h4>
+                <p>ஜாவாஸ்கிரிப்ட்டில், ஒரு செயல்பாட்டை <strong>குறிப்பிடுவது</strong> மற்றும் அதை <strong>அழைப்பது</strong> ஆகியவற்றுக்கு இடையே ஒரு முக்கியமான வேறுபாடு உள்ளது:</p>
+                
+                <div class="code-example">
+                    <pre><code>// செயல்பாட்டு வெளிப்பாடு
+const sayHello = function() {
+    return "Hello World";
+};
+
+// குறிப்பிடுதல் - செயல்பாட்டையே திருப்பி அனுப்புகிறது
+let funcReference = sayHello;
+console.log(funcReference);  // function() { return "Hello World"; }
+console.log(typeof funcReference);  // "function"
+
+// அழைத்தல் - செயல்பாட்டை இயக்குகிறது மற்றும் முடிவைத் திருப்பி அனுப்புகிறது
+let funcResult = sayHello();
+console.log(funcResult);     // "Hello World"
+console.log(typeof funcResult);  // "string"</code></pre>
+                </div>
+                
+                <p><strong>செயல்பாட்டு குறிப்புகள்</strong> நினைவகத்தில் செயல்பாட்டை சுட்டிக்காட்டும் மாறிகள். நீங்கள் அடைப்புக்குறிகளைச் சேர்க்கும் வரை அவை செயல்பாட்டை இயக்காது.</p>
+                <p><strong>செயல்பாட்டு அழைப்புகள்</strong> உடனடியாக செயல்பாட்டை இயக்குகின்றன மற்றும் அதன் <code>return</code> மதிப்பை (ஏதேனும் இருந்தால்) திருப்பி அனுப்புகின்றன.</p>
+                
+                <div class="tip-box">
+                    <h4><span class="tip-icon">🎯</span> நடைமுறை பயன்பாடு:</h4>
+                    <ul>
+                        <li><code>sayHello</code> - callback அளவுருவாக அனுப்பும்போது பயன்படுத்தவும்</li>
+                        <li><code>sayHello()</code> - நீங்கள் உடனடியாக முடிவை விரும்பும் போது பயன்படுத்தவும்</li>
+                    </ul>
+                    <pre><code>// Callback: செயல்பாட்டை அனுப்பவும்
+button.addEventListener('click', sayHello);
+
+// உடனடி அழைப்பு: முடிவைப் பெறவும்
+let greeting = sayHello();</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Chapter Preview -->
+        <section class="content-section" id="next-chapter">
+            <h2>அடுத்த அத்தியாயம்</h2>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">➡️</span> JavaScript Arrow Functions</h4>
+                <p>அடுத்த பாடத்தில், அம்புக்குறி செயல்பாடுகள் பற்றி கற்றுக்கொள்வோம் - செயல்பாடுகளை எழுதுவதற்கான நவீன, சுருக்கமான தொடரியல்:</p>
+                <ul>
+                    <li>அம்புக்குறி செயல்பாடு தொடரியல்</li>
+                    <li><code>this</code> க்கான கட்டுப்பாடு</li>
+                    <li>மறைமுகமான திரும்புகை</li>
+                    <li>அம்புக்குறி செயல்பாடுகளின் வரம்புகள்</li>
+                </ul>
+                <a href="javascript%20arrow%20functions.html" class="nav-tab next" style="margin-top: 15px; padding: 10px 20px; display: inline-flex; align-items: center; gap: 10px;">
+                    <span>JavaScript Arrow Functions ஐ தொடர்ந்து படிக்கவும்</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="javascript%20function%20arguments.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="javascript%20arrow%20functions.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is">செயல்பாட்டு வெளிப்பாடு என்றால் என்ன?</a></li>
+                    <li><a href="#anonymous-functions">அநாமதேய செயல்பாடுகள்</a></li>
+                    <li><a href="#hoisting">தலைக்கு மேலே உயர்த்துதல்</a></li>
+                    <li><a href="#key-differences">முக்கிய வேறுபாடுகள்</a></li>
+                    <li><a href="#when-to-use">எப்போது பயன்படுத்துவது</a></li>
+                    <li><a href="#common-mistakes">பொதுவான தவறுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Interactive function expression demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create interactive example
+            const demoDiv = document.createElement('div');
+            demoDiv.className = 'code-example';
+            demoDiv.innerHTML = `
+                <h4>நிகழ்நேர செயல்பாட்டு வெளிப்பாடு</h4>
+                <pre><code>// செயல்பாட்டு வெளிப்பாடு
+const calculate = function(operation, a, b) {
+    switch(operation) {
+        case 'add': return a + b;
+        case 'subtract': return a - b;
+        case 'multiply': return a * b;
+        case 'divide': return a / b;
+        default: return 'Invalid operation';
+    }
+};
+
+// சோதனை: 
+<select id="operationSelect" style="padding: 5px;">
+    <option value="add">கூட்டல் (+)</option>
+    <option value="subtract">கழித்தல் (-)</option>
+    <option value="multiply">பெருக்கல் (×)</option>
+    <option value="divide">வகுத்தல் (÷)</option>
+</select>
+<input type="number" id="num1" value="10" style="width: 60px; padding: 5px;">
+<input type="number" id="num2" value="5" style="width: 60px; padding: 5px;">
+<button onclick="performCalculation()" style="margin-left: 10px; padding: 5px 10px; background: var(--git-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Calculate</button>
+
+<p style="margin-top: 10px;">முடிவு: <span id="calcResult" style="font-weight: bold;">15</span></p>
+            `;
+            
+            // Find exercise section and insert before it
+            const exerciseSection = document.getElementById('exercise');
+            if (exerciseSection) {
+                exerciseSection.parentNode.insertBefore(demoDiv, exerciseSection);
+            }
+
+            // Define the function
+            window.performCalculation = function() {
+                // Function expression
+                const calculate = function(operation, a, b) {
+                    switch(operation) {
+                        case 'add': return a + b;
+                        case 'subtract': return a - b;
+                        case 'multiply': return a * b;
+                        case 'divide': return a / b;
+                        default: return 'Invalid operation';
+                    }
+                };
+                
+                const operation = document.getElementById('operationSelect').value;
+                const num1 = parseFloat(document.getElementById('num1').value) || 0;
+                const num2 = parseFloat(document.getElementById('num2').value) || 0;
+                const result = calculate(operation, num1, num2);
+                const calcResult = document.getElementById('calcResult');
+                
+                calcResult.textContent = result;
+                calcResult.style.color = 'var(--success)';
+                calcResult.style.fontWeight = 'bold';
+            };
+            
+            // Initialize with default value
+            window.performCalculation();
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

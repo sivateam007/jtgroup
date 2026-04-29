@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Lists - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20Conditional%20Rendering
+.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Forms.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Lists</h2>
+<p>Template-ல் items-ன் collections-ஐ display செய்ய கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Lists</h2>
+<p>Lists template-ல் items-ன் collections-ஐ display செய்கின்றன.</p>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i> List Rendering Essentials</h4>
+<ul>
+<li><strong>Loop:</strong> Stable identity-க்கு track உடன் @if பயன்படுத்தவும் மற்றும் empty states-க்கு @empty பயன்படுத்தவும்.</li>
+<li><strong>Signals:</strong> List state-ஐ signal-ல் store செய்யவும் (e.g., items = signal([...])) மற்றும் immutably update செய்யவும் set()/update() உடன்.</li>
+<li><strong>Identity:</strong> Unnecessary DOM work avoid செய்ய stable key மூலம் track செய்யவும் (e.g., it.id).</li>
+<li><strong>Derived views:</strong> UI-க்கு உங்கள் data-ன் copies-ஐ filter/sort செய்யவும்; source list intact-காக வைக்கவும் (derived state-க்கு computed() பயன்படுத்தவும்).</li>
+</ul>
+</div>
+
+<div class="code-example">
+<h3>Basic List Syntax</h3>
+<pre><code class="command-input">&lt;ul&gt;
+  @for (item of items(); let i = $index; track item) {
+    &lt;li&gt;{{ i + 1 }}. {{ item }}&lt;/li&gt;
+  } @empty {
+    &lt;li&gt;No items&lt;/li&gt;
+  }
+&lt;/ul&gt;</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-info-circle tip-icon"></i> Note</h4>
+<p>Control Flow for @for, Conditional Rendering, and Templates for interpolation and basics ஆகியவற்றை காணவும்.</p>
+</div>
+</section>
+
+<!-- Basic Lists -->
+<section class="content-section" id="basic-lists">
+<h2>Basic Lists</h2>
+<p>Loop செய்ய @if பயன்படுத்தவும்; let i = $index உடன் index-ஐ expose செய்யவும்.</p>
+<p>Signals உடன் immutably update செய்யவும் (e.g., items.update(arr => [...arr, newItem])).</p>
+
+<div class="code-example">
+<h3>Basic List Example</h3>
+<pre><code class="command-input">&lt;ul&gt;
+  @for (item of items(); let i = $index; track item) {
+    &lt;li&gt;{{ i + 1 }}. {{ item }}&lt;/li&gt;
+  } @empty {
+    &lt;li&gt;No items&lt;/li&gt;
+  }
+&lt;/ul&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<p>@if உடன் basic list render செய்யவும் மற்றும் index-ஐ expose செய்யவும்:</p>
+
+<div class="code-example">
+<h3>Basic Lists Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Lists&lt;/h3&gt;
+    &lt;ul&gt;
+      @for (item of items(); let i = $index; track item) {
+        &lt;li&gt;{{ i + 1 }}. {{ item }}&lt;/li&gt;
+      } @empty {
+        &lt;li&gt;No items&lt;/li&gt;
+      }
+    &lt;/ul&gt;
+    &lt;button (click)="add()"&gt;Add Item&lt;/button&gt;
+    &lt;button (click)="clear()"&gt;Clear&lt;/button&gt;
+    &lt;button (click)="reset()"&gt;Reset&lt;/button&gt;
+  `
+})
+export class App {
+  items = signal(['Angular', 'React', 'Vue']);
+  add() { this.items.update(arr => [...arr, 'Svelte']); }
+  clear() { this.items.set([]); }
+  reset() { this.items.set(['Angular', 'React', 'Vue']); }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>@for (item of items(); let i = $index; track item):</strong> items signal-ல் loops செய்கிறது; zero-based index-ஐ i ஆக expose செய்கிறது; primitive item-ஐ identity-காக பயன்படுத்துகிறது.</li>
+<li><strong>Buttons:</strong> add() immutably append செய்கிறது, clear() empty list-ஐ set செய்கிறது, reset() defaults-ஐ restore செய்கிறது.</li>
+<li><strong>@empty:</strong> Items இல்லாத போது fallback list item-ஐ render செய்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>No import needed:</strong> @if Angular-ன் template syntax-ல் built-in ஆகும்; module import தேவையில்லை.</li>
+<li><strong>Don't mutate in place:</strong> Signals உடன், updates trigger செய்ய new array assign செய்ய set()/update()-ஐ விரும்பவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Lists with track -->
+<section class="content-section" id="lists-with-track">
+<h2>Lists with track (@for)</h2>
+<p>List changes-ல், Angular DOM rows-ஐ data items உடன் reconcile செய்கிறது.</p>
+<p>track stable identity வழங்குகிறது (e.g., an id) DOM churn minimize செய்ய மற்றும் focus/inputs preserve செய்ய.</p>
+<p>Legacy equivalence: *ngFor உடன், அதே effect achieve செய்ய trackBy பயன்படுத்தவும்.</p>
+
+<div class="code-example">
+<h3>Track Example Syntax</h3>
+<pre><code class="command-input">@for (it of items(); track it.id) { &lt;li&gt;{{ it.name }}&lt;/li&gt; } @empty { &lt;li&gt;No items&lt;/li&gt; }</code></pre>
+</div>
+
+<h3>Example</h3>
+<p>Track பயன்படுத்தி stable identity உடன் lists render செய்யவும்:</p>
+
+<div class="code-example">
+<h3>Lists with track Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, signal } from '@angular/core';
+
+type Item = { id: number; name: string };
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Lists with track&lt;/h3&gt;
+    &lt;ul&gt;
+      @for (it of items(); let i = $index; track it.id) {
+        &lt;li&gt;{{ i + 1 }}. {{ it.name }} (id: {{ it.id }})&lt;/li&gt;
+      }
+    &lt;/ul&gt;
+    &lt;button (click)="renameFirst()"&gt;Rename first&lt;/button&gt;
+    &lt;button (click)="shuffle()"&gt;Shuffle&lt;/button&gt;
+    &lt;button (click)="add()"&gt;Add item&lt;/button&gt;
+  `
+})
+export class App {
+  items = signal([
+    { id: 1, name: 'Angular' },
+    { id: 2, name: 'React' },
+    { id: 3, name: 'Vue' }
+  ]);
+  nextId = 4;
+
+  renameFirst() {
+    this.items.update(arr => arr.map((it, i) => i === 0 ? { ...it, name: it.name + ' *' } : it));
+  }
+
+  shuffle() {
+    this.items.update(arr => {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    });
+  }
+
+  add() {
+    this.items.update(arr => [...arr, { id: this.nextId++, name: 'New ' + Date.now() }]);
+  }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>track it.id:</strong> Stable identity வழங்குகிறது அதனால் items shuffle அல்லது update ஆகும் போது Angular DOM rows reuse செய்கிறது, focus மற்றும் local state preserve செய்கிறது.</li>
+<li><strong>renameFirst():</strong> First item-ன் name-ஐ immutably update செய்கிறது (new object reference) change detection trigger செய்ய.</li>
+<li><strong>shuffle():</strong> Track உடன் DOM reuse demonstrate செய்ய order-ஐ randomize செய்கிறது.</li>
+<li><strong>add():</strong> Unique id உடன் new item-ஐ append செய்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Avoid index identity:</strong> Order மாறக்கூடியால் array index-ஐ identity-காக பயன்படுத்தாதீர்கள்; stable id பயன்படுத்தவும்.</li>
+<li><strong>Ensure uniqueness:</strong> Duplicate id values DOM/UI desync cause செய்யும். Unique keys பயன்படுத்தவும்.</li>
+<li><strong>*ngFor equivalence:</strong> *ngFor உடன், அதே behavior achieve செய்ய trackBy பயன்படுத்தவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Filter & Sort -->
+<section class="content-section" id="filter-sort">
+<h2>Filter & Sort</h2>
+<p>Signals-அடிப்படையில் computed() உடன் derived view compute செய்யவும்.</p>
+<p>உங்கள் data-ன் copies-ஐ filter மற்றும் sort செய்யவும்; easy resets-க்கு source list intact-காக வைக்கவும்.</p>
+
+<div class="code-example">
+<h3>Filter & Sort Example</h3>
+<pre><code class="command-input">import { signal, computed } from '@angular/core';
+
+items = signal([{ name: 'Angular', price: 0 }, { name: 'React', price: 0 }]);
+query = signal('');
+sortKey = signal<'name' | 'price'>('name');
+sortDir = signal<1 | -1>(1);
+
+view = computed(() => {
+  const q = query().toLowerCase();
+  const dir = sortDir();
+  const key = sortKey();
+  return items()
+    .filter(it => it.name.toLowerCase().includes(q))
+    .sort((a, b) => {
+      const av: any = (a as any)[key];
+      const bv: any = (b as any)[key];
+      return av < bv ? -1 * dir : av > bv ? 1 * dir : 0;
+    });
+});
+
+@for (p of view(); track p.name) {
+  &lt;tr&gt;
+    &lt;td&gt;{{ p.name }}&lt;/td&gt;
+    &lt;td&gt;{{ p.price | currency:'USD' }}&lt;/td&gt;
+  &lt;/tr&gt;
+}</code></pre>
+</div>
+
+<h3>Example</h3>
+<p>computed() பயன்படுத்தி lists filter மற்றும் sort செய்யவும்:</p>
+
+<div class="code-example">
+<h3>Filter & Sort Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, signal, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+type Product = { name: string; price: number };
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    &lt;h3&gt;Filter & Sort&lt;/h3&gt;
+    &lt;div style="display:flex;gap:8px;margin-bottom:8px;"&gt;
+      &lt;label&gt;Search: &lt;input #q (input)="query.set(q.value)" placeholder="Type to filter..." /&gt;&lt;/label&gt;
+      &lt;button (click)="setSort('name')"&gt;Sort by Name&lt;/button&gt;
+      &lt;button (click)="setSort('price')"&gt;Sort by Price&lt;/button&gt;
+      &lt;button (click)="toggleDir()"&gt;{{ sortDir() === 1 ? 'Asc' : 'Desc' }}&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;table style="width:100%;border-collapse:collapse;"&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;&lt;th style="border:1px solid #ddd;padding:8px;background:#f7f7f7;"&gt;Name&lt;/th&gt;&lt;th style="border:1px solid #ddd;padding:8px;background:#f7f7f7;width:140px;"&gt;Price&lt;/th&gt;&lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        @for (p of view(); track p.name) {
+          &lt;tr&gt;
+            &lt;td style="border:1px solid #ddd;padding:8px;"&gt;{{ p.name }}&lt;/td&gt;
+            &lt;td style="border:1px solid #ddd;padding:8px;"&gt;{{ p.price | currency:'USD' }}&lt;/td&gt;
+          &lt;/tr&gt;
+        }
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  `
+})
+export class App {
+  items = signal&lt;Product[]&gt;([
+    { name: 'Angular', price: 0 },
+    { name: 'React', price: 0 },
+    { name: 'Vue', price: 0 },
+    { name: 'Svelte', price: 0 },
+    { name: 'Solid', price: 0 },
+    { name: 'Lit', price: 0 }
+  ]);
+  query = signal('');
+  sortKey = signal&lt;'name' | 'price'&gt;('name');
+  sortDir = signal&lt;1 | -1&gt;(1); // 1 asc, -1 desc
+
+  view = computed(() => {
+    const q = this.query().toLowerCase();
+    const dir = this.sortDir();
+    const key = this.sortKey();
+    return this.items()
+      .filter(it => it.name.toLowerCase().includes(q))
+      .sort((a, b) => {
+        const av: any = (a as any)[key];
+        const bv: any = (b as any)[key];
+        return av < bv ? -1 * dir : av > bv ? 1 * dir : 0;
+      });
+  });
+
+  setSort(key: 'name' | 'price') {
+    if (this.sortKey() === key) {
+      this.toggleDir();
+    } else {
+      this.sortKey.set(key);
+    }
+  }
+
+  toggleDir() {
+    this.sortDir.set(this.sortDir() === 1 ? -1 : 1);
+  }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>computed() view:</strong> Signals-லிருந்து source list mutate செய்யாமல் filtered/sorted array derive செய்கிறது.</li>
+<li><strong>query/sortKey/sortDir:</strong> UI-லிருந்து இந்த signals update செய்வதன் மூலம் derived view-ஐ control செய்கிறது.</li>
+<li><strong>@for (p of view(); track p.name):</strong> Derived rows-ஐ render செய்கிறது; identity-க்கு stable key (p.name) பயன்படுத்துகிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Note</h4>
+<p>Templates-ல் heavy work avoid செய்யவும்; computed() உடன் pre-compute செய்யவும் மற்றும் templates fast-காக வைக்க @if உடன் loop செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Exercise</h2>
+<div class="exercise-box">
+<h4><i class="fas fa-question-circle exercise-icon"></i> Which control flow syntax renders a list from an array?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">@for</div>
+<div class="option-feedback correct">✓ Correct! @if syntax array-லிருந்து list render செய்கிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">@more</div>
+<div class="option-feedback incorrect">✗ Incorrect! @more என்பது valid Angular control flow syntax அல்ல</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">[hidden]</div>
+<div class="option-feedback incorrect">✗ Incorrect! [hidden] element-ஐ CSS மூலம் மறைக்கிறது, list render செய்ய பயன்படாது</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20Conditional%20Rendering.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Forms.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">Lists Introduction</a></li>
+<li><a href="#basic-lists">Basic Lists</a></li>
+<li><a href="#lists-with-track">Lists with track</a></li>
+<li><a href="#filter-sort">Filter & Sort</a></li>
+<li><a href="#exercise">Exercise</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contact</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Location &amp; Hours</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

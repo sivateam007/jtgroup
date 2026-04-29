@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL INSERT INTO SELECT Statement - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Syntax Grid */
+        .syntax-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .syntax-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .syntax-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .syntax-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .syntax-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            margin: 2rem 0;
+        }
+        
+        .responsive-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--git-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .database-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .database-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .database-card h4 {
+            color: var(--git-color);
+            margin-bottom: 1rem;
+            text-align: center;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .syntax-grid,
+            .options-grid,
+            .database-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .syntax-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .responsive-table {
+                font-size: 0.8rem;
+            }
+            
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+            
+            .database-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL SELECT INTO Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL CASE Expression.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL INSERT INTO SELECT Statement</h2>
+            <p>ஒரு அட்டவணையிலிருந்து தரவை நகலெடுத்து மற்றொரு அட்டவணையில் செருக INSERT INTO SELECT அறிக்கையைப் பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is INSERT INTO SELECT Statement -->
+        <section class="content-section" id="what-is-insert-select">
+            <h2>SQL INSERT INTO SELECT அறிக்கை</h2>
+            
+            <p>INSERT INTO SELECT அறிக்கை ஒரு அட்டவணையிலிருந்து தரவை நகலெடுத்து மற்றொரு அட்டவணையில் செருகுகிறது.</p>
+            
+            <p>INSERT INTO SELECT அறிக்கைக்கு மூல மற்றும் இலக்கு அட்டவணைகளில் உள்ள தரவு வகைகள் பொருந்த வேண்டும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>இலக்கு அட்டவணையில் உள்ள இருக்கும் பதிவுகள் பாதிக்கப்படாது.</p>
+            </div>
+        </section>
+
+        <!-- INSERT INTO SELECT Syntax -->
+        <section class="content-section" id="insert-select-syntax">
+            <h2>INSERT INTO SELECT தொடரியல்</h2>
+            
+            <p>ஒரு அட்டவணையிலிருந்து அனைத்து நெடுவரிசைகளையும் மற்றொரு அட்டவணையில் நகலெடுக்க:</p>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-code"></i>
+                        <h3>அனைத்து நெடுவரிசைகளும்</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>INSERT INTO table2
+SELECT * FROM table1
+WHERE condition;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-code"></i>
+                        <h3>சில நெடுவரிசைகள் மட்டும்</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>INSERT INTO table2 (column1, column2, column3, ...)
+SELECT column1, column2, column3, ...
+FROM table1
+WHERE condition;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>இந்த பயிற்சியில் நன்கு அறியப்பட்ட Northwind மாதிரி தரவுத்தளத்தைப் பயன்படுத்துவோம்.</p>
+            
+            <div class="database-comparison">
+                <div class="database-card">
+                    <h4>"Customers" அட்டவணையிலிருந்து ஒரு தேர்வு</h4>
+                    <div class="responsive-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>CustomerID</th>
+                                    <th>CustomerName</th>
+                                    <th>ContactName</th>
+                                    <th>City</th>
+                                    <th>Country</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Alfreds Futterkiste</td>
+                                    <td>Maria Anders</td>
+                                    <td>Berlin</td>
+                                    <td>Germany</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Ana Trujillo Emparedados</td>
+                                    <td>Ana Trujillo</td>
+                                    <td>México D.F.</td>
+                                    <td>Mexico</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Antonio Moreno Taquería</td>
+                                    <td>Antonio Moreno</td>
+                                    <td>México D.F.</td>
+                                    <td>Mexico</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="database-card">
+                    <h4>"Suppliers" அட்டவணையிலிருந்து ஒரு தேர்வு</h4>
+                    <div class="responsive-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SupplierID</th>
+                                    <th>SupplierName</th>
+                                    <th>ContactName</th>
+                                    <th>City</th>
+                                    <th>Country</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Exotic Liquid</td>
+                                    <td>Charlotte Cooper</td>
+                                    <td>London</td>
+                                    <td>UK</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>New Orleans Cajun Delights</td>
+                                    <td>Shelley Burke</td>
+                                    <td>New Orleans</td>
+                                    <td>USA</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Grandma Kelly's Homestead</td>
+                                    <td>Regina Murphy</td>
+                                    <td>Ann Arbor</td>
+                                    <td>USA</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SQL INSERT INTO SELECT Examples -->
+        <section class="content-section" id="insert-select-examples">
+            <h2>SQL INSERT INTO SELECT எடுத்துக்காட்டுகள்</h2>
+            
+            <p>"Suppliers" அட்டவணையை "Customers" அட்டவணையில் நகலெடுக்க (தரவால் நிரப்பப்படாத நெடுவரிசைகள் NULL ஐக் கொண்டிருக்கும்):</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு 1</h3>
+                <pre><code>INSERT INTO Customers (CustomerName, City, Country)
+SELECT SupplierName, City, Country FROM Suppliers;</code></pre>
+            </div>
+            
+            <p>"Suppliers" அட்டவணையை "Customers" அட்டவணையில் நகலெடுக்க (அனைத்து நெடுவரிசைகளையும் நிரப்ப):</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு 2</h3>
+                <pre><code>INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+SELECT SupplierName, ContactName, Address, City, PostalCode, Country FROM Suppliers;</code></pre>
+            </div>
+            
+            <p>ஜெர்மன் சப்ளையர்களை மட்டும் "Customers" அட்டவணையில் நகலெடுக்க:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு 3</h3>
+                <pre><code>INSERT INTO Customers (CustomerName, City, Country)
+SELECT SupplierName, City, Country FROM Suppliers
+WHERE Country='Germany';</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கியமான குறிப்பு:</h4>
+                <p>INSERT INTO SELECT ஐப் பயன்படுத்தும் போது, மூல மற்றும் இலக்கு அட்டவணைகளின் நெடுவரிசை தரவு வகைகள் பொருந்துவதை உறுதிப்படுத்திக் கொள்ளுங்கள். இல்லையெனில் பிழைகள் ஏற்படலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-archive"></i>
+                    </div>
+                    <h3>காப்புப்பிரதி உருவாக்கம்</h3>
+                    <p>குறிப்பிட்ட தரவுகளின் காப்புப்பிரதி</p>
+                    <div class="code-block small">
+                        <pre><code>INSERT INTO CustomerBackup
+SELECT * FROM Customers
+WHERE Country = 'USA';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>தரவு மாற்றம்</h3>
+                    <p>வெவ்வேறு அட்டவணைகளுக்கு இடையே தரவை மாற்றுதல்</p>
+                    <div class="code-block small">
+                        <pre><code>INSERT INTO ArchivedOrders
+SELECT OrderID, CustomerID, OrderDate 
+FROM Orders 
+WHERE OrderDate < '2023-01-01';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3>வடிகட்டப்பட்ட தரவு</h3>
+                    <p>குறிப்பிட்ட நிபந்தனைகளின் அடிப்படையில் தரவு</p>
+                    <div class="code-block small">
+                        <pre><code>INSERT INTO PremiumCustomers
+SELECT CustomerName, Email, TotalPurchases
+FROM Customers
+WHERE TotalPurchases > 1000;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL INSERT INTO SELECT அறிக்கையின் நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு அட்டவணையிலிருந்து தரவை நகலெடுத்து மற்றொரு அட்டவணையில் செருக</div>
+                            <div class="option-feedback correct">✓ சரி! INSERT INTO SELECT ஒரு அட்டவணையிலிருந்து தரவை நகலெடுத்து மற்றொரு அட்டவணையில் செருக பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு அட்டவணையிலிருந்து வரிசைகளை நீக்கி மற்றொரு அட்டவணையில் செருக</div>
+                            <div class="option-feedback incorrect">✗ தவறு! INSERT INTO SELECT தரவை நீக்காது, நகலெடுக்கும் மட்டுமே</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">துணை வினவலில் எந்தப் பதிவு உள்ளதா என சோதிக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது EXISTS செயலிக்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">இரண்டு அல்லது அதற்கு மேற்பட்ட அட்டவணைகளிலிருந்து வரிசைகளை இணைக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது JOIN-க்கானது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL SELECT INTO Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL CASE Expression.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-insert-select">INSERT INTO SELECT அறிக்கை</a></li>
+                    <li><a href="#insert-select-syntax">INSERT INTO SELECT தொடரியல்</a></li>
+                    <li><a href="#insert-select-examples">INSERT INTO SELECT எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#practical-examples">நடைமுறை எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Dropdowns - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Dropdown demo styles */
+        .dropdown-demo {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+            text-align: center;
+        }
+        
+        /* Dropdown examples container */
+        .dropdown-examples {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .dropdown-example-item {
+            text-align: center;
+        }
+        
+        /* Dropdown Text */
+        .dropdown-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-text-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 130px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+        
+        .dropdown-text:hover .dropdown-text-content {
+            display: block;
+        }
+        
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .dropdown-menu-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-menu-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .dropdown-menu-content a:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .dropdown-menu:hover .dropdown-menu-content {
+            display: block;
+        }
+        
+        .dropdown-menu:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+        
+        /* Other dropdown */
+        .dropdown-other {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-other-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+        
+        .dropdown-other:hover .dropdown-other-content {
+            display: block;
+        }
+        
+        /* Right-aligned dropdown */
+        .right-aligned-demo {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .dropdown-right {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-right-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            right: 0;
+            z-index: 1;
+        }
+        
+        .dropdown-right:hover .dropdown-right-content {
+            display: block;
+        }
+        
+        /* Dropdown Image */
+        .dropdown-image {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-image-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 300px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 20px;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .dropdown-image:hover .dropdown-image-content {
+            display: block;
+        }
+        
+        .dropdown-image-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        /* Dropdown Navbar */
+        .dropdown-navbar-demo {
+            background-color: #333;
+            padding: 10px;
+            margin: 20px 0;
+        }
+        
+        .dropdown-navbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #333;
+        }
+        
+        .dropdown-navbar li {
+            position: relative;
+        }
+        
+        .dropdown-navbar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        .dropdown-navbar li a:hover {
+            background-color: #111;
+        }
+        
+        .dropdown-navbar-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-navbar-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .dropdown-navbar-content a:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .dropdown-navbar li:hover .dropdown-navbar-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Horizontal%20Navigation%20Bar.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Image%20Gallery.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Dropdowns</h2>
+            <p>CSS டிராப்டவுன்களைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Dropdowns Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS Dropdowns</h2>
+            
+            <p>CSS டிராப்டவுன்கள் ஒரு பயனர் ஒரு உறுப்பைக் கிளிக் செய்யும்போது அல்லது சுட்டியை நகர்த்தும்போது விருப்பங்கள் அல்லது உள்ளடக்கங்களின் பட்டியலைக் காட்ட பயன்படுகின்றன, ஒரு பொத்தான் அல்லது வழிசெலுத்தல் இணைப்பு போன்றது.</p>
+            
+            <p>ஒரு CSS டிராப்டவுன் ஒரு தூண்டுதல் உறுப்பைக் கொண்டுள்ளது (<code>&lt;div&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;a&gt;</code>, முதலியன).</p>
+            
+            <p>தூண்டுதல் உறுப்பு கிளிக் செய்யப்படும் போது அல்லது சுட்டியை நகர்த்தும் போது, டிராப்டவுன் உள்ளடக்கம் காட்டப்படும்.</p>
+            
+            <p>டிராப்டவுன் உள்ளடக்கம் ஒரு கொள்கலன் உறுப்பாகும் (எ.கா. <code>&lt;div&gt;</code>) இது மறைக்கப்பட்ட உள்ளடக்கத்தை வைத்திருக்கும் (உரை, இணைப்புகள், படங்கள் போன்றவை).</p>
+            
+            <p>கீழே உள்ள மூன்று CSS டிராப்டவுன் எடுத்துக்காட்டுகளின் மேல் சுட்டியை நகர்த்தவும்:</p>
+            
+            <div class="dropdown-examples">
+                <div class="dropdown-example-item">
+                    <div class="dropdown-text">
+                        <div style="padding: 12px; background: #4CAF50; color: white; border-radius: 4px; cursor: pointer;">
+                            Dropdown Text
+                        </div>
+                        <div class="dropdown-text-content">
+                            Hello World!
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dropdown-example-item">
+                    <div class="dropdown-menu">
+                        <button class="dropbtn">Dropdown Menu</button>
+                        <div class="dropdown-menu-content">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dropdown-example-item">
+                    <div class="dropdown-other">
+                        <div style="padding: 12px; background: #2196F3; color: white; border-radius: 4px; cursor: pointer;">
+                            Other: Cinque Terre
+                        </div>
+                        <div class="dropdown-other-content">
+                            <p>Cinque Terre is a beautiful coastal region in Italy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Dropdown Box with Text -->
+        <section class="content-section" id="dropdown-text">
+            <h2>CSS Dropdown Box with Text</h2>
+            
+            <p>இங்கே, பயனர் ஒரு <code>&lt;div&gt;</code> உறுப்பின் மேல் சுட்டியை நகர்த்தும் போது தோன்றும் சில உரையுடன் ஒரு டிராப்டவுன் பெட்டியை உருவாக்குகிறோம்.</p>
+            
+            <div class="dropdown-demo">
+                <div class="dropdown-text">
+                    <div style="padding: 12px; background: #4CAF50; color: white; border-radius: 4px; cursor: pointer;">
+                        Mouse over me!
+                    </div>
+                    <div class="dropdown-text-content">Hello World!</div>
+                </div>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>&lt;style&gt;
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 130px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+&lt;/style&gt;
+
+&lt;div class="dropdown"&gt;Mouse over me!
+  &lt;div class="dropdown-content"&gt;Hello World!&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            
+            <h3>Example Explained</h3>
+            <ul>
+                <li><code>.dropdown</code> வகுப்பு <code>position:relative</code> ஐப் பயன்படுத்துகிறது, இது டிராப்டவுன் உள்ளடக்கத்தை தூண்டுதல் உறுப்புக்கு கீழே வைக்க விரும்பும்போது தேவைப்படுகிறது (டிராப்டவுன் உள்ளடக்கம் <code>position:absolute</code> ஐப் பயன்படுத்தும்).</li>
+                <li><code>.dropdown-content</code> வகுப்பு டிராப்டவுன் உள்ளடக்கத்தை வைத்திருக்கிறது. இது இயல்பாக மறைக்கப்பட்டுள்ளது, மேலும் சுட்டியை நகர்த்தும் போது காட்டப்படும்.</li>
+                <li><code>min-width</code> பண்பு 130px ஆக அமைக்கப்பட்டுள்ளது. இதை மாற்ற தயங்காதீர்கள்! டிராப்டவுன் உள்ளடக்கத்தின் அகலம் தூண்டுதல் உறுப்பைப் போலவே இருக்க வேண்டும் என்றால், <code>width</code> ஐ 100% ஆக அமைக்கவும் மற்றும் சிறிய திரைகளில் சுருள்பட்டியை இயக்க <code>overflow:auto</code> சேர்க்கவும்.</li>
+                <li>ஒரு எல்லையைப் பயன்படுத்துவதற்குப் பதிலாக, டிராப்டவுன் உள்ளடக்கம் "அட்டை" போல் தோற்றமளிக்க <code>box-shadow</code> பண்பைப் பயன்படுத்துகிறோம்.</li>
+                <li>பயனர் <code>&lt;div class="dropdown"&gt;</code> உறுப்பின் மேல் சுட்டியை நகர்த்தும் போது டிராப்டவுன் உள்ளடக்கத்தைக் காட்ட <code>:hover</code> தேர்வான் பயன்படுத்தப்படுகிறது.</li>
+            </ul>
+        </section>
+
+        <!-- CSS Dropdown Menu -->
+        <section class="content-section" id="dropdown-menu">
+            <h2>CSS Dropdown Menu</h2>
+            
+            <p>பயனர் ஒரு பட்டியலிலிருந்து ஒரு விருப்பத்தைத் தேர்ந்தெடுக்க அனுமதிக்கும் ஒரு டிராப்டவுன் மெனுவை உருவாக்கவும்:</p>
+            
+            <div class="dropdown-demo">
+                <div class="dropdown-menu">
+                    <button class="dropbtn">Dropdown Menu</button>
+                    <div class="dropdown-menu-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
+            </div>
+            
+            <p>இந்த எடுத்துக்காட்டு முந்தையதைப் போன்றது, டிராப்டவுன் பெட்டிக்குள் ஒரு பொத்தான் மற்றும் இணைப்புகளைச் சேர்த்து டிராப்டவுன் பொத்தானுக்கு பொருந்துமாறு பாணியிடுவதைத் தவிர:</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>&lt;style&gt;
+.dropdown {
+  position: relative;
+}
+
+/* Style the dropdown button */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside dropdown content */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change background color of dropdown button on hover */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+&lt;/style&gt;
+
+&lt;div class="dropdown"&gt;
+  &lt;button class="dropbtn"&gt;Dropdown Menu&lt;/button&gt;
+  &lt;div class="dropdown-content"&gt;
+    &lt;a href="#"&gt;Link 1&lt;/a&gt;
+    &lt;a href="#"&gt;Link 2&lt;/a&gt;
+    &lt;a href="#"&gt;Link 3&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS Right-aligned Dropdown -->
+        <section class="content-section" id="right-aligned">
+            <h2>CSS Right-aligned Dropdown</h2>
+            
+            <div class="right-aligned-demo">
+                <div class="dropdown-text">
+                    <div style="padding: 12px; background: #4CAF50; color: white; border-radius: 4px; cursor: pointer;">
+                        Left
+                    </div>
+                    <div class="dropdown-text-content">
+                        Left-aligned dropdown
+                    </div>
+                </div>
+                
+                <div class="dropdown-right">
+                    <div style="padding: 12px; background: #2196F3; color: white; border-radius: 4px; cursor: pointer;">
+                        Right
+                    </div>
+                    <div class="dropdown-right-content">
+                        Right-aligned dropdown
+                    </div>
+                </div>
+            </div>
+            
+            <p>டிராப்டவுன் மெனு இடமிருந்து வலமாக செல்ல விரும்பினால், இடமிருந்து வலமாக செல்வதற்குப் பதிலாக, <code>right: 0;</code> சேர்க்கவும்:</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>.dropdown-content {
+  right: 0;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS Dropdown Image -->
+        <section class="content-section" id="dropdown-image">
+            <h2>CSS Dropdown Image</h2>
+            
+            <p>டிராப்டவுன் பெட்டிக்குள் ஒரு படம் மற்றும் பிற உள்ளடக்கத்தை எவ்வாறு சேர்க்கலாம்.</p>
+            
+            <h3>Example</h3>
+            <p>படத்தின் மேல் சுட்டியை நகர்த்தவும்:</p>
+            
+            <div class="dropdown-demo">
+                <div class="dropdown-image">
+                    <div style="padding: 12px; background: #FF5722; color: white; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                        Cinque Terre
+                    </div>
+                    <div class="dropdown-image-content">
+                        <img src="8.jpg" alt="Cinque Terre">
+                        <p style="margin-top: 10px;"><strong>Cinque Terre</strong><br>Beautiful coastal villages in Italy</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Dropdown Navbar -->
+        <section class="content-section" id="dropdown-navbar">
+            <h2>CSS Dropdown Navbar</h2>
+            
+            <p>ஒரு வழிசெலுத்தல் பட்டையில் ஒரு டிராப்டவுன் மெனுவை எவ்வாறு சேர்க்கலாம்.</p>
+            
+            <h3>Example</h3>
+            
+            <div class="dropdown-navbar-demo">
+                <ul class="dropdown-navbar">
+                    <li><a href="#home">Home</a></li>
+                    <li>
+                        <a href="#news">News</a>
+                        <div class="dropdown-navbar-content">
+                            <a href="#">News 1</a>
+                            <a href="#">News 2</a>
+                            <a href="#">News 3</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                        <div class="dropdown-navbar-content">
+                            <a href="#">Email</a>
+                            <a href="#">Phone</a>
+                            <a href="#">Address</a>
+                        </div>
+                    </li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> டிராப்டவுன் உள்ளடக்கத்தை கீழே வைக்க தூண்டுதல் உறுப்புக்கு எந்த CSS position மதிப்பு தேவைப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">position: static;</div>
+                            <div class="option-feedback incorrect">✗ தவறு!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">position: relative;</div>
+                            <div class="option-feedback correct">✓ சரி! தூண்டுதல் உறுப்புக்கு position: relative; தேவைப்படுகிறது, டிராப்டவுன் உள்ளடக்கத்திற்கு position: absolute; தேவைப்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">position: fixed;</div>
+                            <div class="option-feedback incorrect">✗ தவறு!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">position: sticky;</div>
+                            <div class="option-feedback incorrect">✗ தவறு!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Horizontal%20Navigation%20Bar.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Image%20Gallery.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">CSS Dropdowns</a></li>
+                    <li><a href="#dropdown-text">Dropdown Box with Text</a></li>
+                    <li><a href="#dropdown-menu">Dropdown Menu</a></li>
+                    <li><a href="#right-aligned">Right-aligned Dropdown</a></li>
+                    <li><a href="#dropdown-image">Dropdown Image</a></li>
+                    <li><a href="#dropdown-navbar">Dropdown Navbar</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

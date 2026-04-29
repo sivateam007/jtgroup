@@ -1,0 +1,1158 @@
+﻿<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Easy Level - Answer Key | Jassif Team</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional Quiz-specific styles - EXACT SAME AS hard answer.html */
+        
+        /* Jassif Team Quiz Header */
+        .jassif-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--git-color);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .team-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Quiz Hero */
+        .quiz-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quiz-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .quiz-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Question Selection Grid - GREEN COLOR */
+        .question-selection-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        /* Question number button with Easy level color (GREEN) */
+        .question-number-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number-btn:hover {
+            border-color: var(--git-color);
+            transform: translateY(-3px);
+        }
+
+        .question-number-btn.active {
+            background: #27ae60; /* GREEN for Easy */
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .question-number-btn.answered {
+            background: #d4edda; /* Light green for answered */
+            border-color: #27ae60;
+            color: var(--dark);
+        }
+
+        /* Difficulty level indicator - GREEN for Easy */
+        .difficulty-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 8px 8px 0 0;
+            background-color: #27ae60; /* Green for Easy */
+        }
+
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+
+        .current-question-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--git-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        /* ANSWER KEY MODIFICATION: Show correct/incorrect colors immediately on click */
+        .quiz-option.selected.correct {
+            border-color: #27ae60; /* GREEN */
+            background: #d4edda;
+        }
+
+        .quiz-option.selected.incorrect {
+            border-color: var(--accent);
+            background: #f8d7da;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected.correct .option-letter {
+            background: #27ae60; /* GREEN */
+        }
+
+        .quiz-option.selected.incorrect .option-letter {
+            background: var(--accent);
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-btn.prev {
+            background: #667eea;
+        }
+
+        .quiz-btn.submit {
+            background: var(--success);
+        }
+
+        /* Results Container - HIDDEN FOR ANSWER KEY */
+        .results-container {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: black;
+            padding: 0;
+        }
+
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Answer Feedback Section */
+        .answer-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .answer-feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #27ae60; /* GREEN */
+            color: #155724;
+        }
+
+        .answer-feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid var(--accent);
+            color: #721c24;
+        }
+
+        .feedback-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .team-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quiz-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .question-selection-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .question-number-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="jassif-header">
+        <div class="header-container">
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <img src="logo.jpg" alt="Jassif Team Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">JASSIF TEAM</div>
+                    <div class="logo-sub">NODE.JS COURSE - EASY ANSWER KEY</div>
+                </div>
+            </a>
+            <div class="team-info">
+                <div class="team-badge">
+                    <i class="fab fa-node-js"></i>
+                    Node.js Course
+                </div>
+                <div class="team-badge">
+                    <i class="fas fa-key"></i>
+                    Easy Answer Key
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Hero Section -->
+    <section class="quiz-hero">
+        <div class="quiz-hero-content">
+            <h2>Node.js Easy Level - Answer Key</h2>
+            <p>Click on any option to see if it's correct (green) or incorrect (red). Learn all 30 easy Node.js questions.</p>
+            <div class="quiz-badges">
+                <span class="info-badge level"><i class="fas fa-signal"></i> Easy Level</span>
+                <span class="info-badge"><i class="fas fa-question-circle"></i> 30 Questions</span>
+                <span class="info-badge"><i class="fas fa-check-circle"></i> Interactive Answers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Question Selection Grid - GREEN COLOR -->
+    <section class="question-selection-section">
+        <div class="section-title">
+            <h2>Easy Level Questions - Answer Key</h2>
+            <p>Click on any question number to jump directly to it. Click options to see answers.</p>
+        </div>
+        
+        <div class="question-selection-grid" id="questionSelectionGrid">
+            <!-- Question numbers will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Main Quiz Container -->
+    <main class="quiz-container">
+        <!-- Quiz Interface -->
+        <div class="quiz-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="current-question-number" id="questionNumber">
+                    Question 1 of 30
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <!-- Question -->
+            <div class="question-text" id="questionText">
+                Node.js à®®à¯à®•à¯à®•à®¿à®¯à®®à®¾à®• à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?
+            </div>
+            
+            <!-- Options -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+
+            <!-- Answer Feedback -->
+            <div class="answer-feedback" id="answerFeedback">
+                <!-- Feedback will be inserted here -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="quiz-footer">
+                <button class="quiz-btn prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="quiz-btn next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <div class="footer-logo-image">
+                <img src="logo.jpg" alt="Jassif Team Logo">
+            </div>
+            <div>Jassif Team - Node.js Course Answer Key</div>
+        </div>
+        <div class="footer-text">
+            &copy; 2024 Jassif Team. All rights reserved. | Easy Level Node.js Answer Key
+        </div>
+    </footer>
+
+    <script>
+        // Node.js Easy Level Answer Key Data - 30 QUESTIONS WITH EXPLANATIONS
+        const quizData = [
+            { 
+                question: "Node.js à®®à¯à®•à¯à®•à®¿à®¯à®®à®¾à®• à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®®à¯à®©à¯à®ªà®•à¯à®• à®µà®²à¯ˆ à®…à®ªà®¿à®µà®¿à®°à¯à®¤à¯à®¤à®¿",
+                    "à®®à¯Šà®ªà¯ˆà®²à¯ à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯ à®‰à®°à¯à®µà®¾à®•à¯à®•à®®à¯",
+                    "à®šà¯‡à®µà¯ˆà®¯à®•à®ªà¯ à®ªà®•à¯à®• JavaScript à®¨à®¿à®°à®²à®¾à®•à¯à®•à®®à¯",
+                    "à®Ÿà¯†à®¸à¯à®•à¯à®Ÿà®¾à®ªà¯ GUI à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®•à®³à¯"
+                ], 
+                correct: 2,
+                explanation: "Node.js à®Žà®©à¯à®ªà®¤à¯ à®šà¯‡à®µà¯ˆà®¯à®•à®ªà¯ à®ªà®•à¯à®• à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®•à¯à®µà®¤à®±à¯à®•à®¾à®© Chrome V8 à®‡à®¯à®¨à¯à®¤à®¿à®°à®¤à¯à®¤à®¿à®©à¯ à®…à®Ÿà®¿à®ªà¯à®ªà®Ÿà¯ˆà®¯à®¿à®²à¯ à®•à®Ÿà¯à®Ÿà®ªà¯à®ªà®Ÿà¯à®Ÿ JavaScript à®‡à®¯à®•à¯à®• à®¨à¯‡à®°à®®à®¾à®•à¯à®®à¯."
+            },
+            { 
+                question: "à®Žà®¨à¯à®¤ à®‡à®¯à®¨à¯à®¤à®¿à®°à®®à¯ Node.js-à® à®‡à®¯à®•à¯à®•à¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "SpiderMonkey",
+                    "V8",
+                    "Chakra",
+                    "JavaScriptCore"
+                ], 
+                correct: 1,
+                explanation: "Node.js Chrome-à®©à¯ V8 JavaScript à®‡à®¯à®¨à¯à®¤à®¿à®°à®¤à¯à®¤à®¿à®©à¯ à®…à®Ÿà®¿à®ªà¯à®ªà®Ÿà¯ˆà®¯à®¿à®²à¯ à®•à®Ÿà¯à®Ÿà®ªà¯à®ªà®Ÿà¯à®Ÿà¯à®³à¯à®³à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ à®¨à®¾à®®à¯ à®Žà®¨à¯à®¤ à®®à¯Šà®´à®¿à®¯à¯ˆà®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®•à®¿à®±à¯‹à®®à¯?", 
+                options: [
+                    "Python",
+                    "Java",
+                    "JavaScript",
+                    "C++"
+                ], 
+                correct: 2,
+                explanation: "Node.js à®šà¯‡à®µà¯ˆà®¯à®•à®ªà¯ à®ªà®•à¯à®•à®¤à¯à®¤à®¿à®²à¯ JavaScript-à® à®‡à®¯à®•à¯à®• à®…à®©à¯à®®à®¤à®¿à®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js-à®‡à®©à¯ à®®à¯à®•à¯à®•à®¿à®¯ à®…à®®à¯à®šà®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®’à®¤à¯à®¤à®¿à®šà¯ˆà®µà¯",
+                    "à®’à®¤à¯à®¤à®¿à®šà¯ˆà®µà®¿à®²à¯à®²à®¾à®¤à¯ & à®¨à®¿à®•à®´à¯à®µà¯-à®šà®¾à®°à¯à®¨à¯à®¤",
+                    "à®®à¯†à®¤à¯à®µà®¾à®© à®šà¯†à®¯à®²à¯à®¤à®¿à®±à®©à¯",
+                    "à®’à®±à¯à®±à¯ˆ-à®‡à®´à¯ à®®à®¾à®¤à®¿à®°à®¿"
+                ], 
+                correct: 1,
+                explanation: "Node.js à®’à®¤à¯à®¤à®¿à®šà¯ˆà®µà®¿à®²à¯à®²à®¾à®¤à¯, à®¨à®¿à®•à®´à¯à®µà¯-à®šà®¾à®°à¯à®¨à¯à®¤ à®•à®Ÿà¯à®Ÿà®®à¯ˆà®ªà¯à®ªà¯ˆà®•à¯ à®•à¯Šà®£à¯à®Ÿà¯à®³à¯à®³à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ 'npm' à®Žà®©à¯à®±à®¾à®²à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "Node Package Manager",
+                    "Node Program Module",
+                    "Node Project Management",
+                    "Node Process Manager"
+                ], 
+                correct: 0,
+                explanation: "npm à®Žà®©à¯à®ªà®¤à¯ Node.js-à®•à¯à®•à®¾à®© à®¤à¯Šà®•à¯à®ªà¯à®ªà¯ à®®à¯‡à®²à®¾à®³à®°à¯ à®†à®•à¯à®®à¯."
+            },
+            { 
+                question: "Node.js à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ˆà®¤à¯ à®¤à¯Šà®Ÿà®™à¯à®• à®Žà®¨à¯à®¤ à®•à®Ÿà¯à®Ÿà®³à¯ˆ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "node start app.js",
+                    "node run app.js",
+                    "node app.js",
+                    "npm app.js"
+                ], 
+                correct: 2,
+                explanation: "`node app.js` à®Žà®©à¯à®ªà®¤à¯ app.js à®Žà®©à¯à®± Node.js à®•à¯‹à®ªà¯à®ªà¯ˆ à®‡à®¯à®•à¯à®• à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯, 'require()' à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆ à®¨à¯€à®•à¯à®•",
+                    "à®¤à¯Šà®•à¯à®¤à®¿à®•à®³à¯ˆ à®‡à®±à®•à¯à®•à¯à®®à®¤à®¿ à®šà¯†à®¯à¯à®¯",
+                    "à®®à®¾à®±à®¿à®•à®³à¯ˆ à®…à®±à®¿à®µà®¿à®•à¯à®•",
+                    "à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ˆ à®µà®°à¯ˆà®¯à®±à¯à®•à¯à®•"
+                ], 
+                correct: 1,
+                explanation: "`require()` à®Žà®©à¯à®ªà®¤à¯ Node.js à®‡à®²à¯ à®¤à¯Šà®•à¯à®¤à®¿à®•à®³à¯ˆ à®‡à®±à®•à¯à®•à¯à®®à®¤à®¿ à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®®à¯ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯."
+            },
+            { 
+                question: "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆà®ªà¯ à®ªà®Ÿà®¿à®•à¯à®•à®µà¯à®®à¯ à®Žà®´à¯à®¤à®µà¯à®®à¯ à®Žà®¨à¯à®¤ Node.js à®¤à¯Šà®•à¯à®¤à®¿ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "http module",
+                    "fs module",
+                    "path module",
+                    "os module"
+                ], 
+                correct: 1,
+                explanation: "`fs` (file system) à®¤à¯Šà®•à¯à®¤à®¿ à®•à¯‹à®ªà¯à®ªà¯ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯à®•à¯à®•à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ 'package.json' à®•à¯‹à®ªà¯à®ªà®¿à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "JavaScript à®•à¯à®±à®¿à®¯à¯€à®Ÿà¯à®Ÿà¯ˆà®šà¯ à®šà¯‡à®®à®¿à®•à¯à®•",
+                    "à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯ à®‰à®°à¯à®µà®•à®ªà¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®¤à®²à¯",
+                    "à®¤à®¿à®Ÿà¯à®Ÿ à®®à¯†à®Ÿà¯à®Ÿà®¾à®Ÿà¯‡à®Ÿà¯à®Ÿà®¾ à®®à®±à¯à®±à¯à®®à¯ à®šà®¾à®°à¯à®ªà¯à®•à®³à¯ˆ à®µà®°à¯ˆà®¯à®±à¯à®•à¯à®•",
+                    "HTML à®à®šà¯ à®šà¯‡à®®à®¿à®•à¯à®•"
+                ], 
+                correct: 2,
+                explanation: "package.json à®¤à®¿à®Ÿà¯à®Ÿà®¤à¯à®¤à¯ˆà®ªà¯ à®ªà®±à¯à®±à®¿à®¯ à®¤à®•à®µà®²à¯à®•à®³à¯ˆà®¯à¯à®®à¯ à®šà®¾à®°à¯à®ªà¯ à®¤à¯Šà®•à¯à®ªà¯à®ªà¯à®•à®³à¯ˆà®¯à¯à®®à¯ à®•à¯Šà®£à¯à®Ÿà¯à®³à¯à®³à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ à®µà®²à¯ˆ à®šà¯‡à®µà¯ˆà®¯à®•à®¤à¯à®¤à¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®• à®Žà®¨à¯à®¤ à®¤à¯Šà®•à¯à®¤à®¿ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "fs module",
+                    "http module",
+                    "url module",
+                    "events module"
+                ], 
+                correct: 1,
+                explanation: "`http` à®¤à¯Šà®•à¯à®¤à®¿ HTTP à®šà¯‡à®µà¯ˆà®¯à®•à®™à¯à®•à®³à¯ à®®à®±à¯à®±à¯à®®à¯ à®•à®¿à®³à¯ˆà®¯à®©à¯à®Ÿà¯à®•à®³à¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®• à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ à®šà®®à®•à®¾à®² à®¨à®¿à®°à®²à®¾à®•à¯à®•à®¤à¯à®¤à®¿à®±à¯à®•à®¾à®© à®…à®£à¯à®•à¯à®®à¯à®±à¯ˆ à®Žà®©à¯à®©?", 
+                options: [
+                    "Callbacks",
+                    "Threads",
+                    "Processes",
+                    "Synchronous functions"
+                ], 
+                correct: 0,
+                explanation: "Node.js à®šà®®à®•à®¾à®² à®¨à®¿à®°à®²à®¾à®•à¯à®•à®¤à¯à®¤à®¿à®±à¯à®•à¯ callback à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ˆà®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "à®ªà®¿à®´à¯ˆà®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³ à®Žà®¨à¯à®¤ à®¤à¯Šà®•à¯à®¤à®¿ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "error module",
+                    "debug module",
+                    "util module",
+                    "try-catch blocks"
+                ], 
+                correct: 3,
+                explanation: "Node.js à®ªà®¿à®´à¯ˆ à®•à¯ˆà®¯à®¾à®³à¯à®¤à®²à¯à®•à¯à®•à¯ try-catch à®¤à¯Šà®•à¯à®¤à®¿à®•à®³à¯ˆà®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "'console.log()' à®Žà®¤à®±à¯à®•à¯à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆà®ªà¯ à®ªà®Ÿà®¿à®•à¯à®•",
+                    "à®µà®²à¯ˆà®ªà¯à®ªà®•à¯à®•à®¤à¯à®¤à¯ˆ à®à®±à¯à®±",
+                    "à®µà¯†à®³à®¿à®¯à¯€à®Ÿà¯à®Ÿà¯ˆ à®…à®šà¯à®šà®¿à®Ÿ",
+                    "à®šà¯‡à®µà¯ˆà®¯à®•à®¤à¯à®¤à¯ˆà®¤à¯ à®¤à¯Šà®Ÿà®™à¯à®•"
+                ], 
+                correct: 2,
+                explanation: "`console.log()` à®µà¯†à®³à®¿à®¯à¯€à®Ÿà¯à®Ÿà¯ˆ à®•à®©à¯à®šà¯‹à®²à®¿à®²à¯ à®…à®šà¯à®šà®¿à®Ÿ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ 'module.exports' à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®¤à¯Šà®•à¯à®¤à®¿à®¯à¯ˆ à®‡à®±à®•à¯à®•à¯à®®à®¤à®¿ à®šà¯†à®¯à¯à®¯",
+                    "à®¤à¯Šà®•à¯à®¤à®¿à®¯à¯ˆ à®à®±à¯à®±à¯à®®à®¤à®¿ à®šà¯†à®¯à¯à®¯",
+                    "à®•à¯‹à®ªà¯à®ªà¯ˆ à®¨à¯€à®•à¯à®•",
+                    "à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ˆ à®®à¯à®Ÿà®¿à®•à¯à®•"
+                ], 
+                correct: 1,
+                explanation: "`module.exports` à®’à®°à¯ à®¤à¯Šà®•à¯à®¤à®¿à®¯à®¿à®²à¯ à®‡à®°à¯à®¨à¯à®¤à¯ à®®à®¤à®¿à®ªà¯à®ªà¯à®•à®³à¯ à®…à®²à¯à®²à®¤à¯ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ˆ à®à®±à¯à®±à¯à®®à®¤à®¿ à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "'process' à®ªà¯Šà®°à¯à®³à®¿à®©à¯ à®ªà®¯à®©à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®•à¯‹à®ªà¯à®ªà¯ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯",
+                    "à®¤à®±à¯à®ªà¯‹à®¤à¯ˆà®¯ Node.js à®šà¯†à®¯à®²à¯à®®à¯à®±à¯ˆ à®ªà®±à¯à®±à®¿à®¯ à®¤à®•à®µà®²à¯",
+                    "à®µà®²à¯ˆ à®•à¯‹à®°à®¿à®•à¯à®•à¯ˆà®•à®³à¯",
+                    "à®¤à®°à®µà¯à®¤à¯à®¤à®³ à®‡à®£à¯ˆà®ªà¯à®ªà¯à®•à®³à¯"
+                ], 
+                correct: 1,
+                explanation: "`process` à®ªà¯Šà®°à¯à®³à¯ à®¤à®±à¯à®ªà¯‹à®¤à¯ˆà®¯ Node.js à®šà¯†à®¯à®²à¯à®®à¯à®±à¯ˆ à®ªà®±à¯à®±à®¿à®¯ à®¤à®•à®µà®²à¯ˆ à®µà®´à®™à¯à®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js-à®‡à®©à¯ à®‡à®¯à®•à¯à®•à¯à®¨à®°à®¾à®• à®šà¯†à®¯à®²à¯à®ªà®Ÿà¯à®µà®¤à¯ à®¯à®¾à®°à¯?", 
+                options: [
+                    "Node Package Manager",
+                    "Event Loop",
+                    "JavaScript Engine",
+                    "Callback Queue"
+                ], 
+                correct: 1,
+                explanation: "à®¨à®¿à®•à®´à¯à®µà¯ à®šà¯à®´à®±à¯à®šà®¿ Node.js-à®‡à®²à¯ à®‡à®¯à®•à¯à®•à¯à®¨à®°à®¾à®• à®šà¯†à®¯à®²à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯, callback-à®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "à®•à¯‹à®ªà¯à®ªà¯à®ªà¯ à®ªà®¾à®¤à¯ˆà®•à®³à¯à®Ÿà®©à¯ à®ªà®£à®¿à®ªà¯à®°à®¿à®¯ à®Žà®¨à¯à®¤ à®¤à¯Šà®•à¯à®¤à®¿ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "fs module",
+                    "path module",
+                    "url module",
+                    "util module"
+                ], 
+                correct: 1,
+                explanation: "`path` à®¤à¯Šà®•à¯à®¤à®¿ à®•à¯‹à®ªà¯à®ªà¯ à®®à®±à¯à®±à¯à®®à¯ à®•à¯‹à®ªà¯à®ªà®•à®ªà¯ à®ªà®¾à®¤à¯ˆà®•à®³à¯à®Ÿà®©à¯ à®ªà®£à®¿à®ªà¯à®°à®¿à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "à®Žà®¨à¯à®¤à®•à¯ à®•à®Ÿà¯à®Ÿà®³à¯ˆ npm à®¤à¯Šà®•à¯à®ªà¯à®ªà¯ˆ à®¨à®¿à®±à¯à®µà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "npm add package",
+                    "npm get package",
+                    "npm install package",
+                    "npm include package"
+                ], 
+                correct: 2,
+                explanation: "`npm install package_name` à®’à®°à¯ npm à®¤à¯Šà®•à¯à®ªà¯à®ªà¯ˆ à®¨à®¿à®±à¯à®µ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ˆ à®¨à®¿à®±à¯à®¤à¯à®¤ à®Žà®¨à¯à®¤ à®µà®¿à®šà¯ˆ à®šà¯‡à®°à¯à®•à¯à®•à¯ˆ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "Ctrl + S",
+                    "Ctrl + C",
+                    "Ctrl + D",
+                    "Ctrl + Q"
+                ], 
+                correct: 1,
+                explanation: "Ctrl + C Node.js à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ˆ à®¨à®¿à®±à¯à®¤à¯à®¤à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "OS à®¤à¯Šà®•à¯à®¤à®¿ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®•à¯‹à®ªà¯à®ªà¯ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯",
+                    "à®‡à®¯à®•à¯à®• à®®à¯à®±à¯ˆà®®à¯ˆ à®¤à®•à®µà®²à¯à®•à®³à¯",
+                    "à®µà®²à¯ˆ à®•à¯‹à®°à®¿à®•à¯à®•à¯ˆà®•à®³à¯",
+                    "à®¤à®°à®µà¯à®¤à¯à®¤à®³ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯"
+                ], 
+                correct: 1,
+                explanation: "`os` à®¤à¯Šà®•à¯à®¤à®¿ à®‡à®¯à®•à¯à®• à®®à¯à®±à¯ˆà®®à¯ˆ à®¤à¯Šà®Ÿà®°à¯à®ªà®¾à®© à®¤à®•à®µà®²à¯à®•à®³à¯ˆ à®µà®´à®™à¯à®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ ECMAScript à®¤à¯Šà®•à¯à®¤à®¿à®•à®³à¯ˆ à®‡à®±à®•à¯à®•à¯à®®à®¤à®¿ à®šà¯†à®¯à¯à®¯ à®Žà®¤à¯ˆà®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®²à®¾à®®à¯?", 
+                options: [
+                    "require()",
+                    "include()",
+                    "import()",
+                    "export()"
+                ], 
+                correct: 2,
+                explanation: "ES à®¤à¯Šà®•à¯à®¤à®¿à®•à®³à¯à®•à¯à®•à¯ `import` à®…à®±à®¿à®•à¯à®•à¯ˆ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "URL à®•à®³à¯à®Ÿà®©à¯ à®ªà®£à®¿à®ªà¯à®°à®¿à®¯ à®Žà®¨à¯à®¤ à®¤à¯Šà®•à¯à®¤à®¿ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "http module",
+                    "web module",
+                    "url module",
+                    "link module"
+                ], 
+                correct: 2,
+                explanation: "`url` à®¤à¯Šà®•à¯à®¤à®¿ URL à®•à®³à¯ˆà®ªà¯ à®ªà®¾à®•à¯à®ªà®Ÿà¯à®¤à¯à®¤à®µà¯à®®à¯ à®‰à®°à¯à®µà®¾à®•à¯à®•à®µà¯à®®à¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "'node -v' à®•à®Ÿà¯à®Ÿà®³à¯ˆ à®Žà®©à¯à®© à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "Node.js à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ˆ à®‡à®¯à®•à¯à®•à¯à®•à®¿à®±à®¤à¯",
+                    "Node.js à®ªà®¤à®¿à®ªà¯à®ªà¯ˆà®•à¯ à®•à®¾à®Ÿà¯à®Ÿà¯à®•à®¿à®±à®¤à¯",
+                    "npm à®ªà®¤à®¿à®ªà¯à®ªà¯ˆà®•à¯ à®•à®¾à®Ÿà¯à®Ÿà¯à®•à®¿à®±à®¤à¯",
+                    "à®•à¯‹à®ªà¯à®ªà¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®•à¯à®•à®¿à®±à®¤à¯"
+                ], 
+                correct: 1,
+                explanation: "`node -v` à®¨à®¿à®±à¯à®µà®ªà¯à®ªà®Ÿà¯à®Ÿ Node.js à®ªà®¤à®¿à®ªà¯à®ªà¯ˆà®•à¯ à®•à®¾à®Ÿà¯à®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "'npm init' à®•à®Ÿà¯à®Ÿà®³à¯ˆ à®Žà®©à¯à®© à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®ªà¯à®¤à®¿à®¯ à®¤à¯Šà®•à¯à®ªà¯à®ªà¯ˆ à®¨à®¿à®±à¯à®µà¯à®•à®¿à®±à®¤à¯",
+                    "à®ªà¯à®¤à®¿à®¯ package.json à®•à¯‹à®ªà¯à®ªà¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®•à¯à®•à®¿à®±à®¤à¯",
+                    "Node.js à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ˆà®¤à¯ à®¤à¯Šà®Ÿà®™à¯à®•à¯à®•à®¿à®±à®¤à¯",
+                    "à®¤à¯Šà®•à¯à®¤à®¿à®•à®³à¯ˆ à®‡à®±à®•à¯à®•à¯à®®à®¤à®¿ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯"
+                ], 
+                correct: 1,
+                explanation: "`npm init` à®’à®°à¯ à®ªà¯à®¤à®¿à®¯ package.json à®•à¯‹à®ªà¯à®ªà¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ Events à®¤à¯Šà®•à¯à®¤à®¿à®¯à®¿à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®•à¯‹à®ªà¯à®ªà¯ à®¨à®¿à®•à®´à¯à®µà¯à®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³",
+                    "à®¨à®¿à®•à®´à¯à®µà¯-à®šà®¾à®°à¯à®¨à¯à®¤ à®¨à®¿à®°à®²à®¾à®•à¯à®•à®¤à¯à®¤à¯ˆ à®šà¯†à®¯à®²à¯à®ªà®Ÿà¯à®¤à¯à®¤",
+                    "à®µà®²à¯ˆ à®•à¯‹à®°à®¿à®•à¯à®•à¯ˆà®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³",
+                    "à®¤à®°à®µà¯à®¤à¯à®¤à®³ à®¨à®¿à®•à®´à¯à®µà¯à®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³"
+                ], 
+                correct: 1,
+                explanation: "`events` à®¤à¯Šà®•à¯à®¤à®¿ Node.js à®‡à®²à¯ à®¨à®¿à®•à®´à¯à®µà¯-à®šà®¾à®°à¯à®¨à¯à®¤ à®¨à®¿à®°à®²à®¾à®•à¯à®•à®¤à¯à®¤à¯ˆ à®šà¯†à®¯à®²à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ Timer à®¤à¯Šà®•à¯à®¤à®¿ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®•à®Ÿà®¿à®•à®¾à®°à®¤à¯à®¤à¯ˆà®•à¯ à®•à®¾à®Ÿà¯à®Ÿ",
+                    "à®•à¯à®±à®¿à®ªà¯à®ªà®¿à®Ÿà¯à®Ÿ à®•à®¾à®² à®‡à®Ÿà¯ˆà®µà¯†à®³à®¿à®¯à®¿à®²à¯ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ˆ à®‡à®¯à®•à¯à®•",
+                    "à®¨à¯‡à®°à®¤à¯à®¤à¯ˆ à®…à®³à®µà®¿à®Ÿ",
+                    "à®¤à®¾à®®à®¤à®™à¯à®•à®³à¯ˆà®•à¯ à®•à®£à®•à¯à®•à®¿à®Ÿ"
+                ], 
+                correct: 1,
+                explanation: "Timer à®¤à¯Šà®•à¯à®¤à®¿ `setTimeout()`, `setInterval()` à®ªà¯‹à®©à¯à®± à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ˆ à®µà®´à®™à¯à®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "à®•à¯à®±à®¿à®¯à®¾à®•à¯à®• à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯à®•à¯à®•à¯ à®Žà®¨à¯à®¤ à®¤à¯Šà®•à¯à®¤à®¿ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "encode module",
+                    "crypto module",
+                    "security module",
+                    "encrypt module"
+                ], 
+                correct: 1,
+                explanation: "`crypto` à®¤à¯Šà®•à¯à®¤à®¿ à®•à¯à®±à®¿à®¯à®¾à®•à¯à®• à®®à®±à¯à®±à¯à®®à¯ à®•à¯à®±à®¿à®µà®¿à®²à®•à¯à®•à®®à¯ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ˆ à®µà®´à®™à¯à®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "'node_modules' à®•à¯‹à®ªà¯à®ªà®•à®¤à¯à®¤à®¿à®²à¯ à®Žà®©à¯à®© à®‰à®³à¯à®³à®¤à¯?", 
+                options: [
+                    "Node.js à®®à¯‚à®² à®•à¯à®±à®¿à®¯à¯€à®Ÿà¯",
+                    "à®¨à®¿à®±à¯à®µà®ªà¯à®ªà®Ÿà¯à®Ÿ npm à®¤à¯Šà®•à¯à®ªà¯à®ªà¯à®•à®³à¯",
+                    "à®ªà®¯à®©à®°à¯ à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯",
+                    "à®•à®Ÿà¯à®Ÿà®®à¯ˆà®ªà¯à®ªà¯ à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯"
+                ], 
+                correct: 1,
+                explanation: "`node_modules` à®¨à®¿à®±à¯à®µà®ªà¯à®ªà®Ÿà¯à®Ÿ à®…à®©à¯ˆà®¤à¯à®¤à¯ npm à®¤à¯Šà®•à¯à®ªà¯à®ªà¯à®•à®³à¯ˆà®¯à¯à®®à¯ à®•à¯Šà®£à¯à®Ÿà¯à®³à¯à®³à®¤à¯."
+            },
+            { 
+                question: "Stream à®¤à¯Šà®•à¯à®¤à®¿ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®¤à®°à®µà¯ à®“à®Ÿà¯à®Ÿà®™à¯à®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³",
+                    "à®¨à¯€à®°à¯‹à®Ÿà¯ˆà®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³",
+                    "à®µà®²à¯ˆ à®“à®Ÿà¯à®Ÿà®™à¯à®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³",
+                    "à®•à¯‹à®ªà¯à®ªà¯ à®“à®Ÿà¯à®Ÿà®™à¯à®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³"
+                ], 
+                correct: 0,
+                explanation: "Stream à®¤à¯Šà®•à¯à®¤à®¿ à®¤à®°à®µà¯ˆ à®¤à¯à®£à¯à®Ÿà¯à®•à®³à®¾à®• à®µà®¾à®šà®¿à®ªà¯à®ªà®¤à®±à¯à®•à¯à®®à¯ à®Žà®´à¯à®¤à¯à®µà®¤à®±à¯à®•à¯à®®à¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "DNS à®¤à¯Šà®•à¯à®¤à®¿à®¯à®¿à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®¤à®°à®µà¯à®¤à¯à®¤à®³ à®ªà¯†à®¯à®°à¯à®•à®³à¯ˆà®¤à¯ à®¤à¯€à®°à¯à®•à¯à®•",
+                    "à®Ÿà¯Šà®®à¯ˆà®©à¯ à®ªà¯†à®¯à®°à¯à®•à®³à¯ˆ IP à®®à¯à®•à®µà®°à®¿à®•à®³à®¾à®•à®¤à¯ à®¤à¯€à®°à¯à®•à¯à®•",
+                    "à®•à¯‹à®ªà¯à®ªà¯ à®ªà¯†à®¯à®°à¯à®•à®³à¯ˆà®¤à¯ à®¤à¯€à®°à¯à®•à¯à®•",
+                    "à®¤à¯Šà®•à¯à®¤à®¿ à®ªà¯†à®¯à®°à¯à®•à®³à¯ˆà®¤à¯ à®¤à¯€à®°à¯à®•à¯à®•"
+                ], 
+                correct: 1,
+                explanation: "DNS à®¤à¯Šà®•à¯à®¤à®¿ à®Ÿà¯Šà®®à¯ˆà®©à¯ à®ªà¯†à®¯à®°à¯à®•à®³à¯ˆ IP à®®à¯à®•à®µà®°à®¿à®•à®³à®¾à®• à®®à®¾à®±à¯à®± à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let answeredQuestions = new Array(quizData.length).fill(false);
+
+        // DOM elements
+        const questionSelectionGrid = document.getElementById('questionSelectionGrid');
+        const questionNumberElement = document.getElementById('questionNumber');
+        const questionTextElement = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const answerFeedback = document.getElementById('answerFeedback');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+
+        // Initialize question selection grid with GREEN color
+        function initializeQuestionGrid() {
+            questionSelectionGrid.innerHTML = '';
+            quizData.forEach((question, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'question-number-btn';
+                btn.dataset.index = index;
+                
+                // Add GREEN difficulty indicator
+                const difficultyIndicator = document.createElement('div');
+                difficultyIndicator.className = 'difficulty-indicator';
+                btn.appendChild(difficultyIndicator);
+                
+                // Add question number
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'question-number';
+                numberSpan.textContent = index + 1;
+                btn.appendChild(numberSpan);
+                
+                if (index === 0) {
+                    btn.classList.add('active');
+                }
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    updateQuestionGrid();
+                });
+                
+                questionSelectionGrid.appendChild(btn);
+            });
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const buttons = document.querySelectorAll('.question-number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = quizData[currentQuestionIndex];
+            
+            // Update question number
+            questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            
+            // Update question text
+            questionTextElement.textContent = question.question;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.dataset.optionIndex = index;
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Clear feedback
+            answerFeedback.style.display = 'none';
+            answerFeedback.className = 'answer-feedback';
+            answerFeedback.innerHTML = '';
+            
+            // Update navigation buttons
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            const question = quizData[currentQuestionIndex];
+            const optionElements = document.querySelectorAll('.quiz-option');
+            
+            // Remove any previous selection classes
+            optionElements.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Mark the selected option
+            const selectedOption = optionElements[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            // Check if answer is correct
+            if (optionIndex === question.correct) {
+                selectedOption.classList.add('correct');
+                showFeedback(true, question.explanation);
+            } else {
+                selectedOption.classList.add('incorrect');
+                // Also show the correct answer
+                const correctOption = optionElements[question.correct];
+                correctOption.classList.add('correct');
+                showFeedback(false, question.explanation);
+            }
+            
+            // Mark question as answered
+            if (!answeredQuestions[currentQuestionIndex]) {
+                answeredQuestions[currentQuestionIndex] = true;
+                updateQuestionGrid();
+            }
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect, explanation) {
+            answerFeedback.className = `answer-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            const icon = isCorrect ? 'fa-check-circle' : 'fa-times-circle';
+            const message = isCorrect ? 'à®šà®°à®¿à®¯à®¾à®© à®µà®¿à®Ÿà¯ˆ!' : 'à®¤à®µà®±à®¾à®© à®µà®¿à®Ÿà¯ˆ!';
+            
+            answerFeedback.innerHTML = `
+                <div>
+                    <i class="fas ${icon} feedback-icon"></i>
+                    <strong>${message}</strong> ${explanation}
+                </div>
+            `;
+            
+            answerFeedback.style.display = 'block';
+            
+            // Scroll feedback into view
+            answerFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        // Initialize the answer key
+        initializeQuestionGrid();
+        loadQuestion();
+    </script>
+</body>
+</html>

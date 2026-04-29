@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Path Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js File System Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js OS Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Path Module</h2>
+            <p>Node.js இல் கோப்பு பாதைகளை கையாள கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is the Path Module? -->
+        <section class="content-section" id="introduction">
+            <h2>Path தொகுதி என்றால் என்ன?</h2>
+            
+            <p>Path தொகுதி என்பது Node.js இன் உள்ளமைக்கப்பட்ட தொகுதியாகும், இது வெவ்வேறு இயக்க முறைமைகளில் கோப்பு பாதைகளை கையாளவும் மாற்றவும் கருவிகளை வழங்குகிறது.</p>
+            
+            <p>விண்டோஸ் பின்சாய்வுகளை (\) பயன்படுத்துகிறது மற்றும் POSIX அமைப்புகள் (Linux, macOS) முன்சாய்வுகளை (/) பயன்படுத்துவதால், Path தொகுதி எந்த அமைப்பிலும் சரியாக வேலை செய்யும் குறுக்கு-மேடை குறியீட்டை எழுத உதவுகிறது.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>குறுக்கு-மேடை பாதை கையாளுதல்</h4>
+                    </div>
+                    <p>அனைத்து இயக்க முறைமைகளிலும் வேலை செய்யும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-wrench"></i>
+                        <h4>பாதை கையாளுதல் மற்றும் இயல்பாக்கம்</h4>
+                    </div>
+                    <p>பாதைகளை மாற்றுதல் மற்றும் சரிசெய்தல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file-code"></i>
+                        <h4>கோப்பு நீட்டிப்பு பிரித்தெடுத்தல்</h4>
+                    </div>
+                    <p>கோப்பு வகைகளை எளிதாக அடையாளம் காணுதல்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Using the Path Module -->
+        <section class="content-section" id="using-path">
+            <h2>Path தொகுதியைப் பயன்படுத்துதல்</h2>
+            
+            <p>Path தொகுதி Node.js இல் ஒரு முக்கிய தொகுதியாகும், எனவே எந்த நிறுவலும் தேவையில்லை.</p>
+            
+            <p>நீங்கள் CommonJS அல்லது ES தொகுதிகள் இலக்கணத்தைப் பயன்படுத்தி அதை இறக்குமதி செய்யலாம்:</p>
+            
+            <div class="code-example">
+                <h3>CommonJS (Node.js இல் இயல்புநிலை)</h3>
+                <pre><code>const path = require('path');
+
+// Destructure specific methods if needed
+const { join, resolve, basename } = require('path');</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>ES Modules (Node.js 14+ with "type": "module" in package.json)</h3>
+                <pre><code>import path from 'path';
+
+// Or import specific methods
+import { join, resolve, basename } from 'path';</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> சிறந்த நடைமுறை:</h4>
+                <p>ES தொகுதிகளைப் பயன்படுத்தும் போது சிறந்த tree-shaking மற்றும் சிறிய தொகுப்பு அளவுகளுக்கு, உங்களுக்குத் தேவையான முறைகளை மட்டுமே இறக்குமதி செய்யவும்.</p>
+            </div>
+        </section>
+
+        <!-- Path Module Methods -->
+        <section class="content-section" id="path-methods">
+            <h2>Path தொகுதி முறைகள்</h2>
+
+            <h3>path.basename()</h3>
+            
+            <p>பாதையின் கடைசி பகுதியை வழங்குகிறது, யூனிக்ஸ் basename கட்டளைக்கு ஒத்ததாகும்.</p>
+            
+            <div class="code-example">
+                <pre><code>const path = require('path');
+
+// Get filename from a path
+const filename = path.basename('/users/docs/file.txt');
+console.log(filename); // 'file.txt'
+
+// Get filename without extension
+const filenameWithoutExt = path.basename('/users/docs/file.txt', '.txt');
+console.log(filenameWithoutExt); // 'file'</code></pre>
+            </div>
+
+            <h3>__dirname மற்றும் __filename</h3>
+            
+            <p>Node.js இல், __dirname மற்றும் __filename CommonJS தொகுதிகளில் கிடைக்கும் சிறப்பு மாறிகள் ஆகும், அவை தற்போதைய தொகுதியின் அடைவு பெயர் மற்றும் கோப்பு பெயரை வழங்குகின்றன.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: CommonJS இல் __dirname மற்றும் __filename பயன்படுத்துதல்</h3>
+                <pre><code>// CommonJS module (e.g., app.js)
+const path = require('path');
+
+// Get the directory name of the current module
+console.log('Directory name:', __dirname);
+
+// Get the file name of the current module
+console.log('File name:', __filename);
+
+// Building paths relative to the current module
+const configPath = path.join(__dirname, 'config', 'app-config.json');
+console.log('Config file path:', configPath);
+
+// Getting the directory name using path.dirname()
+console.log('Directory using path.dirname():', path.dirname(__filename));</code></pre>
+            </div>
+
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: ES தொகுதிகளில் __dirname மற்றும் __filename பெறுதல்</h3>
+                <pre><code>// ES Module (e.g., app.mjs or "type": "module" in package.json)
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Get the current module's URL
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+console.log('ES Module file path:', __filename);
+console.log('ES Module directory:', __dirname);
+
+// Example with dynamic imports
+async function loadConfig() {
+  const configPath = new URL('../config/app-config.json', import.meta.url);
+  const config = await import(configPath, { with: { type: 'json' } });
+  return config;
+}</code></pre>
+            </div>
+
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔧</span> சிறந்த நடைமுறைகள்:</h4>
+                <ul>
+                    <li>CommonJS தொகுதிகளில் கோப்பு பாதைகளை உருவாக்க path.join() அல்லது path.resolve() உடன் __dirname பயன்படுத்தவும்</li>
+                    <li>ES தொகுதிகளுக்கு, சமமான செயல்பாட்டைப் பெற fileURLToPath மற்றும் dirname உடன் import.meta.url பயன்படுத்தவும்</li>
+                    <li>path.join() உடன் __dirname பயன்படுத்தும் போது, அவை சரியான மேடை பிரிப்பானுக்கு இயல்பாக்கப்படுவதால் முன்சாய்வுகளைப் பாதுகாப்பாகப் பயன்படுத்தலாம்</li>
+                </ul>
+            </div>
+
+            <h3>path.extname()</h3>
+            
+            <p>பாதையின் நீட்டிப்பை வழங்குகிறது, . எழுத்தின் கடைசி நிகழ்விலிருந்து சரத்தின் முடிவு வரை.</p>
+            
+            <div class="code-example">
+                <pre><code>const path = require('path');
+
+const extension = path.extname('file.txt');
+console.log(extension); // '.txt'
+
+console.log(path.extname('index.html')); // '.html'
+console.log(path.extname('index.coffee.md')); // '.md'
+console.log(path.extname('index.')); // '.'
+console.log(path.extname('index')); // ''
+console.log(path.extname('.index')); // ''</code></pre>
+            </div>
+
+            <h3>path.join()</h3>
+            
+            <p>கொடுக்கப்பட்ட அனைத்து பாதை பகுதிகளையும் மேடை-குறிப்பிட்ட பிரிப்பானைப் பயன்படுத்தி பிரிப்பானாக இணைக்கிறது, பின்னர் விளைவாக வரும் பாதையை இயல்பாக்குகிறது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: அடிப்படை பாதை இணைத்தல்</h3>
+                <pre><code>const path = require('path');
+
+// Join path segments
+const fullPath = path.join('/users', 'docs', 'file.txt');
+console.log(fullPath); // Output depends on OS
+
+// Handle relative paths and navigation
+console.log(path.join('/users', '../system', './logs', 'file.txt'));
+
+// Handle multiple slashes
+console.log(path.join('users', '//docs', 'file.txt')); // Normalizes slashes</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>இது வெவ்வேறு இயக்க முறைமைகளில் வெவ்வேறு பாதை பிரிப்பான்களைக் கையாளுவதால், + உடன் சரம் இணைப்பை விட path.join() விரும்பப்படுகிறது.</p>
+            </div>
+
+            <h3>path.resolve()</h3>
+            
+            <p>பாதைகள் அல்லது பாதை பகுதிகளின் வரிசையை முழுமையான பாதையாக தீர்க்கிறது, ஒரு முழுமையான பாதை கட்டமைக்கப்படும் வரை வலமிருந்து இடமாக செயலாக்குகிறது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: பாதைகளை தீர்த்தல்</h3>
+                <pre><code>const path = require('path');
+
+// 1. Resolve relative to current working directory
+console.log(path.resolve('file.txt'));
+
+// 2. Resolve with multiple segments
+console.log(path.resolve('/users', 'docs', 'file.txt'));
+
+// 3. Right-to-left processing
+console.log(path.resolve('/first', '/second', 'third')); // '/second/third'
+
+// 4. Using __dirname for module-relative paths
+console.log(path.resolve(__dirname, 'config', 'app.json'));</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🌟</span> உதவிக்குறிப்பு:</h4>
+                <p>தற்போதைய தொகுதியின் இடத்துடன் தொடர்புடைய முழுமையான பாதைகளை உருவாக்க path.resolve() பொதுவாக __dirname உடன் பயன்படுத்தப்படுகிறது.</p>
+            </div>
+
+            <h3>path.parse()</h3>
+            
+            <p>பாதையின் முக்கியமான கூறுகளைக் குறிக்கும் பண்புகளைக் கொண்ட ஒரு பொருளை வழங்குகிறது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: கோப்பு பாதையைப் பாகுபடுத்துதல்</h3>
+                <pre><code>const path = require('path');
+
+// Parse a file path
+const pathInfo = path.parse('/users/docs/file.txt');
+console.log(pathInfo);
+/* Output on Unix/macOS:
+{
+  root: '/',
+  dir: '/users/docs',
+  base: 'file.txt',
+  ext: '.txt',
+  name: 'file'
+}
+*/
+
+// Accessing parsed components
+console.log('Directory:', pathInfo.dir); // /users/docs
+console.log('Filename:', pathInfo.base); // file.txt
+console.log('Name only:', pathInfo.name); // file
+console.log('Extension:', pathInfo.ext); // .txt</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">ℹ️</span> குறிப்பு:</h4>
+                <p>path.parse() இன் வெளியீட்டை path.format() க்கு அனுப்பி பாதையை மீண்டும் கட்டமைக்கலாம்.</p>
+            </div>
+
+            <h3>path.format()</h3>
+            
+            <p>ஒரு பொருளிலிருந்து பாதை சரத்தை வழங்குகிறது, இது path.parse() க்கு எதிரானது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: பாதை பொருள்களை வடிவமைத்தல்</h3>
+                <pre><code>const path = require('path');
+
+// Method 1: Using dir and base
+const pathString1 = path.format({
+  dir: '/users/docs',
+  base: 'file.txt'
+});
+console.log(pathString1); // '/users/docs/file.txt'
+
+// Method 2: Using root, dir, name, and ext
+const pathString2 = path.format({
+  root: '/',
+  dir: '/users/docs',
+  name: 'file',
+  ext: '.txt'
+});
+console.log(pathString2); // '/users/docs/file.txt'
+
+// Practical example: Modify and reconstruct a path
+const parsedPath = path.parse('/users/docs/old-file.txt');
+parsedPath.base = 'new-file.md';
+const newPath = path.format(parsedPath);
+console.log(newPath); // '/users/docs/new-file.md'</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>path.format() பயன்படுத்தும் போது, dir மற்றும் root பண்புகள் வழங்கப்பட்டால், root புறக்கணிக்கப்படும்.</p>
+            </div>
+
+            <h3>path.normalize()</h3>
+            
+            <p>கொடுக்கப்பட்ட பாதையை இயல்பாக்குகிறது, .. மற்றும் . பகுதிகளைத் தீர்த்து மிகையான பிரிப்பான்களை அகற்றுகிறது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: பாதைகளை இயல்பாக்குதல்</h3>
+                <pre><code>const path = require('path');
+
+// Resolve relative navigation
+console.log(path.normalize('/users/./docs/../data/file.txt')); // '/users/data/file.txt'
+
+// Handle multiple consecutive slashes
+console.log(path.normalize('/users//docs////file.txt')); // '/users/docs/file.txt'
+
+// Windows-style paths (automatically handled)
+console.log(path.normalize('C:\\users\\docs\\..\\file.txt')); // 'C:\\users\\file.txt'
+
+// Edge cases
+console.log(path.normalize('')); // '.'
+console.log(path.normalize('.')); // '.'
+console.log(path.normalize('..')); // '..'
+console.log(path.normalize('/..')); // '/'</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🔒</span> பாதுகாப்பு குறிப்பு:</h4>
+                <p>path.normalize() .. வரிசைகளைத் தீர்க்கும் போது, இது அடைவு டிராவர்சல் தாக்குதல்களிலிருந்து பாதுகாக்காது. கோப்பு பாதைகளுடன் பணிபுரியும் போது எப்போதும் பயனர் உள்ளீட்டை சரிபார்க்கவும் மற்றும் சுத்திகரிக்கவும்.</p>
+            </div>
+
+            <h3>path.relative()</h3>
+            
+            <p>முதல் பாதையிலிருந்து இரண்டாவது பாதைக்கு உறவினர் பாதையை வழங்குகிறது, அல்லது பாதைகள் ஒரே மாதிரியாக இருந்தால் வெற்று சரம்.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: உறவினர் பாதைகளைக் கண்டறிதல்</h3>
+                <pre><code>const path = require('path');
+
+// Basic relative path
+console.log(path.relative('/users/docs/file.txt', '/users/images/photo.jpg'));
+// Output: '../../images/photo.jpg'
+
+// Same directory
+console.log(path.relative('/users/docs/file1.txt', '/users/docs/file2.txt'));
+// Output: 'file2.txt'
+
+// Same file
+console.log(path.relative('/users/docs/file.txt', '/users/docs/file.txt'));
+// Output: ''
+
+// Different roots (Windows)
+console.log(path.relative('C:\\user\\test\\aaa', 'C:\\user\\impl\\bbb'));
+// Output: '..\\..\\impl\\bbb'
+
+// Practical example: Creating a relative path for web
+const absolutePath = '/var/www/static/images/logo.png';
+const webRoot = '/var/www/';
+const webPath = path.relative(webRoot, absolutePath).replace(/\\/g, '/');
+console.log(webPath); // 'static/images/logo.png'</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🌟</span> உதவிக்குறிப்பு:</h4>
+                <p>உறவினர் URLகளை உருவாக்க வேண்டும் அல்லது உங்கள் திட்டத்தில் வெவ்வேறு இடங்களுக்கு இடையே சுமக்கக்கூடிய பாதைகளை உருவாக்க வேண்டும் போது path.relative() குறிப்பாக பயனுள்ளதாக இருக்கும்.</p>
+            </div>
+
+            <h3>path.isAbsolute()</h3>
+            
+            <p>கொடுக்கப்பட்ட பாதை முழுமையான பாதையா என்பதை தீர்மானிக்கிறது. ஒரு முழுமையான பாதை எப்போதும் ஒரே இடத்திற்கு தீரும், வேலை அடைவைப் பொருட்படுத்தாமல்.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: முழுமையான பாதைகளைச் சரிபார்த்தல்</h3>
+                <pre><code>const path = require('path');
+
+// POSIX (Unix/Linux/macOS)
+console.log(path.isAbsolute('/users/docs')); // true
+console.log(path.isAbsolute('users/docs')); // false
+
+// Windows
+console.log(path.isAbsolute('C:\\temp')); // true
+console.log(path.isAbsolute('temp')); // false
+
+// UNC paths (Windows network paths)
+console.log(path.isAbsolute('\\\\server\\share')); // true
+
+// Practical example: Ensure absolute path for config files
+function ensureAbsolute(configPath) {
+  return path.isAbsolute(configPath)
+    ? configPath
+    : path.resolve(process.cwd(), configPath);
+}
+
+console.log(ensureAbsolute('config.json')); // Resolves to absolute path
+console.log(ensureAbsolute('/etc/app/config.json')); // Already absolute</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">ℹ️</span> குறிப்பு:</h4>
+                <p>விண்டோஸில், கொலன் ('C:\\' போன்றவை) தொடர்ந்து வரும் ஓட்ட எழுத்துடன் தொடங்கும் பாதைகள் முழுமையானதாகக் கருதப்படுகின்றன, UNC பாதைகள் ('\\\\server\\share' போன்றவை) போன்றவை.</p>
+            </div>
+        </section>
+
+        <!-- Path Properties -->
+        <section class="content-section" id="path-properties">
+            <h2>Path பண்புகள்</h2>
+
+            <h3>path.sep</h3>
+            
+            <p>மேடை-குறிப்பிட்ட பாதை பகுதி பிரிப்பானை வழங்குகிறது.</p>
+            
+            <p>இது தற்போதைய இயக்க முறைமைக்கான இயல்புநிலை பாதை பகுதி பிரிப்பானை வழங்கும் படிக்க-மட்டும் பண்பு.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: பாதை பிரிப்பான்களுடன் பணிபுரிதல்</h3>
+                <pre><code>const path = require('path');
+
+// Get the platform-specific separator
+console.log(`Path separator: ${JSON.stringify(path.sep)}`); // '\\' on Windows, '/' on POSIX
+
+// Building paths safely across platforms
+const parts = ['users', 'docs', 'file.txt'];
+const filePath = parts.join(path.sep);
+console.log('Built path:', filePath);
+
+// Splitting paths correctly
+const pathToSplit = process.platform === 'win32'
+  ? 'C:\\Users\\docs\\file.txt'
+  : '/users/docs/file.txt';
+const pathParts = pathToSplit.split(path.sep);
+console.log('Split path:', pathParts);
+
+// Normalizing paths with the correct separator
+const normalized = path.normalize(`users${path.sep}docs${path.sep}..${path.sep}file.txt`);
+console.log('Normalized path:', normalized);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> சிறந்த நடைமுறை:</h4>
+                <p>உங்கள் Node.js பயன்பாடுகளில் குறுக்கு-மேடை பொருந்தக்கூடிய தன்மையை உறுதி செய்ய கடினமாக்கப்பட்ட பாதை பிரிப்பான்களுக்கு பதிலாக எப்போதும் path.sep பயன்படுத்தவும்.</p>
+            </div>
+
+            <h3>path.delimiter</h3>
+            
+            <p>PATH போன்ற சூழல் மாறிகளில் பாதைகளைப் பிரிக்கப் பயன்படும் மேடை-குறிப்பிட்ட பாதை பிரிப்பானை வழங்குகிறது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: PATH சூழல் மாறியுடன் பணிபுரிதல்</h3>
+                <pre><code>const path = require('path');
+
+// Get the platform-specific delimiter
+console.log(`Path delimiter: ${JSON.stringify(path.delimiter)}`); // ';' on Windows, ':' on POSIX
+
+// Working with PATH environment variable
+function findInPath(executable) {
+  if (!process.env.PATH) return null;
+
+  // Split PATH into directories
+  const pathDirs = process.env.PATH.split(path.delimiter);
+
+  // Check each directory for the executable
+  for (const dir of pathDirs) {
+    try {
+      const fullPath = path.join(dir, executable);
+      require('fs').accessSync(fullPath, require('fs').constants.X_OK);
+      return fullPath;
+    } catch (err) {
+      // File not found or not executable
+      continue;
+    }
+  }
+  return null;
+}
+
+// Example: Find node executable in PATH
+const nodePath = findInPath(process.platform === 'win32' ? 'node.exe' : 'node');
+console.log('Node.js path:', nodePath || 'Not found in PATH');</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">ℹ️</span> குறிப்பு:</h4>
+                <p>path.delimiter முதன்மையாக PATH அல்லது NODE_PATH போன்ற பல பாதைகளைக் கொண்ட சூழல் மாறிகளுடன் பணிபுரியப் பயன்படுத்தப்படுகிறது.</p>
+            </div>
+
+            <h3>path.win32</h3>
+            
+            <p>விண்டோஸ்-குறிப்பிட்ட பாதை முறைகளுக்கான அணுகலை வழங்குகிறது, நீங்கள் இயங்கும் இயக்க முறைமையைப் பொருட்படுத்தாமல் விண்டோஸ்-பாணி பாதைகளுடன் பணிபுரிய உங்களை அனுமதிக்கிறது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: எந்த மேடையிலும் விண்டோஸ் பாதைகளுடன் பணிபுரிதல்</h3>
+                <pre><code>const path = require('path');
+
+// Always use Windows-style path handling
+const winPath = 'C:\\Users\\user\\Documents\\file.txt';
+console.log('Windows basename:', path.win32.basename(winPath));
+console.log('Windows dirname:', path.win32.dirname(winPath));
+
+// Normalize Windows paths
+console.log('Normalized path:', path.win32.normalize('C:\\\\temp\\\\foo\\..\\bar\\file.txt'));
+
+// Convert between forward and backward slashes
+const mixedPath = 'C:/Users/User/Documents//file.txt';
+console.log('Normalized mixed slashes:', path.win32.normalize(mixedPath));
+
+// Working with UNC paths
+const uncPath = '\\\\server\\share\\folder\\file.txt';
+console.log('UNC path components:', path.win32.parse(uncPath));</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🖥️</span> பயன்பாட்டு நிகழ்வு:</h4>
+                <p>விண்டோஸ் அமைப்பு பதிவிலிருந்து அல்லது கட்டமைப்பு கோப்பிலிருந்து பாதைகளை செயலாக்கும் போது உங்கள் பயன்பாடு விண்டோஸ்-பாணி பாதைகளுடன் விண்டோஸ் அல்லாத மேடைகளில் பணிபுரிய வேண்டியிருக்கும் போது path.win32 பொருள் குறிப்பாக பயனுள்ளதாக இருக்கும்.</p>
+            </div>
+
+            <h3>path.posix</h3>
+            
+            <p>POSIX-இணங்க பாதை முறைகளுக்கான அணுகலை வழங்குகிறது, அனைத்து மேடைகளிலும் நிலையான முன்சாய்வு பாதை கையாளுதலை உறுதி செய்கிறது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: எந்த மேடையிலும் POSIX பாதைகளுடன் பணிபுரிதல்</h3>
+                <pre><code>const path = require('path');
+
+// Always use POSIX-style path handling
+const posixPath = '/home/user/documents/file.txt';
+console.log('POSIX basename:', path.posix.basename(posixPath));
+console.log('POSIX dirname:', path.posix.dirname(posixPath));
+
+// Normalize POSIX paths
+console.log('Normalized path:', path.posix.normalize('/usr/local//bin/../lib/file.txt'));
+
+// Working with relative paths
+console.log('Relative path:', path.posix.relative('/data/test/aaa', '/data/impl/bbb'));
+
+// Joining paths with POSIX separators
+const urlPath = ['static', 'images', 'logo.png'].join(path.posix.sep);
+console.log('URL path:', urlPath); // 'static/images/logo.png'</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🌐</span> பயன்பாட்டு நிகழ்வு:</h4>
+                <p>வலை பயன்பாடுகள், கட்டமைப்பு கோப்புகள் அல்லது POSIX-பாணி பாதைகளை எதிர்பார்க்கும் APIகளுடன் பணிபுரியும் போது நிலையான பாதை கையாளுதலை உறுதி செய்ய வேண்டும் போது path.posix பொருள் குறிப்பாக பயனுள்ளதாக இருக்கும், அடிப்படை இயக்க முறைமையைப் பொருட்படுத்தாமல்.</p>
+            </div>
+        </section>
+
+        <!-- Common Use Cases and Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>பொதுவான பயன்பாட்டு நிகழ்வுகள் மற்றும் சிறந்த நடைமுறைகள்</h2>
+
+            <h3>தொகுதி பாதைகளுடன் பணிபுரிதல்</h3>
+            
+            <p>தொகுதி பாதைகளைப் புரிந்துகொள்வது மற்றும் பணிபுரிவது பராமரிக்கக்கூடிய Node.js பயன்பாடுகளை உருவாக்குவதற்கு முக்கியமானது. உண்மையான உலக சூழ்நிலைகளில் பாதை கையாளுதலுக்கான சில பொதுவான வடிவங்கள் மற்றும் சிறந்த நடைமுறைகள் இங்கே.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: தொகுதி பாதை தீர்மானம்</h3>
+                <pre><code>const path = require('path');
+const fs = require('fs/promises');
+
+// Current module's directory and file info
+console.log('Module directory:', __dirname);
+console.log('Module file path:', __filename);
+
+// Common path patterns
+const paths = {
+  // Configuration files relative to project root
+  config: path.join(__dirname, '..', 'config', 'app.json'),
+ 
+  // Logs directory (create if doesn't exist)
+  logs: path.join(__dirname, '..', 'logs'),
+ 
+  // Public assets
+  public: path.join(__dirname, '..', 'public'),
+ 
+  // Uploads directory with proper permissions
+  uploads: path.join(__dirname, '..', 'uploads')
+};
+
+// Ensure directories exist
+async function ensureDirectories() {
+  try {
+    await Promise.all([
+      fs.mkdir(paths.logs, { recursive: true }),
+      fs.mkdir(paths.public, { recursive: true }),
+      fs.mkdir(paths.uploads, { recursive: true, mode: 0o755 })
+    ]);
+    console.log('All directories ready');
+  } catch (error) {
+    console.error('Error creating directories:', error);
+  }
+}
+
+// Example: Load configuration
+async function loadConfig() {
+  try {
+    const configData = await fs.readFile(paths.config, 'utf8');
+    return JSON.parse(configData);
+  } catch (error) {
+    console.error('Error loading config:', error.message);
+    return {};
+  }
+}
+
+// Example: Log to application log
+async function logToFile(message) {
+  try {
+    const logFile = path.join(paths.logs, `${new Date().toISOString().split('T')[0]}.log`);
+    const logMessage = `[${new Date().toISOString()}] ${message}\n`;
+    await fs.appendFile(logFile, logMessage, 'utf8');
+  } catch (error) {
+    console.error('Error writing to log:', error);
+  }
+}
+
+// Initialize and run examples
+(async () => {
+  await ensureDirectories();
+  const config = await loadConfig();
+  console.log('Loaded config:', config);
+  await logToFile('Application started');
+})();</code></pre>
+            </div>
+
+            <h3>ES தொகுதிகள் பாதை கையாளுதல்</h3>
+            
+            <p>ECMAScript தொகுதிகளில் (.mjs நீட்டிப்பு கொண்ட கோப்புகள் அல்லது package.json இல் "type": "module" அமைக்கப்பட்டால்), __dirname மற்றும் __filename கிடைக்காது. ES தொகுதிகளில் பாதைகளைக் கையாள இங்கே எப்படி:</p>
+            
+            <div class="code-example">
+                <pre><code>// ES Module (app.mjs or with "type": "module" in package.json)
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { promises as fs } from 'fs';
+
+// Get current module's directory and file path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Utility function for path resolution in ES modules
+function resolvePath(relativePath) {
+  return new URL(relativePath, import.meta.url).pathname;
+}
+
+// Example usage
+const configPath = join(__dirname, '..', 'config', 'settings.json');
+const assetPath = resolvePath('../assets/logo.png');
+
+// Dynamic imports with paths relative to current module
+async function loadModule(modulePath) {
+  const fullPath = new URL(modulePath, import.meta.url);
+  return import(fullPath);
+}</code></pre>
+            </div>
+
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔑</span> முக்கிய புள்ளிகள்:</h4>
+                <ul>
+                    <li>தற்போதைய தொகுதியின் URL ஐப் பெற import.meta.url பயன்படுத்தவும்</li>
+                    <li>தேவைப்படும் போது fileURLToPath() உடன் கோப்பு பாதைக்கு URL ஐ மாற்றவும்</li>
+                    <li>அடிப்படையாக import.meta.url உடன் URL கட்டமைப்பாளரைப் பயன்படுத்தவும்</li>
+                    <li>குறுக்கு-மேடை பொருந்தக்கூடிய தன்மைக்கு path.join() மற்றும் பிற பாதை முறைகளைத் தொடர்ந்து பயன்படுத்தவும்</li>
+                </ul>
+            </div>
+
+            <h3>மேம்பட்ட பாதை கையாளுதல் வடிவங்கள்</h3>
+            
+            <p>உண்மையான உலக பயன்பாடுகளில் பாதைகளுடன் பணிபுரிய சில மேம்பட்ட வடிவங்கள் இங்கே.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: உற்பத்தி பயன்பாடுகளுக்கான பாதை பயன்பாடுகள்</h3>
+                <pre><code>const path = require('path');
+const fs = require('fs/promises');
+const os = require('os');
+
+// Path utility class
+class PathUtils {
+  static get tempDir() {
+    return path.join(os.tmpdir(), 'myapp');
+  }
+ 
+  static get userHome() {
+    return process.env.HOME || process.env.USERPROFILE || os.homedir();
+  }
+
+  static async ensureDirectory(dirPath) {
+    try {
+      await fs.mkdir(dirPath, { recursive: true, mode: 0o755 });
+      return true;
+    } catch (error) {
+      if (error.code !== 'EEXIST') throw error;
+      return false;
+    }
+  }
+ 
+  static isSafePath(baseDir, targetPath) {
+    const normalizedBase = path.resolve(baseDir);
+    const normalizedTarget = path.resolve(targetPath);
+    return normalizedTarget.startsWith(normalizedBase);
+  }
+ 
+  static getUniqueFilename(dir, filename) {
+    const { name, ext } = path.parse(filename);
+    let counter = 1;
+    let candidate = filename;
+   
+    while (fs.existsSync(path.join(dir, candidate))) {
+      candidate = `${name} (${counter++})${ext}`;
+    }
+    return candidate;
+  }
+}
+
+// Example usage
+(async () => {
+  // Ensure temp directory exists
+  await PathUtils.ensureDirectory(PathUtils.tempDir);
+ 
+  // Safe file operations
+  const userUploads = path.join(PathUtils.userHome, 'uploads');
+  const safePath = path.join(userUploads, 'profile.jpg');
+ 
+  if (PathUtils.isSafePath(userUploads, safePath)) {
+    console.log('Path is safe for operations');
+  } else {
+    console.error('Potential path traversal attack detected!');
+  }
+ 
+  // Generate unique filename
+  const uniqueName = PathUtils.getUniqueFilename(
+    userUploads,
+    'document.pdf'
+  );
+  console.log('Unique filename:', uniqueName);
+ 
+  // Working with file extensions
+  const filePath = '/users/john/docs/report.pdf';
+  const fileInfo = {
+    name: path.basename(filePath, path.extname(filePath)),
+    ext: path.extname(filePath),
+    dir: path.dirname(filePath)
+  };
+  console.log('File info:', fileInfo);
+})();</code></pre>
+            </div>
+
+            <h3>பாதுகாப்பு பரிசீலனைகள்</h3>
+            
+            <p>கோப்பு பாதைகளுடன் பணிபுரியும் போது, பாதுகாப்பு எப்போதும் முதன்மையான முன்னுரிமையாக இருக்க வேண்டும். சில முக்கியமான பாதுகாப்பு பரிசீலனைகள் மற்றும் சிறந்த நடைமுறைகள் இங்கே:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: பாதுகாப்பான பாதை கையாளுதல்</h3>
+                <pre><code>const path = require('path');
+const fs = require('fs').promises;
+
+// 1. Prevent directory traversal attacks
+function safeJoin(base, ...paths) {
+  const targetPath = path.join(base, ...paths);
+  const normalizedPath = path.normalize(targetPath);
+ 
+  // Ensure the resulting path is still within the base directory
+  if (!normalizedPath.startsWith(path.resolve(base))) {
+    throw new Error('Access denied: Path traversal detected');
+  }
+ 
+  return normalizedPath;
+}
+
+// 2. Validate file extensions
+const ALLOWED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.gif']);
+
+function hasValidExtension(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  return ALLOWED_EXTENSIONS.has(ext);
+}
+
+// 3. Safe file operations
+async function safeReadFile(baseDir, relativePath) {
+  const safePath = safeJoin(baseDir, relativePath);
+ 
+  // Additional security checks
+  if (!hasValidExtension(safePath)) {
+    throw new Error('Invalid file type');
+  }
+ 
+  const stats = await fs.stat(safePath);
+  if (!stats.isFile()) {
+    throw new Error('Not a file');
+  }
+ 
+  return fs.readFile(safePath, 'utf8');
+}
+
+// Example usage
+(async () => {
+  const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
+  const userInput = '../../../etc/passwd'; // Malicious input
+ 
+  try {
+    // This will throw an error due to path traversal attempt
+    const content = await safeReadFile(UPLOAD_DIR, userInput);
+    console.log('File content:', content);
+  } catch (error) {
+    console.error('Security error:', error.message);
+  }
+})();</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <h4><span class="warning-icon">🔒</span> பாதுகாப்பு சிறந்த நடைமுறைகள்:</h4>
+                <ul>
+                    <li>பயனர் வழங்கிய பாதைகளை எப்போதும் சரிபார்க்கவும் மற்றும் சுத்திகரிக்கவும்</li>
+                    <li>அடைவு டிராவர்சலைத் தடுக்க path.normalize() பயன்படுத்தவும்</li>
+                    <li>சரியான கோப்பு வகை சரிபார்ப்பை செயல்படுத்தவும்</li>
+                    <li>பொருத்தமான கோப்பு அனுமதிகளை அமைக்கவும்</li>
+                    <li>குறைந்தபட்ச சலுகை கொள்கையைப் பயன்படுத்தவும்</li>
+                    <li>eslint-plugin-security போன்ற பாதுகாப்பு லிண்டரைப் பயன்படுத்தவும்</li>
+                </ul>
+            </div>
+
+            <h3>குறுக்கு-மேடை மேம்பாடு</h3>
+            
+            <p>குறுக்கு-மேடை பயன்பாடுகளை உருவாக்கும் போது, வெவ்வேறு இயக்க முறைமைகளுக்கு இடையேயான பாதை வேறுபாடுகளை சரியாகக் கையாளுவது முக்கியம்.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: குறுக்கு-மேடை பாதை கையாளுதல்</h3>
+                <pre><code>const path = require('path');
+
+// Platform detection
+const isWindows = process.platform === 'win32';
+const isMac = process.platform === 'darwin';
+const isLinux = process.platform === 'linux';
+
+// Platform-specific paths
+const appDataDir = isWindows
+  ? path.join(process.env.APPDATA || path.join(process.env.USERPROFILE, 'AppData', 'Roaming'))
+  : path.join(process.env.HOME || process.env.USERPROFILE, isMac ? 'Library/Application Support' : '.config');
+
+// Application-specific directories
+const appName = 'MyApp';
+const appDir = path.join(appDataDir, appName);
+
+// Ensure application directory exists
+require('fs').mkdirSync(appDir, { recursive: true });
+
+// Platform-specific temporary directory
+const tempDir = path.join(require('os').tmpdir(), appName);
+
+// Example: Platform-agnostic path handling
+function getConfigPath() {
+  const configName = 'config.json';
+
+  // Development vs production paths
+  if (process.env.NODE_ENV === 'development') {
+    return path.join(process.cwd(), 'config', configName);
+  }
+  
+  // Production path
+  return path.join(appDir, configName);
+}
+
+console.log('Application directory:', appDir);
+console.log('Temporary directory:', tempDir);
+console.log('Config file path:', getConfigPath());</code></pre>
+            </div>
+
+            <div class="tip-box">
+                <h4><span class="tip-icon">🌍</span> குறுக்கு-மேடை உதவிக்குறிப்புகள்:</h4>
+                <ul>
+                    <li>சரம் இணைப்புக்கு பதிலாக எப்போதும் path.join() பயன்படுத்தவும்</li>
+                    <li>மேடை-குறிப்பிட்ட பிரிப்பான் தேவைப்படும் போது path.sep பயன்படுத்தவும்</li>
+                    <li>வழக்கு உணர்திறன் வேறுபாடுகளைக் கையாளவும் (விண்டோஸ் வழக்கு-உணர்திறன் அல்ல)</li>
+                    <li>வெவ்வேறு மேடைகளில் பாதை நீள வரம்புகளைப் பற்றி அறிந்து கொள்ளுங்கள்</li>
+                    <li>உங்கள் பயன்பாட்டை அனைத்து இலக்கு மேடைகளிலும் சோதிக்கவும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>Node.js Path தொகுதி ஒரு நிலையான மற்றும் மேடை-சுயாதீன முறையில் கோப்பு பாதைகளுடன் பணிபுரிய ஒரு அத்தியாவசியமான கருவியாகும்.</p>
+            
+            <p>இது உதவும் ஒரு வளமான பயன்பாடுகளின் தொகுப்பை வழங்குகிறது:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <span><strong>கோப்பு பாதைகளைப் பாகுபடுத்துதல் மற்றும் வடிவமைத்தல்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync-alt"></i>
+                    <span><strong>பாதைகளை இயல்பாக்குதல் மற்றும் தீர்த்தல்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-route"></i>
+                    <span><strong>உறவினர் மற்றும் முழுமையான பாதைகளுடன் பணிபுரிதல்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span><strong>பாதை கூறுகளை கையாளுதல்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-desktop"></i>
+                    <span><strong>எந்த இயக்க முறைமையிலும் சரியாக வேலை செய்யும் குறுக்கு-மேடை குறியீட்டை எழுதுதல்</strong></span>
+                </div>
+            </div>
+
+            <p>Path தொகுதியைப் பயன்படுத்துவதன் மூலம், நீங்கள் வெவ்வேறு சூழல்களில் கோப்பு பாதைகளை சரியாகக் கையாளும் மிகவும் வலுவான மற்றும் சுமக்கக்கூடிய குறியீட்டை எழுதலாம்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> கோப்பு மற்றும் அடைவு பாதைகளுடன் பணிபுரிய பயன்பாடுகளை வழங்கும் சரியான தொகுதி பெயரை இழுத்து விடவும்.</h4>
+                <p>The <span class="blank">______</span> module.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">path</div>
+                            <div class="option-feedback correct">✓ சரி! Path தொகுதி கோப்பு மற்றும் அடைவு பாதைகளுடன் பணிபுரிய பயன்பாடுகளை வழங்குகிறது.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">fs</div>
+                            <div class="option-feedback incorrect">✗ தவறு! fs தொகுதி கோப்பு முறைமை செயல்பாடுகளுக்கானது, ஆனால் பாதை கையாளுதலுக்கு அல்ல.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">os</div>
+                            <div class="option-feedback incorrect">✗ தவறு! os தொகுதி இயக்க முறைமை-தொடர்பான செயல்பாடுகளுக்கானது, பாதை கையாளுதலுக்கு அல்ல.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">url</div>
+                            <div class="option-feedback incorrect">✗ தவறு! url தொகுதி URLகளை கையாளுவதற்கானது, கோப்பு பாதைகளுக்கு அல்ல.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js File System Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js OS Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Path தொகுதி என்றால் என்ன?</a></li>
+                    <li><a href="#path-methods">Path தொகுதி முறைகள்</a></li>
+                    <li><a href="#path-properties">Path பண்புகள்</a></li>
+                    <li><a href="#best-practices">சிறந்த நடைமுறைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

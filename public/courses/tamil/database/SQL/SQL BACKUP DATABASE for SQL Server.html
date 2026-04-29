@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL BACKUP DATABASE for SQL Server - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Backup Types Grid */
+        .backup-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .backup-type-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .backup-type-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .backup-type-card.full {
+            border-top: 4px solid #28a745;
+        }
+        
+        .backup-type-card.differential {
+            border-top: 4px solid #007bff;
+        }
+        
+        .backup-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .backup-type-card.full .backup-icon {
+            color: #28a745;
+        }
+        
+        .backup-type-card.differential .backup-icon {
+            color: #007bff;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .backup-flow {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            margin: 0.5rem;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step-arrow {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin: 0 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .backup-types-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .flow-steps {
+                flex-direction: column;
+            }
+            
+            .step-arrow {
+                transform: rotate(90deg);
+                margin: 1rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL DROP DATABASE Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL CREATE TABLE Statement.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL BACKUP DATABASE for SQL Server</h2>
+            <p>ஏற்கனவே உள்ள SQL தரவுத்தளத்தின் முழு காப்புப்பிரதியை உருவாக்க BACKUP DATABASE அறிக்கையைப் பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is BACKUP DATABASE -->
+        <section class="content-section" id="what-is-backup-db">
+            <h2>SQL BACKUP DATABASE அறிக்கை</h2>
+            
+            <p>BACKUP DATABASE அறிக்கை ஏற்கனவே உள்ள SQL தரவுத்தளத்தின் முழு காப்புப்பிரதியை உருவாக்க SQL Server-ல் பயன்படுத்தப்படுகிறது.</p>
+            
+            <div class="backup-flow">
+                <h3>காப்புப்பிரதி செயல்முறை பணிப்பாய்வு</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <p>காப்புப்பிரதி இடத்தைத் தேர்ந்தெடுக்கவும்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <p>BACKUP DATABASE அறிக்கையை இயக்கு</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <p>காப்புப்பிரதி கோப்பு உருவாக்கப்படுகிறது</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <p>காப்புப்பிரதியைச் சரிபார்க்கவும்</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BACKUP DATABASE Syntax -->
+        <section class="content-section" id="backup-db-syntax">
+            <h2>BACKUP DATABASE தொடரியல்</h2>
+            
+            <div class="syntax-box">
+                <pre><code>BACKUP DATABASE databasename
+TO DISK = 'filepath';</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>எப்போதும் உண்மையான தரவுத்தளத்தை விட வேறு இயக்ககத்திற்கு தரவுத்தளத்தை காப்புப்பிரதி எடுக்கவும். பின்னர், நீங்கள் ஒரு டிஸ்க் கிராஷ் ஏற்பட்டால், தரவுத்தளத்துடன் உங்கள் காப்புப்பிரதி கோப்பையும் இழக்க மாட்டீர்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Backup Types -->
+        <section class="content-section" id="backup-types">
+            <h2>காப்புப்பிரதி வகைகள்</h2>
+            
+            <div class="backup-types-grid">
+                <div class="backup-type-card full">
+                    <div class="backup-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>முழு காப்புப்பிரதி</h3>
+                    <p>முழு தரவுத்தளத்தின் காப்புப்பிரதி</p>
+                    <div class="syntax-box">
+                        <pre><code>BACKUP DATABASE databasename
+TO DISK = 'filepath';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="backup-type-card differential">
+                    <div class="backup-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>வேறுபட்ட காப்புப்பிரதி</h3>
+                    <p>கடைசி முழு காப்புப்பிரதிக்குப் பிறகு மாற்றப்பட்ட தரவுத்தளத்தின் பகுதிகளை மட்டும் காப்புப்பிரதி எடுக்கும்</p>
+                    <div class="syntax-box">
+                        <pre><code>BACKUP DATABASE databasename
+TO DISK = 'filepath'
+WITH DIFFERENTIAL;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BACKUP DATABASE Examples -->
+        <section class="content-section" id="backup-db-examples">
+            <h2>BACKUP DATABASE எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>முழு காப்புப்பிரதி எடுத்துக்காட்டு</h3>
+            <p>பின்வரும் SQL அறிக்கை ஏற்கனவே உள்ள "testDB" தரவுத்தளத்தின் முழு காப்புப்பிரதியை D இயக்ககத்தில் உருவாக்குகிறது:</p>
+            
+            <div class="code-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <pre><code>BACKUP DATABASE testDB
+TO DISK = 'D:\backups\testDB.bak';</code></pre>
+            </div>
+            
+            <h3>வேறுபட்ட காப்புப்பிரதி எடுத்துக்காட்டு</h3>
+            <p>பின்வரும் SQL அறிக்கை "testDB" தரவுத்தளத்தின் வேறுபட்ட காப்புப்பிரதியை உருவாக்குகிறது:</p>
+            
+            <div class="code-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <pre><code>BACKUP DATABASE testDB
+TO DISK = 'D:\backups\testDB.bak'
+WITH DIFFERENTIAL;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>ஒரு வேறுபட்ட காப்புப்பிரதி காப்புப்பிரதி நேரத்தைக் குறைக்கிறது (மாற்றங்கள் மட்டுமே காப்புப்பிரதி எடுக்கப்படுவதால்).</p>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>நிறுவன தரவுத்தளம்</h3>
+                    <p>வணிக தரவுத்தளத்தின் காப்புப்பிரதி</p>
+                    <div class="code-block small">
+                        <pre><code>BACKUP DATABASE CompanyDB
+TO DISK = 'E:\Backups\CompanyDB_Full.bak';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>இ-காமர்ஸ் தளம்</h3>
+                    <p>விற்பனை தரவுத்தளத்தின் வேறுபட்ட காப்புப்பிரதி</p>
+                    <div class="code-block small">
+                        <pre><code>BACKUP DATABASE EcommerceDB
+TO DISK = 'F:\Backups\EcommerceDB_Diff.bak'
+WITH DIFFERENTIAL;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <h3>தினசரி காப்புப்பிரதி</h3>
+                    <p>தேதி-குறிப்பிட்ட காப்புப்பிரதி கோப்புகள்</p>
+                    <div class="code-block small">
+                        <pre><code>BACKUP DATABASE SalesDB
+TO DISK = 'G:\Backups\SalesDB_20240115.bak';</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த பயிற்சிகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-hdd"></i>
+                    </div>
+                    <h3>தனி இயக்ககம்</h3>
+                    <p>வேறு இயக்ககத்தில் காப்புப்பிரதி எடுக்கவும்</p>
+                    <div class="code-block small">
+                        <pre><code>-- Good: Different drive
+BACKUP DATABASE DB1 
+TO DISK = 'D:\Backups\DB1.bak';
+
+-- Avoid: Same drive
+BACKUP DATABASE DB1 
+TO DISK = 'C:\Backups\DB1.bak';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>பிணைய காப்புப்பிரதி</h3>
+                    <p>பிணைய இடத்திற்கு காப்புப்பிரதி எடுக்கவும்</p>
+                    <div class="code-block small">
+                        <pre><code>BACKUP DATABASE ImportantDB
+TO DISK = '\\BackupServer\SQLBackups\ImportantDB.bak';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>காப்புப்பிரதி உத்தி</h3>
+                    <p>முழு + வேறுபட்ட காப்புப்பிரதி கலவை</p>
+                    <div class="code-block small">
+                        <pre><code>-- Sunday: Full backup
+BACKUP DATABASE ProductionDB 
+TO DISK = 'D:\Backups\Full_Sun.bak';
+
+-- Weekdays: Differential
+BACKUP DATABASE ProductionDB 
+TO DISK = 'D:\Backups\Diff_Mon.bak'
+WITH DIFFERENTIAL;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> 'myDB' என்ற தரவுத்தளத்தின் முழு காப்புப்பிரதியை உருவாக்க எந்த SQL அறிக்கை பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">BACKUP DATABASE myDB TO FILE = 'C:\backups\myDB.bak';</div>
+                            <div class="option-feedback incorrect">✗ தவறு! TO FILE பயன்படுத்தப்படவில்லை, TO DISK பயன்படுத்தப்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">BACKUP DATABASE myDB TO DISK = 'C:\backups\myDB.bak';</div>
+                            <div class="option-feedback correct">✓ சரி! இது முழு காப்புப்பிரதியை உருவாக்க சரியான தொடரியல்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">BACKUP DATABASE myDB WITH DIFFERENTIAL;</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது வேறுபட்ட காப்புப்பிரதிக்கானது, முழு காப்புப்பிரதிக்கு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SAVE DATABASE myDB TO 'C:\backups\myDB.bak';</div>
+                            <div class="option-feedback incorrect">✗ தவறு! SAVE DATABASE என்பது சரியான SQL கட்டளை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL DROP DATABASE Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL CREATE TABLE Statement.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-backup-db">BACKUP DATABASE அறிக்கை</a></li>
+                    <li><a href="#backup-db-syntax">BACKUP DATABASE தொடரியல்</a></li>
+                    <li><a href="#backup-types">காப்புப்பிரதி வகைகள்</a></li>
+                    <li><a href="#best-practices">சிறந்த பயிற்சிகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Snippets - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Snippet styles */
+        .snippet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .snippet-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .snippet-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .snippet-preview {
+            padding: 20px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .snippet-content {
+            padding: 20px;
+        }
+        
+        .snippet-title {
+            margin: 0 0 10px 0;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+        
+        /* Image Text Block Styles */
+        .image-text-container {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .image-text-bg {
+            width: 100%;
+            height: 100%;
+            background-image: url('l.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.8);
+        }
+        
+        .image-text-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+        }
+        
+        /* Alert Button Styles */
+        .alert-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .alert-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .alert-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .btn-success { background-color: #28a745; }
+        .btn-info { background-color: #17a2b8; }
+        .btn-warning { background-color: #ffc107; color: #333; }
+        .btn-danger { background-color: #dc3545; }
+        .btn-default { background-color: #6c757d; }
+        
+        /* Loader Styles */
+        .loader-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--git-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Top Navigation Styles */
+        .topnav-preview {
+            background: var(--primary);
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+        }
+        
+        .topnav-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .topnav-link {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: background 0.3s;
+            border-radius: 3px;
+        }
+        
+        .topnav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Search Form Styles */
+        .search-form {
+            display: flex;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--git-color);
+            border-right: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+        
+        .search-btn {
+            background: var(--git-color);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        /* Dropdown Styles */
+        .dropdown-preview {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-btn {
+            background: var(--git-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .dropdown-preview:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-item {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            color: #333;
+            transition: background 0.3s;
+        }
+        
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Fixed Sidebar Styles */
+        .sidebar-preview {
+            display: flex;
+            height: 120px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            width: 60px;
+            background: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+        
+        .sidebar-item {
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .sidebar-content {
+            flex: 1;
+            padding: 10px;
+            background: #f8f9fa;
+        }
+        
+        /* Code display */
+        .snippet-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS Examples.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Snippets</h2>
+            <p>CSS குறியீட்டுத் துணுக்குகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS Snippets</h2>
+            
+            <p>ஒரு வலைத்தளத்தில் ஒரு கூல் அம்சத்தைப் பார்த்து "அவர்கள் அதை எப்படி செய்கிறார்கள்?" என்று எப்போதாவது நினைத்திருக்கிறீர்களா?</p>
+            
+            <p>உங்கள் திட்டங்களில் பயன்படுத்தக்கூடிய பல CSS துணுக்குகளை நாங்கள் சேகரித்துள்ளோம், இலவசமாக:</p>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <img src="l.jpg" alt="CSS Snippets Collection" style="width: 100%; max-width: 800px; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+
+        <!-- Image Text Blocks -->
+        <section class="content-section" id="image-text">
+            <h2>Image Text Blocks</h2>
+            
+            <div class="snippet-grid">
+                <div class="snippet-card">
+                    <div class="snippet-preview">
+                        <div class="image-text-container">
+                            <div class="image-text-bg"></div>
+                            <div class="image-text-content">
+                                <h4 style="margin: 0; color: white;">Nature</h4>
+                                <p style="margin: 5px 0 0 0; font-size: 0.9rem;">அழகான சூரிய உதயம்</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="snippet-content">
+                        <h4 class="snippet-title">Image Text Overlay</h4>
+                        <p>படங்களின் மேல் உரை வைக்க இந்த CSS துணுக்கைப் பயன்படுத்தவும்.</p>
+                        
+                        <div class="snippet-code">
+<pre>.image-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px;
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alert Buttons -->
+        <section class="content-section" id="alert-buttons">
+            <h2>Alert Buttons</h2>
+            
+            <div class="snippet-grid">
+                <div class="snippet-card">
+                    <div class="snippet-preview">
+                        <div class="alert-buttons">
+                            <button class="alert-btn btn-success">Success</button>
+                            <button class="alert-btn btn-info">Info</button>
+                            <button class="alert-btn btn-warning">Warning</button>
+                            <button class="alert-btn btn-danger">Danger</button>
+                            <button class="alert-btn btn-default">Default</button>
+                        </div>
+                    </div>
+                    <div class="snippet-content">
+                        <h4 class="snippet-title">Colorful Alert Buttons</h4>
+                        <p>வெவ்வேறு செய்தி வகைகளுக்கான வண்ணமயமான பொத்தான்கள்.</p>
+                        
+                        <div class="snippet-code">
+<pre>.alert-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.btn-success { background: #28a745; }
+.btn-info { background: #17a2b8; }
+.btn-warning { background: #ffc107; color: #333; }
+.btn-danger { background: #dc3545; }
+.btn-default { background: #6c757d; }</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loaders -->
+        <section class="content-section" id="loaders">
+            <h2>Loaders</h2>
+            
+            <div class="snippet-grid">
+                <div class="snippet-card">
+                    <div class="snippet-preview">
+                        <div class="loader-container">
+                            <div class="loader"></div>
+                        </div>
+                    </div>
+                    <div class="snippet-content">
+                        <h4 class="snippet-title">CSS Spinner Loader</h4>
+                        <p>உள்ளடக்கம் ஏற்றப்படும் போது காட்டுவதற்கான எளிய சுழலும் லோடர்.</p>
+                        
+                        <div class="snippet-code">
+<pre>.loader {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Navigation -->
+        <section class="content-section" id="top-navigation">
+            <h2>Top Navigation</h2>
+            
+            <div class="snippet-grid">
+                <div class="snippet-card">
+                    <div class="snippet-preview">
+                        <div class="topnav-preview">
+                            <div class="topnav-links">
+                                <a href="#" class="topnav-link">Home</a>
+                                <a href="#" class="topnav-link">About</a>
+                                <a href="#" class="topnav-link">Services</a>
+                                <a href="#" class="topnav-link">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="snippet-content">
+                        <h4 class="snippet-title">Modern Top Navigation</h4>
+                        <p>நவீன மற்றும் பதிலளிக்கும் மேல் வழிசெலுத்தல் பட்டி.</p>
+                        
+                        <div class="snippet-code">
+<pre>.topnav {
+  background: #2c3e50;
+  padding: 15px;
+}
+
+.topnav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: background 0.3s;
+}
+
+.topnav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Animated Search Form -->
+        <section class="content-section" id="search-form">
+            <h2>Animated Search Form</h2>
+            
+            <div class="snippet-grid">
+                <div class="snippet-card">
+                    <div class="snippet-preview">
+                        <form class="search-form">
+                            <input type="text" class="search-input" placeholder="Search...">
+                            <button type="submit" class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="snippet-content">
+                        <h4 class="snippet-title">Animated Search Box</h4>
+                        <p>அனிமேஷன்களுடன் கூடிய நவீன தேடல் படிவம்.</p>
+                        
+                        <div class="snippet-code">
+<pre>.search-form {
+  display: flex;
+  max-width: 300px;
+  transition: width 0.3s;
+}
+
+.search-form:focus-within {
+  width: 400px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #3498db;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #2980b9;
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hover Dropdowns -->
+        <section class="content-section" id="dropdowns">
+            <h2>Hover Dropdowns</h2>
+            
+            <div class="snippet-grid">
+                <div class="snippet-card">
+                    <div class="snippet-preview">
+                        <div class="dropdown-preview">
+                            <button class="dropdown-btn">Hover</button>
+                            <div class="dropdown-content">
+                                <a href="#" class="dropdown-item">Link 1</a>
+                                <a href="#" class="dropdown-item">Link 2</a>
+                                <a href="#" class="dropdown-item">Link 3</a>
+                                <a href="#" class="dropdown-item">Link 4</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="snippet-content">
+                        <h4 class="snippet-title">Hover Dropdown Menu</h4>
+                        <p>ஹோவர் செய்யும்போது தானாகவே திறக்கும் துளிவிடு மெனு.</p>
+                        
+                        <div class="snippet-code">
+<pre>.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: white;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background: #f8f9fa;
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fixed Sidebar -->
+        <section class="content-section" id="sidebar">
+            <h2>Fixed Sidebar</h2>
+            
+            <div class="snippet-grid">
+                <div class="snippet-card">
+                    <div class="snippet-preview">
+                        <div class="sidebar-preview">
+                            <div class="sidebar">
+                                <div class="sidebar-item">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div class="sidebar-item">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="sidebar-item">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <div class="sidebar-item">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                            </div>
+                            <div class="sidebar-content">
+                                <h4 style="margin: 0;">Main Content</h4>
+                                <p style="margin: 10px 0 0 0;">This is the main content area.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="snippet-content">
+                        <h4 class="snippet-title">Fixed Icon Sidebar</h4>
+                        <p>ஐகான்களுடன் கூடிய நிலையான பக்கப்பட்டை வடிவமைப்பு.</p>
+                        
+                        <div class="snippet-code">
+<pre>.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 100vh;
+  background: #2c3e50;
+  padding-top: 60px;
+}
+
+.main-content {
+  margin-left: 60px;
+  padding: 20px;
+}
+
+.sidebar-icon {
+  color: white;
+  padding: 15px;
+  text-align: center;
+  display: block;
+  transition: background 0.3s;
+}
+
+.sidebar-icon:hover {
+  background: #34495e;
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How To - Snippets Library -->
+        <section class="content-section" id="library">
+            <h2>How To - Snippets Library</h2>
+            
+            <p>மேலும் துணுக்குகளுக்கு, எங்கள் How To பிரிவைப் பார்வையிடலாம், இது HTML, CSS மற்றும் JavaScript க்கான நூற்றுக்கணக்கான குறியீட்டுத் துணுக்குகளை உள்ளடக்கியது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📚</span> Jassif Team Snippets Library:</h4>
+                <ul>
+                    <li>300+ HTML துணுக்குகள்</li>
+                    <li>250+ CSS துணுக்குகள்</li>
+                    <li>200+ JavaScript துணுக்குகள்</li>
+                    <li>அனைத்து துணுக்குகளும் இலவசம்</li>
+                    <li>உங்கள் திட்டங்களில் பயன்படுத்தவும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பயிற்சி:</h4>
+                <p>CSS துணுக்குகளைப் பயன்படுத்துவதன் முக்கிய நன்மை என்ன?</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அவை விலை உயர்ந்தவை</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Jassif Team CSS துணுக்குகள் இலவசம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">வலைத்தள அம்சங்களை விரைவாகச் செயல்படுத்த உதவுகின்றன</div>
+                            <div class="option-feedback correct">✓ சரி! CSS துணுக்குகள் முன்-கட்டப்பட்ட குறியீடுகளை வழங்குகின்றன, இது நேரத்தைச் சேமிக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அவை மாற்றியமைக்க முடியாது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! CSS துணுக்குகள் உங்கள் தேவைகளுக்கு ஏற்ப மாற்றியமைக்க முடியும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அவை Jassif Team இல் மட்டுமே வேலை செய்கின்றன</div>
+                            <div class="option-feedback incorrect">✗ தவறு! CSS துணுக்குகள் எந்த வலைத்தளத்திலும் வேலை செய்கின்றன</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS Examples.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">CSS துணுக்குகள்</a></li>
+                    <li><a href="#image-text">பட உரை தொகுதிகள்</a></li>
+                    <li><a href="#alert-buttons">எச்சரிக்கை பொத்தான்கள்</a></li>
+                    <li><a href="#loaders">லோடர்கள்</a></li>
+                    <li><a href="#top-navigation">மேல் வழிசெலுத்தல்</a></li>
+                    <li><a href="#search-form">தேடல் படிவம்</a></li>
+                    <li><a href="#dropdowns">துளிவிடு மெனுக்கள்</a></li>
+                    <li><a href="#sidebar">பக்கப்பட்டை</a></li>
+                    <li><a href="#library">துணுக்குகள் நூலகம்</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Add interactive hover effects for dropdown
+        document.querySelectorAll('.dropdown-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.nextElementSibling.style.display = 'block';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                setTimeout(() => {
+                    if (!this.matches(':hover') && !this.nextElementSibling.matches(':hover')) {
+                        this.nextElementSibling.style.display = 'none';
+                    }
+                }, 100);
+            });
+        });
+        
+        document.querySelectorAll('.dropdown-content').forEach(content => {
+            content.addEventListener('mouseleave', function() {
+                this.style.display = 'none';
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

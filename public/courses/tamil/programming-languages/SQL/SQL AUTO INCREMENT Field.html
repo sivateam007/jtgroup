@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL AUTO INCREMENT Field - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles specific to this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Syntax Grid */
+        .syntax-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .syntax-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .syntax-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .syntax-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .syntax-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .comparison-grid,
+            .syntax-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .syntax-header,
+            .comparison-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL CREATE INDEX Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL Working With Dates.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL AUTO INCREMENT Field</h2>
+            <p>AUTO INCREMENT புலத்தைப் பற்றி அறிந்து, தானாகவே தனித்துவமான எண்களை எவ்வாறு உருவாக்குவது என்பதைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is AUTO INCREMENT Field -->
+        <section class="content-section" id="what-is-auto-increment">
+            <h2>AUTO INCREMENT புலம் என்றால் என்ன?</h2>
+            
+            <p>Auto-increment ஒரு புதிய பதிவு அட்டவணையில் செருகப்படும் போது தானாகவே ஒரு தனித்துவமான எண்ணை உருவாக்க அனுமதிக்கிறது.</p>
+            
+            <p>பெரும்பாலும் இது முதன்மை விசை புலமாகும், இது ஒவ்வொரு புதிய பதிவும் செருகப்படும் போதும் தானாகவே உருவாக்கப்பட我们希望.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கியமான குறிப்பு:</h4>
+                <p>AUTO INCREMENT தரவுத்தளத்தில் தனித்துவமான அடையாளங்களை தானாகவே உருவாக்க உதவுகிறது, இது பயனர்கள் கைமுறையாக மதிப்புகளை உள்ளிட வேண்டியதில்லை என்பதை உறுதி செய்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Syntax for MySQL -->
+        <section class="content-section" id="mysql-syntax">
+            <h2>MySQL-க்கான தொடரியல்</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை "Persons" அட்டவணையில் "Personid" நெடுவரிசை auto-increment முதன்மை விசை புலமாக இருக்கும் வகையில் வரையறுக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>MySQL CREATE TABLE:</h3>
+                <pre><code>CREATE TABLE Persons (
+    Personid int NOT NULL AUTO_INCREMENT,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (Personid)
+);</code></pre>
+            </div>
+            
+            <p>MySQL தானியங்கி-அதிகரிப்பு அம்சத்தைச் செயல்படுத்த AUTO_INCREMENT முக்கிய சொல்லைப் பயன்படுத்துகிறது.</p>
+            
+            <p>இயல்பாக, AUTO_INCREMENT-க்கான தொடக்க மதிப்பு 1 ஆகும், மேலும் இது ஒவ்வொரு புதிய பதிவுக்கும் 1 ஆல் அதிகரிக்கும்.</p>
+            
+            <p>AUTO_INCREMENT வரிசையை வேறு மதிப்புடன் தொடங்க அனுமதிக்க, பின்வரும் SQL அறிக்கையைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>MySQL AUTO_INCREMENT தொடக்கம் மாற்றம்:</h3>
+                <pre><code>ALTER TABLE Persons AUTO_INCREMENT=100;</code></pre>
+            </div>
+            
+            <h3>MySQL-ல் புதிய பதிவைச் செருகுதல்</h3>
+            
+            <p>"Persons" அட்டவணையில் ஒரு புதிய பதிவைச் செருக, நாங்கள் "Personid" நெடுவரிசைக்கு மதிப்பைக் குறிப்பிட வேண்டியதில்லை (ஒரு தனித்துவமான மதிப்பு தானாகவே சேர்க்கப்படும்):</p>
+            
+            <div class="code-example">
+                <h3>MySQL INSERT:</h3>
+                <pre><code>INSERT INTO Persons (FirstName, LastName)
+VALUES ('Lars', 'Monsen');</code></pre>
+            </div>
+        </section>
+
+        <!-- Syntax for SQL Server -->
+        <section class="content-section" id="sqlserver-syntax">
+            <h2>SQL Server-க்கான தொடரியல்</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை "Persons" அட்டவணையில் "Personid" நெடுவரிசை auto-increment முதன்மை விசை புலமாக இருக்கும் வகையில் வரையறுக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>SQL Server CREATE TABLE:</h3>
+                <pre><code>CREATE TABLE Persons (
+    Personid int IDENTITY(1,1) PRIMARY KEY,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);</code></pre>
+            </div>
+            
+            <p>MS SQL Server தானியங்கி-அதிகரிப்பு அம்சத்தைச் செயல்படுத்த IDENTITY முக்கிய சொல்லைப் பயன்படுத்துகிறது.</p>
+            
+            <p>மேலே உள்ள எடுத்துக்காட்டில், IDENTITY-க்கான தொடக்க மதிப்பு 1 ஆகும், மேலும் இது ஒவ்வொரு புதிய பதிவுக்கும் 1 ஆல் அதிகரிக்கும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>"Personid" நெடுவரிசை மதிப்பு 10 இல் தொடங்கி 5 ஆல் அதிகரிக்க வேண்டும் எனக் குறிப்பிட, அதை IDENTITY(10,5) ஆக மாற்றவும்.</p>
+            </div>
+            
+            <h3>SQL Server-ல் புதிய பதிவைச் செருகுதல்</h3>
+            
+            <div class="code-example">
+                <h3>SQL Server INSERT:</h3>
+                <pre><code>INSERT INTO Persons (FirstName, LastName)
+VALUES ('Lars', 'Monsen');</code></pre>
+            </div>
+        </section>
+
+        <!-- Syntax for Access -->
+        <section class="content-section" id="access-syntax">
+            <h2>Access-க்கான தொடரியல்</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை "Persons" அட்டவணையில் "Personid" நெடுவரிசை auto-increment முதன்மை விசை புலமாக இருக்கும் வகையில் வரையறுக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>MS Access CREATE TABLE:</h3>
+                <pre><code>CREATE TABLE Persons (
+    Personid AUTOINCREMENT PRIMARY KEY,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);</code></pre>
+            </div>
+            
+            <p>MS Access தானியங்கி-அதிகரிப்பு அம்சத்தைச் செயல்படுத்த AUTOINCREMENT முக்கிய சொல்லைப் பயன்படுத்துகிறது.</p>
+            
+            <p>இயல்பாக, AUTOINCREMENT-க்கான தொடக்க மதிப்பு 1 ஆகும், மேலும் இது ஒவ்வொரு புதிய பதிவுக்கும் 1 ஆல் அதிகரிக்கும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>"Personid" நெடுவரிசை மதிப்பு 10 இல் தொடங்கி 5 ஆல் அதிகரிக்க வேண்டும் எனக் குறிப்பிட, autoincrement-ஐ AUTOINCREMENT(10,5) ஆக மாற்றவும்.</p>
+            </div>
+        </section>
+
+        <!-- Syntax for Oracle -->
+        <section class="content-section" id="oracle-syntax">
+            <h2>Oracle-க்கான தொடரியல்</h2>
+            
+            <p>Oracle-ல் குறியீடு சிறிது சிக்கலானது.</p>
+            
+            <p>நீங்கள் வரிசை பொருளுடன் (sequence object) ஒரு தானியங்கி-அதிகரிப்பு புலத்தை உருவாக்க வேண்டும் (இந்த பொருள் எண் வரிசையை உருவாக்குகிறது).</p>
+            
+            <p>பின்வரும் CREATE SEQUENCE தொடரியலைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>Oracle SEQUENCE உருவாக்கம்:</h3>
+                <pre><code>CREATE SEQUENCE seq_person
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1
+CACHE 10;</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீடு seq_person என்று அழைக்கப்படும் ஒரு வரிசை பொருளை உருவாக்குகிறது, இது 1 உடன் தொடங்கி 1 ஆல் அதிகரிக்கும். இது செயல்திறனுக்காக 10 மதிப்புகள் வரை cache செய்யும்.</p>
+            
+            <h3>Oracle-ல் புதிய பதிவைச் செருகுதல்</h3>
+            
+            <p>"Persons" அட்டவணையில் ஒரு புதிய பதிவைச் செருக, நாங்கள் nextval செயல்பாட்டைப் பயன்படுத்த வேண்டும் (இந்த செயல்பாடு seq_person வரிசையிலிருந்து அடுத்த மதிப்பைப் பெறுகிறது):</p>
+            
+            <div class="code-example">
+                <h3>Oracle INSERT:</h3>
+                <pre><code>INSERT INTO Persons (Personid, FirstName, LastName)
+VALUES (seq_person.nextval, 'Lars', 'Monsen');</code></pre>
+            </div>
+        </section>
+
+        <!-- Database Comparison -->
+        <section class="content-section" id="database-comparison">
+            <h2>தரவுத்தள ஒப்பீடு</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>MySQL</h4>
+                    </div>
+                    <ul>
+                        <li><strong>முக்கிய சொல்:</strong> AUTO_INCREMENT</li>
+                        <li><strong>தொடரியல்:</strong> column_name INT AUTO_INCREMENT</li>
+                        <li><strong>தொடக்கம் மாற்றம்:</strong> ALTER TABLE table AUTO_INCREMENT=value</li>
+                        <li><strong>INSERT:</strong> மதிப்பைக் குறிப்பிட தேவையில்லை</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>SQL Server</h4>
+                    </div>
+                    <ul>
+                        <li><strong>முக்கிய சொல்:</strong> IDENTITY</li>
+                        <li><strong>தொடரியல்:</strong> IDENTITY(start, increment)</li>
+                        <li><strong>தொடக்கம் மாற்றம்:</strong> IDENTITY-ல் நேரடியாக</li>
+                        <li><strong>INSERT:</strong> மதிப்பைக் குறிப்பிட தேவையில்லை</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>Oracle</h4>
+                    </div>
+                    <ul>
+                        <li><strong>முக்கிய சொல்:</strong> SEQUENCE + NEXTVAL</li>
+                        <li><strong>தொடரியல்:</strong> CREATE SEQUENCE</li>
+                        <li><strong>தொடக்கம் மாற்றம்:</strong> SEQUENCE-ல் நேரடியாக</li>
+                        <li><strong>INSERT:</strong> seq_name.nextval குறிப்பிட வேண்டும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>பயனர்கள் அட்டவணை</h3>
+                    <p>தானாக உருவாக்கப்படும் பயனர் ID</p>
+                    <div class="code-example">
+                        <pre><code>-- MySQL
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL,
+    Email VARCHAR(100)
+);
+
+INSERT INTO Users (Username, Email)
+VALUES ('john_doe', 'john@example.com');</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>ஆர்டர்கள் அட்டவணை</h3>
+                    <p>தானாக உருவாக்கப்படும் ஆர்டர் எண்</p>
+                    <div class="code-example">
+                        <pre><code>-- SQL Server
+CREATE TABLE Orders (
+    OrderID INT IDENTITY(1000,1) PRIMARY KEY,
+    CustomerID INT NOT NULL,
+    OrderDate DATE DEFAULT GETDATE()
+);
+
+INSERT INTO Orders (CustomerID)
+VALUES (12345);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3>தயாரிப்புகள் அட்டவணை</h3>
+                    <p>தானாக உருவாக்கப்படும் தயாரிப்பு ID</p>
+                    <div class="code-example">
+                        <pre><code>-- Oracle
+CREATE SEQUENCE seq_product START WITH 500;
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(255)
+);
+
+INSERT INTO Products (ProductID, ProductName)
+VALUES (seq_product.nextval, 'Laptop');</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits and Considerations -->
+        <section class="content-section" id="benefits-considerations">
+            <h2>நன்மைகள் மற்றும் கருத்துகள்</h2>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>நன்மைகள்</h3>
+                    </div>
+                    <ul>
+                        <li>தனித்துவமான அடையாளங்களை தானாக உருவாக்குகிறது</li>
+                        <li>பயனர் உள்ளீட்டு பிழைகளைக் குறைக்கிறது</li>
+                        <li>தரவு ஒருமைப்பாட்டை பராமரிக்கிறது</li>
+                        <li>பயன்பாட்டு குறியீட்டை எளிதாக்குகிறது</li>
+                        <li>அடையாள மேலாண்மையை தானாகவே செய்கிறது</li>
+                    </ul>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>கருத்துகள்</h3>
+                    </div>
+                    <ul>
+                        <li>தரவுத்தளங்கள் இடையே மாற்றும் போது சிக்கல்கள்</li>
+                        <li>வெவ்வேறு தரவுத்தளங்களுக்கு வெவ்வேறு தொடரியல்</li>
+                        <li>காலியிடங்கள் நீக்கப்பட்ட பதிவுகளுக்கு ஏற்படலாம்</li>
+                        <li>அதிகபட்ச மதிப்பு வரம்புகள் இருக்கலாம்</li>
+                        <li>Oracle-ல் கூடுதல் வரிசை நிர்வாகம் தேவை</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL-ல் AUTO_INCREMENT புலத்தின் முதன்மை நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நெடுவரிசையில் நகல் மதிப்புகளை அனுமதிக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! AUTO_INCREMENT நகல் மதிப்புகளை அனுமதிப்பதில்லை, மாறாக தனித்துவமான மதிப்புகளை உருவாக்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நெடுவரிசைக்கு தானாகவே தனித்துவமான எண்ணை உருவாக்க</div>
+                            <div class="option-feedback correct">✓ சரி! AUTO_INCREMENT ஒரு புதிய பதிவு செருகப்படும் போது தானாகவே தனித்துவமான எண்ணை உருவாக்குகிறது, பொதுவாக முதன்மை விசைகளுக்காக</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">நீக்கப்பட்ட பிறகு நெடுவரிசை மதிப்புகளை மீட்டமைக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! AUTO_INCREMENT நீக்கப்பட்ட மதிப்புகளை தானாக மீட்டமைக்காது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">நெடுவரிசை தரவை உரை வடிவத்தில் வடிவமைக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! AUTO_INCREMENT எண் மதிப்புகளை உருவாக்க பயன்படுகிறது, உரை வடிவமைப்பிற்கு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL CREATE INDEX Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL Working With Dates.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-auto-increment">AUTO INCREMENT என்றால் என்ன?</a></li>
+                    <li><a href="#mysql-syntax">MySQL தொடரியல்</a></li>
+                    <li><a href="#sqlserver-syntax">SQL Server தொடரியல்</a></li>
+                    <li><a href="#oracle-syntax">Oracle தொடரியல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

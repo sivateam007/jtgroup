@@ -1,0 +1,778 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY_SQL - JT GROUP OF INSTITUTION</title>
+    <link rel="icon" href="/assets/images/jt_logo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin:0;
+            background: #f5f7fa;
+        }
+        /* Professional Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top:0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 1px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+        }
+        .home-link:hover {
+            opacity: 0.8;
+        }
+        .dashboard-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+            font-weight: 600;
+        }
+        .dashboard-link:hover {
+            opacity: 0.8;
+        }
+        /* Hero Section */
+        .course-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .course-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .course-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .course-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .course-hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .start-learning-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+        .start-learning-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+        /* Topics Grid */
+        .topics-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .topic-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid var(--git-color);
+            text-align: center;
+        }
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .topic-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        .topic-card h3 {
+            color: var(--dark);
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+        }
+        .topic-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .topic-card a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .topic-card a:hover {
+            background: var(--secondary);
+            transform: translateX(5px);
+        }
+        /* Start Here Card */
+        .topic-card:first-child {
+            border-top: 5px solid #e74c3c;
+        }
+        .topic-card:first-child .topic-icon {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        .topic-card:first-child h3 {
+            color: #e74c3c;
+        }
+        .topic-card:first-child a {
+            background: #e74c3c;
+        }
+        .topic-card:first-child a:hover {
+            background: #c0392b;
+        }
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        .footer-column a:hover {
+            color: white;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 2rem 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo">
+                <h1>JT GROUP OF INSTITUTION</h1>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="home-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="/app/dashboard.html" class="dashboard-link">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="course-hero">
+        <div class="course-hero-content">
+            <h1><i class="fas fa-database"></i> MY_SQL</h1>
+            <p>Master MY_SQL with hands-on tutorials and examples</p>
+            <a href="MySQL Tutorial.html" class="start-learning-btn">Start Learning <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Topics -->
+    <div class="topics-container">
+        <h2 style="text-align: center; color: var(--dark); margin-bottom: 2rem;">Available Topics</h2>
+        <div class="topics-grid">
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>Introduction to MySQL (Start Here)</h3>
+                <p>Begin your MY_SQL journey with this introductory tutorial</p>
+                <a href="Introduction to MySQL.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Tutorial</h3>
+                <p>Learn MySQL Tutorial</p>
+                <a href="MySQL Tutorial.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL SQL</h3>
+                <p>Learn MySQL SQL</p>
+                <a href="MySQL SQL.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL RDBMS</h3>
+                <p>Learn MySQL RDBMS</p>
+                <a href="MySQL RDBMS.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Data Types</h3>
+                <p>Learn MySQL Data Types</p>
+                <a href="MySQL Data Types.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL CREATE DATABASE</h3>
+                <p>Learn MySQL CREATE DATABASE Statement</p>
+                <a href="MySQL CREATE DATABASE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL CREATE TABLE</h3>
+                <p>Learn MySQL CREATE TABLE Statement</p>
+                <a href="MySQL CREATE TABLE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL INSERT INTO</h3>
+                <p>Learn MySQL INSERT INTO Statement</p>
+                <a href="MySQL INSERT INTO Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL SELECT</h3>
+                <p>Learn MySQL SELECT Statement</p>
+                <a href="MySQL SELECT Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL WHERE</h3>
+                <p>Learn MySQL WHERE Clause</p>
+                <a href="MySQL WHERE Clause.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL AND, OR, NOT</h3>
+                <p>Learn MySQL AND, OR and NOT Operators</p>
+                <a href="MySQL AND, OR and NOT Operators.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL ORDER BY</h3>
+                <p>Learn MySQL ORDER BY Keyword</p>
+                <a href="MySQL ORDER BY Keyword.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL INSERT INTO SELECT</h3>
+                <p>Learn MySQL INSERT INTO SELECT Statement</p>
+                <a href="MySQL INSERT INTO SELECT Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Joins</h3>
+                <p>Learn MySQL Joins</p>
+                <a href="MySQL Joins.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL INNER JOIN</h3>
+                <p>Learn MySQL INNER JOIN Keyword</p>
+                <a href="MySQL INNER JOIN Keyword.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL LEFT JOIN</h3>
+                <p>Learn MySQL LEFT JOIN Keyword</p>
+                <a href="MySQL LEFT JOIN Keyword.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL RIGHT JOIN</h3>
+                <p>Learn MySQL RIGHT JOIN Keyword</p>
+                <a href="MySQL RIGHT JOIN Keyword.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL CROSS JOIN</h3>
+                <p>Learn MySQL CROSS JOIN Keyword</p>
+                <a href="MySQL CROSS JOIN Keyword.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Self Join</h3>
+                <p>Learn MySQL Self Join</p>
+                <a href="MySQL Self Join.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL UNION</h3>
+                <p>Learn MySQL UNION Operator</p>
+                <a href="MySQL UNION Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL UNION ALL</h3>
+                <p>Learn MySQL UNION ALL Operator</p>
+                <a href="MySQL UNION ALL Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL GROUP BY</h3>
+                <p>Learn MySQL GROUP BY Statement</p>
+                <a href="MySQL GROUP BY Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL HAVING</h3>
+                <p>Learn MySQL HAVING Clause</p>
+                <a href="MySQL HAVING Clause.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL EXISTS</h3>
+                <p>Learn MySQL EXISTS Operator</p>
+                <a href="MySQL EXISTS Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL ANY, ALL</h3>
+                <p>Learn MySQL ANY and ALL Operators</p>
+                <a href="MySQL ANY and ALL Operators.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL INSERT INTO SELECT</h3>
+                <p>Learn MySQL INSERT INTO SELECT Statement</p>
+                <a href="MySQL INSERT INTO SELECT Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL UPDATE</h3>
+                <p>Learn MySQL UPDATE Statement</p>
+                <a href="MySQL UPDATE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL DELETE</h3>
+                <p>Learn MySQL DELETE Statement</p>
+                <a href="MySQL DELETE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL DROP TABLE</h3>
+                <p>Learn MySQL DROP TABLE Statement</p>
+                <a href="MySQL DROP TABLE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL DROP DATABASE</h3>
+                <p>Learn MySQL DROP DATABASE Statement</p>
+                <a href="MySQL DROP DATABASE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL ALTER TABLE</h3>
+                <p>Learn MySQL ALTER TABLE Statement</p>
+                <a href="MySQL ALTER TABLE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL AUTO INCREMENT</h3>
+                <p>Learn MySQL AUTO INCREMENT Field</p>
+                <a href="MySQL AUTO INCREMENT Field.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Views</h3>
+                <p>Learn MySQL Views</p>
+                <a href="MySQL Views.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL INDEX</h3>
+                <p>Learn MySQL CREATE INDEX Statement</p>
+                <a href="MySQL CREATE INDEX Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Operators</h3>
+                <p>Learn MySQL Operators</p>
+                <a href="MySQL Operators.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Functions</h3>
+                <p>Learn MySQL Functions</p>
+                <a href="MySQL Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL COUNT(), AVG(), SUM()</h3>
+                <p>Learn MySQL COUNT(), AVG() and SUM() Functions</p>
+                <a href="MySQL COUNT(), AVG() and SUM() Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL MIN(), MAX()</h3>
+                <p>Learn MySQL MIN() and MAX() Functions</p>
+                <a href="MySQL MIN() and MAX() Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL LIKE</h3>
+                <p>Learn MySQL LIKE Operator</p>
+                <a href="MySQL LIKE Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Wildcards</h3>
+                <p>Learn MySQL Wildcards</p>
+                <a href="MySQL Wildcards.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL IN</h3>
+                <p>Learn MySQL IN Operator</p>
+                <a href="MySQL IN Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL BETWEEN</h3>
+                <p>Learn MySQL BETWEEN Operator</p>
+                <a href="MySQL BETWEEN Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Aliases</h3>
+                <p>Learn MySQL Aliases</p>
+                <a href="MySQL Aliases.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL NULL Values</h3>
+                <p>Learn MySQL NULL Values</p>
+                <a href="MySQL NULL Values.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL NULL Functions</h3>
+                <p>Learn MySQL NULL Functions</p>
+                <a href="MySQL NULL Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Constraints</h3>
+                <p>Learn MySQL Constraints</p>
+                <a href="MySQL Constraints.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL NOT NULL</h3>
+                <p>Learn MySQL NOT NULL Constraint</p>
+                <a href="MySQL NOT NULL Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL UNIQUE</h3>
+                <p>Learn MySQL UNIQUE Constraint</p>
+                <a href="MySQL UNIQUE Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL PRIMARY KEY</h3>
+                <p>Learn MySQL PRIMARY KEY Constraint</p>
+                <a href="MySQL PRIMARY KEY Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL FOREIGN KEY</h3>
+                <p>Learn MySQL FOREIGN KEY Constraint</p>
+                <a href="MySQL FOREIGN KEY Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL CHECK</h3>
+                <p>Learn MySQL CHECK Constraint</p>
+                <a href="MySQL CHECK Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL DEFAULT</h3>
+                <p>Learn MySQL DEFAULT Constraint</p>
+                <a href="MySQL DEFAULT Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Comments</h3>
+                <p>Learn MySQL Comments</p>
+                <a href="MySQL Comments.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Working With Dates</h3>
+                <p>Learn MySQL Working With Dates</p>
+                <a href="MySQL Working With Dates.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL CASE</h3>
+                <p>Learn MySQL CASE Statement</p>
+                <a href="MySQL CASE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>JT GROUP OF INSTITUTION</h3>
+                <p style="color: #ddd; line-height: 1.6;">Leading educational institution providing quality programming education in multiple languages.</p>
+                <div style="padding: 1rem; margin-top: 1rem;">
+                    <h4 style="color: white; margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> Help Center</h4>
+                    <p style="color: #ddd;">jassifteam@jtgroupofinstitution.com</p>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/app/dashboard.html">Dashboard</a></li>
+                    <li><a href="/courses/tamil/">Courses</a></li>
+                    <li><a href="/app/login.html">Login</a></li>
+                    <li><a href="/app/signup.html">Sign Up</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Course Categories</h3>
+                <ul>
+                    <li><a href="/courses/tamil/FRONT_END_DEVELOPMENT/">Front End</a></li>
+                    <li><a href="/courses/tamil/full stack development/">Full Stack</a></li>
+                    <li><a href="/courses/tamil/backend development/">Backend</a></li>
+                    <li><a href="/courses/tamil/programming-languages/">Programming</a></li>
+                    <li><a href="/courses/tamil/WEB_DEVELOPMENT/">Web Dev</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 JT GROUP OF INSTITUTION. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+

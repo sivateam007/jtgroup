@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Signals - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20Control%20Flow.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Change%20Detection%20Performance.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Signals</h2>
+<p>ஆங்குலர் சிக்னல்கள் - எதிர்வினை மாநில மேலாண்மை</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction Section -->
+<section class="content-section" id="introduction">
+<h2>ஆங்குலர் சிக்னல்கள்</h2>
+<p>சிக்னல்கள் எதிர்வினை மாநிலம்: அவற்றை அழைப்பதன் மூலம் படிக்கவும் (எ.கா., count()), set()/update() உடன் புதுப்பிக்கவும், computed() உடன் பெறவும் மற்றும் effect() உடன் பக்க விளைவுகளை இயக்கவும்.</p>
+</section>
+
+<!-- Signals Essentials -->
+<section class="content-section" id="essentials">
+<h2>சிக்னல்கள் அடிப்படைகள்</h2>
+
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-broadcast-tower"></i>
+<h4>சிக்னல்</h4>
+</div>
+<p>நீங்கள் அழைப்பதன் மூலம் படிக்கும் மதிப்பு (எ.கா., count()). அதைப் புதுப்பித்தல் சார்புடையவர்களுக்கு அறிவிக்கிறது.</p>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-microchip"></i>
+<h4>மாநிலம்</h4>
+</div>
+<p>உள்ளூர் கூறு மாநிலத்திற்கு signal() ஐப் பயன்படுத்தவும்.</p>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-calculator"></i>
+<h4>பெறப்பட்டது</h4>
+</div>
+<p>படிக்க மட்டும் சூத்திரங்களுக்கு computed() ஐப் பயன்படுத்தவும்.</p>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-bolt"></i>
+<h4>விளைவுகள்</h4>
+</div>
+<p>சார்புகள் மாறும்போது பக்க விளைவுகளை இயக்க effect() ஐப் பயன்படுத்தவும்.</p>
+</div>
+</div>
+
+<div class="code-example">
+<h3>சிக்னல்கள் அடிப்படை எடுத்துக்காட்டு</h3>
+<pre><code>import { signal, computed, effect } from '@angular/core';
+
+const count = signal(0);
+const double = computed(() => count() * 2);
+effect(() => console.log('count =', count()));
+
+count.update(n => n + 1);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i>முக்கிய குறிப்புகள்:</h4>
+<ul>
+<li>தொடர்புடையவை: தரவு பைண்டிங், சேவைகள் & DI மற்றும் மாற்றம் கண்டறிதல் ஆகியவற்றைப் பார்க்கவும்.</li>
+<li>உள்ளூர் கூறு மாநிலத்திற்கு சிக்னல்களைப் பயன்படுத்தவும்.</li>
+<li>தேவைப்படும் போது RxJS உடன் toSignal()/toObservable() மூலம் பாலம் அமைக்கவும்.</li>
+<li>பழைய சமநிலை: பட்டியல்களுக்கு, track உடன் @for ஐ விரும்பவும்; *ngFor உடன், அதே விளைவுக்கு trackBy ஐப் பயன்படுத்தவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Working with Signals -->
+<section class="content-section" id="working-with-signals">
+<h2>சிக்னல்களுடன் பணிபுரிதல்</h2>
+<p>.set() அல்லது .update() உடன் ஒரு சிக்னலைப் புதுப்பிக்கவும்.</p>
+<p>ஒரு செயல்பாடு போன்று அழைப்பதன் மூலம் ஒரு சிக்னலைப் படிக்கவும்.</p>
+
+<div class="code-example">
+<h3>சிக்னல் செயல்பாடுகள்</h3>
+<pre><code>const count = signal(0);
+count.set(1);
+count.update(n => n + 1);
+console.log(count());</code></pre>
+</div>
+
+<div class="code-example">
+<h3>முழுமையான எடுத்துக்காட்டு</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, signal, computed, effect } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Signals&lt;/h3&gt;
+    &lt;p&gt;Count: {{ count() }}&lt;/p&gt;
+    &lt;p&gt;Double: {{ double() }}&lt;/p&gt;
+    &lt;button (click)="inc()"&gt;Increment&lt;/button&gt;
+  `
+})
+export class App {
+  count = signal(0);
+  double = computed(() => this.count() * 2);
+  constructor() {
+    effect(() => console.log('count changed', this.count()));
+  }
+  inc() { this.count.update(n => n + 1); }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-list-check tip-icon"></i>எடுத்துக்காட்டு விளக்கம்:</h4>
+<ul>
+<li><strong>signal(0):</strong> நீங்கள் அழைப்பதன் மூலம் படிக்கும் எதிர்வினை மாநிலத்தை உருவாக்குகிறது (எ.கா., count()).</li>
+<li><strong>computed(() => ...):</strong> பிற சிக்னல்களிலிருந்து ஒரு படிக்க மட்டும் மதிப்பைப் பெறுகிறது (double()).</li>
+<li><strong>effect(() => ...):</strong> சார்புகள் மாறும் போதெல்லாம் இயங்குகிறது (count() புதுப்பிப்புகளில் பதிவுகள்).</li>
+<li><strong>update(n => n + 1):</strong> சிக்னலுக்கு எழுதுகிறது மற்றும் சார்புடையவர்களுக்கு அறிவிக்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i>உதவிக்குறிப்புகள்:</h4>
+<ul>
+<li><strong>மாற்ற முடியாத-நட்பு:</strong> இடத்தில் மாற்றுவதற்குப் பதிலாக set/update இல் புதிய பொருள்கள்/வரிசைகளை உருவாக்குவதைப் பயன்படுத்தவும்.</li>
+<li><strong>விளைவுகளைச் சிறியதாக வைக்கவும்:</strong> feedback loops தடுக்க effect() உள்ளே சிக்னல்களுக்கு எழுதுவதைத் தவிர்க்கவும்.</li>
+<li><strong>மலிவாகக் கணக்கிடவும்:</strong> computed() ஐ தூய்மையாகவும் மலிவாகவும் வைத்திருக்கவும்; பிற சிக்னல்களிலிருந்து மட்டுமே பெறவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Derived Values and Effects -->
+<section class="content-section" id="derived-effects">
+<h2>பெறப்பட்ட மதிப்புகள் மற்றும் விளைவுகள்</h2>
+<p>படிக்க மட்டும் சூத்திரங்களை computed() இல் மூடவும்; சார்புகள் மாறும்போது மீண்டும் கணக்கிடுகிறது.</p>
+<p>பதிவு செய்தல் அல்லது ஒத்திசைத்தல் போன்ற பக்க விளைவுகளுக்கு effect() ஐப் பயன்படுத்தவும்.</p>
+<p>விளைவுகளை idempotent மற்றும் இலகுவாக வைத்திருக்கவும்.</p>
+
+<div class="code-example">
+<h3>பெறப்பட்ட மதிப்புகள் எடுத்துக்காட்டு</h3>
+<pre><code>const a = signal(2);
+const b = signal(3);
+const sum = computed(() => a() + b());
+effect(() => console.log('sum =', sum()));</code></pre>
+</div>
+
+<div class="code-example">
+<h3>முழுமையான பெறப்பட்ட மதிப்பு எடுத்துக்காட்டு</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, signal, computed, effect } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Derived & Effects&lt;/h3&gt;
+    &lt;p&gt;a: {{ a() }} | b: {{ b() }} | sum: {{ sum() }}&lt;/p&gt;
+    &lt;button (click)="incA()"&gt;inc a&lt;/button&gt;
+    &lt;button (click)="incB()"&gt;inc b&lt;/button&gt;
+  `
+})
+export class App {
+  a = signal(2);
+  b = signal(3);
+  sum = computed(() => this.a() + this.b());
+  constructor() { effect(() => console.log('sum =', this.sum())); }
+  incA() { this.a.update(n => n + 1); }
+  incB() { this.b.update(n => n + 1); }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-info-circle tip-icon"></i>எடுத்துக்காட்டு விளக்கம்:</h4>
+<ul>
+<li><strong>computed:</strong> a() அல்லது b() மாறும்போது sum() மீண்டும் கணக்கிடுகிறது.</li>
+<li><strong>effect:</strong> sum() புதுப்பிப்புகளுக்கு எதிர்வினை (ஒவ்வொரு மாற்றத்திலும் பதிவுகள்).</li>
+<li><strong>incA()/incB():</strong> சிக்னல்களை அதிகரிக்க update ஐப் பயன்படுத்தவும், மீண்டும் கணக்கீட்டை இயக்கவும்.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-circle warning-icon"></i>குறிப்புகள்:</h4>
+<ul>
+<li><strong>பக்க-விளைவு computed ஐத் தவிர்க்கவும்:</strong> computed() ஐ தூய்மையாக வைத்திருக்கவும் (async/மாற்றங்கள் இல்லை).</li>
+<li><strong>விளைவு வாழ்க்கை சுழற்சிகள்:</strong> effect() உள்ளே சுத்தம் செய்யவும் மற்றும் ஒவ்வொரு ஓட்டத்திலும் தேவையற்ற வேலையைத் தவிர்க்கவும்.</li>
+<li><strong>இடைச்செயல்பாடு:</strong> stream APIs உடன் ஒருங்கிணைக்கும் போது toSignal()/toObservable() ஐப் பயன்படுத்தி RxJS உடன் பாலம் அமைக்கவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- RxJS Interop -->
+<section class="content-section" id="rxjs-interop">
+<h2>RxJS இடைச்செயல்பாடு</h2>
+<p>டெம்ப்ளேட்-நட்பு வாசிப்புகளுக்கு Observable ஐ toSignal() உடன் சிக்னலாக மாற்றவும்.</p>
+<p>stream APIs உடன் ஒருங்கிணைக்க ஒரு சிக்னலை toObservable() உடன் Observable ஆக மாற்றவும்.</p>
+
+<div class="code-example">
+<h3>RxJS இடைச்செயல்பாடு எடுத்துக்காட்டு</h3>
+<pre><code>import { signal, computed, effect, toSignal, toObservable } from '@angular/core';
+import { interval, map } from 'rxjs';
+
+// Observable -> Signal
+const seconds$ = interval(1000).pipe(map(n => n + 1));
+const seconds = toSignal(seconds$, { initialValue: 0 });
+
+// Signal -> Observable
+const count = signal(0);
+const count$ = toObservable(count);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-exchange-alt tip-icon"></i>முக்கிய குறிப்புகள்:</h4>
+<ul>
+<li><strong>ஆரம்ப மதிப்புகள்:</strong> SSR மற்றும் முதல் வழங்கலுக்கு toSignal() க்கு எப்போதும் initialValue வழங்கவும்.</li>
+<li><strong>உரிமையாளர்:</strong> Observable பக்கத்தில் சந்தாக்களை நிர்வகிக்கவும்; toSignal() தானாகவே teardown ஐக் கையாளுகிறது.</li>
+</ul>
+</div>
+</section>
+
+<!-- Signals Quick Reference -->
+<section class="content-section" id="quick-reference">
+<h2>சிக்னல்கள் விரைவு குறிப்பு</h2>
+
+<div class="comparison-table">
+<table>
+<thead>
+<tr>
+<th>செயல்பாடு</th>
+<th>தொடரியல்</th>
+<th>விளக்கம்</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>உருவாக்கு</td>
+<td>signal(initial)</td>
+<td>ஆரம்ப மதிப்புடன் சிக்னலை உருவாக்குகிறது</td>
+</tr>
+<tr>
+<td>படிக்க</td>
+<td>count()</td>
+<td>சிக்னலை ஒரு செயல்பாடு போல் அழைப்பதன் மூலம் படிக்கவும்</td>
+</tr>
+<tr>
+<td>எழுது</td>
+<td>set(value), update(fn)</td>
+<td>சிக்னல் மதிப்பைப் புதுப்பிக்கிறது</td>
+</tr>
+<tr>
+<td>பெறப்பட்டது</td>
+<td>computed(fn)</td>
+<td>பிற சிக்னல்களிலிருந்து பெறப்பட்ட மதிப்பை உருவாக்குகிறது</td>
+</tr>
+<tr>
+<td>விளைவுகள்</td>
+<td>effect(fn)</td>
+<td>சிக்னல் மாறும்போது பக்க விளைவுகளை இயக்குகிறது</td>
+</tr>
+<tr>
+<td>RxJS இடைச்செயல்பாடு</td>
+<td>toSignal(observable, { initialValue })</td>
+<td>Observable ஐ சிக்னலாக மாற்றுகிறது</td>
+</tr>
+<tr>
+<td>RxJS இடைச்செயல்பாடு</td>
+<td>toObservable(signal)</td>
+<td>சிக்னலை Observable ஆக மாற்றுகிறது</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i>ஜாஸிஃப் குழு மேம்போக்கு:</h4>
+<p>எல்லா புதிய ஆங்குலர் திட்டங்களுக்கும் சிக்னல்களைப் பயன்படுத்தவும். அவை மேம்பட்ட செயல்திறன், மேம்பட்ட வகை பாதுகாப்பு மற்றும் மேம்பட்ட மாநில மேலாண்மை ஆகியவற்றை வழங்குகின்றன. பழைய முறைகளுக்குப் பதிலாக எப்போதும் signal(), computed(), மற்றும் effect() ஐ விரும்பவும்.</p>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>பயிற்சி</h2>
+<p>ஒரு சிக்னலின் மதிப்பை எவ்வாறு படிப்பது?</p>
+
+<div class="exercise-box">
+<h4><i class="fas fa-question-circle exercise-icon"></i>சரியான பதிலைத் தேர்ந்தெடுக்கவும்:</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">அதை ஒரு செயல்பாடு போல் அழைக்கவும் (எ.கா., count())</div>
+<div class="option-feedback correct">✓ சரி! சிக்னல்கள் அவற்றை ஒரு செயல்பாடு போல் அழைப்பதன் மூலம் படிக்கப்படுகின்றன: count().</div>
+</div>
+</div>
+
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">.value ஐ அணுகவும்</div>
+<div class="option-feedback incorrect">✗ தவறு! சிக்னல்களில் .value பண்பு இல்லை. அவற்றை ஒரு செயல்பாடு போல் அழைக்கவும்.</div>
+</div>
+</div>
+
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">count.get() பயன்படுத்தவும்</div>
+<div class="option-feedback incorrect">✗ தவறு! சிக்னல்களில் .get() முறை இல்லை. அவற்றை ஒரு செயல்பாடு போல் அழைக்கவும்.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20Control%20Flow.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Change%20Detection%20Performance.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education in Tamil.</p>
+</div>
+<div class="footer-column">
+<h3>விரைவு இணைப்புகள்</h3>
+<ul>
+<li><a href="#introduction">அறிமுகம்</a></li>
+<li><a href="#essentials">அடிப்படைகள்</a></li>
+<li><a href="#working-with-signals">சிக்னல்களுடன் பணி</a></li>
+<li><a href="#derived-effects">பெறப்பட்ட மதிப்புகள்</a></li>
+<li><a href="#rxjs-interop">RxJS இடைச்செயல்பாடு</a></li>
+<li><a href="#quick-reference">விரைவு குறிப்பு</a></li>
+<li><a href="#exercise">பயிற்சி</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>தொடர்பு</h3>
+<ul>
+<li><a href="#">எங்களைப் பற்றி</a></li>
+<li><a href="#">தொடர்பு கொள்ளுங்கள்</a></li>
+<li><a href="#">இருப்பிடம் & நேரம்</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>எங்களைப் பின்தொடருங்கள்</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2024 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

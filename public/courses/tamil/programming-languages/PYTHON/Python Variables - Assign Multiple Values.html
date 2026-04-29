@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Variables - Assign Multiple Values - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Multiple Assignment-specific styling */
+        .assignment-demo {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .assignment-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .variable-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .variable-box {
+            background: white;
+            border: 2px solid var(--git-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            min-width: 100px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .variable-name {
+            color: var(--git-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .variable-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .arrow {
+            font-size: 2rem;
+            color: var(--git-color);
+        }
+        
+        .unpacking-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .unpacking-demo {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .unpacking-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .list-unpack {
+            border-top: 4px solid #3498db;
+        }
+        
+        .tuple-unpack {
+            border-top: 4px solid #e74c3c;
+        }
+        
+        .techniques-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .technique-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid;
+        }
+        
+        .technique-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .multi-vars {
+            border-color: #3498db;
+        }
+        
+        .same-value {
+            border-color: #2ecc71;
+        }
+        
+        .unpacking {
+            border-color: #9b59b6;
+        }
+        
+        .swap {
+            border-color: #e74c3c;
+        }
+        
+        .technique-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python%20-%20Variable%20Names.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python%20-%20Output%20Variables.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python Variables - Assign Multiple Values</h2>
+            <p>Python மாறிகள் - பல மதிப்புகளை ஒதுக்குதல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Many Values to Multiple Variables -->
+        <section class="content-section" id="many-to-many">
+            <h2>பல மதிப்புகளை பல மாறிகளுக்கு</h2>
+            
+            <p>Python ஒரு வரியில் பல மாறிகளுக்கு மதிப்புகளை ஒதுக்க உங்களை அனுமதிக்கிறது:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>உங்கள் சொந்த Python சேவையகத்தைப் பெறுங்கள்</p>
+            
+            <div class="assignment-demo">
+                <div class="code-example">
+                    <pre><code>x, y, z = "Orange", "Banana", "Cherry"
+print(x)
+print(y)
+print(z)</code></pre>
+                </div>
+                
+                <div class="output-display">
+                    Orange
+                    Banana
+                    Cherry
+                </div>
+                
+                <div class="assignment-visual">
+                    <div class="variable-group">
+                        <div class="variable-box">
+                            <div class="variable-name">x</div>
+                            <div class="variable-value">"Orange"</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">மாறி 1</div>
+                    </div>
+                    
+                    <div class="arrow">,</div>
+                    
+                    <div class="variable-group">
+                        <div class="variable-box">
+                            <div class="variable-name">y</div>
+                            <div class="variable-value">"Banana"</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">மாறி 2</div>
+                    </div>
+                    
+                    <div class="arrow">,</div>
+                    
+                    <div class="variable-group">
+                        <div class="variable-box">
+                            <div class="variable-name">z</div>
+                            <div class="variable-value">"Cherry"</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">மாறி 3</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> முக்கிய குறிப்பு:</h4>
+                <p>மாறிகளின் எண்ணிக்கை மதிப்புகளின் எண்ணிக்கையுடன் பொருந்துகிறதா என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள், இல்லையெனில் நீங்கள் ஒரு பிழையைப் பெறுவீர்கள்.</p>
+                <div class="code-example" style="margin: 0.5rem 0;">
+                    <pre><code><span style="color: #dc3545;"># பிழை: மிகக் குறைவான மதிப்புகள்</span>
+x, y, z = "Orange", "Banana"  <span style="color: #6a9955;"># ValueError</span>
+
+<span style="color: #dc3545;"># பிழை: அதிக மதிப்புகள்</span>
+x, y = "Orange", "Banana", "Cherry"  <span style="color: #6a9955;"># ValueError</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- One Value to Multiple Variables -->
+        <section class="content-section" id="one-to-many">
+            <h2>ஒரு மதிப்பை பல மாறிகளுக்கு</h2>
+            
+            <p>மேலும் நீங்கள் ஒரே மதிப்பை ஒரு வரியில் பல மாறிகளுக்கு ஒதுக்கலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="assignment-demo">
+                <div class="code-example">
+                    <pre><code>x = y = z = "Orange"
+print(x)
+print(y)
+print(z)</code></pre>
+                </div>
+                
+                <div class="output-display">
+                    Orange
+                    Orange
+                    Orange
+                </div>
+                
+                <div class="assignment-visual">
+                    <div class="variable-group">
+                        <div class="variable-box">
+                            <div class="variable-name">x</div>
+                            <div class="variable-value">"Orange"</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">மாறி 1</div>
+                    </div>
+                    
+                    <div class="arrow">=</div>
+                    
+                    <div class="variable-group">
+                        <div class="variable-box">
+                            <div class="variable-name">y</div>
+                            <div class="variable-value">"Orange"</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">மாறி 2</div>
+                    </div>
+                    
+                    <div class="arrow">=</div>
+                    
+                    <div class="variable-group">
+                        <div class="variable-box">
+                            <div class="variable-name">z</div>
+                            <div class="variable-value">"Orange"</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">மாறி 3</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> ஒரே மதிப்பு ஒதுக்கீடு:</h4>
+                <p>1. அனைத்து மாறிகளும் ஒரே மதிப்பைச் சுட்டிக்காட்டுகின்றன<br>
+                   2. மாறிகள் ஒரே நினைவக இடத்தைப் பகிர்ந்து கொள்கின்றன (ஒரே பொருள்)<br>
+                   3. ஒரு மாறியை மாற்றினால் மற்றவைகளையும் பாதிக்கும்<br>
+                   4. மாறாத மதிப்புகளுக்கு (எண்கள், சரங்கள்) பயனுள்ளது</p>
+            </div>
+        </section>
+
+        <!-- Unpack a Collection -->
+        <section class="content-section" id="unpack-collection">
+            <h2>ஒரு தொகுப்பை அன்பேக் செய்யவும்</h2>
+            
+            <p>பட்டியல், டூப்பிள் போன்றவற்றில் மதிப்புகளின் தொகுப்பு இருந்தால், Python மதிப்புகளை மாறிகளாகப் பிரித்தெடுக்க உங்களை அனுமதிக்கிறது. இது அன்பேக்கிங் என அழைக்கப்படுகிறது.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>ஒரு பட்டியலை அன்பேக் செய்யவும்:</p>
+            
+            <div class="unpacking-demo">
+                <div class="unpacking-card list-unpack">
+                    <h4><i class="fas fa-list"></i> பட்டியல் அன்பேக்கிங்</h4>
+                    <div class="code-example" style="margin: 1rem 0;">
+                        <pre><code>fruits = ["apple", "banana", "cherry"]
+x, y, z = fruits
+print(x)
+print(y)
+print(z)</code></pre>
+                    </div>
+                    <div class="output-display" style="margin: 0.5rem 0;">
+                        apple
+                        banana
+                        cherry
+                    </div>
+                </div>
+                
+                <div class="unpacking-card tuple-unpack">
+                    <h4><i class="fas fa-brackets-curly"></i> டூப்பிள் அன்பேக்கிங்</h4>
+                    <div class="code-example" style="margin: 1rem 0;">
+                        <pre><code>coordinates = (10, 20, 30)
+x, y, z = coordinates
+print(x, y, z)</code></pre>
+                    </div>
+                    <div class="output-display" style="margin: 0.5rem 0;">
+                        10 20 30
+                    </div>
+                </div>
+            </div>
+            
+            <p>எங்கள் Unpack Tuples அத்தியாயத்தில் அன்பேக்கிங் பற்றி மேலும் அறிக.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">📦</span> அன்பேக்கிங் விதிகள்:</h4>
+                <p>1. இடது பக்க மாறிகளின் எண்ணிக்கை வலது பக்க மதிப்புகளின் எண்ணிக்கையுடன் பொருந்த வேண்டும்<br>
+                   2. பட்டியல்கள், டூப்பிள்கள், சரங்கள் மற்றும் பிற தொகுப்புகளை அன்பேக் செய்யலாம்<br>
+                   3. நீங்கள் அனைத்து மதிப்புகளையும் அன்பேக் செய்ய வேண்டியதில்லை (கீழே பார்க்கவும்)</p>
+            </div>
+        </section>
+
+        <!-- Advanced Unpacking Techniques -->
+        <section class="content-section" id="advanced-unpacking">
+            <h2>மேம்பட்ட அன்பேக்கிங் நுட்பங்கள்</h2>
+            
+            <div class="techniques-grid">
+                <div class="technique-card multi-vars">
+                    <div class="technique-icon">
+                        <i class="fas fa-arrows-alt-h"></i>
+                    </div>
+                    <h4>மாறி மாற்றம்</h4>
+                    <div class="code-example" style="margin: 0.5rem 0;">
+                        <pre style="font-size: 0.9rem;"><code># தற்காலிக மாறி இல்லாமல் மாற்றவும்
+a = 5
+b = 10
+a, b = b, a  # Swap
+print(a, b)  # 10 5</code></pre>
+                    </div>
+                    <p>தற்காலிக மாறி தேவையில்லை</p>
+                </div>
+                
+                <div class="technique-card same-value">
+                    <div class="technique-icon">
+                        <i class="fas fa-asterisk"></i>
+                    </div>
+                    <h4>உள்ளீட்டு ஆபரேட்டர் (*)</h4>
+                    <div class="code-example" style="margin: 0.5rem 0;">
+                        <pre style="font-size: 0.9rem;"><code># மீதமுள்ளவற்றைப் பெற * பயன்படுத்தவும்
+numbers = [1, 2, 3, 4, 5]
+first, *middle, last = numbers
+print(first)   # 1
+print(middle)  # [2, 3, 4]
+print(last)    # 5</code></pre>
+                    </div>
+                    <p>மீதமுள்ள மதிப்புகளைச் சேகரிக்கவும்</p>
+                </div>
+                
+                <div class="technique-card unpacking">
+                    <div class="technique-icon">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <h4>பகுதி அன்பேக்கிங்</h4>
+                    <div class="code-example" style="margin: 0.5rem 0;">
+                        <pre style="font-size: 0.9rem;"><code># சில மதிப்புகளை மட்டும் அன்பேக் செய்யவும்
+data = ["John", "Doe", 25, "NYC"]
+first_name, last_name, *other = data
+print(first_name)  # John
+print(last_name)   # Doe
+print(other)       # [25, "NYC"]</code></pre>
+                    </div>
+                    <p>நீங்கள் அனைத்து மதிப்புகளையும் அன்பேக் செய்ய தேவையில்லை</p>
+                </div>
+                
+                <div class="technique-card swap">
+                    <div class="technique-icon">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <h4>நீக்குதல் (_)</h4>
+                    <div class="code-example" style="margin: 0.5rem 0;">
+                        <pre style="font-size: 0.9rem;"><code># தேவையற்ற மதிப்புகளை நீக்க _ பயன்படுத்தவும்
+record = ("John", "Doe", 25, "Engineer")
+first, last, _, job = record
+print(first)  # John
+print(last)   # Doe
+print(job)    # Engineer</code></pre>
+                    </div>
+                    <p>தேவையற்ற மதிப்புகளை நிராகரிக்கவும்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real World Examples -->
+        <section class="content-section" id="real-world">
+            <h2>நிஜ உலக எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-user"></i>
+                        <h4>பயனர் தரவு</h4>
+                    </div>
+                    <div class="code-example" style="margin: 0.5rem 0;">
+                        <pre style="font-size: 0.9rem;"><code># பயனர் விவரங்களை அன்பேக் செய்யவும்
+user_data = ("John", "Doe", 30, "john@example.com")
+first_name, last_name, age, email = user_data
+
+print(f"Name: {first_name} {last_name}")
+print(f"Age: {age}")
+print(f"Email: {email}")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h4>கடை உத்தரவுகள்</h4>
+                    </div>
+                    <div class="code-example" style="margin: 0.5rem 0;">
+                        <pre style="font-size: 0.9rem;"><code># பல பொருட்களுக்கு விலைகளை ஒதுக்கவும்
+price1 = price2 = price3 = 99.99
+print(f"All items: ${price1} each")
+
+# அல்லது வெவ்வேறு விலைகள்
+item1, item2, item3 = 19.99, 29.99, 9.99
+total = item1 + item2 + item3
+print(f"Total: ${total}")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-gamepad"></i>
+                        <h4>ஆட்ட நிலைகள்</h4>
+                    </div>
+                    <div class="code-example" style="margin: 0.5rem 0;">
+                        <pre style="font-size: 0.9rem;"><code># ஆட்ட நிலைகளை மாற்றவும்
+player1_score = 100
+player2_score = 150
+
+# வெற்றியாளரைக் கண்டறிய விரைவாக மாற்றவும்
+player1_score, player2_score = player2_score, player1_score
+print(f"Player 1: {player1_score}")
+print(f"Player 2: {player2_score}")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>தரவு பகுப்பாய்வு</h4>
+                    </div>
+                    <div class="code-example" style="margin: 0.5rem 0;">
+                        <pre style="font-size: 0.9rem;"><code># புள்ளிவிவரங்களை பிரித்தெடுக்கவும்
+stats = [150, 200, 175, 225, 180]
+first, *middle, last = stats
+
+print(f"First: {first}")
+print(f"Middle values: {middle}")
+print(f"Last: {last}")
+print(f"Average of middle: {sum(middle)/len(middle)}")</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Errors -->
+        <section class="content-section" id="common-errors">
+            <h2>பொதுவான பிழைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <strong>மதிப்பு எண்ணிக்கை பொருந்தவில்லை:</strong> <code>x, y = 1, 2, 3</code> அல்லது <code>x, y, z = 1, 2</code> → ValueError. எப்போதும் சரிபார்க்கவும்.
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <strong>தவறான பிரிப்பான்:</strong> <code>x|y|z = 1, 2, 3</code> அல்லது <code>x y z = 1, 2, 3</code> → SyntaxError. எப்போதும் காற்புள்ளிகளைப் பயன்படுத்தவும்.
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <strong>பட்டியல் அடைப்புக்குறிகள் மறந்து விடுதல்:</strong> <code>x, y, z = "apple", "banana", "cherry"</code> சரியானது, ஆனால் <code>x, y, z = ["apple", "banana", "cherry"]</code> அல்ல.
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>காற்புள்ளிகளை நினைவில் கொள்ளுங்கள்:</strong> பல ஒதுக்கீடுகளுக்கு காற்புள்ளிகள் அவசியம்: <code>x, y, z = 1, 2, 3</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>பட்டியல்கள் vs தனி மதிப்புகள்:</strong> <code>x, y, z = fruits</code> (fruits என்பது பட்டியல்) vs <code>x, y, z = "a", "b", "c"</code> (தனி மதிப்புகள்)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> 'Hello World' மதிப்பை ஒரு அறிக்கையில் 3 மாறிகளுக்குச் சேர்க்க சரியான தொடரியல் எது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">x, y, z = 'Hello World'</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது மூன்று மாறிகளுக்கு ஒரே ஒரு மதிப்பை ஒதுக்குகிறது - ValueError ஐ உருவாக்கும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">x = y = z = 'Hello World'</div>
+                            <div class="option-feedback correct">✓ சரி! இது ஒரே மதிப்பை மூன்று மாறிகளுக்கு ஒதுக்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">x|y|z = 'Hello World'</div>
+                            <div class="option-feedback incorrect">✗ தவறு! | என்பது Python இல் பிரிப்பானாக அனுமதிக்கப்படவில்லை. காற்புள்ளிகளைப் பயன்படுத்தவும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">x y z = 'Hello World'</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இடைவெளிகள் பிரிப்பான்களாக அனுமதிக்கப்படவில்லை. காற்புள்ளிகளைப் பயன்படுத்தவும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                  </section>
+
+        <!-- Key Takeaways -->
+        <section class="content-section" id="key-takeaways">
+            <h2>முக்கிய பாடங்கள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>பல ஒதுக்கீடு:</strong> ஒரே வரியில் பல மாறிகளுக்கு மதிப்புகளை ஒதுக்கவும்: <code>x, y, z = 1, 2, 3</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>ஒரே மதிப்பு:</strong> ஒரே மதிப்பை பல மாறிகளுக்கு ஒதுக்கவும்: <code>x = y = z = 10</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>அன்பேக்கிங்:</strong> பட்டியல்கள், டூப்பிள்கள் போன்றவற்றிலிருந்து மதிப்புகளைப் பிரித்தெடுக்கவும்: <code>x, y, z = [1, 2, 3]</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>எண்ணிக்கை பொருந்த வேண்டும்:</strong> இடது பக்க மாறிகள் மற்றும் வலது பக்க மதிப்புகளின் எண்ணிக்கை ஒரே மாதிரியாக இருக்க வேண்டும்.
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>மேம்பட்ட நுட்பங்கள்:</strong> மாறி மாற்றம், பகுதி அன்பேக்கிங், நீக்குதல் (_) மற்றும் உள்ளீட்டு ஆபரேட்டர் (*) ஆகியவற்றைப் பயன்படுத்தவும்.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Topic Preview -->
+        <section class="content-section" id="next-preview">
+            <h2>அடுத்த தலைப்பு: Python - Output Variables</h2>
+            
+            <p>அடுத்த பாடத்தில், மாறிகளை எவ்வாறு வெளியிடுவது என்பதைக் கற்றுக்கொள்வோம்:</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔜</span> அடுத்து வருவது:</h4>
+                <p>• print() செயல்பாட்டைப் பயன்படுத்துதல்<br>
+                   • f-சரங்கள் (வடிவமைக்கப்பட்ட சரங்கள்)<br>
+                   • சரம் இணைத்தல்<br>
+                   • பல மாறிகளை ஒரே வரியில் வெளியிடுதல்<br>
+                   • வெவ்வேறு தரவு வகைகளை வெளியிடுதல்<br>
+                   • வெளியீட்டை வடிவமைத்தல்</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python%20-%20Variable%20Names.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python%20-%20Output%20Variables.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#many-to-many">பல மதிப்புகளை பல மாறிகளுக்கு</a></li>
+                    <li><a href="#one-to-many">ஒரு மதிப்பை பல மாறிகளுக்கு</a></li>
+                    <li><a href="#unpack-collection">தொகுப்பை அன்பேக் செய்தல்</a></li>
+                    <li><a href="#advanced-unpacking">மேம்பட்ட அன்பேக்கிங்</a></li>
+                    <li><a href="#real-world">நிஜ உலக எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#common-errors">பொதுவான பிழைகள்</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js ES Modules - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Modules.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js NPM.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js ES Modules</h2>
+            <p>நவீன JavaScript தொகுதி தரத்தை Node.js இல் கண்டறியவும்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to ES Modules -->
+        <section class="content-section" id="introduction">
+            <h2>ES தொகுதிகளுக்கு அறிமுகம்</h2>
+            
+            <p>ES தொகுதிகள் (ESM) மீண்டும் பயன்படுத்துவதற்காக JavaScript குறியீட்டை தொகுப்பதற்கான அதிகாரப்பூர்வ தரநிலை வடிவமாகும்.</p>
+            
+            <p>இது ES6 (ES2015) இல் அறிமுகப்படுத்தப்பட்டது மற்றும் இப்போது Node.js இல் ஆதரிக்கப்படுகிறது.</p>
+            
+            <p>ES தொகுதிகளுக்கு முன்பு, Node.js பிரத்தியேகமாக CommonJS தொகுதி வடிவத்தை (require/exports) பயன்படுத்தியது.</p>
+            
+            <p>இப்போது டெவலப்பர்கள் அவர்களின் திட்டத் தேவைகளின் அடிப்படையில் CommonJS மற்றும் ES தொகுதிகளுக்கு இடையே தேர்வு செய்யலாம்.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>கட்டமைக்கப்பட்ட தொடரியல்</h4>
+                    </div>
+                    <p>CommonJS உடன் ஒப்பிடும்போது மேம்பட்ட கட்டமைப்பு</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>நிலையான பகுப்பாய்வு</h4>
+                    </div>
+                    <p>நிலையான பகுப்பாய்வு செய்யக்கூடிய தொகுதிகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tree"></i>
+                        <h4>மர-குலுக்கல்</h4>
+                    </div>
+                    <p>சிறிய கட்டுமானங்களுக்கான மர-குலுக்கல் ஆதரவு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CommonJS vs ES Modules -->
+        <section class="content-section" id="comparison">
+            <h2>CommonJS vs ES தொகுதிகள்</h2>
+            
+            <p>CommonJS மற்றும் ES தொகுதிகள் எவ்வாறு வேறுபடுகின்றன என்பது இங்கே:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>CommonJS</th>
+                            <th>ES தொகுதிகள்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>கோப்பு நீட்டிப்பு</strong></td>
+                            <td>.js (இயல்புநிலை)</td>
+                            <td>.mjs (அல்லது சரியான கட்டமைப்புடன் .js)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>இறக்குமதி தொடரியல்</strong></td>
+                            <td>require()</td>
+                            <td>import</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ஏற்றுமதி தொடரியல்</strong></td>
+                            <td>module.exports / exports</td>
+                            <td>export / export default</td>
+                        </tr>
+                        <tr>
+                            <td><strong>இறக்குமதி நேரம்</strong></td>
+                            <td>டைனமிக் (இயக்க நேரம்)</td>
+                            <td>நிலையான (இயக்கத்திற்கு முன் பாகுபடுத்தப்பட்டது)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>மேல்-நிலை Await</strong></td>
+                            <td>ஆதரிக்கப்படவில்லை</td>
+                            <td>ஆதரிக்கப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>இறக்குமதிகளில் கோப்பு URL</strong></td>
+                            <td>தேவையில்லை</td>
+                            <td>உள்ளூர் கோப்புகளுக்கு தேவை</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>எடுத்துக்காட்டு: CommonJS தொகுதி</h4>
+                    <div class="code-example">
+                        <pre><code>// math.js (CommonJS)
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+module.exports = {
+  add,
+  subtract
+};
+
+// app.js (CommonJS)
+const math = require('./math');
+console.log(math.add(5, 3)); // 8</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>எடுத்துக்காட்டு: ES தொகுதி</h4>
+                    <div class="code-example">
+                        <pre><code>// math.mjs (ES Module)
+export function add(a, b) {
+  return a + b;
+}
+
+export function subtract(a, b) {
+  return a - b;
+}
+
+// app.mjs (ES Module)
+import { add, subtract } from './math.mjs';
+console.log(add(5, 3)); // 8</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enabling ES Modules -->
+        <section class="content-section" id="enabling">
+            <h2>ES தொகுதிகளை இயக்குதல்</h2>
+            
+            <p>Node.js இல் ES தொகுதிகளை இயக்க பல வழிகள் உள்ளன:</p>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-file"></i>
+                    </div>
+                    <h3>1. .mjs கோப்பு நீட்டிப்பைப் பயன்படுத்துதல்</h3>
+                    <p>உங்கள் கோப்புகளுக்கு .mjs நீட்டிப்பைப் பயன்படுத்துவது எளிதான வழி.</p>
+                    <p>Node.js இந்த கோப்புகளை தானாகவே ES தொகுதிகளாக கருதும்.</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3>2. package.json இல் "type": "module" அமைத்தல்</h3>
+                    <p>வழக்கமான .js கோப்புகளுடன் ES தொகுதிகளைப் பயன்படுத்த, உங்கள் package.json க்கு பின்வருவனவற்றைச் சேர்க்கவும்:</p>
+                    <div class="code-example">
+                        <pre><code>{
+  "name": "my-package",
+  "version": "1.0.0",
+  "type": "module"
+}</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <h3>3. --input-type=module கொடியைப் பயன்படுத்துதல்</h3>
+                    <p>node கட்டளையுடன் நேரடியாக இயக்கப்படும் ஸ்கிரிப்ட்களுக்கு, நீங்கள் தொகுதி அமைப்பைக் குறிப்பிடலாம்:</p>
+                    <div class="code-example">
+                        <pre><code>node --input-type=module script.js</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>நீங்கள் முதன்மையாக CommonJS ஐப் பயன்படுத்தும் குறியீட்டுத் தளத்துடன் பணிபுரிந்து, ஒரு கோப்பில் ES தொகுதிகளைப் பயன்படுத்த விரும்பினால், .mjs நீட்டிப்பைப் பயன்படுத்துவது மிகவும் வெளிப்படையான மற்றும் குறைந்த பிழை-ஏற்புடைய அணுகுமுறையாகும்.</p>
+            </div>
+        </section>
+
+        <!-- Import and Export Syntax -->
+        <section class="content-section" id="syntax">
+            <h2>இறக்குமதி மற்றும் ஏற்றுமதி தொடரியல்</h2>
+            
+            <p>ES தொகுதிகள் CommonJS உடன் ஒப்பிடும்போது குறியீட்டை இறக்குமதி செய்தல் மற்றும் ஏற்றுமதி செய்வதற்கான மேலும் நெகிழ்வான வழிகளை வழங்குகின்றன.</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>ஏற்றுமதி தொடரியல்</h4>
+                    <div class="code-example">
+                        <h5>பெயரிடப்பட்ட ஏற்றுமதிகள்</h5>
+                        <pre><code>// Multiple named exports
+export function sayHello() {
+  console.log('Hello');
+}
+
+export function sayGoodbye() {
+  console.log('Goodbye');
+}
+
+// Alternative: export list at the end
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+export { add, subtract };</code></pre>
+                    </div>
+                    <div class="code-example">
+                        <h5>இயல்புநிலை ஏற்றுமதி</h5>
+                        <pre><code>// Only one default export per module
+export default function() {
+  console.log('I am the default export');
+}
+
+// Or with a named function/class/object
+function mainFunction() {
+  return 'Main functionality';
+}
+
+export default mainFunction;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>இறக்குமதி தொடரியல்</h4>
+                    <div class="code-example">
+                        <h5>பெயரிடப்பட்ட ஏற்றுமதிகளை இறக்குமதி செய்தல்</h5>
+                        <pre><code>// Import specific named exports
+import { sayHello, sayGoodbye } from './greetings.mjs';
+sayHello(); // Hello
+
+// Rename imports to avoid naming conflicts
+import { add as sum, subtract as minus } from './math.mjs';
+console.log(sum(5, 3)); // 8
+
+// Import all named exports as an object
+import * as math from './math.mjs';
+console.log(math.add(7, 4)); // 11</code></pre>
+                    </div>
+                    <div class="code-example">
+                        <h5>இயல்புநிலை மற்றும் பெயரிடப்பட்ட ஏற்றுமதிகளை இறக்குமதி செய்தல்</h5>
+                        <pre><code>// Import both default and named exports
+import main, { VERSION } from './main.mjs';
+console.log(VERSION); // 1.0.0
+main(); // Main function</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Imports -->
+        <section class="content-section" id="dynamic-imports">
+            <h2>டைனமிக் இறக்குமதிகள்</h2>
+            
+            <p>ES தொகுதிகள் டைனமிக் இறக்குமதிகளை ஆதரிக்கின்றன, இது நிபந்தனையுடன் அல்லது தேவைக்கேற்ப தொகுதிகளை ஏற்ற உங்களை அனுமதிக்கிறது.</p>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: டைனமிக் இறக்குமதிகள்</h3>
+                <div class="code-example">
+                    <pre><code>// app.mjs
+async function loadModule(moduleName) {
+  try {
+    // Dynamic import returns a promise
+    const module = await import(`./${moduleName}.mjs`);
+    return module;
+  } catch (error) {
+    console.error(`Failed to load ${moduleName}:`, error);
+  }
+}
+
+// Load a module based on a condition
+const moduleName = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+
+loadModule(moduleName).then(module => {
+  module.default(); // Call the default export
+});
+
+// Or with simpler await syntax
+(async () => {
+  const mathModule = await import('./math.mjs');
+  console.log(mathModule.add(10, 5)); // 15
+})();</code></pre>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🚀</span> பயன்பாட்டு வழக்கு:</h4>
+                <p>டைனமிக் இறக்குமதிகள் குறியீடு-பிரித்தல், சோம்பலான-ஏற்றுதல் தொகுதிகள் அல்லது இயக்க நேர நிபந்தனைகளின் அடிப்படையில் நிபந்தனையுடன் தொகுதிகளை ஏற்றுவதற்கு சிறந்தவை.</p>
+            </div>
+        </section>
+
+        <!-- Top-level Await -->
+        <section class="content-section" id="top-level-await">
+            <h2>மேல்-நிலை Await</h2>
+            
+            <p>CommonJS போலல்லாமல், ES தொகுதிகள் மேல்-நிலை await ஐ ஆதரிக்கின்றன, இது தொகுதி நிலையில் async செயல்பாடுகளுக்கு வெளியே await ஐப் பயன்படுத்த உங்களை அனுமதிக்கிறது.</p>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: மேல்-நிலை Await</h3>
+                <div class="code-example">
+                    <pre><code>// data-loader.mjs
+// This would cause an error in CommonJS or in a script
+// But works at the top level in an ES Module
+
+console.log('Loading data...');
+
+// Top-level await - the module's execution pauses here
+const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+const data = await response.json();
+
+console.log('Data loaded!');
+
+export { data };
+
+// When another module imports this one, it will only get the exports
+// after all the top-level await operations have completed</code></pre>
+                </div>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>கட்டமைப்பு ஏற்றுதல்</h4>
+                    </div>
+                    <p>கோப்புகள் அல்லது தொலைதூர மூலங்களிலிருந்து கட்டமைப்பை ஏற்றுதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>தரவுத்தள இணைப்புகள்</h4>
+                    </div>
+                    <p>செயல்பாட்டை ஏற்றுமதி செய்வதற்கு முன் தரவுத்தளங்களுடன் இணைத்தல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-play"></i>
+                        <h4>தொகுதி துவக்கம்</h4>
+                    </div>
+                    <p>நிபந்தனை இறக்குமதிகள் அல்லது தொகுதி துவக்கம்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <p>Node.js இல் ES தொகுதிகளுடன் பணிபுரியும் போது, இந்த சிறந்த நடைமுறைகளைப் பின்பற்றவும்:</p>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3>1. கோப்பு நீட்டிப்புகளைப் பற்றி தெளிவாக இருங்கள்</h3>
+                    <p>உள்ளூர் கோப்புகளுக்கான உங்கள் இறக்குமதி அறிக்கைகளில் எப்போதும் கோப்பு நீட்டிப்புகளைச் சேர்க்கவும்:</p>
+                    <div class="code-example">
+                        <pre><code>// Good
+import { someFunction } from './utils.mjs';
+
+// Bad - might not work depending on configuration
+import { someFunction } from './utils';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3>2. கோப்புறை குறியீடுகளை சரியாகப் பயன்படுத்தவும்</h3>
+                    <p>கோப்புறை இறக்குமதிகளுக்கு, index.mjs கோப்புகளை உருவாக்கவும்:</p>
+                    <div class="code-example">
+                        <pre><code>// utils/index.mjs
+export * from './string-utils.mjs';
+export * from './number-utils.mjs';
+
+// app.mjs
+import { formatString, add } from './utils/index.mjs';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3>3. சரியான ஏற்றுமதி பாணியைத் தேர்ந்தெடுக்கவும்</h3>
+                    <p>பல செயல்பாடுகள்/மதிப்புகளுக்கு பெயரிடப்பட்ட ஏற்றுமதிகளைப் பயன்படுத்தவும், முக்கிய செயல்பாட்டிற்கு இயல்புநிலை ஏற்றுமதிகளைப் பயன்படுத்தவும்:</p>
+                    <div class="code-example">
+                        <pre><code>// For libraries with many utilities, use named exports
+export function validate() { /* ... */ }
+export function format() { /* ... */ }
+
+// For components or classes that are the primary export
+export default class UserService { /* ... */ }</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💎</span> Node.js ஆதரவு:</h4>
+                <p>ES தொகுதிகள் Node.js v12 இல் முழுமையாக ஆதரிக்கப்படுகின்றன, v14+ இல் சிறந்த ஆதரவு உள்ளது. பழைய பதிப்புகளுக்கு, உங்களுக்கு Babel போன்ற மொழிபெயர்ப்பான் தேவைப்படலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file-code"></i>
+                        <h4>.mjs நீட்டிப்பு</h4>
+                    </div>
+                    <p>ES தொகுதிகளை இயக்க எளிதான வழி</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-download"></i>
+                        <h4>import தொடரியல்</h4>
+                    </div>
+                    <p>நிலையான பகுப்பாய்வு மற்றும் மர-குலுக்கல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>டைனமிக் இறக்குமதிகள்</h4>
+                    </div>
+                    <p>நிபந்தனை தொகுதி ஏற்றுதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-play-circle"></i>
+                        <h4>மேல்-நிலை await</h4>
+                    </div>
+                    <p>தொகுதி நிலையில் நேரடி await ஆதரவு</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🚀</span> முக்கிய புள்ளிகள்:</h4>
+                <ul>
+                    <li>ES தொகுதிகள் நவீன JavaScript தொகுதி தரநிலையாகும்</li>
+                    <li>CommonJS உடன் ஒப்பிடும்போது நிலையான பகுப்பாய்வு மற்றும் மர-குலுக்கல் ஆதரவு</li>
+                    <li>டைனமிக் இறக்குமதிகள் குறியீடு-பிரித்தலுக்கு சிறந்தவை</li>
+                    <li>மேல்-நிலை await தொகுதி துவக்கத்தை எளிதாக்குகிறது</li>
+                    <li>கோப்பு நீட்டிப்புகள் மற்றும் ஏற்றுமதி பாணிகளில் தெளிவாக இருங்கள்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான முக்கிய சொல்லை தேர்ந்தெடுக்கவும்.</h4>
+                <p>ES தொகுதிகள் மற்ற தொகுதிகளை ஏற்ற <strong>______</strong> முக்கிய சொல்லைப் பயன்படுத்துகின்றன.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">require</div>
+                            <div class="option-feedback incorrect">✗ தவறு! require CommonJS தொகுதிகளுக்குப் பயன்படுத்தப்படுகிறது, ES தொகுதிகளுக்கு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">import</div>
+                            <div class="option-feedback correct">✓ சரி! ES தொகுதிகள் மற்ற தொகுதிகளை இறக்குமதி செய்ய import முக்கிய சொல்லைப் பயன்படுத்துகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">include</div>
+                            <div class="option-feedback incorrect">✗ தவறு! include என்பது JavaScript இல் தொகுதிகளை இறக்குமதி செய்ய பயன்படுத்தப்படும் முக்கிய சொல் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">load</div>
+                            <div class="option-feedback incorrect">✗ தவறு! load என்பது JavaScript இல் தொகுதிகளை இறக்குமதி செய்ய பயன்படுத்தப்படும் முக்கிய சொல் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Modules.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js NPM.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">அறிமுகம்</a></li>
+                    <li><a href="#comparison">CommonJS vs ES தொகுதிகள்</a></li>
+                    <li><a href="#enabling">ES தொகுதிகளை இயக்குதல்</a></li>
+                    <li><a href="#syntax">இறக்குமதி/ஏற்றுமதி தொடரியல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .architecture-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .flow-step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .step-content p {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .code-column h4 {
+            text-align: center;
+            margin-bottom: 0.8rem;
+            color: var(--git-color);
+            font-size: 1.1rem;
+        }
+        
+        .example-section {
+            margin-bottom: 3rem;
+        }
+        
+        .example-section h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+        
+        /* Comparison Table */
+        .comparison-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Best Practice Lists */
+        .best-practice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .practice-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        
+        .practice-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .practice-item.positive {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid #28a745;
+        }
+        
+        .practice-item i {
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+            color: #28a745;
+        }
+        
+        .practice-item span {
+            line-height: 1.5;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border-left: 6px solid #ff9ff3;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .warning-box:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .warning-box h4 {
+            color: #ff9ff3;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .warning-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .warning-box ul {
+            margin-left: 2rem;
+            margin-bottom: 0;
+        }
+        
+        .warning-box li {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .warning-icon {
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .architecture-flow {
+                gap: 1.5rem;
+            }
+            
+            .flow-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .examples-grid,
+            .comparison-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .practice-item {
+                padding: 0.8rem;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .flow-step {
+                padding: 1rem;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .practice-item {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            .comparison-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python *args and **kwargs - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Python-specific syntax highlighting */
+        .python-keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .python-string {
+            color: #50fa7b;
+        }
+        
+        .python-number {
+            color: #8be9fd;
+        }
+        
+        .python-comment {
+            color: #6272a4;
+        }
+        
+        .python-function {
+            color: #ffb86c;
+        }
+        
+        .python-builtin {
+            color: #8be9fd;
+        }
+        
+        .args-kwargs-flow {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .flow-step:hover {
+            transform: translateX(5px);
+        }
+        
+        .flow-step-number {
+            background: var(--git-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .args-kwargs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .args-card {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #667eea;
+        }
+        
+        .kwargs-card {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #764ba2;
+        }
+        
+        .type-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .args-icon {
+            color: #667eea;
+        }
+        
+        .kwargs-icon {
+            color: #764ba2;
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .visual-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+            gap: 2rem;
+        }
+        
+        .visual-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid var(--git-color);
+            text-align: center;
+            min-width: 180px;
+        }
+        
+        .arrow {
+            font-size: 2rem;
+            color: var(--git-color);
+        }
+        
+        .args-kwargs-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python Function Arguments.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python Scope.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python *args and **kwargs</h2>
+            <p>பைதான் *args மற்றும் **kwargs ஐக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to *args and **kwargs -->
+        <section class="content-section" id="introduction">
+            <h2>Python *args மற்றும் **kwargs</h2>
+            
+            <p>இயல்பாக, ஒரு செயல்பாடு சரியான எண்ணிக்கையிலான வாதங்களுடன் அழைக்கப்பட வேண்டும்.</p>
+            
+            <p>இருப்பினும், சில நேரங்களில் உங்கள் செயல்பாட்டிற்கு எத்தனை வாதங்கள் அனுப்பப்படும் என்பது உங்களுக்குத் தெரியாமல் இருக்கலாம்.</p>
+            
+            <p><strong>*args</strong> மற்றும் <strong>**kwargs</strong> செயல்பாடுகள் தெரியாத எண்ணிக்கையிலான வாதங்களை ஏற்க அனுமதிக்கின்றன.</p>
+            
+            <div class="args-kwargs-grid">
+                <div class="args-card">
+                    <div class="type-icon args-icon">
+                        <i class="fas fa-asterisk"></i>
+                    </div>
+                    <h4>*args</h4>
+                    <p><strong>Arbitrary Arguments</strong></p>
+                    <p>தெரியாத எண்ணிக்கையிலான நிலை வாதங்களை ஏற்கிறது</p>
+                    <div class="code-example" style="padding: 0.5rem; margin: 0.5rem 0;">
+                        <code>def func(*args)</code>
+                    </div>
+                </div>
+                
+                <div class="kwargs-card">
+                    <div class="type-icon kwargs-icon">
+                        <i class="fas fa-asterisk"></i><i class="fas fa-asterisk"></i>
+                    </div>
+                    <h4>**kwargs</h4>
+                    <p><strong>Arbitrary Keyword Arguments</strong></p>
+                    <p>தெரியாத எண்ணிக்கையிலான சாவி வாதங்களை ஏற்கிறது</p>
+                    <div class="code-example" style="padding: 0.5rem; margin: 0.5rem 0;">
+                        <code>def func(**kwargs)</code>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="args-kwargs-demo">
+                <p><strong>நினைவில் கொள்ளுங்கள்:</strong> செயல்பாட்டு வரையறைகளில் *args மற்றும் **kwargs பயன்படுத்தி வாதங்களைச் சேகரிக்கவும், மற்றும் செயல்பாட்டு அழைப்புகளில் வாதங்களைப் பிரிப்பதற்குப் பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- Arbitrary Arguments - *args -->
+        <section class="content-section" id="args-intro">
+            <h2>Arbitrary Arguments - *args</h2>
+            
+            <p>உங்கள் செயல்பாட்டிற்கு எத்தனை வாதங்கள் அனுப்பப்படும் என்பது உங்களுக்குத் தெரியாவிட்டால், அளவுருப் பெயருக்கு முன் ஒரு <strong>*</strong> சேர்க்கவும்.</p>
+            
+            <p>இந்த வழியில், செயல்பாடு வாதங்களின் ஒரு டூப்பிளைப் பெறும் மற்றும் உருப்படிகளை அதற்கேற்ப அணுகலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code><span class="python-keyword">def</span> my_function(*kids):
+  <span class="python-function">print</span>(<span class="python-string">"The youngest child is "</span> + kids[2])
+
+my_function(<span class="python-string">"Emil"</span>, <span class="python-string">"Tobias"</span>, <span class="python-string">"Linus"</span>)</code></pre>
+            </div>
+            
+            <p><strong>Arbitrary Arguments</strong> பைதான் ஆவணங்களில் பெரும்பாலும் <strong>*args</strong> என சுருக்கப்படுகிறது.</p>
+            
+            <div class="args-kwargs-flow">
+                <h4>*args செயல்பாட்டு ஓட்டம்:</h4>
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-content">
+                        <strong>செயல்பாடு அழைப்பு:</strong><br>
+                        <code>my_function("Emil", "Tobias", "Linus")</code>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-content">
+                        <strong>வாதங்கள் சேகரிக்கப்படுகின்றன:</strong><br>
+                        அனைத்து வாதங்களும் <code>kids</code> என்ற டூப்பிளில் சேகரிக்கப்படுகின்றன
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-content">
+                        <strong>உள்ளே செயல்பாடு:</strong><br>
+                        <code>kids = ("Emil", "Tobias", "Linus")</code>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div class="flow-content">
+                        <strong>முடிவு:</strong><br>
+                        <code>kids[2] = "Linus"</code> → "The youngest child is Linus"
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is *args? -->
+        <section class="content-section" id="what-is-args">
+            <h2>*args என்றால் என்ன?</h2>
+            
+            <p><strong>*args</strong> அளவுரு எந்த எண்ணிக்கையிலான நிலை வாதங்களையும் ஏற்க ஒரு செயல்பாட்டை அனுமதிக்கிறது.</p>
+            
+            <p>செயல்பாட்டிற்குள், <strong>args</strong> அனுப்பப்பட்ட அனைத்து வாதங்களையும் கொண்ட ஒரு டூப்பிளாக மாறும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code><span class="python-keyword">def</span> my_function(*args):
+  <span class="python-function">print</span>(<span class="python-string">"Type:"</span>, <span class="python-builtin">type</span>(args))
+  <span class="python-function">print</span>(<span class="python-string">"First argument:"</span>, args[0])
+  <span class="python-function">print</span>(<span class="python-string">"Second argument:"</span>, args[1])
+  <span class="python-function">print</span>(<span class="python-string">"All arguments:"</span>, args)
+
+my_function(<span class="python-string">"Emil"</span>, <span class="python-string">"Tobias"</span>, <span class="python-string">"Linus"</span>)</code></pre>
+            </div>
+            
+            <div class="visual-container">
+                <div class="visual-box">
+                    <strong>அழைப்பு</strong><br>
+                    <code>my_function("E", "T", "L")</code>
+                </div>
+                <div class="arrow">→</div>
+                <div class="visual-box">
+                    <strong>*args உள்ளே</strong><br>
+                    <code>("E", "T", "L")</code><br>
+                    <small>டூப்பிளாக மாற்றப்பட்டது</small>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கிய குறிப்பு:</h4>
+                <p>*args என்ற பெயர் ஒரு கட்டமைப்பு. நீங்கள் எந்தப் பெயரையும் பயன்படுத்தலாம் (எ.கா., *kids, *names, *values), ஆனால் *args என்பது பரிந்துரைக்கப்பட்ட மரபு.</p>
+            </div>
+        </section>
+
+        <!-- Using *args with Regular Arguments -->
+        <section class="content-section" id="args-with-regular">
+            <h2>சாதாரண வாதங்களுடன் *args பயன்படுத்துதல்</h2>
+            
+            <p>நீங்கள் சாதாரண அளவுருக்களை *args உடன் இணைக்கலாம்.</p>
+            
+            <p>சாதாரண அளவுருக்கள் *args க்கு முன் வர வேண்டும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code><span class="python-keyword">def</span> my_function(greeting, *names):
+  <span class="python-keyword">for</span> name <span class="python-keyword">in</span> names:
+    <span class="python-function">print</span>(greeting, name)
+
+my_function(<span class="python-string">"Hello"</span>, <span class="python-string">"Emil"</span>, <span class="python-string">"Tobias"</span>, <span class="python-string">"Linus"</span>)</code></pre>
+            </div>
+            
+            <div class="visual-container">
+                <div class="visual-box">
+                    <strong>வாதங்கள்:</strong><br>
+                    "Hello", "Emil", "Tobias", "Linus"
+                </div>
+                <div class="arrow">→</div>
+                <div class="visual-box">
+                    <strong>பிரிக்கப்பட்டது:</strong><br>
+                    <code>greeting = "Hello"</code><br>
+                    <code>names = ("Emil", "Tobias", "Linus")</code>
+                </div>
+            </div>
+            
+            <p>இந்த எடுத்துக்காட்டில், "Hello" என்பது <code>greeting</code> க்கு ஒதுக்கப்படுகிறது, மீதமுள்ளவை <code>names</code> இல் சேகரிக்கப்படுகின்றன.</p>
+        </section>
+
+        <!-- Practical Examples with *args -->
+        <section class="content-section" id="args-practical">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள் *args உடன்</h2>
+            
+            <p>*args நீங்கள் நெகிழ்வான செயல்பாடுகளை உருவாக்க விரும்பும் போது பயனுள்ளதாக இருக்கும்:</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>எந்த எண்ணிக்கையிலான மதிப்புகளின் கூட்டுத்தொகை</h4>
+                    <div class="code-example">
+                        <pre><code><span class="python-keyword">def</span> calculate_sum(*numbers):
+  total = 0
+  <span class="python-keyword">for</span> num <span class="python-keyword">in</span> numbers:
+    total += num
+  <span class="python-keyword">return</span> total
+
+<span class="python-function">print</span>(calculate_sum(1, 2, 3))        <span class="python-comment"># 6</span>
+<span class="python-function">print</span>(calculate_sum(10, 20, 30, 40)) <span class="python-comment"># 100</span>
+<span class="python-function">print</span>(calculate_sum(5))             <span class="python-comment"># 5</span></code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>அதிகபட்ச மதிப்பைக் கண்டறிதல்</h4>
+                    <div class="code-example">
+                        <pre><code><span class="python-keyword">def</span> find_max(*numbers):
+  <span class="python-keyword">if</span> <span class="python-builtin">len</span>(numbers) == 0:
+    <span class="python-keyword">return</span> <span class="python-builtin">None</span>
+  max_num = numbers[0]
+  <span class="python-keyword">for</span> num <span class="python-keyword">in</span> numbers:
+    <span class="python-keyword">if</span> num > max_num:
+      max_num = num
+  <span class="python-keyword">return</span> max_num
+
+<span class="python-function">print</span>(find_max(3, 7, 2, 9, 1))  <span class="python-comment"># 9</span>
+<span class="python-function">print</span>(find_max())              <span class="python-comment"># None</span></code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h4>சரங்களை இணைக்கும் செயல்பாடு</h4>
+                <pre><code><span class="python-keyword">def</span> join_strings(*words, separator=<span class="python-string">" "</span>):
+  <span class="python-keyword">return</span> separator.join(words)
+
+<span class="python-function">print</span>(join_strings(<span class="python-string">"Hello"</span>, <span class="python-string">"World"</span>))           <span class="python-comment"># Hello World</span>
+<span class="python-function">print</span>(join_strings(<span class="python-string">"Python"</span>, <span class="python-string">"is"</span>, <span class="python-string">"awesome"</span>))  <span class="python-comment"># Python is awesome</span>
+<span class="python-function">print</span>(join_strings(<span class="python-string">"a"</span>, <span class="python-string">"b"</span>, <span class="python-string">"c"</span>, separator=<span class="python-string">"-"</span>)) <span class="python-comment"># a-b-c</span></code></pre>
+            </div>
+        </section>
+
+        <!-- Arbitrary Keyword Arguments - **kwargs -->
+        <section class="content-section" id="kwargs-intro">
+            <h2>Arbitrary Keyword Arguments - **kwargs</h2>
+            
+            <p>உங்கள் செயல்பாட்டிற்கு எத்தனை சாவி வாதங்கள் அனுப்பப்படும் என்பது உங்களுக்குத் தெரியாவிட்டால், அளவுருப் பெயருக்கு முன் இரண்டு நட்சத்திரங்கள் <strong>**</strong> சேர்க்கவும்.</p>
+            
+            <p>இந்த வழியில், செயல்பாடு வாதங்களின் ஒரு அகராதியைப் பெறும் மற்றும் உருப்படிகளை அதற்கேற்ப அணுகலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code><span class="python-keyword">def</span> my_function(**kid):
+  <span class="python-function">print</span>(<span class="python-string">"His last name is "</span> + kid[<span class="python-string">"lname"</span>])
+
+my_function(fname = <span class="python-string">"Tobias"</span>, lname = <span class="python-string">"Refsnes"</span>)</code></pre>
+            </div>
+            
+            <p><strong>Arbitrary Keyword Arguments</strong> பைதான் ஆவணங்களில் பெரும்பாலும் <strong>**kwargs</strong> என சுருக்கப்படுகிறது.</p>
+        </section>
+
+        <!-- What is **kwargs? -->
+        <section class="content-section" id="what-is-kwargs">
+            <h2>**kwargs என்றால் என்ன?</h2>
+            
+            <p><strong>**kwargs</strong> அளவுரு எந்த எண்ணிக்கையிலான சாவி வாதங்களையும் ஏற்க ஒரு செயல்பாட்டை அனுமதிக்கிறது.</p>
+            
+            <p>செயல்பாட்டிற்குள், <strong>kwargs</strong> அனுப்பப்பட்ட அனைத்து சாவி வாதங்களையும் கொண்ட ஒரு அகராதியாக மாறும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code><span class="python-keyword">def</span> my_function(**myvar):
+  <span class="python-function">print</span>(<span class="python-string">"Type:"</span>, <span class="python-builtin">type</span>(myvar))
+  <span class="python-function">print</span>(<span class="python-string">"Name:"</span>, myvar[<span class="python-string">"name"</span>])
+  <span class="python-function">print</span>(<span class="python-string">"Age:"</span>, myvar[<span class="python-string">"age"</span>])
+  <span class="python-function">print</span>(<span class="python-string">"All data:"</span>, myvar)
+
+my_function(name = <span class="python-string">"Tobias"</span>, age = 30, city = <span class="python-string">"Bergen"</span>)</code></pre>
+            </div>
+            
+            <div class="visual-container">
+                <div class="visual-box">
+                    <strong>அழைப்பு</strong><br>
+                    <code>name="Tobias", age=30, city="Bergen"</code>
+                </div>
+                <div class="arrow">→</div>
+                <div class="visual-box">
+                    <strong>**kwargs உள்ளே</strong><br>
+                    <code>{"name": "Tobias", "age": 30, "city": "Bergen"}</code><br>
+                    <small>அகராதியாக மாற்றப்பட்டது</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Using **kwargs with Regular Arguments -->
+        <section class="content-section" id="kwargs-with-regular">
+            <h2>சாதாரண வாதங்களுடன் **kwargs பயன்படுத்துதல்</h2>
+            
+            <p>நீங்கள் சாதாரண அளவுருக்களை **kwargs உடன் இணைக்கலாம்.</p>
+            
+            <p>சாதாரண அளவுருக்கள் **kwargs க்கு முன் வர வேண்டும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code><span class="python-keyword">def</span> my_function(username, **details):
+  <span class="python-function">print</span>(<span class="python-string">"Username:"</span>, username)
+  <span class="python-function">print</span>(<span class="python-string">"Additional details:"</span>)
+  <span class="python-keyword">for</span> key, value <span class="python-keyword">in</span> details.items():
+    <span class="python-function">print</span>(<span class="python-string">"  "</span>, key + <span class="python-string">":"</span>, value)
+
+my_function(<span class="python-string">"emil123"</span>, age = 25, city = <span class="python-string">"Oslo"</span>, hobby = <span class="python-string">"coding"</span>)</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔑</span> **kwargs நன்மைகள்:</h4>
+                <p>1. <strong>நெகிழ்வான API</strong> - புதிய விசைகளை மாற்றங்கள் இல்லாமல் சேர்க்கலாம்<br>
+                   2. <strong>தகவல் தொகுப்பு</strong> - தொடர்புடைய தரவை ஒரே இடத்தில் வைத்திருக்கவும்<br>
+                   3. <strong>மேம்பாட்டு சாய்வு</strong> - புதிய அம்சங்களை பின்னூட்ட ஏற்புடையதாக சேர்க்கவும்</p>
+            </div>
+        </section>
+
+        <!-- Practical Examples with **kwargs -->
+        <section class="content-section" id="kwargs-practical">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள் **kwargs உடன்</h2>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>பயனர் சுயவிவர செயல்பாடு</h4>
+                    <div class="code-example">
+                        <pre><code><span class="python-keyword">def</span> create_user_profile(username, **user_info):
+  profile = {<span class="python-string">"username"</span>: username}
+  profile.update(user_info)
+  <span class="python-keyword">return</span> profile
+
+user1 = create_user_profile(<span class="python-string">"john_doe"</span>, 
+                         age=30, 
+                         city=<span class="python-string">"New York"</span>,
+                         occupation=<span class="python-string">"Engineer"</span>)
+
+user2 = create_user_profile(<span class="python-string">"jane_smith"</span>,
+                         age=25,
+                         city=<span class="python-string">"London"</span>)
+
+<span class="python-function">print</span>(user1)
+<span class="python-function">print</span>(user2)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>HTML உறுப்பு உருவாக்கம்</h4>
+                    <div class="code-example">
+                        <pre><code><span class="python-keyword">def</span> create_html_element(tag, content, **attributes):
+  attr_string = <span class="python-string">""</span>
+  <span class="python-keyword">for</span> key, value <span class="python-keyword">in</span> attributes.items():
+    attr_string += f<span class="python-string">' {key}="{value}"'</span>
+  <span class="python-keyword">return</span> f<span class="python-string">'&lt;{tag}{attr_string}&gt;{content}&lt;/{tag}&gt;'</span>
+
+<span class="python-comment"># பயன்பாடு</span>
+div = create_html_element(<span class="python-string">"div"</span>, <span class="python-string">"Hello World"</span>, 
+                        class_=<span class="python-string">"container"</span>, 
+                        id=<span class="python-string">"main"</span>,
+                        style=<span class="python-string">"color: blue;"</span>)
+<span class="python-function">print</span>(div)  <span class="python-comment"># &lt;div class="container" id="main" style="color: blue;"&gt;Hello World&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Combining *args and **kwargs -->
+        <section class="content-section" id="combining-args-kwargs">
+            <h2>*args மற்றும் **kwargs இரண்டையும் இணைத்தல்</h2>
+            
+            <p>நீங்கள் ஒரே செயல்பாட்டில் *args மற்றும் **kwargs இரண்டையும் பயன்படுத்தலாம்.</p>
+            
+            <p>வரிசை பின்வருமாறு இருக்க வேண்டும்:</p>
+            
+            <div class="args-kwargs-flow">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-content">
+                        <strong>சாதாரண அளவுருக்கள்</strong><br>
+                        <code>def func(regular1, regular2, ...)</code>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-content">
+                        <strong>*args (நிலை வாதங்கள்)</strong><br>
+                        <code>def func(..., *args, ...)</code>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-content">
+                        <strong>**kwargs (சாவி வாதங்கள்)</strong><br>
+                        <code>def func(..., **kwargs)</code>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code><span class="python-keyword">def</span> my_function(title, *args, **kwargs):
+  <span class="python-function">print</span>(<span class="python-string">"Title:"</span>, title)
+  <span class="python-function">print</span>(<span class="python-string">"Positional arguments:"</span>, args)
+  <span class="python-function">print</span>(<span class="python-string">"Keyword arguments:"</span>, kwargs)
+
+my_function(<span class="python-string">"User Info"</span>, <span class="python-string">"Emil"</span>, <span class="python-string">"Tobias"</span>, age = 25, city = <span class="python-string">"Oslo"</span>)</code></pre>
+            </div>
+            
+            <div class="visual-container">
+                <div class="visual-box">
+                    <strong>அழைப்பு</strong><br>
+                    "User Info", "Emil", "Tobias", age=25, city="Oslo"
+                </div>
+                <div class="arrow">→</div>
+                <div class="visual-box">
+                    <strong>பிரிக்கப்பட்டது:</strong><br>
+                    <code>title = "User Info"</code><br>
+                    <code>args = ("Emil", "Tobias")</code><br>
+                    <code>kwargs = {"age": 25, "city": "Oslo"}</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unpacking Arguments -->
+        <section class="content-section" id="unpacking">
+            <h2>வாதங்களைப் பிரித்தல் (Unpacking)</h2>
+            
+            <p>* மற்றும் ** ஆபரேட்டர்கள் செயல்பாடுகளை அழைக்கும்போது பட்டியல் அல்லது அகராதியை தனி வாதங்களாகப் பிரிக்க (விரிவுபடுத்த) பயன்படுத்தப்படலாம்.</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>* உடன் பட்டியல்களைப் பிரித்தல்</h4>
+                    <div class="code-example">
+                        <pre><code><span class="python-keyword">def</span> my_function(a, b, c):
+  <span class="python-keyword">return</span> a + b + c
+
+numbers = [1, 2, 3]
+
+<span class="python-comment"># பிரித்தல்</span>
+result = my_function(*numbers)  <span class="python-comment"># my_function(1, 2, 3) போன்றது</span>
+<span class="python-function">print</span>(result)  <span class="python-comment"># 6</span>
+
+<span class="python-comment"># பிரிக்காமல் (பிழை)</span>
+<span class="python-comment"># result = my_function(numbers)  # பிழை!</span></code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>** உடன் அகராதிகளைப் பிரித்தல்</h4>
+                    <div class="code-example">
+                        <pre><code><span class="python-keyword">def</span> my_function(fname, lname):
+  <span class="python-function">print</span>(<span class="python-string">"Hello"</span>, fname, lname)
+
+person = {<span class="python-string">"fname"</span>: <span class="python-string">"Emil"</span>, <span class="python-string">"lname"</span>: <span class="python-string">"Refsnes"</span>}
+
+<span class="python-comment"># பிரித்தல்</span>
+my_function(**person)  <span class="python-comment"># my_function(fname="Emil", lname="Refsnes") போன்றது</span>
+
+<span class="python-comment"># பிரிக்காமல் (பிழை)</span>
+<span class="python-comment"># my_function(person)  # பிழை!</span></code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> முக்கிய குறிப்பு:</h4>
+                <p>செயல்பாட்டு வரையறைகளில் வாதங்களைச் சேகரிப்பதற்கு * மற்றும் ** பயன்படுத்தவும், மற்றும் செயல்பாட்டு அழைப்புகளில் வாதங்களைப் பிரிப்பதற்குப் பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- Unpacking Practical Examples -->
+        <section class="content-section" id="unpacking-practical">
+            <h2>பிரித்தலின் நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="code-example">
+                <h4>தரவு பரிமாற்றத்திற்கு பிரித்தல்</h4>
+                <pre><code><span class="python-comment"># பல்வேறு ஆதாரங்களிலிருந்து தரவு</span>
+basic_info = {<span class="python-string">"name"</span>: <span class="python-string">"Alice"</span>, <span class="python-string">"age"</span>: 30}
+contact_info = {<span class="python-string">"email"</span>: <span class="python-string">"alice@example.com"</span>, <span class="python-string">"phone"</span>: <span class="python-string">"123-456-7890"</span>}
+
+<span class="python-keyword">def</span> create_user(name, age, email, phone):
+  <span class="python-keyword">return</span> {
+    <span class="python-string">"full_name"</span>: name,
+    <span class="python-string">"years_old"</span>: age,
+    <span class="python-string">"contact"</span>: {<span class="python-string">"email"</span>: email, <span class="python-string">"phone"</span>: phone}
+  }
+
+<span class="python-comment"># பல அகராதிகளை இணைத்து பிரிக்கவும்</span>
+combined = {**basic_info, **contact_info}
+user = create_user(**combined)
+<span class="python-function">print</span>(user)</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h4>*args உடன் செயல்பாடுகளை அழைத்தல்</h4>
+                <pre><code><span class="python-comment"># பல செயல்பாடுகளை ஒரே வடிவத்தில் அழைக்கவும்</span>
+<span class="python-keyword">def</span> multiply(a, b, c):
+  <span class="python-keyword">return</span> a * b * c
+
+<span class="python-keyword">def</span> add(a, b, c):
+  <span class="python-keyword">return</span> a + b + c
+
+<span class="python-comment"># அதே வாதங்களைப் பயன்படுத்தவும்</span>
+numbers = [2, 3, 4]
+<span class="python-function">print</span>(multiply(*numbers))  <span class="python-comment"># 24</span>
+<span class="python-function">print</span>(add(*numbers))       <span class="python-comment"># 9</span>
+
+<span class="python-comment"># பகுதி பட்டியலைப் பிரித்தல்</span>
+first_two = [2, 3]
+<span class="python-function">print</span>(multiply(*first_two, 4))  <span class="python-comment"># 24</span></code></pre>
+            </div>
+        </section>
+
+        <!-- Common Use Cases -->
+        <section class="content-section" id="use-cases">
+            <h2>பொதுவான பயன்பாட்டு வழக்குகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பயன்பாடு</th>
+                            <th>*args</th>
+                            <th>**kwargs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>கணித செயல்பாடுகள்</strong></td>
+                            <td>கூட்டுத்தொகை, சராசரி, பெருக்கல்</td>
+                            <td>ஒதுக்கீடுகளுடன் கணக்கீடுகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தரவு செயலாக்கம்</strong></td>
+                            <td>மாறி நீள தரவு</td>
+                            <td>மாறி விசைகளுடன் கட்டமைப்புகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>வலை மேம்பாடு</strong></td>
+                            <td>URL பாதைகள்</td>
+                            <td>கோரிக்கை அளவுருக்கள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>API வடிவமைப்பு</strong></td>
+                            <td>அடிப்படை வாதங்கள்</td>
+                            <td>விருப்ப அம்சங்கள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>செயல்பாட்டு மேப்பிங்</strong></td>
+                            <td>செயல்பாட்டு வாதங்கள்</td>
+                            <td>செயல்பாடு விருப்பங்கள்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>*args மற்றும் **kwargs சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>விளக்கமான பெயர்களைப் பயன்படுத்தவும்:</strong>
+                        <p>*args மற்றும் **kwargs க்குப் பதிலாக *values, **options போன்ற பெயர்களைப் பயன்படுத்தவும்</p>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>சரியான வரிசையைப் பின்பற்றவும்:</strong>
+                        <p>1. சாதாரண அளவுருக்கள்<br>2. *args<br>3. **kwargs</p>
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <strong>அதிகமாகப் பயன்படுத்த வேண்டாம்:</strong>
+                        <p>அனைத்து வாதங்களுக்கும் *args/**kwargs பயன்படுத்த வேண்டாம். சரியான வாதங்களை வரையறுக்கவும்</p>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>டாக்ஸ்டிரிங்கைச் சேர்க்கவும்:</strong>
+                        <p>*args மற்றும் **kwargs எதிர்பார்க்கிறது என்பதை ஆவணப்படுத்தவும்</p>
+                        <div class="code-example" style="padding: 0.5rem; margin: 0.5rem 0;">
+                            <pre><code><span class="python-keyword">def</span> process_data(*values, **options):
+  <span class="python-comment">"""செயலாக்க தரவு மதிப்புகள் மற்றும் விருப்பங்கள்.</span>
+<span class="python-comment">  
+  Args:</span>
+<span class="python-comment">      *values: செயலாக்க வேண்டிய மதிப்புகள்</span>
+<span class="python-comment">      **options: செயலாக்க விருப்பங்கள்</span>
+<span class="python-comment">          - method: செயலாக்க முறை ('sum', 'avg', 'max')</span>
+<span class="python-comment">          - verbose: விரிவான வெளியீடு</span>
+<span class="python-comment">  """</span>
+  <span class="python-comment"># செயல்பாட்டு உடல்</span>
+  <span class="python-keyword">pass</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சி</h2>
+            
+            <p>உங்கள் அறிவைச் சரிபார்க்க பின்வரும் பயிற்சியை முயற்சிக்கவும்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சாவி வாதங்கள் பெரும்பாலும் எவ்வாறு அழைக்கப்படுகின்றன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">kwargs</div>
+                            <div class="option-feedback correct">✓ சரி! சாவி வாதங்கள் Python ஆவணங்களில் kwargs என சுருக்கப்படுகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">type 2 arguments</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது Python இல் பயன்படுத்தப்படும் சொல் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">B arguments</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது Python இல் பயன்படுத்தப்படும் சொல் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் குறியீட்டின் வெளியீடு என்னவாக இருக்கும்?</h4>
+                
+                <div class="code-example">
+                    <pre><code><span class="python-keyword">def</span> my_func(*args):
+  <span class="python-keyword">return</span> <span class="python-builtin">len</span>(args)
+
+<span class="python-function">print</span>(my_func(1, 2, 3, 4, 5))</code></pre>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">15</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது மதிப்புகளின் கூட்டுத்தொகை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">5</div>
+                            <div class="option-feedback correct">✓ சரி! len(args) args டூப்பிளில் உள்ள உறுப்புகளின் எண்ணிக்கையை வழங்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">(1, 2, 3, 4, 5)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது args டூப்பிள், len(args) அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் குறியீடு என்ன செய்யும்?</h4>
+                
+                <div class="code-example">
+                    <pre><code><span class="python-keyword">def</span> greet(**kwargs):
+  <span class="python-keyword">for</span> key <span class="python-keyword">in</span> kwargs:
+    <span class="python-function">print</span>(key, <span class="python-string">":"</span>, kwargs[key])
+
+greet(name=<span class="python-string">"Alice"</span>, age=25, city=<span class="python-string">"New York"</span>)</code></pre>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">அனைத்து சாவி-மதிப்பு ஜோடிகளையும் அச்சிடும்</div>
+                            <div class="option-feedback correct">✓ சரி! இது kwargs அகராதியில் உள்ள அனைத்து விசைகளையும் மதிப்புகளையும் அச்சிடுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">பிழையை உருவாக்கும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! குறியீடு சரியானது, பிழை இல்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">"Alice" என்று மட்டுமே அச்சிடும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது அனைத்து விசை-மதிப்பு ஜோடிகளையும் அச்சிடுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Table -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்க அட்டவணை</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>*args</th>
+                            <th>**kwargs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>பொருள்</strong></td>
+                            <td>Arbitrary Arguments</td>
+                            <td>Arbitrary Keyword Arguments</td>
+                        </tr>
+                        <tr>
+                            <td><strong>சின்னம்</strong></td>
+                            <td>* (ஒரு நட்சத்திரம்)</td>
+                            <td>** (இரண்டு நட்சத்திரங்கள்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தரவு வகை</strong></td>
+                            <td>டூப்பிள் (Tuple)</td>
+                            <td>அகராதி (Dictionary)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>பயன்பாடு</strong></td>
+                            <td>நிலை வாதங்கள்</td>
+                            <td>சாவி வாதங்கள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>எடுத்துக்காட்டு</strong></td>
+                            <td><code>def func(*args)</code></td>
+                            <td><code>def func(**kwargs)</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>பிரித்தல்</strong></td>
+                            <td><code>func(*list)</code></td>
+                            <td><code>func(**dict)</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>பயன்பாடு</strong></td>
+                            <td>மாறி நீள உள்ளீடு</td>
+                            <td>மாறி விசைகள் உள்ளீடு</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python Function Arguments.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python Scope.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">*args/**kwargs அறிமுகம்</a></li>
+                    <li><a href="#args-intro">Arbitrary Arguments (*args)</a></li>
+                    <li><a href="#what-is-args">*args என்றால் என்ன?</a></li>
+                    <li><a href="#args-with-regular">*args உடன் சாதாரண வாதங்கள்</a></li>
+                    <li><a href="#args-practical">*args நடைமுறை எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#kwargs-intro">Arbitrary Keyword Arguments (**kwargs)</a></li>
+                    <li><a href="#what-is-kwargs">**kwargs என்றால் என்ன?</a></li>
+                    <li><a href="#kwargs-with-regular">**kwargs உடன் சாதாரண வாதங்கள்</a></li>
+                    <li><a href="#kwargs-practical">**kwargs நடைமுறை எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#combining-args-kwargs">*args மற்றும் **kwargs இணைத்தல்</a></li>
+                    <li><a href="#unpacking">வாதங்களைப் பிரித்தல்</a></li>
+                    <li><a href="#unpacking-practical">பிரித்தல் நடைமுறை எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#use-cases">பொதுவான பயன்பாடுகள்</a></li>
+                    <li><a href="#best-practices">சிறந்த நடைமுறைகள்</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                    <li><a href="#summary">சுருக்கம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Python syntax highlighting
+        document.querySelectorAll('.code-example code').forEach(codeBlock => {
+            const code = codeBlock.innerHTML;
+            const highlighted = code
+                .replace(/\bdef\b/g, '<span class="python-keyword">def</span>')
+                .replace(/\breturn\b/g, '<span class="python-keyword">return</span>')
+                .replace(/\bfor\b/g, '<span class="python-keyword">for</span>')
+                .replace(/\bin\b/g, '<span class="python-keyword">in</span>')
+                .replace(/\bif\b/g, '<span class="python-keyword">if</span>')
+                .replace(/\bprint\b/g, '<span class="python-function">print</span>')
+                .replace(/\blen\b/g, '<span class="python-builtin">len</span>')
+                .replace(/\btype\b/g, '<span class="python-builtin">type</span>')
+                .replace(/\bNone\b/g, '<span class="python-builtin">None</span>')
+                .replace(/"([^"]*)"/g, '<span class="python-string">"$1"</span>')
+                .replace(/'([^']*)'/g, '<span class="python-string">\'$1\'</span>')
+                .replace(/\b(\d+)\b/g, '<span class="python-number">$1</span>')
+                .replace(/#([^\n]*)/g, '<span class="python-comment">#$1</span>')
+                .replace(/f"([^"]*)"/g, '<span class="python-string">f"$1"</span>');
+            codeBlock.innerHTML = highlighted;
+        });
+        
+        // Args vs Kwargs visualization
+        const argsKwargsViz = document.createElement('div');
+        argsKwargsViz.innerHTML = `
+            <div style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 10px; display: none; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.2); max-width: 300px;" id="argsKwargsViz">
+                <strong>🌟 *args vs **kwargs:</strong><br>
+                <div style="margin-top: 5px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>*args</div>
+                        <div>**kwargs</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>டூப்பிள்</div>
+                        <div>அகராதி</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>நிலை</div>
+                        <div>சாவி</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(argsKwargsViz);
+        
+        // Show args vs kwargs visualization
+        document.getElementById('summary').addEventListener('click', function() {
+            const viz = document.getElementById('argsKwargsViz');
+            viz.style.display = 'block';
+            setTimeout(() => {
+                viz.style.display = 'none';
+            }, 4000);
+        });
+        
+        // Unpacking visualization
+        const unpackingViz = document.createElement('div');
+        unpackingViz.innerHTML = `
+            <div style="position: fixed; bottom: 20px; left: 20px; background: var(--git-color); color: white; padding: 15px; border-radius: 10px; display: none; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.2); max-width: 300px;" id="unpackingViz">
+                <strong>📦 பிரித்தல்:</strong><br>
+                <div style="margin-top: 5px;">
+                    <strong>* பட்டியலைப் பிரிக்கிறது:</strong><br>
+                    <code>[1, 2, 3] → 1, 2, 3</code><br>
+                    <strong>** அகராதியைப் பிரிக்கிறது:</strong><br>
+                    <code>{"a": 1} → a=1</code>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(unpackingViz);
+        
+        // Show unpacking visualization
+        document.getElementById('unpacking').addEventListener('click', function() {
+            const viz = document.getElementById('unpackingViz');
+            viz.style.display = 'block';
+            setTimeout(() => {
+                viz.style.display = 'none';
+            }, 4000);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

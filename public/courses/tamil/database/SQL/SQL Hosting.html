@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Hosting - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles specific to this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Database Cards */
+        .database-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .database-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--git-color);
+            text-align: center;
+        }
+        
+        .database-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        
+        .database-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .database-card h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .database-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .database-features {
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+        
+        .database-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.8rem;
+        }
+        
+        .database-features li:before {
+            content: '✓';
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .comparison-grid,
+            .database-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .comparison-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL Injection.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL Data Types for MySQL, SQL Server, and MS Access.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Hosting</h2>
+            <p>SQL ஹோஸ்டிங் பற்றி அறிந்து, உங்கள் வலைத்தள தரவுத்தள தேவைகளுக்கு ஏற்ற ஹோஸ்டிங் திட்டங்களை எவ்வாறு தேர்வு செய்வது என்பதைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is SQL Hosting -->
+        <section class="content-section" id="what-is-hosting">
+            <h2>SQL Hosting என்றால் என்ன?</h2>
+            
+            <p>உங்கள் வலைத்தளத்தால் ஒரு தரவுத்தளத்திலிருந்து தரவைச் சேமிக்கவும் மீட்டெடுக்கவும் முடியும் என்றால், உங்கள் வலை சர்வருக்கு SQL மொழியைப் பயன்படுத்தும் ஒரு தரவுத்தள-அமைப்புக்கான அணுகல் இருக்க வேண்டும்.</p>
+            
+            <p>உங்கள் வலை சர்வர் ஒரு இணைய சேவை வழங்குநர் (ISP) மூலம் ஹோஸ்ட் செய்யப்பட்டிருந்தால், நீங்கள் SQL ஹோஸ்டிங் திட்டங்களைத் தேட வேண்டும்.</p>
+            
+            <p>மிகவும் பொதுவான SQL ஹோஸ்டிங் தரவுத்தளங்கள் MS SQL Server, Oracle, MySQL, மற்றும் MS Access ஆகும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கியமான குறிப்பு:</h4>
+                <p>சரியான SQL ஹோஸ்டிங் தேர்வு செய்வது உங்கள் வலைத்தளத்தின் செயல்திறன், பாதுகாப்பு மற்றும் அளவிடுதல் திறனைப் பொறுத்தது. உங்கள் குறிப்பிட்ட தேவைகளுக்கு ஏற்ற தரவுத்தளத்தைத் தேர்ந்தெடுப்பது முக்கியம்.</p>
+            </div>
+        </section>
+
+        <!-- Database Systems Comparison -->
+        <section class="content-section" id="database-comparison">
+            <h2>தரவுத்தள அமைப்புகள் ஒப்பீடு</h2>
+            
+            <div class="database-grid">
+                <div class="database-card">
+                    <div class="database-icon">
+                        <i class="fab fa-microsoft"></i>
+                    </div>
+                    <h3>MS SQL Server</h3>
+                    <p>மைக்ரோசாப்ட்டின் SQL Server அதிக பயன்பாட்டுள்ள தரவுத்தள-ஓட்டும் வலைத்தளங்களுக்கான ஒரு பிரபலமான தரவுத்தள மென்பொருளாகும்.</p>
+                    <div class="database-features">
+                        <ul>
+                            <li>மிகவும் சக்திவாய்ந்த மற்றும் நம்பகமான</li>
+                            <li>முழு அம்சங்களுடன் கூடிய SQL தரவுத்தள அமைப்பு</li>
+                            <li>அதிக பயன்பாட்டிற்கு ஏற்றது</li>
+                            <li>வணிக தரத்தின் அம்சங்கள்</li>
+                            <li>நிறுவன-தர பாதுகாப்பு</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="database-card">
+                    <div class="database-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Oracle</h3>
+                    <p>Oracle என்பதும் அதிக பயன்பாட்டுள்ள தரவுத்தள-ஓட்டும் வலைத்தளங்களுக்கான ஒரு பிரபலமான தரவுத்தள மென்பொருளாகும்.</p>
+                    <div class="database-features">
+                        <ul>
+                            <li>மிகவும் சக்திவாய்ந்த மற்றும் நம்பகமான</li>
+                            <li>முழு அம்சங்களுடன் கூடிய SQL தரவுத்தள அமைப்பு</li>
+                            <li>அதிக அளவிலான பயன்பாட்டிற்கு ஏற்றது</li>
+                            <li>முன்னணி வணிக தரவுத்தளம்</li>
+                            <li>மேம்பட்ட அம்சங்கள்</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="database-card">
+                    <div class="database-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>MySQL</h3>
+                    <p>MySQL என்பதும் வலைத்தளங்களுக்கான ஒரு பிரபலமான தரவுத்தள மென்பொருளாகும்.</p>
+                    <div class="database-features">
+                        <ul>
+                            <li>மிகவும் சக்திவாய்ந்த மற்றும் நம்பகமான</li>
+                            <li>முழு அம்சங்களுடன் கூடிய SQL தரவுத்தள அமைப்பு</li>
+                            <li>விலை உயர்ந்த மைக்ரோசாப்ட் மற்றும் Oracle தீர்வுகளுக்கு மலிவான மாற்று</li>
+                            <li>திறந்த மூல மென்பொருள்</li>
+                            <li>சிறந்த சமூக ஆதரவு</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="database-card">
+                    <div class="database-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>MS Access</h3>
+                    <p>ஒரு வலைத்தளத்திற்கு ஒரு எளிய தரவுத்தளம் மட்டுமே தேவைப்படும் போது, மைக்ரோசாப்ட் Access ஒரு தீர்வாக இருக்கும்.</p>
+                    <div class="database-features">
+                        <ul>
+                            <li>சிறிய தரவுத்தளங்களுக்கு ஏற்றது</li>
+                            <li>மிக அதிக பயன்பாட்டிற்கு ஏற்றதல்ல</li>
+                            <li>MySQL, SQL Server, அல்லது Oracle போல் சக்திவாய்ந்ததல்ல</li>
+                            <li>எளிதான பயன்பாடு</li>
+                            <li>குறைந்த செலவு</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hosting Considerations -->
+        <section class="content-section" id="hosting-considerations">
+            <h2>ஹோஸ்டிங் தேர்வு கருத்துகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>செயல்திறன்</h4>
+                    </div>
+                    <ul>
+                        <li>தரவுத்தள செயல்திறன் மற்றும் வேகம்</li>
+                        <li>அதிகபட்ச ஒரேநேர இணைப்புகள்</li>
+                        <li>குவெரி செயலாக்க திறன்</li>
+                        <li>தரவு சேமிப்பு வரம்புகள்</li>
+                        <li>அளவிடுதல் விருப்பங்கள்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>பாதுகாப்பு</h4>
+                    </div>
+                    <ul>
+                        <li>தரவு குறியாக்கம்</li>
+                        <li>காப்புப்பிரதி விருப்பங்கள்</li>
+                        <li>அணுகல் கட்டுப்பாடு</li>
+                        <li>SQL injection பாதுகாப்பு</li>
+                        <li>SSL/TLS ஆதரவு</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>அம்சங்கள்</h4>
+                    </div>
+                    <ul>
+                        <li>தரவுத்தள நிர்வாக கருவிகள்</li>
+                        <li>STORED PROCEDURES ஆதரவு</li>
+                        <li>தூண்டிகள் மற்றும் காட்சிகள்</li>
+                        <li>குறியீடுகள் மற்றும் கட்டுப்பாடுகள்</li>
+                        <li>API ஆதரவு</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Choosing the Right Database -->
+        <section class="content-section" id="choosing-database">
+            <h2>சரியான தரவுத்தளத்தைத் தேர்ந்தெடுத்தல்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>அதிக பயன்பாட்டு வலைத்தளங்கள்</h3>
+                    <p>மில்லியன் கணக்கான பயனர்களைக் கொண்ட பெரிய அளவிலான பயன்பாடுகள்</p>
+                    <div class="code-example">
+                        <h4>பரிந்துரைக்கப்படும் தரவுத்தளங்கள்:</h4>
+                        <ul>
+                            <li><strong>Oracle</strong> - மிகவும் சிக்கலான மற்றும் அதிக பயன்பாட்டு பயன்பாடுகள்</li>
+                            <li><strong>SQL Server</strong> - வணிக தர பயன்பாடுகள்</li>
+                            <li><strong>MySQL</strong> - அதிக அளவிலான வலை பயன்பாடுகள்</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>நடுத்தர மற்றும் சிறு வணிகங்கள்</h3>
+                    <p>சராசரி பயன்பாட்டுடன் கூடிய வணிக வலைத்தளங்கள்</p>
+                    <div class="code-example">
+                        <h4>பரிந்துரைக்கப்படும் தரவுத்தளங்கள்:</h4>
+                        <ul>
+                            <li><strong>MySQL</strong> - சிறந்த செலவு-செயல்திறன்</li>
+                            <li><strong>SQL Server</strong> - Windows சூழல்கள்</li>
+                            <li><strong>PostgreSQL</strong> - மேம்பட்ட அம்சங்கள் தேவைப்படும் போது</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>சிறிய திட்டங்கள் மற்றும் தனிப்பட்ட வலைத்தளங்கள்</h3>
+                    <p>குறைந்த பயன்பாட்டு தேவைகள் கொண்ட திட்டங்கள்</p>
+                    <div class="code-example">
+                        <h4>பரிந்துரைக்கப்படும் தரவுத்தளங்கள்:</h4>
+                        <ul>
+                            <li><strong>MySQL</strong> - இலவச மற்றும் நம்பகமான</li>
+                            <li><strong>SQLite</strong> - சிறிய திட்டங்கள்</li>
+                            <li><strong>MS Access</strong> - மிகவும் எளிய தேவைகள்</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hosting Providers -->
+        <section class="content-section" id="hosting-providers">
+            <h2>பிரபலமான SQL ஹோஸ்டிங் வழங்குநர்கள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cloud"></i>
+                        <h4>பொதுவான ஹோஸ்டிங் வழங்குநர்கள்</h4>
+                    </div>
+                    <ul>
+                        <li><strong>Amazon Web Services (AWS)</strong> - RDS சேவை</li>
+                        <li><strong>Microsoft Azure</strong> - SQL Database</li>
+                        <li><strong>Google Cloud</strong> - Cloud SQL</li>
+                        <li><strong>Bluehost</strong> - பகிரப்பட்ட ஹோஸ்டிங்</li>
+                        <li><strong>HostGator</strong> - MySQL ஹோஸ்டிங்</li>
+                        <li><strong>SiteGround</strong> - தரவுத்தள ஹோஸ்டிங்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h4>செலவு கருத்துகள்</h4>
+                    </div>
+                    <ul>
+                        <li><strong>பகிரப்பட்ட ஹோஸ்டிங்</strong> - மலிவான, வரம்புக்குட்பட்ட</li>
+                        <li><strong>VPS ஹோஸ்டிங்</strong> - நடுத்தர விலை, அதிக கட்டுப்பாடு</li>
+                        <li><strong>அர்ப்பணிக்கப்பட்ட சர்வர்கள்</strong> - விலை உயர்ந்த, முழு கட்டுப்பாடு</li>
+                        <li><strong>கிளவுட் ஹோஸ்டிங்</strong> - அளவிடக்கூடிய, பயன்பாட்டிற்கு ஏற்ப செலவு</li>
+                        <li><strong>நிர்வகிக்கப்படும் தரவுத்தளங்கள்</strong> - வசதியான, உயர் விலை</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வருவனவற்றில் எது அதிக பயன்பாட்டுள்ள, தரவுத்தள-ஓட்டும் வலைத்தளங்களுக்கான பிரபலமான SQL தரவுத்தள மென்பொருள்?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">MS SQL Server</div>
+                            <div class="option-feedback incorrect">✗ தவறு! MS SQL Server ஒரு பிரபலமான தேர்வாகும், ஆனால் இது மட்டுமே சரியான பதில் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Oracle</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Oracle ஒரு பிரபலமான தேர்வாகும், ஆனால் இது மட்டுமே சரியான பதில் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">MySQL</div>
+                            <div class="option-feedback incorrect">✗ தவறு! MySQL ஒரு பிரபலமான தேர்வாகும், ஆனால் இது மட்டுமே சரியான பதில் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">மேலே உள்ள அனைத்தும்</div>
+                            <div class="option-feedback correct">✓ சரி! MS SQL Server, Oracle, மற்றும் MySQL ஆகியவை அனைத்தும் அதிக பயன்பாட்டுள்ள, தரவுத்தள-ஓட்டும் வலைத்தளங்களுக்கான பிரபலமான SQL தரவுத்தள மென்பொருட்களாகும். ஒவ்வொன்றும் வெவ்வேறு வலிமைகள் மற்றும் பயன்பாட்டு வழக்குகளைக் கொண்டுள்ளன</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL Injection.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL Data Types for MySQL, SQL Server, and MS Access.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-hosting">SQL Hosting என்றால் என்ன?</a></li>
+                    <li><a href="#database-comparison">தரவுத்தள ஒப்பீடு</a></li>
+                    <li><a href="#choosing-database">தரவுத்தள தேர்வு</a></li>
+                    <li><a href="#hosting-providers">ஹோஸ்டிங் வழங்குநர்கள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

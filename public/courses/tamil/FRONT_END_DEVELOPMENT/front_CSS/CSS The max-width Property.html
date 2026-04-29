@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS The max-width Property - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Width vs max-width demonstration */
+        .demo-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 2px solid #e9ecef;
+        }
+        
+        .width-demo {
+            width: 600px;
+            margin: 20px auto;
+            border: 3px solid #73AD21;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        
+        .max-width-demo {
+            max-width: 600px;
+            margin: 20px auto;
+            border: 3px solid #73AD21;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        
+        .demo-label {
+            text-align: center;
+            font-weight: bold;
+            margin: 10px 0;
+            color: var(--git-color);
+        }
+        
+        /* Responsive indicator */
+        .responsive-indicator {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .responsive-indicator.small {
+            background-color: #e74c3c;
+        }
+        
+        /* Drag and drop exercise */
+        .drag-drop-area {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            min-height: 200px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        .code-line {
+            margin: 0.5rem 0;
+        }
+        
+        .code-property {
+            display: inline-block;
+            background: #444;
+            color: #8be9fd;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            margin: 0 0.2rem;
+            cursor: move;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .code-property:hover {
+            background: #555;
+            border-color: #ff79c6;
+        }
+        
+        .code-property.dragging {
+            opacity: 0.5;
+        }
+        
+        .drop-target {
+            display: inline-block;
+            min-width: 100px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin: 0 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .drop-target.active {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4CAF50;
+        }
+        
+        .drop-target.incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: #f44336;
+        }
+        
+        .property-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .check-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .check-button:hover {
+            background: #45a049;
+        }
+        
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+        
+        /* CSS Properties Table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .properties-table th {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .properties-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .properties-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .properties-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Responsive instruction */
+        .resize-instruction {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20The%20display%20Property.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20The%20position%20Property.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS The max-width Property</h2>
+            <p>உறுப்பின் அதிகபட்ச அகலத்தை வரையறுக்கவும்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS The max-width Property -->
+        <section class="content-section" id="max-width-property">
+            <h2>CSS The max-width Property</h2>
+            
+            <p>max-width பண்பானது ஒரு உறுப்பின் அதிகபட்ச அகலத்தை வரையறுக்கிறது.</p>
+            
+            <p>இந்த பண்பு உறுப்பின் அகலம் குறிப்பிட்ட மதிப்பை விட பெரியதாக இருப்பதைத் தடுக்கிறது (சிறியதாக இருக்கலாம், ஆனால் பெரியதாக இருக்க முடியாது).</p>
+            
+            <p>இந்த பண்பு பதிலளிக்கும் தளவமைப்புகளை உருவாக்கவும் பல்வேறு திரை அளவுகளில் உள்ளடக்கத்தின் வாசிக்கும் தன்மையை உறுதிப்படுத்தவும் பயனுள்ளதாக இருக்கிறது.</p>
+        </section>
+
+        <!-- Problem with width -->
+        <section class="content-section" id="problem-width">
+            <h2>Problem with width</h2>
+            
+            <p>இங்கே குறிப்பிட்ட அகலம் (600px) கொண்ட ஒரு கிடைமட்ட மையமாக்கப்பட்ட &lt;div&gt; உறுப்பு உள்ளது:</p>
+            
+            <div class="demo-container">
+                <div class="demo-label">width: 600px (நிலையான அகலம்)</div>
+                <div class="width-demo">
+                    இந்த &lt;div&gt; உறுப்பு 600px அகலம் கொண்டது, மற்றும் margin auto ஆக அமைக்கப்பட்டுள்ளது. இந்த &lt;div&gt; உறுப்பு 600px அகலம் கொண்டது, மற்றும் margin auto ஆக அமைக்கப்பட்டுள்ளது.
+                </div>
+                
+                <div id="width-indicator" class="responsive-indicator">
+                    தற்போதைய உலாவி அகலம்: <span id="current-width">600</span>px
+                </div>
+                
+                <p>உலாவி சாளரம் உறுப்பின் அகலத்தை விட சிறியதாக இருந்தால் மேலே உள்ள &lt;div&gt; என்ன ஆகும்? சில உள்ளடக்கம் காட்டப்படாது, மேலும் உலாவி பக்கத்திற்கு ஒரு கிடைமட்ட உருளும் பட்டையைச் சேர்க்கலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Using max-width instead -->
+        <section class="content-section" id="using-max-width">
+            <h2>Using max-width instead</h2>
+            
+            <p>இப்போது, நாம் max-width பண்பைப் பயன்படுத்துகிறோம். இது சிறிய சாளரங்களை உலாவியின் கையாளுதலை மேம்படுத்தும்:</p>
+            
+            <div class="demo-container">
+                <div class="demo-label">max-width: 600px (அதிகபட்ச அகலம்)</div>
+                <div class="max-width-demo">
+                    இந்த &lt;div&gt; உறுப்பு max-width 600px கொண்டது, மற்றும் margin auto ஆக அமைக்கப்பட்டுள்ளது. இந்த &lt;div&gt; உறுப்பு max-width 600px கொண்டது, மற்றும் margin auto ஆக அமைக்கப்பட்டுள்ளது.
+                </div>
+                
+                <div class="resize-instruction">
+                    <i class="fas fa-mouse-pointer"></i> வித்தியாசத்தைக் காண 600px அகலத்தை விட குறைவாக உலாவி சாளரத்தின் அளவை மாற்றவும்!
+                </div>
+            </div>
+            
+            <p>மேலே உள்ள இரண்டு &lt;div&gt; க்கான CSS குறியீடு இங்கே:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div.ex1 {
+  width: 500px;
+  margin: auto;
+  border: 3px solid #73AD21;
+}
+
+div.ex2 {
+  max-width: 500px;
+  margin: auto;
+  border: 3px solid #73AD21;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <p>div உறுப்பின் அதிகபட்ச அகலத்தை 800px ஆக அமைக்க சரியான பண்பு மற்றும் மதிப்பை இழுத்து விடவும்.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🎯</span> div உறுப்பின் அதிகபட்ச அகலத்தை 800px ஆக அமைக்க சரியான பண்பு மற்றும் மதிப்பை இழுத்து விடவும்.</h4>
+                
+                <div class="drag-drop-area">
+                    <div class="code-block">
+                        <div class="code-line">div {</div>
+                        <div class="code-line">&nbsp;&nbsp;<span class="drop-target" id="drop1"></span>: <span class="drop-target" id="drop2"></span>;</div>
+                        <div class="code-line">}</div>
+                    </div>
+                    
+                    <div class="property-pool" id="propertyPool">
+                        <div class="code-property" draggable="true" data-value="max-width">max-width</div>
+                        <div class="code-property" draggable="true" data-value="width">width</div>
+                        <div class="code-property" draggable="true" data-value="height">height</div>
+                        <div class="code-property" draggable="true" data-value="800px">800px</div>
+                        <div class="code-property" draggable="true" data-value="auto">auto</div>
+                        <div class="code-property" draggable="true" data-value="100%">100%</div>
+                    </div>
+                    
+                    <button class="check-button" onclick="checkExercise()">பதிலை சரிபார்க்கவும்</button>
+                    <button class="check-button" onclick="resetExercise()" style="background: #6c757d; margin-left: 10px;">மீட்டமைக்கவும்</button>
+                    
+                    <div class="feedback" id="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Properties -->
+        <section class="content-section" id="css-properties">
+            <h2>CSS Properties</h2>
+            
+            <p>அகலம் தொடர்பான CSS பண்புகள்:</p>
+            
+            <table class="properties-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>max-width</td>
+                    <td>உறுப்பின் அதிகபட்ச அகலத்தை வரையறுக்கிறது</td>
+                </tr>
+                <tr>
+                    <td>width</td>
+                    <td>உறுப்பின் அகலத்தை அமைக்கிறது</td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கிய வேறுபாடு:</h4>
+                <p><strong>width:</strong> நிலையான அகலத்தை அமைக்கிறது - உறுப்பு எப்போதும் அந்த அகலத்தில் இருக்கும்.<br>
+                <strong>max-width:</strong> அதிகபட்ச அகலத்தை அமைக்கிறது - உறுப்பு சிறியதாக இருக்கலாம் ஆனால் குறிப்பிட்ட மதிப்பை விட பெரியதாக இருக்க முடியாது.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20The%20display%20Property.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20The%20position%20Property.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#max-width-property">The max-width Property</a></li>
+                    <li><a href="#problem-width">Problem with width</a></li>
+                    <li><a href="#using-max-width">Using max-width</a></li>
+                    <li><a href="#exercises">Exercise</a></li>
+                    <li><a href="#css-properties">CSS Properties</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Update current width indicator
+        function updateWidthIndicator() {
+            const width = window.innerWidth;
+            const indicator = document.getElementById('width-indicator');
+            const widthSpan = document.getElementById('current-width');
+            
+            widthSpan.textContent = width;
+            
+            if (width < 600) {
+                indicator.classList.add('small');
+                indicator.innerHTML = `<i class="fas fa-exclamation-triangle"></i> உலாவி அகலம் 600px க்கு கீழே: <span id="current-width">${width}</span>px`;
+            } else {
+                indicator.classList.remove('small');
+                indicator.innerHTML = `தற்போதைய உலாவி அகலம்: <span id="current-width">${width}</span>px`;
+            }
+        }
+        
+        // Initial update
+        updateWidthIndicator();
+        
+        // Update on resize
+        window.addEventListener('resize', updateWidthIndicator);
+        
+        // Drag and drop functionality
+        let draggedItem = null;
+        
+        document.querySelectorAll('.code-property').forEach(item => {
+            item.addEventListener('dragstart', function(e) {
+                draggedItem = this;
+                this.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', this.getAttribute('data-value'));
+            });
+            
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+                draggedItem = null;
+            });
+        });
+        
+        document.querySelectorAll('.drop-target').forEach(target => {
+            target.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('active');
+            });
+            
+            target.addEventListener('dragleave', function() {
+                this.classList.remove('active');
+            });
+            
+            target.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('active');
+                
+                if (draggedItem) {
+                    const value = draggedItem.getAttribute('data-value');
+                    this.innerHTML = `<span class="code-property" data-value="${value}">${value}</span>`;
+                    this.setAttribute('data-filled', value);
+                    
+                    // Remove from pool
+                    draggedItem.style.display = 'none';
+                }
+            });
+        });
+        
+        // Check exercise function
+        function checkExercise() {
+            const drop1 = document.getElementById('drop1');
+            const drop2 = document.getElementById('drop2');
+            const feedback = document.getElementById('feedback');
+            
+            const answer1 = drop1.getAttribute('data-filled');
+            const answer2 = drop2.getAttribute('data-filled');
+            
+            if (answer1 === 'max-width' && answer2 === '800px') {
+                feedback.textContent = '✓ சரி! div { max-width: 800px; } என்பது சரியான CSS ஆகும்.';
+                feedback.className = 'feedback correct';
+                feedback.style.display = 'block';
+                
+                // Mark drop targets as correct
+                drop1.classList.remove('incorrect');
+                drop1.classList.add('active');
+                drop2.classList.remove('incorrect');
+                drop2.classList.add('active');
+            } else {
+                feedback.textContent = '✗ தவறு! மீண்டும் முயற்சிக்கவும். சரியான பதில்: div { max-width: 800px; }';
+                feedback.className = 'feedback incorrect';
+                feedback.style.display = 'block';
+                
+                // Mark incorrect answers
+                if (answer1 !== 'max-width') {
+                    drop1.classList.add('incorrect');
+                }
+                if (answer2 !== '800px') {
+                    drop2.classList.add('incorrect');
+                }
+            }
+        }
+        
+        // Reset functionality
+        function resetExercise() {
+            document.querySelectorAll('.drop-target').forEach(target => {
+                target.innerHTML = '';
+                target.removeAttribute('data-filled');
+                target.classList.remove('active', 'incorrect');
+            });
+            
+            document.querySelectorAll('.code-property').forEach(prop => {
+                prop.style.display = 'inline-block';
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+        }
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

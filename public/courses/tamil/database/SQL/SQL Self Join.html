@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Self Join - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL FULL OUTER JOIN Keyword.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL UNION Operator.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Self Join</h2>
+            <p>அதே அட்டவணையை தானாகவே இணைக்க Self Join பற்றி அறிந்து கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is Self Join -->
+        <section class="content-section" id="what-is-self-join">
+            <h2>Self Join என்றால் என்ன?</h2>
+            
+            <p>Self join என்பது ஒரு வழக்கமான join ஆகும், ஆனால் அட்டவணை தானாகவே இணைக்கப்படுகிறது.</p>
+            
+            <div class="code-example">
+                <h3>Self Join தொடரியல்</h3>
+                <pre><code class="command-input">SELECT column_name(s)
+FROM table1 T1, table1 T2
+WHERE condition;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> குறிப்பு:</h4>
+                <p>T1 மற்றும் T2 ஆகியவை ஒரே அட்டவணைக்கு வெவ்வேறு அட்டவணை aliases ஆகும்.</p>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>இந்த பயிற்சியில் நாம் நன்கு அறியப்பட்ட Northwind மாதிரி தரவுத்தளத்தைப் பயன்படுத்துவோம்.</p>
+            
+            <p>"Customers" அட்டவணையில் இருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="code-example">
+                <h3>Customers அட்டவணை</h3>
+                <pre><code>+------------+--------------------------------+----------------+-------------------+----------+------------+---------+
+| CustomerID | CustomerName                   | ContactName    | Address           | City     | PostalCode | Country |
++------------+--------------------------------+----------------+-------------------+----------+------------+---------+
+| 1          | Alfreds Futterkiste            | Maria Anders   | Obere Str. 57     | Berlin   | 12209      | Germany |
+| 2          | Ana Trujillo Emparedados...    | Ana Trujillo   | Avda. Constitución| México   | 05021      | Mexico  |
+| 3          | Antonio Moreno Taquería        | Antonio Moreno | Mataderos 2312    | México   | 05023      | Mexico  |
+| 4          | Around the Horn                | Thomas Hardy   | 120 Hanover Sq.   | London   | WA1 1DP    | UK      |
+| 5          | Berglunds snabbköp             | Christina Berg | Berguvsvägen 8    | Luleå    | S-958 22   | Sweden  |
++------------+--------------------------------+----------------+-------------------+----------+------------+---------+</code></pre>
+            </div>
+        </section>
+
+        <!-- Self Join Example -->
+        <section class="content-section" id="self-join-example">
+            <h2>SQL Self Join உதாரணம்</h2>
+            
+            <p>பின்வரும் SQL statement ஒரே நகரத்தில் இருந்து வாடிக்கையாளர்களை பொருத்துகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City
+ORDER BY A.City;</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>CustomerName1</div>
+                        <div>CustomerName2</div>
+                        <div>City</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Ana Trujillo Emparedados...</div>
+                        <div>Antonio Moreno Taquería</div>
+                        <div>México D.F.</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Antonio Moreno Taquería</div>
+                        <div>Ana Trujillo Emparedados...</div>
+                        <div>México D.F.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> விளக்கம்:</h4>
+                <p>இந்த Self Join ஒரே நகரத்தில் (México D.F.) இருக்கும் வெவ்வேறு வாடிக்கையாளர்களைக் கண்டறிகிறது. WHERE A.CustomerID <> B.CustomerID என்பது அதே வாடிக்கையாளரை தானாகவே பொருத்துவதைத் தடுக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- How Self Join Works -->
+        <section class="content-section" id="how-it-works">
+            <h2>Self Join எவ்வாறு வேலை செய்கிறது</h2>
+            
+            <div class="visual-container">
+                <div class="self-join-explanation">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>அட்டவணை நகல் உருவாக்கம்</h4>
+                            <p>அதே அட்டவணையின் இரண்டு நகல்கள் உருவாக்கப்படுகின்றன (A மற்றும் B)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>இரண்டு வெவ்வேறு அட்டவணைகளாக கருதப்படுகிறது</h4>
+                            <p>SQL இரண்டு நகல்களை வெவ்வேறு அட்டவணைகளாக கருதுகிறது</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Join நிபந்தனை பயன்படுத்தப்படுகிறது</h4>
+                            <p>விரும்பிய தரவைப் பெற ஒரு join நிபந்தனை பயன்படுத்தப்படுகிறது</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>முடிவுகள் திரும்பப் பெறப்படுகின்றன</h4>
+                            <p>அட்டவணையின் வெவ்வேறு வரிசைகளுக்கு இடையேயான உறவுகள் காட்டப்படுகின்றன</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>பொது நகர வாடிக்கையாளர்கள்</h3>
+                    <p>ஒரே நகரத்தில் இருக்கும் வாடிக்கையாளர்களைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT A.CustomerName, B.CustomerName, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <h3>பணியாளர் மேலாளர் உறவு</h3>
+                    <p>பணியாளர்கள் மற்றும் அவர்களின் மேலாளர்களைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT E1.Name AS Employee, E2.Name AS Manager
+FROM Employees E1, Employees E2
+WHERE E1.ManagerID = E2.EmployeeID;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>தயாரிப்பு தொடர்புகள்</h3>
+                    <p>தொடர்புடைய தயாரிப்புகளைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT P1.ProductName, P2.ProductName
+FROM Products P1, Products P2
+WHERE P1.CategoryID = P2.CategoryID
+AND P1.ProductID <> P2.ProductID;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Employee-Manager Example -->
+        <section class="content-section" id="employee-manager-example">
+            <h2>பணியாளர்-மேலாளர் உதாரணம்</h2>
+            
+            <p>Self Join-ன் மிகவும் பொதுவான பயன்பாடு பணியாளர்-மேலாளர் உறவுகளைக் கண்டறிவதாகும்:</p>
+            
+            <div class="code-example">
+                <h3>Employees அட்டவணை</h3>
+                <pre><code>+-------------+-----------+------------+-----------+
+| EmployeeID  | Name      | ManagerID  | Department|
++-------------+-----------+------------+-----------+
+| 1           | John      | NULL       | CEO       |
+| 2           | Jane      | 1          | IT        |
+| 3           | Bob       | 1          | HR        |
+| 4           | Alice     | 2          | IT        |
+| 5           | Charlie   | 3          | HR        |
++-------------+-----------+------------+-----------+</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>Self Join Query</h3>
+                <pre><code class="command-input">SELECT E1.Name AS Employee, E2.Name AS Manager
+FROM Employees E1, Employees E2
+WHERE E1.ManagerID = E2.EmployeeID;</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>Employee</div>
+                        <div>Manager</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Jane</div>
+                        <div>John</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Bob</div>
+                        <div>John</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Alice</div>
+                        <div>Jane</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Charlie</div>
+                        <div>Bob</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits of Self Join -->
+        <section class="content-section" id="benefits">
+            <h2>Self Join-ன் நன்மைகள்</h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>தரவு உறவுகள்</h4>
+                    <p>அதே அட்டவணையில் உள்ள வெவ்வேறு வரிசைகளுக்கு இடையேயான உறவுகளைக் கண்டறிய உதவுகிறது</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h4>படிநிலை தரவு</h4>
+                    <p>படிநிலை அல்லது மரம் போன்ற தரவு கட்டமைப்புகளைக் கையாள்வதற்கு ஏற்றது</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>சிக்கலான பகுப்பாய்வு</h4>
+                    <p>தரவுக்குள் சிக்கலான உறவுகள் மற்றும் வடிவங்களை பகுப்பாய்வு செய்ய உதவுகிறது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> SQL-ல் Self Join-ன் நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு அட்டவணையை மற்றொரு அட்டவணையுடன் இணைக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது வழக்கமான JOIN-ன் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு அட்டவணையை தானாகவே இணைக்க</div>
+                            <div class="option-feedback correct">✓ சரி! Self Join ஒரு அட்டவணையை தானாகவே இணைக்கப் பயன்படுகிறது, வெவ்வேறு aliases-ஐப் பயன்படுத்தி</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">நெடுவரிசைகளை இணைத்து புதிய அட்டவணையை உருவாக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Self Join புதிய அட்டவணையை உருவாக்காது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">FULL OUTER JOIN செய்ய</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Self Join என்பது ஒரு தனி JOIN வகை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL FULL OUTER JOIN Keyword.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL UNION Operator.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-self-join">Self Join என்றால் என்ன?</a></li>
+                    <li><a href="#self-join-example">Self Join உதாரணம்</a></li>
+                    <li><a href="#employee-manager-example">பணியாளர்-மேலாளர் உதாரணம்</a></li>
+                    <li><a href="#benefits">நன்மைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .visual-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .self-join-explanation {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .step-number {
+            background: var(--git-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--dark);
+        }
+        
+        .step-content p {
+            margin: 0;
+            color: #666;
+        }
+        
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-card h4 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .benefit-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        /* Result Box */
+        .result-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+        }
+        
+        .result-box h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .table-data {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .table-row {
+            display: grid;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .table-row.header {
+            background: var(--git-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .table-row > div {
+            padding: 0.8rem;
+            text-align: center;
+            border-right: 1px solid #ddd;
+        }
+        
+        .table-row > div:last-child {
+            border-right: none;
+        }
+        
+        .table-row.header > div {
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Exercise Styles */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .benefits-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .table-row {
+                font-size: 0.8rem;
+            }
+            
+            .table-row > div {
+                padding: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .table-row {
+                font-size: 0.7rem;
+            }
+            
+            .table-row > div {
+                padding: 0.3rem;
+            }
+            
+            .visual-container {
+                padding: 1rem;
+            }
+            
+            .step-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

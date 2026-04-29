@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python - Add List Items - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* List visualization */
+        .list-visual {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid var(--git-color);
+            overflow-x: auto;
+        }
+        
+        .list-item-box {
+            min-width: 100px;
+            padding: 1rem;
+            margin: 0 0.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 3px solid var(--git-color);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .list-item-box.existing {
+            background: white;
+            border-color: var(--git-color);
+        }
+        
+        .list-item-box.new {
+            background: rgba(39, 174, 96, 0.2);
+            border-color: #27ae60;
+            transform: scale(1.05);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+        }
+        
+        .list-index {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--git-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .list-index.new {
+            background: #27ae60;
+        }
+        
+        .list-content {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+        
+        .method-flow {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(155, 89, 182, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .method-step {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        
+        .method-arrow {
+            font-size: 1.5rem;
+            color: var(--git-color);
+            margin: 0 1rem;
+        }
+        
+        .method-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .method-icon {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .extend-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(241, 196, 15, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #f1c40f;
+        }
+        
+        .extend-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .extend-label {
+            min-width: 150px;
+            font-weight: bold;
+        }
+        
+        .extend-arrow {
+            font-size: 1.5rem;
+            color: var(--git-color);
+            margin: 0 1rem;
+        }
+        
+        .iterable-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .iterable-card {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid var(--git-color);
+        }
+        
+        .iterable-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: rgba(240, 83, 51, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python - Change List Items.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python - Remove List Items.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python - Add List Items</h2>
+            <p>பைத்தான் - பட்டியல் உருப்படிகளைச் சேர்த்தல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Python - Add List Items</h2>
+            
+            <p>பட்டியல்கள் மாற்றக்கூடியவை (mutable), அதாவது பட்டியலை உருவாக்கிய பிறகு அதில் புதிய உருப்படிகளைச் சேர்க்கலாம். பைத்தானில் பட்டியல்களில் உருப்படிகளைச் சேர்க்க பல வழிகள் உள்ளன.</p>
+        </section>
+
+        <!-- Append Items -->
+        <section class="content-section" id="append-items">
+            <h2>Append() முறை - இறுதியில் சேர்த்தல்</h2>
+            
+            <p>பட்டியலின் இறுதியில் ஒரு உருப்படியைச் சேர்க்க, <code>append()</code> முறையைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>thislist = ["apple", "banana", "cherry"]
+thislist.append("orange")
+print(thislist)  # Output: ['apple', 'banana', 'cherry', 'orange']</code></pre>
+            </div>
+            
+            <div class="method-flow">
+                <div class="method-step">
+                    <div class="list-visual" style="margin: 0; padding: 0.5rem; background: white;">
+                        <div class="list-item-box existing">
+                            <div class="list-index">0</div>
+                            <div class="list-content">"apple"</div>
+                        </div>
+                        <div class="list-item-box existing">
+                            <div class="list-index">1</div>
+                            <div class="list-content">"banana"</div>
+                        </div>
+                        <div class="list-item-box existing">
+                            <div class="list-index">2</div>
+                            <div class="list-content">"cherry"</div>
+                        </div>
+                    </div>
+                    <div>Original List</div>
+                </div>
+                
+                <div class="method-arrow">append("orange")</div>
+                
+                <div class="method-step">
+                    <div class="list-visual" style="margin: 0; padding: 0.5rem; background: white;">
+                        <div class="list-item-box existing">
+                            <div class="list-index">0</div>
+                            <div class="list-content">"apple"</div>
+                        </div>
+                        <div class="list-item-box existing">
+                            <div class="list-index">1</div>
+                            <div class="list-content">"banana"</div>
+                        </div>
+                        <div class="list-item-box existing">
+                            <div class="list-index">2</div>
+                            <div class="list-content">"cherry"</div>
+                        </div>
+                        <div class="list-item-box new">
+                            <div class="list-index new">3</div>
+                            <div class="list-content">"orange"</div>
+                        </div>
+                    </div>
+                    <div>After append()</div>
+                </div>
+            </div>
+            
+            <h3>append() முறை எடுத்துக்காட்டுகள்:</h3>
+            
+            <div class="code-example">
+                <pre><code>fruits = ["apple", "banana"]
+
+# Append single item
+fruits.append("cherry")
+print(fruits)  # ['apple', 'banana', 'cherry']
+
+# Append multiple items one by one
+fruits.append("orange")
+fruits.append("grape")
+print(fruits)  # ['apple', 'banana', 'cherry', 'orange', 'grape']
+
+# Append different data types
+numbers = [1, 2, 3]
+numbers.append(4)
+numbers.append(5.5)
+numbers.append("six")
+print(numbers)  # [1, 2, 3, 4, 5.5, 'six']</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p><code>append()</code> முறை எப்போதும் பட்டியலின் இறுதியில் உருப்படியைச் சேர்க்கிறது. இது பட்டியலின் நீளத்தை 1 ஆக அதிகரிக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Insert Items -->
+        <section class="content-section" id="insert-items">
+            <h2>Insert() முறை - குறிப்பிட்ட இடத்தில் சேர்த்தல்</h2>
+            
+            <p>ஒரு குறிப்பிட்ட குறியீட்டில் பட்டியல் உருப்படியைச் செருக, <code>insert()</code> முறையைப் பயன்படுத்தவும்.</p>
+            
+            <p><code>insert()</code> முறை குறிப்பிட்ட குறியீட்டில் ஒரு உருப்படியைச் செருகுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>thislist = ["apple", "banana", "cherry"]
+thislist.insert(1, "orange")
+print(thislist)  # Output: ['apple', 'orange', 'banana', 'cherry']</code></pre>
+            </div>
+            
+            <div class="method-flow">
+                <div class="method-step">
+                    <div class="list-visual" style="margin: 0; padding: 0.5rem; background: white;">
+                        <div class="list-item-box existing">
+                            <div class="list-index">0</div>
+                            <div class="list-content">"apple"</div>
+                        </div>
+                        <div class="list-item-box existing">
+                            <div class="list-index">1</div>
+                            <div class="list-content">"banana"</div>
+                        </div>
+                        <div class="list-item-box existing">
+                            <div class="list-index">2</div>
+                            <div class="list-content">"cherry"</div>
+                        </div>
+                    </div>
+                    <div>Original List</div>
+                </div>
+                
+                <div class="method-arrow">insert(1, "orange")</div>
+                
+                <div class="method-step">
+                    <div class="list-visual" style="margin: 0; padding: 0.5rem; background: white;">
+                        <div class="list-item-box existing">
+                            <div class="list-index">0</div>
+                            <div class="list-content">"apple"</div>
+                        </div>
+                        <div class="list-item-box new">
+                            <div class="list-index new">1</div>
+                            <div class="list-content">"orange"</div>
+                        </div>
+                        <div class="list-item-box existing">
+                            <div class="list-index">2</div>
+                            <div class="list-content">"banana"</div>
+                        </div>
+                        <div class="list-item-box existing">
+                            <div class="list-index">3</div>
+                            <div class="list-content">"cherry"</div>
+                        </div>
+                    </div>
+                    <div>After insert() at index 1</div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>மேலே உள்ள எடுத்துக்காட்டுகளின் விளைவாக, பட்டியல்கள் இப்போது 4 உருப்படிகளைக் கொண்டிருக்கும்.</p>
+            </div>
+            
+            <h3>insert() முறை எடுத்துக்காட்டுகள்:</h3>
+            
+            <div class="code-example">
+                <pre><code>colors = ["red", "blue", "green"]
+
+# Insert at beginning
+colors.insert(0, "yellow")
+print(colors)  # ['yellow', 'red', 'blue', 'green']
+
+# Insert at end (same as append)
+colors.insert(len(colors), "purple")
+print(colors)  # ['yellow', 'red', 'blue', 'green', 'purple']
+
+# Insert at negative index
+colors.insert(-1, "orange")  # Insert before last item
+print(colors)  # ['yellow', 'red', 'blue', 'green', 'orange', 'purple']
+
+# Insert beyond length (adds to end)
+colors.insert(10, "black")
+print(colors)  # Adds 'black' at the end</code></pre>
+            </div>
+        </section>
+
+        <!-- Extend List -->
+        <section class="content-section" id="extend-list">
+            <h2>Extend() முறை - மற்றொரு பட்டியலிலிருந்து சேர்த்தல்</h2>
+            
+            <p>மற்றொரு பட்டியலிலிருந்து உறுப்புகளை தற்போதைய பட்டியலில் சேர்க்க, <code>extend()</code> முறையைப் பயன்படுத்தவும்.</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>thislist = ["apple", "banana", "cherry"]
+tropical = ["mango", "pineapple", "papaya"]
+thislist.extend(tropical)
+print(thislist)  # Output: ['apple', 'banana', 'cherry', 'mango', 'pineapple', 'papaya']</code></pre>
+            </div>
+            
+            <div class="extend-visual">
+                <div class="extend-row">
+                    <div class="extend-label">Original List:</div>
+                    <div class="list-item-box existing">
+                        <div class="list-content">"apple"</div>
+                    </div>
+                    <div class="list-item-box existing">
+                        <div class="list-content">"banana"</div>
+                    </div>
+                    <div class="list-item-box existing">
+                        <div class="list-content">"cherry"</div>
+                    </div>
+                </div>
+                
+                <div class="extend-row">
+                    <div class="extend-label">Tropical List:</div>
+                    <div class="list-item-box new">
+                        <div class="list-content">"mango"</div>
+                    </div>
+                    <div class="list-item-box new">
+                        <div class="list-content">"pineapple"</div>
+                    </div>
+                    <div class="list-item-box new">
+                        <div class="list-content">"papaya"</div>
+                    </div>
+                </div>
+                
+                <div class="extend-row">
+                    <div class="extend-label">extend() →</div>
+                    <div class="extend-arrow">+</div>
+                </div>
+                
+                <div class="extend-row">
+                    <div class="extend-label">Result:</div>
+                    <div class="list-item-box existing">
+                        <div class="list-index">0</div>
+                        <div class="list-content">"apple"</div>
+                    </div>
+                    <div class="list-item-box existing">
+                        <div class="list-index">1</div>
+                        <div class="list-content">"banana"</div>
+                    </div>
+                    <div class="list-item-box existing">
+                        <div class="list-index">2</div>
+                        <div class="list-content">"cherry"</div>
+                    </div>
+                    <div class="list-item-box new">
+                        <div class="list-index">3</div>
+                        <div class="list-content">"mango"</div>
+                    </div>
+                    <div class="list-item-box new">
+                        <div class="list-index">4</div>
+                        <div class="list-content">"pineapple"</div>
+                    </div>
+                    <div class="list-item-box new">
+                        <div class="list-index">5</div>
+                        <div class="list-content">"papaya"</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p>உறுப்புகள் பட்டியலின் இறுதியில் சேர்க்கப்படும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> extend() vs append() வேறுபாடு:</h4>
+                <p><code>extend()</code> மற்றொரு பட்டியலின் அனைத்து உருப்படிகளையும் சேர்க்கிறது<br>
+                <code>append()</code> ஒரு ஒற்றை உருப்படியை மட்டும் சேர்க்கிறது (அது ஒரு பட்டியலாக இருந்தாலும்)</p>
+            </div>
+        </section>
+
+        <!-- Add Any Iterable -->
+        <section class="content-section" id="add-iterable">
+            <h2>எந்தவொரு இட்டரபிளையும் சேர்த்தல்</h2>
+            
+            <p><code>extend()</code> முறை பட்டியல்களை மட்டும் சேர்க்க வேண்டியதில்லை, நீங்கள் எந்தவொரு இட்டரபிள் பொருளையும் சேர்க்கலாம் (டூப்பிள்கள், செட்கள், அகராதிகள் போன்றவை).</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>thislist = ["apple", "banana", "cherry"]
+thistuple = ("kiwi", "orange")
+thislist.extend(thistuple)
+print(thislist)  # Output: ['apple', 'banana', 'cherry', 'kiwi', 'orange']</code></pre>
+            </div>
+            
+            <div class="iterable-grid">
+                <div class="iterable-card">
+                    <div class="iterable-icon">
+                        <i class="fas fa-brackets-curly"></i>
+                    </div>
+                    <h4>Tuple</h4>
+                    <p>டூப்பிள்கள்</p>
+                    <div class="code-example">
+                        <pre><code>list1 = [1, 2, 3]
+tuple1 = (4, 5)
+list1.extend(tuple1)
+# Result: [1, 2, 3, 4, 5]</code></pre>
+                    </div>
+                </div>
+                
+                <div class="iterable-card">
+                    <div class="iterable-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h4>Set</h4>
+                    <p>செட்கள்</p>
+                    <div class="code-example">
+                        <pre><code>list1 = [1, 2, 3]
+set1 = {4, 5, 6}
+list1.extend(set1)
+# Order may vary: [1, 2, 3, 4, 5, 6]</code></pre>
+                    </div>
+                </div>
+                
+                <div class="iterable-card">
+                    <div class="iterable-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h4>Dictionary</h4>
+                    <p>அகராதிகள்</p>
+                    <div class="code-example">
+                        <pre><code>list1 = [1, 2, 3]
+dict1 = {'a': 4, 'b': 5}
+list1.extend(dict1)
+# Adds keys: [1, 2, 3, 'a', 'b']</code></pre>
+                    </div>
+                </div>
+                
+                <div class="iterable-card">
+                    <div class="iterable-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h4>String</h4>
+                    <p>சரங்கள்</p>
+                    <div class="code-example">
+                        <pre><code>list1 = ['a', 'b']
+str1 = "cde"
+list1.extend(str1)
+# Result: ['a', 'b', 'c', 'd', 'e']</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>அகராதிகளை <code>extend()</code> செய்யும்போது, விசைகள் (keys) மட்டுமே சேர்க்கப்படும், மதிப்புகள் (values) சேர்க்கப்படாது.</p>
+            </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section class="content-section" id="comparison">
+            <h2>சேர்க்கும் முறைகள் ஒப்பீடு</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>முறை</th>
+                        <th>விளக்கம்</th>
+                        <th>எடுத்துக்காட்டு</th>
+                        <th>முடிவு</th>
+                        <th>பயன்பாடு</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>append()</code></td>
+                        <td>பட்டியலின் இறுதியில் ஒரு உருப்படியைச் சேர்க்கிறது</td>
+                        <td><code>list.append(x)</code></td>
+                        <td><code>[1, 2, 3] → [1, 2, 3, x]</code></td>
+                        <td>ஒரு உருப்படியை மட்டும் சேர்க்க</td>
+                    </tr>
+                    <tr>
+                        <td><code>insert()</code></td>
+                        <td>குறிப்பிட்ட குறியீட்டில் உருப்படியைச் செருகுகிறது</td>
+                        <td><code>list.insert(i, x)</code></td>
+                        <td><code>[1, 2, 3] → [1, x, 2, 3]</code></td>
+                        <td>குறிப்பிட்ட இடத்தில் செருக</td>
+                    </tr>
+                    <tr>
+                        <td><code>extend()</code></td>
+                        <td>மற்றொரு இட்டரபிளின் அனைத்து உருப்படிகளையும் சேர்க்கிறது</td>
+                        <td><code>list.extend(iterable)</code></td>
+                        <td><code>[1, 2, 3] + [4, 5] → [1, 2, 3, 4, 5]</code></td>
+                        <td>பல உருப்படிகளை ஒரே நேரத்தில் சேர்க்க</td>
+                    </tr>
+                    <tr>
+                        <td><code>+ operator</code></td>
+                        <td>இரண்டு பட்டியல்களை இணைக்கிறது</td>
+                        <td><code>list1 + list2</code></td>
+                        <td><code>[1, 2] + [3, 4] → [1, 2, 3, 4]</code></td>
+                        <td>புதிய பட்டியலை உருவாக்க</td>
+                    </tr>
+                    <tr>
+                        <td><code>+= operator</code></td>
+                        <td>இருக்கும் பட்டியலுடன் சேர்க்கிறது</td>
+                        <td><code>list1 += list2</code></td>
+                        <td><code>[1, 2] += [3, 4] → [1, 2, 3, 4]</code></td>
+                        <td>extend() போலவே</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> முக்கிய வேறுபாடுகள்:</h4>
+                <p>1. <strong>append() vs extend():</strong> append() ஒரு உருப்படியைச் சேர்க்கிறது, extend() பல உருப்படிகளைச் சேர்க்கிறது<br>
+                2. <strong>insert() vs append():</code> insert() குறிப்பிட்ட இடத்தில் செருகுகிறது, append() எப்போதும் இறுதியில் சேர்க்கிறது<br>
+                3. <strong>extend() vs +:</strong> extend() இருக்கும் பட்டியலை மாற்றுகிறது, + புதிய பட்டியலை உருவாக்குகிறது</p>
+            </div>
+        </section>
+
+        <!-- Common Patterns -->
+        <section class="content-section" id="common-patterns">
+            <h2>பொதுவான பயன்பாட்டு வடிவங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">📝</div>
+                    <h4>Building Lists</h4>
+                    <p>பட்டியல்களை உருவாக்குதல்</p>
+                    <div class="code-example">
+                        <pre><code># Start with empty list
+items = []
+items.append("first")
+items.append("second")
+items.insert(1, "middle")
+# Result: ['first', 'middle', 'second']</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">🔄</div>
+                    <h4>Combining Lists</h4>
+                    <p>பட்டியல்களை இணைத்தல்</p>
+                    <div class="code-example">
+                        <pre><code>list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+list3 = [7, 8, 9]
+
+# Method 1: extend()
+list1.extend(list2)
+list1.extend(list3)
+
+# Method 2: + operator
+combined = list1 + list2 + list3</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">🎯</div>
+                    <h4>Conditional Adding</h4>
+                    <p>நிபந்தனை சேர்த்தல்</p>
+                    <div class="code-example">
+                        <pre><code>numbers = []
+for i in range(10):
+    if i % 2 == 0:  # Add only even numbers
+        numbers.append(i)
+# Result: [0, 2, 4, 6, 8]</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சிகள் மூலம் கற்றல்</h2>
+            
+            <p>இந்த டுடோரியலில் உள்ள பல அத்தியாயங்கள் உங்கள் அறிவு நிலையைச் சரிபார்க்கக்கூடிய பயிற்சியுடன் முடிகின்றன.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் தொடரியலின் முடிவு என்னவாக இருக்கும்:</h4>
+                
+                <div class="code-example">
+                    <pre><code>mylist = ['apple', 'banana', 'cherry']
+mylist.insert(0, 'orange')
+print(mylist[1])</code></pre>
+                </div>
+                
+                <div class="method-flow" style="margin: 1rem 0;">
+                    <div class="method-step">
+                        <div class="list-visual" style="margin: 0; padding: 0.5rem; background: white;">
+                            <div class="list-item-box existing">
+                                <div class="list-index">0</div>
+                                <div class="list-content">'apple'</div>
+                            </div>
+                            <div class="list-item-box existing">
+                                <div class="list-index">1</div>
+                                <div class="list-content">'banana'</div>
+                            </div>
+                            <div class="list-item-box existing">
+                                <div class="list-index">2</div>
+                                <div class="list-content">'cherry'</div>
+                            </div>
+                        </div>
+                        <div>Original</div>
+                    </div>
+                    
+                    <div class="method-arrow">insert(0, 'orange')</div>
+                    
+                    <div class="method-step">
+                        <div class="list-visual" style="margin: 0; padding: 0.5rem; background: white;">
+                            <div class="list-item-box new">
+                                <div class="list-index new">0</div>
+                                <div class="list-content">'orange'</div>
+                            </div>
+                            <div class="list-item-box existing" style="border-color: #27ae60; background: rgba(39, 174, 96, 0.1);">
+                                <div class="list-index">1</div>
+                                <div class="list-content">'apple'</div>
+                            </div>
+                            <div class="list-item-box existing">
+                                <div class="list-index">2</div>
+                                <div class="list-content">'banana'</div>
+                            </div>
+                            <div class="list-item-box existing">
+                                <div class="list-index">3</div>
+                                <div class="list-content">'cherry'</div>
+                            </div>
+                        </div>
+                        <div>After insert(0, 'orange')</div>
+                    </div>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">apple</div>
+                            <div class="option-feedback correct">✓ சரி! insert(0, 'orange') முதல் இடத்தில் 'orange' ஐச் செருகுகிறது. முன்பு mylist[0] = 'apple' ஆக இருந்தது, இப்போது அது mylist[1] = 'apple' ஆக மாறிவிட்டது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">banana</div>
+                            <div class="option-feedback incorrect">✗ தவறு! insert() பிறகு, 'banana' mylist[2] ஆக மாறிவிட்டது. mylist[1] இப்போது 'apple' ஆகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">cherry</div>
+                            <div class="option-feedback incorrect">✗ தவறு! 'cherry' mylist[3] ஆக மாறிவிட்டது. insert(0) அனைத்து உருப்படிகளையும் ஒரு குறியீட்டால் மாற்றுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">orange</div>
+                            <div class="option-feedback incorrect">✗ தவறு! 'orange' mylist[0] ஆகும். mylist[1] இரண்டாவது உருப்படியை அணுகுகிறது, அது இப்போது 'apple' ஆகும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Considerations -->
+        <section class="content-section" id="performance">
+            <h2>செயல்திறன் பரிசீலனைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <div>
+                        <strong>append() is Fast:</strong> append() O(1) நேர சிக்கலானது<br>
+                        <code># Fast for adding single items</code><br>
+                        <code>my_list.append(item)</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <div>
+                        <strong>insert(0) is Slow:</strong> insert(0) O(n) நேர சிக்கலானது<br>
+                        <code># Slow for large lists</code><br>
+                        <code>my_list.insert(0, item)  # Avoid for large lists</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-layer-group"></i>
+                    <div>
+                        <strong>Use extend() for Multiple Items:</strong> extend() append() விட சிறந்தது<br>
+                        <code># Good: Add multiple items at once</code><br>
+                        <code>my_list.extend([1, 2, 3, 4, 5])</code><br>
+                        <code># Bad: Multiple append calls</code><br>
+                        <code># for item in items: my_list.append(item)</code>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> சிறந்த பழக்கம்:</h4>
+                <p>பெரிய பட்டியல்களின் தொடக்கத்தில் அடிக்கடி செருக வேண்டியிருந்தால், <code>collections.deque</code> ஐப் பயன்படுத்தவும், இது இருபுறமும் O(1) நேர செருகலை வழங்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Common Errors -->
+        <section class="content-section" id="common-errors">
+            <h2>பொதுவான பிழைகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">❌</div>
+                    <h4>append() vs extend() Confusion</h4>
+                    <div class="code-example">
+                        <pre><code># Wrong: Trying to append a list
+my_list = [1, 2, 3]
+my_list.append([4, 5])
+# Result: [1, 2, 3, [4, 5]] (nested list)
+
+# Correct: Use extend()
+my_list = [1, 2, 3]
+my_list.extend([4, 5])
+# Result: [1, 2, 3, 4, 5]</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">❌</div>
+                    <h4>Index Out of Range</h4>
+                    <div class="code-example">
+                        <pre><code># insert() with out of range index
+my_list = [1, 2, 3]
+my_list.insert(10, 4)  # Works! Adds to end
+# Result: [1, 2, 3, 4]
+
+# But direct index assignment fails
+my_list[10] = 5  # IndexError!</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">✅</div>
+                    <h4>Correct Usage</h4>
+                    <div class="code-example">
+                        <pre><code># Building a list properly
+results = []
+for i in range(5):
+    results.append(i * 2)
+
+# Or using list comprehension
+results = [i * 2 for i in range(5)]</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python - Change List Items.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python - Remove List Items.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Python - Add List Items</a></li>
+                    <li><a href="#append-items">Append() முறை</a></li>
+                    <li><a href="#insert-items">Insert() முறை</a></li>
+                    <li><a href="#extend-list">Extend() முறை</a></li>
+                    <li><a href="#add-iterable">எந்தவொரு இட்டரபிளையும் சேர்த்தல்</a></li>
+                    <li><a href="#comparison">முறைகள் ஒப்பீடு</a></li>
+                    <li><a href="#common-patterns">பொதுவான வடிவங்கள்</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                    <li><a href="#performance">செயல்திறன் பரிசீலனைகள்</a></li>
+                    <li><a href="#common-errors">பொதுவான பிழைகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

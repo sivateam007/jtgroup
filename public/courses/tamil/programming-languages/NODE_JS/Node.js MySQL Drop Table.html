@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js MySQL Drop Table - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js MySQL Delete.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js MySQL Update.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js MySQL Drop Table</h2>
+            <p>Node.js ஐப் பயன்படுத்தி MySQL அட்டவணைகளை நீக்க கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Delete a Table -->
+        <section class="content-section" id="delete-table">
+            <h2>அட்டவணையை நீக்குதல்</h2>
+            
+            <p>ஏற்கனவே உள்ள அட்டவணையை "DROP TABLE" அறிக்கையைப் பயன்படுத்தி நீக்கலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"customers" அட்டவணையை நீக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  let sql = "DROP TABLE customers";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table deleted");
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_db_drop_table.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_db_drop_table.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>Table deleted</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> முக்கியமான எச்சரிக்கை:</h4>
+                <ul>
+                    <li><strong>மீளமுடியாதது:</strong> DROP TABLE செயல்பாடு மீளமுடியாதது</li>
+                    <li><strong>அனைத்து தரவும்:</strong> அட்டவணையும் அதில் உள்ள அனைத்து தரவும் நிரந்தரமாக நீக்கப்படும்</li>
+                    <li><strong>கட்டமைப்பு:</strong> அட்டவணை கட்டமைப்பு, குறியீடுகள் மற்றும் கட்டுப்பாடுகள் அனைத்தும் நீக்கப்படும்</li>
+                    <li><strong>பாதுகாப்பு நகல்:</strong> முக்கியமான அட்டவணைகளை நீக்குவதற்கு முன் பாதுகாப்பு நகல் எடுக்கவும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Drop Only if Exist -->
+        <section class="content-section" id="drop-if-exists">
+            <h2>இருந்தால் மட்டும் நீக்கவும்</h2>
+            
+            <p>நீக்க விரும்பும் அட்டவணை ஏற்கனவே நீக்கப்பட்டிருந்தால், அல்லது வேறு எந்த காரணத்திற்காகவும் இல்லையென்றால், பிழை ஏற்படாமல் இருக்க IF EXISTS முக்கியச்சொல்லைப் பயன்படுத்தலாம்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"customers" அட்டவணை இருந்தால் மட்டும் நீக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  let sql = "DROP TABLE IF EXISTS customers";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_db_drop_table_if.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_db_drop_table_if.js</code></pre>
+            </div>
+            
+            <p>அட்டவணை இருந்தால், முடிவு பொருள் இப்படித் தெரிகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>{
+  fieldCount: 0,
+  affectedRows: 0,
+  insertId: 0,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '',
+  protocol41: true,
+  changedRows: 0
+}</code></pre>
+            </div>
+            
+            <p>அட்டவணை இல்லையென்றால், முடிவு பொருள் இப்படித் தெரிகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>{
+  fieldCount: 0,
+  affectedRows: 0,
+  insertId: 0,
+  serverStatus: 2,
+  warningCount: 1,
+  message: '',
+  protocol41: true,
+  changedRows: 0
+}</code></pre>
+            </div>
+            
+            <p>நீங்கள் பார்க்க முடியும் என, ஒரே வித்தியாசம் என்னவென்றால், அட்டவணை இல்லையென்றால் warningCount பண்பு 1 ஆக அமைக்கப்படும்.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>அட்டவணை உள்ளது</h4>
+                    </div>
+                    <ul>
+                        <li><strong>warningCount:</strong> 0</li>
+                        <li><strong>affectedRows:</strong> 0</li>
+                        <li><strong>message:</strong> ''</li>
+                        <li><strong>நிலை:</strong> வெற்றிகரமாக நீக்கப்பட்டது</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>அட்டவணை இல்லை</h4>
+                    </div>
+                    <ul>
+                        <li><strong>warningCount:</strong> 1</li>
+                        <li><strong>affectedRows:</strong> 0</li>
+                        <li><strong>message:</strong> ''</li>
+                        <li><strong>நிலை:</strong> அட்டவணை இல்லை, ஆனால் பிழை இல்லை</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced DROP TABLE Techniques -->
+        <section class="content-section" id="advanced-drop">
+            <h2>மேம்பட்ட DROP TABLE நுட்பங்கள்</h2>
+            
+            <h3>பல அட்டவணைகளை நீக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Drop multiple tables
+let sql = "DROP TABLE customers, orders, products";
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Multiple tables deleted");
+});
+
+// Drop multiple tables with IF EXISTS
+let sql = "DROP TABLE IF EXISTS customers, orders, products";
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Tables deleted if they existed");
+});</code></pre>
+            </div>
+            
+            <h3>அட்டவணை இருப்பதை முதலில் சரிபார்க்கவும்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Check if table exists before dropping
+con.query("SHOW TABLES LIKE 'customers'", function (err, result) {
+  if (err) throw err;
+  
+  if (result.length > 0) {
+    console.log("Table exists, proceeding with drop...");
+    
+    // Drop the table
+    con.query("DROP TABLE customers", function (err, dropResult) {
+      if (err) throw err;
+      console.log("Table dropped successfully");
+    });
+  } else {
+    console.log("Table does not exist, no action needed");
+  }
+});</code></pre>
+            </div>
+            
+            <h3>பரிவர்த்தனைகளுடன் பாதுகாப்பான நீக்கல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Safe drop with transaction
+con.beginTransaction(function(err) {
+  if (err) throw err;
+  
+  // First create backup or log the action
+  let logSql = "INSERT INTO drop_log (table_name, dropped_at) VALUES (?, NOW())";
+  con.query(logSql, ['customers'], function (err, logResult) {
+    if (err) {
+      return con.rollback(function() {
+        throw err;
+      });
+    }
+    
+    // Then drop the table
+    let dropSql = "DROP TABLE IF EXISTS customers";
+    con.query(dropSql, function (err, dropResult) {
+      if (err) {
+        return con.rollback(function() {
+          throw err;
+        });
+      }
+      
+      console.log("Table dropped with logging");
+      
+      // Commit the transaction
+      con.commit(function(err) {
+        if (err) {
+          return con.rollback(function() {
+            throw err;
+          });
+        }
+        console.log("Transaction completed successfully");
+      });
+    });
+  });
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- DROP TABLE vs Other Operations -->
+        <section class="content-section" id="comparison">
+            <h2>DROP TABLE vs பிற செயல்பாடுகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>செயல்பாடு</th>
+                            <th>விளக்கம்</th>
+                            <th>தரவு</th>
+                            <th>கட்டமைப்பு</th>
+                            <th>மீளக்கூடியது</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>DROP TABLE</strong></td>
+                            <td>முழு அட்டவணையையும் நீக்குகிறது</td>
+                            <td>அனைத்து தரவும் நீக்கப்படும்</td>
+                            <td>கட்டமைப்பு நீக்கப்படும்</td>
+                            <td>இல்லை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DELETE FROM</strong></td>
+                            <td>அட்டவணையில் இருந்து பதிவுகளை நீக்குகிறது</td>
+                            <td>தரவு மட்டும் நீக்கப்படும்</td>
+                            <td>கட்டமைப்பு உள்ளது</td>
+                            <td>ஆம் (ROLLBACK உடன்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TRUNCATE TABLE</strong></td>
+                            <td>அனைத்து பதிவுகளையும் நீக்குகிறது</td>
+                            <td>அனைத்து தரவும் நீக்கப்படும்</td>
+                            <td>கட்டமைப்பு உள்ளது</td>
+                            <td>இல்லை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ALTER TABLE DROP</strong></td>
+                            <td>அட்டவணையில் இருந்து நெடுவரிசையை நீக்குகிறது</td>
+                            <td>நெடுவரிசை தரவு நீக்கப்படும்</td>
+                            <td>கட்டமைப்பு மாற்றப்படும்</td>
+                            <td>இல்லை</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Best Practices for DROP TABLE -->
+        <section class="content-section" id="best-practices">
+            <h2>DROP TABLE சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>பாதுகாப்பு</h4>
+                    </div>
+                    <ul>
+                        <li>எப்போதும் IF EXISTS பயன்படுத்தவும்</li>
+                        <li>உற்பத்தி சூழலில் நேரடி DROP தவிர்க்கவும்</li>
+                        <li>அனுமதிகள் மற்றும் அணுகலைக் கட்டுப்படுத்தவும்</li>
+                        <li>DROP கட்டளைகளை ஆடிட்டு செய்யவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>தரவு மேலாண்மை</h4>
+                    </div>
+                    <ul>
+                        <li>முக்கியமான அட்டவணைகளை நீக்குவதற்கு முன் பாதுகாப்பு நகல் எடுக்கவும்</li>
+                        <li>வெளிநாட்டு விசை உறவுகளைச் சரிபார்க்கவும்</li>
+                        <li>சார்பு அட்டவணைகளைக் கருத்தில் கொள்ளவும்</li>
+                        <li>DROP க்கு முன் தரவு ஏற்றுமதி செய்யவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>குறியீடு தரம்</h4>
+                    </div>
+                    <ul>
+                        <li>நீக்குவதற்கு முன் அட்டவணை இருப்பதைச் சரிபார்க்கவும்</li>
+                        <li>சரியான பிழை கையாளுதலையும் கண்காணிப்பையும் பயன்படுத்தவும்</li>
+                        <li>பரிவர்த்தனைகளைப் பயன்படுத்தி அண்மைத்தன்மையை உறுதிப்படுத்தவும்</li>
+                        <li>DROP செயல்பாடுகளை ஆவணப்படுத்தவும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete Example -->
+        <section class="content-section" id="complete-example">
+            <h2>முழுமையான எடுத்துக்காட்டு</h2>
+            
+            <p>அனைத்து DROP TABLE நுட்பங்களையும் உள்ளடக்கிய முழுமையான எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const mysql = require('mysql');
+
+// Create connection
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "company_db"
+});
+
+// Connect to MySQL
+con.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL:', err.message);
+    return;
+  }
+  
+  console.log('Connected to MySQL database');
+  
+  // Example 1: Basic DROP TABLE
+  console.log('\n1. Basic DROP TABLE:');
+  con.query("DROP TABLE IF EXISTS temp_table", (err, result) => {
+    if (err) {
+      console.error('Error in drop 1:', err.message);
+      return;
+    }
+    console.log('Basic drop result:', result);
+  });
+  
+  // Example 2: Safe drop with existence check
+  console.log('\n2. Safe drop with check:');
+  const tableName = 'customers';
+  
+  // First check if table exists
+  con.query("SHOW TABLES LIKE ?", [tableName], (err, checkResult) => {
+    if (err) {
+      console.error('Error checking table existence:', err.message);
+      return;
+    }
+    
+    if (checkResult.length > 0) {
+      console.log(`Table '${tableName}' exists, proceeding with drop...`);
+      
+      // Drop the table with IF EXISTS for safety
+      con.query("DROP TABLE IF EXISTS ?", [tableName], (err, dropResult) => {
+        if (err) {
+          console.error('Error dropping table:', err.message);
+          return;
+        }
+        
+        console.log('Table dropped successfully');
+        console.log('Drop result:', dropResult);
+      });
+    } else {
+      console.log(`Table '${tableName}' does not exist`);
+    }
+  });
+  
+  // Example 3: Multiple table drop
+  console.log('\n3. Multiple table drop:');
+  setTimeout(() => {
+    const tables = ['backup_customers', 'temp_orders', 'old_products'];
+    
+    tables.forEach((table, index) => {
+      con.query("DROP TABLE IF EXISTS ??", [table], (err, result) => {
+        if (err) {
+          console.error(`Error dropping table ${table}:`, err.message);
+          return;
+        }
+        
+        if (result.warningCount > 0) {
+          console.log(`Table '${table}' did not exist (warning count: ${result.warningCount})`);
+        } else {
+          console.log(`Table '${table}' dropped successfully`);
+        }
+        
+        // Close connection after last operation
+        if (index === tables.length - 1) {
+          setTimeout(() => {
+            con.end((err) => {
+              if (err) {
+                console.error('Error closing connection:', err.message);
+                return;
+              }
+              console.log('\nConnection closed');
+            });
+          }, 1000);
+        }
+      });
+    });
+  }, 2000);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MySQL இல் அட்டவணையை நீக்க பயன்படுத்தப்படும் சரியான SQL அறிக்கையைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">DELETE TABLE</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "DELETE TABLE" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL அறிக்கை அல்ல. DELETE FROM அட்டவணையில் இருந்து பதிவுகளை நீக்க பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">REMOVE TABLE</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "REMOVE TABLE" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL அறிக்கை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">DROP TABLE</div>
+                            <div class="option-feedback correct">✓ சரி! "DROP TABLE" என்பது MySQL இல் அட்டவணையை நீக்க பயன்படும் சரியான SQL அறிக்கையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ERASE TABLE</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "ERASE TABLE" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL அறிக்கை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js MySQL Delete.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js MySQL Update.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#delete-table">அட்டவணையை நீக்குதல்</a></li>
+                    <li><a href="#drop-if-exists">இருந்தால் மட்டும் நீக்கவும்</a></li>
+                    <li><a href="#advanced-drop">மேம்பட்ட DROP TABLE நுட்பங்கள்</a></li>
+                    <li><a href="#comparison">DROP TABLE vs பிற செயல்பாடுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

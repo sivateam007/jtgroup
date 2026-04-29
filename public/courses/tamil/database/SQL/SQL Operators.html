@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Operators - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .operator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .operator-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .operator-category:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--git-color);
+        }
+        
+        .category-header i {
+            font-size: 2rem;
+            color: var(--git-color);
+        }
+        
+        .category-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.5rem;
+        }
+        
+        /* Table Styles */
+        .operator-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .operator-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .operator-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .operator-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .operator-code {
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: var(--git-color);
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .option-feedback {
+            margin-top: 0.5rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-card h4 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .operator-grid,
+            .examples-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .operator-table {
+                font-size: 0.9rem;
+            }
+            
+            .operator-table th,
+            .operator-table td {
+                padding: 8px 10px;
+            }
+            
+            .category-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .operator-table {
+                font-size: 0.8rem;
+            }
+            
+            .code-block pre {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL Comments.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL CREATE DATABASE Statement.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Operators</h2>
+            <p>கணித, ஒப்பீடு, தருக்க மற்றும் பிட்வைஸ் செயலிகள் உட்பட அனைத்து SQL செயலிகளையும் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>SQL செயலிகள்</h2>
+            
+            <p>SQL செயலிகள் என்பது SQL அறிக்கைகளில் WHERE மற்றும் HAVING போன்ற பகுதிகளில் நிபந்தனைகளைக் குறிப்பிடப் பயன்படும் சிறப்பு வார்த்தைகள் அல்லது எழுத்துகள் ஆகும். அவை கணிதக் கணக்கீடுகள், ஒப்பீடுகள் மற்றும் தருக்கச் செயல்பாடுகளைச் செய்யப் பயன்படுகின்றன.</p>
+        </section>
+
+        <!-- Arithmetic Operators -->
+        <section class="content-section" id="arithmetic">
+            <div class="operator-category">
+                <div class="category-header">
+                    <i class="fas fa-calculator"></i>
+                    <h3>கணித செயலிகள்</h3>
+                </div>
+                
+                <table class="operator-table">
+                    <thead>
+                        <tr>
+                            <th>செயலி</th>
+                            <th>விளக்கம்</th>
+                            <th>எடுத்துக்காட்டு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="operator-code">+</span></td>
+                            <td>கூட்டல்</td>
+                            <td><code>SELECT 10 + 5;</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">-</span></td>
+                            <td>கழித்தல்</td>
+                            <td><code>SELECT 10 - 5;</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">*</span></td>
+                            <td>பெருக்கல்</td>
+                            <td><code>SELECT 10 * 5;</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">/</span></td>
+                            <td>வகுத்தல்</td>
+                            <td><code>SELECT 10 / 5;</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">%</span></td>
+                            <td>மாடுலோ</td>
+                            <td><code>SELECT 10 % 3;</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Comparison Operators -->
+        <section class="content-section" id="comparison">
+            <div class="operator-category">
+                <div class="category-header">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>ஒப்பீடு செயலிகள்</h3>
+                </div>
+                
+                <table class="operator-table">
+                    <thead>
+                        <tr>
+                            <th>செயலி</th>
+                            <th>விளக்கம்</th>
+                            <th>எடுத்துக்காட்டு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="operator-code">=</span></td>
+                            <td>சமம்</td>
+                            <td><code>WHERE Age = 25</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">></span></td>
+                            <td>அதிகமான</td>
+                            <td><code>WHERE Salary > 50000</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code"><</span></td>
+                            <td>குறைவான</td>
+                            <td><code>WHERE Price < 100</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">>=</span></td>
+                            <td>அதிகமான அல்லது சமமான</td>
+                            <td><code>WHERE Quantity >= 10</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code"><=</span></td>
+                            <td>குறைவான அல்லது சமமான</td>
+                            <td><code>WHERE Age <= 65</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code"><></span></td>
+                            <td>சமமில்லை</td>
+                            <td><code>WHERE Status <> 'Inactive'</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Logical Operators -->
+        <section class="content-section" id="logical">
+            <div class="operator-category">
+                <div class="category-header">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3>தருக்க செயலிகள்</h3>
+                </div>
+                
+                <table class="operator-table">
+                    <thead>
+                        <tr>
+                            <th>செயலி</th>
+                            <th>விளக்கம்</th>
+                            <th>எடுத்துக்காட்டு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="operator-code">ALL</span></td>
+                            <td>துணைவினவல் மதிப்புகள் அனைத்தும் நிபந்தனையைப் பூர்த்தி செய்தால் TRUE</td>
+                            <td><code>WHERE Price > ALL (SELECT...)</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">AND</span></td>
+                            <td>AND ஆல் பிரிக்கப்பட்ட அனைத்து நிபந்தனைகளும் TRUE ஆக இருந்தால் TRUE</td>
+                            <td><code>WHERE Age > 18 AND Country = 'USA'</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">ANY</span></td>
+                            <td>துணைவினவல் மதிப்புகள் ஏதேனும் நிபந்தனையைப் பூர்த்தி செய்தால் TRUE</td>
+                            <td><code>WHERE Price > ANY (SELECT...)</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">BETWEEN</span></td>
+                            <td>ஒப்பீடுகளின் வரம்பிற்குள் இருந்தால் TRUE</td>
+                            <td><code>WHERE Age BETWEEN 18 AND 65</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">EXISTS</span></td>
+                            <td>துணைவினவல் ஒன்று அல்லது அதற்கு மேற்பட்ட பதிவுகளைத் திருப்பித் தந்தால் TRUE</td>
+                            <td><code>WHERE EXISTS (SELECT...)</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">IN</span></td>
+                            <td>வெளிப்பாடுகளின் பட்டியலில் ஒன்றுக்குச் சமமாக இருந்தால் TRUE</td>
+                            <td><code>WHERE Country IN ('USA', 'UK')</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">LIKE</span></td>
+                            <td>ஒரு வடிவத்துடன் பொருந்தினால் TRUE</td>
+                            <td><code>WHERE Name LIKE 'A%'</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">NOT</span></td>
+                            <td>நிபந்தனை(கள்) TRUE இல்லையென்றால் ஒரு பதிவைக் காட்டுகிறது</td>
+                            <td><code>WHERE NOT Country = 'USA'</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">OR</span></td>
+                            <td>OR ஆல் பிரிக்கப்பட்ட நிபந்தனைகள் ஏதேனும் TRUE ஆக இருந்தால் TRUE</td>
+                            <td><code>WHERE City = 'NY' OR City = 'LA'</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="operator-code">SOME</span></td>
+                            <td>துணைவினவல் மதிப்புகள் ஏதேனும் நிபந்தனையைப் பூர்த்தி செய்தால் TRUE</td>
+                            <td><code>WHERE Price > SOME (SELECT...)</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Other Operators -->
+        <section class="content-section" id="other-operators">
+            <div class="operator-grid">
+                <div class="operator-category">
+                    <div class="category-header">
+                        <i class="fas fa-microchip"></i>
+                        <h3>பிட்வைஸ் செயலிகள்</h3>
+                    </div>
+                    
+                    <table class="operator-table">
+                        <thead>
+                            <tr>
+                                <th>செயலி</th>
+                                <th>விளக்கம்</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="operator-code">&</span></td>
+                                <td>பிட்வைஸ் AND</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-code">|</span></td>
+                                <td>பிட்வைஸ் OR</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-code">^</span></td>
+                                <td>பிட்வைஸ் exclusive OR</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="operator-category">
+                    <div class="category-header">
+                        <i class="fas fa-code"></i>
+                        <h3>கூட்டு செயலிகள்</h3>
+                    </div>
+                    
+                    <table class="operator-table">
+                        <thead>
+                            <tr>
+                                <th>செயலி</th>
+                                <th>விளக்கம்</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="operator-code">+=</span></td>
+                                <td>கூட்டல் சமம்</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-code">-=</span></td>
+                                <td>கழித்தல் சமம்</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-code">*=</span></td>
+                                <td>பெருக்கல் சமம்</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-code">/=</span></td>
+                                <td>வகுத்தல் சமம்</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-code">%=</span></td>
+                                <td>மாடுலோ சமம்</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>கணித செயலிகள்</h4>
+                    <div class="code-block">
+                        <pre><code>-- Calculate total price with tax
+SELECT ProductName, 
+       Price, 
+       Price * 1.18 AS PriceWithTax,
+       Price * Quantity AS TotalValue
+FROM Products;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <h4>ஒப்பீடு செயலிகள்</h4>
+                    <div class="code-block">
+                        <pre><code>-- Find high-value customers
+SELECT CustomerName, TotalPurchases
+FROM Customers
+WHERE TotalPurchases > 1000 
+   AND Country = 'USA'
+   AND Status = 'Active';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <h4>தருக்க செயலிகள்</h4>
+                    <div class="code-block">
+                        <pre><code>-- Complex conditions with logical operators
+SELECT ProductName, Price, Category
+FROM Products
+WHERE (Category = 'Electronics' OR Category = 'Computers')
+   AND Price BETWEEN 100 AND 1000
+   AND ProductName LIKE '%Pro%'
+   AND NOT Discontinued = 1;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> இரண்டு எண்களைக் கூட்ட எந்த SQL செயலி பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-text">+</div>
+                        <div class="option-feedback correct">✓ சரி! + செயலி இரண்டு எண்களைக் கூட்ட பயன்படுகிறது</div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-text">-</div>
+                        <div class="option-feedback incorrect">✗ தவறு! - செயலி கழித்தலுக்கு பயன்படுகிறது</div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-text">*</div>
+                        <div class="option-feedback incorrect">✗ தவறு! * செயலி பெருக்கலுக்கு பயன்படுகிறது</div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-text">/</div>
+                        <div class="option-feedback incorrect">✗ தவறு! / செயலி வகுத்தலுக்கு பயன்படுகிறது</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL Comments.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL CREATE DATABASE Statement.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">SQL செயலிகள்</a></li>
+                    <li><a href="#arithmetic">கணித செயலிகள்</a></li>
+                    <li><a href="#comparison">ஒப்பீடு செயலிகள்</a></li>
+                    <li><a href="#logical">தருக்க செயலிகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

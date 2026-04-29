@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Node.js Database Interaction - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MongoDB Drivers.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MongoDB Charts.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MongoDB Node.js Database Interaction</h2>
+            <p>Node.js உடன் MongoDB தரவுத்தள தொடர்பு</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Node.js Database Interaction -->
+        <section class="content-section" id="nodejs-interaction">
+            <h2>Node.js Database Interaction</h2>
+            
+            <p>இந்த டுடோரியலுக்கு, நாங்கள் ஒரு MongoDB Atlas தரவுத்தளத்தைப் பயன்படுத்துவோம். உங்களிடம் ஏற்கனவே MongoDB Atlas கணக்கு இல்லையென்றால், நீங்கள் MongoDB Atlas இல் இலவசமாக ஒன்றை உருவாக்கலாம்.</p>
+            
+            <p>ஒருங்கிணைப்புகள் அறிமுகப் பிரிவில் இருந்து எங்கள் மாதிரி தரவில் இருந்து ஏற்றப்பட்ட "sample_mflix" தரவுத்தளத்தையும் பயன்படுத்துவோம்.</p>
+        </section>
+
+        <!-- MongoDB Node.js Driver Installation -->
+        <section class="content-section" id="driver-installation">
+            <h2>MongoDB Node.js Driver நிறுவுதல்</h2>
+            
+            <p>Node.js உடன் MongoDB ஐப் பயன்படுத்த, உங்கள் Node.js திட்டத்தில் mongodb தொகுப்பை நிறுவ வேண்டும்.</p>
+            
+            <p>mongodb தொகுப்பை நிறுவ உங்கள் டெர்மினலில் பின்வரும் கட்டளையைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>npm install mongodb</code></pre>
+            </div>
+            
+            <p>இப்போது MongoDB தரவுத்தளத்துடன் இணைக்க இந்த தொகுப்பைப் பயன்படுத்தலாம்.</p>
+            
+            <p>உங்கள் திட்ட அடைவில் ஒரு index.js கோப்பை உருவாக்கவும்.</p>
+            
+            <h3>index.js</h3>
+            
+            <div class="code-example">
+                <pre><code>const { MongoClient } = require('mongodb');</code></pre>
+            </div>
+        </section>
+
+        <!-- Connection String -->
+        <section class="content-section" id="connection-string">
+            <h2>இணைப்பு சரம்</h2>
+            
+            <p>எங்கள் MongoDB Atlas தரவுத்தளத்துடன் இணைக்க, Atlas டாஷ்போர்டில் இருந்து எங்கள் இணைப்பு சரத்தைப் பெற வேண்டும்.</p>
+            
+            <p>Database க்குச் சென்று உங்கள் கிளஸ்டரில் CONNECT பொத்தானைக் கிளிக் செய்யவும்.</p>
+            
+            <p>Connect your application ஐத் தேர்ந்தெடுத்து உங்கள் இணைப்பு சரத்தை நகலெடுக்கவும்.</p>
+            
+            <h3>எடுத்துக்காட்டு:</h3>
+            
+            <div class="code-example">
+                <pre><code>mongodb+srv://<username>:<password>@<cluster.string>.mongodb.net/myFirstDatabase?retryWrites=true&w=majority</code></pre>
+            </div>
+            
+            <p>நீங்கள் <username>, <password>, மற்றும் <cluster.string> ஐ உங்கள் MongoDB Atlas பயனர்பெயர், கடவுச்சொல் மற்றும் கிளஸ்டர் சரத்துடன் மாற்ற வேண்டும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🔐</span> பாதுகாப்பு குறிப்பு:</h4>
+                <p>உங்கள் இணைப்பு சரத்தை பாதுகாப்பாக வைத்திருப்பதை உறுதிப்படுத்தவும். உங்கள் கடவுச்சொல்லை எப்போதும் பகிர வேண்டாம்.</p>
+            </div>
+        </section>
+
+        <!-- Connecting to MongoDB -->
+        <section class="content-section" id="connecting-mongodb">
+            <h2>MongoDB உடன் இணைக்கிறது</h2>
+            
+            <p>நமது index.js கோப்பில் சேர்ப்போம்.</p>
+            
+            <h3>index.js</h3>
+            
+            <div class="code-example">
+                <pre><code>const { MongoClient } = require('mongodb');
+
+const uri = "<Your Connection String>";
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    await client.connect();
+    const db = client.db('sample_mflix');
+    const collection = db.collection('movies');
+
+    // Find the first document in the collection
+    const first = await collection.findOne();
+    console.log(first);
+  } finally {
+    // Close the database connection when finished or an error occurs
+    await client.close();
+  }
+}
+run().catch(console.error);</code></pre>
+            </div>
+            
+            <p>உங்கள் டெர்மினலில் இந்த கோப்பை இயக்கவும்.</p>
+            
+            <div class="code-example">
+                <pre><code>node index.js</code></pre>
+            </div>
+            
+            <p>முதல் ஆவணம் கன்சோலில் பதிவு செய்யப்பட்டதை நீங்கள் காண வேண்டும்.</p>
+        </section>
+
+        <!-- CRUD & Document Aggregation -->
+        <section class="content-section" id="crud-aggregation">
+            <h2>CRUD & ஆவண ஒருங்கிணைப்பு</h2>
+            
+            <p>நாங்கள் mongosh ஐப் பயன்படுத்தியதைப் போலவே, தரவுத்தளத்தில் ஆவணங்களை உருவாக்க, வாசிக்க, புதுப்பிக்க, நீக்க மற்றும் ஒருங்கிணைக்க MongoDB Node.js மொழி டிரைவரைப் பயன்படுத்தலாம்.</p>
+            
+            <p>முந்தைய எடுத்துக்காட்டை விரிவுபடுத்தி, collection.findOne() ஐ find(), insertOne(), insertMany(), updateOne(), updateMany(), deleteOne(), deleteMany(), அல்லது aggregate() உடன் மாற்றலாம்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முயற்சிக்கவும்:</h4>
+                <p>இவற்றில் சிலவற்றை முயற்சிக்கவும். Node.js டிரைவர் mongosh இல் நீங்கள் கற்றுக்கொண்ட அனைத்து முறைகளையும் ஆதரிக்கிறது, இது உங்கள் பயன்பாடுகளில் நீங்கள் கற்றுக்கொண்ட குவேரி மற்றும் ஒருங்கிணைப்பு கருத்துகளைப் பயன்படுத்த உங்களை அனுமதிக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MongoDB Drivers.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MongoDB Charts.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#nodejs-interaction">Node.js Database Interaction</a></li>
+                    <li><a href="#driver-installation">Driver நிறுவுதல்</a></li>
+                    <li><a href="#connection-string">இணைப்பு சரம்</a></li>
+                    <li><a href="#connecting-mongodb">MongoDB உடன் இணைத்தல்</a></li>
+                    <li><a href="#crud-aggregation">CRUD & ஒருங்கிணைப்பு</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

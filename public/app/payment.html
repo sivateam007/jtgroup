@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - JT GROUP OF INSTITUTION</title>
+    <link rel="icon" href="/assets/images/jt_logo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        /* Header override to match landing page */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding:1rem 0;
+            position: sticky;
+            top:0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin:0 auto;
+            padding:0 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo img.logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 1px;
+            margin:0;
+            text-transform: uppercase;
+        }
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+        }
+        .home-link:hover {
+            opacity: 0.8;
+        }
+        .logout-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .payment-container {
+            max-width: 650px;
+            margin: 3rem auto;
+            padding:0 20px;
+        }
+        .payment-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+        }
+        .payment-header {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .payment-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .payment-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .payment-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+        .plan-details {
+            padding: 2.5rem;
+        }
+        .price-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .plan-price {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1;
+        }
+        .plan-period {
+            color: #999;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+        .plan-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        .plan-features li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #f5f5f5;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #555;
+            font-size: 1.05rem;
+        }
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        .plan-features li i {
+            color: #43e97b;
+            font-size: 1.2rem;
+        }
+        .pay-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(226, 65, 36, 0.3);
+        }
+        .pay-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(226, 65, 36, 0.4);
+        }
+        .pay-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .secure-badge {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        .error-message {
+            background: #fff5f5;
+            color: #c53030;
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid #c53030;
+            display: none;
+        }
+        .success-message {
+            background: #f0fff4;
+            color: #2f855a;
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid #2f855a;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo" class="logo-image">
+                <h1>JT GROUP OF INSTITUTION</h1>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="home-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="payment-container">
+        <!-- User Info Card -->
+        <div id="userInfoCard" style="background: white; padding: 1.5rem 2rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 2rem; display: none;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem;">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <div style="color: #999; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Logged in as</div>
+                    <div style="color: var(--dark); font-size: 1.1rem; font-weight: 600;" id="paymentUserName">Loading...</div>
+                    <div style="color: #666; font-size: 0.9rem;" id="paymentUserEmail">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-card">
+            <div class="payment-header">
+                <h2>Unlock All Courses</h2>
+                <p>Get 30 days access to all courses in all languages</p>
+            </div>
+
+            <div class="plan-details">
+                <div class="error-message" id="errorMsg"></div>
+                <div class="success-message" id="successMsg"></div>
+
+                <div class="price-section">
+                    <div class="plan-price">₹29</div>
+                    <div class="plan-period">for 30 days full access</div>
+                </div>
+
+                <ul class="plan-features">
+                    <li><i class="fas fa-check-circle"></i> Access to ALL courses (Tamil, Hindi, Bengali, Malayalam)</li>
+                    <li><i class="fas fa-check-circle"></i> Web Development, Frontend, Backend, Programming</li>
+                    <li><i class="fas fa-check-circle"></i> 30 days unlimited access</li>
+                    <li><i class="fas fa-check-circle"></i> Certificate of completion</li>
+                    <li><i class="fas fa-check-circle"></i> Learn in your native language</li>
+                </ul>
+
+                <button id="payButton" class="pay-btn">
+                    <i class="fas fa-lock"></i> Pay ₹29 with Razorpay
+                </button>
+
+                <div class="secure-badge">
+                    <i class="fas fa-shield-alt"></i> Secure payment powered by Razorpay
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: linear-gradient(135deg, var(--primary), var(--dark)); color: white; padding: 4rem 0 2rem; margin-top: 4rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div>
+                <h3 style="margin-bottom: 1.5rem; color: var(--accent); font-size: 1.3rem;">JT GROUP OF INSTITUTION</h3>
+                <p style="color: #ddd; line-height: 1.6;">Leading educational institution providing quality programming education in multiple languages.</p>
+                <div style="padding: 1rem; margin-top: 1rem;">
+                    <h4 style="color: white; margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> Help Center</h4>
+                    <p style="color: #ddd;">jassifteam@jtgroupofinstitution.com</p>
+                </div>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 1.5rem; color: var(--accent); font-size: 1.3rem;">Quick Links</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="#about" style="color: #ddd; text-decoration: none;">About Us</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="#careers" style="color: #ddd; text-decoration: none;">Careers</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="#courses" style="color: #ddd; text-decoration: none;">Courses</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="/app/signup.html" style="color: #ddd; text-decoration: none;">Sign Up</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="/app/login.html" style="color: #ddd; text-decoration: none;">Login</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 1.5rem; color: var(--accent); font-size: 1.3rem;">Course Categories</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="/courses/tamil/WEB_DEVELOPMENT/" style="color: #ddd; text-decoration: none;">Web Development</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="/courses/tamil/FRONT_END_DEVELOPMENT/" style="color: #ddd; text-decoration: none;">Front End</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="/courses/tamil/full stack development/" style="color: #ddd; text-decoration: none;">Full Stack</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="/courses/tamil/programming-languages/" style="color: #ddd; text-decoration: none;">Programming</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 1.5rem; color: var(--accent); font-size: 1.3rem;">Legal & Social</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem;"><a href="#terms" style="color: #ddd; text-decoration: none;">Terms & Conditions</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="#privacy" style="color: #ddd; text-decoration: none;">Privacy Policy</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="#" style="color: #ddd; text-decoration: none;"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="#" style="color: #ddd; text-decoration: none;"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="#" style="color: #ddd; text-decoration: none;"><i class="fab fa-github"></i> GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #aaa; max-width: 1200px; margin: 3rem auto 0; padding: 2rem 20px 0;">
+            <p>&copy; 2026 JT GROUP OF INSTITUTION. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        let userId = null;
+
+        // Get user ID from JWT cookie
+        async function getUserId() {
+            try {
+                const res = await fetch('/api/auth/me', {
+                    credentials: 'include'
+                });
+                if (res.ok) {
+                    const user = await res.json();
+                    return user.id;
+                }
+            } catch (err) {
+                console.error('Failed to get user:', err);
+            }
+            return null;
+        }
+
+        // Load user info
+        async function loadUserInfo() {
+            try {
+                const res = await fetch('/api/auth/me', {
+                    credentials: 'include'
+                });
+                if (res.ok) {
+                    const user = await res.json();
+                    document.getElementById('paymentUserName').textContent = user.name || 'User';
+                    document.getElementById('paymentUserEmail').textContent = user.email;
+                    document.getElementById('userInfoCard').style.display = 'block';
+                }
+            } catch (err) {
+                console.error('Failed to load user info:', err);
+            }
+        }
+
+        // Logout function
+        function logout() {
+            fetch('/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include'
+            }).then(() => {
+                window.location.href = '/app/login.html';
+            });
+        }
+
+        let razorpayKey = '';
+
+        // Load Razorpay key from backend
+        async function loadRazorpayConfig() {
+            try {
+                const res = await fetch('/api/payment/config');
+                const data = await res.json();
+                razorpayKey = data.keyId || '';
+            } catch (err) {
+                console.error('Failed to load Razorpay config:', err);
+            }
+        }
+
+        // Load user info and check subscription status
+        loadUserInfo();
+        loadRazorpayConfig();
+        checkSubscriptionStatus();
+
+        async function checkSubscriptionStatus() {
+            try {
+                const userId = await getUserId();
+                if (!userId) return;
+
+                const res = await fetch(`/api/payment/status/${userId}`);
+                const data = await res.json();
+
+                const payButton = document.getElementById('payButton');
+                const planPeriod = document.querySelector('.plan-period');
+
+                if (data.hasAccess) {
+                    // User has active subscription - show extend option
+                    const validUntil = new Date(data.subscription.valid_until);
+                    const newValidUntil = new Date(validUntil);
+                    newValidUntil.setDate(newValidUntil.getDate() + 30);
+
+                    payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription - ₹29';
+                    planPeriod.innerHTML = `Current: ${validUntil.toLocaleDateString()}<br>New: ${newValidUntil.toLocaleDateString()}`;
+                } else {
+                    // No active subscription
+                    payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
+                    planPeriod.textContent = 'for 30 days full access';
+                }
+            } catch (err) {
+                console.error('Failed to check subscription status:', err);
+            }
+        }
+
+        document.getElementById('payButton').addEventListener('click', async () => {
+            const payButton = document.getElementById('payButton');
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+
+            payButton.disabled = true;
+            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+            try {
+                userId = await getUserId();
+
+                if (!userId) {
+                    errorMsg.textContent = 'Please login first';
+                    errorMsg.style.display = 'block';
+                    successMsg.style.display = 'none';
+                    payButton.disabled = false;
+                    payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
+                    return;
+                }
+
+                if (!razorpayKey) {
+                    throw new Error('Razorpay configuration missing. Please contact support.');
+                }
+
+                // Create order
+                const orderRes = await fetch('/api/payment/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId })
+                });
+
+                const order = await orderRes.json();
+
+                if (!orderRes.ok) {
+                    throw new Error(order.error || 'Failed to create order');
+                }
+
+                // Launch Razorpay checkout
+                const options = {
+                    key: razorpayKey,
+                    amount: order.amount,
+                    currency: order.currency,
+                    name: 'JT GROUP OF INSTITUTION',
+                    description: '30 Days Full Access',
+                    order_id: order.id,
+                    handler: async function(response) {
+                        // Verify payment
+                        const verifyRes = await fetch('/api/payment/verify', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                userId: userId,
+                                orderId: response.razorpay_order_id,
+                                paymentId: response.razorpay_payment_id
+                            })
+                        });
+
+                        const verifyData = await verifyRes.json();
+
+                        if (verifyRes.ok) {
+                             const newValidUntil = new Date(verifyData.validUntil);
+                             successMsg.innerHTML = `Payment successful! Your subscription is now valid until ${newValidUntil.toLocaleDateString()}. Redirecting to dashboard...`;
+                             successMsg.style.display = 'block';
+                             errorMsg.style.display = 'none';
+
+                             setTimeout(() => {
+                                 window.location.href = '/app/dashboard.html';
+                             }, 3000);
+                         } else {
+                             throw new Error(verifyData.error || 'Payment verification failed');
+                         }
+                    },
+                    prefill: {
+                        email: ''
+                    },
+                    theme: {
+                        color: '#e24124'
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.open();
+
+            } catch (err) {
+                errorMsg.textContent = err.message || 'Payment failed. Please try again.';
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+            } finally {
+                payButton.disabled = false;
+                payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Bitwise Operations - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Bitwise styling */
+        .operator-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .operator-table th {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .operator-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+        
+        .operator-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .operator-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .operator-symbol {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: var(--git-color);
+            text-align: center;
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 6px;
+            display: inline-block;
+            min-width: 40px;
+        }
+        
+        .binary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .binary-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 0.8rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .binary-table td {
+            padding: 0.8rem;
+            border: 1px solid #f0f0f0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .binary-cell {
+            background: #2d2d2d;
+            color: #f1fa8c;
+            font-weight: bold;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .decimal-cell {
+            background: #f0f8ff;
+            color: #3498db;
+            font-weight: bold;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .demo-container {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .demo-output {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--git-color);
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+            min-height: 60px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .demo-button {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #e74c3c, var(--git-color));
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .bitwise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .bitwise-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--git-color);
+        }
+        
+        .bitwise-card h4 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bitwise-icon {
+            color: var(--git-color);
+            font-size: 1.5rem;
+        }
+        
+        .conversion-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        
+        .binary-joke {
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            color: #333;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .bit-visual {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .bit {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .bit-1 {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .bit-0 {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .bit-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+            margin-top: 0.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20Number%20Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20BigInt.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript Bitwise Operations</h2>
+            <p>JavaScript பிட்வைஸ் செயல்பாடுகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Bits in a Computer -->
+        <section class="content-section" id="bits-computer">
+            <h2>கணினியில் பிட்கள்</h2>
+            
+            <p>கணினிகள் தரவை பைனரி வடிவத்தில் (0கள் மற்றும் 1கள்) சேமிக்கின்றன. இந்த ஒவ்வொரு 0 அல்லது 1 ஒரு பிட் என்று அழைக்கப்படுகிறது.</p>
+            
+            <p>JavaScript பிட்வைஸ் செயல்பாடுகள் இந்த பிட்களின் அடிப்படையில் செயல்படும் கணித செயல்பாடுகள்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> பிட் என்றால் என்ன?</h4>
+                <p>பிட் (Bit) = Binary Digit (பைனரி இலக்கம்). இது கணினியில் தரவின் மிகச்சிறிய அலகு. ஒரு பிட் 0 அல்லது 1 மதிப்பை மட்டுமே கொள்ளும்.</p>
+            </div>
+        </section>
+
+        <!-- JavaScript Bitwise Operators -->
+        <section class="content-section" id="bitwise-operators">
+            <h2>JavaScript பிட்வைஸ் செயலிகள்</h2>
+            
+            <table class="operator-table">
+                <thead>
+                    <tr>
+                        <th width="15%">செயலி</th>
+                        <th width="25%">பெயர்</th>
+                        <th width="60%">விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="operator-symbol">&</span></td>
+                        <td>AND</td>
+                        <td>இரு பிட்களும் 1 ஆக இருந்தால் மட்டும் ஒவ்வொரு பிட்டையும் 1 ஆக்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><span class="operator-symbol">|</span></td>
+                        <td>OR</td>
+                        <td>இரு பிட்களில் ஒன்று 1 ஆக இருந்தால் ஒவ்வொரு பிட்டையும் 1 ஆக்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><span class="operator-symbol">^</span></td>
+                        <td>XOR</td>
+                        <td>இரு பிட்கள் வித்தியாசமாக இருந்தால் மட்டும் ஒவ்வொரு பிட்டையும் 1 ஆக்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><span class="operator-symbol">~</span></td>
+                        <td>NOT</td>
+                        <td>அனைத்து பிட்களையும் தலைகீழாக மாற்றுகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><span class="operator-symbol">&lt;&lt;</span></td>
+                        <td>Zero fill left shift</td>
+                        <td>வலது பக்கத்திலிருந்து பூஜ்ஜியங்களைத் தள்ளி இடது பக்கமாக மாற்றுகிறது, இடதுபுற பிட்கள் விடுபடுகின்றன</td>
+                    </tr>
+                    <tr>
+                        <td><span class="operator-symbol">&gt;&gt;</span></td>
+                        <td>Signed right shift</td>
+                        <td>இடதுபுறத்திலிருந்து இடதுபுற பிட்டின் நகல்களைத் தள்ளி வலது பக்கமாக மாற்றுகிறது, வலதுபுற பிட்கள் விடுபடுகின்றன</td>
+                    </tr>
+                    <tr>
+                        <td><span class="operator-symbol">&gt;&gt;&gt;</span></td>
+                        <td>Zero fill right shift</td>
+                        <td>இடதுபுறத்திலிருந்து பூஜ்ஜியங்களைத் தள்ளி வலது பக்கமாக மாற்றுகிறது, வலதுபுற பிட்கள் விடுபடுகின்றன</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Examples -->
+        <section class="content-section" id="examples">
+            <h2>எடுத்துக்காட்டுகள்</h2>
+            
+            <table class="binary-table">
+                <thead>
+                    <tr>
+                        <th>செயல்பாடு</th>
+                        <th>முடிவு</th>
+                        <th>அதே போன்றது</th>
+                        <th>முடிவு</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>5 & 1</td>
+                        <td><span class="decimal-cell">1</span></td>
+                        <td><span class="binary-cell">0101</span> & <span class="binary-cell">0001</span></td>
+                        <td><span class="binary-cell">0001</span></td>
+                    </tr>
+                    <tr>
+                        <td>5 | 1</td>
+                        <td><span class="decimal-cell">5</span></td>
+                        <td><span class="binary-cell">0101</span> | <span class="binary-cell">0001</span></td>
+                        <td><span class="binary-cell">0101</span></td>
+                    </tr>
+                    <tr>
+                        <td>~ 5</td>
+                        <td><span class="decimal-cell">10</span></td>
+                        <td>~<span class="binary-cell">0101</span></td>
+                        <td><span class="binary-cell">1010</span></td>
+                    </tr>
+                    <tr>
+                        <td>5 &lt;&lt; 1</td>
+                        <td><span class="decimal-cell">10</span></td>
+                        <td><span class="binary-cell">0101</span> &lt;&lt; 1</td>
+                        <td><span class="binary-cell">1010</span></td>
+                    </tr>
+                    <tr>
+                        <td>5 ^ 1</td>
+                        <td><span class="decimal-cell">4</span></td>
+                        <td><span class="binary-cell">0101</span> ^ <span class="binary-cell">0001</span></td>
+                        <td><span class="binary-cell">0100</span></td>
+                    </tr>
+                    <tr>
+                        <td>5 &gt;&gt; 1</td>
+                        <td><span class="decimal-cell">2</span></td>
+                        <td><span class="binary-cell">0101</span> &gt;&gt; 1</td>
+                        <td><span class="binary-cell">0010</span></td>
+                    </tr>
+                    <tr>
+                        <td>5 &gt;&gt;&gt; 1</td>
+                        <td><span class="decimal-cell">2</span></td>
+                        <td><span class="binary-cell">0101</span> &gt;&gt;&gt; 1</td>
+                        <td><span class="binary-cell">0010</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- JavaScript Uses 32 bits -->
+        <section class="content-section" id="32-bits">
+            <h2>JavaScript 32 பிட்களைப் பயன்படுத்துகிறது</h2>
+            
+            <p>JavaScript எண்களை 64 பிட் மிதவை புள்ளி எண்களாக சேமிக்கிறது, ஆனால் அனைத்து பிட்வைஸ் செயல்பாடுகளும் 32 பிட் பைனரி எண்களில் செய்யப்படுகின்றன.</p>
+            
+            <p>ஒரு பிட்வைஸ் செயல்பாடு செய்யப்படுவதற்கு முன், JavaScript எண்களை 32 பிட் கையொப்பமிடப்பட்ட முழு எண்களாக மாற்றுகிறது.</p>
+            
+            <p>பிட்வைஸ் செயல்பாடு செய்யப்பட்ட பிறகு, முடிவு 64 பிட் JavaScript எண்களாக மாற்றப்படுகிறது.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> 4 பிட் vs 32 பிட்:</h4>
+                <p>மேலே உள்ள எடுத்துக்காட்டுகள் 4 பிட் கையொப்பமிடப்படாத பைனரி எண்களைப் பயன்படுத்துகின்றன. இதனால்தான் ~ 5, 10 ஐ வழங்குகிறது.</p>
+                <p>JavaScript 32 பிட் கையொப்பமிடப்பட்ட முழு எண்களைப் பயன்படுத்துவதால், இது 10 ஐ வழங்காது. இது -6 ஐ வழங்கும்.</p>
+            </div>
+            
+            <div class="code-example">
+                // 32 பிட் பைனரி பிரதிநிதித்துவம்<br>
+                00000000000000000000000000000101 (5)<br>
+                <br>
+                // பிட்வைஸ் NOT (~5)<br>
+                11111111111111111111111111111010 (~5 = -6)
+            </div>
+            
+            <p>கையொப்பமிடப்பட்ட முழு எண் இடதுபுற பிட்டை மைனஸ் அடையாளமாகப் பயன்படுத்துகிறது.</p>
+        </section>
+
+        <!-- Bitwise Operations Grid -->
+        <section class="content-section" id="operations-grid">
+            <h2>பிட்வைஸ் செயல்பாடுகள்</h2>
+            
+            <div class="bitwise-grid">
+                <div class="bitwise-card">
+                    <h4><i class="fas fa-code bitwise-icon"></i> பிட்வைஸ் AND (&)</h4>
+                    <p>இரு பிட்களும் 1 ஆக இருந்தால் மட்டும் 1 ஐ வழங்குகிறது:</p>
+                    <table class="binary-table">
+                        <tr>
+                            <td>5 (பைனரி)</td>
+                            <td><span class="binary-cell">00000101</span></td>
+                        </tr>
+                        <tr>
+                            <td>1 (பைனரி)</td>
+                            <td><span class="binary-cell">00000001</span></td>
+                        </tr>
+                        <tr>
+                            <td>5 & 1</td>
+                            <td><span class="binary-cell">00000001</span> (1)</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="bitwise-card">
+                    <h4><i class="fas fa-code bitwise-icon"></i> பிட்வைஸ் OR (|)</h4>
+                    <p>இரு பிட்களில் ஒன்று 1 ஆக இருந்தால் 1 ஐ வழங்குகிறது:</p>
+                    <table class="binary-table">
+                        <tr>
+                            <td>5 (பைனரி)</td>
+                            <td><span class="binary-cell">00000101</span></td>
+                        </tr>
+                        <tr>
+                            <td>1 (பைனரி)</td>
+                            <td><span class="binary-cell">00000001</span></td>
+                        </tr>
+                        <tr>
+                            <td>5 | 1</td>
+                            <td><span class="binary-cell">00000101</span> (5)</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="bitwise-card">
+                    <h4><i class="fas fa-code bitwise-icon"></i> பிட்வைஸ் XOR (^)</h4>
+                    <p>இரு பிட்கள் வித்தியாசமாக இருந்தால் 1 ஐ வழங்குகிறது:</p>
+                    <table class="binary-table">
+                        <tr>
+                            <td>5 (பைனரி)</td>
+                            <td><span class="binary-cell">00000101</span></td>
+                        </tr>
+                        <tr>
+                            <td>1 (பைனரி)</td>
+                            <td><span class="binary-cell">00000001</span></td>
+                        </tr>
+                        <tr>
+                            <td>5 ^ 1</td>
+                            <td><span class="binary-cell">00000100</span> (4)</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="bitwise-card">
+                    <h4><i class="fas fa-code bitwise-icon"></i> பிட்வைஸ் NOT (~)</h4>
+                    <p>அனைத்து பிட்களையும் தலைகீழாக மாற்றுகிறது:</p>
+                    <table class="binary-table">
+                        <tr>
+                            <td>5 (பைனரி)</td>
+                            <td><span class="binary-cell">00000101</span></td>
+                        </tr>
+                        <tr>
+                            <td>~5</td>
+                            <td><span class="binary-cell">11111010</span> (-6)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Demos -->
+        <section class="content-section" id="interactive-demos">
+            <h2>நேரடி டெமோக்கள்</h2>
+            
+            <div class="demo-container">
+                <h4>அடிப்படை பிட்வைஸ் செயல்பாடுகள்</h4>
+                <div id="basic-demo" class="demo-output">முடிவு: </div>
+                <div class="button-group">
+                    <button class="demo-button" onclick="demoBitwiseAND()">5 & 1 (AND)</button>
+                    <button class="demo-button" onclick="demoBitwiseOR()">5 | 1 (OR)</button>
+                    <button class="demo-button" onclick="demoBitwiseXOR()">5 ^ 1 (XOR)</button>
+                    <button class="demo-button" onclick="demoBitwiseNOT()">~5 (NOT)</button>
+                </div>
+            </div>
+            
+            <div class="demo-container">
+                <h4>ஷிப்ட் செயல்பாடுகள்</h4>
+                <div id="shift-demo" class="demo-output">முடிவு: </div>
+                <div class="button-group">
+                    <button class="demo-button" onclick="demoLeftShift()">5 &lt;&lt; 1 (Left Shift)</button>
+                    <button class="demo-button" onclick="demoRightShift()">5 &gt;&gt; 1 (Right Shift)</button>
+                    <button class="demo-button" onclick="demoZeroFillShift()">5 &gt;&gt;&gt; 1 (Zero Fill)</button>
+                </div>
+            </div>
+            
+            <div class="demo-container">
+                <h4>ஒதுக்கீடு செயலிகள்</h4>
+                <div id="assignment-demo" class="demo-output">மாறி மதிப்புகள்: </div>
+                <div class="button-group">
+                    <button class="demo-button" onclick="demoANDassignment()">x &= 5 (AND Assignment)</button>
+                    <button class="demo-button" onclick="demoORassignment()">x |= 5 (OR Assignment)</button>
+                    <button class="demo-button" onclick="demoXORassignment()">x ^= 5 (XOR Assignment)</button>
+                    <button class="demo-button" onclick="demoLeftShiftAssignment()">x &lt;&lt;= 2 (Left Shift)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Binary Numbers -->
+        <section class="content-section" id="binary-numbers">
+            <h2>பைனரி எண்கள்</h2>
+            
+            <p>ஒரே ஒரு பிட் அமைக்கப்பட்ட பைனரி எண்களை புரிந்துகொள்வது எளிது:</p>
+            
+            <table class="binary-table">
+                <thead>
+                    <tr>
+                        <th>பைனரி பிரதிநிதித்துவம்</th>
+                        <th>தசம மதிப்பு</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="binary-cell">00000000000000000000000000000001</span></td>
+                        <td><span class="decimal-cell">1</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="binary-cell">00000000000000000000000000000010</span></td>
+                        <td><span class="decimal-cell">2</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="binary-cell">00000000000000000000000000000100</span></td>
+                        <td><span class="decimal-cell">4</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="binary-cell">00000000000000000000000000001000</span></td>
+                        <td><span class="decimal-cell">8</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="binary-cell">00000000000000000000000000010000</span></td>
+                        <td><span class="decimal-cell">16</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p>இன்னும் சில பிட்களை அமைப்பது பைனரி முறையை வெளிப்படுத்துகிறது:</p>
+            
+            <table class="binary-table">
+                <thead>
+                    <tr>
+                        <th>பைனரி பிரதிநிதித்துவம்</th>
+                        <th>தசம மதிப்பு</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="binary-cell">00000000000000000000000000000101</span></td>
+                        <td><span class="decimal-cell">5</span> (4 + 1)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="binary-cell">00000000000000000000000000001101</span></td>
+                        <td><span class="decimal-cell">13</span> (8 + 4 + 1)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="binary-cell">00000000000000000000000000101101</span></td>
+                        <td><span class="decimal-cell">45</span> (32 + 8 + 4 + 1)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="binary-joke">
+                <i class="fas fa-laugh"></i> உலகில் 10 வகையான மக்கள் மட்டுமே உள்ளனர்: பைனரியை புரிந்துகொள்ளும் மக்கள் மற்றும் புரிந்துகொள்ளாத மக்கள்.
+                <div style="font-size: 0.9rem; margin-top: 0.5rem;">(10 in binary = 2 in decimal)</div>
+            </div>
+        </section>
+
+        <!-- Conversion Functions -->
+        <section class="content-section" id="conversion-functions">
+            <h2>மாற்றும் செயல்பாடுகள்</h2>
+            
+            <div class="conversion-box">
+                <h4>தசமத்தை பைனரியாக மாற்றுதல்</h4>
+                <div class="code-example">
+                    function dec2bin(dec) {<br>
+                    &nbsp;&nbsp;return (dec >>> 0).toString(2);<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="conversion-box">
+                <h4>பைனரியை தசமமாக மாற்றுதல்</h4>
+                <div class="code-example">
+                    function bin2dec(bin) {<br>
+                    &nbsp;&nbsp;return parseInt(bin, 2).toString(10);<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="demo-container">
+                <h4>மாற்றுதல் டெமோ</h4>
+                <div id="conversion-demo" class="demo-output">மாற்றல் முடிவுகள்: </div>
+                <div class="button-group">
+                    <button class="demo-button" onclick="demoDecToBin()">தசம 5 → பைனரி</button>
+                    <button class="demo-button" onclick="demoBinToDec()">பைனரி 101 → தசம</button>
+                    <button class="demo-button" onclick="demoDec13ToBin()">தசம 13 → பைனரி</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise - ONLY ONE EXERCISE -->
+        <section class="content-section" id="exercises">
+            <h2>JavaScript பயிற்சிகள்</h2>
+            
+            <p>இந்த டுடோரியலில் உள்ள பல அத்தியாயங்கள் உங்கள் அறிவு நிலையைச் சரிபார்க்கக்கூடிய பயிற்சியுடன் முடிகின்றன.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பைனரி எண் 010 எந்த எண்ணைக் குறிக்கிறது?</h4>
+                
+                <div class="bit-visual">
+                    <div>
+                        <div class="bit bit-0">0</div>
+                        <div class="bit-label">முதல் பிட்</div>
+                    </div>
+                    <div>
+                        <div class="bit bit-1">1</div>
+                        <div class="bit-label">இரண்டாம் பிட்</div>
+                    </div>
+                    <div>
+                        <div class="bit bit-0">0</div>
+                        <div class="bit-label">மூன்றாம் பிட்</div>
+                    </div>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">1</div>
+                            <div class="option-feedback incorrect">✗ தவறு! 1 என்பது பைனரியில் 001 ஆகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">2</div>
+                            <div class="option-feedback correct">✓ சரி! 010 = (0×4) + (1×2) + (0×1) = 2</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">10</div>
+                            <div class="option-feedback incorrect">✗ தவறு! 10 என்பது தசம எண். பைனரி 010 என்பது தசம 2 க்கு சமம்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20Number%20Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20BigInt.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#bits-computer">கணினியில் பிட்கள்</a></li>
+                    <li><a href="#bitwise-operators">பிட்வைஸ் செயலிகள்</a></li>
+                    <li><a href="#examples">எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#32-bits">32 பிட்கள்</a></li>
+                    <li><a href="#operations-grid">பிட்வைஸ் செயல்பாடுகள்</a></li>
+                    <li><a href="#interactive-demos">நேரடி டெமோக்கள்</a></li>
+                    <li><a href="#binary-numbers">பைனரி எண்கள்</a></li>
+                    <li><a href="#conversion-functions">மாற்றும் செயல்பாடுகள்</a></li>
+                    <li><a href="#exercises">JavaScript பயிற்சிகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Demo Functions
+        function demoBitwiseAND() {
+            let result = 5 & 1;
+            let binary5 = (5 >>> 0).toString(2).padStart(8, '0');
+            let binary1 = (1 >>> 0).toString(2).padStart(8, '0');
+            let binaryResult = (result >>> 0).toString(2).padStart(8, '0');
+            
+            document.getElementById("basic-demo").innerHTML = 
+                `5 & 1 = ${result}<br>` +
+                `(${binary5} & ${binary1} = ${binaryResult})`;
+        }
+        
+        function demoBitwiseOR() {
+            let result = 5 | 1;
+            let binary5 = (5 >>> 0).toString(2).padStart(8, '0');
+            let binary1 = (1 >>> 0).toString(2).padStart(8, '0');
+            let binaryResult = (result >>> 0).toString(2).padStart(8, '0');
+            
+            document.getElementById("basic-demo").innerHTML = 
+                `5 | 1 = ${result}<br>` +
+                `(${binary5} | ${binary1} = ${binaryResult})`;
+        }
+        
+        function demoBitwiseXOR() {
+            let result = 5 ^ 1;
+            let binary5 = (5 >>> 0).toString(2).padStart(8, '0');
+            let binary1 = (1 >>> 0).toString(2).padStart(8, '0');
+            let binaryResult = (result >>> 0).toString(2).padStart(8, '0');
+            
+            document.getElementById("basic-demo").innerHTML = 
+                `5 ^ 1 = ${result}<br>` +
+                `(${binary5} ^ ${binary1} = ${binaryResult})`;
+        }
+        
+        function demoBitwiseNOT() {
+            let result = ~5;
+            let binary5 = (5 >>> 0).toString(2).padStart(8, '0');
+            let binaryResult = (result >>> 0).toString(2).padStart(32, '0').slice(-8);
+            
+            document.getElementById("basic-demo").innerHTML = 
+                `~5 = ${result}<br>` +
+                `(~${binary5} = ${binaryResult})`;
+        }
+        
+        function demoLeftShift() {
+            let result = 5 << 1;
+            let binary5 = (5 >>> 0).toString(2).padStart(8, '0');
+            let binaryResult = (result >>> 0).toString(2).padStart(8, '0');
+            
+            document.getElementById("shift-demo").innerHTML = 
+                `5 << 1 = ${result}<br>` +
+                `(${binary5} << 1 = ${binaryResult})`;
+        }
+        
+        function demoRightShift() {
+            let result = 5 >> 1;
+            let binary5 = (5 >>> 0).toString(2).padStart(8, '0');
+            let binaryResult = (result >>> 0).toString(2).padStart(8, '0');
+            
+            document.getElementById("shift-demo").innerHTML = 
+                `5 >> 1 = ${result}<br>` +
+                `(${binary5} >> 1 = ${binaryResult})`;
+        }
+        
+        function demoZeroFillShift() {
+            let result = 5 >>> 1;
+            let binary5 = (5 >>> 0).toString(2).padStart(8, '0');
+            let binaryResult = (result >>> 0).toString(2).padStart(8, '0');
+            
+            document.getElementById("shift-demo").innerHTML = 
+                `5 >>> 1 = ${result}<br>` +
+                `(${binary5} >>> 1 = ${binaryResult})`;
+        }
+        
+        function demoANDassignment() {
+            let x = 10;
+            x &= 5;
+            document.getElementById("assignment-demo").innerHTML = 
+                `x = 10;<br>` +
+                `x &= 5;<br>` +
+                `x = ${x} (10 & 5 = ${x})`;
+        }
+        
+        function demoORassignment() {
+            let x = 10;
+            x |= 5;
+            document.getElementById("assignment-demo").innerHTML = 
+                `x = 10;<br>` +
+                `x |= 5;<br>` +
+                `x = ${x} (10 | 5 = ${x})`;
+        }
+        
+        function demoXORassignment() {
+            let x = 10;
+            x ^= 5;
+            document.getElementById("assignment-demo").innerHTML = 
+                `x = 10;<br>` +
+                `x ^= 5;<br>` +
+                `x = ${x} (10 ^ 5 = ${x})`;
+        }
+        
+        function demoLeftShiftAssignment() {
+            let x = 5;
+            x <<= 2;
+            document.getElementById("assignment-demo").innerHTML = 
+                `x = 5;<br>` +
+                `x <<= 2;<br>` +
+                `x = ${x} (5 << 2 = ${x})`;
+        }
+        
+        function demoDecToBin() {
+            function dec2bin(dec) {
+                return (dec >>> 0).toString(2);
+            }
+            
+            let decimal = 5;
+            let binary = dec2bin(decimal);
+            
+            document.getElementById("conversion-demo").innerHTML = 
+                `தசம ${decimal} → பைனரி ${binary}<br>` +
+                `(5 = ${binary.padStart(4, '0')})`;
+        }
+        
+        function demoBinToDec() {
+            function bin2dec(bin) {
+                return parseInt(bin, 2).toString(10);
+            }
+            
+            let binary = "101";
+            let decimal = bin2dec(binary);
+            
+            document.getElementById("conversion-demo").innerHTML = 
+                `பைனரி ${binary} → தசம ${decimal}<br>` +
+                `(${binary} = ${decimal})`;
+        }
+        
+        function demoDec13ToBin() {
+            function dec2bin(dec) {
+                return (dec >>> 0).toString(2);
+            }
+            
+            let decimal = 13;
+            let binary = dec2bin(decimal);
+            
+            document.getElementById("conversion-demo").innerHTML = 
+                `தசம ${decimal} → பைனரி ${binary}<br>` +
+                `(13 = ${binary.padStart(8, '0')})`;
+        }
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>
