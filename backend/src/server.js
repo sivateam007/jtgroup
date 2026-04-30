@@ -21,8 +21,8 @@ app.use(helmet({
 
 // Rate limiting for auth endpoints (skip in test mode)
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'production' ? 10 : 100, // 100 in test mode
+  windowMs: 5 * 60 * 1000, // 5 minutes (changed from 15)
+  max: process.env.NODE_ENV === 'production' ? 50 : 100, // 50 in production (changed from 10), 100 in test mode
   message: { error: 'Too many requests, please try again later.' },
   standardHeaders: true,
   legacyHeaders: false,
@@ -37,9 +37,6 @@ const paymentLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   skip: (req) => process.env.NODE_ENV !== 'production' // Disable in non-production
-});
-  standardHeaders: true,
-  legacyHeaders: false
 });
 
 // Middleware
