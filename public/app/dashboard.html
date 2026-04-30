@@ -679,12 +679,18 @@
                 // Handle payment success redirect
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('payment') === 'success') {
+                    // Get paymentLinkId from sessionStorage
+                    const paymentLinkId = sessionStorage.getItem('paymentLinkId');
+                    
                     // Call manual verification endpoint
                     try {
                         const verifyRes = await fetch('/api/payment/verify-manual', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ userId: user.id }),
+                            body: JSON.stringify({ 
+                                userId: user.id,
+                                paymentLinkId: paymentLinkId 
+                            }),
                             credentials: 'include'
                         });
                         
@@ -694,6 +700,8 @@
                                 await checkSubscription(user.id);
                                 // Clean URL
                                 window.history.replaceState({}, document.title, '/app/dashboard.html');
+                                // Clear sessionStorage
+                                sessionStorage.removeItem('paymentLinkId');
                             }, 1000);
                         }
                     } catch (err) {

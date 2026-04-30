@@ -66,7 +66,8 @@ router.post('/create-payment-link', async (req, res) => {
             console.error('Razorpay Payment Link creation failed:', result);
             return res.status(500).json({ error: 'Failed to create payment link: ' + (result.error?.description || 'Unknown error') });
           }
-          res.json({ paymentUrl: result.short_url });
+          // Return both short_url and payment_link id
+          res.json({ paymentUrl: result.short_url, paymentLinkId: result.id });
         } catch (e) {
           res.status(500).json({ error: 'Failed to parse Razorpay response' });
         }
@@ -196,7 +197,7 @@ router.post('/verify-manual', (req, res) => {
       validUntil = result.newDate;
     }
     
-    // Insert subscription record
+    // Insert subscription record (use paymentLinkId if provided, otherwise 'manual')
     const stmt = db.prepare('INSERT INTO subscriptions (user_id, razorpay_order_id, razorpay_payment_id, amount, valid_until) VALUES (?, ?, ?, ?, ?)');
     stmt.run(userId, paymentLinkId || 'manual', 'manual', process.env.PLAN_PRICE_INR || 29, validUntil);
     
