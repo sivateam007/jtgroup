@@ -33,7 +33,8 @@ router.post('/create-order', (req, res) => {
   
   rzp.orders.create(options, (err, order) => {
     if (err) {
-      return res.status(500).json({ error: 'Failed to create order' });
+      console.error('Razorpay order creation failed:', err);
+      return res.status(500).json({ error: 'Failed to create order: ' + err.message });
     }
     res.json(order);
   });
@@ -82,6 +83,24 @@ router.get('/status/:userId', (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
+});
+
+// Test Razorpay connectivity
+router.get('/test', (req, res) => {
+  const rzp = getRazorpay();
+  console.log('Testing Razorpay with key:', process.env.RAZORPAY_KEY_ID);
+  
+  rzp.orders.create({
+    amount: 2900,
+    currency: 'INR',
+    receipt: 'test_' + Date.now()
+  }, (err, order) => {
+    if (err) {
+      console.error('Razorpay test failed:', err);
+      return res.status(500).json({ error: 'Razorpay test failed', details: err.message, key: process.env.RAZORPAY_KEY_ID });
+    }
+    res.json({ success: true, order, key: process.env.RAZORPAY_KEY_ID });
+  });
 });
 
 // Get Razorpay key for frontend
