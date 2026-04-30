@@ -19,9 +19,9 @@ router.post('/create-payment-link', async (req, res) => {
 
     const amount = parseInt(process.env.PLAN_PRICE_INR || 29) * 100; // ₹29 to paise
     const callbackUrl = `${process.env.APP_ORIGIN || 'http://localhost:3000'}/app/dashboard.html`;
+    const isTestMode = process.env.RAZORPAY_KEY_ID?.startsWith('rzp_test_');
 
     const paymentLinkData = {
-      upi_link: true,
       amount: amount,
       currency: 'INR',
       description: '30 Days Full Access - JT Group of Institution',
@@ -36,6 +36,11 @@ router.post('/create-payment-link', async (req, res) => {
       callback_url: callbackUrl,
       callback_method: 'get'
     };
+
+    // UPI Payment Links not supported in Test Mode
+    if (!isTestMode) {
+      paymentLinkData.upi_link = true;
+    }
 
     const auth = Buffer.from(`${process.env.RAZORPAY_KEY_ID}:${process.env.RAZORPAY_KEY_SECRET}`).toString('base64');
 
