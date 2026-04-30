@@ -1,5 +1,5 @@
 const express = require('express');
-const fetch = require('node-fetch');
+const https = require('https');
 const db = require('../db/database');
 
 const router = express.Router();
@@ -39,23 +39,42 @@ router.post('/create-payment-link', async (req, res) => {
 
     const auth = Buffer.from(`${process.env.RAZORPAY_KEY_ID}:${process.env.RAZORPAY_KEY_SECRET}`).toString('base64');
 
-    const response = await fetch('https://api.razorpay.com/v1/payment_links', {
+    const postData = JSON.stringify(paymentLinkData);
+    const options = {
+      hostname: 'api.razorpay.com',
+      path: '/v1/payment_links',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Basic ${auth}`
-      },
-      body: JSON.stringify(paymentLinkData)
+        'Authorization': `Basic ${auth}`,
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    };
+
+    const req = https.request(options, (response) => {
+      let data = '';
+      response.on('data', (chunk) => { data += chunk; });
+      response.on('end', () => {
+        try {
+          const result = JSON.parse(data);
+          if (response.statusCode !== 200) {
+            console.error('Razorpay Payment Link creation failed:', result);
+            return res.status(500).json({ error: 'Failed to create payment link: ' + (result.error?.description || 'Unknown error') });
+          }
+          res.json({ paymentUrl: result.short_url });
+        } catch (e) {
+          res.status(500).json({ error: 'Failed to parse Razorpay response' });
+        }
+      });
     });
 
-    const data = await response.json();
+    req.on('error', (err) => {
+      console.error('Razorpay request failed:', err);
+      res.status(500).json({ error: 'Failed to create payment link: ' + err.message });
+    });
 
-    if (!response.ok) {
-      console.error('Razorpay Payment Link creation failed:', data);
-      return res.status(500).json({ error: 'Failed to create payment link: ' + (data.error?.description || 'Unknown error') });
-    }
-
-    res.json({ paymentUrl: data.short_url });
+    req.write(postData);
+    req.end();
   } catch (err) {
     console.error('Payment link error:', err);
     res.status(500).json({ error: 'Failed to create payment link: ' + err.message });
