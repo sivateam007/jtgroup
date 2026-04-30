@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const authRoutes = require('./routes/auth');
 const paymentRoutes = require('./routes/payment');
 const courseRoutes = require('./routes/courses');
@@ -10,6 +12,30 @@ const auth = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Security: Add security headers
+app.use(helmet({
+  contentSecurityPolicy: false, // Disable CSP for now to avoid breaking inline scripts
+  crossOriginEmbedderPolicy: false
+}));
+
+// Rate limiting for auth endpoints
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // Limit each IP to 10 requests per windowMs
+  message: { error: 'Too many requests, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+// Rate limiting for payment endpoints
+const paymentLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5, // Limit each IP to 5 payment attempts per hour
+  message: { error: 'Too many payment attempts, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
 // Middleware
 app.use(express.json());
@@ -26,9 +52,9 @@ app.get('/app/payment.html', auth, (req, res) => {
 
 app.use('/app', express.static(path.join(__dirname, '../../public/app')));
 
-// API routes
-app.use('/api/auth', authRoutes);
-app.use('/api/payment', paymentRoutes);
+// API routes with rate limiting
+app.use('/api/auth', authLimiter, authRoutes);
+app.use('/api/payment', paymentLimiter, paymentRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/progress', progressRoutes);
 
@@ -37,10 +63,24 @@ app.use('/api/progress', progressRoutes);
 app.use('/courses', (req, res, next) => {
   // Check if this is a request for an index.html page (ends with / or index.html)
   const urlPath = req.path;
+
+  // Security: Prevent directory traversal
+  if (urlPath.includes('..') || urlPath.includes('//')) {
+    return res.status(403).send('Forbidden');
+  }
+
   if (urlPath.endsWith('/') || urlPath.endsWith('index.html')) {
     // Extract the path after /courses/
     const subPath = urlPath.replace(/^\//, '').replace(/\/$/, '');
     const indexPath = path.join(__dirname, '../../public/courses', subPath, 'index.html');
+
+    // Security: Ensure the resolved path is within the courses directory
+    const resolvedPath = path.resolve(indexPath);
+    const coursesRoot = path.resolve(path.join(__dirname, '../../public/courses'));
+    if (!resolvedPath.startsWith(coursesRoot)) {
+      return res.status(403).send('Forbidden');
+    }
+
     if (require('fs').existsSync(indexPath)) {
       return res.sendFile(indexPath);
     }

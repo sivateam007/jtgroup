@@ -65,6 +65,27 @@ router.post('/create-payment-link', async (req, res) => {
 // Webhook handler for Razorpay Payment Link events
 router.post('/webhook', express.json(), (req, res) => {
   try {
+    // Security: Verify webhook signature if secret is configured
+    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
+    if (webhookSecret) {
+      const crypto = require('crypto');
+      const razorpaySignature = req.headers['x-razorpay-signature'];
+      
+      if (!razorpaySignature) {
+        return res.status(401).json({ error: 'Missing webhook signature' });
+      }
+      
+      const expectedSignature = crypto
+        .createHmac('sha256', webhookSecret)
+        .update(JSON.stringify(req.body))
+        .digest('hex');
+      
+      if (expectedSignature !== razorpaySignature) {
+        console.error('Webhook signature verification failed');
+        return res.status(401).json({ error: 'Invalid webhook signature' });
+      }
+    }
+    
     const event = req.body;
 
     // Handle payment_link.paid event

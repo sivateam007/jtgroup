@@ -1,6 +1,7 @@
-const express = require('express');
+﻿const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 const db = require('../db/database');
 
 const router = express.Router();
@@ -11,6 +12,22 @@ router.post('/signup', (req, res) => {
   
   if (!name || !email || !dob || !password) {
     return res.status(400).json({ error: 'Name, email, DOB, and password are required' });
+  }
+  
+  // Security: Validate email format
+  if (!validator.isEmail(email)) {
+    return res.status(400).json({ error: 'Invalid email format' });
+  }
+  
+  // Security: Sanitize name (allow only letters, spaces, dots, hyphens)
+  const sanitizedName = validator.whitelist(name, 'A-Za-z \\.\\-\\ ');
+  if (sanitizedName !== name || name.length < 2 || name.length > 100) {
+    return res.status(400).json({ error: 'Invalid name format' });
+  }
+  
+  // Security: Validate date format (YYYY-MM-DD)
+  if (!validator.isDate(dob, { format: 'YYYY-MM-DD', delimiters: ['-'] })) {
+    return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
   }
   
   if (password.length < 6) {
@@ -27,6 +44,7 @@ router.post('/signup', (req, res) => {
         res.cookie(process.env.JWT_COOKIE_NAME || 'jt_token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
         
@@ -48,6 +66,11 @@ router.post('/login', (req, res) => {
     return res.status(400).json({ error: 'Email and password required' });
   }
   
+  // Security: Validate email format
+  if (!validator.isEmail(email)) {
+    return res.status(400).json({ error: 'Invalid email format' });
+  }
+  
   try {
     const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
     
@@ -60,6 +83,7 @@ router.post('/login', (req, res) => {
     res.cookie(process.env.JWT_COOKIE_NAME || 'jt_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
     
@@ -99,6 +123,16 @@ router.post('/forgot-password', (req, res) => {
     return res.status(400).json({ error: 'Email and Date of Birth are required' });
   }
   
+  // Security: Validate email format
+  if (!validator.isEmail(email)) {
+    return res.status(400).json({ error: 'Invalid email format' });
+  }
+  
+  // Security: Validate date format
+  if (!validator.isDate(dob, { format: 'YYYY-MM-DD', delimiters: ['-'] })) {
+    return res.status(400).json({ error: 'Invalid date format' });
+  }
+  
   try {
     const user = db.prepare('SELECT * FROM users WHERE email = ? AND dob = ?').get(email, dob);
     
@@ -118,6 +152,16 @@ router.post('/reset-password', (req, res) => {
   
   if (!email || !dob || !newPassword) {
     return res.status(400).json({ error: 'Email, DOB, and new password are required' });
+  }
+  
+  // Security: Validate email format
+  if (!validator.isEmail(email)) {
+    return res.status(400).json({ error: 'Invalid email format' });
+  }
+  
+  // Security: Validate date format
+  if (!validator.isDate(dob, { format: 'YYYY-MM-DD', delimiters: ['-'] })) {
+    return res.status(400).json({ error: 'Invalid date format' });
   }
   
   if (newPassword.length < 6) {
