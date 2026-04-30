@@ -264,7 +264,11 @@
                 const data = await res.json();
                 
                 if (res.ok) {
-                    window.location.href = '/app/dashboard.html';
+                    // Preserve payment success parameter through login redirect
+                    const redirectUrl = new URLSearchParams(window.location.search).get('payment') === 'success'
+                        ? '/app/dashboard.html?payment=success'
+                        : '/app/dashboard.html';
+                    window.location.href = redirectUrl;
                 } else {
                     errorMsg.textContent = data.error || 'Login failed';
                     errorMsg.style.display = 'block';
