@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>const RAZORPAY_KEY_ID = '{{RAZORPAY_KEY_ID}}';</script>
     <style>
         /* Header override to match landing page */
         header {
@@ -374,22 +375,10 @@
             });
         }
 
-        let razorpayKey = '';
-
-        // Load Razorpay key from backend
-        async function loadRazorpayConfig() {
-            try {
-                const res = await fetch('/api/payment/config');
-                const data = await res.json();
-                razorpayKey = data.keyId || '';
-            } catch (err) {
-                console.error('Failed to load Razorpay config:', err);
-            }
-        }
+        let razorpayKey = RAZORPAY_KEY_ID || '';
 
         // Load user info and check subscription status
         loadUserInfo();
-        loadRazorpayConfig();
         checkSubscriptionStatus();
 
         async function checkSubscriptionStatus() {

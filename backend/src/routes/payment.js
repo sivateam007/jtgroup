@@ -85,29 +85,4 @@ router.get('/status/:userId', (req, res) => {
   }
 });
 
-// Test Razorpay connectivity
-router.get('/test', (req, res) => {
-  const rzp = getRazorpay();
-  console.log('Testing Razorpay with key:', process.env.RAZORPAY_KEY_ID);
-  
-  rzp.orders.create({
-    amount: 2900,
-    currency: 'INR',
-    receipt: 'test_' + Date.now()
-  }, (err, order) => {
-    if (err) {
-      console.error('Razorpay test failed:', err);
-      return res.status(500).json({ error: 'Razorpay test failed', details: err.message, key: process.env.RAZORPAY_KEY_ID });
-    }
-    res.json({ success: true, order, key: process.env.RAZORPAY_KEY_ID });
-  });
-});
-
-// Get Razorpay key for frontend
-router.get('/config', (req, res) => {
-  res.json({
-    keyId: process.env.RAZORPAY_KEY_ID || ''
-  });
-});
-
 module.exports = router;
