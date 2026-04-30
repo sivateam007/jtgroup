@@ -18,7 +18,7 @@ router.post('/create-payment-link', async (req, res) => {
     if (!user) return res.status(404).json({ error: 'User not found' });
 
     const amount = parseInt(process.env.PLAN_PRICE_INR || 29) * 100; // ₹29 to paise
-    const callbackUrl = `${process.env.APP_ORIGIN || 'http://localhost:3000'}/app/dashboard.html?payment=success`;
+    const callbackUrl = `${process.env.APP_ORIGIN || 'http://localhost:3000'}/app/login.html?payment=success`;
     const isTestMode = process.env.RAZORPAY_KEY_ID?.startsWith('rzp_test_');
 
     const paymentLinkData = {
