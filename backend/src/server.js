@@ -19,20 +19,25 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false
 }));
 
-// Rate limiting for auth endpoints
+// Rate limiting for auth endpoints (skip in test mode)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // Limit each IP to 10 requests per windowMs
+  max: process.env.NODE_ENV === 'production' ? 10 : 100, // 100 in test mode
   message: { error: 'Too many requests, please try again later.' },
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
+  skip: (req) => process.env.NODE_ENV !== 'production' // Disable in non-production
 });
 
-// Rate limiting for payment endpoints
+// Rate limiting for payment endpoints (skip in test mode)
 const paymentLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5, // Limit each IP to 5 payment attempts per hour
+  max: process.env.NODE_ENV === 'production' ? 5 : 100, // 100 in test mode
   message: { error: 'Too many payment attempts, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => process.env.NODE_ENV !== 'production' // Disable in non-production
+});
   standardHeaders: true,
   legacyHeaders: false
 });
