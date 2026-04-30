@@ -22,22 +22,19 @@ app.use(helmet({
 // Rate limiting for auth endpoints (skip in test mode)
 const authLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes (changed from 15)
-  max: process.env.NODE_ENV === 'production' ? 50 : 100, // 50 in production (changed from 10), 100 in test mode
+  max: process.env.NODE_ENV === 'production' ? 50 : 1000, // 50 in production (changed from 10), 1000 in test mode
   message: { error: 'Too many requests, please try again later.' },
   standardHeaders: true,
   legacyHeaders: false,
-  skip: (req) => process.env.NODE_ENV !== 'production' // Disable in non-production
+  skip: () => {
+    // Skip rate limiting entirely in non-production
+    return process.env.NODE_ENV !== 'production';
+  }
 });
 
-// Rate limiting for payment endpoints (skip in test mode)
-const paymentLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hour
-  max: process.env.NODE_ENV === 'production' ? 5 : 100, // 100 in test mode
-  message: { error: 'Too many payment attempts, please try again later.' },
-  standardHeaders: true,
-  legacyHeaders: false,
-  skip: (req) => process.env.NODE_ENV !== 'production' // Disable in non-production
-});
+// Payment rate limiter removed - payment endpoints don't need rate limiting
+// as users only pay once (not susceptible to brute force like login)
+
 
 // Middleware
 app.use(express.json());
@@ -56,7 +53,7 @@ app.use('/app', express.static(path.join(__dirname, '../../public/app')));
 
 // API routes with rate limiting
 app.use('/api/auth', authLimiter, authRoutes);
-app.use('/api/payment', paymentLimiter, paymentRoutes);
+app.use('/api/payment', paymentRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/progress', progressRoutes);
 
