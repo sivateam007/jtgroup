@@ -92,15 +92,22 @@ router.post('/webhook', express.json(), (req, res) => {
     // Security: Verify webhook signature if secret is configured
     const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
     
-    // Only verify signature if webhook secret is configured
+    // In production, webhook secret MUST be configured
+    if (process.env.NODE_ENV === 'production' && !webhookSecret) {
+      console.error('Webhook: Missing webhook secret in production!');
+      return res.status(401).json({ error: 'Webhook secret not configured' });
+    }
+    
+    // Verify signature if webhook secret is configured
     if (webhookSecret && webhookSecret !== '') {
       const crypto = require('crypto');
       const razorpaySignature = req.headers['x-razorpay-signature'];
       
       if (!razorpaySignature) {
         console.error('Webhook: Missing signature');
-        // Continue processing even without signature for test mode
-        // return res.status(401).json({ error: 'Missing webhook signature' });
+        if (process.env.NODE_ENV === 'production') {
+          return res.status(401).json({ error: 'Missing webhook signature' });
+        }
       } else {
         const expectedSignature = crypto
           .createHmac('sha256', webhookSecret)
@@ -109,8 +116,7 @@ router.post('/webhook', express.json(), (req, res) => {
         
         if (expectedSignature !== razorpaySignature) {
           console.error('Webhook signature verification failed');
-          // Continue processing for now (webhook might not be configured)
-          // return res.status(401).json({ error: 'Invalid webhook signature' });
+          return res.status(401).json({ error: 'Invalid webhook signature' });
         }
       }
     }
