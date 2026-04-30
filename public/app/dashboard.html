@@ -513,6 +513,12 @@
                 });
                 
                 if (!res.ok) {
+                    // Check if this is a payment redirect - try to re-login
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.get('payment') === 'success') {
+                        // Show message and redirect to login with return URL
+                        alert('Your session expired. Please login again to view your subscription.');
+                    }
                     window.location.href = '/app/login.html';
                     return null;
                 }
@@ -669,6 +675,15 @@
                 document.getElementById('profileAvatar').textContent = displayName.charAt(0).toUpperCase();
                 await checkSubscription(user.id);
                 await loadCourses();
+                
+                // Handle payment success redirect
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('payment') === 'success') {
+                    // Refresh subscription status after payment
+                    setTimeout(async () => {
+                        await checkSubscription(user.id);
+                    }, 2000); // Wait 2 seconds for webhook to process
+                }
             }
         })();
     </script>
