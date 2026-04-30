@@ -180,31 +180,73 @@ router.get('/status/:userId', (req, res) => {
   }
 });
 
-// Manual payment verification (fallback if webhook fails)
+// Manual payment verification (verifies with Razorpay API)
 router.post('/verify-manual', (req, res) => {
   const { userId, paymentLinkId } = req.body;
   
-  try {
-    // Check if user already has active subscription
-    const existingSub = db.prepare("SELECT * FROM subscriptions WHERE user_id = ? AND datetime(valid_until) > datetime('now')").get(userId);
-    
-    let validUntil;
-    if (existingSub) {
-      const result = db.prepare("SELECT datetime(valid_until, '+30 days') as newDate FROM subscriptions WHERE id = ?").get(existingSub.id);
-      validUntil = result.newDate;
-    } else {
-      const result = db.prepare("SELECT datetime('now', '+30 days') as newDate").get();
-      validUntil = result.newDate;
-    }
-    
-    // Insert subscription record (use paymentLinkId if provided, otherwise 'manual')
-    const stmt = db.prepare('INSERT INTO subscriptions (user_id, razorpay_order_id, razorpay_payment_id, amount, valid_until) VALUES (?, ?, ?, ?, ?)');
-    stmt.run(userId, paymentLinkId || 'manual', 'manual', process.env.PLAN_PRICE_INR || 29, validUntil);
-    
-    res.json({ success: true, validUntil });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to verify payment: ' + err.message });
+  // Validate input
+  if (!userId || !paymentLinkId) {
+    return res.status(400).json({ error: 'Missing userId or paymentLinkId' });
   }
+  
+  // Verify payment link with Razorpay API
+  const auth = Buffer.from(process.env.RAZORPAY_KEY_ID + ':' + process.env.RAZORPAY_KEY_SECRET).toString('base64');
+  
+  const options = {
+    hostname: 'api.razorpay.com',
+    port: 443,
+    path: `/v1/payment_links/${paymentLinkId}`,
+    method: 'GET',
+    headers: { 'Authorization': 'Basic ' + auth }
+  };
+  
+  const verifyReq = https.request(options, (verifyRes) => {
+    let data = '';
+    verifyRes.on('data', (chunk) => { data += chunk; });
+    verifyRes.on('end', () => {
+      try {
+        const linkDetails = JSON.parse(data);
+        
+        // Check if payment was actually made
+        if (linkDetails.status === 'paid' && linkDetails.payments && linkDetails.payments.length > 0) {
+          const paymentId = linkDetails.payments[0];
+          
+          // Check if subscription already exists (idempotency)
+          const existingSub = db.prepare("SELECT * FROM subscriptions WHERE razorpay_order_id = ?").get(paymentLinkId);
+          if (existingSub) {
+            return res.json({ success: true, validUntil: existingSub.valid_until });
+          }
+          
+          // Create new subscription
+          const existingActiveSub = db.prepare("SELECT * FROM subscriptions WHERE user_id = ? AND datetime(valid_until) > datetime('now')").get(userId);
+          
+          let validUntil;
+          if (existingActiveSub) {
+            const result = db.prepare("SELECT datetime(valid_until, '+30 days') as newDate FROM subscriptions WHERE id = ?").get(existingActiveSub.id);
+            validUntil = result.newDate;
+          } else {
+            const result = db.prepare("SELECT datetime('now', '+30 days') as newDate").get();
+            validUntil = result.newDate;
+          }
+          
+          const stmt = db.prepare('INSERT INTO subscriptions (user_id, razorpay_order_id, razorpay_payment_id, amount, valid_until) VALUES (?, ?, ?, ?, ?)');
+          stmt.run(userId, paymentLinkId, paymentId, process.env.PLAN_PRICE_INR || 29, validUntil);
+          
+          res.json({ success: true, validUntil });
+        } else {
+          res.status(400).json({ error: 'Payment not verified with Razorpay. Status: ' + (linkDetails.status || 'unknown') });
+        }
+      } catch (err) {
+        res.status(500).json({ error: 'Failed to parse Razorpay response' });
+      }
+    });
+  });
+  
+  verifyReq.on('error', (err) => {
+    res.status(500).json({ error: 'Failed to verify with Razorpay: ' + err.message });
+  });
+  
+  verifyReq.end();
 });
 
 module.exports = router;
