@@ -1,74 +1,113 @@
 const express = require('express');
-const Razorpay = require('razorpay');
+const fetch = require('node-fetch');
 const db = require('../db/database');
 
 const router = express.Router();
 
-// Lazy initialization of Razorpay
-let razorpay = null;
-function getRazorpay() {
-  if (!razorpay) {
-    razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET
-    });
-  }
-  return razorpay;
-}
-
-// Create order
-router.post('/create-order', (req, res) => {
+// Create Razorpay Payment Link (server-to-server, no frontend Key ID exposure)
+router.post('/create-payment-link', async (req, res) => {
   const { userId } = req.body;
-  const rzp = getRazorpay();
-  
-  if (!process.env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID.startsWith('rzp_test_your')) {
-    return res.status(500).json({ error: 'Razorpay not configured. Please update backend/.env with valid keys.' });
-  }
-  
-  const options = {
-    amount: process.env.PLAN_PRICE_INR * 100, // ₹29 to paise
-    currency: 'INR',
-    receipt: `receipt_${Date.now()}`
-  };
-  
-  rzp.orders.create(options, (err, order) => {
-    if (err) {
-      console.error('Razorpay order creation failed:', err);
-      return res.status(500).json({ error: 'Failed to create order: ' + err.message });
-    }
-    res.json(order);
-  });
-});
 
-// Verify payment
-router.post('/verify', (req, res) => {
-  const { userId, orderId, paymentId } = req.body;
+  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    return res.status(500).json({ error: 'Razorpay not configured' });
+  }
 
   try {
-    // Check if user has an active subscription (using SQLite date format)
-    const existingSub = db.prepare("SELECT * FROM subscriptions WHERE user_id = ? AND datetime(valid_until) > datetime('now')").get(userId);
+    // Get user email for Razorpay
+    const user = db.prepare('SELECT email, name FROM users WHERE id = ?').get(userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
 
-    let validUntil;
-    const daysToAdd = parseInt(process.env.PLAN_VALID_DAYS || 30);
+    const amount = parseInt(process.env.PLAN_PRICE_INR || 29) * 100; // ₹29 to paise
+    const callbackUrl = `${process.env.APP_ORIGIN || 'http://localhost:3000'}/app/dashboard.html`;
 
-    if (existingSub) {
-      // Extend existing subscription: add days to current valid_until
-      // Use SQLite date function to add days to existing valid_until
-      const result = db.prepare("SELECT datetime(valid_until, '+30 days') as newDate FROM subscriptions WHERE id = ?").get(existingSub.id);
-      validUntil = result.newDate;
-    } else {
-      // New subscription: 30 days from now
-      const result = db.prepare("SELECT datetime('now', '+30 days') as newDate").get();
-      validUntil = result.newDate;
+    const paymentLinkData = {
+      upi_link: true,
+      amount: amount,
+      currency: 'INR',
+      description: '30 Days Full Access - JT Group of Institution',
+      customer: {
+        name: user.name || 'User',
+        email: user.email
+      },
+      notify: {
+        sms: false,
+        email: false
+      },
+      callback_url: callbackUrl,
+      callback_method: 'get'
+    };
+
+    const auth = Buffer.from(`${process.env.RAZORPAY_KEY_ID}:${process.env.RAZORPAY_KEY_SECRET}`).toString('base64');
+
+    const response = await fetch('https://api.razorpay.com/v1/payment_links', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${auth}`
+      },
+      body: JSON.stringify(paymentLinkData)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Razorpay Payment Link creation failed:', data);
+      return res.status(500).json({ error: 'Failed to create payment link: ' + (data.error?.description || 'Unknown error') });
     }
 
-    // Insert new subscription record (keep history)
-    const stmt = db.prepare('INSERT INTO subscriptions (user_id, razorpay_order_id, razorpay_payment_id, amount, valid_until) VALUES (?, ?, ?, ?, ?)');
-    stmt.run(userId, orderId, paymentId, process.env.PLAN_PRICE_INR || 29, validUntil);
-
-    res.json({ success: true, validUntil, extended: !!existingSub });
+    res.json({ paymentUrl: data.short_url });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to verify payment: ' + err.message });
+    console.error('Payment link error:', err);
+    res.status(500).json({ error: 'Failed to create payment link: ' + err.message });
+  }
+});
+
+// Webhook handler for Razorpay Payment Link events
+router.post('/webhook', express.json(), (req, res) => {
+  try {
+    const event = req.body;
+
+    // Handle payment_link.paid event
+    if (event.event === 'payment_link.paid') {
+      const paymentEntity = event.payload?.payment?.entity;
+      const paymentLinkEntity = event.payload?.payment_link?.entity;
+
+      if (paymentEntity && paymentLinkEntity) {
+        // Extract user info from payment link description or customer details
+        // Note: You may need to store userId in the payment link description or use a custom field
+        const customerEmail = paymentEntity.email || paymentLinkEntity.customer?.email;
+
+        if (customerEmail) {
+          const user = db.prepare('SELECT id FROM users WHERE email = ?').get(customerEmail);
+          if (user) {
+            const userId = user.id;
+            const paymentId = paymentEntity.id;
+            const orderId = paymentLinkEntity.id;
+
+            // Check if user has an active subscription
+            const existingSub = db.prepare("SELECT * FROM subscriptions WHERE user_id = ? AND datetime(valid_until) > datetime('now')").get(userId);
+
+            let validUntil;
+            if (existingSub) {
+              const result = db.prepare("SELECT datetime(valid_until, '+30 days') as newDate FROM subscriptions WHERE id = ?").get(existingSub.id);
+              validUntil = result.newDate;
+            } else {
+              const result = db.prepare("SELECT datetime('now', '+30 days') as newDate").get();
+              validUntil = result.newDate;
+            }
+
+            // Insert subscription record
+            const stmt = db.prepare('INSERT INTO subscriptions (user_id, razorpay_order_id, razorpay_payment_id, amount, valid_until) VALUES (?, ?, ?, ?, ?)');
+            stmt.run(userId, orderId, paymentId, process.env.PLAN_PRICE_INR || 29, validUntil);
+          }
+        }
+      }
+    }
+
+    res.json({ received: true });
+  } catch (err) {
+    console.error('Webhook error:', err);
+    res.status(500).json({ error: 'Webhook processing failed' });
   }
 });
 
@@ -77,7 +116,6 @@ router.get('/status/:userId', (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Get the latest active subscription (ORDER BY valid_until DESC)
     const sub = db.prepare("SELECT * FROM subscriptions WHERE user_id = ? AND datetime(valid_until) > datetime('now') ORDER BY valid_until DESC LIMIT 1").get(userId);
     res.json({ hasAccess: !!sub, subscription: sub });
   } catch (err) {

@@ -7,8 +7,6 @@
     <link rel="icon" href="/assets/images/jt_logo.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script>const RAZORPAY_KEY_ID = '{{RAZORPAY_KEY_ID}}';</script>
     <style>
         /* Header override to match landing page */
         header {
@@ -375,7 +373,7 @@
             });
         }
 
-        let razorpayKey = RAZORPAY_KEY_ID || '';
+        let razorpayKey = '';
 
         // Load user info and check subscription status
         loadUserInfo();
@@ -416,7 +414,7 @@
             const successMsg = document.getElementById('successMsg');
 
             payButton.disabled = true;
-            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting to payment...';
 
             try {
                 userId = await getUserId();
@@ -426,20 +424,36 @@
                     errorMsg.style.display = 'block';
                     successMsg.style.display = 'none';
                     payButton.disabled = false;
-                    payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
+                    payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29';
                     return;
                 }
 
-                if (!razorpayKey) {
-                    throw new Error('Razorpay configuration missing. Please contact support.');
-                }
-
-                // Create order
-                const orderRes = await fetch('/api/payment/create-order', {
+                // Create payment link
+                const linkRes = await fetch('/api/payment/create-payment-link', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userId })
+                    body: JSON.stringify({ userId }),
+                    credentials: 'include'
                 });
+
+                const linkData = await linkRes.json();
+
+                if (!linkRes.ok) {
+                    throw new Error(linkData.error || 'Failed to create payment link');
+                }
+
+                // Redirect to Razorpay payment page
+                window.location.href = linkData.paymentUrl;
+
+            } catch (err) {
+                console.error('Payment failed:', err);
+                errorMsg.textContent = err.message || 'Payment failed. Please try again.';
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+                payButton.disabled = false;
+                payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29';
+            }
+        });
 
                 const order = await orderRes.json();
 

@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth');
 const paymentRoutes = require('./routes/payment');
@@ -20,14 +19,9 @@ app.use(cookieParser());
 // Serve static assets (public, no auth required)
 app.use('/assets', express.static(path.join(__dirname, '../../public/assets')));
 
-// Serve payment.html with injected Razorpay key (only for authenticated users)
+// Serve payment.html (only for authenticated users)
 app.get('/app/payment.html', auth, (req, res) => {
-  const paymentHtmlPath = path.join(__dirname, '../../public/app/payment.html');
-  fs.readFile(paymentHtmlPath, 'utf8', (err, html) => {
-    if (err) return res.status(500).send('Error loading page');
-    const modifiedHtml = html.replace('{{RAZORPAY_KEY_ID}}', process.env.RAZORPAY_KEY_ID || '');
-    res.send(modifiedHtml);
-  });
+  res.sendFile(path.join(__dirname, '../../public/app/payment.html'));
 });
 
 app.use('/app', express.static(path.join(__dirname, '../../public/app')));
