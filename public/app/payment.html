@@ -373,8 +373,6 @@
             });
         }
 
-        let razorpayKey = '';
-
         // Load user info and check subscription status
         loadUserInfo();
         checkSubscriptionStatus();
@@ -452,68 +450,6 @@
                 successMsg.style.display = 'none';
                 payButton.disabled = false;
                 payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29';
-            }
-        });
-
-                const order = await orderRes.json();
-
-                if (!orderRes.ok) {
-                    throw new Error(order.error || 'Failed to create order');
-                }
-
-                // Launch Razorpay checkout
-                const options = {
-                    key: razorpayKey,
-                    amount: order.amount,
-                    currency: order.currency,
-                    name: 'JT GROUP OF INSTITUTION',
-                    description: '30 Days Full Access',
-                    order_id: order.id,
-                    handler: async function(response) {
-                        // Verify payment
-                        const verifyRes = await fetch('/api/payment/verify', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                userId: userId,
-                                orderId: response.razorpay_order_id,
-                                paymentId: response.razorpay_payment_id
-                            })
-                        });
-
-                        const verifyData = await verifyRes.json();
-
-                        if (verifyRes.ok) {
-                             const newValidUntil = new Date(verifyData.validUntil);
-                             successMsg.innerHTML = `Payment successful! Your subscription is now valid until ${newValidUntil.toLocaleDateString()}. Redirecting to dashboard...`;
-                             successMsg.style.display = 'block';
-                             errorMsg.style.display = 'none';
-
-                             setTimeout(() => {
-                                 window.location.href = '/app/dashboard.html';
-                             }, 3000);
-                         } else {
-                             throw new Error(verifyData.error || 'Payment verification failed');
-                         }
-                    },
-                    prefill: {
-                        email: ''
-                    },
-                    theme: {
-                        color: '#e24124'
-                    }
-                };
-
-                const rzp = new Razorpay(options);
-                rzp.open();
-
-            } catch (err) {
-                errorMsg.textContent = err.message || 'Payment failed. Please try again.';
-                errorMsg.style.display = 'block';
-                successMsg.style.display = 'none';
-            } finally {
-                payButton.disabled = false;
-                payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
             }
         });
     </script>
