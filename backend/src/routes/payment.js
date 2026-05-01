@@ -29,25 +29,32 @@ router.post('/create-order', async (req, res) => {
     return res.status(500).json({ error: 'Razorpay not configured' });
   }
 
-  try {
+    try {
     const user = db.prepare('SELECT email, name FROM users WHERE id = ?').get(userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
     const amountPaise = (parseInt(process.env.PLAN_PRICE_INR) || 29) * 100;
 
     console.log('Creating Razorpay order for user:', userId, 'amount:', amountPaise);
+    console.log('Using Razorpay key:', process.env.RAZORPAY_KEY_ID?.substring(0, 10) + '...');
     
-    const order = await razorpay.orders.create({
-      amount: amountPaise,
-      currency: 'INR',
-      receipt: `receipt_${userId}_${Date.now()}`,
-      notes: {
-        userId: String(userId),
-        plan: '30 Days Full Access'
-      }
-    });
+    try {
+      const order = await razorpay.orders.create({
+        amount: amountPaise,
+        currency: 'INR',
+        receipt: `receipt_${userId}_${Date.now()}`,
+        notes: {
+          userId: String(userId),
+          plan: '30 Days Full Access'
+        }
+      });
 
-    console.log('Order created successfully:', order.id);
+      console.log('Order created successfully:', order.id);
+      console.log('Order details:', JSON.stringify(order).substring(0, 200));
+    } catch (razorpayErr) {
+      console.error('Razorpay API error:', razorpayErr.message);
+      return res.status(500).json({ error: 'Razorpay API error: ' + razorpayErr.message });
+    }
 
     // Return keyId + order (like fullstack - public key is safe to expose)
     res.json({
