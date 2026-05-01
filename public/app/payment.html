@@ -266,6 +266,10 @@
                 <div class="error-message" id="errorMsg"></div>
                 <div class="success-message" id="successMsg"></div>
 
+                <div style="background: #e6f3ff; border-left: 4px solid #2196F3; padding: 12px; margin: 1rem 0; font-size: 0.9rem; border-radius: 6px;">
+                    <strong>Test Mode:</strong> Use Card (4111 1111 1111 1111, CVV: 123, OTP: 123456) or UPI (success@razorpay) for reliable testing. Net banking may show blank page in test mode.
+                </div>
+
                 <div class="price-section">
                     <div class="plan-price">₹29</div>
                     <div class="plan-period" id="planPeriod">for 30 days full access</div>
@@ -487,7 +491,27 @@
                             payButton.disabled = false;
                             payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
                         }
-                    }
+                    },
+                    config: {
+                        display: {
+                            blocks: {
+                                banks: {
+                                    name: 'Payment Methods',
+                                    instruments: [
+                                        { method: 'card' },
+                                        { method: 'upi' },
+                                        { method: 'wallet' },
+                                        { method: 'netbanking' }
+                                    ]
+                                }
+                            },
+                            sequence: ['block.banks'],
+                            preferences: {
+                                show_default_blocks: false
+                            }
+                        }
+                    },
+                    redirect: true
                 };
                 
                 const rzp = new Razorpay(options);
