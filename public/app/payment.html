@@ -8,101 +8,58 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; }
-        header {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            color: white; padding: 1rem 0; position: sticky; top: 0; z-index: 100;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .header-container {
-            max-width: 1200px; margin: 0 auto; padding: 0 20px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo { display: flex; align-items: center; gap: 15px; }
-        .logo img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid white; object-fit: cover; }
-        .logo h1 { font-size: 1.5rem; color: white; letter-spacing: 1px; margin: 0; text-transform: uppercase; }
-        .header-actions { display: flex; gap: 15px; }
-        .home-link, .logout-btn {
-            color: white; text-decoration: none; padding: 8px 16px;
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 6px;
-            background: transparent; cursor: pointer; font-size: 0.9rem;
-        }
-        .home-link:hover, .logout-btn:hover { background: rgba(255,255,255,0.1); }
-        .payment-container { max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
-        .payment-card {
-            background: white; border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08); overflow: hidden;
-        }
-        .payment-header {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            color: white; padding: 3rem 2rem; text-align: center;
-        }
-        .payment-header h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .plan-details { padding: 2.5rem; }
-        .error-msg, .success-msg {
-            padding: 1.2rem; border-radius: 10px; margin: 1rem 0;
-            border-left: 4px solid; display: none;
-        }
-        .error-msg { background: #fff5f5; color: #c53030; border-color: #c53030; }
-        .success-msg { background: #f0fff4; color: #2f855a; border-color: #2f855a; }
-        .price-section { text-align: center; margin-bottom: 2rem; }
-        .plan-price { font-size: 4rem; font-weight: 700; color: #2d3748; line-height: 1; }
-        .plan-features { list-style: none; padding: 0; margin: 2rem 0; }
-        .plan-features li { padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0; color: #4a5568; }
-        .plan-features li i { color: #38ef7d; margin-right: 10px; }
-        .pay-btn {
-            width: 100%; padding: 1.2rem; border: none; border-radius: 12px;
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            color: white; font-size: 1.2rem; font-weight: 600; cursor: pointer;
-        }
-        .pay-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .secure-badge { text-align: center; margin-top: 1.5rem; color: #718096; font-size: 0.9rem; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; }
+        header { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; padding: 1rem; }
+        .container { max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+        .price { font-size: 4rem; font-weight: bold; text-align: center; color: #2d3748; }
+        .btn { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #11998e, #38ef7d); color: white; border: none; border-radius: 12px; font-size: 1.2rem; cursor: pointer; }
+        .btn:disabled { opacity: 0.6; }
+        .error { background: #fff5f5; color: #c53030; padding: 1rem; border-radius: 10px; margin: 1rem 0; display: none; }
+        .success { background: #f0fff4; color: #2f855a; padding: 1rem; border-radius: 10px; margin: 1rem 0; display: none; }
+        .info { background: #e6f3ff; padding: 12px; margin: 1rem 0; font-size: 0.9rem; border-radius: 6px; }
     </style>
 </head>
 <body>
     <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo">
-                <h1>JT GROUP OF INSTITUTION</h1>
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo" style="width: 50px; height: 50px; border-radius: 50%;">
+                <h1 style="font-size: 1.5rem; margin: 0;">JT GROUP OF INSTITUTION</h1>
             </div>
-            <div class="header-actions">
-                <a href="/" class="home-link"><i class="fas fa-home"></i> Home</a>
-                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            <div>
+                <a href="/" style="color: white; text-decoration: none; margin-right: 15px;">Home</a>
+                <button onclick="logout()" style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 16px; border-radius: 6px; cursor: pointer;">Logout</button>
             </div>
         </div>
     </header>
 
-    <div class="payment-container">
-        <div class="payment-card">
-            <div class="payment-header">
-                <h2>Unlock All Courses</h2>
+    <div class="container">
+        <div class="card">
+            <div style="text-align: center; background: linear-gradient(135deg, #11998e, #38ef7d); color: white; padding: 3rem 2rem; margin: -2rem -2rem 2rem -2rem; border-radius: 20px 20px 0 0;">
+                <h2 style="font-size: 2.5rem; margin: 0 0 0.5rem 0;">Unlock All Courses</h2>
                 <p>Get 30 days access to all courses</p>
             </div>
-            <div class="plan-details">
-                <div class="error-msg" id="errorMsg"></div>
-                <div class="success-msg" id="successMsg"></div>
-                
-                <div class="price-section">
-                    <div class="plan-price">₹29</div>
-                    <div style="color: #718096; font-size: 1rem;">for 30 days full access</div>
-                </div>
 
-                <ul class="plan-features">
-                    <li><i class="fas fa-check-circle"></i> Access to ALL courses</li>
-                    <li><i class="fas fa-check-circle"></i> Web Development, Programming</li>
-                    <li><i class="fas fa-check-circle"></i> 30 days unlimited access</li>
-                    <li><i class="fas fa-check-circle"></i> Certificate of completion</li>
-                </ul>
+            <div class="error" id="errorMsg"></div>
+            <div class="success" id="successMsg"></div>
+            
+            <div class="info">
+                <strong>Test Mode Payments:</strong><br>
+                • <strong>Card:</strong> 4111 1111 1111 1111, CVV: 123, OTP: 123456<br>
+                • <strong>UPI:</strong> success@razorpay<br>
+                • <strong>Net Banking:</strong> Select bank → Click "Success" on popup
+            </div>
 
-                <button id="payButton" class="pay-btn">
-                    <i class="fas fa-lock"></i> Pay ₹29 with Razorpay
-                </button>
+            <div class="price">₹29</div>
+            <div style="text-align: center; color: #718096; margin-bottom: 2rem;">for 30 days full access</div>
 
-                <div class="secure-badge">
-                    <i class="fas fa-shield-alt"></i> Secured by Razorpay
-                </div>
+            <button id="payButton" class="btn" onclick="startPayment()">
+                <i class="fas fa-lock"></i> Pay ₹29 with Razorpay
+            </button>
+
+            <div style="text-align: center; margin-top: 1.5rem; color: #718096; font-size: 0.9rem;">
+                <i class="fas fa-shield-alt"></i> Secured by Razorpay
             </div>
         </div>
     </div>
@@ -110,42 +67,44 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     
     <script>
-        console.log('Payment page loaded');
+        console.log('=== Payment Page Loaded ===');
         
         function logout() {
             fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
                 .then(() => window.location.href = '/app/login.html');
         }
         
-        async function startCheckout() {
-            console.log('Starting checkout...');
+        async function startPayment() {
+            console.log('=== Starting Payment ===');
+            
             const payButton = document.getElementById('payButton');
             const errorMsg = document.getElementById('errorMsg');
             const successMsg = document.getElementById('successMsg');
             
             payButton.disabled = true;
-            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating order...';
+            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             errorMsg.style.display = 'none';
             successMsg.style.display = 'none';
             
             try {
-                // Check Razorpay loaded
+                // Step 1: Check Razorpay loaded
+                console.log('Step 1: Checking Razorpay...');
                 if (typeof Razorpay === 'undefined') {
-                    throw new Error('Razorpay script not loaded. Please refresh page.');
+                    throw new Error('Razorpay script not loaded. Check internet connection.');
                 }
-                console.log('Razorpay script loaded');
+                console.log('✓ Razorpay loaded');
                 
-                // Get user ID
-                console.log('Fetching user info...');
+                // Step 2: Get user
+                console.log('Step 2: Getting user...');
                 const userRes = await fetch('/api/auth/me', { credentials: 'include' });
                 if (!userRes.ok) {
                     throw new Error('Please login first');
                 }
                 const user = await userRes.json();
-                console.log('User:', user.id);
+                console.log('✓ User:', user.id);
                 
-                // Create order
-                console.log('Creating order...');
+                // Step 3: Create order
+                console.log('Step 3: Creating order...');
                 const orderRes = await fetch('/api/payment/create-order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -159,9 +118,12 @@
                 if (!orderRes.ok || !orderData.orderId) {
                     throw new Error(orderData.error || 'Failed to create order');
                 }
+                console.log('✓ Order created:', orderData.orderId);
                 
-                // Launch Razorpay
-                console.log('Launching Razorpay with key:', orderData.keyId);
+                // Step 4: Launch Razorpay
+                console.log('Step 4: Launching Razorpay...');
+                console.log('Key:', orderData.keyId?.substring(0, 20));
+                console.log('Amount:', orderData.amount);
                 
                 const options = {
                     key: orderData.keyId,
@@ -170,15 +132,15 @@
                     name: 'JT Group of Institution',
                     description: '30 Days Full Access',
                     order_id: orderData.orderId,
-                    handler: function(response) {
-                        console.log('Payment successful, verifying...', response.razorpay_payment_id);
-                        verifyPayment(user.id, response);
-                    },
                     prefill: {
                         name: user.name || '',
                         email: user.email || ''
                     },
                     theme: { color: '#11998e' },
+                    handler: function(response) {
+                        console.log('✓ Payment successful:', response.razorpay_payment_id);
+                        verifyPayment(user.id, response);
+                    },
                     modal: {
                         ondismiss: function() {
                             console.log('Payment cancelled');
@@ -189,18 +151,21 @@
                 };
                 
                 const rzp = new Razorpay(options);
+                
                 rzp.on('payment.failed', function(response) {
-                    console.error('Payment failed:', response.error);
+                    console.error('✗ Payment failed:', response.error);
                     errorMsg.textContent = 'Payment failed: ' + (response.error?.description || 'Please try again.');
                     errorMsg.style.display = 'block';
                     payButton.disabled = false;
                     payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
                 });
+                
+                console.log('Opening Razorpay...');
                 rzp.open();
-                console.log('Razorpay opened');
+                console.log('✓ Razorpay should be open now');
                 
             } catch (err) {
-                console.error('Checkout error:', err);
+                console.error('✗ Error:', err.message);
                 errorMsg.textContent = err.message || 'Payment failed. Please try again.';
                 errorMsg.style.display = 'block';
                 payButton.disabled = false;
@@ -239,10 +204,6 @@
                 errorMsg.style.display = 'block';
             }
         }
-        
-        // Initialize
-        document.getElementById('payButton').addEventListener('click', () => startCheckout());
-        console.log('Payment page initialized');
     </script>
 </body>
 </html>
