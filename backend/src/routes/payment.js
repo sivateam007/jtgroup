@@ -6,12 +6,20 @@ const db = require('../db/database');
 const router = express.Router();
 
 // Initialize Razorpay
-const razorpay = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
-  ? new Razorpay({
+let razorpay = null;
+try {
+  if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
+    razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET
-    })
-  : null;
+    });
+    console.log('Razorpay initialized successfully');
+  } else {
+    console.error('Razorpay not initialized: Missing API keys');
+  }
+} catch (err) {
+  console.error('Razorpay initialization failed:', err.message);
+}
 
 // Create Razorpay Order (like fullstack)
 router.post('/create-order', async (req, res) => {
