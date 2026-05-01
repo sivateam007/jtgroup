@@ -38,7 +38,7 @@ try {
 
 // Create Razorpay Order - Uses Payment Links (hosted pages) to avoid blank page issues
 router.post('/create-order', async (req, res) => {
-  const { userId } = req.body;
+  const userId = req.user?.id; // Get from auth middleware, not request body
 
   if (!razorpay) {
     return res.status(500).json({ error: 'Razorpay not configured' });
@@ -176,9 +176,17 @@ router.post('/verify', async (req, res) => {
   }
 });
 
-// Check subscription status
+// Check subscription status (protected - users can only check their own)
 router.get('/status/:userId', (req, res) => {
-  const { userId } = req.params;
+  const requestedUserId = parseInt(req.params.userId);
+  const authenticatedUserId = req.user?.id;
+
+  // Ensure user can only check their own subscription
+  if (requestedUserId !== authenticatedUserId) {
+    return res.status(403).json({ error: 'Forbidden: You can only check your own subscription' });
+  }
+
+  const userId = authenticatedUserId;
 
   try {
     const sub = db.prepare("SELECT * FROM subscriptions WHERE user_id = ? AND datetime(valid_until) > datetime('now') ORDER BY valid_until DESC LIMIT 1").get(userId);

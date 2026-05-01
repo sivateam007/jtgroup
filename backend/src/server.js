@@ -56,7 +56,7 @@ app.use('/app', express.static(path.join(__dirname, '../../public/app')));
 
 // API routes with rate limiting
 app.use('/api/auth', authLimiter, authRoutes);
-app.use('/api/payment', paymentRoutes);
+app.use('/api/payment', auth, paymentRoutes); // Add auth middleware to protect payment routes
 app.use('/api/courses', courseRoutes);
 app.use('/api/progress', auth, progressRoutes);
 
