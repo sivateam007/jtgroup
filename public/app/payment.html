@@ -452,7 +452,7 @@
                     name: 'JT Group of Institution',
                     description: orderData.planName,
                     order_id: orderData.orderId,
-                    timeout: 300, // 5 minutes
+                    timeout: 60, // 1 minute for test mode
                     handler: async function(response) {
                         try {
                             const verifyRes = await fetch('/api/payment/verify', {
@@ -511,8 +511,8 @@
                                 show_default_blocks: false
                             }
                         }
-                    },
-                    redirect: false
+                    }
+                    // Note: Do NOT set redirect: false - net banking needs redirect in test mode
                 };
                 
                 const rzp = new Razorpay(options);
@@ -522,19 +522,6 @@
                     errorMsg.style.display = 'block';
                     payButton.disabled = false;
                     payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
-                });
-                
-                // Detect if Razorpay fails to load within 10 seconds
-                const loadTimeout = setTimeout(() => {
-                    errorMsg.innerHTML = 'Payment gateway not responding.<br>' +
-                        'Please use: <strong>Card</strong> (4111 1111 1111 1111, CVV: 123, OTP: 123456) or <strong>UPI</strong> (success@razorpay)';
-                    errorMsg.style.display = 'block';
-                    payButton.disabled = false;
-                    payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
-                }, 10000);
-                
-                rzp.on('payment.success', function() {
-                    clearTimeout(loadTimeout);
                 });
                 
                 rzp.open();
