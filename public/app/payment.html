@@ -58,9 +58,7 @@
             border-radius: 6px;
             transition: background 0.3s;
         }
-        .home-link:hover {
-            background: rgba(255,255,255,0.1);
-        }
+        .home-link:hover { background: rgba(255,255,255,0.1); }
         .logout-btn {
             background: transparent;
             color: white;
@@ -71,9 +69,7 @@
             font-size: 0.9rem;
             transition: background 0.3s;
         }
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.1);
-        }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); }
         .payment-container {
             max-width: 600px;
             margin: 2rem auto;
@@ -131,17 +127,9 @@
             padding: 3rem 2rem;
             text-align: center;
         }
-        .payment-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .payment-header p {
-            font-size: 1.1rem;
-            opacity: 0.95;
-        }
-        .plan-details {
-            padding: 2.5rem;
-        }
+        .payment-header h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .payment-header p { font-size: 1.1rem; opacity: 0.95; }
+        .plan-details { padding: 2.5rem; }
         .error-message {
             background: #fff5f5;
             color: #c53030;
@@ -219,10 +207,18 @@
             color: #38ef7d;
             margin-right: 5px;
         }
+        .test-note {
+            background: #e6f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="header-container">
             <div class="logo">
@@ -241,7 +237,6 @@
     </header>
 
     <div class="payment-container">
-        <!-- User Info Card -->
         <div id="userInfoCard" class="user-info-card">
             <div class="user-details">
                 <div class="user-icon">
@@ -264,6 +259,13 @@
             <div class="plan-details">
                 <div class="error-message" id="errorMsg"></div>
                 <div class="success-message" id="successMsg"></div>
+                
+                <div class="test-note" id="testNote">
+                    <strong>Test Mode Active:</strong><br>
+                    <strong>Card (100% Works):</strong> 4111 1111 1111 1111, CVV: 123, OTP: 123456<br>
+                    <strong>UPI (100% Works):</strong> success@razorpay<br>
+                    <strong>Net Banking:</strong> May show blank page in test mode (known issue)
+                </div>
 
                 <div class="price-section">
                     <div class="plan-price">₹29</div>
@@ -282,13 +284,6 @@
                     <i class="fas fa-lock"></i> Pay ₹29 with Razorpay
                 </button>
 
-                <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 10px; margin: 1rem 0; border-radius: 6px; font-size: 0.85rem;">
-                    <strong>Test Mode - Reliable Options:</strong><br>
-                    • <strong>Card:</strong> 4111 1111 1111 1111, CVV: 123, OTP: 123456<br>
-                    • <strong>UPI:</strong> success@razorpay<br>
-                    • <strong>Net Banking:</strong> Select bank → Popup appears → Click "Success"
-                </div>
-
                 <div class="secure-badge">
                     <i class="fas fa-shield-alt"></i> Secured by Razorpay
                 </div>
@@ -296,7 +291,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer style="background: var(--dark); color: white; padding: 3rem 0 1rem; margin-top: 4rem;">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
             <div>
@@ -336,7 +330,6 @@
     </footer>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    
     <script>
         let userId = null;
         
@@ -352,9 +345,7 @@
                     const user = await res.json();
                     return user.id;
                 }
-            } catch (err) {
-                console.error('Failed to get user:', err);
-            }
+            } catch (err) { console.error('Failed to get user:', err); }
             return null;
         }
         
@@ -367,9 +358,7 @@
                     document.getElementById('paymentUserEmail').textContent = user.email || '';
                     document.getElementById('userInfoCard').style.display = 'block';
                 }
-            } catch (err) {
-                console.error('Failed to load user info:', err);
-            }
+            } catch (err) { console.error('Failed to load user info:', err); }
         }
         
         async function checkSubscriptionStatus() {
@@ -392,20 +381,20 @@
                         payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
                     }
                 }
-            } catch (err) {
-                console.error('Failed to check subscription status:', err);
-            }
+            } catch (err) { console.error('Failed to check subscription status:', err); }
         }
         
         async function startCheckout() {
             const payButton = document.getElementById('payButton');
             const errorMsg = document.getElementById('errorMsg');
             const successMsg = document.getElementById('successMsg');
+            const testNote = document.getElementById('testNote');
             
             payButton.disabled = true;
             payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating order...';
             errorMsg.style.display = 'none';
             successMsg.style.display = 'none';
+            testNote.style.display = 'block';
             
             try {
                 if (!window.Razorpay) {
@@ -442,6 +431,11 @@
                     name: 'JT Group of Institution',
                     description: orderData.planName || '30 Days Full Access',
                     order_id: orderData.orderId,
+                    prefill: {
+                        name: document.getElementById('paymentUserName')?.textContent || '',
+                        email: document.getElementById('paymentUserEmail')?.textContent || ''
+                    },
+                    theme: { color: '#11998e' },
                     handler: async function(response) {
                         try {
                             const verifyRes = await fetch('/api/payment/verify', {
@@ -469,11 +463,6 @@
                             errorMsg.style.display = 'block';
                         }
                     },
-                    prefill: {
-                        name: document.getElementById('paymentUserName')?.textContent || '',
-                        email: document.getElementById('paymentUserEmail')?.textContent || ''
-                    },
-                    theme: { color: '#11998e' },
                     modal: {
                         ondismiss: function() {
                             payButton.disabled = false;
@@ -486,7 +475,7 @@
                 rzp.on('payment.failed', function(response) {
                     console.error('Payment failed:', response.error);
                     errorMsg.innerHTML = 'Payment failed: ' + (response.error?.description || 'Please try again.') + 
-                        '<br><small>Tip: Use Card (4111 1111 1111 1111) or UPI (success@razorpay) for reliable testing</small>';
+                        '<br><small>Tip: Use <strong>Card</strong> (4111 1111 1111 1111) or <strong>UPI</strong> (success@razorpay) for reliable testing</small>';
                     errorMsg.style.display = 'block';
                     payButton.disabled = false;
                     payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
@@ -502,7 +491,6 @@
             }
         }
         
-        // Initialize
         loadUserInfo();
         checkSubscriptionStatus();
         document.getElementById('payButton').addEventListener('click', () => startCheckout());
