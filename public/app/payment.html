@@ -6,57 +6,143 @@
     <title>Payment - JT GROUP OF INSTITUTION</title>
     <link rel="icon" href="/assets/images/jt_logo.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
     <style>
-        /* Header override to match landing page */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding:1rem 0;
-            position: sticky;
-            top:0;
-            z-index:100;
-            box-shadow:0 4px 12px rgba(0,0,0,0.1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .logo-image {
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            border: 2px solid white;
             object-fit: cover;
         }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 1px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .home-link, .logout-btn {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .home-link:hover, .logout-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Payment Container */
         .payment-container {
             max-width: 600px;
             margin: 2rem auto;
             padding: 0 1rem;
         }
+        
         .payment-card {
             background: white;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             overflow: hidden;
-            border: 1px solid #f0f0f0;
         }
+        
         .payment-header {
             background: linear-gradient(135deg, #11998e, #38ef7d);
             color: white;
             padding: 3rem 2rem;
             text-align: center;
         }
+        
         .payment-header h2 {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
         }
+        
         .payment-header p {
             font-size: 1.1rem;
             opacity: 0.95;
         }
+        
         .plan-details {
             padding: 2.5rem;
         }
+        
+        .error-message {
+            background: #fff5f5;
+            color: #c53030;
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid #c53030;
+            display: none;
+        }
+        
+        .success-message {
+            background: #f0fff4;
+            color: #2f855a;
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid #2f855a;
+            display: none;
+        }
+        
         .price-section {
             text-align: center;
             margin-bottom: 2rem;
         }
+        
         .plan-price {
             font-size: 4rem;
             font-weight: 700;
@@ -64,24 +150,29 @@
             line-height: 1;
             margin-bottom: 0.5rem;
         }
+        
         .plan-period {
             color: #718096;
             font-size: 1rem;
         }
+        
         .plan-features {
             list-style: none;
             padding: 0;
             margin: 2rem 0;
         }
+        
         .plan-features li {
             padding: 0.8rem 0;
             border-bottom: 1px solid #f0f0f0;
             color: #4a5568;
         }
+        
         .plan-features li i {
             color: #38ef7d;
             margin-right: 10px;
         }
+        
         .pay-btn {
             width: 100%;
             padding: 1.2rem;
@@ -94,41 +185,27 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+        
         .pay-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(17, 153, 142, 0.3);
         }
+        
         .pay-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
+        
         .secure-badge {
             text-align: center;
             margin-top: 1.5rem;
             color: #718096;
             font-size: 0.9rem;
         }
+        
         .secure-badge i {
             color: #38ef7d;
             margin-right: 5px;
-        }
-        .error-message {
-            background: #fff5f5;
-            color: #c53030;
-            padding: 1.2rem;
-            border-radius: 10px;
-            margin: 1rem 0;
-            border-left: 4px solid #c53030;
-            display: none;
-        }
-        .success-message {
-            background: #f0fff4;
-            color: #2f855a;
-            padding: 1.2rem;
-            border-radius: 10px;
-            margin: 1rem 0;
-            border-left: 4px solid #2f855a;
-            display: none;
         }
     </style>
 </head>
@@ -137,7 +214,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo" class="logo-image">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo">
                 <h1>JT GROUP OF INSTITUTION</h1>
             </div>
             <div class="header-actions">
@@ -152,20 +229,6 @@
     </header>
 
     <div class="payment-container">
-        <!-- User Info Card -->
-        <div id="userInfoCard" style="background: white; padding: 1.5rem 2rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 2rem; display: none;">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem;">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div>
-                    <div style="color: #999; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Logged in as</div>
-                    <div style="color: var(--dark); font-size: 1.1rem; font-weight: 600;" id="paymentUserName">Loading...</div>
-                    <div style="color: #666; font-size: 0.9rem;" id="paymentUserEmail">Loading...</div>
-                </div>
-            </div>
-        </div>
-
         <div class="payment-card">
             <div class="payment-header">
                 <h2>Unlock All Courses</h2>
@@ -178,7 +241,7 @@
 
                 <div class="price-section">
                     <div class="plan-price">₹29</div>
-                    <div class="plan-period">for 30 days full access</div>
+                    <div class="plan-period" id="planPeriod">for 30 days full access</div>
                 </div>
 
                 <ul class="plan-features">
@@ -194,69 +257,27 @@
                 </button>
 
                 <div class="secure-badge">
-                    <i class="fas fa-shield-alt"></i> Secure payment powered by Razorpay
+                    <i class="fas fa-shield-alt"></i> Secured by Razorpay
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer style="background: linear-gradient(135deg, var(--primary), var(--dark)); color: white; padding: 4rem 0 2rem; margin-top: 4rem;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div>
-                <h3 style="margin-bottom: 1.5rem; color: var(--accent); font-size: 1.3rem;">JT GROUP OF INSTITUTION</h3>
-                <p style="color: #ddd; line-height: 1.6;">Leading educational institution providing quality programming education in multiple languages.</p>
-                <div style="padding: 1rem; margin-top: 1rem;">
-                    <h4 style="color: white; margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> Help Center</h4>
-                    <p style="color: #ddd;">jassifteam@jtgroupofinstitution.com</p>
-                </div>
-            </div>
-            <div>
-                <h3 style="margin-bottom: 1.5rem; color: var(--accent); font-size: 1.3rem;">Quick Links</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 0.8rem;"><a href="#about" style="color: #ddd; text-decoration: none;">About Us</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="#careers" style="color: #ddd; text-decoration: none;">Careers</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="#courses" style="color: #ddd; text-decoration: none;">Courses</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="/app/signup.html" style="color: #ddd; text-decoration: none;">Sign Up</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="/app/login.html" style="color: #ddd; text-decoration: none;">Login</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 style="margin-bottom: 1.5rem; color: var(--accent); font-size: 1.3rem;">Course Categories</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 0.8rem;"><a href="/courses/tamil/WEB_DEVELOPMENT/" style="color: #ddd; text-decoration: none;">Web Development</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="/courses/tamil/FRONT_END_DEVELOPMENT/" style="color: #ddd; text-decoration: none;">Front End</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="/courses/tamil/full stack development/" style="color: #ddd; text-decoration: none;">Full Stack</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="/courses/tamil/programming-languages/" style="color: #ddd; text-decoration: none;">Programming</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 style="margin-bottom: 1.5rem; color: var(--accent); font-size: 1.3rem;">Legal & Social</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 0.8rem;"><a href="#terms" style="color: #ddd; text-decoration: none;">Terms & Conditions</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="#privacy" style="color: #ddd; text-decoration: none;">Privacy Policy</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="#" style="color: #ddd; text-decoration: none;"><i class="fab fa-facebook"></i> Facebook</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="#" style="color: #ddd; text-decoration: none;"><i class="fab fa-youtube"></i> YouTube</a></li>
-                    <li style="margin-bottom: 0.8rem;"><a href="#" style="color: #ddd; text-decoration: none;"><i class="fab fa-github"></i> GitHub</a></li>
-                </ul>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #aaa; max-width: 1200px; margin: 3rem auto 0; padding: 2rem 20px 0;">
-            <p>&copy; 2026 JT GROUP OF INSTITUTION. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     
     <script>
         let userId = null;
         
+        // Logout function
+        async function logout() {
+            await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+            window.location.href = '/app/login.html';
+        }
+        
         // Get user ID from JWT cookie
         async function getUserId() {
             try {
-                const res = await fetch('/api/auth/me', {
-                    credentials: 'include'
-                });
+                const res = await fetch('/api/auth/me', { credentials: 'include' });
                 if (res.ok) {
                     const user = await res.json();
                     return user.id;
@@ -270,13 +291,11 @@
         // Load user info
         async function loadUserInfo() {
             try {
-                const res = await fetch('/api/auth/me', {
-                    credentials: 'include'
-                });
+                const res = await fetch('/api/auth/me', { credentials: 'include' });
                 if (res.ok) {
                     const user = await res.json();
                     document.getElementById('paymentUserName').textContent = user.name || 'User';
-                    document.getElementById('paymentUserEmail').textContent = user.email;
+                    document.getElementById('paymentUserEmail').textContent = user.email || '';
                     document.getElementById('userInfoCard').style.display = 'block';
                 }
             } catch (err) {
@@ -284,59 +303,43 @@
             }
         }
         
-        // Logout function
-        function logout() {
-            fetch('/api/auth/logout', {
-                method: 'POST',
-                credentials: 'include'
-            }).then(() => {
-                window.location.href = '/app/login.html';
-            });
-        }
-        
-        // Load user info and check subscription status
-        loadUserInfo();
-        checkSubscriptionStatus();
-        
+        // Check subscription status
         async function checkSubscriptionStatus() {
             try {
-                const userId = await getUserId();
+                userId = await getUserId();
                 if (!userId) return;
                 
-                const res = await fetch(`/api/payment/status/${userId}`);
-                const data = await res.json();
-                
-                const payButton = document.getElementById('payButton');
-                const planPeriod = document.querySelector('.plan-period');
-                
-                if (data.hasAccess) {
-                    // User has active subscription - show extend option
-                    const validUntil = new Date(data.subscription.valid_until);
-                    const newValidUntil = new Date(validUntil);
-                    newValidUntil.setDate(newValidUntil.getDate() + 30);
+                const res = await fetch(`/api/payment/status/${userId}`, { credentials: 'include' });
+                if (res.ok) {
+                    const data = await res.json();
+                    const payButton = document.getElementById('payButton');
+                    const planPeriod = document.getElementById('planPeriod');
                     
-                    payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription - ₹29';
-                    planPeriod.innerHTML = `Current: ${validUntil.toLocaleDateString()}<br>New: ${newValidUntil.toLocaleDateString()}`;
-                } else {
-                    // No active subscription
-                    payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
-                    planPeriod.textContent = 'for 30 days full access';
+                    if (data.hasAccess) {
+                        payButton.innerHTML = '<i class="fas fa-check"></i> Already Subscribed';
+                        payButton.disabled = true;
+                        const validUntil = new Date(data.subscription.valid_until);
+                        planPeriod.textContent = `Valid until ${validUntil.toLocaleDateString()}`;
+                    } else {
+                        payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
+                        planPeriod.textContent = 'for 30 days full access';
+                    }
                 }
             } catch (err) {
                 console.error('Failed to check subscription status:', err);
             }
         }
         
-        // Start Razorpay Checkout (like fullstack)
+        // Start Razorpay Checkout
         async function startCheckout() {
             const payButton = document.getElementById('payButton');
             const errorMsg = document.getElementById('errorMsg');
             
             payButton.disabled = true;
             payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating order...';
+            errorMsg.style.display = 'none';
             
             try {
-                // Check if Razorpay is loaded
                 if (!window.Razorpay) {
                     throw new Error('Razorpay script not loaded. Please refresh page.');
                 }
@@ -351,7 +354,6 @@
                     return;
                 }
                 
-                // Create order
                 const orderRes = await fetch('/api/payment/create-order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -359,35 +361,15 @@
                     credentials: 'include'
                 });
                 
-                console.log('Order creation status:', orderRes.status, orderRes.statusText);
-                
                 const orderData = await orderRes.json();
                 
-                console.log('Order creation response:', orderData);
-                
                 if (!orderRes.ok) {
-                    if (orderData.error?.includes('Razorpay not configured') || 
-                        orderData.error?.includes('API error')) {
-                        throw new Error('Payment system not configured properly. Please contact support.');
-                    }
                     throw new Error(orderData.error || 'Failed to create order');
-                }
-                
-                if (!orderData.orderId) {
-                    throw new Error('Invalid order response from server: ' + JSON.stringify(orderData));
                 }
                 
                 if (!orderData.orderId) {
                     throw new Error('Invalid order response from server');
                 }
-                
-                // Launch Razorpay Checkout
-                console.log('Creating Razorpay instance with options:', {
-                    key: orderData.keyId?.substring(0, 10) + '...',
-                    amount: orderData.amount,
-                    currency: orderData.currency,
-                    order_id: orderData.orderId
-                });
                 
                 const options = {
                     key: orderData.keyId,
@@ -397,8 +379,6 @@
                     description: orderData.planName,
                     order_id: orderData.orderId,
                     handler: async function(response) {
-                        console.log('Payment successful, verifying...', response.razorpay_payment_id);
-                        // Verify payment
                         try {
                             const verifyRes = await fetch('/api/payment/verify', {
                                 method: 'POST',
@@ -415,86 +395,37 @@
                             if (verifyRes.ok) {
                                 document.getElementById('successMsg').textContent = 'Payment successful! Subscription activated.';
                                 document.getElementById('successMsg').style.display = 'block';
-                                setTimeout(() => {
-                                    checkSubscriptionStatus();
-                                }, 1000);
+                                setTimeout(() => checkSubscriptionStatus(), 1000);
                             } else {
                                 const errorData = await verifyRes.json();
                                 throw new Error(errorData.error || 'Payment verification failed');
                             }
                         } catch (err) {
-                            console.error('Verification error:', err);
                             errorMsg.textContent = err.message || 'Payment verification failed';
                             errorMsg.style.display = 'block';
                         }
                     },
                     prefill: {
-                        name: document.getElementById('paymentUserName').textContent || '',
-                        email: document.getElementById('paymentUserEmail').textContent || ''
+                        name: document.getElementById('paymentUserName')?.textContent || '',
+                        email: document.getElementById('paymentUserEmail')?.textContent || ''
                     },
-                    theme: {
-                        color: '#11998e'
-                    },
+                    theme: { color: '#11998e' },
                     modal: {
                         ondismiss: function() {
                             payButton.disabled = false;
                             payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
                         }
-                    },
-                    config: {
-                        display: {
-                            blocks: {
-                                banks: {
-                                    name: 'All Payment Options',
-                                    instruments: [
-                                        {
-                                            method: 'netbanking'
-                                        },
-                                        {
-                                            method: 'card'
-                                        },
-                                        {
-                                            method: 'upi'
-                                        },
-                                        {
-                                            method: 'wallet'
-                                        }
-                                    ]
-                                }
-                            },
-                            sequence: ['block.banks'],
-                            preferences: {
-                                show_default_blocks: false
-                            }
-                        }
                     }
                 };
                 
-                try {
-                    const rzp = new Razorpay(options);
-                    
-                    rzp.on('payment.failed', function(response) {
-                        console.error('Payment failed:', response.error);
-                        const errorDesc = response.error?.description || response.error?.reason || 'Payment failed';
-                        errorMsg.textContent = 'Payment failed: ' + errorDesc;
-                        errorMsg.style.display = 'block';
-                        payButton.disabled = false;
-                        payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
-                    });
-                    
-                    rzp.on('payment.error', function(response) {
-                        console.error('Payment error:', response);
-                    });
-                    
-                    console.log('Opening Razorpay Checkout...');
-                    rzp.open();
-                } catch (razorpayErr) {
-                    console.error('Razorpay initialization error:', razorpayErr);
-                    errorMsg.textContent = 'Unable to initialize payment. Please check your connection and try again.';
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function(response) {
+                    errorMsg.textContent = 'Payment failed: ' + (response.error?.description || 'Please try again.');
                     errorMsg.style.display = 'block';
                     payButton.disabled = false;
                     payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
-                }
+                });
+                rzp.open();
                 
             } catch (err) {
                 console.error('Payment failed:', err);
@@ -505,9 +436,9 @@
             }
         }
         
-        document.getElementById('payButton').addEventListener('click', () => {
-            startCheckout();
-        });
+        // Initialize
+        document.getElementById('payButton').addEventListener('click', () => startCheckout());
+        checkSubscriptionStatus();
     </script>
 </body>
 </html>
