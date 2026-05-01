@@ -327,11 +327,11 @@
         </div>
     </footer>
 
-    <!-- Razorpay Checkout Script (like fullstack) -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    
     <script>
         let userId = null;
+        
+        // Start Razorpay Checkout (like fullstack)
+        async function startCheckout() {
         
         // Get user ID from JWT cookie
         async function getUserId() {
@@ -415,9 +415,20 @@
             const errorMsg = document.getElementById('errorMsg');
             
             payButton.disabled = true;
-            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating order...';
+            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading payment gateway...';
             
             try {
+                // Load Razorpay script if not already loaded
+                if (!window.Razorpay) {
+                    await new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+                        script.onload = resolve;
+                        script.onerror = () => reject(new Error('Failed to load Razorpay script'));
+                        document.head.appendChild(script);
+                    });
+                }
+                
                 userId = await getUserId();
                 
                 if (!userId) {
