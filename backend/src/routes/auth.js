@@ -73,8 +73,10 @@ router.post('/login', (req, res) => {
 
   try {
     const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+    console.log('Login attempt:', email, 'User found:', !!user);
 
     if (!user || !bcrypt.compareSync(password, user.password_hash)) {
+      console.log('Login failed for:', email, 'User exists:', !!user);
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
