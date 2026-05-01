@@ -13,6 +13,9 @@ const auth = require('./middleware/auth');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust first proxy (required for Render/X-Forwarded-For/rate limiter)
+app.set('trust proxy', 1);
+
 // Security: Add security headers
 app.use(helmet({
   contentSecurityPolicy: false, // Disable CSP for now to avoid breaking inline scripts
