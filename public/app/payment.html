@@ -471,6 +471,13 @@
                 }
                 
                 // Launch Razorpay Checkout
+                console.log('Creating Razorpay instance with options:', {
+                    key: orderData.keyId?.substring(0, 10) + '...',
+                    amount: orderData.amount,
+                    currency: orderData.currency,
+                    order_id: orderData.orderId
+                });
+                
                 const options = {
                     key: orderData.keyId,
                     amount: orderData.amount,
@@ -479,6 +486,7 @@
                     description: orderData.planName,
                     order_id: orderData.orderId,
                     handler: async function(response) {
+                        console.log('Payment successful, verifying...', response.razorpay_payment_id);
                         // Verify payment
                         try {
                             const verifyRes = await fetch('/api/payment/verify', {
@@ -504,6 +512,7 @@
                                 throw new Error(errorData.error || 'Payment verification failed');
                             }
                         } catch (err) {
+                            console.error('Verification error:', err);
                             errorMsg.textContent = err.message || 'Payment verification failed';
                             errorMsg.style.display = 'block';
                         }
@@ -550,14 +559,24 @@
                     }
                 };
                 
-                const rzp = new Razorpay(options);
-                rzp.on('payment.failed', function() {
-                    errorMsg.textContent = 'Payment failed. Please try again.';
+                try {
+                    const rzp = new Razorpay(options);
+                    rzp.on('payment.failed', function(response) {
+                        console.error('Payment failed:', response.error);
+                        errorMsg.textContent = 'Payment failed: ' + (response.error?.description || 'Please try again.');
+                        errorMsg.style.display = 'block';
+                        payButton.disabled = false;
+                        payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
+                    });
+                    rzp.open();
+                    console.log('Razorpay Checkout opened successfully');
+                } catch (razorpayErr) {
+                    console.error('Razorpay initialization error:', razorpayErr);
+                    errorMsg.textContent = 'Payment system error. Please refresh and try again.';
                     errorMsg.style.display = 'block';
                     payButton.disabled = false;
                     payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
-                });
-                rzp.open();
+                }
                 
             } catch (err) {
                 console.error('Payment failed:', err);

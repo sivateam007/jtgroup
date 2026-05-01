@@ -9,13 +9,19 @@ const router = express.Router();
 let razorpay = null;
 try {
   if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
-    razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET
-    });
-    console.log('Razorpay initialized successfully');
+    // Check if keys are placeholder values
+    if (process.env.RAZORPAY_KEY_ID.includes('your_key_id_here') || 
+        process.env.RAZORPAY_KEY_SECRET.includes('your_key_secret_here')) {
+      console.error('Razorpay not initialized: Please replace placeholder keys in .env with real test keys from https://dashboard.razorpay.com');
+    } else {
+      razorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET
+      });
+      console.log('Razorpay initialized successfully with key:', process.env.RAZORPAY_KEY_ID?.substring(0, 15) + '...');
+    }
   } else {
-    console.error('Razorpay not initialized: Missing API keys');
+    console.error('Razorpay not initialized: Missing RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET in .env');
   }
 } catch (err) {
   console.error('Razorpay initialization failed:', err.message);
