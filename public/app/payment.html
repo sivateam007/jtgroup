@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
-        /* Header override to match landing page */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -79,6 +78,45 @@
             max-width: 600px;
             margin: 2rem auto;
             padding: 0 1rem;
+        }
+        .user-info-card {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            display: none;
+        }
+        .user-details {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .user-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+        .user-meta {
+            color: #999;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .user-name {
+            color: var(--dark);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .user-email {
+            color: #666;
+            font-size: 0.9rem;
         }
         .payment-card {
             background: white;
@@ -181,45 +219,6 @@
             color: #38ef7d;
             margin-right: 5px;
         }
-        .user-info-card {
-            background: white;
-            padding: 1.5rem 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
-            display: none;
-        }
-        .user-info-card .user-details {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .user-info-card .user-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.3rem;
-        }
-        .user-info-card .user-meta {
-            color: #999;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .user-info-card .user-name {
-            color: var(--dark);
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        .user-info-card .user-email {
-            color: #666;
-            font-size: 0.9rem;
-        }
     </style>
 </head>
 <body>
@@ -265,10 +264,6 @@
             <div class="plan-details">
                 <div class="error-message" id="errorMsg"></div>
                 <div class="success-message" id="successMsg"></div>
-
-                <div style="background: #e6f3ff; border-left: 4px solid #2196F3; padding: 12px; margin: 1rem 0; font-size: 0.9rem; border-radius: 6px;">
-                    <strong>Test Mode:</strong> Use Card (4111 1111 1111 1111, CVV: 123, OTP: 123456) or UPI (success@razorpay) for reliable testing. Net banking may show blank page in test mode.
-                </div>
 
                 <div class="price-section">
                     <div class="plan-price">₹29</div>
@@ -338,13 +333,11 @@
     <script>
         let userId = null;
         
-        // Logout function
-        async function logout() {
-            await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
-            window.location.href = '/app/login.html';
+        function logout() {
+            fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
+                .then(() => window.location.href = '/app/login.html');
         }
         
-        // Get user ID from JWT cookie
         async function getUserId() {
             try {
                 const res = await fetch('/api/auth/me', { credentials: 'include' });
@@ -358,7 +351,6 @@
             return null;
         }
         
-        // Load user info
         async function loadUserInfo() {
             try {
                 const res = await fetch('/api/auth/me', { credentials: 'include' });
@@ -373,7 +365,6 @@
             }
         }
         
-        // Check subscription status and enable payment for extension
         async function checkSubscriptionStatus() {
             try {
                 userId = await getUserId();
@@ -386,15 +377,12 @@
                     const planPeriod = document.getElementById('planPeriod');
                     
                     if (data.hasAccess) {
-                        // User has active subscription - show extension option
                         const validUntil = new Date(data.subscription.valid_until);
                         planPeriod.innerHTML = `Current: ${validUntil.toLocaleDateString()}<br>Extend by 30 days for ₹29`;
                         payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
-                        payButton.disabled = false; // Allow extension
                     } else {
                         planPeriod.textContent = 'for 30 days full access';
                         payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
-                        payButton.disabled = false;
                     }
                 }
             } catch (err) {
@@ -402,7 +390,6 @@
             }
         }
         
-        // Start Razorpay Checkout
         async function startCheckout() {
             const payButton = document.getElementById('payButton');
             const errorMsg = document.getElementById('errorMsg');
@@ -415,11 +402,10 @@
             
             try {
                 if (!window.Razorpay) {
-                    throw new Error('Razorpay script not loaded. Please refresh page.');
+                    throw new Error('Payment system not loaded. Please refresh page.');
                 }
                 
                 userId = await getUserId();
-                
                 if (!userId) {
                     errorMsg.textContent = 'Please login first';
                     errorMsg.style.display = 'block';
@@ -436,13 +422,10 @@
                 });
                 
                 const orderData = await orderRes.json();
+                console.log('Order created:', orderData);
                 
-                if (!orderRes.ok) {
+                if (!orderRes.ok || !orderData.orderId) {
                     throw new Error(orderData.error || 'Failed to create order');
-                }
-                
-                if (!orderData.orderId) {
-                    throw new Error('Invalid order response from server');
                 }
                 
                 const options = {
@@ -450,10 +433,8 @@
                     amount: orderData.amount,
                     currency: orderData.currency,
                     name: 'JT Group of Institution',
-                    description: orderData.planName,
+                    description: orderData.planName || '30 Days Full Access',
                     order_id: orderData.orderId,
-                    image: '/assets/images/jt_logo.jpeg',
-                    remember_customer: false,
                     handler: async function(response) {
                         try {
                             const verifyRes = await fetch('/api/payment/verify', {
@@ -471,9 +452,7 @@
                             if (verifyRes.ok) {
                                 successMsg.textContent = 'Payment successful! Subscription extended by 30 days.';
                                 successMsg.style.display = 'block';
-                                setTimeout(() => {
-                                    checkSubscriptionStatus(); // Refresh status
-                                }, 2000);
+                                setTimeout(() => checkSubscriptionStatus(), 2000);
                             } else {
                                 const errorData = await verifyRes.json();
                                 throw new Error(errorData.error || 'Payment verification failed');
@@ -493,26 +472,22 @@
                             payButton.disabled = false;
                             payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
                         }
-                    },
-                    notes: {
-                        test_mode: 'true',
-                        purpose: 'Subscription extension'
                     }
                 };
                 
                 const rzp = new Razorpay(options);
                 rzp.on('payment.failed', function(response) {
+                    console.error('Payment failed:', response.error);
                     errorMsg.innerHTML = 'Payment failed: ' + (response.error?.description || 'Please try again.') + 
                         '<br><small>Tip: Use Card (4111 1111 1111 1111) or UPI (success@razorpay) for reliable testing</small>';
                     errorMsg.style.display = 'block';
                     payButton.disabled = false;
                     payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
                 });
-                
                 rzp.open();
                 
             } catch (err) {
-                console.error('Payment failed:', err);
+                console.error('Payment error:', err);
                 errorMsg.textContent = err.message || 'Payment failed. Please try again.';
                 errorMsg.style.display = 'block';
                 payButton.disabled = false;
