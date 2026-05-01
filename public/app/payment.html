@@ -15,8 +15,8 @@
             padding:1rem 0;
             position: sticky;
             top:0;
-            z-index: 100;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index:100;
+            box-shadow:0 4px 12px rgba(0,0,0,0.1);
         }
         .header-container {
             display: flex;
@@ -36,7 +36,7 @@
             height: 50px;
             border-radius: 50%;
             border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow:0 2px 4px rgba(0,0,0,0.1);
             object-fit: cover;
         }
         .logo h1 {
@@ -61,7 +61,7 @@
             transition: opacity 0.3s;
         }
         .home-link:hover {
-            opacity: 0.8;
+            opacity:0.8;
         }
         .logout-btn {
             background: rgba(255,255,255,0.15);
@@ -89,7 +89,7 @@
         .payment-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            box-shadow:0 10px 40px rgba(0,0,0,0,0.08);
             overflow: hidden;
             border: 1px solid #f0f0f0;
         }
@@ -115,13 +115,13 @@
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
             position: relative;
-            z-index: 1;
+            z-index:1;
         }
         .payment-header p {
             font-size: 1.1rem;
-            opacity: 0.95;
+            opacity:0.95;
             position: relative;
-            z-index: 1;
+            z-index:1;
         }
         .plan-details {
             padding: 2.5rem;
@@ -176,14 +176,14 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 6px 20px rgba(226, 65, 36, 0.3);
+            box-shadow:0 6px 20px rgba(226, 65, 36, 0.3);
         }
         .pay-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(226, 65, 36, 0.4);
+            box-shadow:0 10px 30px rgba(226, 65, 36, 0.4);
         }
         .pay-btn:disabled {
-            opacity: 0.6;
+            opacity:0.6;
             cursor: not-allowed;
             transform: none;
         }
@@ -328,11 +328,9 @@
     </footer>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
     <script>
         let userId = null;
-        
-        // Start Razorpay Checkout (like fullstack)
-        async function startCheckout() {
         
         // Get user ID from JWT cookie
         async function getUserId() {
@@ -416,12 +414,12 @@
             const errorMsg = document.getElementById('errorMsg');
             
             payButton.disabled = true;
-            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading payment gateway...';
+            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating order...';
             
             try {
-                // Razorpay script already loaded via <script> tag
+                // Check if Razorpay is loaded
                 if (!window.Razorpay) {
-                    throw new Error('Razorpay script not loaded. Check internet connection.');
+                    throw new Error('Razorpay script not loaded. Please refresh page.');
                 }
                 
                 userId = await getUserId();
@@ -434,7 +432,7 @@
                     return;
                 }
                 
-                // Create order (like fullstack)
+                // Create order
                 const orderRes = await fetch('/api/payment/create-order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -454,18 +452,15 @@
                     throw new Error('Invalid order response from server');
                 }
                 
-                // Launch Razorpay Checkout (like fullstack)
-                console.log('Launching Razorpay Checkout with key:', orderData.keyId, 'amount:', orderData.amount);
-                
+                // Launch Razorpay Checkout
                 const options = {
-                    key: orderData.keyId,  // Public key from backend
+                    key: orderData.keyId,
                     amount: orderData.amount,
                     currency: orderData.currency,
                     name: 'JT Group of Institution',
                     description: orderData.planName,
                     order_id: orderData.orderId,
                     handler: async function(response) {
-                        console.log('Payment successful, verifying...', response);
                         // Verify payment
                         try {
                             const verifyRes = await fetch('/api/payment/verify', {
@@ -491,7 +486,6 @@
                                 throw new Error(errorData.error || 'Payment verification failed');
                             }
                         } catch (err) {
-                            console.error('Payment verification failed:', err);
                             errorMsg.textContent = err.message || 'Payment verification failed';
                             errorMsg.style.display = 'block';
                         }
@@ -506,15 +500,13 @@
                 };
                 
                 const rzp = new Razorpay(options);
-                rzp.on('payment.failed', function(response) {
-                    console.error('Payment failed:', response.error);
-                    errorMsg.textContent = 'Payment failed: ' + (response.error?.description || 'Please try again.');
+                rzp.on('payment.failed', function() {
+                    errorMsg.textContent = 'Payment failed. Please try again.';
                     errorMsg.style.display = 'block';
                     payButton.disabled = false;
                     payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
                 });
                 rzp.open();
-                console.log('Razorpay Checkout opened');
                 
             } catch (err) {
                 console.error('Payment failed:', err);
