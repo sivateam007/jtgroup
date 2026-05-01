@@ -5,38 +5,76 @@ const db = require('../db/database');
 
 const router = express.Router();
 
-// Course structure for each language
+// Course structure for each language (folder names match actual directory structure)
 const courseStructure = {
   'tamil': {
     'WEB_DEVELOPMENT': {
       name: 'Web Development',
       icon: 'fa-globe',
-      courses: ['HTML', 'CSS', 'JAVASCRIPT']
+      courses: [
+        { name: 'HTML', folder: 'WEB_HTML' },
+        { name: 'CSS', folder: 'WEB_CSS' },
+        { name: 'JavaScript', folder: 'WEB_JAVASCRIPT' }
+      ]
     },
     'FRONT_END_DEVELOPMENT': {
       name: 'Front End Development',
       icon: 'fa-code',
-      courses: ['HTML', 'CSS', 'JAVASCRIPT', 'GIT']
+      courses: [
+        { name: 'HTML', folder: 'front_HTML' },
+        { name: 'CSS', folder: 'front_CSS' },
+        { name: 'JavaScript', folder: 'front_JAVASCRIPT' }
+      ]
     },
     'full stack development': {
       name: 'Full Stack Development',
       icon: 'fa-layer-group',
-      courses: ['HTML', 'CSS', 'JAVASCRIPT', 'ANGULAR', 'ANGULAR_JS', 'NODE_JS', 'MONGO_DB', 'PYTHON', 'MY_SQL', 'SQL']
+      courses: [
+        { name: 'HTML', folder: 'HTML' },
+        { name: 'CSS', folder: 'CSS' },
+        { name: 'JavaScript', folder: 'JAVASCRIPT' },
+        { name: 'Angular', folder: 'ANGULAR' },
+        { name: 'Angular JS', folder: 'ANGULAR_JS' },
+        { name: 'Node.js', folder: 'NODE_JS' },
+        { name: 'MongoDB', folder: 'MONGO_DB' },
+        { name: 'Python', folder: 'PYTHON' },
+        { name: 'MySQL', folder: 'MY_SQL' },
+        { name: 'SQL', folder: 'SQL' }
+      ]
     },
     'backend development': {
       name: 'Backend Development',
       icon: 'fa-server',
-      courses: ['PYTHON', 'NODE_JS']
+      courses: [
+        { name: 'Python', folder: 'PYTHON' },
+        { name: 'Node.js', folder: 'NODE_JS' }
+      ]
     },
     'programming-languages': {
       name: 'Programming Languages',
       icon: 'fa-laptop-code',
-      courses: ['PYTHON', 'JAVASCRIPT', 'HTML', 'CSS', 'MONGO_DB', 'ANGULAR', 'ANGULAR_JS', 'GIT', 'MY_SQL', 'SQL', 'NODE_JS']
+      courses: [
+        { name: 'Python', folder: 'PYTHON' },
+        { name: 'JavaScript', folder: 'JAVASCRIPT' },
+        { name: 'HTML', folder: 'HTML' },
+        { name: 'CSS', folder: 'CSS' },
+        { name: 'MongoDB', folder: 'MONGO_DB' },
+        { name: 'Angular', folder: 'ANGULAR' },
+        { name: 'Angular JS', folder: 'ANGULAR_JS' },
+        { name: 'Git', folder: 'GIT' },
+        { name: 'MySQL', folder: 'MY_SQL' },
+        { name: 'SQL', folder: 'SQL' },
+        { name: 'Node.js', folder: 'NODE_JS' }
+      ]
     },
     'database': {
       name: 'Database Courses',
       icon: 'fa-database',
-      courses: ['MY_SQL', 'SQL', 'MONGO_DB']
+      courses: [
+        { name: 'MySQL', folder: 'MY_SQL' },
+        { name: 'SQL', folder: 'SQL' },
+        { name: 'MongoDB', folder: 'MONGO_DB' }
+      ]
     }
   },
   'hindi': {},
@@ -82,8 +120,21 @@ router.get('/:language/:category', (req, res) => {
   const basePath = path.join(__dirname, '../../../public/courses', language, category);
 
   if (course) {
+    // Security: Prevent directory traversal
+    if (course.includes('..') || course.includes('//') || course.includes('/')) {
+      return res.status(403).send('Forbidden');
+    }
+
     // Serve specific course index.html
-    res.sendFile(path.join(basePath, course, 'index.html'));
+    const coursePath = path.join(basePath, course, 'index.html');
+    const resolvedPath = path.resolve(coursePath);
+    const coursesRoot = path.resolve(path.join(__dirname, '../../../public/courses'));
+
+    if (!resolvedPath.startsWith(coursesRoot)) {
+      return res.status(403).send('Forbidden');
+    }
+
+    res.sendFile(coursePath);
   } else {
     // Serve category index page
     const indexPath = path.join(basePath, 'index.html');
@@ -115,11 +166,11 @@ router.get('/:language/:category', (req, res) => {
   </div>
   <div class="course-grid">`;
 
-        categoryInfo.courses.forEach(courseName => {
+        categoryInfo.courses.forEach(courseItem => {
           html += `
           <div class="course-card">
-            <h3>${courseName}</h3>
-            <a href="?course=${courseName}">Start Learning</a>
+            <h3>${courseItem.name}</h3>
+            <a href="?course=${courseItem.folder}">Start Learning</a>
           </div>`;
         });
 

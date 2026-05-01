@@ -51,4 +51,11 @@ db.exec(`
   )
 `);
 
+// Performance indexes
+db.exec(`CREATE INDEX IF NOT EXISTS idx_subscriptions_user_id ON subscriptions(user_id)`);
+db.exec(`CREATE INDEX IF NOT EXISTS idx_subscriptions_razorpay_order_id ON subscriptions(razorpay_order_id)`);
+db.exec(`CREATE INDEX IF NOT EXISTS idx_progress_user_id ON progress(user_id)`);
+db.exec(`CREATE INDEX IF NOT EXISTS idx_progress_course_path ON progress(course_path)`);
+db.exec(`CREATE INDEX IF NOT EXISTS idx_progress_user_course ON progress(user_id, course_path)`);
+
 module.exports = db;

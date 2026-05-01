@@ -58,7 +58,7 @@ app.use('/app', express.static(path.join(__dirname, '../../public/app')));
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/courses', courseRoutes);
-app.use('/api/progress', progressRoutes);
+app.use('/api/progress', auth, progressRoutes);
 
 // Serve course category index pages (public - no auth required)
 // Matches: /courses/tamil, /courses/tamil/programming-languages, /courses/tamil/programming-languages/HTML, etc.
