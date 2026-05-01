@@ -452,7 +452,8 @@
                     name: 'JT Group of Institution',
                     description: orderData.planName,
                     order_id: orderData.orderId,
-                    timeout: 60, // 1 minute for test mode
+                    image: '/assets/images/jt_logo.jpeg',
+                    remember_customer: false,
                     handler: async function(response) {
                         try {
                             const verifyRes = await fetch('/api/payment/verify', {
@@ -493,28 +494,10 @@
                             payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
                         }
                     },
-                    config: {
-                        display: {
-                            blocks: {
-                                banks: {
-                                    name: 'Payment Methods',
-                                    instruments: [
-                                        { method: 'card' },
-                                        { method: 'upi' },
-                                        { method: 'wallet' },
-                                        { method: 'netbanking' }
-                                    ]
-                                }
-                            },
-                            sequence: ['block.banks'],
-                            preferences: {
-                                show_default_blocks: false
-                            }
-                        }
-                    },
-                    redirect: true,
-                    redirect_url: window.location.origin + '/app/payment.html',
-                    cancel_url: window.location.origin + '/app/payment.html'
+                    notes: {
+                        test_mode: 'true',
+                        purpose: 'Subscription extension'
+                    }
                 };
                 
                 const rzp = new Razorpay(options);
