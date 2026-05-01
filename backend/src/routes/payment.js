@@ -14,7 +14,7 @@ const razorpay = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
   : null;
 
 // Create Razorpay Order (like fullstack)
-router.post('/create-order', (req, res) => {
+router.post('/create-order', async (req, res) => {
   const { userId } = req.body;
 
   if (!razorpay) {
@@ -53,7 +53,7 @@ router.post('/create-order', (req, res) => {
 });
 
 // Verify Payment (with signature check - like fullstack)
-router.post('/verify', (req, res) => {
+router.post('/verify', async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature, userId } = req.body;
 
   if (!razorpay) {
