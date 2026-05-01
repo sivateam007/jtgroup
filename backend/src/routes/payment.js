@@ -191,13 +191,19 @@ router.get('/status/:userId', (req, res) => {
 router.post('/verify-manual', (req, res) => {
   const { userId, paymentLinkId } = req.body;
   
+  // Log incoming request
+  console.log('Manual verification request:', { userId, paymentLinkId });
+  
   // Validate input
   if (!userId || !paymentLinkId) {
+    console.error('Missing params:', { userId, paymentLinkId });
     return res.status(400).json({ error: 'Missing userId or paymentLinkId' });
   }
   
   // Verify payment link with Razorpay API
   const auth = Buffer.from(process.env.RAZORPAY_KEY_ID + ':' + process.env.RAZORPAY_KEY_SECRET).toString('base64');
+  
+  console.log('Calling Razorpay API for paymentLinkId:', paymentLinkId);
   
   const options = {
     hostname: 'api.razorpay.com',
@@ -210,15 +216,18 @@ router.post('/verify-manual', (req, res) => {
   const verifyReq = https.request(options, (verifyRes) => {
     let data = '';
     verifyRes.on('data', (chunk) => { data += chunk; });
-    verifyRes.on('end', () => {
+    verifyReq.on('end', () => {
       try {
         const linkDetails = JSON.parse(data);
         
-        // Log for debugging
+        // Log full response for debugging
+        console.log('Razorpay API response status:', verifyRes.statusCode);
         console.log('Razorpay link details:', JSON.stringify(linkDetails));
         
         // Check if payment was actually made
         if (linkDetails.status === 'paid') {
+          console.log('Payment verified as PAID');
+          
           // Razorpay returns payments as array of objects or IDs
           let paymentId = 'manual_' + Date.now();
           if (linkDetails.payments && linkDetails.payments.length > 0) {
@@ -226,10 +235,13 @@ router.post('/verify-manual', (req, res) => {
             paymentId = typeof firstPayment === 'string' ? firstPayment : (firstPayment.id || firstPayment.entity?.id || paymentId);
           }
           
+          console.log('Using paymentId:', paymentId);
+          
           // Check if subscription already exists (idempotency)
           const existingSub = db.prepare("SELECT * FROM subscriptions WHERE razorpay_order_id = ?").get(paymentLinkId);
           if (existingSub) {
-            return res.json({ success: true, validUntil: existingSub.valid_until });
+            console.log('Subscription already exists for this paymentLinkId');
+            return res.json({ success: true, validUntil: existingSub.validUntil });
           }
           
           // Create new subscription
@@ -244,12 +256,15 @@ router.post('/verify-manual', (req, res) => {
             validUntil = result.newDate;
           }
           
+          console.log('Creating subscription for userId:', userId, 'validUntil:', validUntil);
+          
           const stmt = db.prepare('INSERT INTO subscriptions (user_id, razorpay_order_id, razorpay_payment_id, amount, valid_until) VALUES (?, ?, ?, ?, ?)');
           stmt.run(userId, paymentLinkId, paymentId, process.env.PLAN_PRICE_INR || 29, validUntil);
           
+          console.log('Subscription created successfully');
           res.json({ success: true, validUntil });
         } else {
-          console.error('Payment not paid. Status:', linkDetails.status, 'Response:', data);
+          console.error('Payment not paid. Status:', linkDetails.status, 'Full response:', data);
           res.status(400).json({ error: 'Payment not verified with Razorpay. Status: ' + (linkDetails.status || 'unknown') });
         }
       } catch (err) {
