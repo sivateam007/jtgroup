@@ -327,9 +327,12 @@
         </div>
     </footer>
 
+    <!-- Razorpay Checkout Script (like fullstack) -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
     <script>
         let userId = null;
-
+        
         // Get user ID from JWT cookie
         async function getUserId() {
             try {
@@ -345,7 +348,7 @@
             }
             return null;
         }
-
+        
         // Load user info
         async function loadUserInfo() {
             try {
@@ -362,7 +365,7 @@
                 console.error('Failed to load user info:', err);
             }
         }
-
+        
         // Logout function
         function logout() {
             fetch('/api/auth/logout', {
@@ -372,28 +375,28 @@
                 window.location.href = '/app/login.html';
             });
         }
-
+        
         // Load user info and check subscription status
         loadUserInfo();
         checkSubscriptionStatus();
-
+        
         async function checkSubscriptionStatus() {
             try {
                 const userId = await getUserId();
                 if (!userId) return;
-
+                
                 const res = await fetch(`/api/payment/status/${userId}`);
                 const data = await res.json();
-
+                
                 const payButton = document.getElementById('payButton');
                 const planPeriod = document.querySelector('.plan-period');
-
+                
                 if (data.hasAccess) {
                     // User has active subscription - show extend option
                     const validUntil = new Date(data.subscription.valid_until);
                     const newValidUntil = new Date(validUntil);
                     newValidUntil.setDate(newValidUntil.getDate() + 30);
-
+                    
                     payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription - ₹29';
                     planPeriod.innerHTML = `Current: ${validUntil.toLocaleDateString()}<br>New: ${newValidUntil.toLocaleDateString()}`;
                 } else {
@@ -405,53 +408,107 @@
                 console.error('Failed to check subscription status:', err);
             }
         }
-
-        document.getElementById('payButton').addEventListener('click', async () => {
+        
+        // Start Razorpay Checkout (like fullstack)
+        async function startCheckout() {
             const payButton = document.getElementById('payButton');
             const errorMsg = document.getElementById('errorMsg');
-            const successMsg = document.getElementById('successMsg');
-
+            
             payButton.disabled = true;
-            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting to payment...';
-
+            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating order...';
+            
             try {
                 userId = await getUserId();
-
+                
                 if (!userId) {
                     errorMsg.textContent = 'Please login first';
                     errorMsg.style.display = 'block';
-                    successMsg.style.display = 'none';
                     payButton.disabled = false;
-                    payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29';
+                    payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
                     return;
                 }
-
-                // Create payment link
-                const linkRes = await fetch('/api/payment/create-payment-link', {
+                
+                // Create order (like fullstack)
+                const orderRes = await fetch('/api/payment/create-order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ userId }),
                     credentials: 'include'
                 });
-
-                 const linkData = await linkRes.json();
-                  
-                  if (!linkRes.ok) {
-                      throw new Error(linkData.error || 'Failed to create payment link');
-                  }
-                  
-                  // Redirect to Razorpay payment page
-                  // Razorpay will redirect to callbackUrl WITH paymentLinkId appended
-                  window.location.href = linkData.paymentUrl;
-
+                
+                const orderData = await orderRes.json();
+                
+                if (!orderRes.ok) {
+                    throw new Error(orderData.error || 'Failed to create order');
+                }
+                
+                // Launch Razorpay Checkout (like fullstack)
+                const options = {
+                    key: orderData.keyId,  // Public key from backend
+                    amount: orderData.amount,
+                    currency: orderData.currency,
+                    name: 'JT Group of Institution',
+                    description: orderData.planName,
+                    order_id: orderData.orderId,
+                    handler: async function(response) {
+                        // Verify payment
+                        try {
+                            const verifyRes = await fetch('/api/payment/verify', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    userId: userId,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature
+                                }),
+                                credentials: 'include'
+                            });
+                            
+                            if (verifyRes.ok) {
+                                document.getElementById('successMsg').textContent = 'Payment successful! Subscription activated.';
+                                document.getElementById('successMsg').style.display = 'block';
+                                setTimeout(() => {
+                                    checkSubscriptionStatus();
+                                }, 1000);
+                            } else {
+                                const errorData = await verifyRes.json();
+                                throw new Error(errorData.error || 'Payment verification failed');
+                            }
+                        } catch (err) {
+                            errorMsg.textContent = err.message || 'Payment verification failed';
+                            errorMsg.style.display = 'block';
+                        }
+                    },
+                    prefill: {
+                        name: document.getElementById('paymentUserName').textContent || '',
+                        email: document.getElementById('paymentUserEmail').textContent || ''
+                    },
+                    theme: {
+                        color: '#11998e'
+                    }
+                };
+                
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function() {
+                    errorMsg.textContent = 'Payment failed. Please try again.';
+                    errorMsg.style.display = 'block';
+                    payButton.disabled = false;
+                    payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
+                });
+                rzp.open();
+                
             } catch (err) {
                 console.error('Payment failed:', err);
                 errorMsg.textContent = err.message || 'Payment failed. Please try again.';
                 errorMsg.style.display = 'block';
-                successMsg.style.display = 'none';
                 payButton.disabled = false;
-                payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29';
+                payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
             }
+        }
+        
+        document.getElementById('payButton').addEventListener('click', () => {
+            startCheckout();
         });
     </script>
 </body>

@@ -675,44 +675,6 @@
                 document.getElementById('profileAvatar').textContent = displayName.charAt(0).toUpperCase();
                 await checkSubscription(user.id);
                 await loadCourses();
-                
-                // Handle payment success redirect
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.get('payment') === 'success') {
-                    // Get paymentLinkId from URL (plink parameter)
-                    const paymentLinkId = urlParams.get('plink');
-                    
-                    if (!paymentLinkId) {
-                        console.error('No paymentLinkId found in URL');
-                    }
-                    
-                    // Call manual verification endpoint
-                    try {
-                        const verifyRes = await fetch('/api/payment/verify-manual', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ 
-                                userId: user.id,
-                                paymentLinkId: paymentLinkId 
-                            }),
-                            credentials: 'include'
-                        });
-                        
-                        if (verifyRes.ok) {
-                            // Refresh subscription status
-                            setTimeout(async () => {
-                                await checkSubscription(user.id);
-                                // Clean URL
-                                window.history.replaceState({}, document.title, '/app/dashboard.html');
-                            }, 1000);
-                        } else {
-                            const errorData = await verifyRes.json();
-                            console.error('Verification failed:', errorData.error);
-                        }
-                    } catch (err) {
-                        console.error('Manual verification failed:', err);
-                    }
-                }
             }
         })();
     </script>
