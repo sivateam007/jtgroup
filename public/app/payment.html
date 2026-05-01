@@ -509,21 +509,16 @@
                     }
                 };
                 
-                try {
-                    const rzp = new Razorpay(options);
-                    rzp.on('payment.failed', function(response) {
-                        console.error('Payment failed:', response.error);
-                        errorMsg.textContent = 'Payment failed: ' + (response.error?.description || 'Please try again.');
-                        errorMsg.style.display = 'block';
-                        payButton.disabled = false;
-                        payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
-                    });
-                    rzp.open();
-                    console.log('Razorpay Checkout opened');
-                } catch (err) {
-                    console.error('Failed to open Razorpay Checkout:', err);
-                    throw new Error('Failed to open payment gateway: ' + err.message);
-                }
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function(response) {
+                    console.error('Payment failed:', response.error);
+                    errorMsg.textContent = 'Payment failed: ' + (response.error?.description || 'Please try again.');
+                    errorMsg.style.display = 'block';
+                    payButton.disabled = false;
+                    payButton.innerHTML = '<i class="fas fa-lock"></i> Pay ₹29 with Razorpay';
+                });
+                rzp.open();
+                console.log('Razorpay Checkout opened');
                 
             } catch (err) {
                 console.error('Payment failed:', err);
