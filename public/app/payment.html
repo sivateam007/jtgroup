@@ -452,6 +452,7 @@
                     name: 'JT Group of Institution',
                     description: orderData.planName,
                     order_id: orderData.orderId,
+                    timeout: 300, // 5 minutes
                     handler: async function(response) {
                         try {
                             const verifyRes = await fetch('/api/payment/verify', {
@@ -511,16 +512,31 @@
                             }
                         }
                     },
-                    redirect: true
+                    redirect: false
                 };
                 
                 const rzp = new Razorpay(options);
                 rzp.on('payment.failed', function(response) {
-                    errorMsg.textContent = 'Payment failed: ' + (response.error?.description || 'Please try again.');
+                    errorMsg.innerHTML = 'Payment failed: ' + (response.error?.description || 'Please try again.') + 
+                        '<br><small>Tip: Use Card (4111 1111 1111 1111) or UPI (success@razorpay) for reliable testing</small>';
                     errorMsg.style.display = 'block';
                     payButton.disabled = false;
                     payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
                 });
+                
+                // Detect if Razorpay fails to load within 10 seconds
+                const loadTimeout = setTimeout(() => {
+                    errorMsg.innerHTML = 'Payment gateway not responding.<br>' +
+                        'Please use: <strong>Card</strong> (4111 1111 1111 1111, CVV: 123, OTP: 123456) or <strong>UPI</strong> (success@razorpay)';
+                    errorMsg.style.display = 'block';
+                    payButton.disabled = false;
+                    payButton.innerHTML = '<i class="fas fa-plus-circle"></i> Extend Subscription by 30 Days';
+                }, 10000);
+                
+                rzp.on('payment.success', function() {
+                    clearTimeout(loadTimeout);
+                });
+                
                 rzp.open();
                 
             } catch (err) {
