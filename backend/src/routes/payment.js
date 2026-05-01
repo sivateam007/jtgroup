@@ -27,6 +27,8 @@ router.post('/create-order', async (req, res) => {
 
     const amountPaise = (parseInt(process.env.PLAN_PRICE_INR) || 29) * 100;
 
+    console.log('Creating Razorpay order for user:', userId, 'amount:', amountPaise);
+    
     const order = await razorpay.orders.create({
       amount: amountPaise,
       currency: 'INR',
@@ -36,6 +38,8 @@ router.post('/create-order', async (req, res) => {
         plan: '30 Days Full Access'
       }
     });
+
+    console.log('Order created successfully:', order.id);
 
     // Return keyId + order (like fullstack - public key is safe to expose)
     res.json({
