@@ -7,24 +7,33 @@ const router = express.Router();
 
 // Initialize Razorpay
 let razorpay = null;
+let razorpayReady = false;
+
 try {
   if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
     // Check if keys are placeholder values
     if (process.env.RAZORPAY_KEY_ID.includes('your_key_id_here') || 
         process.env.RAZORPAY_KEY_SECRET.includes('your_key_secret_here')) {
-      console.error('Razorpay not initialized: Please replace placeholder keys in .env with real test keys from https://dashboard.razorpay.com');
+      console.error('ERROR: Razorpay keys are placeholders! Get real test keys from https://dashboard.razorpay.com');
+      razorpayReady = false;
+    } else if (!process.env.RAZORPAY_KEY_ID.startsWith('rzp_')) {
+      console.error('ERROR: RAZORPAY_KEY_ID should start with rzp_test_ or rzp_live_');
+      razorpayReady = false;
     } else {
       razorpay = new Razorpay({
         key_id: process.env.RAZORPAY_KEY_ID,
         key_secret: process.env.RAZORPAY_KEY_SECRET
       });
-      console.log('Razorpay initialized successfully with key:', process.env.RAZORPAY_KEY_ID?.substring(0, 15) + '...');
+      razorpayReady = true;
+      console.log('Razorpay initialized successfully with key:', process.env.RAZORPAY_KEY_ID?.substring(0, 20) + '...');
     }
   } else {
-    console.error('Razorpay not initialized: Missing RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET in .env');
+    console.error('ERROR: Missing RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET in .env file');
+    razorpayReady = false;
   }
 } catch (err) {
   console.error('Razorpay initialization failed:', err.message);
+  razorpayReady = false;
 }
 
 // Create Razorpay Order (like fullstack)
