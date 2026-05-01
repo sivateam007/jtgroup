@@ -438,8 +438,14 @@
                 
                 const orderData = await orderRes.json();
                 
+                console.log('Order creation response:', orderData);
+                
                 if (!orderRes.ok) {
                     throw new Error(orderData.error || 'Failed to create order');
+                }
+                
+                if (!orderData.orderId) {
+                    throw new Error('Invalid order response from server');
                 }
                 
                 // Launch Razorpay Checkout (like fullstack)
