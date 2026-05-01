@@ -420,13 +420,26 @@
             try {
                 // Load Razorpay script if not already loaded
                 if (!window.Razorpay) {
+                    console.log('Loading Razorpay script...');
                     await new Promise((resolve, reject) => {
                         const script = document.createElement('script');
                         script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-                        script.onload = resolve;
-                        script.onerror = () => reject(new Error('Failed to load Razorpay script'));
+                        script.onload = () => {
+                            console.log('Razorpay script loaded successfully');
+                            resolve();
+                        };
+                        script.onerror = () => {
+                            console.error('Failed to load Razorpay script');
+                            reject(new Error('Failed to load Razorpay script'));
+                        };
                         document.head.appendChild(script);
                     });
+                } else {
+                    console.log('Razorpay already loaded');
+                }
+                
+                if (!window.Razorpay) {
+                    throw new Error('Razorpay not available after loading script');
                 }
                 
                 userId = await getUserId();
