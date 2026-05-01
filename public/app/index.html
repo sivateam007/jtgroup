@@ -77,6 +77,18 @@
             color: var(--accent);
         }
         
+        .nav-links .dashboard-link {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links .dashboard-link:hover {
+            background: rgba(255,255,255,0.3);
+            color: var(--accent);
+        }
+        
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, var(--git-color), #6e5494);
@@ -466,6 +478,7 @@
                 <ul class="nav-links">
                     <li><a href="#courses">Explore</a></li>
                     <li><a href="#courses">Courses</a></li>
+                    <li><a href="/app/dashboard.html" class="dashboard-link" style="display: none;"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 </ul>
             </nav>
         </div>
@@ -718,28 +731,42 @@
             try {
                 const response = await fetch('/api/auth/status');
                 const data = await response.json();
-
+                
                 // Select all course links: cards in main section + footer category links
                 const courseLinks = document.querySelectorAll('.course-card-horizontal, .footer-column a[href*="/courses/"]');
-
+                const dashboardLink = document.querySelector('.dashboard-link');
+                
                 if (data.loggedIn) {
                     // User is logged in - redirect to dashboard
-                    courseLinks.forEach(link => {
-                        link.href = '/app/dashboard.html';
+                    courseLinks.forEach(el => {
+                        el.href = '/app/dashboard.html';
                     });
+                    // Show Dashboard link
+                    if (dashboardLink) {
+                        dashboardLink.style.display = 'inline';
+                    }
                 } else {
                     // User not logged in - redirect to login
-                    courseLinks.forEach(link => {
-                        link.href = '/app/login.html';
+                    courseLinks.forEach(el => {
+                        el.href = '/app/login.html';
                     });
+                    // Hide Dashboard link
+                    if (dashboardLink) {
+                        dashboardLink.style.display = 'none';
+                    }
                 }
             } catch (err) {
                 console.error('Auth check failed:', err);
                 // On error, redirect to login
                 const allCourseLinks = document.querySelectorAll('.course-card-horizontal, .footer-column a[href*="/courses/"]');
-                allCourseLinks.forEach(link => {
-                    link.href = '/app/login.html';
+                allCourseLinks.forEach(el => {
+                    el.href = '/app/login.html';
                 });
+                // Hide Dashboard link on error
+                const dashboardLink = document.querySelector('.dashboard-link');
+                if (dashboardLink) {
+                    dashboardLink.style.display = 'none';
+                }
             }
         }
 
