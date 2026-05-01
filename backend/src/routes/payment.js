@@ -38,8 +38,9 @@ router.post('/create-order', async (req, res) => {
     console.log('Creating Razorpay order for user:', userId, 'amount:', amountPaise);
     console.log('Using Razorpay key:', process.env.RAZORPAY_KEY_ID?.substring(0, 10) + '...');
     
+    let order;
     try {
-      const order = await razorpay.orders.create({
+      order = await razorpay.orders.create({
         amount: amountPaise,
         currency: 'INR',
         receipt: `receipt_${userId}_${Date.now()}`,
