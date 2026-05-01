@@ -327,6 +327,7 @@
         </div>
     </footer>
 
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         let userId = null;
         
@@ -418,28 +419,9 @@
             payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading payment gateway...';
             
             try {
-                // Load Razorpay script if not already loaded
+                // Razorpay script already loaded via <script> tag
                 if (!window.Razorpay) {
-                    console.log('Loading Razorpay script...');
-                    await new Promise((resolve, reject) => {
-                        const script = document.createElement('script');
-                        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-                        script.onload = () => {
-                            console.log('Razorpay script loaded successfully');
-                            resolve();
-                        };
-                        script.onerror = () => {
-                            console.error('Failed to load Razorpay script');
-                            reject(new Error('Failed to load Razorpay script'));
-                        };
-                        document.head.appendChild(script);
-                    });
-                } else {
-                    console.log('Razorpay already loaded');
-                }
-                
-                if (!window.Razorpay) {
-                    throw new Error('Razorpay not available after loading script');
+                    throw new Error('Razorpay script not loaded. Check internet connection.');
                 }
                 
                 userId = await getUserId();
