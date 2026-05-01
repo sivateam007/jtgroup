@@ -435,21 +435,14 @@
                 });
 
                  const linkData = await linkRes.json();
-                 
-                 if (!linkRes.ok) {
-                     throw new Error(linkData.error || 'Failed to create payment link');
-                 }
-                 
-                 // Store paymentLinkId in sessionStorage for verification after redirect
-                 if (linkData.paymentLinkId) {
-                     sessionStorage.setItem('paymentLinkId', linkData.paymentLinkId);
-                 }
-                 
-                 // Redirect to Razorpay payment page
-                 // Note: After payment, Razorpay redirects to callbackUrl (dashboard)
-                 // If webhook is configured, subscription will be auto-activated
-                 // If not, user may need to refresh dashboard to see updated status
-                 window.location.href = linkData.paymentUrl;
+                  
+                  if (!linkRes.ok) {
+                      throw new Error(linkData.error || 'Failed to create payment link');
+                  }
+                  
+                  // Redirect to Razorpay payment page
+                  // Razorpay will redirect to callbackUrl WITH paymentLinkId appended
+                  window.location.href = linkData.paymentUrl;
 
             } catch (err) {
                 console.error('Payment failed:', err);

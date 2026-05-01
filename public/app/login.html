@@ -264,10 +264,19 @@
                 const data = await res.json();
                 
                 if (res.ok) {
-                    // Preserve payment success parameter through login redirect
-                    const redirectUrl = new URLSearchParams(window.location.search).get('payment') === 'success'
-                        ? '/app/dashboard.html?payment=success'
-                        : '/app/dashboard.html';
+                    // Preserve payment parameters through login redirect
+                    const urlParams = new URLSearchParams(window.location.search);
+                    let redirectUrl = '/app/dashboard.html';
+                    
+                    if (urlParams.get('payment') === 'success') {
+                        redirectUrl += '?payment=success';
+                        // Pass paymentLinkId (plink) from URL if present
+                        const plink = urlParams.get('plink');
+                        if (plink) {
+                            redirectUrl += '&plink=' + encodeURIComponent(plink);
+                        }
+                    }
+                    
                     window.location.href = redirectUrl;
                 } else {
                     errorMsg.textContent = data.error || 'Login failed';

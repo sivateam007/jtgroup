@@ -18,7 +18,9 @@ router.post('/create-payment-link', async (req, res) => {
     if (!user) return res.status(404).json({ error: 'User not found' });
 
     const amount = parseInt(process.env.PLAN_PRICE_INR || 29) * 100; // ₹29 to paise
-    const callbackUrl = `${process.env.APP_ORIGIN || 'http://localhost:3000'}/app/login.html?payment=success`;
+    // We'll append paymentLinkId after Razorpay creates it
+    // For now, use a callback that login.html can handle
+    const baseCallbackUrl = `${process.env.APP_ORIGIN || 'http://localhost:3000'}/app/login.html`;
     const isTestMode = process.env.RAZORPAY_KEY_ID?.startsWith('rzp_test_');
 
     const paymentLinkData = {
@@ -33,7 +35,7 @@ router.post('/create-payment-link', async (req, res) => {
         sms: false,
         email: false
       },
-      callback_url: callbackUrl,
+      callback_url: baseCallbackUrl + '?payment=success',
       callback_method: 'get'
     };
 
@@ -66,8 +68,13 @@ router.post('/create-payment-link', async (req, res) => {
             console.error('Razorpay Payment Link creation failed:', result);
             return res.status(500).json({ error: 'Failed to create payment link: ' + (result.error?.description || 'Unknown error') });
           }
-          // Return both short_url and payment_link id
-          res.json({ paymentUrl: result.short_url, paymentLinkId: result.id });
+          // Return payment URL with paymentLinkId appended for verification
+          const finalCallbackUrl = `${baseCallbackUrl}?payment=success&plink=${result.id}`;
+          res.json({ 
+            paymentUrl: result.short_url, 
+            paymentLinkId: result.id,
+            callbackUrl: finalCallbackUrl 
+          });
         } catch (e) {
           res.status(500).json({ error: 'Failed to parse Razorpay response' });
         }
