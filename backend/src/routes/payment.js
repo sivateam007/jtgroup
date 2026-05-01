@@ -207,9 +207,17 @@ router.post('/verify-manual', (req, res) => {
       try {
         const linkDetails = JSON.parse(data);
         
+        // Log for debugging
+        console.log('Razorpay link details:', JSON.stringify(linkDetails));
+        
         // Check if payment was actually made
-        if (linkDetails.status === 'paid' && linkDetails.payments && linkDetails.payments.length > 0) {
-          const paymentId = linkDetails.payments[0];
+        if (linkDetails.status === 'paid') {
+          // Razorpay returns payments as array of objects or IDs
+          let paymentId = 'manual_' + Date.now();
+          if (linkDetails.payments && linkDetails.payments.length > 0) {
+            const firstPayment = linkDetails.payments[0];
+            paymentId = typeof firstPayment === 'string' ? firstPayment : (firstPayment.id || firstPayment.entity?.id || paymentId);
+          }
           
           // Check if subscription already exists (idempotency)
           const existingSub = db.prepare("SELECT * FROM subscriptions WHERE razorpay_order_id = ?").get(paymentLinkId);
@@ -234,15 +242,18 @@ router.post('/verify-manual', (req, res) => {
           
           res.json({ success: true, validUntil });
         } else {
+          console.error('Payment not paid. Status:', linkDetails.status, 'Response:', data);
           res.status(400).json({ error: 'Payment not verified with Razorpay. Status: ' + (linkDetails.status || 'unknown') });
         }
       } catch (err) {
-        res.status(500).json({ error: 'Failed to parse Razorpay response' });
+        console.error('Parse error:', err, 'Data:', data);
+        res.status(500).json({ error: 'Failed to parse Razorpay response: ' + err.message });
       }
     });
   });
   
   verifyReq.on('error', (err) => {
+    console.error('Razorpay API error:', err);
     res.status(500).json({ error: 'Failed to verify with Razorpay: ' + err.message });
   });
   
