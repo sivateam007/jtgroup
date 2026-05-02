@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL CASE Expression - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Syntax Grid */
+        .syntax-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .syntax-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .syntax-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .syntax-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .syntax-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            margin: 2rem 0;
+        }
+        
+        .responsive-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--git-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .flow-diagram {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            margin: 0.5rem;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+        }
+        
+        .step-arrow {
+            font-size: 1.5rem;
+            color: var(--git-color);
+            margin: 0 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .syntax-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .syntax-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .flow-steps {
+                flex-direction: column;
+            }
+            
+            .step-arrow {
+                transform: rotate(90deg);
+                margin: 1rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .responsive-table {
+                font-size: 0.8rem;
+            }
+            
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL INSERT INTO SELECT Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL NULL Functions.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL CASE Expression</h2>
+            <p>நிபந்தனைகளை மதிப்பீடு செய்து முதல் உண்மை நிபந்தனைக்கான மதிப்பைத் திருப்பித் தரும் CASE வெளிப்பாட்டைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is CASE Expression -->
+        <section class="content-section" id="what-is-case">
+            <h2>SQL CASE வெளிப்பாடு</h2>
+            
+            <p>CASE வெளிப்பாடு நிபந்தனைகளைக் கடந்து, முதல் நிபந்தனை நிறைவேற்றப்படும் போது ஒரு மதிப்பைத் திருப்பித் தரும் (if-then-else அறிக்கை போன்றது). எனவே, ஒரு நிபந்தனை உண்மையாகி விட்டால், அது வாசிப்பதை நிறுத்திவிட்டு முடிவைத் திருப்பித் தரும்.</p>
+            
+            <p>எந்த நிபந்தனைகளும் உண்மையாக இல்லாவிட்டால், ELSE பகுதியில் உள்ள மதிப்பைத் திருப்பித் தரும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>ELSE பகுதி இல்லை மற்றும் எந்த நிபந்தனைகளும் உண்மையாக இல்லாவிட்டால், NULL திருப்பித் தரப்படும்.</p>
+            </div>
+        </section>
+
+        <!-- CASE Syntax -->
+        <section class="content-section" id="case-syntax">
+            <h2>CASE தொடரியல்</h2>
+            
+            <div class="syntax-box">
+                <pre><code>CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;</code></pre>
+            </div>
+            
+            <div class="flow-diagram">
+                <h3>CASE வெளிப்பாட்டின் பணிப்பாய்வு</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <p>முதல் நிபந்தனை சோதிக்கப்படும்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <p>நிபந்தனை உண்மையாக இருந்தால், முடிவு திருப்பித் தரப்படும்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <p>இல்லையெனில் அடுத்த நிபந்தனை சோதிக்கப்படும்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <p>அனைத்தும் தவறாக இருந்தால் ELSE முடிவு திருப்பித் தரப்படும்</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் உள்ள "OrderDetails" அட்டவணையிலிருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>OrderDetailID</th>
+                                <th>OrderID</th>
+                                <th>ProductID</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>10248</td>
+                                <td>11</td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>10248</td>
+                                <td>42</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>10248</td>
+                                <td>72</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>10249</td>
+                                <td>14</td>
+                                <td>9</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>10249</td>
+                                <td>51</td>
+                                <td>40</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SQL CASE Examples -->
+        <section class="content-section" id="case-examples">
+            <h2>SQL CASE எடுத்துக்காட்டுகள்</h2>
+            
+            <p>பின்வரும் SQL நிபந்தனைகளைக் கடந்து, முதல் நிபந்தனை நிறைவேற்றப்படும் போது ஒரு மதிப்பைத் திருப்பித் தரும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு 1</h3>
+                <pre><code>SELECT OrderID, Quantity,
+CASE
+    WHEN Quantity > 30 THEN 'The quantity is greater than 30'
+    WHEN Quantity = 30 THEN 'The quantity is 30'
+    ELSE 'The quantity is under 30'
+END AS QuantityText
+FROM OrderDetails;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL வாடிக்கையாளர்களை City-யின் அடிப்படையில் வரிசைப்படுத்தும். இருப்பினும், City NULL ஆக இருந்தால், Country-யின் அடிப்படையில் வரிசைப்படுத்தும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு 2</h3>
+                <pre><code>SELECT CustomerName, City, Country
+FROM Customers
+ORDER BY
+(CASE
+    WHEN City IS NULL THEN Country
+    ELSE City
+END);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>CASE வெளிப்பாடு SELECT, WHERE, ORDER BY மற்றும் HAVING உரைகள் உட்பட SQL-ன் பல்வேறு பகுதிகளில் பயன்படுத்தப்படலாம். இது தரவை வடிவமைக்கவும் வகைப்படுத்தவும் மிகவும் பயனுள்ளதாக இருக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h3>விலை வகைப்படுத்தல்</h3>
+                    <p>தயாரிப்பு விலைகளை வகைப்படுத்துதல்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT ProductName, Price,
+CASE
+    WHEN Price > 100 THEN 'Premium'
+    WHEN Price > 50 THEN 'Standard'
+    ELSE 'Budget'
+END AS PriceCategory
+FROM Products;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>வாடிக்கையாளர் வகை</h3>
+                    <p>வாடிக்கையாளர்களை அவர்களின் கொள்முதல் அடிப்படையில் வகைப்படுத்துதல்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT CustomerName,
+CASE
+    WHEN TotalOrders > 50 THEN 'VIP'
+    WHEN TotalOrders > 20 THEN 'Regular'
+    ELSE 'New'
+END AS CustomerType
+FROM Customers;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>செயல்திறன் மதிப்பீடு</h3>
+                    <p>பணியாளர் செயல்திறனை மதிப்பீடு செய்தல்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT EmployeeName,
+CASE
+    WHEN Sales > 100000 THEN 'Excellent'
+    WHEN Sales > 50000 THEN 'Good'
+    WHEN Sales > 20000 THEN 'Average'
+    ELSE 'Needs Improvement'
+END AS Performance
+FROM Employees;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL CASE வெளிப்பாடு என்ன செய்கிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணை வரிசைகளில் மீண்டும் மீண்டும் செயல்படுத்தி ஒவ்வொரு நெடுவரிசைக்கும் ஒரு மதிப்பைத் திருப்பித் தரும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! CASE வெளிப்பாடு வரிசைகளில் மீண்டும் மீண்டும் செயல்படுத்தாது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">நிபந்தனைகளை மதிப்பீடு செய்து முதல் உண்மை நிபந்தனையின் அடிப்படையில் ஒரு மதிப்பைத் திருப்பித் தரும்</div>
+                            <div class="option-feedback correct">✓ சரி! CASE வெளிப்பாடு நிபந்தனைகளை மதிப்பீடு செய்து முதல் உண்மை நிபந்தனைக்கான மதிப்பைத் திருப்பித் தரும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நெடுவரிசை அல்லது அட்டவணைக்கு மாற்றுப் பெயரைக் குறிப்பிடுகிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது AS உரைக்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">இரண்டு அட்டவணைகளிலிருந்து வரிசைகளை ஒரு நிபந்தனையின் அடிப்படையில் இணைக்கிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது JOIN-க்கானது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL INSERT INTO SELECT Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL NULL Functions.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-case">CASE வெளிப்பாடு</a></li>
+                    <li><a href="#case-syntax">CASE தொடரியல்</a></li>
+                    <li><a href="#case-examples">CASE எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#practical-examples">நடைமுறை எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

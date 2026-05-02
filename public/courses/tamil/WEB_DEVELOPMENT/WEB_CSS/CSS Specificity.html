@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Specificity - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Specificity visualization */
+        .specificity-scale {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .scale-item {
+            text-align: center;
+            flex: 1;
+            padding: 1rem;
+        }
+        
+        .scale-item h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .scale-weight {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS Inheritance.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS The important Rule.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Specificity</h2>
+            <p>CSS சிறப்புத்தன்மை (Specificity) பற்றி கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Specificity Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS Specificity</h2>
+            
+            <p>CSS சிறப்புத்தன்மை என்பது ஒரு உறுப்புக்கு இறுதியாக எந்த பாணி அறிவிப்பு (style declaration) பயன்படுத்தப்படுகிறது என்பதை தீர்மானிக்கும் ஒரு அல்காரிதம் ஆகும்.</p>
+            
+            <p>இரண்டு அல்லது அதற்கு மேற்பட்ட CSS விதிகள் ஒரே உறுப்பைச் சுட்டிக்காட்டினால், அதிக சிறப்புத்தன்மை கொண்ட அறிவிப்பு "வெற்றி பெறும்", மேலும் அந்த பாணி HTML உறுப்புக்குப் பயன்படுத்தப்படும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> Jassif Team உதவிக்குறிப்பு:</h4>
+                <p>CSS சிறப்புத்தன்மை புரிந்துகொள்வது CSS முரண்பாடுகளை (conflicts) தீர்க்க மிகவும் முக்கியமானது. இது எந்த பாணி விதிகள் மற்றவற்றை மேலெழுதும் (override) என்பதை தீர்மானிக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Basic Examples -->
+        <section class="content-section" id="basic-examples">
+            <h2>அடிப்படை எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>எடுத்துக்காட்டு 1: உறுப்பு தேர்வாளர் (Element Selector)</h3>
+            <p>இங்கே, &lt;p&gt; உறுப்புகளுக்கு சிவப்பு நிறத்தை குறிப்பிட்டுள்ளோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+p {color: red;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;p&gt;Hello World!&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு 2: வகுப்பு தேர்வாளர் (Class Selector)</h3>
+            <p>இங்கே, "test" என்ற வகுப்பு தேர்வாளரைச் சேர்த்துள்ளோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+.test {color: green;}
+p {color: red;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;p class="test"&gt;Hello World!&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> Jassif Team விளக்கம்:</h4>
+                <p>வகுப்பு தேர்வாளருக்கு உறுப்பு தேர்வாளரை விட அதிக சிறப்புத்தன்மை உள்ளது, எனவே உரை பச்சை நிறத்தில் தோன்றும்.</p>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு 3: ID தேர்வாளர் (ID Selector)</h3>
+            <p>இங்கே, "demo" என்ற ID தேர்வாளரைச் சேர்த்துள்ளோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+#demo {color: blue;}
+.test {color: green;}
+p {color: red;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;p id="demo" class="test"&gt;Hello World!&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> Jassif Team விளக்கம்:</h4>
+                <p>ID தேர்வாளருக்கு வகுப்பு தேர்வாளரை விட அதிக சிறப்புத்தன்மை உள்ளது, எனவே உரை நீல நிறத்தில் தோன்றும்.</p>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு 4: உள்ளிணைந்த பாணி (Inline Style)</h3>
+            <p>இங்கே, உள்ளிணைந்த பாணியைச் சேர்த்துள்ளோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+#demo {color: blue;}
+.test {color: green;}
+p {color: red;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;p id="demo" class="test" style="color: pink;"&gt;Hello World!&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> Jassif Team விளக்கம்:</h4>
+                <p>உள்ளிணைந்த பாணிக்கு அதிகபட்ச சிறப்புத்தன்மை உள்ளது, எனவே உரை இளஞ்சிவப்பு நிறத்தில் தோன்றும்.</p>
+            </div>
+        </section>
+
+        <!-- CSS Specificity Hierarchy -->
+        <section class="content-section" id="specificity-hierarchy">
+            <h2>CSS Specificity Hierarchy</h2>
+            
+            <p>ஒவ்வொரு வகை CSS தேர்வாளரும் சிறப்புத்தன்மை படிநிலையில் ஒரு நிலையைக் கொண்டுள்ளது, மேலும் தேர்வாளர் வகைகள் வெவ்வேறு "எடைகளை" கொண்டு செல்கின்றன.</p>
+            
+            <div class="specificity-scale">
+                <div class="scale-item">
+                    <h4>Inline Styles</h4>
+                    <p>அதிக முன்னுரிமை</p>
+                    <div class="scale-weight">1-0-0-0</div>
+                </div>
+                <div class="scale-item">
+                    <h4>ID Selectors</h4>
+                    <p>இரண்டாவது அதிக முன்னுரிமை</p>
+                    <div class="scale-weight">0-1-0-0</div>
+                </div>
+                <div class="scale-item">
+                    <h4>Classes/Attributes</h4>
+                    <p>மூன்றாவது அதிக முன்னுரிமை</p>
+                    <div class="scale-weight">0-0-1-0</div>
+                </div>
+                <div class="scale-item">
+                    <h4>Elements</h4>
+                    <p>குறைந்த முன்னுரிமை</p>
+                    <div class="scale-weight">0-0-0-1</div>
+                </div>
+            </div>
+            
+            <div class="comparison-table">
+                <table>
+                    <tr>
+                        <th>தேர்வாளர்</th>
+                        <th>எடுத்துக்காட்டு</th>
+                        <th>விளக்கம்</th>
+                        <th>எடை</th>
+                    </tr>
+                    <tr>
+                        <td>Inline styles</td>
+                        <td>&lt;h1 style="color: pink;"&gt;</td>
+                        <td>அதிகபட்ச முன்னுரிமை, மற்ற அனைத்து தேர்வாளர்களையும் மேலெழுதும்</td>
+                        <td>1-0-0-0</td>
+                    </tr>
+                    <tr>
+                        <td>ID selectors</td>
+                        <td>#navbar</td>
+                        <td>இரண்டாவது அதிக முன்னுரிமை</td>
+                        <td>0-1-0-0</td>
+                    </tr>
+                    <tr>
+                        <td>Classes, attribute selectors and pseudo-classes</td>
+                        <td>.test, [type="text"], :hover</td>
+                        <td>மூன்றாவது அதிக முன்னுரிமை</td>
+                        <td>0-0-1-0</td>
+                    </tr>
+                    <tr>
+                        <td>Elements and pseudo-elements</td>
+                        <td>h1, ::before, ::after</td>
+                        <td>குறைந்த முன்னுரிமை</td>
+                        <td>0-0-0-1</td>
+                    </tr>
+                    <tr>
+                        <td>Universal selector and :where()</td>
+                        <td>*, where()</td>
+                        <td>முன்னுரிமை இல்லை</td>
+                        <td>0-0-0-0</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு: சிறப்புத்தன்மை படிநிலை மற்றும் எடை</h3>
+            
+            <div class="code-example">
+                <pre><code>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+#demo {color: blue;} /* எடை: 1-0-0 */
+p#demo {color: orange;} /* எடை: 1-0-1 - வெற்றி! */
+.test {color: green;} /* எடை: 0-1-0 */
+p.test {color: green;} /* எடை: 0-1-1 */
+p {color: red;} /* எடை: 0-0-1 */
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;p id="demo" class="test"&gt;Hello World!&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🚀</span> Jassif Team உதவிக்குறிப்பு:</h4>
+                <p>எடைகளை a-b-c-d வடிவத்தில் நினைத்துக் கொள்ளுங்கள், இங்கு:<br>
+                a = உள்ளிணைந்த பாணிகள்<br>
+                b = ID தேர்வாளர்கள்<br>
+                c = வகுப்புகள், பண்புக்கூறுகள், போலி-வகுப்புகள்<br>
+                d = உறுப்புகள் மற்றும் போலி-உறுப்புகள்</p>
+            </div>
+        </section>
+
+        <!-- More Specificity Examples -->
+        <section class="content-section" id="more-examples">
+            <h2>மேலும் சிறப்புத்தன்மை எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>1. சமமான சிறப்புத்தன்மை: சமீபத்திய விதி வெல்லும்</h3>
+            <p>அதே விதி வெளிப்புற பாணி தாளில் (external style sheet) இருமுறை எழுதப்பட்டால், சமீபத்திய விதி வெல்லும்:</p>
+            
+            <div class="code-example">
+                <pre><code>h1 {background-color: yellow;}
+h1 {background-color: red;}</code></pre>
+            </div>
+            
+            <h3>2. ID தேர்வாளர்கள் பண்புக்கூறு தேர்வாளர்களை விட சிறந்தவை</h3>
+            
+            <div class="code-example">
+                <pre><code>#myDiv {background-color: yellow;}
+div[id=myDiv] {background-color: blue;}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> Jassif Team விளக்கம்:</h4>
+                <p>முதல் விதிக்கு இரண்டாவதை விட அதிக சிறப்புத்தன்மை உள்ளது, எனவே அது பயன்படுத்தப்படும்.</p>
+            </div>
+            
+            <h3>3. ஒரு வகுப்பு தேர்வாளர் உறுப்பு தேர்வாளர்களை விட சிறந்தது</h3>
+            
+            <div class="code-example">
+                <pre><code>.intro {background-color: yellow;}
+h1 {background-color: red;}</code></pre>
+            </div>
+            
+            <h3>4. பொது தேர்வாளர் (*)</h3>
+            <p>பொது தேர்வாளருக்கு (*) சிறப்புத்தன்மை எடை மதிப்பு இல்லை:</p>
+            
+            <div class="code-example">
+                <pre><code>* {background-color: yellow;}
+h1 {background-color: red;}</code></pre>
+            </div>
+            
+            <h3>5. உள்ளிணைந்த பாணி தாள்கள் வெளிப்புற பாணி தாள்களை விட மிகவும் குறிப்பிட்டவை</h3>
+            <p>உள்ளிணைந்த பாணி தாள் பாணி அமைக்கப்பட வேண்டிய உறுப்புக்கு மிக அருகில் உள்ளது:</p>
+            
+            <div class="code-example">
+                <pre><code>/*வெளிப்புற CSS கோப்பில் இருந்து:*/
+#content h1 {background-color: red;}
+
+/*HTML கோப்பில்:*/
+&lt;style&gt;
+#content h1 {background-color: yellow;}
+&lt;/style&gt;</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> முக்கிய குறிப்பு:</h4>
+                <p>உள்ளிணைந்த பாணிகளை அதிகமாகப் பயன்படுத்துவதைத் தவிர்க்கவும், ஏனெனில் அவை பராமரிப்பை கடினமாக்குகின்றன மற்றும் !important விதிகளைத் தவிர அனைத்தையும் மேலெழுதுகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Calculating Specificity -->
+        <section class="content-section" id="calculating-specificity">
+            <h2>சிறப்புத்தன்மையைக் கணக்கிடுதல்</h2>
+            
+            <p>சிறப்புத்தன்மையைக் கணக்கிடும் போது, ஒவ்வொரு தேர்வாளர் வகைக்கும் புள்ளிகளைச் சேர்க்கவும்:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <tr>
+                        <th>தேர்வாளர் வகை</th>
+                        <th>எடுத்துக்காட்டு</th>
+                        <th>புள்ளிகள்</th>
+                        <th>மொத்த சிறப்புத்தன்மை</th>
+                    </tr>
+                    <tr>
+                        <td>உறுப்பு</td>
+                        <td>p, div, h1</td>
+                        <td>0-0-0-1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>வகுப்பு</td>
+                        <td>.container, .btn-primary</td>
+                        <td>0-0-1-0</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>போலி-வகுப்பு</td>
+                        <td>:hover, :first-child</td>
+                        <td>0-0-1-0</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>ID</td>
+                        <td>#header, #main-content</td>
+                        <td>0-1-0-0</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>உள்ளிணைந்த பாணி</td>
+                        <td>style="color: red;"</td>
+                        <td>1-0-0-0</td>
+                        <td>1000</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>கணக்கீட்டு எடுத்துக்காட்டுகள்:</h3>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h4>#nav .item a:hover</h4>
+                    <p>ID: 1 = 100<br>
+                    வகுப்பு: 1 = 10<br>
+                    உறுப்பு: 1 = 1<br>
+                    போலி-வகுப்பு: 1 = 10<br>
+                    மொத்தம் = 121</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h4>div#main .content p</h4>
+                    <p>ID: 1 = 100<br>
+                    வகுப்பு: 1 = 10<br>
+                    உறுப்புகள்: 2 = 2<br>
+                    மொத்தம் = 112</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h4>body div p</h4>
+                    <p>உறுப்புகள்: 3 = 3<br>
+                    மொத்தம் = 3</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>CSS Specificity பயிற்சி</h2>
+            
+            <p>உங்கள் CSS சிறப்புத்தன்மை அறிவைச் சோதிக்க இந்த பயிற்சியை முயற்சிக்கவும்.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வருவனவற்றில் எதற்கு அதிகபட்ச சிறப்புத்தன்மை உள்ளது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">வகுப்பு தேர்வாளர் (Class selector)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! வகுப்பு தேர்வாளருக்கு 0-0-1-0 எடை உள்ளது, இது அதிகபட்சம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">உறுப்பு தேர்வாளர் (Element selector)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! உறுப்பு தேர்வாளருக்கு 0-0-0-1 எடை உள்ளது, இது மிகக் குறைந்தது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ID தேர்வாளர் (ID selector)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ID தேர்வாளருக்கு 0-1-0-0 எடை உள்ளது, ஆனால் உள்ளிணைந்த பாணியை விட குறைவு</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">உள்ளிணைந்த பாணி (Inline style)</div>
+                            <div class="option-feedback correct">✓ சரி! உள்ளிணைந்த பாணிக்கு 1-0-0-0 எடை உள்ளது, இது CSS இல் அதிகபட்ச சிறப்புத்தன்மை ஆகும் (!important விதிகளைத் தவிர)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>சிறப்புத்தன்மை படிநிலை: உள்ளிணைந்த பாணி > ID > வகுப்பு/பண்புக்கூறு > உறுப்பு</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>சிறப்புத்தன்மை a-b-c-d வடிவத்தில் கணக்கிடப்படுகிறது, இங்கு a உள்ளிணைந்த பாணி, b ID கள், c வகுப்புகள், d உறுப்புகள்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>சம சிறப்புத்தன்மை கொண்ட விதிகளில், கடைசியாக வரும் விதி வெல்லும்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>குறைந்த சிறப்புத்தன்மை கொண்ட தேர்வாளர்களைப் பயன்படுத்தி, உங்கள் CSS ஐ மேம்படுத்த முடியும்</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> Jassif Team இறுதி உதவிக்குறிப்பு:</h4>
+                <p>CSS சிறப்புத்தன்மையைப் புரிந்துகொள்வது திறமையான மற்றும் பராமரிக்கக்கூடிய CSS எழுத உதவுகிறது. நீங்கள் எப்போதுமே சாத்தியமான குறைந்த சிறப்புத்தன்மை கொண்ட தேர்வாளர்களைப் பயன்படுத்த முயற்சிக்க வேண்டும், ஏனெனில் இது மேலெழுதுவதை எளிதாக்குகிறது மற்றும் !important ஐத் தவிர்க்க உதவுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS Inheritance.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS The important Rule.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">CSS Specificity அறிமுகம்</a></li>
+                    <li><a href="#basic-examples">அடிப்படை எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#specificity-hierarchy">சிறப்புத்தன்மை படிநிலை</a></li>
+                    <li><a href="#more-examples">மேலும் எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#calculating-specificity">சிறப்புத்தன்மை கணக்கிடுதல்</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                    <li><a href="#summary">சுருக்கம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

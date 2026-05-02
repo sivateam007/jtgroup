@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - JT GROUP OF INSTITUTION</title>
+    <link rel="icon" href="/assets/images/jt_logo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); margin: 0; }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo img.logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 1px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+        }
+        .home-link:hover { opacity: 0.8; }
+        .logout-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .container { max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+        .price { font-size: 4rem; font-weight: bold; text-align: center; color: var(--primary); }
+        .btn { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 12px; font-size: 1.2rem; cursor: pointer; font-weight: 600; }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); transition: all 0.3s; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .error { background: #fff5f5; color: #c53030; padding: 1rem; border-radius: 10px; margin: 1rem 0; display: none; }
+        .success { background: #f0fff4; color: #2f855a; padding: 1rem; border-radius: 10px; margin: 1rem 0; display: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo" class="logo-image">
+                <h1>JT GROUP OF INSTITUTION</h1>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="home-link"><i class="fas fa-home"></i> Home</a>
+                <a href="/app/dashboard.html" class="home-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div style="text-align: center; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 3rem 2rem; margin: -2rem -2rem 2rem -2rem; border-radius: 20px 20px 0 0;">
+                <h2 style="font-size: 2.5rem; margin: 0 0 0.5rem 0;">Unlock All Courses</h2>
+                <p>Get 30 days access to all courses</p>
+            </div>
+
+            <div class="error" id="errorMsg"></div>
+            <div class="success" id="successMsg"></div>
+
+            <div class="price">₹29</div>
+            <div style="text-align: center; color: #718096; margin-bottom: 0.5rem; font-size: 1.1rem;">for 30 days full access</div>
+            <div style="text-align: center; color: var(--primary); margin-bottom: 2rem; font-weight: 600;">learn programming in your own native language</div>
+
+            <button class="btn" id="payBtn" onclick="payNow()">
+                <i class="fas fa-lock" style="margin-right: 8px;"></i>Pay ₹29
+            </button>
+
+            <div style="text-align: center; margin-top: 1.5rem; color: #718096; font-size: 0.9rem;">
+                <i class="fas fa-shield-alt"></i> Secured by Razorpay
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>JT GROUP OF INSTITUTION</h3>
+                <p>Leading educational institution providing quality programming education in multiple languages.</p>
+                <div class="help-center">
+                    <h4><i class="fas fa-envelope"></i> Help Center</h4>
+                    <p>jassifteam@jtgroupofinstitution.com</p>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/app/dashboard.html">Dashboard</a></li>
+                    <li><a href="/courses/tamil/">Courses</a></li>
+                    <li><a href="/app/login.html">Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Course Categories</h3>
+                <ul>
+                    <li><a href="/courses/tamil/FRONT_END_DEVELOPMENT/">Front End</a></li>
+                    <li><a href="/courses/tamil/full stack development/">Full Stack</a></li>
+                    <li><a href="/courses/tamil/programming-languages/">Programming</a></li>
+                    <li><a href="/courses/tamil/WEB_DEVELOPMENT/">Web Dev</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal & Social</h3>
+                <ul>
+                    <li><a href="#terms">Terms & Conditions</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 JT GROUP OF INSTITUTION. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        console.log('=== Payment Page Loaded ===');
+
+        function logout() {
+            fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
+                .then(() => window.location.href = '/app/login.html');
+        }
+
+        async function payNow() {
+            console.log('=== Starting Payment ===');
+
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+            const payBtn = document.getElementById('payBtn');
+            
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+            payBtn.disabled = true;
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting to payment...';
+
+            try {
+                const userRes = await fetch('/api/auth/me', { credentials: 'include' });
+                if (!userRes.ok) {
+                    throw new Error('Please login first');
+                }
+                const user = await userRes.json();
+
+                const orderRes = await fetch('/api/payment/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({}),
+                    credentials: 'include'
+                });
+
+                if (!orderRes.ok) {
+                    const error = await orderRes.json();
+                    throw new Error(error.error || 'Failed to create order');
+                }
+
+                const orderData = await orderRes.json();
+                console.log('Payment link created:', orderData.hostedUrl);
+
+                // Redirect to Razorpay hosted payment page
+                window.location.href = orderData.hostedUrl;
+
+            } catch (err) {
+                console.error('Error:', err.message);
+                errorMsg.textContent = err.message || 'Payment failed. Please try again.';
+                errorMsg.style.display = 'block';
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fas fa-lock" style="margin-right: 8px;"></i>Pay ₹29';
+            }
+        }
+
+        // Check for success/error from redirect
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('success');
+            const error = urlParams.get('error');
+            const razorpay_payment_id = urlParams.get('razorpay_payment_id');
+
+            if (success || razorpay_payment_id) {
+                document.getElementById('successMsg').textContent = 'Payment successful! Subscription activated.';
+                document.getElementById('successMsg').style.display = 'block';
+                document.getElementById('payBtn').style.display = 'none';
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            } else if (error) {
+                document.getElementById('errorMsg').textContent = 'Payment failed. Please try again.';
+                document.getElementById('errorMsg').style.display = 'block';
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+    </script>
+</body>
+</html>

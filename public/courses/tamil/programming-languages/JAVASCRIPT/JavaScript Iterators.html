@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Iterators - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20Iterables.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20Generators.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript Iterators</h2>
+            <p>JavaScript மீள்விகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- The Iterator Object -->
+        <section class="content-section" id="iterator-object">
+            <h2>The Iterator Object</h2>
+            
+            <p>ஒரு மீள்வி என்பது உறுப்புகளை வரிசைப்படுத்தப்பட்ட முறையில் அணுகுவதற்கு ஒரு தரமான வழியை வழங்கும் ஒரு பொருள் ஆகும்.</p>
+            
+            <p>ஒரு மீள்வி மீள்வி நெறிமுறையைப் பின்பற்ற வேண்டும்: அதற்கு next() முறை இருக்க வேண்டும்.</p>
+        </section>
+
+        <!-- The next() Method -->
+        <section class="content-section" id="next-method">
+            <h2>The next() Method</h2>
+            
+            <p>next() முறை இரண்டு பண்புகளைக் கொண்ட ஒரு பொருளைத் தரும்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-tag"></i>
+                    <div><strong>value</strong> பண்பு மீள்வு வரிசையில் அடுத்த மதிப்பைக் கொண்டுள்ளது.</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div><strong>done</strong> பண்பு இன்னும் மீள்வு செய்ய வேண்டிய உறுப்புகள் இருந்தால் false ஐத் தரும், இல்லையெனில் true ஐத் தரும்.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The For Of Loop -->
+        <section class="content-section" id="for-of-loop">
+            <h2>The For Of Loop</h2>
+            
+            <p>JavaScript for..of அறிக்கை ஒரு மீளக்கூடிய பொருளின் உறுப்புகள் வழியாக லூப் செய்கிறது.</p>
+            
+            <h3>Syntax</h3>
+            <div class="code-example">
+                <pre><code>for (variable of iterable) {
+  // செயல்படுத்த வேண்டிய குறியீட்டு தொகுதி
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> தொழில்நுட்ப குறிப்பு:</h4>
+                <p>தொழில்நுட்ப ரீதியாக, மீளக்கூடியவை Symbol.iterator முறையை செயல்படுத்த வேண்டும்.</p>
+            </div>
+        </section>
+
+        <!-- JavaScript Iterables List -->
+        <section class="content-section" id="iterables-list">
+            <h2>JavaScript இல் மீளக்கூடியவை</h2>
+            
+            <p>JavaScript இல் பின்வருவன மீளக்கூடியவை:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-font"></i>
+                        <h4>சரங்கள்</h4>
+                    </div>
+                    <p>Strings</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-list"></i>
+                        <h4>வரிசைகள்</h4>
+                    </div>
+                    <p>Arrays</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>தட்டையான வரிசைகள்</h4>
+                    </div>
+                    <p>Typed Arrays</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-object-group"></i>
+                        <h4>Sets</h4>
+                    </div>
+                    <p>Sets</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-map"></i>
+                        <h4>Maps</h4>
+                    </div>
+                    <p>Maps</p>
+                </div>
+            </div>
+            
+            <p>காரணம்: அவற்றின் முன்னுதாரணப் பொருள்கள் Symbol.iterator முறையைக் கொண்டுள்ளன.</p>
+        </section>
+
+        <!-- Iterator Benefits -->
+        <section class="content-section" id="iterator-benefits">
+            <h2>மீள்விகளின் நன்மைகள்</h2>
+            
+            <p>மீள்விகள் தரவு வரிசைகளுடன் பணிபுரிய ஒரு கட்டுப்படுத்தப்பட்ட வழியை வழங்குகின்றன, பல்வேறு தரவு கட்டமைப்புகளுக்கு தனிப்பயன் மீள்வு தர்க்கத்தை இயலுமைப்படுத்துகின்றன.</p>
+            
+            <p>அவை குறிப்பாக பின்வருவனவற்றிற்கு மிகவும் பயனுள்ளதாக இருக்கின்றன:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-stream"></i>
+                    <div>தரவு ஓட்டங்களைக் கையாளுதல்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-calculator"></i>
+                    <div>மதிப்புகளின் சோம்பேறி கணக்கீடு</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-sitemap"></i>
+                    <div>வரையறுக்கப்பட்ட மீள்வு நடத்தைகளுடன் தனிப்பயன் தரவு கட்டமைப்புகளை உருவாக்குதல்</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Helper Functions -->
+        <section class="content-section" id="helper-functions">
+            <h2>உதவி செயல்பாடுகள்</h2>
+            
+            <p>JavaScript 2025 (ECMAScript 2025) JavaScript இல் மீள்விகளின் செயல்பாட்டை கணிசமாக மேம்படுத்தும் புதிய மீள்வி உதவி முறைகளின் தொகுப்பை அதிகாரப்பூர்வமாக அங்கீகரித்தது.</p>
+            
+            <p>இந்த முறைகள் அவற்றை முதலில் வரிசைகளாக மாற்றாமலேயே நேரடி கையாளுதல் மற்றும் மாற்றத்தை அனுமதிப்பதன் மூலம், மீளக்கூடிய பொருள்கள் மற்றும் ஜெனரேட்டர்களுடன் பணிபுரிய மிகவும் செயல்பாட்டு மற்றும் திறமையான வழியை வழங்குகின்றன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>செயல்பாடு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>drop()</code></td>
+                            <td>குறிப்பிட்ட எண்ணிக்கையிலான உறுப்புகளைத் தவிர்த்துவிட்டு மீதமுள்ளவற்றை வழங்கும் ஒரு மீள்வியைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><code>every()</code></td>
+                            <td>அனைத்து உறுப்புகளும் ஒரு சோதனை செயல்பாட்டை திருப்திப்படுத்தினால் true ஐத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><code>filter()</code></td>
+                            <td>ஒரு வடிகட்டி செயல்பாட்டை திருப்திப்படுத்தும் உறுப்புகளைக் கொண்ட ஒரு மீள்வியைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><code>find()</code></td>
+                            <td>ஒரு சோதனை செயல்பாட்டை திருப்திப்படுத்தும் முதல் உறுப்பைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><code>flatMap()</code></td>
+                            <td>ஒவ்வொரு உறுப்பையும் மேப்பிங் செய்து, பின்னர் முடிவுகளை ஒரு மீள்வியாக சமன்படுத்துவதன் மூலம் ஒரு புதிய மீள்வியைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><code>forEach()</code></td>
+                            <td>மீள்வியில் உள்ள ஒவ்வொரு உறுப்புக்கும் ஒரு செயல்பாட்டை ஒரு முறை செயல்படுத்துகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><code>from()</code></td>
+                            <td>ஒரு மீளக்கூடியதிலிருந்து ஒரு மீள்வி பொருளை உருவாக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><code>map()</code></td>
+                            <td>ஒரு மேப் செயல்பாட்டின் மூலம் மாற்றப்பட்ட அனைத்து உறுப்புகளையும் கொண்ட ஒரு மீள்வியைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><code>reduce()</code></td>
+                            <td>ஒரு ஒற்றை மதிப்பாகக் குறைக்க ஒரு குவிப்பான் மற்றும் ஒவ்வொரு உறுப்புக்கும் எதிராக ஒரு reducer செயல்பாட்டைப் பயன்படுத்துகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><code>some()</code></td>
+                            <td>குறைந்தபட்சம் ஒரு உறுப்பு ஒரு சோதனை செயல்பாட்டை திருப்திப்படுத்தினால் true ஐத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><code>take()</code></td>
+                            <td>குறிப்பிட்ட எண்ணிக்கையிலான உறுப்புகளை வழங்கும் ஒரு மீள்வியைத் தரும்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- The Iterator.from() Method -->
+        <section class="content-section" id="iterator-from">
+            <h2>The Iterator.from() Method</h2>
+            
+            <p><code>Iterator.from()</code> முறை ஒரு இருக்கும் மீளக்கூடிய அல்லது மீள்வி பொருளிலிருந்து ஒரு மீள்வி பொருளை உருவாக்குகிறது.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from([1, 2, 3]);
+
+// உறுப்புகள் மீது மீள்வு செய்யவும்
+let text = "";
+for (const x of myIterator) {
+  text += x;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- The drop() Method -->
+        <section class="content-section" id="drop-method">
+            <h2>The drop() Method</h2>
+            
+            <p><code>drop()</code> முறை குறிப்பிட்ட எண்ணிக்கையிலான உறுப்புகளைத் தவிர்த்துவிட்டு மீதமுள்ளவற்றை வழங்கும் ஒரு புதிய மீள்வியைத் தரும்.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from([1, 2, 3, 4, 5, 6]);
+
+// முதல் ஐந்தை நீக்கவும்
+const firstFive = myIterator.drop(5);</code></pre>
+            </div>
+        </section>
+
+        <!-- The every() Method -->
+        <section class="content-section" id="every-method">
+            <h2>The every() Method</h2>
+            
+            <p><code>every(fn)</code> முறை மீள்வியில் உள்ள அனைத்து உறுப்புகளும் வழங்கப்பட்ட சோதனை செயல்பாட்டை திருப்திப்படுத்தினால் true ஐத் தரும்.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from("123456789");
+
+// ஒவ்வொரு உறுப்பும் 7 ஐ விட பெரியதா?
+let result = myIterator.every(x => x > 7);</code></pre>
+            </div>
+        </section>
+
+        <!-- The filter() Method -->
+        <section class="content-section" id="filter-method">
+            <h2>The filter() Method</h2>
+            
+            <p><code>filter()</code> முறை ஒரு வடிகட்டி செயல்பாட்டை திருப்திப்படுத்தும் உறுப்புகளைக் கொண்ட ஒரு புதிய மீள்வியைத் தரும்.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from([32, 33, 16, 40]);
+
+// மீள்வியை வடிகட்டவும்
+const filteredIterator = myIterator.filter(x => x > 18);</code></pre>
+            </div>
+        </section>
+
+        <!-- The find() Method -->
+        <section class="content-section" id="find-method">
+            <h2>The find() Method</h2>
+            
+            <p><code>find(fn)</code> முறை ஒரு சோதனை செயல்பாட்டை திருப்திப்படுத்தும் முதல் உறுப்பைத் தரும்.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from([3, 10, 18, 30, 20]);
+
+// 18 ஐ விட பெரிய முதல் உறுப்பைக் கண்டறியவும்
+let result = myIterator.find(x => x > 18);</code></pre>
+            </div>
+        </section>
+
+        <!-- The flatMap() Method -->
+        <section class="content-section" id="flatmap-method">
+            <h2>The flatMap() Method</h2>
+            
+            <p><code>flatMap()</code> முறை ஒவ்வொரு உறுப்பையும் மேப்பிங் செய்து, பின்னர் முடிவுகளை ஒரு மீள்வியாக சமன்படுத்துவதன் மூலம் ஒரு புதிய மீள்வியைத் தரும்.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from([1, 2, 3, 4, 5, 6]);
+
+// மீள்வியை மேப் செய்யவும்
+const mappedIterator = myIterator.flatMap(x => [x, x * 10]);</code></pre>
+            </div>
+        </section>
+
+        <!-- The forEach() Method -->
+        <section class="content-section" id="foreach-method">
+            <h2>The forEach() Method</h2>
+            
+            <p><code>forEach()</code> முறை மீள்வியில் உள்ள ஒவ்வொரு உறுப்புக்கும் வழங்கப்பட்ட செயல்பாட்டை ஒரு முறை செயல்படுத்துகிறது.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from("123456789");
+
+// அனைத்து உறுப்புகள் மீதும் மீள்வு செய்யவும்
+let text = "";
+myIterator.forEach (x => text += x);</code></pre>
+            </div>
+        </section>
+
+        <!-- The map() Method -->
+        <section class="content-section" id="map-method">
+            <h2>The map() Method</h2>
+            
+            <p><code>map()</code> முறை ஒரு மேப் செயல்பாட்டின் மூலம் மாற்றப்பட்ட அனைத்து உறுப்புகளையும் கொண்ட ஒரு புதிய மீள்வியைத் தரும்.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from("123456789");
+
+// இப்போது நீங்கள் map முறையைப் பயன்படுத்தலாம்
+const mappedIterator = myIterator.map(x => x * 2);</code></pre>
+            </div>
+        </section>
+
+        <!-- The reduce() Method -->
+        <section class="content-section" id="reduce-method">
+            <h2>The reduce() Method</h2>
+            
+            <p><code>reduce()</code> முறை ஒரு ஒற்றை மதிப்பாகக் குறைக்க ஒரு குவிப்பான் மற்றும் ஒவ்வொரு உறுப்புக்கும் எதிராக ஒரு reducer செயல்பாட்டைப் பயன்படுத்துகிறது.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from([175, 50, 25]);
+
+// மீள்வியைக் குறைக்கவும்
+let result = myIterator.reduce(myFunc);</code></pre>
+            </div>
+        </section>
+
+        <!-- The some() Method -->
+        <section class="content-section" id="some-method">
+            <h2>The some() Method</h2>
+            
+            <p><code>some()</code> முறை குறைந்தபட்சம் ஒரு உறுப்பு வழங்கப்பட்ட சோதனை செயல்பாட்டை திருப்திப்படுத்தினால் true ஐத் தரும்.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு மீள்வியை உருவாக்கவும்
+const myIterator = Iterator.from("123456789");
+
+// சில உறுப்புகள் 7 ஐ விட பெரியதா?
+let result = myIterator.some(x => x > 7);</code></pre>
+            </div>
+        </section>
+
+        <!-- The take() Method -->
+        <section class="content-section" id="take-method">
+            <h2>The take() Method</h2>
+            
+            <p><code>take()</code> முறை அதிகபட்சமாக குறிப்பிட்ட எண்ணிக்கையிலான உறுப்புகளை வழங்கும் ஒரு புதிய மீள்வியைத் தரும்.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>const myIterator = Iterator.from([1, 2, 3, 4, 5, 6]);
+
+// முதல் ஐந்து உறுப்புகளை எடுக்கவும்
+const firstFive = myIterator.take(5);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> முக்கிய குறிப்பு:</h4>
+                <p>மீள்விகள் மீள்வு கருத்தை நேரடியாக மைய JavaScript மொழியில் கொண்டு வந்து for...of இன் நடத்தையைத் தனிப்பயனாக்குவதற்கான ஒரு பொறிமுறையை வழங்குகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Single Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>JavaScript Iterators பயிற்சி</h2>
+            
+            <p>பின்வரும் குறியீட்டைக் கவனியுங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>const myIterator = Iterator.from([1, 2, 3, 4, 5]);
+const result = myIterator.filter(x => x % 2 === 0).take(2);</code></pre>
+            </div>
+            
+            <p>result மீள்வியிலிருந்து பெறப்பட்ட மதிப்புகள் என்ன?</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான பதிலைத் தேர்ந்தெடுக்கவும்:</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">[1, 2]</div>
+                            <div class="option-feedback incorrect">✗ தவறு! filter(x => x % 2 === 0) இரட்டை எண்களை மட்டுமே தேர்ந்தெடுக்கும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">[2, 4]</div>
+                            <div class="option-feedback correct">✓ சரி! filter இரட்டை எண்களைத் தேர்ந்தெடுக்கும் (2,4) மற்றும் take(2) முதல் இரண்டை எடுக்கும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">[2, 4, 5]</div>
+                            <div class="option-feedback incorrect">✗ தவறு! take(2) இரண்டு உறுப்புகளை மட்டுமே எடுக்கும், 5 இரட்டை எண்ணல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">[1, 3, 5]</div>
+                            <div class="option-feedback incorrect">✗ தவறு! filter(x => x % 2 === 0) இரட்டை எண்களை மட்டுமே தேர்ந்தெடுக்கும், ஒற்றை எண்களை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20Iterables.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20Generators.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#iterator-object">Iterator Object</a></li>
+                    <li><a href="#next-method">next() Method</a></li>
+                    <li><a href="#helper-functions">உதவி செயல்பாடுகள்</a></li>
+                    <li><a href="#iterator-from">Iterator.from()</a></li>
+                    <li><a href="#filter-method">filter() Method</a></li>
+                    <li><a href="#map-method">map() Method</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

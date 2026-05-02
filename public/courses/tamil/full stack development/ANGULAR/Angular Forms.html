@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Forms - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20Lists.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Router.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Forms</h2>
+<p>பயனர்கள் உங்கள் பயன்பாட்டில் தரவை உள்ளிடவும் திருத்தவும் படிவங்கள் அனுமதிக்கின்றன</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Forms</h2>
+<p>படிவங்கள் பயனர்கள் உங்கள் பயன்பாட்டில் தரவை உள்ளிடவும் திருத்தவும் அனுமதிக்கின்றன.</p>
+</section>
+
+<!-- Forms Essentials -->
+<section class="content-section" id="essentials">
+<h2>Forms Essentials</h2>
+<p><strong>Two approaches:</strong> Template-driven (HTML-first with [(ngModel)]) and Reactive (code-first with FormGroup/FormControl).</p>
+<p><strong>When to use:</strong> Template-driven for simple forms; Reactive for complex validation, dynamic fields, and testability.</p>
+<p><strong>Key concepts:</strong> A FormControl tracks a single input's value/state; a FormGroup groups controls by name.</p>
+<p><strong>Imports:</strong> FormsModule (template-driven) and ReactiveFormsModule (reactive).</p>
+
+<div class="tip-box">
+<h4><span class="tip-icon">💡</span>Jassif Team Notes:</h4>
+<p>Data Binding for [(ngModel)] and property binding, Events for handling input, and Templates for interpolation பற்றி காண்க.</p>
+<p>Template-driven-க்கு FormsModule மற்றும் reactive-க்கு ReactiveFormsModule இறக்குமதி செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Template-driven Forms -->
+<section class="content-section" id="template-driven">
+<h2>Template-driven Forms</h2>
+<p>தொடங்க விரைவானது மற்றும் plain HTML போல் உணர்கிறது.</p>
+<p>[(ngModel)] மற்றும் தனித்த name attributes உடன் bind செய்யவும்.</p>
+<p>ஏற்றுமதி செய்யப்பட்ட ngForm (எ.கா., valid, touched) மூலம் ஒட்டுமொத்த நிலையை அணுகவும்.</p>
+<p>Standalone கூறுகளில் FormsModule-ஐ இறக்குமதி செய்யவும்.</p>
+
+<div class="code-example">
+<h3>Template-driven Form Example</h3>
+<pre><code>&lt;form #f="ngForm" (ngSubmit)="onSubmit()"&gt;
+  &lt;input name="name" [(ngModel)]="name" required minlength="3" #c="ngModel"&gt;
+  &lt;div *ngIf="c.invalid && (c.dirty || c.touched)"&gt;Invalid&lt;/div&gt;
+  &lt;button [disabled]="f.invalid"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+</div>
+
+<div class="code-example">
+<h3>Complete Example</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  template: `
+    &lt;h3&gt;Forms&lt;/h3&gt;
+    &lt;form #f="ngForm" (ngSubmit)="onSubmit()"&gt;
+      &lt;label&gt;
+        Name:
+        &lt;input name="name" [(ngModel)]="name" placeholder="Enter your name"&gt;
+      &lt;/label&gt;
+      &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;p&gt;Value: {{ name }}&lt;/p&gt;
+    &lt;p *ngIf="submitted"&gt;Submitted!&lt;/p&gt;
+  `
+})
+export class App {
+  name = '';
+  submitted = false;
+  onSubmit() { this.submitted = true; }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>Example Explained:</h4>
+<p><strong>[(ngModel)]="name":</strong> உள்ளீட்டை name புலத்திற்கு இரண்டு-வழி bind செய்கிறது.</p>
+<p><strong>#f="ngForm":</strong> படிவ நிலையை ஏற்றுமதி செய்கிறது (எ.கா., f.valid, f.invalid).</p>
+<p><strong>(ngSubmit)="onSubmit()":</strong> கூறு முறையைப் பயன்படுத்தி submit-ஐ கையாளுகிறது.</p>
+<p><strong>Display:</strong> {{ name }} தற்போதைய மதிப்பைக் காட்டுகிறது; ஒரு கொடி சமர்ப்பிக்கப்பட்ட நிலையைக் காட்டுகிறது.</p>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">⚡</span>Important Notes:</h4>
+<p><strong>Unique name required:</strong> ngForm உடன் பதிவு செய்ய ஒவ்வொரு கட்டுப்பாட்டிற்கும் தனித்த name தேவை.</p>
+<p><strong>Module imports:</strong> Template-driven படிவங்களுக்கு FormsModule தேவை (standalone கூறுகளுக்கு, அதை imports-இல் சேர்க்கவும்).</p>
+</div>
+</section>
+
+<!-- HTML Form Elements in Angular -->
+<section class="content-section" id="html-elements">
+<h2>HTML Form Elements in Angular</h2>
+<div class="code-example">
+<h3>Form Elements Examples</h3>
+<pre><code>&lt;input name="email" type="email" [(ngModel)]="model.email"&gt;
+&lt;textarea name="bio" [(ngModel)]="model.bio"&gt;&lt;/textarea&gt;
+&lt;label&gt;&lt;input type="checkbox" name="agree" [(ngModel)]="model.agree"&gt; Agree&lt;/label&gt;
+&lt;label&gt;&lt;input type="radio" name="color" [value]="'red'" [(ngModel)]="model.color"&gt; Red&lt;/label&gt;
+&lt;label&gt;&lt;input type="radio" name="color" [value]="'blue'" [(ngModel)]="model.color"&gt; Blue&lt;/label&gt;
+&lt;select name="pet" [(ngModel)]="model.pet"&gt;
+  &lt;option [ngValue]="{ id: 1, name: 'Cat' }"&gt;Cat&lt;/option&gt;
+  &lt;option [ngValue]="{ id: 2, name: 'Dog' }"&gt;Dog&lt;/option&gt;
+&lt;/select&gt;
+&lt;input type="file" (change)="onFiles($event)"&gt;</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">💡</span>Form Elements Tips:</h4>
+<p><strong>Object options:</strong> &lt;select&gt;-இல் object விருப்பங்களுக்கு, value-க்கு பதிலாக [ngValue] பயன்படுத்தவும்.</p>
+<p><strong>Radio with non-string values:</strong> எண்கள் அல்லது objects போன்ற string அல்லாத மதிப்புகளை radios-க்கு bind செய்ய [ngValue] பயன்படுத்தவும்.</p>
+<p><strong>Select multiple:</strong> multiple சேர்க்கவும் மற்றும் ஒரு வரிசைக்கு bind செய்யவும்; string அல்லாதவற்றுக்கு [ngValue] பயன்படுத்தவும்.</p>
+<p><strong>Number inputs:</strong> Template-driven மதிப்புகளை strings-ஆக bind செய்கிறது; உங்களுக்கு எண்கள் தேவைப்பட்டால் குறியீட்டில் மாற்றவும்.</p>
+<p><strong>File input:</strong> (change) கையாளியுடன் கோப்புகளைப் படிக்கவும்; கோப்பு objects-ஐ இரண்டு-வழி bind செய்யாதீர்கள்.</p>
+<p><strong>compareWith for select:</strong> விருப்பங்கள் மறு-உருவாக்கப்படக்கூடிய objects-களாக இருக்கும்போது [compareWith] பயன்படுத்தவும்.</p>
+</div>
+</section>
+
+<!-- Validation -->
+<section class="content-section" id="validation">
+<h2>Validation</h2>
+<p>required, minlength, மற்றும் email போன்ற விதிகளைச் சேர்க்கவும்.</p>
+<p>கட்டுப்பாடு அசுத்தமாகவோ அல்லது தொட்டதாகவோ இருக்கும்போது அல்லது சமர்ப்பித்த பிறகு பிழைகளைக் காட்டவும்.</p>
+<p>படிவம் தவறானதாக இருக்கும்போது submit-ஐ முடக்கவும்.</p>
+
+<div class="code-example">
+<h3>Validation Example</h3>
+<pre><code>&lt;input name="email" [(ngModel)]="email" email required #e="ngModel"&gt;
+&lt;div *ngIf="e.invalid && (e.dirty || e.touched)"&gt;
+  &lt;small *ngIf="e.errors && e.errors['required']"&gt;Required&lt;/small&gt;
+  &lt;small *ngIf="e.errors && e.errors['email']"&gt;Invalid email&lt;/small&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+<div class="code-example">
+<h3>Complete Validation Example</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  template: `
+    &lt;h3&gt;Forms Validation&lt;/h3&gt;
+    &lt;form #f="ngForm" (ngSubmit)="onSubmit()" novalidate&gt;
+      &lt;label&gt;
+        Name:
+        &lt;input name="name" [(ngModel)]="model.name" required minlength="3" #name="ngModel"&gt;
+      &lt;/label&gt;
+      &lt;div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" style="color:crimson"&gt;
+        &lt;small *ngIf="name.errors && name.errors['required']"&gt;Name is required.&lt;/small&gt;
+        &lt;small *ngIf="name.errors && name.errors['minlength']"&gt;Name must be at least 3 characters.&lt;/small&gt;
+      &lt;/div&gt;
+
+      &lt;label&gt;
+        Email:
+        &lt;input name="email" [(ngModel)]="model.email" email required #email="ngModel"&gt;
+      &lt;/label&gt;
+      &lt;div *ngIf="email.invalid && (email.dirty || email.touched || submitted)" style="color:crimson"&gt;
+        &lt;small *ngIf="email.errors && email.errors['required']"&gt;Email is required.&lt;/small&gt;
+        &lt;small *lgIf="email.errors && email.errors['email']"&gt;Email must be valid.&lt;/small&gt;
+      &lt;/div&gt;
+
+      &lt;button type="submit" [disabled]="f.invalid"&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;p *ngIf="submitted"&gt;Submitted: {{ model | json }}&lt;/p&gt;
+  `
+})
+export class App {
+  model = { name: '', email: '' };
+  submitted = false;
+  onSubmit() { this.submitted = true; }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>Validation Explained:</h4>
+<p><strong>#name="ngModel":</strong> name உள்ளீட்டிற்கான கட்டுப்பாட்டு நிலையை ஏற்றுமதி செய்கிறது.</p>
+<p><strong>Errors:</strong> name.errors['required'] மற்றும் name.errors['minlength'] குறிப்பிட்ட செய்திகளை இயக்குகின்றன.</p>
+<p><strong>When to show:</strong> செய்திகள் கட்டுப்பாடு தவறாகவும் அசுத்தமாக || தொட்டதாக || சமர்ப்பிக்கப்பட்டதாக இருந்தால் தோன்றும்.</p>
+<p><strong>Disable submit:</strong> பொத்தான் தவறான சமர்ப்பிப்பைத் தடுக்க f.invalid க்கு bind செய்கிறது.</p>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">✅</span>Validation Best Practices:</h4>
+<p><strong>When to show errors:</strong> செய்திகளை அசுத்தமாக || தொட்டதாக || சமர்ப்பிக்கப்பட்டதாக இருக்கும்போது மட்டும் காட்டவும், அதிக முன்கூட்டியே தோன்றாதபடி.</p>
+<p><strong>Disable submit correctly:</strong> f.invalid (டெம்ப்ளேட்) அல்லது form.invalid (reactive) க்கு bind செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Reactive Forms -->
+<section class="content-section" id="reactive-forms">
+<h2>Reactive Forms</h2>
+<p>குறியீட்டில் FormGroup/FormControl-ன் மரத்தை உருவாக்கவும்.</p>
+<p>டெம்ப்ளேட்டை [formGroup] மற்றும் formControlName உடன் bind செய்யவும்.</p>
+<p>சிக்கலான சரிபார்ப்பு, நிபந்தனை புலங்கள் மற்றும் சோதனைக்கு சிறந்தது.</p>
+<p>FormBuilder மற்றும் Validators-உடன் கட்டுப்பாடுகளை உருவாக்கவும்.</p>
+
+<div class="code-example">
+<h3>Reactive Form Setup</h3>
+<pre><code>form = this.fb.group({
+  name: ['', [Validators.required, Validators.minLength(3)]],
+  email: ['', [Validators.required, Validators.email]],
+});
+
+&lt;form [formGroup]="form"&gt;
+  &lt;input formControlName="name"&gt;
+  &lt;input formControlName="email"&gt;
+&lt;/form&gt;</code></pre>
+</div>
+
+<div class="code-example">
+<h3>Complete Reactive Example</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: `
+    &lt;h3&gt;Reactive Forms&lt;/h3&gt;
+    &lt;form [formGroup]="form" (ngSubmit)="onSubmit()"&gt;
+      &lt;label&gt;
+        Name
+        &lt;input formControlName="name" placeholder="Your name"&gt;
+      &lt;/label&gt;
+      &lt;div *ngIf="form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched || submitted)" style="color:crimson"&gt;
+        &lt;small *ngIf="form.controls.name.errors && form.controls.name.errors['required']"&gt;Name is required.&lt;/small&gt;
+        &lt;small *ngIf="form.controls.name.errors && form.controls.name.errors['minlength']"&gt;Min 3 characters.&lt;/small&gt;
+      &lt;/div&gt;
+
+      &lt;label&gt;
+        Email
+        &lt;input formControlName="email" placeholder="you@example.com"&gt;
+      &lt;/label&gt;
+      &lt;div *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched || submitted)" style="color:crimson"&gt;
+        &lt;small *ngIf="form.controls.email.errors && form.controls.email.errors['required']"&gt;Email is required.&lt;/small&gt;
+        &lt;small *ngIf="form.controls.email.errors && form.controls.email.errors['email']"&gt;Email must be valid.&lt;/small&gt;
+      &lt;/div&gt;
+
+      &lt;label&gt;
+        &lt;input type="checkbox" formControlName="newsletter"&gt;
+        Subscribe to newsletter
+      &lt;/label&gt;
+
+      &lt;button type="submit" [disabled]="form.invalid"&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;p&gt;Status: {{ form.status }}&lt;/p&gt;
+    &lt;p&gt;Value: {{ form.value | json }}&lt;/p&gt;
+    &lt;p *ngIf="submitted" style="color: seagreen;"&gt;Submitted!&lt;/p&gt;
+  `
+})
+export class App {
+  fb = new FormBuilder();
+  submitted = false;
+  form = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    newsletter: [false],
+  });
+
+  onSubmit() { this.submitted = true; }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>Reactive Forms Explained:</h4>
+<p><strong>[formGroup]="form":</strong> படிவ உறுப்பை FormGroup நிகழ்வுக்கு bind செய்கிறது.</p>
+<p><strong>formControlName:</strong> பெயரிடப்பட்ட கட்டுப்பாடுகளுக்கு உள்ளீடுகளை இணைக்கிறது (name, email, newsletter).</p>
+<p><strong>Validators:</strong> FormBuilder மற்றும் Validators-உடன் உருவாக்கப்பட்டது; பிழை செய்திகள் கட்டுப்பாடு பிழைகளைப் படிக்கின்றன.</p>
+<p><strong>Submit:</strong> form.invalid ஆக இருக்கும்போது பொத்தானை முடக்குகிறது; submit-இல் ஒரு சமர்ப்பிக்கப்பட்ட கொடியை அமைக்கிறது.</p>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">🚫</span>Reactive Forms Warnings:</h4>
+<p><strong>Don't mix paradigms:</strong> formControlName-ஐயும் பயன்படுத்தும் கட்டுப்பாடுகளில் [(ngModel)]-ஐத் தவிர்க்கவும்.</p>
+<p><strong>Update via API:</strong> கட்டுப்பாட்டு objects-ஐ நேரடியாக மாற்றுவதற்குப் பதிலாக setValue/patchValue மற்றும் validator முறைகளைப் பயன்படுத்தவும்.</p>
+<p><strong>Module imports:</strong> Reactive படிவங்களுக்கு ReactiveFormsModule தேவை.</p>
+</div>
+</section>
+
+<!-- Forms Comparison -->
+<section class="content-section" id="forms-comparison">
+<h2>Forms Approaches Comparison</h2>
+<div class="comparison-table">
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Template-driven Forms</th>
+<th>Reactive Forms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Setup</strong></td>
+<td>HTML-first, quick start</td>
+<td>Code-first, explicit</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>Simple forms</td>
+<td>Complex forms, dynamic fields</td>
+</tr>
+<tr>
+<td><strong>Validation</strong></td>
+<td>HTML attributes</td>
+<td>Programmatic, synchronous/async</td>
+</tr>
+<tr>
+<td><strong>Testability</strong></td>
+<td>Harder to unit test</td>
+<td>Easier to unit test</td>
+</tr>
+<tr>
+<td><strong>Data Model</strong></td>
+<td>Two-way binding</td>
+<td>Immutable data model</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Good for simple forms</td>
+<td>Better for complex scenarios</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Forms Knowledge Check</h2>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>Which module do you import for template-driven forms?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">FormsModule</div>
+<div class="option-feedback correct">✓ Correct! FormsModule is required for template-driven forms in Angular</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">ReactiveFormsModule</div>
+<div class="option-feedback incorrect">✗ Incorrect! ReactiveFormsModule is for reactive forms, not template-driven forms</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">HttpClientModule</div>
+<div class="option-feedback incorrect">✗ Incorrect! HttpClientModule is for HTTP requests, not forms</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20Lists.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Router.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education in Tamil.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">Angular Forms</a></li>
+<li><a href="#essentials">Forms Essentials</a></li>
+<li><a href="#template-driven">Template-driven Forms</a></li>
+<li><a href="#html-elements">Form Elements</a></li>
+<li><a href="#validation">Validation</a></li>
+<li><a href="#reactive-forms">Reactive Forms</a></li>
+<li><a href="#forms-comparison">Forms Comparison</a></li>
+<li><a href="#exercise">Quiz</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contact</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Location &amp; Hours</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

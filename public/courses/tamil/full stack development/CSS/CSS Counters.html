@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Counters - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Counter demo styles */
+        .counter-demo {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+        }
+        
+        /* Automatic numbering demo */
+        .auto-numbering {
+            counter-reset: section;
+        }
+        
+        .auto-numbering h2::before {
+            counter-increment: section;
+            content: "Section " counter(section) ": ";
+            color: #04AA6D;
+            font-weight: bold;
+        }
+        
+        /* Food list with counters */
+        .food-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .food-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-left: 4px solid #04AA6D;
+            counter-increment: food-counter;
+        }
+        
+        .food-list li::before {
+            content: counter(food-counter) ". ";
+            font-weight: bold;
+            color: #04AA6D;
+            margin-right: 10px;
+        }
+        
+        /* Increase and decrease counter demo */
+        .increase-demo {
+            counter-reset: increase-section;
+        }
+        
+        .increase-demo h2::before {
+            counter-increment: increase-section;
+            content: "Section " counter(increase-section) ": ";
+            color: #2196F3;
+            font-weight: bold;
+        }
+        
+        .decrease-demo {
+            counter-reset: decrease-section;
+        }
+        
+        .decrease-demo h2::before {
+            counter-increment: decrease-section -1;
+            content: "Section " counter(decrease-section) ": ";
+            color: #FF5722;
+            font-weight: bold;
+        }
+        
+        .increment-by-two {
+            counter-reset: two-section;
+        }
+        
+        .increment-by-two h2::before {
+            counter-increment: two-section 2;
+            content: "Section " counter(two-section) ": ";
+            color: #9C27B0;
+            font-weight: bold;
+        }
+        
+        /* Two counters demo */
+        .two-counters-demo {
+            counter-reset: section;
+        }
+        
+        .two-counters-demo h1 {
+            counter-reset: subsection;
+        }
+        
+        .two-counters-demo h1::before {
+            counter-increment: section;
+            content: "Section " counter(section) ". ";
+            color: #04AA6D;
+            font-weight: bold;
+        }
+        
+        .two-counters-demo h2::before {
+            counter-increment: subsection;
+            content: counter(section) "." counter(subsection) " ";
+            color: #2196F3;
+            font-weight: bold;
+        }
+        
+        /* Nested counters demo */
+        .nested-counters {
+            counter-reset: section;
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .nested-counters li {
+            counter-increment: section;
+            margin: 10px 0;
+        }
+        
+        .nested-counters li::before {
+            content: counters(section, ".") " ";
+            font-weight: bold;
+            color: #04AA6D;
+            margin-right: 10px;
+        }
+        
+        .nested-counters ul {
+            counter-reset: section;
+            padding-left: 30px;
+        }
+        
+        /* Comparison table */
+        .comparison-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Forms.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Units.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Counters</h2>
+            <p>CSS கவுண்டர்களைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Counters Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS Counters</h2>
+            
+            <p>CSS கவுண்டர்களுடன், JavaScript ஐப் பயன்படுத்தாமல் உறுப்புகளின் (தலைப்புகள், பிரிவுகள் அல்லது பட்டியல் உருப்படிகள் போன்றவை) டைனமிக் எண்ணிக்கையை உருவாக்கலாம்.</p>
+            
+            <p>CSS கவுண்டர்கள் CSS மூலம் பராமரிக்கப்படும் "மாறிகள்" ஆகும், மேலும் அவற்றின் மதிப்புகள் CSS விதிகளால் அதிகரிக்கப்படலாம் (அல்லது குறைக்கப்படலாம்).</p>
+            
+            <div class="counter-demo">
+                <ul class="food-list">
+                    <li>Pizza</li>
+                    <li>Hamburger</li>
+                    <li>Hotdogs</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- CSS Automatic Numbering With Counters -->
+        <section class="content-section" id="automatic-numbering">
+            <h2>CSS Automatic Numbering With Counters</h2>
+            
+            <p>CSS கவுண்டர்கள் "மாறிகள்" போன்றவை. மாறி மதிப்புகள் CSS விதிகளால் அதிகரிக்கப்படலாம் (அல்லது குறைக்கப்படலாம்).</p>
+            
+            <p>CSS கவுண்டர்களுடன் வேலை செய்ய பின்வரும் பண்புகளைப் பயன்படுத்துவோம்:</p>
+            
+            <ul>
+                <li><code>counter-reset</code> - ஒரு கவுண்டரை உருவாக்குகிறது அல்லது மீட்டமைக்கிறது</li>
+                <li><code>counter-increment</code> - ஒரு கவுண்டரை அதிகரிக்கிறது அல்லது குறைக்கிறது</li>
+                <li><code>content</code> - உருவாக்கப்பட்ட உள்ளடக்கத்தைச் செருகுகிறது (::before மற்றும் ::after உள்ளே பயன்படுத்தப்படுகிறது, உருவாக்கப்பட்ட உள்ளடக்கத்தைச் செருக)</li>
+                <li><code>counter()</code> மற்றும் <code>counters()</code> செயல்பாடுகள் - ஒரு கவுண்டரின் மதிப்பை ஒரு உறுப்பில் சேர்க்கின்றன</li>
+            </ul>
+            
+            <p>CSS கவுண்டரைப் பயன்படுத்த, அது முதலில் <code>counter-reset</code> பண்புடன் உருவாக்கப்பட வேண்டும்.</p>
+        </section>
+
+        <!-- CSS Increase and Decrease Counter -->
+        <section class="content-section" id="increase-decrease">
+            <h2>CSS Increase and Decrease Counter</h2>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு பக்கத்திற்கான ஒரு கவுண்டரை உருவாக்குகிறது (body தேர்வாளில்), பின்னர் அது ஒவ்வொரு <code>&lt;h2&gt;</code> உறுப்புக்கும் கவுண்டர் மதிப்பை 1 ஆல் அதிகரிக்கிறது மற்றும் ஒவ்வொரு <code>&lt;h2&gt;</code> உறுப்பின் தொடக்கத்தில் "Section + countervalue:" என்ற உரையைச் சேர்க்கிறது:</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>body {
+  counter-reset: section;
+}
+
+h2::before {
+  counter-increment: section;
+  content: "Section " counter(section) ": ";
+}</code></pre>
+            </div>
+            
+            <div class="counter-demo">
+                <div class="auto-numbering">
+                    <h2>Introduction</h2>
+                    <h2>Getting Started</h2>
+                    <h2>Advanced Topics</h2>
+                </div>
+            </div>
+            
+            <p><code>counter-increment</code> பண்பு இரண்டாவது அளவுருவைக் கொண்டுள்ளது. இதன் இயல்புநிலை மதிப்பு 1 (இது கவுண்டரை ஒன்றால் அதிகரிக்கிறது). கவுண்டர் மதிப்பைக் குறைக்க, அதை -1 ஆக அமைக்கலாம்.</p>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு மேலே உள்ளதைப் போன்றது, ஆனால் இங்கே நாம் ஒவ்வொரு <code>&lt;h2&gt;</code> உறுப்புக்கும் கவுண்டர் மதிப்பைக் குறைக்கிறோம் மற்றும் ஒவ்வொரு <code>&lt;h2&gt;</code> உறுப்பின் தொடக்கத்தில் "Section + countervalue:" என்ற உரையைச் சேர்க்கிறோம்:</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>body {
+  counter-reset: section;
+}
+
+h2::before {
+  counter-increment: section -1;
+  content: "Section " counter(section) ": ";
+}</code></pre>
+            </div>
+            
+            <div class="counter-demo">
+                <div class="decrease-demo">
+                    <h2>Introduction</h2>
+                    <h2>Getting Started</h2>
+                    <h2>Advanced Topics</h2>
+                </div>
+            </div>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு மேலே உள்ளதைப் போன்றது, ஆனால் இங்கே நாம் ஒவ்வொரு <code>&lt;h2&gt;</code> உறுப்புக்கும் கவுண்டர் மதிப்பை 2 ஆல் அதிகரிக்கிறோம் மற்றும் ஒவ்வொரு <code>&lt;h2&gt;</code> உறுப்பின் தொடக்கத்தில் "Section + countervalue:" என்ற உரையைச் சேர்க்கிறோம்:</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>body {
+  counter-reset: section;
+}
+
+h2::before {
+  counter-increment: section 2;
+  content: "Section " counter(section) ": ";
+}</code></pre>
+            </div>
+            
+            <div class="counter-demo">
+                <div class="increment-by-two">
+                    <h2>Introduction</h2>
+                    <h2>Getting Started</h2>
+                    <h2>Advanced Topics</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Using Two Counters -->
+        <section class="content-section" id="two-counters">
+            <h2>CSS Using Two Counters</h2>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு பக்கத்திற்கான ஒரு கவுண்டரை ("section" என்று பெயரிடப்பட்டது) மற்றும் ஒவ்வொரு <code>&lt;h1&gt;</code> உறுப்புக்கும் ஒரு கவுண்டரை ("subsection" என்று பெயரிடப்பட்டது) உருவாக்குகிறது. "section" கவுண்டர் ஒவ்வொரு <code>&lt;h1&gt;</code> உறுப்புக்கும் "Section +  sectioncounter>." உடன் எண்ணப்படும், மற்றும் "subsection" கவுண்டர் ஒவ்வொரு <code>&lt;h2&gt;</code> உறுப்புக்கும் "sectioncounter.subsectioncounter" உடன் எண்ணப்படும்:</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>body {
+  counter-reset: section;
+}
+
+h1 {
+  counter-reset: subsection;
+}
+
+h1::before {
+  counter-increment: section;
+  content: "Section " counter(section) ". ";
+}
+
+h2::before {
+  counter-increment: subsection;
+  content: counter(section) "." counter(subsection) " ";
+}</code></pre>
+            </div>
+            
+            <div class="counter-demo">
+                <div class="two-counters-demo">
+                    <h1>HTML Tutorial</h1>
+                    <h2>HTML Introduction</h2>
+                    <h2>HTML Basic</h2>
+                    
+                    <h1>CSS Tutorial</h1>
+                    <h2>CSS Introduction</h2>
+                    <h2>CSS Syntax</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- The CSS counters() Function -->
+        <section class="content-section" id="counters-function">
+            <h2>The CSS counters() Function</h2>
+            
+            <p><code>counters()</code> செயல்பாடு பெயரிடப்பட்ட மற்றும் கூடு கட்டப்பட்ட கவுண்டர்களின் தற்போதைய மதிப்புகளை ஒரு சரமாக வழங்குகிறது.</p>
+            
+            <p>இங்கே நாம் கூடு கட்டப்பட்ட கவுண்டர்களின் வெவ்வேறு நிலைகளுக்கு இடையே ஒரு சரத்தைச் செருக <code>counters()</code> செயல்பாட்டைப் பயன்படுத்துகிறோம்:</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>ol {
+  counter-reset: section;
+  list-style-type: none;
+}
+
+li::before {
+  counter-increment: section;
+  content: counters(section,".") " ";
+}</code></pre>
+            </div>
+            
+            <div class="counter-demo">
+                <ol class="nested-counters">
+                    <li>Main Topic 1
+                        <ul>
+                            <li>Sub Topic 1.1</li>
+                            <li>Sub Topic 1.2</li>
+                        </ul>
+                    </li>
+                    <li>Main Topic 2
+                        <ul>
+                            <li>Sub Topic 2.1</li>
+                            <li>Sub Topic 2.2
+                                <ul>
+                                    <li>Sub-sub Topic 2.2.1</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> CSS இல் counter-reset பண்பின் நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">கவுண்டரின் மதிப்பைக் காட்ட</div>
+                            <div class="option-feedback incorrect">✗ தவறு! கவுண்டரின் மதிப்பைக் காட்ட counter() செயல்பாடு பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">கவுண்டரின் மதிப்பை அதிகரிக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! கவுண்டரின் மதிப்பை அதிகரிக்க counter-increment பண்பு பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">கவுண்டரை உருவாக்க அல்லது மீட்டமைக்க</div>
+                            <div class="option-feedback correct">✓ சரி! counter-reset பண்பு CSS கவுண்டரை உருவாக்க அல்லது மீட்டமைக்க பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">கவுண்டர்களுக்கு பாணியைப் பயன்படுத்த</div>
+                            <div class="option-feedback incorrect">✗ தவறு! கவுண்டர்களுக்கு பாணியைப் பயன்படுத்த content பண்பு பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Counter Properties -->
+        <section class="content-section" id="counter-properties">
+            <h2>CSS Counter Properties</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <tr>
+                        <th>Property</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>content</code></td>
+                        <td>::before மற்றும் ::after பியூடோ-எலிமென்டுகளுடன் பயன்படுத்தப்படுகிறது, உருவாக்கப்பட்ட உள்ளடக்கத்தைச் செருக</td>
+                    </tr>
+                    <tr>
+                        <td><code>counter-increment</code></td>
+                        <td>ஒன்று அல்லது அதற்கு மேற்பட்ட கவுண்டர் மதிப்புகளை அதிகரிக்கிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>counter-reset</code></td>
+                        <td>ஒன்று அல்லது அதற்கு மேற்பட்ட கவுண்டர்களை உருவாக்குகிறது அல்லது மீட்டமைக்கிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>counter()</code></td>
+                        <td>பெயரிடப்பட்ட கவுண்டரின் தற்போதைய மதிப்பை வழங்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>counters()</code></td>
+                        <td>பெயரிடப்பட்ட மற்றும் கூடு கட்டப்பட்ட கவுண்டர்களின் தற்போதைய மதிப்புகளை வழங்குகிறது</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Forms.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Units.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">CSS Counters</a></li>
+                    <li><a href="#automatic-numbering">Automatic Numbering</a></li>
+                    <li><a href="#increase-decrease">Increase and Decrease Counter</a></li>
+                    <li><a href="#two-counters">Using Two Counters</a></li>
+                    <li><a href="#counters-function">counters() Function</a></li>
+                    <li><a href="#counter-properties">Counter Properties</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

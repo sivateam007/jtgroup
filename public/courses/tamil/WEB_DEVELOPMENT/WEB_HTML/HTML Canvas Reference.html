@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Canvas Reference - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4 {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        .method-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .method-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .method-table th {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        .method-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .method-table tr:hover td {
+            background-color: #f9f9f9;
+        }
+        
+        .method-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .method-category {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .method-category td {
+            padding: 1.2rem 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML%20Color%20Names.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML%20Audio%20Video%20DOM%20Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML Canvas Reference</h2>
+            <p>HTML Canvas API கையேடு</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML Canvas Reference</h2>
+            
+            <p>&lt;canvas&gt; கூறு HTML பக்கத்தில் ஒரு பிட்மேப் பகுதியை வரையறுக்கிறது.</p>
+            
+            <p>Canvas API JavaScript க்கு கேன்வாஸில் கிராபிக்ஸ் வரைய அனுமதிக்கிறது.</p>
+            
+            <p>Canvas API வடிவங்கள், கோடுகள், வளைவுகள், பெட்டிகள், உரை மற்றும் படங்களை, நிறங்கள், சுழற்சிகள், வெளிப்படைத்தன்மை மற்றும் பிற பிக்செல் கையாளுதல்களுடன் வரைய முடியும்.</p>
+            
+            <p>நீங்கள் &lt;canvas&gt; குறிச்சொல்லுடன் HTML பக்கத்தில் எங்கும் ஒரு கேன்வாஸ் கூறைச் சேர்க்கலாம்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;canvas id="myCanvas" width="300" height="150"&gt;&lt;/canvas&gt;</code></pre>
+            </div>
+            
+            <p>நீங்கள் HTML DOM முறை getElementById() உடன் ஒரு &lt;canvas&gt; கூறை அணுகலாம்.</p>
+            
+            <p>கேன்வாஸில் வரைய, நீங்கள் ஒரு 2D சூழல் பொருளை உருவாக்க வேண்டும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const myCanvas = document.getElementById("myCanvas");
+const ctx = myCanvas.getContext("2d");</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு</h4>
+                <p>HTML &lt;canvas&gt; கூறு தானாகவே வரையும் திறன்களைக் கொண்டிருக்கவில்லை.</p>
+                <p>எந்தவொரு கிராபிக்ஸையும் வரைய JavaScript ஐப் பயன்படுத்த வேண்டும்.</p>
+                <p>getContext() முறை வரையும் கருவிகளுடன் (முறைகள்) ஒரு பொருளை வழங்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Drawing on the Canvas -->
+        <section class="content-section" id="drawing">
+            <h2>Drawing on the Canvas</h2>
+            
+            <p>நீங்கள் ஒரு 2D சூழலை உருவாக்கிய பிறகு, கேன்வாஸில் வரையலாம்.</p>
+            
+            <p>fillRect() முறை 20,20 நிலையில் மேல்-இடது மூலையுடன் ஒரு கருப்பு செவ்வகத்தை வரைகிறது. செவ்வகம் 150 பிக்சல் அகலமும் 100 பிக்சல் உயரமும் கொண்டது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>const myCanvas = document.getElementById("myCanvas");
+const ctx = myCanvas.getContext("2d");
+
+ctx.fillRect(20, 20, 150, 100);</code></pre>
+            </div>
+        </section>
+
+        <!-- Using Colors -->
+        <section class="content-section" id="colors">
+            <h2>Using Colors</h2>
+            
+            <p>fillStyle பண்பு வரையும் பொருளின் நிரப்பு நிறத்தை அமைக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>const myCanvas = document.getElementById("myCanvas");
+const ctx = myCanvas.getContext("2d");
+
+ctx.fillStyle = "red";
+ctx.fillRect(20, 20, 150, 100);</code></pre>
+            </div>
+            
+            <p>நீங்கள் document.createElement() முறையுடன் ஒரு புதிய &lt;canvas&gt; கூறையும் உருவாக்கலாம், மேலும் கூறை ஏற்கனவே உள்ள HTML பக்கத்தில் சேர்க்கலாம்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>const myCanvas = document.createElement("canvas");
+document.body.appendChild(myCanvas);
+const ctx = myCanvas.getContext("2d");
+
+ctx.fillStyle = "red";
+ctx.fillRect(20, 20, 150, 100);</code></pre>
+            </div>
+        </section>
+
+        <!-- Paths -->
+        <section class="content-section" id="paths">
+            <h2>Paths</h2>
+            
+            <p>கேன்வாஸில் வரையும் பொதுவான வழி:</p>
+            
+            <p>பாதையைத் தொடங்கவும் - beginPath()<br>
+            ஒரு புள்ளிக்கு நகர்த்தவும் - moveTo()<br>
+            பாதையில் வரையவும் - lineTo()<br>
+            பாதையை வரையவும் - stroke()</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+ctx.beginPath();
+ctx.moveTo(20, 20);
+ctx.lineTo(20, 100);
+ctx.lineTo(70, 100);
+ctx.stroke();</code></pre>
+            </div>
+        </section>
+
+        <!-- Complete Canvas API Reference -->
+        <section class="content-section" id="complete-reference">
+            <h2>Complete Canvas API Reference</h2>
+            
+            <p>இந்த குறிப்பு கேன்வாஸில் உரை, கோடுகள், பெட்டிகள், வட்டங்கள், படங்கள் மற்றும் பலவற்றை வரையப் பயன்படுத்தப்படும் getContext("2d") பொருளின் அனைத்து பண்புகள் மற்றும் முறைகளையும் உள்ளடக்கியது.</p>
+        </section>
+
+        <!-- Drawing Methods -->
+        <section class="content-section" id="drawing-methods">
+            <h2>Drawing Methods</h2>
+            
+            <p>கேன்வாஸில் நேரடியாக வரைய மட்டும் 3 முறைகள் உள்ளன:</p>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>fillRect()</strong></td>
+                            <td>"நிரப்பப்பட்ட" செவ்வகத்தை வரைகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>strokeRect()</strong></td>
+                            <td>செவ்வகத்தை வரைகிறது (நிரப்பு இல்லாமல்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>clearRect()</strong></td>
+                            <td>ஒரு செவ்வகத்திற்குள் குறிப்பிட்ட பிக்சல்களை அழிக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Path Methods -->
+        <section class="content-section" id="path-methods">
+            <h2>Path Methods</h2>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>beginPath()</strong></td>
+                            <td>புதிய பாதையைத் தொடங்குகிறது அல்லது தற்போதைய பாதையை மீட்டமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>closePath()</strong></td>
+                            <td>தற்போதைய புள்ளியிலிருந்து தொடக்கத்திற்கு பாதையில் ஒரு கோட்டைச் சேர்க்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>isPointInPath()</strong></td>
+                            <td>குறிப்பிட்ட புள்ளி தற்போதைய பாதையில் இருந்தால் true ஐ வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>moveTo()</strong></td>
+                            <td>பாதையை கேன்வாஸில் ஒரு புள்ளிக்கு நகர்த்துகிறது (வரையாமல்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>lineTo()</strong></td>
+                            <td>பாதையில் ஒரு கோட்டைச் சேர்க்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>fill()</strong></td>
+                            <td>தற்போதைய பாதையை நிரப்புகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>rect()</strong></td>
+                            <td>பாதையில் ஒரு செவ்வகத்தைச் சேர்க்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>stroke()</strong></td>
+                            <td>தற்போதைய பாதையை வரைகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Circles and Curves -->
+        <section class="content-section" id="circles-curves">
+            <h2>Circles and Curves</h2>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>bezierCurveTo()</strong></td>
+                            <td>பாதையில் ஒரு கியூபிக் பெசியர் வளைவைச் சேர்க்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>arc()</strong></td>
+                            <td>பாதையில் ஒரு வில்/வளைவைச் சேர்க்கிறது (வட்டம், அல்லது வட்டத்தின் பகுதிகள்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>arcTo()</strong></td>
+                            <td>இரு தொடுகோடுகளுக்கு இடையே ஒரு வில்/வளைவைப் பாதையில் சேர்க்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>quadraticCurveTo()</strong></td>
+                            <td>பாதையில் ஒரு குவாட்ராடிக் பெசியர் வளைவைச் சேர்க்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Text -->
+        <section class="content-section" id="text">
+            <h2>Text</h2>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை/பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>direction</strong></td>
+                            <td>உரை வரையப் பயன்படுத்தப்படும் திசையை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>fillText()</strong></td>
+                            <td>கேன்வாஸில் "நிரப்பப்பட்ட" உரையை வரைகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>font</strong></td>
+                            <td>உரை உள்ளடக்கத்திற்கான எழுத்துரு பண்புகளை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>measureText()</strong></td>
+                            <td>குறிப்பிட்ட உரையின் அகலத்தைக் கொண்ட ஒரு பொருளை வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>strokeText()</strong></td>
+                            <td>கேன்வாஸில் உரையை வரைகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>textAlign</strong></td>
+                            <td>உரை உள்ளடக்கத்திற்கான சீரமைப்பை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>textBaseline</strong></td>
+                            <td>உரை வரையும் போது பயன்படுத்தப்படும் உரை அடிப்படைக் கோட்டை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Colors, Styles, and Shadows -->
+        <section class="content-section" id="colors-styles">
+            <h2>Colors, Styles, and Shadows</h2>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை/பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>addColorStop()</strong></td>
+                            <td>நிறம் பொருளில் நிறங்கள் மற்றும் நிறுத்த நிலைகளைக் குறிப்பிடுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>createLinearGradient()</strong></td>
+                            <td>ஒரு நேரியல் சாயலை உருவாக்குகிறது (கேன்வாஸ் உள்ளடக்கத்தில் பயன்படுத்த)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>createPattern()</strong></td>
+                            <td>குறிப்பிட்ட திசையில் குறிப்பிட்ட கூறை மீண்டும் மீண்டும் செய்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>createRadialGradient()</strong></td>
+                            <td>ஒரு ஆரச்/வட்ட சாயலை உருவாக்குகிறது (கேன்வாஸ் உள்ளடக்கத்தில் பயன்படுத்த)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>fillStyle</strong></td>
+                            <td>வரைதலை நிரப்ப பயன்படுத்தப்படும் நிறம், சாயல் அல்லது முறையை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>lineCap</strong></td>
+                            <td>ஒரு கோட்டிற்கான இறுதி முனைகளின் பாணியை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>lineJoin</strong></td>
+                            <td>இரு கோடுகள் சந்திக்கும் போது உருவாக்கப்படும் மூலையின் வகையை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>lineWidth</strong></td>
+                            <td>தற்போதைய கோட்டின் அகலத்தை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>miterLimit</strong></td>
+                            <td>அதிகபட்ச மைட்டர் நீளத்தை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>shadowBlur</strong></td>
+                            <td>நிழல்களுக்கான தெளிவின்மை நிலையை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>shadowColor</strong></td>
+                            <td>நிழல்களுக்குப் பயன்படுத்தப்படும் நிறத்தை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>shadowOffsetX</strong></td>
+                            <td>வடிவத்திலிருந்து நிழலின் கிடைமட்ட தூரத்தை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>shadowOffsetY</strong></td>
+                            <td>வடிவத்திலிருந்து நிழலின் செங்குத்து தூரத்தை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>strokeStyle</strong></td>
+                            <td>பக்கவாட்டுகளுக்குப் பயன்படுத்தப்படும் நிறம், சாயல் அல்லது முறையை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Transformations -->
+        <section class="content-section" id="transformations">
+            <h2>Transformations</h2>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>scale()</strong></td>
+                            <td>தற்போதைய வரைதலை பெரிதாக்குகிறது அல்லது சிறிதாக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>rotate()</strong></td>
+                            <td>தற்போதைய வரைதலை சுழற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>translate()</strong></td>
+                            <td>கேன்வாஸில் (0,0) நிலையை மீள் மேப்பிங் செய்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>transform()</strong></td>
+                            <td>வரைதலுக்கான தற்போதைய உருமாற்ற மேட்ரிக்ஸை மாற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>setTransform()</strong></td>
+                            <td>தற்போதைய உருமாற்றத்தை அடையாள மேட்ரிக்ஸாக மீட்டமைக்கிறது. பின்னர் transform() ஐ இயக்குகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Image Drawing -->
+        <section class="content-section" id="image-drawing">
+            <h2>Image Drawing</h2>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>drawImage()</strong></td>
+                            <td>ஒரு படம், கேன்வாஸ் அல்லது வீடியோவை கேன்வாஸில் வரைகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- The ImageData Object / Pixel Manipulation -->
+        <section class="content-section" id="imagedata">
+            <h2>The ImageData Object / Pixel Manipulation</h2>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை/பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>createImageData()</strong></td>
+                            <td>புதிய, வெற்று ImageData பொருளை உருவாக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>getImageData()</strong></td>
+                            <td>கேன்வாஸில் குறிப்பிட்ட செவ்வகத்திற்கான பிக்சல் தரவின் நகலைக் கொண்ட ImageData பொருளை வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ImageData.data</strong></td>
+                            <td>குறிப்பிட்ட ImageData பொருளின் படத் தரவைக் கொண்ட பொருளை வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ImageData.height</strong></td>
+                            <td>ImageData பொருளின் உயரத்தை வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ImageData.width</strong></td>
+                            <td>ImageData பொருளின் அகலத்தை வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>putImageData()</strong></td>
+                            <td>படத் தரவை (குறிப்பிட்ட ImageData பொருளிலிருந்து) மீண்டும் கேன்வாஸில் வைக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Compositing -->
+        <section class="content-section" id="compositing">
+            <h2>Compositing</h2>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>globalAlpha</strong></td>
+                            <td>வரைதலின் தற்போதைய ஆல்பா அல்லது வெளிப்படைத்தன்மை மதிப்பை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>globalCompositeOperation</strong></td>
+                            <td>ஒரு புதிய படம் ஏற்கனவே உள்ள படத்தின் மேல் எவ்வாறு வரையப்படுகிறது என்பதை அமைக்கிறது அல்லது வழங்குகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Other Methods -->
+        <section class="content-section" id="other-methods">
+            <h2>Other Methods</h2>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>clip()</strong></td>
+                            <td>அசல் கேன்வாஸிலிருந்து எந்த வடிவம் மற்றும் அளவிலும் ஒரு பிராந்தியத்தை வெட்டுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>save()</strong></td>
+                            <td>தற்போதைய வரைதல் சூழலின் நிலையையும் அதன் அனைத்து பண்புகளையும் சேமிக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>restore()</strong></td>
+                            <td>முன்பு சேமிக்கப்பட்ட நிலையையும் பண்புகளையும் மீட்டமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>createEvent()</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>getContext()</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>toDataURL()</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Standard Properties and Events -->
+        <section class="content-section" id="standard-properties">
+            <h2>Standard Properties and Events</h2>
+            
+            <p>கேன்வாஸ் பொருள் நிலையான பண்புகள் மற்றும் நிகழ்வுகளையும் ஆதரிக்கிறது.</p>
+        </section>
+
+        <!-- Related Pages -->
+        <section class="content-section" id="related-pages">
+            <h2>Related Pages</h2>
+            
+            <p>Canvas tutorial: Canvas Tutorial</p>
+            <p>HTML tutorial: HTML5 Canvas</p>
+            <p>HTML reference: HTML &lt;canvas&gt; tag</p>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2>Browser Support</h2>
+            
+            <p>&lt;canvas&gt; கூறு ஒரு HTML5 தரநிலை (2014).</p>
+            <p>Canvas API அனைத்து நவீன உலாவிகளிலும் ஆதரிக்கப்படுகிறது:</p>
+            
+            <div class="method-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Chrome</th>
+                            <th>Edge</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Opera</th>
+                            <th>IE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>9-11</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercises</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Which method is used to get the 2D drawing context for a canvas?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">getCanvas()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! getCanvas() is not a valid method</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">getContext("2d")</div>
+                            <div class="option-feedback correct">✓ சரி! getContext("2d") returns the 2D drawing context</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">createContext()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! createContext() is not a valid method</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">get2DContext()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! get2DContext() is not a valid method</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML%20Color%20Names.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML%20Audio%20Video%20DOM%20Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>முன்னணிக் கல்வி நிறுவனம் தமிழில் தரமான நிரலாக்க கல்வியை வழங்குகிறது.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#introduction">HTML Canvas Reference</a></li>
+                    <li><a href="#drawing">Drawing on Canvas</a></li>
+                    <li><a href="#colors">Using Colors</a></li>
+                    <li><a href="#paths">Paths</a></li>
+                    <li><a href="#drawing-methods">Drawing Methods</a></li>
+                    <li><a href="#path-methods">Path Methods</a></li>
+                    <li><a href="#circles-curves">Circles & Curves</a></li>
+                    <li><a href="#text">Text</a></li>
+                    <li><a href="#colors-styles">Colors & Styles</a></li>
+                    <li><a href="#transformations">Transformations</a></li>
+                    <li><a href="#image-drawing">Image Drawing</a></li>
+                    <li><a href="#imagedata">ImageData Object</a></li>
+                    <li><a href="#compositing">Compositing</a></li>
+                    <li><a href="#other-methods">Other Methods</a></li>
+                    <li><a href="#browser-support">Browser Support</a></li>
+                    <li><a href="#exercises">Exercises</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">தொடர்பு கொள்ளவும்</a></li>
+                    <li><a href="#">இடம் & நேரம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>பின்தொடரவும்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Make method table rows interactive
+        document.querySelectorAll('.method-table tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(5px)';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

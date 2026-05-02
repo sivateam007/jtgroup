@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANGULAR - JT GROUP OF INSTITUTION</title>
+    <link rel="icon" href="/assets/images/jt_logo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin:0;
+            background: #f5f7fa;
+        }
+        /* Professional Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 1px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+        }
+        .home-link:hover {
+            opacity: 0.8;
+        }
+        .dashboard-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+            font-weight: 600;
+        }
+        .dashboard-link:hover {
+            opacity: 0.8;
+        }
+        /* Hero Section */
+        .course-hero {
+            background: linear-gradient(135deg, #dd0031, #c3002f);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .course-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+        .course-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .course-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .course-hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .start-learning-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #dd0031;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 15px rgba(221, 0, 49, 0.4);
+        }
+        .start-learning-btn:hover {
+            background: #b30027;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(221, 0, 49, 0.6);
+        }
+        /* Topics Grid */
+        .topics-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .topic-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid #dd0031;
+            text-align: center;
+        }
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .topic-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #dd0031, #c3002f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        .topic-card h3 {
+            color: var(--dark);
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+        }
+        .topic-card p {
+            color: #666;
+            margin: 0 0 1.5rem 0;
+        }
+        .topic-card a {
+            display: inline-block;
+            padding: 0.7rem 2rem;
+            background: #dd0031;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s;
+        }
+        .topic-card a:hover {
+            background: #b30027;
+        }
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        .footer-column a:hover {
+            color: white;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 2rem 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo">
+                <h1>JT GROUP OF INSTITUTION</h1>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="home-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="/app/dashboard.html" class="dashboard-link">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="course-hero">
+        <div class="course-hero-content">
+            <h1><i class="fab fa-angular"></i> Angular</h1>
+            <p>Master Angular framework for building modern web applications</p>
+            <a href="Angular Tutorial.html" class="start-learning-btn">Start Learning <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Topics -->
+    <div class="topics-container">
+        <h2 style="text-align: center; color: var(--dark); margin-bottom: 2rem;">Available Topics</h2>
+        <div class="topics-grid">
+            <div class="topic-card" style="border-top: 5px solid #e74c3c;">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Advanced DI</h3>
+                <p>Learn Angular Advanced DI</p>
+                <a href="Angular Advanced DI.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Alias with as in ngIf</h3>
+                <p>Learn Angular Alias with as in ngIf</p>
+                <a href="Angular Alias with as in ngIf.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Animations</h3>
+                <p>Learn Angular Animations</p>
+                <a href="Angular Animations.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular App Bootstrap & Providers</h3>
+                <p>Learn Angular App Bootstrap & Providers</p>
+                <a href="Angular App Bootstrap & Providers.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Change Detection Performance</h3>
+                <p>Learn Angular Change Detection Performance</p>
+                <a href="Angular Change Detection Performance.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Components</h3>
+                <p>Learn Angular Components</p>
+                <a href="Angular Components.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Conditional Rendering</h3>
+                <p>Learn Angular Conditional Rendering</p>
+                <a href="Angular Conditional Rendering.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Control Flow</h3>
+                <p>Learn Angular Control Flow</p>
+                <a href="Angular Control Flow.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Data Binding</h3>
+                <p>Learn Angular Data Binding</p>
+                <a href="Angular Data Binding.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Directives</h3>
+                <p>Learn Angular Directives</p>
+                <a href="Angular Directives.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Dynamic Components</h3>
+                <p>Learn Angular Dynamic Components</p>
+                <a href="Angular Dynamic Components.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Events</h3>
+                <p>Learn Angular Events</p>
+                <a href="Angular Events.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular First App</h3>
+                <p>Learn Angular First App</p>
+                <a href="Angular First App.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Forms</h3>
+                <p>Learn Angular Forms</p>
+                <a href="Angular Forms.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Get Started</h3>
+                <p>Learn Angular Get Started</p>
+                <a href="Angular Get Started.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular HTTP Interceptors</h3>
+                <p>Learn Angular HTTP Interceptors</p>
+                <a href="Angular HTTP Interceptors.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular HttpClient</h3>
+                <p>Learn Angular HttpClient</p>
+                <a href="Angular HttpClient.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Interpolation</h3>
+                <p>Learn Angular Interpolation</p>
+                <a href="Angular Interpolation.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Intro</h3>
+                <p>Learn Angular Intro</p>
+                <a href="Angular Intro.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Introduction</h3>
+                <p>Learn Angular Introduction</p>
+                <a href="Angular Introduction.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Lifecycle Hooks</h3>
+                <p>Learn Angular Lifecycle Hooks</p>
+                <a href="Angular Lifecycle Hooks.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Lists</h3>
+                <p>Learn Angular Lists</p>
+                <a href="Angular Lists.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Null-Safe Navigation</h3>
+                <p>Learn Angular Null-Safe Navigation</p>
+                <a href="Angular Null-Safe Navigation.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Pipes in Templates</h3>
+                <p>Learn Angular Pipes in Templates</p>
+                <a href="Angular Pipes in Templates.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Pipes</h3>
+                <p>Learn Angular Pipes</p>
+                <a href="Angular Pipes.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Reactive Forms Advanced</h3>
+                <p>Learn Angular Reactive Forms Advanced</p>
+                <a href="Angular Reactive Forms Advanced.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Router Advanced</h3>
+                <p>Learn Angular Router Advanced</p>
+                <a href="Angular Router Advanced.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Router</h3>
+                <p>Learn Angular Router</p>
+                <a href="Angular Router.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular SSR & Hydration</h3>
+                <p>Learn Angular SSR & Hydration</p>
+                <a href="Angular SSR & Hydration.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular SSR Hydration</h3>
+                <p>Learn Angular SSR Hydration</p>
+                <a href="Angular SSR Hydration.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Security</h3>
+                <p>Learn Angular Security</p>
+                <a href="Angular Security.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Services & Dependency Injection</h3>
+                <p>Learn Angular Services & Dependency Injection</p>
+                <a href="Angular Services & Dependency Injection.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Signals</h3>
+                <p>Learn Angular Signals</p>
+                <a href="Angular Signals.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular State Management</h3>
+                <p>Learn Angular State Management</p>
+                <a href="Angular State Management.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Styling</h3>
+                <p>Learn Angular Styling</p>
+                <a href="Angular Styling.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Template Reference Variables</h3>
+                <p>Learn Angular Template Reference Variables</p>
+                <a href="Angular Template Reference Variables.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Template Statements and $event</h3>
+                <p>Learn Angular Template Statements and $event</p>
+                <a href="Angular Template Statements and $event.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Templates Attribute Binding</h3>
+                <p>Learn Angular Templates Attribute Binding</p>
+                <a href="Angular Templates Attribute Binding.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Templates TrackBy with ngFor</h3>
+                <p>Learn Angular Templates TrackBy with ngFor</p>
+                <a href="Angular Templates TrackBy with ngFor.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Templates ngTemplateOutlet</h3>
+                <p>Learn Angular Templates ngTemplateOutlet</p>
+                <a href="Angular Templates ngTemplateOutlet.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Templates</h3>
+                <p>Learn Angular Templates</p>
+                <a href="Angular Templates.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Testing</h3>
+                <p>Learn Angular Testing</p>
+                <a href="Angular Testing.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular Tutorial</h3>
+                <p>Learn Angular Tutorial</p>
+                <a href="Angular Tutorial.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular ngTemplateOutlet</h3>
+                <p>Learn Angular ngTemplateOutlet</p>
+                <a href="Angular ngTemplateOutlet.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>Angular templates Structural Directives Micro-syntax</h3>
+                <p>Learn Angular templates Structural Directives Micro-syntax</p>
+                <a href="Angular templates Structural Directives Micro-syntax.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>hard</h3>
+                <p>Learn hard</p>
+                <a href="hard.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-angular"></i>
+                </div>
+                <h3>medium</h3>
+                <p>Learn medium</p>
+                <a href="medium.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>JT GROUP OF INSTITUTION</h3>
+                <p style="color: #ddd; line-height: 1.6;">Leading educational institution providing quality programming education in multiple languages.</p>
+                <div style="padding: 1rem; margin-top: 1rem;">
+                    <h4 style="color: white; margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> Help Center</h4>
+                    <p style="color: #ddd;">jassifteam@jtgroupofinstitution.com</p>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/app/dashboard.html">Dashboard</a></li>
+                    <li><a href="/courses/tamil/">Courses</a></li>
+                    <li><a href="/app/login.html">Login</a></li>
+                    <li><a href="/app/signup.html">Sign Up</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Course Categories</h3>
+                <ul>
+                    <li><a href="/courses/tamil/FRONT_END_DEVELOPMENT/">Front End</a></li>
+                    <li><a href="/courses/tamil/full stack development/">Full Stack</a></li>
+                    <li><a href="/courses/tamil/backend development/">Backend</a></li>
+                    <li><a href="/courses/tamil/programming-languages/">Programming</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 JT GROUP OF INSTITUTION. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+

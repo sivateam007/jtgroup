@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL NOT NULL Constraint - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles specific to this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Syntax Grid */
+        .syntax-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .syntax-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .syntax-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .syntax-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .syntax-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .comparison-grid,
+            .syntax-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .syntax-header,
+            .comparison-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL Constraints.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL UNIQUE Constraint.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL NOT NULL Constraint</h2>
+            <p>NOT NULL கட்டுப்பாட்டைப் பற்றி அறிந்து, அதை எவ்வாறு பயன்படுத்துவது என்பதைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is NOT NULL Constraint -->
+        <section class="content-section" id="what-is-not-null">
+            <h2>SQL NOT NULL Constraint என்றால் என்ன?</h2>
+            
+            <p>பொதுவாக, ஒரு நெடுவரிசை NULL மதிப்புகளை வைத்திருக்க முடியும்.</p>
+            
+            <p>NOT NULL கட்டுப்பாடு ஒரு நெடுவரிசை NULL மதிப்புகளை ஏற்காதவாறு கட்டாயப்படுத்துகிறது.</p>
+            
+            <p>இது ஒரு புலம் எப்போதும் ஒரு மதிப்பைக் கொண்டிருக்க வேண்டும் என்று கட்டாயப்படுத்துகிறது, அதாவது இந்த புலத்திற்கு மதிப்பைச் சேர்ப்பதில்லாமல் ஒரு புதிய பதிவைச் செருகவோ அல்லது ஒரு பதிவைப் புதுப்பிக்கவோ முடியாது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கியமான குறிப்பு:</h4>
+                <p>NOT NULL கட்டுப்பாடு ஒரு புலத்தில் மதிப்பு இல்லாமல் இருப்பதைத் தடுக்கிறது, இது தரவு ஒருமைப்பாட்டை பராமரிக்க உதவுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- SQL NOT NULL on CREATE TABLE -->
+        <section class="content-section" id="create-table">
+            <h2>CREATE TABLE-ல் SQL NOT NULL</h2>
+            
+            <p>"Persons" அட்டவணை உருவாக்கப்படும் போது "ID", "LastName", மற்றும் "FirstName" நெடுவரிசைகள் NULL மதிப்புகளை ஏற்காது என்பதை பின்வரும் SQL உறுதி செய்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code>CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255) NOT NULL,
+    Age int
+);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>அட்டவணை உருவாக்கும் போது முக்கியமான நெடுவரிசைகளுக்கு NOT NULL கட்டுப்பாட்டைப் பயன்படுத்தவும், இதனால் அவை காலியாக இருக்காது.</p>
+            </div>
+        </section>
+
+        <!-- SQL NOT NULL on ALTER TABLE -->
+        <section class="content-section" id="alter-table">
+            <h2>ALTER TABLE-ல் SQL NOT NULL</h2>
+            
+            <p>"Persons" அட்டவணை ஏற்கனவே உருவாக்கப்பட்ட பிறகு "Age" நெடுவரிசையில் NOT NULL கட்டுப்பாட்டை உருவாக்க, பின்வரும் SQL-ஐப் பயன்படுத்தவும்:</p>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>SQL Server / MS Access:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>ALTER TABLE Persons
+ALTER COLUMN Age int NOT NULL;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>MySQL / Oracle (முந்தைய பதிப்பு 10G):</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>ALTER TABLE Persons
+MODIFY COLUMN Age int NOT NULL;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>Oracle 10G மற்றும் பிற்காலம்:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>ALTER TABLE Persons
+MODIFY Age int NOT NULL;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>பயனர் அட்டவணை</h3>
+                    <p>அனைத்து பயனர்களும் பெயர் மற்றும் மின்னஞ்சலைக் கொண்டிருக்க வேண்டும்</p>
+                    <div class="code-example">
+                        <pre><code>CREATE TABLE Users (
+    UserID int NOT NULL,
+    UserName varchar(255) NOT NULL,
+    Email varchar(255) NOT NULL,
+    Phone varchar(20)
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>ஆர்டர்கள் அட்டவணை</h3>
+                    <p>ஆர்டர் தேதி மற்றும் வாடிக்கையாளர் ID கட்டாயமாகும்</p>
+                    <div class="code-example">
+                        <pre><code>CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    CustomerID int NOT NULL,
+    OrderDate date NOT NULL,
+    ShipDate date
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3>தயாரிப்புகள் அட்டவணை</h3>
+                    <p>தயாரிப்பு பெயர் மற்றும் விலை காலியாக இருக்க முடியாது</p>
+                    <div class="code-example">
+                        <pre><code>CREATE TABLE Products (
+    ProductID int NOT NULL,
+    ProductName varchar(255) NOT NULL,
+    Price decimal(10,2) NOT NULL,
+    Description text
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits of NOT NULL Constraint -->
+        <section class="content-section" id="benefits">
+            <h2>NOT NULL கட்டுப்பாட்டின் நன்மைகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>தரவு ஒருமைப்பாடு</h4>
+                    </div>
+                    <ul>
+                        <li>முக்கியமான தரவு காலியாக இருப்பதைத் தடுக்கிறது</li>
+                        <li>தரவு துல்லியத்தை உறுதி செய்கிறது</li>
+                        <li>தவறான தரவு உள்ளீட்டைத் தடுக்கிறது</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>தேடல் திறன்</h4>
+                    </div>
+                    <ul>
+                        <li>NULL சோதனைகளின் தேவையைக் குறைக்கிறது</li>
+                        <li>குவெரி செயல்திறனை மேம்படுத்துகிறது</li>
+                        <li>தரவு பகுப்பாய்வை எளிதாக்குகிறது</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>பயன்பாட்டு தர்க்கம்</h4>
+                    </div>
+                    <ul>
+                        <li>பயன்பாட்டு குறியீட்டை எளிதாக்குகிறது</li>
+                        <li>NULL சோதனை தேவையை நீக்குகிறது</li>
+                        <li>மிகவும் கணிக்கத்தக்க தரவு கட்டமைப்பை வழங்குகிறது</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL NOT NULL கட்டுப்பாட்டின் நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நெடுவரிசைக்கு நகல் மதிப்புகள் இருக்க முடியாது என்பதை உறுதி செய்ய</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது UNIQUE கட்டுப்பாட்டின் நோக்கம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு நெடுவரிசை எப்போதும் ஒரு மதிப்பைக் கொண்டிருக்க வேண்டும் என்பதைக் கட்டாயப்படுத்த</div>
+                            <div class="option-feedback correct">✓ சரி! NOT NULL கட்டுப்பாடு ஒரு நெடுவரிசை காலியாக இருக்க முடியாது என்பதை உறுதி செய்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு அட்டவணைக்கு தனித்துவ அடையாளத்தை வரையறுக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது PRIMARY KEY கட்டுப்பாட்டின் நோக்கம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு அட்டவணை நீக்கப்படுவதைத் தடுக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! NOT NULL கட்டுப்பாடு அட்டவணை நீக்குதலைத் தடுக்காது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL Constraints.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL UNIQUE Constraint.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-not-null">NOT NULL Constraint என்றால் என்ன?</a></li>
+                    <li><a href="#create-table">CREATE TABLE-ல் NOT NULL</a></li>
+                    <li><a href="#alter-table">ALTER TABLE-ல் NOT NULL</a></li>
+                    <li><a href="#benefits">NOT NULL-ன் நன்மைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

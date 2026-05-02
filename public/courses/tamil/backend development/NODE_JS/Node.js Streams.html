@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Streams - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Events.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Buffer Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Streams</h2>
+            <p>Node.js இல் தரவை திறம்பட கையாள ஸ்ட்ரீம்களைப் பயன்படுத்த கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What are Streams? -->
+        <section class="content-section" id="what-are-streams">
+            <h2>ஸ்ட்ரீம்கள் என்றால் என்ன?</h2>
+            
+            <p>Node.js இல், ஸ்ட்ரீம்கள் என்பது தரவின் தொகுப்புகள் ஆகும், அவை ஒரே நேரத்தில் முழுமையாக கிடைக்காமல் இருக்கலாம் மற்றும் நினைவகத்தில் பொருந்த வேண்டியதில்லை.</p>
+            
+            <p>ஒரு இடத்திலிருந்து மற்றொரு இடத்திற்கு தரவை நகர்த்தும் கன்வேயர் பெல்ட்களாக அவற்றை நினைத்துப் பாருங்கள், முழுத் தரவுத் தொகுப்புக்காகக் காத்திருக்காமல் ஒவ்வொரு துண்டும் வரும் போதே வேலை செய்ய உங்களை அனுமதிக்கிறது.</p>
+            
+            <p>ஸ்ட்ரீம்கள் Node.js இன் மிகவும் சக்திவாய்ந்த அம்சங்களில் ஒன்றாகும் மற்றும் பரவலாகப் பயன்படுத்தப்படுகின்றன:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file"></i>
+                        <h4>கோப்பு முறைமை செயல்பாடுகள்</h4>
+                    </div>
+                    <p>கோப்புகளைப் படித்தல்/எழுதுதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-globe"></i>
+                        <h4>HTTP கோரிக்கைகள் மற்றும் பதில்கள்</h4>
+                    </div>
+                    <p>வலை கோரிக்கைகள் மற்றும் பதில்களை கையாளுதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-compress"></i>
+                        <h4>தரவு சுருக்கம் மற்றும் விரிவாக்கம்</h4>
+                    </div>
+                    <p>தரவை சுருக்குதல் மற்றும் விரிவுபடுத்துதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>தரவுத்தள செயல்பாடுகள்</h4>
+                    </div>
+                    <p>தரவுத்தள செயல்பாடுகளை கையாளுதல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>நிகழ்நேர தரவு செயலாக்கம்</h4>
+                    </div>
+                    <p>நிகழ்நேர தரவு பரிமாற்றம் மற்றும் செயலாக்கம்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started with Streams -->
+        <section class="content-section" id="getting-started">
+            <h2>ஸ்ட்ரீம்களுடன் தொடங்குதல்</h2>
+            
+            <p>ஸ்ட்ரீம்கள் Node.js இல் தரவை திறம்பட கையாளுவதற்கான அடிப்படை கருத்துக்களில் ஒன்றாகும்.</p>
+            
+            <p>அவை எல்லாவற்றையும் ஒரே நேரத்தில் நினைவகத்தில் ஏற்றுவதற்குப் பதிலாக, தரவு கிடைக்கும் போது அதைத் துண்டுகளாக செயலாக்க உங்களை அனுமதிக்கின்றன.</p>
+            
+            <h3>அடிப்படை ஸ்ட்ரீம் எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+
+// Create a readable stream from a file
+const readableStream = fs.createReadStream('input.txt', 'utf8');
+// Create a writable stream to a file
+const writableStream = fs.createWriteStream('output.txt');
+
+// Pipe the data from readable to writable stream
+readableStream.pipe(writableStream);
+
+// Handle completion and errors
+writableStream.on('finish', () => {
+  console.log('File copy completed!');
+});
+
+readableStream.on('error', (err) => {
+  console.error('Error reading file:', err);
+});
+
+writableStream.on('error', (err) => {
+  console.error('Error writing file:', err);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Why Use Streams? -->
+        <section class="content-section" id="why-streams">
+            <h2>ஏன் ஸ்ட்ரீம்களைப் பயன்படுத்த வேண்டும்?</h2>
+            
+            <p>ஸ்ட்ரீம்களைப் பயன்படுத்த பல நன்மைகள் உள்ளன:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>நினைவக திறன்:</strong> பெரிய கோப்புகளை முழுமையாக நினைவகத்தில் ஏற்றாமல் செயலாக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-clock"></i>
+                    <span><strong>நேர திறன்:</strong> அனைத்து தரவுக்காகக் காத்திருக்காமல், தரவு கிடைக்கும் விரைவில் செயலாக்கத் தொடங்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span><strong>கூட்டுத்தன்மை:</strong> ஸ்ட்ரீம்களை இணைப்பதன் மூலம் சக்திவாய்ந்த தரவு குழாய்களை உருவாக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-user-check"></i>
+                    <span><strong>சிறந்த பயனர் அனுபவம்:</strong> தரவு கிடைக்கும் போது பயனர்களுக்கு வழங்கவும் (எ.கா., வீடியோ ஸ்ட்ரீமிங்)</span>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> ஸ்ட்ரீம்களின் நன்மைகள்:</h4>
+                <p>512MB RAM உள்ள ஒரு சேவையகத்தில் 1GB கோப்பைப் படிப்பதை கற்பனை செய்து பாருங்கள்:</p>
+                <ul>
+                    <li><strong>ஸ்ட்ரீம்கள் இல்லாமல்:</strong> முழு கோப்பையும் நினைவகத்தில் ஏற்ற முயற்சிக்கும் போது செயல்முறை கிராஷ் ஆகும்</li>
+                    <li><strong>ஸ்ட்ரீம்களுடன்:</strong> நீங்கள் கோப்பை சிறிய துண்டுகளாக (எ.கா., ஒரு நேரத்தில் 64KB) செயலாக்குகிறீர்கள்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Core Stream Types -->
+        <section class="content-section" id="core-types">
+            <h2>முக்கிய ஸ்ட்ரீம் வகைகள்</h2>
+            
+            <p>Node.js நான்கு அடிப்படை வகை ஸ்ட்ரீம்களை வழங்குகிறது, ஒவ்வொன்றும் தரவு கையாளுதலில் ஒரு குறிப்பிட்ட நோக்கத்திற்கு சேவை செய்கின்றன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ஸ்ட்ரீம் வகை</th>
+                            <th>விளக்கம்</th>
+                            <th>பொதுவான எடுத்துக்காட்டுகள்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Readable</strong></td>
+                            <td>தரவைப் படிக்கக்கூடிய ஸ்ட்ரீம்கள் (தரவு மூலம்)</td>
+                            <td>fs.createReadStream(), HTTP பதில்கள், process.stdin</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Writable</strong></td>
+                            <td>தரவை எழுதக்கூடிய ஸ்ட்ரீம்கள் (தரவு இலக்கு)</td>
+                            <td>fs.createWriteStream(), HTTP கோரிக்கைகள், process.stdout</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Duplex</strong></td>
+                            <td>Readable மற்றும் Writable இரண்டுமான ஸ்ட்ரீம்கள்</td>
+                            <td>TCP சாக்கெட்டுகள், Zlib ஸ்ட்ரீம்கள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transform</strong></td>
+                            <td>தரவு எழுதப்பட்டு படிக்கப்படும் போது அதை மாற்றியமைக்கக்கூடிய Duplex ஸ்ட்ரீம்கள்</td>
+                            <td>Zlib ஸ்ட்ரீம்கள், crypto ஸ்ட்ரீம்கள்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>Node.js இல் உள்ள அனைத்து ஸ்ட்ரீம்களும் EventEmitter இன் நிகழ்வுகளாகும், அதாவது அவை கேட்கக்கூடிய மற்றும் கையாளக்கூடிய நிகழ்வுகளை உமிழ்கின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Readable Streams -->
+        <section class="content-section" id="readable-streams">
+            <h2>Readable ஸ்ட்ரீம்கள்</h2>
+            
+            <p>Readable ஸ்ட்ரீம்கள் ஒரு மூலத்திலிருந்து தரவைப் படிக்க உங்களை அனுமதிக்கின்றன. எடுத்துக்காட்டுகள்:</p>
+            
+            <ul>
+                <li>ஒரு கோப்பிலிருந்து படித்தல்</li>
+                <li>கிளையன்டில் HTTP பதில்கள்</li>
+                <li>சேவையகத்தில் HTTP கோரிக்கைகள்</li>
+                <li>process.stdin</li>
+            </ul>
+            
+            <h3>Readable ஸ்ட்ரீம் உருவாக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+
+// Create a readable stream from a file
+const readableStream = fs.createReadStream('myfile.txt', {
+  encoding: 'utf8',
+  highWaterMark: 64 * 1024 // 64KB chunks
+});
+
+// Events for readable streams
+readableStream.on('data', (chunk) => {
+  console.log(`Received ${chunk.length} bytes of data.`);
+  console.log(chunk);
+});
+
+readableStream.on('end', () => {
+  console.log('No more data to read.');
+});
+
+readableStream.on('error', (err) => {
+  console.error('Error reading from stream:', err);
+});</code></pre>
+            </div>
+            
+            <h3>படிக்கும் முறைகள்</h3>
+            
+            <p>Readable ஸ்ட்ரீம்கள் இரண்டு முறைகளில் ஒன்றில் செயல்படுகின்றன:</p>
+            
+            <ul>
+                <li><strong>Flowing Mode:</strong> தரவு மூலத்திலிருந்து விரைவாகப் படிக்கப்பட்டு நிகழ்வுகளைப் பயன்படுத்தி உங்கள் பயன்பாட்டிற்கு வழங்கப்படுகிறது</li>
+                <li><strong>Paused Mode:</strong> ஸ்ட்ரீமிலிருந்து தரவின் துண்டுகளைப் பெற stream.read() ஐ வெளிப்படையாக அழைக்க வேண்டும்</li>
+            </ul>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+
+// Paused mode example
+const readableStream = fs.createReadStream('myfile.txt', {
+  encoding: 'utf8',
+  highWaterMark: 64 * 1024 // 64KB chunks
+});
+
+// Manually consume the stream using read()
+readableStream.on('readable', () => {
+  let chunk;
+  while (null !== (chunk = readableStream.read())) {
+    console.log(`Read ${chunk.length} bytes of data.`);
+    console.log(chunk);
+  }
+});
+
+readableStream.on('end', () => {
+  console.log('No more data to read.');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Writable Streams -->
+        <section class="content-section" id="writable-streams">
+            <h2>Writable ஸ்ட்ரீம்கள்</h2>
+            
+            <p>Writable ஸ்ட்ரீம்கள் ஒரு இலக்குக்கு தரவை எழுத உங்களை அனுமதிக்கின்றன. எடுத்துக்காட்டுகள்:</p>
+            
+            <ul>
+                <li>ஒரு கோப்பில் எழுதுதல்</li>
+                <li>கிளையன்டில் HTTP கோரிக்கைகள்</li>
+                <li>சேவையகத்தில் HTTP பதில்கள்</li>
+                <li>process.stdout</li>
+            </ul>
+            
+            <h3>Writable ஸ்ட்ரீம் உருவாக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+
+// Create a writable stream to a file
+const writableStream = fs.createWriteStream('output.txt');
+
+// Write data to the stream
+writableStream.write('Hello, ');
+writableStream.write('World!');
+writableStream.write('\nWriting to a stream is easy!');
+
+// End the stream
+writableStream.end();
+
+// Events for writable streams
+writableStream.on('finish', () => {
+  console.log('All data has been written to the file.');
+});
+
+writableStream.on('error', (err) => {
+  console.error('Error writing to stream:', err);
+});</code></pre>
+            </div>
+            
+            <h3>பின்னழுத்தத்தைக் கையாளுதல்</h3>
+            
+            <p>ஒரு ஸ்ட்ரீமில் எழுதும் போது, தரவு செயலாக்கப்படுவதை விட வேகமாக எழுதப்பட்டால், பின்னழுத்தம் ஏற்படுகிறது.</p>
+            
+            <p>write() முறை தொடர்ந்து எழுதுவது பாதுகாப்பானதா என்பதைக் குறிக்கும் பூலியன் மதிப்பை வழங்குகிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+
+const writableStream = fs.createWriteStream('output.txt');
+
+function writeData() {
+  let i = 100;
+  function write() {
+    let ok = true;
+    do {
+      i--;
+      if (i === 0) {
+        // Last time, close the stream
+        writableStream.write('Last chunk!\n');
+        writableStream.end();
+      } else {
+        // Continue writing data
+        const data = `Data chunk ${i}\n`;
+        // Write and check if we should continue
+        ok = writableStream.write(data);
+      }
+    }
+    while (i > 0 && ok);
+
+    if (i > 0) {
+      // We need to wait for the drain event before writing more
+      writableStream.once('drain', write);
+    }
+  }
+  write();
+}
+
+writeData();
+writableStream.on('finish', () => {
+  console.log('All data written successfully.');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Pipe -->
+        <section class="content-section" id="pipe">
+            <h2>Pipe</h2>
+            
+            <p>pipe() முறை ஒரு readable ஸ்ட்ரீமை writable ஸ்ட்ரீமுடன் இணைக்கிறது, தரவின் ஓட்டத்தை தானாக மேலாண்மை செய்கிறது மற்றும் பின்னழுத்தத்தைக் கையாளுகிறது.</p>
+            
+            <p>இது ஸ்ட்ரீம்களை நுகர எளிதான வழியாகும்.</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+
+// Create readable and writable streams
+const readableStream = fs.createReadStream('source.txt');
+const writableStream = fs.createWriteStream('destination.txt');
+
+// Pipe the readable stream to the writable stream
+readableStream.pipe(writableStream);
+
+// Handle completion and errors
+readableStream.on('error', (err) => {
+  console.error('Read error:', err);
+});
+
+writableStream.on('error', (err) => {
+  console.error('Write error:', err);
+});
+
+writableStream.on('finish', () => {
+  console.log('File copy completed!');
+});</code></pre>
+            </div>
+            
+            <h3>சங்கிலி Pipes</h3>
+            
+            <p>நீங்கள் pipe() ஐப் பயன்படுத்தி பல ஸ்ட்ரீம்களை ஒன்றாக இணைக்கலாம்.</p>
+            
+            <p>இது transform ஸ்ட்ரீம்களுடன் பணிபுரியும் போது குறிப்பாக பயனுள்ளதாக இருக்கும்.</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const zlib = require('zlib');
+
+// Create a pipeline to read a file, compress it, and write to a new file
+fs.createReadStream('source.txt')
+  .pipe(zlib.createGzip()) // Compress the data
+  .pipe(fs.createWriteStream('destination.txt.gz'))
+  .on('finish', () => {
+    console.log('File compressed successfully!');
+  });</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>pipe() முறை இலக்கு ஸ்ட்ரீமை வழங்குகிறது, இது சங்கிலியை இயக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Duplex and Transform Streams -->
+        <section class="content-section" id="duplex-transform">
+            <h2>Duplex மற்றும் Transform ஸ்ட்ரீம்கள்</h2>
+            
+            <h3>Duplex ஸ்ட்ரீம்கள்</h3>
+            
+            <p>Duplex ஸ்ட்ரீம்கள் இரண்டும் readable மற்றும் writable ஆகும், இருவழி குழாய் போன்றது.</p>
+            
+            <p>ஒரு TCP சாக்கெட் duplex ஸ்ட்ரீமின் நல்ல எடுத்துக்காட்டாகும்.</p>
+            
+            <div class="code-example">
+                <pre><code>const net = require('net');
+
+// Create a TCP server
+const server = net.createServer((socket) => {
+  // 'socket' is a duplex stream
+
+  // Handle incoming data (readable side)
+  socket.on('data', (data) => {
+    console.log('Received:', data.toString());
+
+    // Echo back (writable side)
+    socket.write(`Echo: ${data}`);
+  });
+
+  socket.on('end', () => {
+    console.log('Client disconnected');
+  });
+});
+
+server.listen(8080, () => {
+  console.log('Server listening on port 8080');
+});
+
+// To test, you can use a tool like netcat or telnet:
+// $ nc localhost 8080
+// or create a client:
+/*
+const client = net.connect({ port: 8080 }, () => {
+  console.log('Connected to server');
+  client.write('Hello from client!');
+});
+
+client.on('data', (data) => {
+  console.log('Server says:', data.toString());
+  client.end(); // Close the connection
+});
+*/</code></pre>
+            </div>
+            
+            <h3>Transform ஸ்ட்ரீம்கள்</h3>
+            
+            <p>Transform ஸ்ட்ரீம்கள் duplex ஸ்ட்ரீம்கள் ஆகும், அவை அதன் வழியாக செல்லும் போது தரவை மாற்ற முடியும்.</p>
+            
+            <p>அவை குழாய்களில் தரவை செயலாக்குவதற்கு சிறந்தவை.</p>
+            
+            <div class="code-example">
+                <pre><code>const { Transform } = require('stream');
+const fs = require('fs');
+
+// Create a transform stream that converts text to uppercase
+class UppercaseTransform extends Transform {
+  _transform(chunk, encoding, callback) {
+    // Transform the chunk to uppercase
+    const upperChunk = chunk.toString().toUpperCase();
+    // Push the transformed data
+    this.push(upperChunk);
+    // Signal that we're done with this chunk
+    callback();
+  }
+}
+
+// Create an instance of our transform stream
+const uppercaseTransform = new UppercaseTransform();
+
+// Create a readable stream from a file
+const readableStream = fs.createReadStream('input.txt');
+
+// Create a writable stream to a file
+const writableStream = fs.createWriteStream('output-uppercase.txt');
+
+// Pipe the data through our transform stream
+readableStream
+  .pipe(uppercaseTransform)
+  .pipe(writableStream)
+  .on('finish', () => {
+    console.log('Transformation completed!');
+  });</code></pre>
+            </div>
+        </section>
+
+        <!-- Stream Events -->
+        <section class="content-section" id="stream-events">
+            <h2>ஸ்ட்ரீம் நிகழ்வுகள்</h2>
+            
+            <p>அனைத்து ஸ்ட்ரீம்களும் EventEmitter இன் நிகழ்வுகளாகும் மற்றும் பல நிகழ்வுகளை உமிழ்கின்றன:</p>
+            
+            <h3>Readable ஸ்ட்ரீம் நிகழ்வுகள்</h3>
+            
+            <ul>
+                <li><strong>data:</strong> ஸ்ட்ரீமில் படிக்க தரவு கிடைக்கும் போது உமிழப்படுகிறது</li>
+                <li><strong>end:</strong> நுகரப்பட இன்னும் தரவு இல்லாத போது உமிழப்படுகிறது</li>
+                <li><strong>error:</strong> படிக்கும் போது பிழை ஏற்பட்டால் உமிழப்படுகிறது</li>
+                <li><strong>close:</strong> ஸ்ட்ரீமின் அடிப்படை வளம் மூடப்பட்டால் உமிழப்படுகிறது</li>
+                <li><strong>readable:</strong> தரவு படிக்க கிடைக்கும் போது உமிழப்படுகிறது</li>
+            </ul>
+            
+            <h3>Writable ஸ்ட்ரீம் நிகழ்வுகள்</h3>
+            
+            <ul>
+                <li><strong>drain:</strong> write() முறை false ஐ வழங்கிய பிறகு ஸ்ட்ரீம் மேலும் தரவை ஏற்க தயாராக இருக்கும் போது உமிழப்படுகிறது</li>
+                <li><strong>finish:</strong> அனைத்து தரவும் அடிப்படை அமைப்புக்கு ப்ளஷ் செய்யப்பட்டால் உமிழப்படுகிறது</li>
+                <li><strong>error:</strong> எழுதும் போது பிழை ஏற்பட்டால் உமிழப்படுகிறது</li>
+                <li><strong>close:</strong> ஸ்ட்ரீமின் அடிப்படை வளம் மூடப்பட்டால் உமிழப்படுகிறது</li>
+                <li><strong>pipe:</strong> readable ஸ்ட்ரீமில் pipe() முறை அழைக்கப்படும் போது உமிழப்படுகிறது</li>
+                <li><strong>unpipe:</strong> readable ஸ்ட்ரீமில் unpipe() முறை அழைக்கப்படும் போது உமிழப்படுகிறது</li>
+            </ul>
+        </section>
+
+        <!-- The stream.pipeline() Method -->
+        <section class="content-section" id="pipeline">
+            <h2>stream.pipeline() முறை</h2>
+            
+            <p>pipeline() செயல்பாடு (Node.js v10.0.0 முதல் கிடைக்கும்) ஸ்ட்ரீம்களை ஒன்றாக இணைக்க மிகவும் உறுதியான வழியாகும், குறிப்பாக பிழை கையாளுதலுக்கு.</p>
+            
+            <div class="code-example">
+                <pre><code>const { pipeline } = require('stream');
+const fs = require('fs');
+const zlib = require('zlib');
+
+// Create a pipeline that handles errors properly
+pipeline(
+  fs.createReadStream('source.txt'),
+  zlib.createGzip(),
+  fs.createWriteStream('destination.txt.gz'),
+  (err) => {
+    if (err) {
+      console.error('Pipeline failed:', err);
+    } else {
+      console.log('Pipeline succeeded!');
+    }
+  }
+);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>pipeline() அவற்றில் ஏதேனும் பிழை ஏற்பட்டால் அனைத்து ஸ்ட்ரீம்களையும் சரியாக சுத்தம் செய்யும், சாத்தியமான நினைவக கசிவுகளைத் தடுக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Object Mode Streams -->
+        <section class="content-section" id="object-mode">
+            <h2>Object Mode ஸ்ட்ரீம்கள்</h2>
+            
+            <p>இயல்பாக, ஸ்ட்ரீம்கள் சரங்கள் மற்றும் Buffer பொருள்களுடன் வேலை செய்கின்றன.</p>
+            
+            <p>இருப்பினும், ஸ்ட்ரீம்கள் JavaScript பொருள்களுடன் வேலை செய்ய 'object mode' க்கு அமைக்கப்படலாம்.</p>
+            
+            <div class="code-example">
+                <pre><code>const { Readable, Writable, Transform } = require('stream');
+
+// Create a readable stream in object mode
+const objectReadable = new Readable({
+  objectMode: true,
+  read() {} // Implementation required but can be no-op
+});
+
+// Create a transform stream in object mode
+const objectTransform = new Transform({
+  objectMode: true,
+  transform(chunk, encoding, callback) {
+    // Add a property to the object
+    chunk.transformed = true;
+    chunk.timestamp = new Date();
+    this.push(chunk);
+    callback();
+  }
+});
+
+// Create a writable stream in object mode
+const objectWritable = new Writable({
+  objectMode: true,
+  write(chunk, encoding, callback) {
+    console.log('Received object:', chunk);
+    callback();
+  }
+});
+
+// Connect the streams
+objectReadable
+  .pipe(objectTransform)
+  .pipe(objectWritable);
+
+// Push some objects to the stream
+objectReadable.push({ name: 'Object 1', value: 10 });
+objectReadable.push({ name: 'Object 2', value: 20 });
+objectReadable.push({ name: 'Object 3', value: 30 });
+objectReadable.push(null); // Signal the end of data</code></pre>
+            </div>
+        </section>
+
+        <!-- Advanced Stream Patterns -->
+        <section class="content-section" id="advanced-patterns">
+            <h2>மேம்பட்ட ஸ்ட்ரீம் முறைகள்</h2>
+            
+            <h3>1. pipeline() உடன் பிழை கையாளுதல்</h3>
+            
+            <p>pipeline() முறை ஸ்ட்ரீம் சங்கிலிகளில் பிழைகளைக் கையாள பரிந்துரைக்கப்படும் வழியாகும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { pipeline } = require('stream');
+const fs = require('fs');
+const zlib = require('zlib');
+
+pipeline(
+  fs.createReadStream('input.txt'),
+  zlib.createGzip(),
+  fs.createWriteStream('output.txt.gz'),
+  (err) => {
+   if (err) {
+    console.error('Pipeline failed:', err);
+   } else {
+    console.log('Pipeline succeeded');
+   }
+  }
+);</code></pre>
+            </div>
+            
+            <h3>2. Object Mode ஸ்ட்ரீம்கள்</h3>
+            
+            <p>ஸ்ட்ரீம்கள் சரங்கள் மற்றும் buffers மட்டுமல்ல JavaScript பொருள்களுடன் வேலை செய்ய முடியும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { Readable } = require('stream');
+
+// Create a readable stream in object mode
+const objectStream = new Readable({
+  objectMode: true,
+  read() {}
+});
+// Push objects to the stream
+objectStream.push({ id: 1, name: 'Alice' });
+objectStream.push({ id: 2, name: 'Bob' });
+objectStream.push(null); // Signal end of stream
+// Consume the stream
+objectStream.on('data', (obj) => {
+  console.log('Received:', obj);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>HTTP ஸ்ட்ரீமிங்</h3>
+            
+            <p>ஸ்ட்ரீம்கள் HTTP கோரிக்கைகள் மற்றும் பதில்களில் பரவலாகப் பயன்படுத்தப்படுகின்றன.</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const fs = require('fs');
+
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+  // Handle different routes
+  if (req.url === '/') {
+    // Send a simple response
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('<h1>Stream Demo</h1><p>Try <a href="/file">streaming a file</a> or <a href="/video">streaming a video</a>.</p>');
+  }
+  else if (req.url === '/file') {
+    // Stream a large text file
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    const fileStream = fs.createReadStream('largefile.txt', 'utf8');
+
+    // Pipe the file to the response (handles backpressure automatically)
+    fileStream.pipe(res);
+
+    // Handle errors
+    fileStream.on('error', (err) => {
+      console.error('File stream error:', err);
+      res.statusCode = 500;
+      res.end('Server Error');
+    });
+  }
+  else if (req.url === '/video') {
+    // Stream a video file with proper headers
+    const videoPath = 'video.mp4';
+    const stat = fs.statSync(videoPath);
+    const fileSize = stat.size;
+    const range = req.headers.range;
+
+    if (range) {
+      // Handle range requests for video seeking
+      const parts = range.replace(/bytes=/, "").split("-");
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+      const chunksize = (end - start) + 1;
+
+      const videoStream = fs.createReadStream(videoPath, { start, end });
+      res.writeHead(206, {
+        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunksize,
+        'Content-Type': 'video/mp4'
+      });
+
+      videoStream.pipe(res);
+      } else {
+        // No range header, send entire video
+        res.writeHead(200, {
+          'Content-Length': fileSize,
+          'Content-Type': 'video/mp4'
+        });
+
+        fs.createReadStream(videoPath).pipe(res);
+      }
+  } else {
+    // 404 Not Found
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Not Found');
+  }
+});
+
+// Start the server
+server.listen(8080, () => {
+  console.log('Server running at http://localhost:8080/');
+});</code></pre>
+            </div>
+            
+            <h3>பெரிய CSV கோப்புகளை செயலாக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const { Transform } = require('stream');
+const csv = require('csv-parser'); // npm install csv-parser
+
+// Create a transform stream to filter and transform CSV data
+const filterTransform = new Transform({
+  objectMode: true,
+  transform(row, encoding, callback) {
+    // Only pass through rows that meet our criteria
+    if (parseInt(row.age) > 18) {
+      // Modify the row
+      row.isAdult = 'Yes';
+      // Push the transformed row
+      this.push(row);
+    }
+    callback();
+  }
+});
+
+// Create a writable stream for the results
+const results = [];
+const writeToArray = new Transform({
+  objectMode: true,
+  transform(row, encoding, callback) {
+    results.push(row);
+    callback();
+  }
+});
+
+// Create the processing pipeline
+fs.createReadStream('people.csv')
+  .pipe(csv())
+  .pipe(filterTransform)
+  .pipe(writeToArray)
+  .on('finish', () => {
+    console.log(`Processed ${results.length} records:`);
+    console.log(results);
+  })
+  .on('error', (err) => {
+    console.error('Error processing CSV:', err);
+  });</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>பிழை கையாளுதல்:</strong> பயன்பாடு கிராஷ் ஆவதைத் தடுக்க ஸ்ட்ரீம்களில் error நிகழ்வுகளை எப்போதும் கையாளவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <span><strong>pipeline() பயன்படுத்தவும்:</strong> சிறந்த பிழை கையாளுதல் மற்றும் சுத்தம் செய்ய stream.pipeline() ஐ .pipe() க்கு முன்னுரிமை அளிக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>பின்னழுத்தத்தைக் கையாளவும்:</strong> நினைவக சிக்கல்களைத் தவிர்க்க write() இன் வருமான மதிப்பை மதிக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-stop"></i>
+                    <span><strong>ஸ்ட்ரீம்களை முடிக்கவும்:</strong> நீங்கள் முடித்தவுடன் writable ஸ்ட்ரீம்களில் எப்போதும் end() ஐ அழைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync"></i>
+                    <span><strong>ஒத்திசைவான செயல்பாடுகளைத் தவிர்க்கவும்:</strong> ஸ்ட்ரீம் கையாளுநர்களுக்குள் ஒத்திசைவான செயல்பாடுகளுடன் நிகழ்வு சுழற்சியைத் தடுக்காதீர்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-expand"></i>
+                    <span><strong>Buffer அளவு:</strong> highWaterMark (buffer அளவு) அமைப்புகளைப் பற்றி கவனத்துடன் இருங்கள்</span>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>ஸ்ட்ரீம்களை தவறாக கையாளுதல் நினைவக கசிவுகள் மற்றும் செயல்திறன் சிக்கல்களுக்கு வழிவகுக்கும்.</p>
+                <p>பிழைகளை எப்போதும் கையாளுங்கள் மற்றும் ஸ்ட்ரீம்களை சரியாக முடிக்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>ஸ்ட்ரீம்கள் Node.js இல் ஒரு அடிப்படை கருத்தாகும், இது திறந்த தரவு கையாளுதலுக்கு அனுமதிக்கிறது. அவை:</p>
+            
+            <ul>
+                <li>எல்லாவற்றையும் நினைவகத்தில் ஏற்றாமல் துண்டு துண்டாக தரவை செயலாக்குகின்றன</li>
+                <li>பெரிய தரவுத் தொகுப்புகளுக்கு சிறந்த நினைவக திறனை வழங்குகின்றன</li>
+                <li>அனைத்து தரவும் கிடைப்பதற்கு முன்பே செயலாக்கத்தைத் தொடங்க அனுமதிக்கின்றன</li>
+                <li>சக்திவாய்ந்த தரவு செயலாக்க குழாய்களை இயக்குகின்றன</li>
+                <li>Core Node.js APIகளில் பரவலாகப் பயன்படுத்தப்படுகின்றன</li>
+            </ul>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> ஒரு readable ஸ்ட்ரீமை writable ஸ்ட்ரீமுடன் இணைக்க எந்த முறை பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">connect()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "connect()" என்பது Node.js ஸ்ட்ரீம்களில் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">pipe()</div>
+                            <div class="option-feedback correct">✓ சரி! "pipe()" முறை ஒரு readable ஸ்ட்ரீமை writable ஸ்ட்ரீமுடன் இணைக்க பயன்படும் சரியான முறையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">link()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "link()" என்பது Node.js ஸ்ட்ரீம்களில் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">flow()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "flow()" என்பது Node.js ஸ்ட்ரீம்களில் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Events.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Buffer Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-are-streams">ஸ்ட்ரீம்கள் என்றால் என்ன?</a></li>
+                    <li><a href="#why-streams">ஏன் ஸ்ட்ரீம்களைப் பயன்படுத்த வேண்டும்?</a></li>
+                    <li><a href="#core-types">முக்கிய ஸ்ட்ரீம் வகைகள்</a></li>
+                    <li><a href="#pipe">Pipe முறை</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

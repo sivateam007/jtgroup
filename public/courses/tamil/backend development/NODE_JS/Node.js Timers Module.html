@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Timers Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Crypto Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js DNS Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Timers Module</h2>
+            <p>Node.js இல் குறிப்பிட்ட நேரங்களில் அல்லது இடைவெளிகளில் குறியீடு செயல்படுத்துதலை கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is the Timers Module? -->
+        <section class="content-section" id="what-is-timers">
+            <h2>Timers தொகுதி என்றால் என்ன?</h2>
+            
+            <p>Timers தொகுதி குறிப்பிட்ட நேரங்களில் அல்லது இடைவெளிகளில் குறியீடு செயல்படுத்துதலை திட்டமிட உதவும் செயல்பாடுகளை வழங்குகிறது.</p>
+            
+            <p>Browser JavaScript இலிருந்து வேறுபட்டு, Node.js நேர செயல்பாடுகள் Timers தொகுதியின் ஒரு பகுதியாக வழங்கப்படுகின்றன, இருப்பினும் அவை வெளிப்படையான இறக்குமதி இல்லாமல் உலகளவில் கிடைக்கின்றன.</p>
+            
+            <h3>முக்கிய அம்சங்கள்:</h3>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-clock"></i>
+                        <h4>setTimeout()</h4>
+                    </div>
+                    <p>தாமதமான செயல்படுத்தல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-redo"></i>
+                        <h4>setInterval()</h4>
+                    </div>
+                    <p>மீண்டும் மீண்டும் செயல்படுத்தல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>setImmediate()</h4>
+                    </div>
+                    <p>அடுத்த event loop இல் உடனடி செயல்படுத்தல்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>Promise-அடிப்படையிலான APIகள்</h4>
+                    </div>
+                    <p>நவீன async/await முறைகளுக்கு</p>
+                </div>
+            </div>
+            
+            <p>இந்த திறன்கள் பதிலளிக்கும் பயன்பாடுகளை உருவாக்குவதற்கு, polling செயல்படுத்துவதற்கு, தாமதமான செயல்பாடுகளைக் கையாள்வதற்கு மற்றும் பலவற்றுக்கு அத்தியாவசியமானவை.</p>
+        </section>
+
+        <!-- Getting Started with Timers -->
+        <section class="content-section" id="getting-started">
+            <h2>Timers உடன் தொடங்குதல்</h2>
+            
+            <p>குறியீடு செயல்படுத்துதலை திட்டமிட Timers தொகுதியைப் பயன்படுத்துவதற்கான விரைவான எடுத்துக்காட்டு இங்கே:</p>
+            
+            <h3>அடிப்படை Timer எடுத்துக்காட்டு</h3>
+            
+            <div class="code-example">
+                <pre><code>const { setTimeout, setInterval, setImmediate } = require('timers');
+
+console.log('Starting timers...');
+
+// Execute once after delay
+setTimeout(() => {
+  console.log('This runs after 1 second');
+}, 1000);
+
+// Execute repeatedly at interval
+let counter = 0;
+const interval = setInterval(() => {
+  counter++;
+  console.log(`Interval tick ${counter}`);
+  if (counter >= 3) clearInterval(interval);
+}, 1000);
+
+// Execute in the next event loop iteration
+setImmediate(() => {
+  console.log('This runs in the next iteration of the event loop');
+});
+
+console.log('Timers scheduled');</code></pre>
+            </div>
+        </section>
+
+        <!-- Using the Timers Module -->
+        <section class="content-section" id="using-timers">
+            <h2>Timers தொகுதியைப் பயன்படுத்துதல்</h2>
+            
+            <p>Timers தொகுதியின் செயல்பாடுகள் உலகளவில் கிடைக்கின்றன, எனவே நீங்கள் அவற்றை வெளிப்படையாக தேவைப்படுத்த தேவையில்லை.</p>
+            
+            <p>இருப்பினும், நீங்கள் மேம்பட்ட அம்சங்களை அணுக விரும்பினால் அல்லது தெளிவுக்காக, நீங்கள் தொகுதியை இறக்குமதி செய்யலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const timers = require('timers');
+
+// Or, for the promises API (Node.js 15.0.0+)
+const timersPromises = require('timers/promises');</code></pre>
+            </div>
+        </section>
+
+        <!-- setTimeout() and clearTimeout() -->
+        <section class="content-section" id="settimeout">
+            <h2>setTimeout() மற்றும் clearTimeout()</h2>
+            
+            <p>setTimeout() செயல்பாடு குறிப்பிட்ட நேரத்திற்குப் பிறகு (மில்லி விநாடிகளில்) ஒரு callback இன் செயல்படுத்தலை திட்டமிடுகிறது.</p>
+            
+            <p>இது timeout ஐ ரத்து செய்ய பயன்படுத்தக்கூடிய ஒரு Timeout பொருளை வழங்குகிறது.</p>
+            
+            <h3>பொதுவான பயன்பாட்டு நிகழ்வுகள்</h3>
+            
+            <ul>
+                <li>முக்கியமற்ற பணிகளின் செயல்படுத்தலை தாமதப்படுத்துதல்</li>
+                <li>செயல்பாடுகளுக்கான timeouts செயல்படுத்துதல்</li>
+                <li>CPU-தீவிர பணிகளை உடைத்தல்</li>
+                <li>மீண்டும் முயற்சி தர்க்கத்தை செயல்படுத்துதல்</li>
+            </ul>
+            
+            <div class="code-example">
+                <pre><code>// Basic usage
+setTimeout(() => {
+  console.log('This message is displayed after 2 seconds');
+}, 2000);
+
+// With arguments
+setTimeout((name) => {
+  console.log(`Hello, ${name}!`);
+}, 1000, 'World');
+
+// Storing and clearing a timeout
+const timeoutId = setTimeout(() => {
+  console.log('This will never be displayed');
+}, 5000);
+
+// Cancel the timeout before it executes
+clearTimeout(timeoutId);
+console.log('Timeout has been cancelled');</code></pre>
+            </div>
+            
+            <h3>Promise-அடிப்படையிலான setTimeout</h3>
+            
+            <p>Node.js 15.0.0 மற்றும் பிற்பட்டவை timers க்கான promises-அடிப்படையிலான API ஐ வழங்குகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>const { setTimeout } = require('timers/promises');
+
+async function delayedGreeting() {
+  console.log('Starting...');
+
+  // Wait for 2 seconds
+  await setTimeout(2000);
+
+  console.log('After 2 seconds');
+
+  // Wait for 1 second with a value
+  const result = await setTimeout(1000, 'Hello, World!');
+
+  console.log('After 1 more second:', result);
+}
+
+delayedGreeting().catch(console.error);</code></pre>
+            </div>
+        </section>
+
+        <!-- setInterval() and clearInterval() -->
+        <section class="content-section" id="setinterval">
+            <h2>setInterval() மற்றும் clearInterval()</h2>
+            
+            <p>setInterval() செயல்பாடு குறிப்பிட்ட இடைவெளிகளில் (மில்லி விநாடிகளில்) ஒரு செயல்பாட்டை மீண்டும் மீண்டும் அழைக்கிறது.</p>
+            
+            <p>இது இடைவெளியை நிறுத்த பயன்படுத்தக்கூடிய ஒரு Interval பொருளை வழங்குகிறது.</p>
+            
+            <h3>பொதுவான பயன்பாட்டு நிகழ்வுகள்</h3>
+            
+            <ul>
+                <li>புதுப்பிப்புகளுக்கான polling</li>
+                <li>காலமுறை பராமரிப்பு பணிகளை இயக்குதல்</li>
+                <li>heartbeat பொறிமுறைகளை செயல்படுத்துதல்</li>
+                <li>UI உறுப்புகளை வழக்கமான இடைவெளிகளில் புதுப்பித்தல்</li>
+            </ul>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>மற்ற செயல்பாடுகளால் event loop தடுக்கப்பட்டால், செயல்படுத்தல்களுக்கு இடையே உள்ள உண்மையான இடைவெளி குறிப்பிடப்பட்டதை விட நீளமாக இருக்கலாம்.</p>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// Basic interval
+let counter = 0;
+const intervalId = setInterval(() => {
+  counter++;
+  console.log(`Interval executed ${counter} times`);
+
+  // Stop after 5 executions
+  if (counter >= 5) {
+    clearInterval(intervalId);
+    console.log('Interval stopped');
+  }
+}, 1000);
+
+// Interval with arguments
+const nameInterval = setInterval((name) => {
+  console.log(`Hello, ${name}!`);
+}, 2000, 'Node.js');
+
+// Stop the name interval after 6 seconds
+setTimeout(() => {
+  clearInterval(nameInterval);
+  console.log('Name interval stopped');
+}, 6000);</code></pre>
+            </div>
+            
+            <h3>Promise-அடிப்படையிலான setInterval</h3>
+            
+            <p>இடைவெளிகளுக்கான promises API ஐப் பயன்படுத்துதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { setInterval } = require('timers/promises');
+
+async function repeatedGreeting() {
+  console.log('Starting interval...');
+
+  // Create an async iterator from setInterval
+  const interval = setInterval(1000, 'tick');
+
+  // Limit to 5 iterations
+  let counter = 0;
+
+  for await (const tick of interval) {
+    console.log(counter + 1, tick);
+    counter++;
+
+    if (counter >= 5) {
+      break; // Exit the loop, stopping the interval
+    }
+  }
+
+  console.log('Interval finished');
+}
+
+repeatedGreeting().catch(console.error);</code></pre>
+            </div>
+        </section>
+
+        <!-- setImmediate() and clearImmediate() -->
+        <section class="content-section" id="setimmediate">
+            <h2>setImmediate() மற்றும் clearImmediate()</h2>
+            
+            <p>setImmediate() செயல்பாடு event loop இன் அடுத்த மறு செய்கையில், I/O நிகழ்வுகளுக்குப் பிறகு ஆனால் timers க்கு முன்பு இயங்க ஒரு callback ஐ திட்டமிடுகிறது.</p>
+            
+            <p>இது setTimeout(callback, 0) ஐப் பயன்படுத்துவதைப் போன்றது, ஆனால் மிகவும் திறமையானது.</p>
+            
+            <h3>setImmediate() எப்போது பயன்படுத்த வேண்டும்</h3>
+            
+            <ul>
+                <li>தற்போதைய செயல்பாடு முடிந்த பிறகு குறியீட்டை இயக்க விரும்பும் போது</li>
+                <li>நீண்ட-இயங்கும் செயல்பாடுகளை சிறிய துண்டுகளாக உடைக்க</li>
+                <li>I/O செயல்பாடுகள் முடிந்த பிறகு callbacks இயங்குவதை உறுதி செய்ய</li>
+                <li>மறுநிகழ்வு செயல்பாடுகளில் stack overflows தடுக்க</li>
+            </ul>
+            
+            <div class="code-example">
+                <pre><code>console.log('Start');
+
+setTimeout(() => {
+  console.log('setTimeout callback');
+}, 0);
+
+setImmediate(() => {
+  console.log('setImmediate callback');
+});
+
+process.nextTick(() => {
+  console.log('nextTick callback');
+});
+
+console.log('End');</code></pre>
+            </div>
+            
+            <p>செயல்படுத்தல் வரிசை பொதுவாக இருக்கும்:</p>
+            
+            <ol>
+                <li>Start</li>
+                <li>End</li>
+                <li>nextTick callback</li>
+                <li>setTimeout callback அல்லது setImmediate callback (வரிசை மாறுபடலாம்)</li>
+            </ol>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>முக்கிய தொகுதியிலிருந்து அழைக்கப்படும் போது setTimeout(0) மற்றும் setImmediate() இடையேயான செயல்படுத்தல் வரிசை கணிக்க முடியாததாக இருக்கலாம்.</p>
+                <p>இருப்பினும், ஒரு I/O callback உள்ளே, setImmediate() எந்த timers க்கும் முன்பு எப்போதும் இயங்கும்.</p>
+            </div>
+            
+            <h3>உடனடியை ரத்து செய்தல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const immediateId = setImmediate(() => {
+  console.log('This will not be displayed');
+});
+
+clearImmediate(immediateId);
+console.log('Immediate has been cancelled');</code></pre>
+            </div>
+        </section>
+
+        <!-- process.nextTick() -->
+        <section class="content-section" id="nexttick">
+            <h2>process.nextTick()</h2>
+            
+            <p>Timers தொகுதியின் ஒரு பகுதியாக இல்லை என்றாலும், process.nextTick() ஒரு தொடர்புடைய செயல்பாடாகும், இது event loop இன் அடுத்த மறு செய்கை வரை ஒரு callback ஐ தாமதப்படுத்துகிறது, ஆனால் எந்த I/O நிகழ்வுகள் அல்லது timers க்கும் முன்பு அதை இயக்குகிறது.</p>
+            
+            <h3>முக்கிய பண்புகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span><strong>எந்த I/O நிகழ்வுகள் அல்லது timers க்கும் முன்பு இயங்கும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sort-up"></i>
+                    <span><strong>setImmediate() ஐ விட அதிக முன்னுரிமை</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tasks"></i>
+                    <span><strong>event loop தொடரும் முன் அனைத்து வரிசையில் callbacks செயலாக்குகிறது</strong></span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>அதிகமாகப் பயன்படுத்தப்பட்டால் I/O பட்டினியை ஏற்படுத்தலாம்</strong></span>
+                </div>
+            </div>
+            
+            <h3>process.nextTick() எப்போது பயன்படுத்த வேண்டும்</h3>
+            
+            <ul>
+                <li>தற்போதைய செயல்பாட்டிற்குப் பிறகு ஆனால் எந்த I/O க்கும் முன்பு ஒரு callback இயங்குவதை உறுதி செய்ய</li>
+                <li>நீண்ட-இயங்கும் செயல்பாடுகளை உடைக்க</li>
+                <li>ஒரு பொருள் உருவாக்கப்பட்ட பிறகு event handlers அமைக்க அனுமதிக்க</li>
+                <li>நிலையான API நடத்தையை உறுதி செய்ய (எ.கா., constructors உடன் அல்லது இல்லாமல் வேலை செய்யும்)</li>
+            </ul>
+            
+            <div class="code-example">
+                <pre><code>console.log('Start');
+
+// Schedule three different types of callbacks
+setTimeout(() => {
+  console.log('setTimeout executed');
+}, 0);
+
+setImmediate(() => {
+  console.log('setImmediate executed');
+});
+
+process.nextTick(() => {
+  console.log('nextTick executed');
+});
+
+console.log('End');</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>process.nextTick() event loop இன் அதே கட்டத்தில் உடனடியாக தீய்க்கிறது, அதே சமயம் setImmediate() event loop இன் அடுத்த மறு செய்கை அல்லது 'tick' இல் தீய்க்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Advanced Timer Patterns -->
+        <section class="content-section" id="advanced-patterns">
+            <h2>மேம்பட்ட Timer முறைகள்</h2>
+            
+            <h3>Debouncing</h3>
+            
+            <p>அதிக அடிக்கடி அழைக்கப்படுவதிலிருந்து ஒரு செயல்பாட்டைத் தடுக்க அதன் செயல்படுத்தலை தாமதப்படுத்துவதன் மூலம்:</p>
+            
+            <div class="code-example">
+                <pre><code>function debounce(func, delay) {
+  let timeoutId;
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// Example usage
+const handleResize = debounce(() => {
+  console.log('Window resized');
+}, 300);
+
+// Call handleResize() on window resize</code></pre>
+            </div>
+            
+            <h3>Throttling</h3>
+            
+            <p>காலப்போக்கில் ஒரு செயல்பாடு எத்தனை முறை அழைக்கப்படலாம் என்பதைக் கட்டுப்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>function throttle(func, limit) {
+  let inThrottle = false;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+// Example usage
+const handleScroll = throttle(() => {
+  console.log('Handling scroll');
+}, 200);
+
+// Call handleScroll() on window scroll</code></pre>
+            </div>
+            
+            <h3>Sequential Timeouts</h3>
+            
+            <p>அவற்றுக்கிடையே தாமதங்களுடன் தொடர்ச்சியான செயல்பாடுகளை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>function sequentialTimeouts(callbacks, delay = 1000) {
+  let index = 0;
+  function next() {
+    if (index < callbacks.length) {
+      callbacks[index]();
+      index++;
+      setTimeout(next, delay);
+    }
+  }
+  next();
+}
+
+// Example usage
+sequentialTimeouts([
+  () => console.log('Step 1'),
+  () => console.log('Step 2'),
+  () => console.log('Step 3')
+], 1000);</code></pre>
+            </div>
+        </section>
+
+        <!-- Timer Behavior and Best Practices -->
+        <section class="content-section" id="timer-behavior">
+            <h2>Timer நடத்தை மற்றும் சிறந்த நடைமுறைகள்</h2>
+            
+            <h3>Timer துல்லியம் மற்றும் செயல்திறன்</h3>
+            
+            <p>Node.js timers மில்லி விநாடிக்கு துல்லியமானவை அல்ல. உண்மையான தாமதம் இதன் காரணமாக சற்று நீளமாக இருக்கலாம்:</p>
+            
+            <ul>
+                <li>கணினி சுமை மற்றும் CPU பயன்பாடு</li>
+                <li>Event loop தடுக்கும் செயல்பாடுகள்</li>
+                <li>மற்ற timers மற்றும் I/O செயல்பாடுகள்</li>
+                <li>கணினி timer தீர்மானம் (பொதுவாக 1-15ms)</li>
+            </ul>
+            
+            <h3>Timer துல்லியத்தை அளவிடுதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const desiredDelay = 100; // 100ms
+const start = Date.now();
+
+setTimeout(() => {
+  const actualDelay = Date.now() - start;
+  console.log(`Desired delay: ${desiredDelay}ms`);
+  console.log(`Actual delay: ${actualDelay}ms`);
+  console.log(`Difference: ${actualDelay - desiredDelay}ms`);
+}, desiredDelay);</code></pre>
+            </div>
+            
+            <h3>நினைவகம் மற்றும் வள மேலாண்மை</h3>
+            
+            <p>நினைவக கசிவுகள் மற்றும் அதிகப்படியான வள பயன்பாட்டைத் தடுக்க timers இன் சரியான மேலாண்மை முக்கியமானது:</p>
+            
+            <h4>பொதுவான நினைவக கசிவு முறைகள்</h4>
+            
+            <div class="code-example">
+                <pre><code>// Leak: Interval keeps running even if not needed
+function startService() {
+  setInterval(() => {
+    fetchData();
+  }, 1000);
+}
+
+// Leak: Timeout with closure over large object
+function processData(data) {
+  setTimeout(() => {
+    console.log('Processing complete');
+   // 'data' is kept in memory until the timeout fires
+  }, 10000, data);
+}</code></pre>
+            </div>
+            
+            <h3>சிறந்த நடைமுறைகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-trash"></i>
+                    <span><strong>அவை இனி தேவையில்லாத போது எப்போதும் இடைவெளிகள் மற்றும் timeouts ஐ அழிக்கவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-save"></i>
+                    <span><strong>சுத்தம் செய்வதற்கு அனுமதிக்கும் வகையில் timer IDs ஐ சேமிக்கவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation"></i>
+                    <span><strong>Timer callbacks இல் closures உடன் எச்சரிக்கையாக இருங்கள்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-broom"></i>
+                    <span><strong>சுத்தம் செய்யும் செயல்பாடுகளில் clearTimeout() மற்றும் clearInterval() ஐப் பயன்படுத்தவும்</strong></span>
+                </div>
+            </div>
+            
+            <p>நினைவக கசிவுகளைத் தடுக்க, குறிப்பாக நீண்ட-இயங்கும் பயன்பாடுகளில், அவை இனி தேவையில்லாத போது timers ஐ அழிக்க நினைவில் கொள்ளுங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>// Bad practice in a server context
+function startServer() {
+  setInterval(() => {
+    // This interval will run forever and prevent proper cleanup
+    console.log('Server is running...');
+  }, 60000);
+}
+
+// Better practice
+function startServer() {
+  const intervalId = setInterval(() => {
+    console.log('Server is running...');
+  }, 60000);
+
+  // Store the interval ID for later cleanup
+  return {
+    stop: () => {
+      clearInterval(intervalId);
+      console.log('Server stopped');
+    }
+  };
+}
+
+// Example usage
+const server = startServer();
+
+// Stop the server after 3 minutes
+setTimeout(() => {
+  server.stop();
+}, 180000);</code></pre>
+            </div>
+            
+            <h3>Zero-Delay Timeouts</h3>
+            
+            <p>setTimeout(callback, 0) பயன்படுத்தும் போது, callback உடனடியாக இயங்காது.</p>
+            
+            <p>இது தற்போதைய event loop சுழற்சி முடிந்த பிறகு இயங்கும், இது CPU-தீவிர பணிகளை "உடைக்க" பயன்படுத்தப்படலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>function processArray(array, processFunction) {
+  const chunkSize = 1000;
+  let index = 0;
+
+  function processChunk() {
+    const chunk = array.slice(index, index + chunkSize);
+    chunk.forEach(processFunction);
+
+    index += chunkSize;
+
+    if (index < array.length) {
+      setTimeout(processChunk, 0); // Yield to the event loop
+    } else {
+      console.log('Processing complete');
+    }
+  }
+
+  processChunk();
+}
+
+// Example usage
+const bigArray = Array(10000).fill().map((_, i) => i);
+
+console.log('Starting processing...');
+processArray(bigArray, (item) => {
+  // Simple processing
+  if (item % 5000 === 0) {
+    console.log(`Processed item ${item}`);
+  }
+});
+console.log('This will log before processing completes');</code></pre>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>Node.js Timers தொகுதி குறிப்பிட்ட நேரங்களில் அல்லது இடைவெளிகளில் குறியீடு செயல்படுத்துதலை திட்டமிடுவதற்கான சக்திவாய்ந்த கருவிகளை வழங்குகிறது:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-clock"></i>
+                        <h4>setTimeout()</h4>
+                    </div>
+                    <p>தாமதத்திற்குப் பிறகு ஒரு முறை செயல்படுத்துகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-redo"></i>
+                        <h4>setInterval()</h4>
+                    </div>
+                    <p>இடைவெளிகளில் மீண்டும் மீண்டும் செயல்படுத்துகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>setImmediate()</h4>
+                    </div>
+                    <p>அடுத்த event loop இல் உடனடியாக செயல்படுத்துகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>Promise APIகள்</h4>
+                    </div>
+                    <p>நவீன async/await முறைகளுக்கு</p>
+                </div>
+            </div>
+            
+            <p>இந்த கருவிகளைப் புரிந்துகொண்டு சரியாகப் பயன்படுத்துவதன் மூலம், நீங்கள் பதிலளிக்கும் பயன்பாடுகளை உருவாக்கலாம், நேரம்-தொடர்பான தர்க்கத்தை செயல்படுத்தலாம் மற்றும் உங்கள் குறியீட்டின் செயல்திறனை மேம்படுத்தலாம்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> குறிப்பிட்ட தாமதத்திற்குப் பிறகு ஒரு callback ஒரு முறை இயக்க எந்த செயல்பாடு பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">setInterval()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! setInterval() மீண்டும் மீண்டும் இயக்குகிறது, ஒரு முறை மட்டும் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">setImmediate()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! setImmediate() அடுத்த event loop இல் இயக்குகிறது, குறிப்பிட்ட தாமதத்திற்குப் பிறகு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">setTimeout()</div>
+                            <div class="option-feedback correct">✓ சரி! setTimeout() குறிப்பிட்ட தாமதத்திற்குப் பிறகு ஒரு callback ஒரு முறை இயக்க பயன்படும் சரியான செயல்பாடாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">clearTimeout()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! clearTimeout() ஒரு timeout ஐ ரத்து செய்கிறது, அதை இயக்கவில்லை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Crypto Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js DNS Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-timers">Timers தொகுதி என்றால் என்ன?</a></li>
+                    <li><a href="#settimeout">setTimeout() மற்றும் clearTimeout()</a></li>
+                    <li><a href="#setinterval">setInterval() மற்றும் clearInterval()</a></li>
+                    <li><a href="#setimmediate">setImmediate() மற்றும் clearImmediate()</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Angular ngTemplateOutlet - Jassif Team</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="style.css" rel="stylesheet"/>
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .template-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            margin: 2rem 0;
+        }
+        
+        .demo-container {
+            background: white;
+            color: #333;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .demo-controls {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--git-color);
+        }
+        
+        .control-group select,
+        .control-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .demo-output {
+            margin-top: 20px;
+            padding: 20px;
+            min-height: 100px;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .template-card {
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .template-info { color: royalblue; border: 2px solid royalblue; background: #e8f4fd; }
+        .template-warning { color: darkorange; border: 2px solid darkorange; background: #fff3e0; }
+        .template-success { color: seagreen; border: 2px solid seagreen; background: #e8f5e9; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .workflow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2.5rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .workflow-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            padding: 0 1rem;
+        }
+        
+        .workflow-step:not(:last-child):after {
+            content: '→';
+            position: absolute;
+            right: -0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--git-color);
+            font-weight: bold;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .context-explanation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .context-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .context-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .context-icon {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .workflow-diagram {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .workflow-step:not(:last-child):after {
+                content: '↓';
+                right: 50%;
+                bottom: -1.5rem;
+                top: auto;
+                transform: translateX(50%);
+            }
+            
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a class="nav-tab prev" href="Angular Templates Structural Directives Micro-syntax.html">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a class="nav-tab அடுத்தது" href="Angular Template Statements and $event.html">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Angular ngTemplateOutlet</h2>
+            <p>[ngTemplateOutlet] உடன் ஒரு குறிப்பிடப்பட்ட டெம்ப்ளேட்டை மீண்டும் பயன்படுத்தி ரெண்டர் செய்தல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is ngTemplateOutlet? -->
+        <section class="content-section" id="what-is-ngtemplateoutlet">
+            <h2>ngTemplateOutlet என்றால் என்ன?</h2>
+            <p><code>&lt;ng-template&gt;</code> மீண்டும் பயன்படுத்தக்கூடிய ஒரு டெம்ப்ளேட் துண்டை ("சமையல் செய்முறை") வரையறுக்கிறது [citation:2][citation:5].</p>
+            <p>அதை <code>[ngTemplateOutlet]</code> உடன் ரெண்டர் செய்யவும் [citation:1][citation:3].</p>
+            <p>மதிப்புகளை <code>[ngTemplateOutletContext]</code> மூலம் அனுப்பி, <code>let-</code> மாறிகள் மூலம் படிக்கவும் [citation:1][citation:4].</p>
+            
+            <div class="workflow-diagram">
+                <div class="workflow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <h4>டெம்ப்ளேட்டை வரையறுக்கவும்</h4>
+                    <p><code>&lt;ng-template #myTpl&gt;</code> உடன்</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h4>சூழலை அமைக்கவும்</h4>
+                    <p><code>[ngTemplateOutletContext]</code> உடன் தரவை அனுப்பவும்</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <h4>ரெண்டர் செய்யவும்</h4>
+                    <p><code>[ngTemplateOutlet]="myTpl"</code> உடன்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- When to use ngTemplateOutlet -->
+        <section class="content-section" id="when-to-use">
+            <h2>எப்போது ngTemplateOutlet ஐப் பயன்படுத்துவது</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-redo"></i>
+                        <h4>UI முறைகளை மீண்டும் பயன்படுத்தவும்</h4>
+                    </div>
+                    <p>வெவ்வேறு தரவு அல்லது ரெண்டரிங் மாறுபாடுகளுடன் [citation:3][citation:4]</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cube"></i>
+                        <h4>சிக்கலான தர்க்கத்திற்கு கூறுகளைப் பயன்படுத்தவும்</h4>
+                    </div>
+                    <p>மீண்டும் பயன்படுத்தக்கூடிய சிக்கலான தர்க்கம் மற்றும் நிலை மேலாண்மைக்கு [citation:3]</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-eye"></i>
+                        <h4>காட்சி-மட்ட மீள் பயன்பாட்டிற்கு டெம்ப்ளேட்டுகளைப் பயன்படுத்தவும்</h4>
+                    </div>
+                    <p>இலகுவான, காட்சி-மட்ட மீள் பயன்பாட்டிற்கு [citation:3]</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-box"></i></span>குறிப்பு:</h4>
+                <p>கூடுதல் DOM உறுப்புகளைச் சேர்க்காத தர்க்க ரேப்பராக <code>&lt;ng-container&gt;</code> ஐப் பயன்படுத்தவும் [citation:2][citation:3].</p>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-project-diagram"></i></span>தொடர்புடையது:</h4>
+                <p><code>&lt;ng-content&gt;</code> உடன் உள்ளடக்கம் ப்ராஜெக்ஷனுக்கு கூறுகள் பகுதியைப் பார்க்கவும் [citation:3].</p>
+            </div>
+        </section>
+
+        <!-- Example -->
+        <section class="content-section" id="example">
+            <h2>எடுத்துக்காட்டு</h2>
+            <p>உங்கள் சொந்த Angular சேவையகத்தைப் பெறுங்கள்:</p>
+            
+            <div class="code-example">
+                <h3>main.ts</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <h3>Templates with ngTemplateOutlet</h3>
+
+    <label>
+      Type:
+      <select (change)="type = $any($event.target).value">
+        <option value="info">info</option>
+        <option value="warning">warning</option>
+        <option value="success">success</option>
+      </select>
+    </label>
+
+    <label>
+      Message: <input (input)="msg = $any($event.target).value" [value]="msg" />
+    </label>
+
+    <ng-container
+      [ngTemplateOutlet]="type === 'info' ? infoTpl : (type === 'warning' ? warnTpl : successTpl)"
+      [ngTemplateOutletContext]="{ $implicit: msg }">
+    </ng-container>
+
+    <ng-template #infoTpl let-text>
+      <p style="color:royalblue">Info: {{ text }}</p>
+    </ng-template>
+
+    <ng-template #warnTpl let-text>
+      <p style="color:darkorange">Warning: {{ text }}</p>
+    </ng-template>
+
+    <ng-template #successTpl let-text>
+      <p style="color:seagreen">Success: {{ text }}</p>
+    </ng-template>
+  `
+})
+export class App {
+  type: 'info' | 'warning' | 'success' = 'info';
+  msg = 'Hello';
+}
+
+bootstrapApplication(App);</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>index.html</h3>
+<pre><code class="command-input">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Angular App&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;app-root&gt;&lt;/app-root&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="template-demo">
+                <h3 style="color: white; text-align: center;">நேரடி டெமோ: டைனமிக் டெம்ப்ளேட் ரெண்டரிங்</h3>
+                <div class="demo-container">
+                    <div class="demo-controls">
+                        <div class="control-group">
+                            <label for="demoType">செய்தி வகை:</label>
+                            <select id="demoType" onchange="updateDemo()">
+                                <option value="info">தகவல் (Info)</option>
+                                <option value="warning">எச்சரிக்கை (Warning)</option>
+                                <option value="success">வெற்றி (Success)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="demoMessage">செய்தி:</label>
+                            <input type="text" id="demoMessage" value="Hello Angular!" oninput="updateDemo()"/>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-output" id="templateOutput">
+                        <div class="template-card template-info" id="outputCard">
+                            Info: Hello Angular!
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px; font-size: 0.9rem; color: #666; text-align: center;">
+                        <p><strong>தற்போதைய டெம்ப்ளேட்:</strong> <code id="currentTemplate">infoTpl</code></p>
+                        <p><strong>சூழல் மதிப்பு:</strong> <code id="contextValue">"Hello Angular!"</code></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example explained -->
+        <section class="content-section" id="example-explained">
+            <h2>எடுத்துக்காட்டு விளக்கம்</h2>
+            
+            <div class="context-explanation">
+                <div class="context-card">
+                    <div class="context-header">
+                        <i class="fas fa-code context-icon"></i>
+                        <h4><code>&lt;ng-template&gt;</code></h4>
+                    </div>
+                    <p>மீண்டும் பயன்படுத்தக்கூடிய டெம்ப்ளேட் தொகுதியை வரையறுக்கிறது (குறிப்பிடப்படும் வரை ரெண்டர் செய்யப்படவில்லை) [citation:5][citation:9].</p>
+                </div>
+                
+                <div class="context-card">
+                    <div class="context-header">
+                        <i class="fas fa-play-circle context-icon"></i>
+                        <h4><code>[ngTemplateOutlet]</code></h4>
+                    </div>
+                    <p>எந்த டெம்ப்ளேட்டை ரெண்டர் செய்வது என்பதை தேர்ந்தெடுக்கிறது (இங்கே வகையின் அடிப்படையில் மூன்று வெளிப்பாடு மூலம்) [citation:1][citation:8].</p>
+                </div>
+                
+                <div class="context-card">
+                    <div class="context-header">
+                        <i class="fas fa-exchange-alt context-icon"></i>
+                        <h4><code>[ngTemplateOutletContext]</code></h4>
+                    </div>
+                    <p>டெம்ப்ளேட்டில் மதிப்புகளை அனுப்புகிறது. <code>$implicit</code> விசை சூழல் பொருளின் ஒரு சிறப்பு பண்பாகும், இது ஒரு பொதுவான மதிப்பை வழங்கப் பயன்படுகிறது. ஒத்த <code>let-</code> மாறியால் படிக்கப்படுகிறது [citation:1][citation:4][citation:8].</p>
+                </div>
+                
+                <div class="context-card">
+                    <div class="context-header">
+                        <i class="fas fa-variable context-icon"></i>
+                        <h4><code>let-text</code></h4>
+                    </div>
+                    <p>சூழலில் இருந்து <code>$implicit</code> மதிப்பைப் படிக்கும் டெம்ப்ளேட்டிற்குள் உள்ளூர் மாறியை அறிவிக்கிறது [citation:4][citation:8].</p>
+                </div>
+                
+                <div class="context-card">
+                    <div class="context-header">
+                        <i class="fas fa-layer-group context-icon"></i>
+                        <h4><code>&lt;ng-container&gt;</code></h4>
+                    </div>
+                    <p>கூடுதல் DOM உறுப்புகளை உருவாக்காத தர்க்க ரேப்பர் [citation:2]. இது <code>ngTemplateOutlet</code> ஐ வைக்க ஏற்ற இடமாகும்.</p>
+                </div>
+            </div>
+            
+            <div class="code-comparison">
+                <div>
+                    <h4>வெளிப்படையான தொடரியல்</h4>
+                    <div class="code-example" style="margin: 0;">
+<pre><code>&lt;ng-container
+  [ngTemplateOutlet]="myTemplate"
+  [ngTemplateOutletContext]="{ $implicit: data }"&gt;
+&lt;/ng-container&gt;</code></pre>
+                    </div>
+                    <p>முழு பண்பு பைண்டிங் தொடரியல்</p>
+                </div>
+                <div>
+                    <h4>குறுக்குவழி தொடரியல்</h4>
+                    <div class="code-example" style="margin: 0;">
+<pre><code>&lt;ng-container
+  *ngTemplateOutlet="myTemplate; 
+                    context: { $implicit: data }"&gt;
+&lt;/ng-container&gt;</code></pre>
+                    </div>
+                    <p>குறைக்கப்பட்ட மைக்ரோ-தொடரியல் [citation:8]</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon"><i class="fas fa-lightbulb"></i></span>சூழல் புரிதல்:</h4>
+                <p><code>$implicit</code> பண்பு ஒரு சிறப்பு விசை. நீங்கள் ஒரு <code>let-text</code> மாறியை வரையறுக்கும்போது, இது தானாகவே சூழல் பொருளின் <code>$implicit</code> பண்பின் மதிப்பைப் பெறுகிறது. பிற பண்புகளை அணுக, நீங்கள் வெளிப்படையாகக் குறிப்பிட வேண்டும் (எ.கா., <code>let-idx="index"</code>) [citation:4][citation:8].</p>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            <p>உங்கள் அறிவைச் சோதிக்க இந்தப் பயிற்சியை முயற்சிக்கவும்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span>ngTemplateOutlet என்ன செய்கிறது?</h4>
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு குறிப்பிட்ட இடத்தில் <code>&lt;ng-template&gt;</code> ஐ ரெண்டர் செய்கிறது</div>
+                            <div class="option-feedback correct">✓ சரி! <code>ngTemplateOutlet</code> என்பது ஒரு டெம்ப்ளேட் குறிப்பை (<code>TemplateRef</code>) எடுத்து, அதை ஒரு குறிப்பிட்ட இடத்தில் (பொதுவாக ஒரு <code>&lt;ng-container&gt;</code> உள்ளே) ரெண்டர் செய்யும் ஸ்ட்ரக்சரல் டைரக்டிவ் ஆகும். இது டெம்ப்ளேட்டின் உள்ளடக்கத்தை ஸ்டாம்ப் அவுட் செய்கிறது [citation:1][citation:8].</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">டைனமிக்காக ஒரு புதிய கூறை உருவாக்குகிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறானது! <code>ngTemplateOutlet</code> டைனமிக் கூறு உருவாக்கத்திற்குப் பயன்படுத்தப்படவில்லை. இது முன்-வரையறுக்கப்பட்ட <code>&lt;ng-template&gt;</code> உள்ளடக்கத்தை மீண்டும் பயன்படுத்துகிறது. டைனமிக் கூறு உருவாக்கத்திற்கு, நீங்கள் <code>ComponentFactoryResolver</code> அல்லது Angular 13+ இல் ஸ்டேண்டலோன் கூறுகளைப் பயன்படுத்தலாம்.</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு குழாயை வரையறுக்கிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறானது! குழாய்கள் (<code>|</code>) டெம்ப்ளேட்டில் தரவை மாற்றுவதற்கான வேறுபட்ட Angular அம்சமாகும். <code>ngTemplateOutlet</code> ஒரு டைரக்டிவ் ஆகும், இது டெம்ப்ளேட் உள்ளடக்கத்தை ரெண்டர் செய்கிறது, தரவை மாற்றவில்லை.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-puzzle-piece"></i></span>நடைமுறைப் பயன்பாடு:</h4>
+                <p><code>ngTemplateOutlet</code> பெரும்பாலும் மிகவும் தனிப்பயனாக்கக்கூடிய கூறுகளை உருவாக்கப் பயன்படுகிறது, அங்கு பயன்படுத்துபவர்கள் கூறுகளுக்குள் காட்சித் துண்டுகளை (டெம்ப்ளேட்டுகள்) அனுப்ப முடியும் [citation:4][citation:6]. இது உள்ளமைக்கப்பட்ட கூறுகளுக்கு ஒரு சக்திவாய்ந்த முறையை வழங்குகிறது, குறிப்பாக அட்டவணைகள், பட்டியல்கள் அல்லது கார்டுகள் போன்ற மீண்டும் மீண்டும் வரும் UI கூறுகளுக்கு.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a class="nav-tab prev" href="Angular Templates Structural Directives Micro-syntax.html">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a class="nav-tab அடுத்தது" href="Angular Template Statements and $event.html">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழ் மொழியில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணிக் கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#what-is-ngtemplateoutlet">ngTemplateOutlet என்றால் என்ன?</a></li>
+                    <li><a href="#when-to-use">எப்போது பயன்படுத்துவது</a></li>
+                    <li><a href="#example">எடுத்துக்காட்டு</a></li>
+                    <li><a href="#example-explained">எடுத்துக்காட்டு விளக்கம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">எங்களைத் தொடர்பு கொள்ளவும்</a></li>
+                    <li><a href="#">இடம் மற்றும் நேரம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>எங்களைப் பின்தொடருங்கள்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Demo functionality
+        function updateDemo() {
+            const type = document.getElementById('demoType').value;
+            const message = document.getElementById('demoMessage').value || 'Hello Angular!';
+            const output = document.getElementById('templateOutput');
+            const currentTemplate = document.getElementById('currentTemplate');
+            const contextValue = document.getElementById('contextValue');
+            
+            // Clear முந்தைய output
+            output.innerHTML = '';
+            
+            // Create new template card based on type
+            const card = document.createElement('div');
+            card.className = 'template-card';
+            
+            let templateName = '';
+            let cardClass = '';
+            let prefix = '';
+            
+            switch(type) {
+                case 'info':
+                    templateName = 'infoTpl';
+                    cardClass = 'template-info';
+                    prefix = 'Info: ';
+                    break;
+                case 'warning':
+                    templateName = 'warnTpl';
+                    cardClass = 'template-warning';
+                    prefix = 'Warning: ';
+                    break;
+                case 'success':
+                    templateName = 'successTpl';
+                    cardClass = 'template-success';
+                    prefix = 'Success: ';
+                    break;
+            }
+            
+            card.classList.add(cardClass);
+            card.textContent = prefix + message;
+            card.id = 'outputCard';
+            
+            output.appendChild(card);
+            
+            // Update status information
+            currentTemplate.textContent = templateName;
+            contextValue.textContent = `"${message}"`;
+        }
+        
+        // Initialize demo
+        updateDemo();
+    </script>
+
+    <!-- Home Button -->
+    <a class="home-icon" href="index.html">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

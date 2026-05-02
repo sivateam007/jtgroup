@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Razorpay</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button { padding: 15px 30px; margin: 10px; font-size: 16px; cursor: pointer; }
+        #status { margin: 20px 0; padding: 15px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Razorpay Debug Page</h1>
+    <p>Check browser console (F12) for detailed logs</p>
+    
+    <button onclick="testCard()">Test with Card</button>
+    <button onclick="testUPI()">Test with UPI</button>
+    <button onclick="testNetBanking()">Test with Net Banking</button>
+    <button onclick="checkRazorpay()">Check Razorpay Loaded</button>
+    
+    <div id="status" class="info">Click a button to test...</div>
+
+    <script>
+        function log(msg) {
+            console.log(msg);
+            const status = document.getElementById('status');
+            status.innerHTML += '<br>' + msg;
+        }
+
+        function checkRazorpay() {
+            const status = document.getElementById('status');
+            if (typeof Razorpay === 'undefined') {
+                status.className = 'error';
+                status.innerText = 'ERROR: Razorpay not loaded! Check internet connection.';
+            } else {
+                status.className = 'success';
+                status.innerText = 'SUCCESS: Razorpay is loaded! Version: ' + (Razorpay.VERSION || 'unknown');
+            }
+        }
+
+        function testCard() {
+            log('Testing Card payment...');
+            if (typeof Razorpay === 'undefined') {
+                log('ERROR: Razorpay not loaded');
+                return;
+            }
+
+            const options = {
+                key: 'rzp_test_Sk1Qr5nGd7fPmU',
+                amount: 2900,
+                currency: 'INR',
+                name: 'JT Group Test',
+                description: 'Test Payment',
+                handler: function(response) {
+                    log('SUCCESS! Payment ID: ' + response.razorpay_payment_id);
+                    document.getElementById('status').className = 'success';
+                },
+                modal: {
+                    ondismiss: function() {
+                        log('CANCELLED by user');
+                    }
+                },
+                theme: { color: '#0c1f33' }
+            };
+
+            try {
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function(response) {
+                    log('FAILED: ' + response.error.description);
+                    document.getElementById('status').className = 'error';
+                });
+                rzp.open();
+                log('Razorpay opened for Card');
+            } catch(e) {
+                log('ERROR: ' + e.message);
+                document.getElementById('status').className = 'error';
+            }
+        }
+
+        function testUPI() {
+            log('Testing UPI payment...');
+            if (typeof Razorpay === 'undefined') {
+                log('ERROR: Razorpay not loaded');
+                return;
+            }
+
+            const options = {
+                key: 'rzp_test_Sk1Qr5nGd7fPmU',
+                amount: 2900,
+                currency: 'INR',
+                name: 'JT Group Test',
+                description: 'Test UPI Payment',
+                method: {
+                    upi: true,
+                    card: false,
+                    netbanking: false
+                },
+                handler: function(response) {
+                    log('SUCCESS! Payment ID: ' + response.razorpay_payment_id);
+                    document.getElementById('status').className = 'success';
+                },
+                modal: {
+                    ondismiss: function() {
+                        log('CANCELLED by user');
+                    }
+                },
+                theme: { color: '#0c1f33' }
+            };
+
+            try {
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function(response) {
+                    log('FAILED: ' + response.error.description);
+                    document.getElementById('status').className = 'error';
+                });
+                rzp.open();
+                log('Razorpay opened for UPI');
+            } catch(e) {
+                log('ERROR: ' + e.message);
+                document.getElementById('status').className = 'error';
+            }
+        }
+
+        function testNetBanking() {
+            log('Testing Net Banking payment...');
+            if (typeof Razorpay === 'undefined') {
+                log('ERROR: Razorpay not loaded');
+                return;
+            }
+
+            const options = {
+                key: 'rzp_test_Sk1Qr5nGd7fPmU',
+                amount: 2900,
+                currency: 'INR',
+                name: 'JT Group Test',
+                description: 'Test Net Banking',
+                method: {
+                    upi: false,
+                    card: false,
+                    netbanking: true
+                },
+                handler: function(response) {
+                    log('SUCCESS! Payment ID: ' + response.razorpay_payment_id);
+                    document.getElementById('status').className = 'success';
+                },
+                modal: {
+                    ondismiss: function() {
+                        log('CANCELLED by user');
+                    }
+                },
+                theme: { color: '#0c1f33' }
+            };
+
+            try {
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function(response) {
+                    log('FAILED: ' + response.error.description);
+                    document.getElementById('status').className = 'error';
+                });
+                rzp.open();
+                log('Razorpay opened for Net Banking (may open new tab)');
+            } catch(e) {
+                log('ERROR: ' + e.message);
+                document.getElementById('status').className = 'error';
+            }
+        }
+
+        // Check on load
+        window.onload = function() {
+            setTimeout(checkRazorpay, 1000);
+        };
+    </script>
+</body>
+</html>

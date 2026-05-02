@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python OOP - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* OOP concept styling */
+        .concept-diagram {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .diagram-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .diagram-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            min-width: 120px;
+        }
+        
+        .diagram-arrow {
+            font-size: 1.5rem;
+            color: #ffd700;
+        }
+        
+        .oop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .oop-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid;
+        }
+        
+        .oop-concept {
+            border-top-color: #28a745;
+        }
+        
+        .oop-advantage {
+            border-top-color: #ffc107;
+        }
+        
+        .oop-principle {
+            border-top-color: #dc3545;
+        }
+        
+        .oop-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .oop-header i {
+            font-size: 1.5rem;
+        }
+        
+        .oop-concept .oop-header i {
+            color: #28a745;
+        }
+        
+        .oop-advantage .oop-header i {
+            color: #ffc107;
+        }
+        
+        .oop-principle .oop-header i {
+            color: #dc3545;
+        }
+        
+        .oop-header h4 {
+            margin: 0;
+        }
+        
+        .class-object-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .class-object-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 3px solid #555;
+        }
+        
+        .class-object-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .class-object-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .class-example {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .topic-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s;
+        }
+        
+        .topic-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .topic-item i {
+            color: #667eea;
+            margin-right: 0.5rem;
+        }
+        
+        .code-output {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .output-title {
+            color: #6a9955;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python%20Virtual%20Environment.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python%20Classes%20and%20Objects.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python OOP</h2>
+            <p>பைத்தான் பொருள்-சார்ந்த நிரலாக்கத்தைப் புரிந்துகொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is OOP? -->
+        <section class="content-section" id="what-is-oop">
+            <h2>OOP என்றால் என்ன?</h2>
+            
+            <p>OOP என்பது Object-Oriented Programming என்பதன் சுருக்கமாகும்.</p>
+            
+            <p>பைத்தான் ஒரு பொருள்-சார்ந்த மொழியாகும், உங்கள் குறியீட்டை நல்ல அமைப்பு மற்றும் மீண்டும் பயன்படுத்தக்கூடிய தன்மைக்காக வகுப்புகள் மற்றும் பொருள்களைப் பயன்படுத்தி கட்டமைக்க உங்களை அனுமதிக்கிறது.</p>
+            
+            <div class="concept-diagram">
+                <h4>OOP கருத்து வரைபடம்:</h4>
+                <div class="diagram-flow">
+                    <div class="diagram-item">
+                        <strong>வகுப்பு</strong><br>
+                        <small>(வடிவமைப்பு)</small>
+                    </div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-item">
+                        <strong>பொருள்</strong><br>
+                        <small>(உதாரணம்)</small>
+                    </div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="diagram-item">
+                        <strong>முறைகள்</strong><br>
+                        <small>(நடவடிக்கைகள்)</small>
+                    </div>
+                </div>
+                <p>ஒரு வகுப்பு ஒரு பொருளுக்கான வடிவமைப்பு ஆகும். ஒரு பொருள் அந்த வகுப்பின் ஒரு உதாரணமாகும்.</p>
+            </div>
+        </section>
+
+        <!-- Advantages of OOP -->
+        <section class="content-section" id="advantages-oop">
+            <h2>OOP இன் நன்மைகள்</h2>
+            
+            <div class="oop-grid">
+                <div class="oop-card oop-advantage">
+                    <div class="oop-header">
+                        <i class="fas fa-sitemap"></i>
+                        <h4>தெளிவான கட்டமைப்பு</h4>
+                    </div>
+                    <p>நிரல்களுக்கு ஒரு தெளிவான கட்டமைப்பை வழங்குகிறது. குறியீட்டை தர்க்கரீதியான தொகுதிகளாக (வகுப்புகள்) ஒழுங்கமைக்க உதவுகிறது.</p>
+                </div>
+                
+                <div class="oop-card oop-advantage">
+                    <div class="oop-header">
+                        <i class="fas fa-tools"></i>
+                        <h4>பராமரிப்பு எளிது</h4>
+                    </div>
+                    <p>குறியீட்டை பராமரிக்க, மீண்டும் பயன்படுத்த மற்றும் பிழைத்திருத்தம் செய்வதை எளிதாக்குகிறது. மாற்றங்கள் ஒரு இடத்தில் மட்டுமே செய்யப்பட வேண்டும்.</p>
+                </div>
+                
+                <div class="oop-card oop-principle">
+                    <div class="oop-header">
+                        <i class="fas fa-repeat"></i>
+                        <h4>DRY கொள்கை</h4>
+                    </div>
+                    <p>உங்கள் குறியீட்டை DRY (Don't Repeat Yourself) வைத்திருக்க உதவுகிறது. அதே குறியீட்டை ஒன்றுக்கு மேற்பட்ட முறை எழுதுவதைத் தவிர்க்கவும்.</p>
+                </div>
+                
+                <div class="oop-card oop-advantage">
+                    <div class="oop-header">
+                        <i class="fas fa-code"></i>
+                        <h4>குறைந்த குறியீடு</h4>
+                    </div>
+                    <p>குறைந்த குறியீட்டுடன் மீண்டும் பயன்படுத்தக்கூடிய பயன்பாடுகளை உருவாக்க உங்களை அனுமதிக்கிறது. மறுபயன்பாட்டு திறன் உற்பத்தித்திறனை அதிகரிக்கிறது.</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> DRY கொள்கை பற்றி:</h4>
+                <p>DRY கொள்கை என்பது நீங்கள் அதே குறியீட்டை ஒன்றுக்கு மேற்பட்ட முறை எழுதக்கூடாது என்பதாகும். மீண்டும் மீண்டும் வரும் குறியீட்டை செயல்பாடுகள் அல்லது வகுப்புகளுக்கு நகர்த்தி மீண்டும் பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- What are Classes and Objects? -->
+        <section class="content-section" id="classes-objects">
+            <h2>வகுப்புகள் மற்றும் பொருள்கள் என்றால் என்ன?</h2>
+            
+            <p>வகுப்புகள் மற்றும் பொருள்கள் என்பது பொருள்-சார்ந்த நிரலாக்கத்தில் உள்ள இரண்டு முக்கிய கருத்துகள் ஆகும்.</p>
+            
+            <p>ஒரு வகுப்பு ஒரு பொருள் எப்படி இருக்க வேண்டும் என்பதை வரையறுக்கிறது, மற்றும் அந்த வகுப்பின் அடிப்படையில் ஒரு பொருள் உருவாக்கப்படுகிறது.</p>
+            
+            <table class="class-object-table">
+                <thead>
+                    <tr>
+                        <th>வகுப்பு</th>
+                        <th>பொருள்கள்</th>
+                        <th>விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Fruit</strong></td>
+                        <td>Apple, Banana, Mango</td>
+                        <td>Fruit வகுப்பு அனைத்து பழங்களுக்கும் பொதுவான பண்புகளை வரையறுக்கிறது. ஒவ்வொரு பழமும் Fruit வகுப்பின் ஒரு பொருள்.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Car</strong></td>
+                        <td>Volvo, Audi, Toyota</td>
+                        <td>Car வகுப்பு அனைத்து கார்களுக்கும் பொதுவான பண்புகளை வரையறுக்கிறது. ஒவ்வொரு காரும் Car வகுப்பின் ஒரு பொருள்.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Student</strong></td>
+                        <td>ராம், சீதா, அர்ஜுன்</td>
+                        <td>Student வகுப்பு அனைத்து மாணவர்களுக்கும் பொதுவான பண்புகளை வரையறுக்கிறது. ஒவ்வொரு மாணவரும் Student வகுப்பின் ஒரு பொருள்.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p>நீங்கள் ஒரு வகுப்பிலிருந்து ஒரு பொருளை உருவாக்கும் போது, அந்த வகுப்பின் உள்ளே வரையறுக்கப்பட்ட அனைத்து மாறிகள் மற்றும் செயல்பாடுகளையும் அது பெறுகிறது.</p>
+            
+            <div class="class-example">
+                <h4>வகுப்பு மற்றும் பொருள் உதாரணம்:</h4>
+                <pre><code># வகுப்பை வரையறுத்தல்
+class Car:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+    
+    def display_info(self):
+        print(f"Brand: {self.brand}, Model: {self.model}")
+
+# வகுப்பிலிருந்து பொருள்களை உருவாக்குதல்
+car1 = Car("Toyota", "Camry")
+car2 = Car("Honda", "Civic")
+
+# பொருள்களைப் பயன்படுத்துதல்
+car1.display_info()
+car2.display_info()</code></pre>
+                
+                <div class="code-output">
+                    <div class="output-title">வெளியீடு:</div>
+                    Brand: Toyota, Model: Camry<br>
+                    Brand: Honda, Model: Civic
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Topics -->
+        <section class="content-section" id="upcoming-topics">
+            <h2>அடுத்த அத்தியாயங்களில் நீங்கள் கற்றுக்கொள்வது:</h2>
+            
+            <div class="topic-grid">
+                <div class="topic-item">
+                    <i class="fas fa-cube"></i>
+                    <span>வகுப்புகள் மற்றும் பொருள்கள்</span>
+                </div>
+                <div class="topic-item">
+                    <i class="fas fa-cogs"></i>
+                    <span>__init__() முறை</span>
+                </div>
+                <div class="topic-item">
+                    <i class="fas fa-user"></i>
+                    <span>self பாராமீட்டர்</span>
+                </div>
+                <div class="topic-item">
+                    <i class="fas fa-list"></i>
+                    <span>பண்புகள் மற்றும் முறைகள்</span>
+                </div>
+                <div class="topic-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>மரபுரிமை மற்றும் பாலிமார்பிஸம்</span>
+                </div>
+                <div class="topic-item">
+                    <i class="fas fa-lock"></i>
+                    <span>என்கேப்ஸுலேஷன் மற்றும் உள் வகுப்புகள்</span>
+                </div>
+            </div>
+            
+            <div class="oop-grid" style="margin-top: 2rem;">
+                <div class="oop-card oop-concept">
+                    <div class="oop-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>__init__() முறை</h4>
+                    </div>
+                    <p>ஒரு வகுப்பிலிருந்து ஒரு பொருள் உருவாக்கப்படும் போது தானாகவே அழைக்கப்படும் ஒரு சிறப்பு முறை. பொருளைத் தொடங்குவதற்குப் பயன்படுகிறது.</p>
+                </div>
+                
+                <div class="oop-card oop-concept">
+                    <div class="oop-header">
+                        <i class="fas fa-user"></i>
+                        <h4>self பாராமீட்டர்</h4>
+                    </div>
+                    <p>வகுப்பு முறைகளுக்கான முதல் பாராமீட்டர். இது தற்போதைய பொருளைக் குறிக்கிறது மற்றும் பொருளின் பண்புகள் மற்றும் முறைகளை அணுக பயன்படுகிறது.</p>
+                </div>
+                
+                <div class="oop-card oop-concept">
+                    <div class="oop-header">
+                        <i class="fas fa-project-diagram"></i>
+                        <h4>மரபுரிமை</h4>
+                    </div>
+                    <p>ஒரு வகுப்பு மற்றொரு வகுப்பிலிருந்து பண்புகள் மற்றும் முறைகளைப் பெற அனுமதிக்கிறது. குறியீட்டை மீண்டும் பயன்படுத்துவதை ஊக்குவிக்கிறது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> OOP இல், ஒரு வகுப்பிலிருந்து உருவாக்கப்பட்ட ஒரு பொருள் என்ன செய்கிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">வகுப்பின் குறியீட்டை நிரந்தரமாக மாற்றுகிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ஒரு பொருள் வகுப்பின் குறியீட்டை மாற்றாது. வகுப்பு ஒரு வடிவமைப்பாகும், பொருள் அந்த வடிவமைப்பின் ஒரு உதாரணமாகும்.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">அந்த வகுப்பின் உள்ளே வரையறுக்கப்பட்ட அனைத்து மாறிகள் மற்றும் செயல்பாடுகளையும் பெறுகிறது</div>
+                            <div class="option-feedback correct">✓ சரி! நீங்கள் ஒரு வகுப்பிலிருந்து ஒரு பொருளை உருவாக்கும் போது, அந்த பொருள் வகுப்பின் வரையறுக்கப்பட்ட அனைத்து பண்புகள் (மாறிகள்) மற்றும் நடவடிக்கைகள் (முறைகள்) ஆகியவற்றைப் பெறுகிறது. இது OOP இன் முக்கிய கருத்தாகும்.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">வகுப்பை நீக்கி அதை ஒரு செயல்பாட்டுடன் மாற்றுகிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ஒரு பொருள் வகுப்பை நீக்காது அல்லது மாற்றாது. வகுப்பு தொடர்ந்து இருக்கும், மேலும் நீங்கள் அதிலிருந்து பல பொருள்களை உருவாக்கலாம்.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python%20Virtual%20Environment.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python%20Classes%20and%20Objects.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-oop">OOP என்றால் என்ன?</a></li>
+                    <li><a href="#advantages-oop">OOP இன் நன்மைகள்</a></li>
+                    <li><a href="#classes-objects">வகுப்புகள் மற்றும் பொருள்கள்</a></li>
+                    <li><a href="#upcoming-topics">வரவிருக்கும் தலைப்புகள்</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

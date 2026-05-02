@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Image Maps - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Image map preview styling */
+        .image-map-container {
+            position: relative;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .image-map-preview {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid var(--git-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .shape-demo {
+            position: absolute;
+            border: 2px dashed red;
+            pointer-events: none;
+        }
+        
+        .shape-rect {
+            border-color: #3498db;
+        }
+        
+        .shape-circle {
+            border-color: #e74c3c;
+            border-radius: 50%;
+        }
+        
+        .shape-poly {
+            border-color: #27ae60;
+        }
+        
+        .coordinate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .coordinate-item {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-caption {
+            padding: 1rem;
+            background: white;
+            text-align: center;
+        }
+        
+        .missing-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML%20Images.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML%20Background%20Images.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML Image Maps</h2>
+            <p>படத்தில் கிளிக் செய்யக்கூடிய பகுதிகளை உருவாக்குவது</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML பட வரைபடங்கள்</h2>
+            
+            <p>HTML பட வரைபடங்களைப் பயன்படுத்தி, ஒரு படத்தில் கிளிக் செய்யக்கூடிய பகுதிகளை உருவாக்கலாம்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🗺️</span> பட வரைபடங்கள் என்றால் என்ன?</h4>
+                <p>பட வரைபடம் என்பது கிளிக் செய்யக்கூடிய பகுதிகளைக் கொண்ட ஒரு படமாகும். இந்த பகுதிகள் ஒன்று அல்லது அதற்கு மேற்பட்ட &lt;area&gt; குறிச்சொற்களால் வரையறுக்கப்படுகின்றன.</p>
+            </div>
+            
+            <div class="image-map-container">
+                <img src="img2.png" alt="Image Map Example - img2" class="image-map-preview">
+                <p class="image-caption">படம் 1: அடிப்படை பட வரைபட எடுத்துக்காட்டு (img2.png)</p>
+            </div>
+        </section>
+
+        <!-- How Image Maps Work -->
+        <section class="content-section" id="how-it-works">
+            <h2>பட வரைபடங்கள் எவ்வாறு செயல்படுகின்றன?</h2>
+            
+            <p>பட வரைபடத்தின் பின்னுள்ள யோசனை என்னவென்றால், நீங்கள் படத்தில் எந்த இடத்தைக் கிளிக் செய்கிறீர்களோ அதைப் பொறுத்து வெவ்வேறு செயல்களைச் செய்ய வேண்டும்.</p>
+            
+            <p>ஒரு பட வரைபடத்தை உருவாக்க, உங்களுக்கு ஒரு படம் மற்றும் கிளிக் செய்யக்கூடிய பகுதிகளை விவரிக்கும் சில HTML குறியீடு தேவை.</p>
+            
+            <div class="image-map-container">
+                <img src="img3.png" alt="Workplace Example - img3" class="image-map-preview">
+                <div class="shape-demo shape-rect" style="left: 34px; top: 44px; width: 236px; height: 306px;"></div>
+                <div class="shape-demo shape-rect" style="left: 290px; top: 172px; width: 43px; height: 78px;"></div>
+                <div class="shape-demo shape-circle" style="left: 293px; top: 256px; width: 88px; height: 88px;"></div>
+                <p class="image-caption">படம் 2: கணினி, தொலைபேசி, காபி கோப்பை - கிளிக் செய்யக்கூடிய பகுதிகள் (img3.png)</p>
+            </div>
+        </section>
+
+        <!-- Example Code -->
+        <section class="content-section" id="example">
+            <h2>எடுத்துக்காட்டு குறியீடு</h2>
+            
+            <p>மேலே உள்ள பட வரைபடத்திற்கான HTML மூலக் குறியீடு:</p>
+            
+            <div class="code-example">
+                <h3>HTML Code</h3>
+                <pre><code>&lt;img src="workplace.jpg" alt="Workplace" usemap="#workmap"&gt;
+
+&lt;map name="workmap"&gt;
+  &lt;area shape="rect" coords="34,44,270,350" alt="Computer" href="computer.htm"&gt;
+  &lt;area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm"&gt;
+  &lt;area shape="circle" coords="337,300,44" alt="Coffee" href="coffee.htm"&gt;
+&lt;/map&gt;</code></pre>
+            </div>
+            
+            <div class="image-map-container">
+                <img src="img4.png" alt="Code Structure - img4" class="image-map-preview">
+                <p class="image-caption">படம் 3: HTML குறியீட்டின் கட்டமைப்பு (img4.png)</p>
+            </div>
+        </section>
+
+        <!-- Shape Types -->
+        <section class="content-section" id="shapes">
+            <h2>வடிவ வகைகள்</h2>
+            
+            <p>கிளிக் செய்யக்கூடிய பகுதியின் வடிவத்தை நீங்கள் வரையறுக்க வேண்டும், மேலும் இந்த மதிப்புகளில் ஒன்றை நீங்கள் தேர்வு செய்யலாம்:</p>
+            
+            <div class="coordinate-grid">
+                <div class="coordinate-item">
+                    <h4>rect</h4>
+                    <p>செவ்வகப் பகுதியை வரையறுக்கிறது</p>
+                </div>
+                <div class="coordinate-item">
+                    <h4>circle</h4>
+                    <p>வட்டப் பகுதியை வரையறுக்கிறது</p>
+                </div>
+                <div class="coordinate-item">
+                    <h4>poly</h4>
+                    <p>பலகோணப் பகுதியை வரையறுக்கிறது</p>
+                </div>
+                <div class="coordinate-item">
+                    <h4>default</h4>
+                    <p>முழுப் பகுதியையும் வரையறுக்கிறது</p>
+                </div>
+            </div>
+            
+            <h3>வடிவம்="rect" (செவ்வகம்)</h3>
+            <p>shape="rect" க்கான ஆயங்கள் ஜோடிகளாக வருகின்றன, ஒன்று x-அச்சுக்கும் மற்றொன்று y-அச்சுக்கும்.</p>
+            
+            <div class="image-map-container">
+                <img src="img5.png" alt="Rectangle Coordinates - img5" class="image-map-preview">
+                <div class="shape-demo shape-rect" style="left: 50px; top: 50px; width: 200px; height: 200px;"></div>
+                <p class="image-caption">படம் 4: செவ்வக வடிவத்திற்கான ஆயத்தொலைவுகள் (img5.png)</p>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>&lt;area shape="rect" coords="34, 44, 270, 350" href="computer.htm"&gt;</code></pre>
+            </div>
+            
+            <h3>வடிவம்="circle" (வட்டம்)</h3>
+            <p>முதலில் வட்டத்தின் மையத்தின் ஆயங்களைக் கண்டறியவும்:</p>
+            
+            <div class="image-map-container">
+                <img src="img6.png" alt="Circle Coordinates - img6" class="image-map-preview">
+                <div class="shape-demo shape-circle" style="left: 250px; top: 150px; width: 100px; height: 100px;"></div>
+                <p class="image-caption">படம் 5: வட்ட வடிவத்திற்கான ஆயத்தொலைவுகள் (img6.png)</p>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>&lt;area shape="circle" coords="337, 300, 44" href="coffee.htm"&gt;</code></pre>
+            </div>
+            
+            <h3>வடிவம்="poly" (பலகோணம்)</h3>
+            <p>shape="poly" பல ஆயப் புள்ளிகளைக் கொண்டுள்ளது, இது நேர் கோடுகளால் உருவான ஒரு வடிவத்தை உருவாக்குகிறது.</p>
+            
+            <div class="image-map-container">
+                <img src="img7.png" alt="Polygon Shape - img7" class="image-map-preview">
+                <div class="shape-demo shape-poly" style="left: 100px; top: 100px; width: 200px; height: 150px; clip-path: polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%);"></div>
+                <p class="image-caption">படம் 6: பலகோண வடிவ எடுத்துக்காட்டு (img7.png)</p>
+            </div>
+        </section>
+
+        <!-- Image Maps with JavaScript -->
+        <section class="content-section" id="javascript">
+            <h2>பட வரைபடங்கள் மற்றும் JavaScript</h2>
+            
+            <p>கிளிக் செய்யக்கூடிய பகுதி ஒரு JavaScript செயல்பாட்டையும் தூண்டும்.</p>
+            
+            <p>பகுதி கிளிக் செய்யப்படும் போது JavaScript செயல்பாட்டை இயக்க, &lt;area&gt; உறுப்புக்கு ஒரு கிளிக் நிகழ்வைச் சேர்க்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>JavaScript Example</h3>
+                <pre><code>&lt;map name="workmap"&gt;
+  &lt;area shape="circle" coords="337,300,44" href="coffee.htm" onclick="myFunction()"&gt;
+&lt;/map&gt;
+
+&lt;script&gt;
+function myFunction() {
+  alert("You clicked the coffee cup!");
+}
+&lt;/script&gt;</code></pre>
+            </div>
+            
+            <div class="image-map-container">
+                <img src="img8.png" alt="JavaScript Integration - img8" class="image-map-preview">
+                <p class="image-caption">படம் 7: JavaScript உடன் ஒருங்கிணைப்பு (img8.png)</p>
+            </div>
+        </section>
+
+        <!-- Chapter Summary -->
+        <section class="content-section" id="summary">
+            <h2>அத்தியாய சுருக்கம்</h2>
+            
+            <div class="image-map-container">
+                <img src="img9.png" alt="Chapter Summary - img9" class="image-map-preview">
+                <p class="image-caption">படம் 8: பட வரைபட கோட்பாட்டின் சுருக்கம் (img9.png)</p>
+            </div>
+            
+            <ul>
+                <li>பட வரைபடத்தை வரையறுக்க HTML &lt;map&gt; உறுப்பைப் பயன்படுத்தவும்</li>
+                <li>பட வரைபடத்தில் கிளிக் செய்யக்கூடிய பகுதிகளை வரையறுக்க HTML &lt;area&gt; உறுப்பைப் பயன்படுத்தவும்</li>
+                <li>பட வரைபடத்தைச் சுட்டிக்காட்ட, &lt;img&gt; உறுப்பின் HTML <code>usemap</code> பண்புக்கூறைப் பயன்படுத்தவும்</li>
+            </ul>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சி</h2>
+            
+            <div class="image-map-container">
+                <img src="img10.png" alt="Exercise Example - img10" class="image-map-preview">
+                <p class="image-caption">படம் 9: பயிற்சி எடுத்துக்காட்டு (img10.png)</p>
+            </div>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பட வரைபடத்தை வரையறுப்பதற்கான சரியான HTML உறுப்பு எது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">&lt;imagemap&gt; உறுப்பு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது செல்லுபடியாகும் HTML உறுப்பு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">&lt;imgmap&gt; உறுப்பு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது செல்லுபடியாகும் HTML உறுப்பு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">&lt;map&gt; உறுப்பு</div>
+                            <div class="option-feedback correct">✓ சரி! &lt;map&gt; குறிச்சொல் பட வரைபடங்களை வரையறுக்கப் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HTML Image Tags Reference -->
+        <section class="content-section" id="tags-reference">
+            <h2>HTML பட குறிச்சொற்கள்</h2>
+            
+            <div class="image-map-container">
+                <img src="img11.png" alt="HTML Tags Reference - img11" class="image-map-preview">
+                <p class="image-caption">படம் 10: HTML பட குறிச்சொற்களின் குறிப்பு (img11.png)</p>
+            </div>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>குறிச்சொல்</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>&lt;img&gt;</td>
+                            <td>ஒரு படத்தை வரையறுக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td>&lt;map&gt;</td>
+                            <td>ஒரு பட வரைபடத்தை வரையறுக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td>&lt;area&gt;</td>
+                            <td>பட வரைபடத்திற்குள் கிளிக் செய்யக்கூடிய பகுதியை வரையறுக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td>&lt;picture&gt;</td>
+                            <td>பல பட வளங்களுக்கான கொள்கலனை வரையறுக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p>அனைத்து கிடைக்கக்கூடிய HTML குறிச்சொற்களின் முழுமையான பட்டியலுக்கு, எங்கள் HTML குறிச்சொல் குறிப்பைப் பார்வையிடவும்.</p>
+        </section>
+
+        <!-- Image Gallery -->
+        <section class="content-section" id="gallery">
+            <h2>பட வரைபட பயன்பாடுகள்</h2>
+            
+            <p>பல்வேறு தொழில்துறைகளில் பட வரைபடங்கள் எவ்வாறு பயன்படுத்தப்படுகின்றன என்பதற்கான எடுத்துக்காட்டுகள்:</p>
+            
+            <div class="image-gallery">
+                <div class="gallery-item">
+                    <img src="img2.png" alt="img2 - Basic Image Map">
+                    <div class="gallery-caption">
+                        <h4>அடிப்படை எடுத்துக்காட்டு</h4>
+                        <p>img2.png - முதல் பட வரைபடம்</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="img3.png" alt="img3 - Workplace Map">
+                    <div class="gallery-caption">
+                        <h4>பணியிட வரைபடம்</h4>
+                        <p>img3.png - கிளிக் செய்யக்கூடிய பொருட்கள்</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="img4.png" alt="img4 - Code Structure">
+                    <div class="gallery-caption">
+                        <h4>குறியீட்டு கட்டமைப்பு</h4>
+                        <p>img4.png - HTML குறியீட்டு வரைபடம்</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="img5.png" alt="img5 - Rectangle Shape">
+                    <div class="gallery-caption">
+                        <h4>செவ்வக வடிவம்</h4>
+                        <p>img5.png - ஆயத்தொலைவுகளுடன்</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="img6.png" alt="img6 - Circle Shape">
+                    <div class="gallery-caption">
+                        <h4>வட்ட வடிவம்</h4>
+                        <p>img6.png - மையம் மற்றும் ஆரம்</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="img7.png" alt="img7 - Polygon Shape">
+                    <div class="gallery-caption">
+                        <h4>பலகோண வடிவம்</h4>
+                        <p>img7.png - பல புள்ளி ஆயங்கள்</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="tip-box" style="margin-top: 2rem;">
+                <strong>நினைவில் கொள்ள:</strong> பட வரைபடங்கள் இணையதளங்கள், கல்வி பொருட்கள், தயாரிப்பு பட்டியல்கள் மற்றும் விளையாட்டுகளில் பரவலாகப் பயன்படுத்தப்படுகின்றன.
+            </p>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4>alt பண்புக்கூறுகளைப் பயன்படுத்தவும்</h4>
+                        <p>ஒவ்வொரு &lt;area&gt; உறுப்புக்கும் விளக்கமான alt உரையை வழங்கவும்</p>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4>ஆயங்களைச் சரிபார்க்கவும்</h4>
+                        <p>ஆயங்கள் சரியானவை என்பதை உறுதிப்படுத்த பட வரைபட சோதனை கருவிகளைப் பயன்படுத்தவும்</p>
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>
+                        <h4>மிகவும் சிக்கலான வடிவங்களைத் தவிர்க்கவும்</h4>
+                        <p>சிக்கலான பலகோண வடிவங்கள் பராமரிப்பதற்கு கடினமாக இருக்கும்</p>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4>செயல்திறனுக்காக மாற்று முறைகளை வழங்கவும்</h4>
+                        <p>பட வரைபடங்கள் செயல்படாத போது மாற்று வழிசெலுத்தலை வழங்கவும்</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML%20Images.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML%20Background%20Images.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">பட வரைபடங்கள்</a></li>
+                    <li><a href="#how-it-works">எவ்வாறு செயல்படுகிறது</a></li>
+                    <li><a href="#shapes">வடிவ வகைகள்</a></li>
+                    <li><a href="#javascript">JavaScript உடன்</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                    <li><a href="#best-practices">சிறந்த நடைமுறைகள்</a></li>
+                    <li><a href="#gallery">பட கேலரி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#example">குறியீடு எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#tags-reference">குறிச்சொல் குறிப்பு</a></li>
+                    <li><a href="#summary">அத்தியாய சுருக்கம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Image map area hover effects
+        document.querySelectorAll('.shape-demo').forEach(area => {
+            area.addEventListener('mouseenter', function() {
+                this.style.borderStyle = 'solid';
+                this.style.borderWidth = '3px';
+            });
+            
+            area.addEventListener('mouseleave', function() {
+                this.style.borderStyle = 'dashed';
+                this.style.borderWidth = '2px';
+            });
+        });
+
+        // Simulate image map clicking
+        document.querySelectorAll('.image-map-preview').forEach(img => {
+            img.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const imgName = this.getAttribute('src');
+                
+                alert(`படம்: ${imgName}\nகிளிக் செய்த இடம்: X=${Math.round(x)}, Y=${Math.round(y)}\n\nஉண்மையான பயன்பாட்டில், இந்த ஆயங்கள் பட வரைபடப் பகுதியைத் தீர்மானிக்கும்.`);
+            });
+        });
+        
+        // Gallery image click
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('click', function() {
+                const src = this.getAttribute('src');
+                const alt = this.getAttribute('alt');
+                alert(`படம்: ${src}\n\nபயன்பாடு: ${this.closest('.gallery-item').querySelector('h4').textContent}`);
+            });
+        });
+        
+        // Handle missing images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                const parent = this.parentElement;
+                const imgName = this.getAttribute('src');
+                const altText = this.getAttribute('alt') || 'Image';
+                
+                // Create replacement div
+                const replacement = document.createElement('div');
+                replacement.className = 'missing-image';
+                replacement.innerHTML = `<div style="text-align: center;">
+                    <i class="fas fa-image" style="font-size: 3rem; margin-bottom: 10px;"></i><br>
+                    <strong>${altText}</strong><br>
+                    <small>File: ${imgName}</small><br>
+                    <small style="font-size: 0.8rem;">(இந்த படத்தை உங்கள் images கோப்புறையில் சேர்க்கவும்)</small>
+                </div>`;
+                
+                // Replace the image
+                parent.replaceChild(replacement, this);
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

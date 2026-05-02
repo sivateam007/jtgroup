@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Medium Level - Answer Key | Jassif Team</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional Quiz-specific styles - EXACT SAME AS medium answer.html */
+        
+        /* Jassif Team Quiz Header */
+        .jassif-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--git-color);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .team-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Quiz Hero - SAME COLOR */
+        .quiz-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quiz-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .quiz-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Question Selection Grid - ONLY ORANGE CHANGES HERE */
+        .question-selection-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        /* ONLY CHANGE: Question number button with Medium level color (ORANGE) */
+        .question-number-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number-btn:hover {
+            border-color: var(--git-color);
+            transform: translateY(-3px);
+        }
+
+        .question-number-btn.active {
+            background: #ff9800; /* ONLY CHANGE: ORANGE for Medium */
+            color: white;
+            border-color: #ff9800;
+        }
+
+        .question-number-btn.answered {
+            background: #ffe0b2; /* Light orange for answered */
+            border-color: #ff9800;
+            color: var(--dark);
+        }
+
+        /* ONLY CHANGE: Difficulty level indicator - ORANGE for Medium */
+        .difficulty-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 8px 8px 0 0;
+            background-color: #ff9800; /* ONLY CHANGE: Orange for Medium */
+        }
+
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+
+        .current-question-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* REMOVED: Quiz info section */
+        .quiz-info {
+            display: none;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--git-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        /* ANSWER KEY MODIFICATION: Show correct/incorrect colors immediately on click */
+        .quiz-option.selected.correct {
+            border-color: #27ae60; /* GREEN for correct */
+            background: #d4edda;
+        }
+
+        .quiz-option.selected.incorrect {
+            border-color: var(--accent);
+            background: #f8d7da;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected.correct .option-letter {
+            background: #27ae60; /* GREEN */
+        }
+
+        .quiz-option.selected.incorrect .option-letter {
+            background: var(--accent);
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-btn.prev {
+            background: #667eea;
+        }
+
+        .quiz-btn.submit {
+            background: var(--success);
+        }
+
+        /* Results Container - HIDDEN FOR ANSWER KEY */
+        .results-container {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: black;
+            padding: 0;
+        }
+
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Answer Feedback Section */
+        .answer-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .answer-feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #27ae60; /* GREEN */
+            color: #155724;
+        }
+
+        .answer-feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid var(--accent);
+            color: #721c24;
+        }
+
+        .feedback-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .team-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quiz-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .question-selection-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .question-number-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="jassif-header">
+        <div class="header-container">
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <img src="logo.jpg" alt="Jassif Team Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">JASSIF TEAM</div>
+                    <div class="logo-sub">ANGULAR COURSE - MEDIUM ANSWER KEY</div>
+                </div>
+            </a>
+            <div class="team-info">
+                <div class="team-badge">
+                    <i class="fab fa-angular"></i>
+                    Angular Course
+                </div>
+                <div class="team-badge">
+                    <i class="fas fa-key"></i>
+                    Medium Answer Key
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Hero Section -->
+    <section class="quiz-hero">
+        <div class="quiz-hero-content">
+            <h2>Angular Medium Level - Answer Key</h2>
+            <p>Click on any option to see if it's correct (green) or incorrect (red). Learn all 30 medium Angular questions.</p>
+            <div class="quiz-badges">
+                <span class="info-badge level"><i class="fas fa-signal"></i> Medium Level</span>
+                <span class="info-badge"><i class="fas fa-question-circle"></i> 30 Questions</span>
+                <span class="info-badge"><i class="fas fa-check-circle"></i> Interactive Answers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Question Selection Grid - ORANGE COLOR HERE ONLY -->
+    <section class="question-selection-section">
+        <div class="section-title">
+            <h2>Medium Level Questions - Answer Key</h2>
+            <p>Click on any question number to jump directly to it. Click options to see answers.</p>
+        </div>
+        
+        <div class="question-selection-grid" id="questionSelectionGrid">
+            <!-- Question numbers will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Main Quiz Container -->
+    <main class="quiz-container">
+        <!-- Quiz Interface -->
+        <div class="quiz-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="current-question-number" id="questionNumber">
+                    Question 1 of 30
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <!-- Question -->
+            <div class="question-text" id="questionText">
+                Angular-இல் @Input() மற்றும் @Output() decorators-இன் பயன் என்ன?
+            </div>
+            
+            <!-- Options -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+
+            <!-- Answer Feedback -->
+            <div class="answer-feedback" id="answerFeedback">
+                <!-- Feedback will be inserted here -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="quiz-footer">
+                <button class="quiz-btn prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="quiz-btn next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <div class="footer-logo-image">
+                <img src="logo.jpg" alt="Jassif Team Logo">
+            </div>
+            <div>Jassif Team - Angular Course Answer Key</div>
+        </div>
+        <div class="footer-text">
+            &copy; 2024 Jassif Team. All rights reserved. | Medium Level Angular Answer Key
+        </div>
+    </footer>
+
+    <script>
+        // Angular Medium Level Answer Key Data - 30 QUESTIONS WITH EXPLANATIONS
+        const quizData = [
+            { 
+                question: "Angular-இல் @Input() மற்றும் @Output() decorators-இன் பயன் என்ன?", 
+                options: [
+                    "Parent-child component communication",
+                    "Service injection",
+                    "Module configuration",
+                    "Template rendering"
+                ], 
+                correct: 0,
+                explanation: "@Input() parent component-இல் இருந்து child component-க்கு data pass செய்ய, @Output() child component-இல் இருந்து parent component-க்கு events emit செய்ய பயன்படுகிறது. இது component communication-க்கு primary mechanism."
+            },
+            { 
+                question: "Angular-இல் ngOnChanges lifecycle hook எப்போது call ஆகும்?", 
+                options: [
+                    "@Input() properties change ஆகும் போது",
+                    "Component initialize ஆகும் போது",
+                    "Template render ஆகும் போது",
+                    "Service inject ஆகும் போது"
+                ], 
+                correct: 0,
+                explanation: "ngOnChanges hook @Input() decorated properties change ஆகும் போது call ஆகும். SimpleChanges object parameter ஆக receive செய்யும், previous மற்றும் current values access செய்யலாம்."
+            },
+            { 
+                question: "Angular services-ஐ singleton ஆக use செய்ய எப்படி?", 
+                options: [
+                    "Root level-ல் provide செய்து",
+                    "Component level-ல் provide செய்து",
+                    "Module level-ல் provide செய்து",
+                    "Template-இல் provide செய்து"
+                ], 
+                correct: 0,
+                explanation: "Services singleton ஆக use செய்ய root level-ல் provide செய்ய வேண்டும் (AppModule-இன் providers array-இல் அல்லது @Injectable({providedIn: 'root'}) decorator use செய்து). Component level-ல் provide செய்தால் separate instances create ஆகும்."
+            },
+            { 
+                question: "RxJS Subject vs BehaviorSubject vs ReplaySubject வித்தியாசம்?", 
+                options: [
+                    "Initial value மற்றும் replay behavior",
+                    "Performance characteristics",
+                    "Memory usage differences",
+                    "All same"
+                ], 
+                correct: 0,
+                explanation: "Subject - no initial value, no replay. BehaviorSubject - initial value required, current value replay to new subscribers. ReplaySubject - buffer size specify, multiple values replay. Choose based on requirements."
+            },
+            { 
+                question: "Angular-இல் HttpClient-உடன் error handling செய்ய எப்படி?", 
+                options: [
+                    "catchError operator use செய்து",
+                    "try-catch block use செய்து",
+                    "if-else statements use செய்து",
+                    "No error handling needed"
+                ], 
+                correct: 0,
+                explanation: "HttpClient error handling catchError RxJS operator மூலம் செய்யப்படுகிறது. pipe() method-இல் catchError add செய்து, errors handle செய்யலாம், retry logic implement செய்யலாம், user-friendly messages show செய்யலாம்."
+            },
+            { 
+                question: "Angular forms-இல் template-driven vs reactive forms வித்தியாசம்?", 
+                options: [
+                    "Declarative vs programmatic approach",
+                    "Performance differences",
+                    "Testing complexity",
+                    "All of the above"
+                ], 
+                correct: 3,
+                explanation: "Template-driven forms - HTML template-இல் declarative, two-way binding, simpler small forms. Reactive forms - programmatic TypeScript code-இல், more control, better testing, complex forms suitable. Both FormsModule or ReactiveFormsModule import செய்ய வேண்டும்."
+            },
+            { 
+                question: "Angular-இல் route parameters access செய்ய எப்படி?", 
+                options: [
+                    "ActivatedRoute service use செய்து",
+                    "Router service use செய்து",
+                    "Location service use செய்து",
+                    "Navigation service use செய்து"
+                ], 
+                correct: 0,
+                explanation: "Route parameters access ActivatedRoute service மூலம் செய்யப்படுகிறது. params observable subscribe செய்து dynamic parameters get செய்யலாம். snapshot property one-time access-க்கு பயன்படுகிறது."
+            },
+            { 
+                question: "Angular-இல் lazy loading modules implement செய்ய எப்படி?", 
+                options: [
+                    "loadChildren property use செய்து",
+                    "imports array-இல் specify செய்து",
+                    "exports array-இல் specify செய்து",
+                    "providers array-இல் specify செய்து"
+                ], 
+                correct: 0,
+                explanation: "Lazy loading loadChildren property மூலம் implement செய்யப்படுகிறது. Route configuration-இல் loadChildren: () => import('./module-path').then(m => m.ModuleName) syntax use செய்யப்படுகிறது. Initial bundle size reduce ஆகும்."
+            },
+            { 
+                question: "Angular-இல் custom pipes create செய்ய எப்படி?", 
+                options: [
+                    "@Pipe decorator use செய்து",
+                    "@Component decorator use செய்து",
+                    "@Directive decorator use செய்து",
+                    "@Injectable decorator use செய்து"
+                ], 
+                correct: 0,
+                explanation: "Custom pipes @Pipe decorator மூலம் create செய்யப்படுகின்றன. PipeTransform interface implement செய்ய வேண்டும், transform() method define செய்ய வேண்டும். Module-இன் declarations array-இல் add செய்ய வேண்டும்."
+            },
+            { 
+                question: "Angular-இல் ngTemplateOutlet-இன் பயன் என்ன?", 
+                options: [
+                    "Dynamic templates render செய்ய",
+                    "Static content display செய்ய",
+                    "Forms create செய்ய",
+                    "Services inject செய்ய"
+                ], 
+                correct: 0,
+                explanation: "ngTemplateOutlet structural directive dynamic templates render செய்ய பயன்படுகிறது. TemplateRef instances dynamically insert செய்யும். ngTemplateOutletContext template-க்கு context data provide செய்யும்."
+            },
+            { 
+                question: "Angular-இல் change detection OnPush strategy-இன் பயன்?", 
+                options: [
+                    "Performance optimization",
+                    "Memory optimization",
+                    "Code simplification",
+                    "All of the above"
+                ], 
+                correct: 0,
+                explanation: "OnPush change detection strategy performance optimize செய்ய பயன்படுகிறது. Component-இன் inputs change ஆகும் போது மட்டும் change detection run ஆகும். Immutable data patterns use செய்ய பரிந்துரைக்கப்படுகிறது."
+            },
+            { 
+                question: "Angular-இல் ViewChild vs ContentChild query differences?", 
+                options: [
+                    "Component view vs projected content",
+                    "Performance differences",
+                    "Memory usage",
+                    "No difference"
+                ], 
+                correct: 0,
+                explanation: "ViewChild - component-இன் template-இல் உள்ள elements query செய்யும். ContentChild - component-க்கு projected content (ng-content மூலம்) query செய்யும். Query timing different (ngAfterViewInit vs ngAfterContentInit)."
+            },
+            { 
+                question: "Angular-இல் dependency injection hierarchical injectors?", 
+                options: [
+                    "Component tree level injectors",
+                    "Module level injectors",
+                    "Service level injectors",
+                    "All levels injectors"
+                ], 
+                correct: 3,
+                explanation: "Angular DI hierarchical injectors system: Root injector (AppModule), component injectors (each component level). Services different levels-இல் provide செய்யலாம். Child injectors parent injectors override செய்யலாம்."
+            },
+            { 
+                question: "Angular-இல் route guards types எத்தனை?", 
+                options: [
+                    "4 (CanActivate, CanDeactivate, CanLoad, Resolve)",
+                    "3 (CanActivate, CanDeactivate, CanLoad)",
+                    "2 (CanActivate, CanDeactivate)",
+                    "5 (All above plus CanActivateChild)"
+                ], 
+                correct: 3,
+                explanation: "Route guards 5 types: CanActivate, CanActivateChild, CanDeactivate, CanLoad, Resolve. Each different navigation phases control செய்யும். Guards services-ஆக implement செய்யப்படுகின்றன."
+            },
+            { 
+                question: "Angular-இல் interceptors chain execution order?", 
+                options: [
+                    "Request forward, response reverse",
+                    "Request reverse, response forward",
+                    "Both same order",
+                    "Random order"
+                ], 
+                correct: 0,
+                explanation: "HttpClient interceptors chain: Request interceptors forward order execute (1→2→3), response interceptors reverse order execute (3→2→1). This allows request modification and response processing different levels-இல்."
+            },
+            { 
+                question: "Angular-இல் standalone components advantages?", 
+                options: [
+                    "No NgModule required",
+                    "Lazy loading easier",
+                    "Smaller bundles",
+                    "All of the above"
+                ], 
+                correct: 3,
+                explanation: "Standalone components (Angular 14+): NgModule required இல்லை, easier lazy loading, smaller bundles, simpler project structure. imports array-இல் dependencies declare செய்யலாம்."
+            },
+            { 
+                question: "Angular-இல் signals vs observables comparison?", 
+                options: [
+                    "Simpler reactivity",
+                    "Fine-grained updates",
+                    "Both A and B",
+                    "No advantages"
+                ], 
+                correct: 2,
+                explanation: "Signals (Angular 16+): Simpler reactivity model, fine-grained updates, automatic dependency tracking. Observables: Powerful async operations, operators ecosystem. Both coexist, use case based choose."
+            },
+            { 
+                question: "Angular-இல் trackBy function-இன் பயன் ngFor-ல்?", 
+                options: [
+                    "Performance optimization",
+                    "DOM element reuse",
+                    "Both A and B",
+                    "No specific use"
+                ], 
+                correct: 2,
+                explanation: "trackBy function ngFor performance optimize செய்யும். DOM elements properly reuse செய்யும், unnecessary DOM manipulations avoid செய்யும். Function unique identifier return செய்ய வேண்டும்."
+            },
+            { 
+                question: "Angular-இல் content projection multiple slots?", 
+                options: [
+                    "Named ng-content use செய்து",
+                    "Multiple ng-content elements",
+                    "Both A and B",
+                    "Not possible"
+                ], 
+                correct: 2,
+                explanation: "Multiple content projection slots: Named ng-content select attribute use செய்து (select=\"selector\"), multiple ng-content elements different positions-இல். Complex component layouts create செய்ய பயன்படுகிறது."
+            },
+            { 
+                question: "Angular-இல் dynamic component creation?", 
+                options: [
+                    "ComponentFactoryResolver use செய்து",
+                    "ViewContainerRef use செய்து",
+                    "Both A and B",
+                    "Not possible"
+                ], 
+                correct: 2,
+                explanation: "Dynamic component creation: ComponentFactoryResolver (Angular 13 வரை) மற்றும் ViewContainerRef. Angular 13+ ComponentFactoryResolver deprecated, ViewContainerRef.createComponent() directly use செய்யலாம்."
+            },
+            { 
+                question: "Angular-இல் router events subscription?", 
+                options: [
+                    "Router.events subscribe செய்து",
+                    "ActivatedRoute subscribe செய்து",
+                    "Both methods possible",
+                    "No events available"
+                ], 
+                correct: 2,
+                explanation: "Router events: Router.events observable navigation lifecycle events provide செய்யும் (NavigationStart, NavigationEnd, etc.). ActivatedRoute specific route data events. Both different purposes-க்கு use செய்யலாம்."
+            },
+            { 
+                question: "Angular-இல் environment variables configuration?", 
+                options: [
+                    "environment.ts files use செய்து",
+                    "Build configurations",
+                    "Both A and B",
+                    "Hardcoded values only"
+                ], 
+                correct: 2,
+                explanation: "Environment configuration: environment.ts files (environment.prod.ts, etc.), angular.json-இல் fileReplacements configuration. Build time different environments different values use செய்யலாம்."
+            },
+            { 
+                question: "Angular-இல் async pipe-இன் advantages?", 
+                options: [
+                    "Automatic subscription management",
+                    "Change detection handling",
+                    "Both A and B",
+                    "No advantages"
+                ], 
+                correct: 2,
+                explanation: "async pipe advantages: Automatic subscription/unsubscription (no memory leaks), automatic change detection trigger (OnPush strategy-க்கு important), cleaner template code. Observables/Promises directly templates-இல் use செய்யலாம்."
+            },
+            { 
+                question: "Angular-இல் route data pre-fetching?", 
+                options: [
+                    "Resolve guards use செய்து",
+                    "Route data property",
+                    "Both methods possible",
+                    "Not supported"
+                ], 
+                correct: 2,
+                explanation: "Route data pre-fetching: Resolve guards - navigation complete ஆகும் முன் data load, component data available. Route data property - static data configuration. Different use cases based on data requirements."
+            },
+            { 
+                question: "Angular-இல் custom form validators?", 
+                options: [
+                    "Sync validators functions",
+                    "Async validators functions",
+                    "Both types possible",
+                    "Not supported"
+                ], 
+                correct: 2,
+                explanation: "Custom form validators: Sync validators - immediate validation (return ValidationErrors|null), Async validators - server validation (return Promise|Observable). Validators.compose() multiple validators combine செய்யலாம்."
+            },
+            { 
+                question: "Angular-இல் ngZone.runOutsideAngular() use case?", 
+                options: [
+                    "Third-party library integration",
+                    "Performance optimization",
+                    "Both A and B",
+                    "No specific use"
+                ], 
+                correct: 2,
+                explanation: "ngZone.runOutsideAngular(): Third-party libraries (charts, animations) integrate செய்ய, performance-critical code execute, unnecessary change detection triggers avoid. Code Angular zone-இல் இருந்து outside execute செய்யும்."
+            },
+            { 
+                question: "Angular-இல் service worker registration?", 
+                options: [
+                    "ServiceWorkerModule.register()",
+                    "@angular/pwa package",
+                    "Both A and B",
+                    "Manual registration only"
+                ], 
+                correct: 2,
+                explanation: "Service worker: ServiceWorkerModule.register() AppModule-இல், @angular/pwa package PWA features add செய்ய, ng add @angular/pwa command automatic configuration. Production builds only work செய்யும்."
+            },
+            { 
+                question: "Angular-இல் internationalization (i18n) implementation?", 
+                options: [
+                    "Built-in i18n tools",
+                    "Third-party libraries",
+                    "Both approaches possible",
+                    "Not supported"
+                ], 
+                correct: 2,
+                explanation: "Internationalization: Built-in i18n - compile-time translation, separate bundles. Third-party libraries (ngx-translate) - runtime translation, dynamic language switching. Project requirements based choose."
+            },
+            { 
+                question: "Angular-இல் testing strategies differences?", 
+                options: [
+                    "Unit testing components",
+                    "Integration testing",
+                    "E2E testing",
+                    "All testing types"
+                ], 
+                correct: 3,
+                explanation: "Angular testing: Unit testing (Jasmine/Karma) - individual components, Integration testing - component interactions, E2E testing (Protractor/Cypress) - complete application. Different testing pyramids levels represent."
+            },
+            { 
+                question: "Angular-இல் performance optimization techniques?", 
+                options: [
+                    "OnPush change detection",
+                    "Lazy loading",
+                    "Tree shaking",
+                    "All techniques"
+                ], 
+                correct: 3,
+                explanation: "Performance optimization: OnPush change detection strategy, lazy loading modules, tree shaking (dead code elimination), AOT compilation, production builds, bundle analysis, code splitting. Multiple techniques combine செய்ய வேண்டும்."
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let answeredQuestions = new Array(quizData.length).fill(false);
+
+        // DOM elements
+        const questionSelectionGrid = document.getElementById('questionSelectionGrid');
+        const questionNumberElement = document.getElementById('questionNumber');
+        const questionTextElement = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const answerFeedback = document.getElementById('answerFeedback');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+
+        // Initialize question selection grid with ORANGE color
+        function initializeQuestionGrid() {
+            questionSelectionGrid.innerHTML = '';
+            quizData.forEach((question, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'question-number-btn';
+                btn.dataset.index = index;
+                
+                // Add ORANGE difficulty indicator
+                const difficultyIndicator = document.createElement('div');
+                difficultyIndicator.className = 'difficulty-indicator';
+                btn.appendChild(difficultyIndicator);
+                
+                // Add question number
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'question-number';
+                numberSpan.textContent = index + 1;
+                btn.appendChild(numberSpan);
+                
+                if (index === 0) {
+                    btn.classList.add('active');
+                }
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    updateQuestionGrid();
+                });
+                
+                questionSelectionGrid.appendChild(btn);
+            });
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const buttons = document.querySelectorAll('.question-number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = quizData[currentQuestionIndex];
+            
+            // Update question number
+            questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            
+            // Update question text
+            questionTextElement.textContent = question.question;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.dataset.optionIndex = index;
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Clear feedback
+            answerFeedback.style.display = 'none';
+            answerFeedback.className = 'answer-feedback';
+            answerFeedback.innerHTML = '';
+            
+            // Update navigation buttons
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            const question = quizData[currentQuestionIndex];
+            const optionElements = document.querySelectorAll('.quiz-option');
+            
+            // Remove any previous selection classes
+            optionElements.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Mark the selected option
+            const selectedOption = optionElements[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            // Check if answer is correct
+            if (optionIndex === question.correct) {
+                selectedOption.classList.add('correct');
+                showFeedback(true, question.explanation);
+            } else {
+                selectedOption.classList.add('incorrect');
+                // Also show the correct answer
+                const correctOption = optionElements[question.correct];
+                correctOption.classList.add('correct');
+                showFeedback(false, question.explanation);
+            }
+            
+            // Mark question as answered
+            if (!answeredQuestions[currentQuestionIndex]) {
+                answeredQuestions[currentQuestionIndex] = true;
+                updateQuestionGrid();
+            }
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect, explanation) {
+            answerFeedback.className = `answer-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            const icon = isCorrect ? 'fa-check-circle' : 'fa-times-circle';
+            const message = isCorrect ? 'சரியான விடை!' : 'தவறான விடை!';
+            
+            answerFeedback.innerHTML = `
+                <div>
+                    <i class="fas ${icon} feedback-icon"></i>
+                    <strong>${message}</strong> ${explanation}
+                </div>
+            `;
+            
+            answerFeedback.style.display = 'block';
+            
+            // Scroll feedback into view
+            answerFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        // Initialize the answer key
+        initializeQuestionGrid();
+        loadQuestion();
+    </script>
+</body>
+</html>

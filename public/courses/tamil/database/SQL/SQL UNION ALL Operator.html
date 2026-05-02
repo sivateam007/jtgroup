@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL UNION ALL Operator - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL UNION Operator.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL GROUP BY Statement.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL UNION ALL Operator</h2>
+            <p>இரண்டு அல்லது அதற்கு மேற்பட்ட SELECT statements-ன் முடிவு-தொகுப்புகளை இணைக்க UNION ALL operator பற்றி அறிந்து கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is UNION ALL Operator -->
+        <section class="content-section" id="what-is-union-all">
+            <h2>SQL UNION ALL Operator என்றால் என்ன?</h2>
+            
+            <p>UNION ALL operator இரண்டு அல்லது அதற்கு மேற்பட்ட SELECT statements-ன் முடிவு-தொகுப்புகளை இணைக்கப் பயன்படுகிறது.</p>
+            
+            <p>UNION ALL operator ஒவ்வொரு statement-ல் இருந்தும் அனைத்து வரிசைகளையும் உள்ளடக்குகிறது, எந்த நகல்கள் உட்பட.</p>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> UNION ALL-க்கான தேவைகள்:</h4>
+                <ul>
+                    <li>UNION ALL-ல் உள்ள ஒவ்வொரு SELECT statement-க்கும் ஒரே எண்ணிக்கையிலான நெடுவரிசைகள் இருக்க வேண்டும்</li>
+                    <li>நெடுவரிசைகளும் ஒத்த தரவு வகைகளைக் கொண்டிருக்க வேண்டும்</li>
+                    <li>ஒவ்வொரு SELECT statement-ல் உள்ள நெடுவரிசைகளும் ஒரே வரிசையில் இருக்க வேண்டும்</li>
+                </ul>
+            </div>
+            
+            <div class="code-example">
+                <h3>UNION ALL தொடரியல்</h3>
+                <pre><code class="command-input">SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> குறிப்பு:</h4>
+                <p>UNION operator இயல்பாக நகல் மதிப்புகளை நீக்குகிறது, ஆனால் UNION ALL நகல் மதிப்புகளை உள்ளடக்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>இந்த பயிற்சியில் நாம் நன்கு அறியப்பட்ட Northwind மாதிரி தரவுத்தளத்தைப் பயன்படுத்துவோம்.</p>
+            
+            <p>"Customers" அட்டவணையில் இருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="code-example">
+                <h3>Customers அட்டவணை</h3>
+                <pre><code>+------------+--------------------------------+----------------+-------------------+----------+------------+---------+
+| CustomerID | CustomerName                   | ContactName    | Address           | City     | PostalCode | Country |
++------------+--------------------------------+----------------+-------------------+----------+------------+---------+
+| 1          | Alfreds Futterkiste            | Maria Anders   | Obere Str. 57     | Berlin   | 12209      | Germany |
+| 2          | Ana Trujillo Emparedados...    | Ana Trujillo   | Avda. Constitución| México   | 05021      | Mexico  |
+| 3          | Antonio Moreno Taquería        | Antonio Moreno | Mataderos 2312    | México   | 05023      | Mexico  |
++------------+--------------------------------+----------------+-------------------+----------+------------+---------+</code></pre>
+            </div>
+            
+            <p>மற்றும் "Suppliers" அட்டவணையில் இருந்து ஒரு தேர்வு:</p>
+            
+            <div class="code-example">
+                <h3>Suppliers அட்டவணை</h3>
+                <pre><code>+------------+-----------------------------+-------------------+-----------------+-------------+------------+---------+
+| SupplierID | SupplierName                | ContactName       | Address         | City         | PostalCode | Country |
++------------+-----------------------------+-------------------+-----------------+-------------+------------+---------+
+| 1          | Exotic Liquid               | Charlotte Cooper  | 49 Gilbert St.  | London       | EC1 4SD    | UK      |
+| 2          | New Orleans Cajun Delights  | Shelley Burke     | P.O. Box 78934  | New Orleans  | 70117      | USA     |
+| 3          | Grandma Kelly's Homestead   | Regina Murphy     | 707 Oxford Rd.  | Ann Arbor    | 48104      | USA     |
++------------+-----------------------------+-------------------+-----------------+-------------+------------+---------+</code></pre>
+            </div>
+        </section>
+
+        <!-- SQL UNION ALL Example -->
+        <section class="content-section" id="union-all-example">
+            <h2>SQL UNION ALL உதாரணம்</h2>
+            
+            <p>பின்வரும் SQL statement "Customers" மற்றும் "Suppliers" அட்டவணைகளில் இருந்து நகரங்களை (நகல் மதிப்புகளும் உட்பட) திரும்பப் பெறுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Suppliers
+ORDER BY City;</code></pre>
+            </div>
+            
+            <div class="result-box">
+                <h4>முடிவு</h4>
+                <div class="table-data">
+                    <div class="table-row header">
+                        <div>City</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Ann Arbor</div>
+                    </div>
+                    <div class="table-row">
+                        <div>Berlin</div>
+                    </div>
+                    <div class="table-row">
+                        <div>London</div>
+                    </div>
+                    <div class="table-row">
+                        <div>London</div>
+                    </div>
+                    <div class="table-row">
+                        <div>México</div>
+                    </div>
+                    <div class="table-row">
+                        <div>México</div>
+                    </div>
+                    <div class="table-row">
+                        <div>New Orleans</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SQL UNION ALL With WHERE -->
+        <section class="content-section" id="union-all-where">
+            <h2>WHERE உடன் SQL UNION ALL</h2>
+            
+            <p>பின்வரும் SQL statement "Customers" மற்றும் "Suppliers" அட்டவணைகளில் இருந்து ஜெர்மன் நகரங்களை (நகல் மதிப்புகளும் உட்பட) திரும்பப் பெறுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT City, Country FROM Customers
+WHERE Country='Germany'
+UNION ALL
+SELECT City, Country FROM Suppliers
+WHERE Country='Germany'
+ORDER BY City;</code></pre>
+            </div>
+        </section>
+
+        <!-- Visual Representation -->
+        <section class="content-section" id="visual-representation">
+            <h2>UNION vs UNION ALL காட்சிப் பிரதிநிதித்துவம்</h2>
+            
+            <div class="visual-container">
+                <div class="comparison-visual">
+                    <div class="union-comparison">
+                        <div class="set-box">
+                            <h4>Customers நகரங்கள்</h4>
+                            <div class="set-items">
+                                <div class="set-item">Berlin</div>
+                                <div class="set-item">México</div>
+                                <div class="set-item">México</div>
+                                <div class="set-item">London</div>
+                            </div>
+                        </div>
+                        
+                        <div class="set-box">
+                            <h4>Suppliers நகரங்கள்</h4>
+                            <div class="set-items">
+                                <div class="set-item">London</div>
+                                <div class="set-item">New Orleans</div>
+                                <div class="set-item">Ann Arbor</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-results">
+                        <div class="result-type">
+                            <div class="operator-header">
+                                <i class="fas fa-exchange-alt"></i>
+                                <h4>UNION முடிவு</h4>
+                            </div>
+                            <div class="set-items">
+                                <div class="set-item unique">Ann Arbor</div>
+                                <div class="set-item unique">Berlin</div>
+                                <div class="set-item unique">London</div>
+                                <div class="set-item unique">México</div>
+                                <div class="set-item unique">New Orleans</div>
+                            </div>
+                            <div class="result-explanation">
+                                <p><strong>நகல்கள் நீக்கப்பட்டன</strong></p>
+                            </div>
+                        </div>
+                        
+                        <div class="result-type">
+                            <div class="operator-header">
+                                <i class="fas fa-plus-circle"></i>
+                                <h4>UNION ALL முடிவு</h4>
+                            </div>
+                            <div class="set-items">
+                                <div class="set-item">Ann Arbor</div>
+                                <div class="set-item">Berlin</div>
+                                <div class="set-item">London</div>
+                                <div class="set-item">London</div>
+                                <div class="set-item">México</div>
+                                <div class="set-item">México</div>
+                                <div class="set-item">New Orleans</div>
+                            </div>
+                            <div class="result-explanation">
+                                <p><strong>அனைத்து நகல்களும் சேர்க்கப்பட்டன</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <p><strong>கவனிக்க:</strong> UNION தானாகவே நகல் மதிப்புகளை நீக்குகிறது, ஆனால் UNION ALL அனைத்து நகல் மதிப்புகளையும் பாதுகாக்கிறது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNION vs UNION ALL Comparison -->
+        <section class="content-section" id="union-comparison">
+            <h2>UNION vs UNION ALL ஒப்பீடு</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>UNION</h4>
+                    </div>
+                    <ul>
+                        <li>நகல் வரிசைகளை <strong>தானாகவே நீக்குகிறது</strong></li>
+                        <li>தனித்த மதிப்புகளை மட்டும் தரும்</li>
+                        <li>மெதுவாக செயல்படக்கூடும் (தனித்துவத்தை சரிபார்க்கும்)</li>
+                        <li>தரவு ஒருமைப்பாட்டிற்கு ஏற்றது</li>
+                        <li>குறைவான வரிசைகளை தரும்</li>
+                    </ul>
+                    <div class="code-block small">
+                        <pre><code>SELECT City FROM Table1
+UNION
+SELECT City FROM Table2;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-plus-circle"></i>
+                        <h4>UNION ALL</h4>
+                    </div>
+                    <ul>
+                        <li>நகல் வரிசைகளை <strong>பாதுகாக்கிறது</strong></li>
+                        <li>அனைத்து மதிப்புகளையும் தரும்</li>
+                        <li>வேகமாக செயல்படும் (தனித்துவம் சரிபார்க்கப்படாது)</li>
+                        <li>முழுமையான தரவிற்கு ஏற்றது</li>
+                        <li>அதிக வரிசைகளை தரும்</li>
+                    </ul>
+                    <div class="code-block small">
+                        <pre><code>SELECT City FROM Table1
+UNION ALL
+SELECT City FROM Table2;</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> செயல்திறன் குறிப்பு:</h4>
+                <p>நகல்கள் தேவையில்லாத சூழ்நிலைகளில் UNION ALL-ஐப் பயன்படுத்தவும், ஏனெனில் இது தனித்துவத்தை சரிபார்க்காமல் இருப்பதால் வேகமாக செயல்படும்.</p>
+            </div>
+        </section>
+
+        <!-- Performance Considerations -->
+        <section class="content-section" id="performance">
+            <h2>செயல்திறன் கருத்துகள்</h2>
+            
+            <div class="performance-grid">
+                <div class="performance-card">
+                    <div class="performance-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>UNION ALL வேகமானது</h4>
+                    <p>தனித்துவத்தை சரிபார்க்க தேவையில்லை</p>
+                    <div class="code-block small">
+                        <pre><code>-- வேகமானது
+SELECT * FROM Table1
+UNION ALL
+SELECT * FROM Table2;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="performance-card">
+                    <div class="performance-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4>UNION மெதுவானது</h4>
+                    <p>தனித்துவத்தை சரிபார்க்க வேண்டும்</p>
+                    <div class="code-block small">
+                        <pre><code>-- மெதுவானது
+SELECT * FROM Table1
+UNION
+SELECT * FROM Table2;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="performance-card">
+                    <div class="performance-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>பெரிய தரவுத்தளங்கள்</h4>
+                    <p>பெரிய அட்டவணைகளுக்கு UNION ALL பயன்படுத்தவும்</p>
+                    <div class="code-block small">
+                        <pre><code>-- பெரிய தரவிற்கு ஏற்றது
+SELECT CustomerID FROM LargeTable1
+UNION ALL
+SELECT CustomerID FROM LargeTable2;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="content-section" id="use-cases">
+            <h2>பயன்பாட்டு நிகழ்வுகள்</h2>
+            
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h4>முழுமையான புள்ளிவிவரங்கள்</h4>
+                    <p>அனைத்து நிகழ்வுகளையும் உள்ளடக்கிய புள்ளிவிவர பகுப்பாய்வுக்கு</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT 'Customer' AS Type, City 
+FROM Customers
+UNION ALL
+SELECT 'Supplier', City 
+FROM Suppliers;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h4>பதிவு கணக்கீடுகள்</h4>
+                    <p>முழுமையான பதிவு எண்ணிக்கைக்கு</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT COUNT(*) AS TotalCount
+FROM (
+    SELECT * FROM Table1
+    UNION ALL
+    SELECT * FROM Table2
+) AS CombinedTable;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h4>தரவு இணைப்பு</h4>
+                    <p>பல மூலங்களில் இருந்து தரவை இணைக்க</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT ProductName FROM CurrentProducts
+UNION ALL
+SELECT ProductName FROM ArchivedProducts;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> SQL UNION operator-ன் முதன்மை நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">இணைந்த நெடுவரிசைகளுடன் புதிய அட்டவணையை உருவாக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! UNION புதிய அட்டவணையை உருவாக்காது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு அட்டவணையில் நகல் வரிசைகளை நீக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது DISTINCT அல்லது DELETE-ன் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Self join செய்ய</div>
+                            <div class="option-feedback incorrect">✗ தவறு! Self join வேறு வகையான JOIN ஆகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">இரண்டு அல்லது அதற்கு மேற்பட்ட SELECT statements-ன் முடிவு-தொகுப்புகளை இணைக்க</div>
+                            <div class="option-feedback correct">✓ சரி! UNION operator பல SELECT queries-ன் முடிவுகளை ஒரே result set-ஆக இணைக்கப் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL UNION Operator.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL GROUP BY Statement.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-union-all">UNION ALL என்றால் என்ன?</a></li>
+                    <li><a href="#union-all-example">UNION ALL உதாரணம்</a></li>
+                    <li><a href="#union-comparison">UNION vs UNION ALL</a></li>
+                    <li><a href="#performance">செயல்திறன்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .visual-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .comparison-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .union-comparison {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .set-box {
+            flex: 1;
+        }
+        
+        .set-box h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .set-items {
+            border: 2px solid var(--git-color);
+            border-radius: 8px;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.05);
+            min-height: 150px;
+        }
+        
+        .set-item {
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .set-item.unique {
+            background: rgba(46, 204, 113, 0.1);
+            border-color: #2ecc71;
+        }
+        
+        .comparison-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .result-type {
+            text-align: center;
+        }
+        
+        .operator-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .operator-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .operator-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .result-explanation {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 5px;
+        }
+        
+        .result-explanation p {
+            margin: 0;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .explanation {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary);
+            margin-top: 1.5rem;
+        }
+        
+        .explanation p {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .comparison-card li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Performance Grid */
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .performance-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .performance-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .performance-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .performance-card h4 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .performance-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Use Cases Grid */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .use-case-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .use-case-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .use-case-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .use-case-card h4 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .use-case-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Exercise Styles */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .union-comparison {
+                flex-direction: column;
+            }
+            
+            .comparison-results {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-grid,
+            .performance-grid,
+            .use-cases-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .visual-container {
+                padding: 1rem;
+            }
+            
+            .set-item {
+                font-size: 0.8rem;
+                padding: 0.3rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

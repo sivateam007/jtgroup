@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Drag and Drop API - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        .drag-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-right: 10px;
+        }
+        
+        .drag-demo-container {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .drop-zone {
+            width: 200px;
+            height: 200px;
+            border: 3px dashed var(--git-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        
+        .drop-zone.dragover {
+            background: #e8f4ff;
+            border-color: #3498db;
+            transform: scale(1.05);
+        }
+        
+        .drop-zone.active {
+            border-style: solid;
+            background: #e8f4ff;
+        }
+        
+        .draggable-item {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            border-radius: 8px;
+            cursor: grab;
+            user-select: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .draggable-item:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+        
+        .draggable-item.dragging {
+            opacity: 0.5;
+        }
+        
+        .browser-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .browser-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .browser-table td {
+            padding: 0.8rem;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .browser-table .version {
+            color: var(--git-color);
+            font-weight: bold;
+        }
+        
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .event-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .event-name {
+            font-family: monospace;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .demo-instruction {
+            background: #e8f4ff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML Geolocation API.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML Web Storage API.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML Drag and Drop API</h2>
+            <p>உறுப்புகளை இழுத்து விடுதல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2><i class="fas fa-arrows-alt drag-icon"></i>HTML Drag and Drop API</h2>
+            
+            <p>HTML Drag and Drop API ஒரு உறுப்பை இழுத்து விட அனுமதிக்கிறது.</p>
+            
+            <div class="demo-instruction">
+                <h4><i class="fas fa-play-circle"></i> நடைமுறை:</h4>
+                <p>கீழே உள்ள jassif team படத்தை இரண்டாவது செவ்வகத்திற்குள் இழுத்து விடவும்.</p>
+            </div>
+        </section>
+
+        <!-- Drag and Drop Overview -->
+        <section class="content-section" id="overview">
+            <h2><i class="fas fa-hand-rock drag-icon"></i>இழுத்து விடுதல்</h2>
+            
+            <p>இழுத்து விடுதல் மிகவும் பொதுவான அம்சமாகும். இது நீங்கள் ஒரு பொருளை "பிடித்து" வேறு இடத்திற்கு இழுப்பது ஆகும்.</p>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2><i class="fas fa-globe drag-icon"></i>உலாவி ஆதரவு</h2>
+            
+            <p>அட்டவணையில் உள்ள எண்கள் Drag and Drop ஐ முழுமையாக ஆதரிக்கும் முதல் உலாவி பதிப்பைக் குறிக்கின்றன.</p>
+            
+            <table class="browser-table">
+                <thead>
+                    <tr>
+                        <th>API</th>
+                        <th>Chrome</th>
+                        <th>Edge</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                        <th>Opera</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Drag and Drop</td>
+                        <td class="version">4.0</td>
+                        <td class="version">9.0</td>
+                        <td class="version">3.5</td>
+                        <td class="version">6.0</td>
+                        <td class="version">12.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- HTML Drag and Drop API Example -->
+        <section class="content-section" id="api-example">
+            <h2><i class="fas fa-code drag-icon"></i>HTML Drag and Drop API எடுத்துக்காட்டு</h2>
+            
+            <p>கீழே உள்ள எடுத்துக்காட்டு ஒரு எளிய இழுத்து விடும் எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;script&gt;
+function dragstartHandler(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function dragoverHandler(ev) {
+  ev.preventDefault();
+}
+
+function dropHandler(ev) {
+  ev.preventDefault();
+  const data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="div1" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"&gt;&lt;/div&gt;
+
+&lt;img id="img1" src="img_logo.gif" draggable="true" ondragstart="dragstartHandler(event)" width="336" height="69"&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <p>இது சிக்கலானதாகத் தோன்றலாம், ஆனால் ஒரு இழுத்து விடும் நிகழ்வின் வெவ்வேறு பகுதிகளைப் பார்ப்போம்.</p>
+        </section>
+
+        <!-- Make an Element Draggable -->
+        <section class="content-section" id="make-draggable">
+            <h2><i class="fas fa-hand-point-up drag-icon"></i>ஒரு உறுப்பை இழுக்கக்கூடியதாக ஆக்குதல்</h2>
+            
+            <p>முதலில்: ஒரு உறுப்பை இழுக்கக்கூடியதாக ஆக்க, <code>draggable</code> பண்புக்கூறை <code>true</code> ஆக அமைக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;img id="img1" draggable="true"&gt;</code></pre>
+            </div>
+            
+            <p>அல்லது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;p id="p1" draggable="true"&gt;இழுக்கக்கூடிய உரை&lt;/p&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- What to Drag - ondragstart and setData() -->
+        <section class="content-section" id="what-to-drag">
+            <h2><i class="fas fa-database drag-icon"></i>எதை இழுக்க வேண்டும் - ondragstart மற்றும் setData()</h2>
+            
+            <p>பின்னர், உறுப்பு இழுக்கப்படும் போது என்ன நடக்க வேண்டும் என்பதைக் குறிப்பிடவும்.</p>
+            
+            <p>மேலே உள்ள எடுத்துக்காட்டில், <code>&lt;img&gt;</code> உறுப்பின் <code>ondragstart</code> பண்புக்கூறு ஒரு செயல்பாட்டை (<code>dragstartHandler(ev)</code>) அழைக்கிறது, இது எந்த தரவு இழுக்கப்பட வேண்டும் என்பதைக் குறிப்பிடுகிறது.</p>
+            
+            <p><code>dataTransfer.setData()</code> முறை இழுக்கப்படும் தரவின் தரவு வகை மற்றும் மதிப்பை அமைக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>function dragstartHandler(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}</code></pre>
+            </div>
+            
+            <p>இந்த வழக்கில், தரவு வகை "text" மற்றும் மதிப்பு இழுக்கக்கூடிய உறுப்பின் id ("img1") ஆகும்.</p>
+        </section>
+
+        <!-- Where to Drop - ondragover -->
+        <section class="content-section" id="where-to-drop">
+            <h2><i class="fas fa-map-marker-alt drag-icon"></i>எங்கே விட வேண்டும் - ondragover</h2>
+            
+            <p><code>&lt;div&gt;</code> உறுப்பின் <code>ondragover</code> பண்புக்கூறு ஒரு செயல்பாட்டை (<code>dragoverHandler(ev)</code>) அழைக்கிறது, இது இழுக்கப்படும் தரவு எங்கே விடப்படலாம் என்பதைக் குறிப்பிடுகிறது.</p>
+            
+            <p>இயல்பாக, தரவு/உறுப்புகள் பிற உறுப்புகளில் விடப்பட முடியாது. ஒரு விடுதலை அனுமதிக்க, நாம் உறுப்பின் இயல்புநிலை கையாளுதலுக்குத் தடை விதிக்க வேண்டும்.</p>
+            
+            <p>இது <code>ondragover</code> நிகழ்வுக்கான <code>preventDefault()</code> முறையை அழைப்பதன் மூலம் செய்யப்படுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>function dragoverHandler(ev) {
+  ev.preventDefault();
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Do the Drop - ondrop -->
+        <section class="content-section" id="do-drop">
+            <h2><i class="fas fa-check-circle drag-icon"></i>விடுதலைச் செய் - ondrop</h2>
+            
+            <p>இழுக்கப்படும் தரவு விடப்படும் போது, ஒரு <code>drop</code> நிகழ்வு ஏற்படுகிறது.</p>
+            
+            <p>மேலே உள்ள எடுத்துக்காட்டில், <code>&lt;div&gt;</code> உறுப்பின் <code>ondrop</code> பண்புக்கூறு <code>dropHandler(event)</code> செயல்பாட்டை அழைக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>function dropHandler(ev) {
+  ev.preventDefault();
+  const data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}</code></pre>
+            </div>
+            
+            <h3>குறியீடு விளக்கம்:</h3>
+            
+            <ol>
+                <li>தரவின் உலாவி இயல்புநிலை கையாளுதலைத் தடுக்க <code>preventDefault()</code> ஐ அழைக்கவும் (இயல்புநிலை விடப்பட்டால் இணைப்பாக திறக்கப்படும்)</li>
+                <li><code>dataTransfer.getData()</code> முறையுடன் இழுக்கப்படும் தரவைப் பெறவும். இந்த முறை <code>setData()</code> முறையில் அதே வகைக்கு அமைக்கப்பட்ட எந்த தரவையும் வழங்கும்</li>
+                <li>இழுக்கப்படும் தரவு இழுக்கப்பட்ட உறுப்பின் id ("img1") ஆகும்</li>
+                <li>இழுக்கப்பட்ட உறுப்பை விடும் உறுப்பில் இணைக்கவும்</li>
+            </ol>
+        </section>
+
+        <!-- Drag and Drop Events -->
+        <section class="content-section" id="events">
+            <h2><i class="fas fa-calendar-alt drag-icon"></i>இழுத்து விடும் நிகழ்வுகள்</h2>
+            
+            <div class="event-grid">
+                <div class="event-card">
+                    <div class="event-name">dragstart</div>
+                    <p>உறுப்பு இழுக்கத் தொடங்கும் போது</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-name">drag</div>
+                    <p>உறுப்பு இழுக்கப்படும் போது</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-name">dragenter</div>
+                    <p>இழுக்கப்பட்ட உறுப்பு வலையில் நுழையும் போது</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-name">dragover</div>
+                    <p>இழுக்கப்பட்ட உறுப்பு வலையின் மேல் இருக்கும் போது</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-name">dragleave</div>
+                    <p>இழுக்கப்பட்ட உறுப்பு வலையை விட்டு வெளியேறும் போது</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-name">drop</div>
+                    <p>இழுக்கப்பட்ட உறுப்பு விடப்படும் போது</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-name">dragend</div>
+                    <p>இழுத்தல் செயல்பாடு முடிவடையும் போது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Demo -->
+        <section class="content-section" id="interactive-demo">
+            <h2><i class="fas fa-gamepad drag-icon"></i>ஊடாடும் நடைமுறை</h2>
+            
+            <div class="demo-instruction">
+                <h4><i class="fas fa-info-circle"></i> வழிமுறைகள்:</h4>
+                <p>கீழே உள்ள "இழுத்து விடு உறுப்பு" ஐ "இலக்கு பகுதி" க்குள் இழுத்து விடவும்.</p>
+            </div>
+            
+            <div class="drag-demo-container">
+                <div class="drop-zone" id="sourceZone">
+                    <div class="draggable-item" id="draggableElement" draggable="true">
+                        <i class="fas fa-arrows-alt"></i><br>
+                        இழுத்து விடு உறுப்பு
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center;">
+                    <i class="fas fa-arrow-right fa-2x" style="color: var(--git-color);"></i>
+                </div>
+                
+                <div class="drop-zone" id="targetZone">
+                    இலக்கு பகுதி
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i>நடைமுறைக் குறிப்பு:</h4>
+                <p>இழுக்கக்கூடிய உறுப்பை மூல பகுதிக்குத் திரும்ப கொண்டு செல்லலாம். முழு செயல்முறையும் கண்காணிக்கப்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- More Examples -->
+        <section class="content-section" id="more-examples">
+            <h2><i class="fas fa-list-alt drag-icon"></i>மேலும் எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: &lt;h1&gt; உறுப்பை &lt;div&gt; உறுப்பிற்கு இழுத்து விடுதல்</h3>
+                <pre><code>&lt;script&gt;
+function dragstartHandler(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function dragoverHandler(ev) {
+  ev.preventDefault();
+}
+
+function dropHandler(ev) {
+  ev.preventDefault();
+  const data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+&lt;/script&gt;
+
+&lt;div id="div1" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"&gt;&lt;/div&gt;
+
+&lt;h1 id="h1" draggable="true" ondragstart="dragstartHandler(event)"&gt;JassifTeam.com&lt;/h1&gt;</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: &lt;a&gt; உறுப்பை &lt;div&gt; உறுப்பிற்கு இழுத்து விடுதல்</h3>
+                <pre><code>&lt;script&gt;
+function dragstartHandler(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function dragoverHandler(ev) {
+  ev.preventDefault();
+}
+
+function dropHandler(ev) {
+  ev.preventDefault();
+  const data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+&lt;/script&gt;
+
+&lt;div id="div1" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"&gt;&lt;/div&gt;
+
+&lt;a id="link1" href="https://jassifteam.com" draggable="true" ondragstart="dragstartHandler(event)"&gt;JassifTeam.com&lt;/a&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercise">
+            <h2><i class="fas fa-dumbbell drag-icon"></i>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> ஒரு உறுப்பை இழுக்கக்கூடியதாக ஆக்க பின்வரும் எந்த பண்புக்கூறு பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">movable="true"</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "movable" என்பது செல்லுபடியாகும் HTML பண்புக்கூறு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">draggable="true"</div>
+                            <div class="option-feedback correct">✓ சரி! draggable="true" ஒரு உறுப்பை இழுக்கக்கூடியதாக ஆக்க பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">drag="enabled"</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "drag" என்பது செல்லுபடியாகும் HTML பண்புக்கூறு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML Geolocation API.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML Web Storage API.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Drag and Drop API</a></li>
+                    <li><a href="#overview">இழுத்து விடுதல்</a></li>
+                    <li><a href="#browser-support">உலாவி ஆதரவு</a></li>
+                    <li><a href="#make-draggable">உறுப்பை இழுக்கக்கூடியதாக்குதல்</a></li>
+                    <li><a href="#what-to-drag">எதை இழுக்க வேண்டும்</a></li>
+                    <li><a href="#where-to-drop">எங்கே விட வேண்டும்</a></li>
+                    <li><a href="#do-drop">விடுதலைச் செய்தல்</a></li>
+                    <li><a href="#events">நிகழ்வுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Drag and Drop Demo
+        const draggableElement = document.getElementById('draggableElement');
+        const targetZone = document.getElementById('targetZone');
+        const sourceZone = document.getElementById('sourceZone');
+
+        // Make both zones drop targets
+        [targetZone, sourceZone].forEach(zone => {
+            zone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+
+            zone.addEventListener('dragleave', function(e) {
+                this.classList.remove('dragover');
+            });
+
+            zone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                
+                // Move the draggable element to this zone
+                if (e.target === this) {
+                    this.appendChild(draggableElement);
+                    this.classList.add('active');
+                    
+                    // Update instruction
+                    if (this.id === 'targetZone') {
+                        document.querySelector('.demo-instruction h4').innerHTML = 
+                            '<i class="fas fa-check-circle"></i> வெற்றி! இப்போது மூல பகுதிக்குத் திரும்ப கொண்டு செல்லலாம்.';
+                    } else {
+                        document.querySelector('.demo-instruction h4').innerHTML = 
+                            '<i class="fas fa-info-circle"></i> வழிமுறைகள்: மீண்டும் இலக்கு பகுதிக்குள் இழுத்து விடவும்.';
+                    }
+                }
+            });
+        });
+
+        // Draggable element events
+        draggableElement.addEventListener('dragstart', function(e) {
+            e.dataTransfer.setData('text/plain', this.id);
+            this.classList.add('dragging');
+            
+            // Set drag image (optional)
+            // e.dataTransfer.setDragImage(this, 0, 0);
+        });
+
+        draggableElement.addEventListener('dragend', function(e) {
+            this.classList.remove('dragging');
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js and Raspberry Pi - Webserver with WebSocket - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Raspberry Pi GPIO - Flowing LEDs.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Raspberry Pi RGB LED with WebSocket.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js and Raspberry Pi - Webserver with WebSocket</h2>
+            <p>WebSocket ஐப் பயன்படுத்தி நிகழ்நேர இரு-திசை தகவல்தொடர்புடன் வலைச் சேவையகத்தை உருவாக்க கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is WebSocket? -->
+        <section class="content-section" id="websocket">
+            <h2>WebSocket என்றால் என்ன?</h2>
+            
+            <p>WebSocket வலைவழியாக நிகழ்நேரத்தில் இரு-திசை தகவல்தொடர்பை இயலுமைப்படுத்துகிறது.</p>
+            
+            <p>WebSocket ஒரு சாதாரண HTTP சேவையகத்துடன் இணைந்து இயக்கப்படலாம். ஒரு வலை உலாவியில் ஒரு பொத்தானைக் கிளிக் செய்து, உங்கள் வீட்டில் ஒரு விளக்கை இயக்கும் உங்கள் Raspberry Pi இல் ஒரு GPIO ஐ இயலுமைப்படுத்தலாம். எல்லாம் நிகழ்நேரத்தில், மற்றும் தகவல்தொடர்பு இரு வழிகளிலும் செல்கிறது!</p>
+            
+            <p>இந்த அத்தியாயத்தில், நாம் WebSocket உடன் ஒரு வலை சேவையகத்தை அமைப்போம். பின்னர் ஒரு பொத்தானுடன் ஒரு LED ஐ எரியச் செய்வதற்கும் அணைப்பதற்கும் நமக்கு முன்னர் உள்ள எடுத்துக்காட்டுடன் தொடர்பு கொள்ள ஒரு உலாவி UI ஐ உருவாக்குவோம்.</p>
+        </section>
+
+        <!-- What Do I Need? -->
+        <section class="content-section" id="requirements">
+            <h2>எனக்கு என்ன தேவை?</h2>
+            
+            <p>இந்த டுடோரியலுக்கு உங்களுக்கு ஒரு Raspberry Pi தேவை. எங்கள் எடுத்துக்காட்டுகளில் நாம் ஒரு Raspberry Pi 3 ஐப் பயன்படுத்துகிறோம், ஆனால் இந்த டுடோரியல் பெரும்பாலான பதிப்புகளுக்கும் வேலை செய்ய வேண்டும்.</p>
+            
+            <p>இதற்கு உங்களுக்கு தேவை:</p>
+            
+            <ul>
+                <li>A Raspberry Pi with Raspian, internet, SSH, with Node.js installed</li>
+                <li>The onoff module for Node.js</li>
+                <li>The socket.io module for Node.js</li>
+                <li>1 x Breadboard</li>
+                <li>1 x 68 Ohm resistor</li>
+                <li>1 x 1k Ohm resistor</li>
+                <li>1 x Through Hole LED</li>
+                <li>1 x Push Button</li>
+                <li>4 x Female to male jumper wires</li>
+                <li>1 x Male to Male jumper wires</li>
+            </ul>
+            
+            <p>வெவ்வேறு கூறுகளின் விளக்கங்களுக்கு மேலே உள்ள பட்டியலில் உள்ள இணைப்புகளைக் கிளிக் செய்யவும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>நீங்கள் பயன்படுத்தும் LED வகையைப் பொறுத்து உங்களுக்குத் தேவையான மின்தடை நாம் பயன்படுத்துவதிலிருந்து வேறுபட்டிருக்கலாம். பெரும்பாலான சிறிய LED க்களுக்கு ஒரு சிறிய மின்தடை மட்டுமே தேவை, சுமார் 200-500 ஓம்கள். நீங்கள் பயன்படுத்தும் சரியான மதிப்பு பொதுவாக முக்கியமானது அல்ல, ஆனால் மின்தடையின் மதிப்பு சிறியதாக இருந்தால், LED பிரகாசமாக ஒளிரும்.</p>
+            </div>
+            
+            <p>எங்களுக்கு முன்னர் உள்ள எடுத்துக்காட்டுடன் ஒப்பிடும்போது, நமக்குத் தேவையான ஒரே புதிய விஷயம் ஒரு வலை சேவையகத்தை அமைப்பது மற்றும் socket.io தொகுதியை நிறுவுவது.</p>
+        </section>
+
+        <!-- Webserver for Raspberry Pi and Node.js -->
+        <section class="content-section" id="webserver">
+            <h2>Raspberry Pi மற்றும் Node.js க்கான வலைச் சேவையகம்</h2>
+            
+            <p>இந்த Node.js டுடோரியலில் முந்தைய அத்தியாயங்களைப் பின்பற்றி, HTML கோப்புகளை வழங்கக்கூடிய ஒரு வலை சேவையகத்தை அமைப்போம்.</p>
+            
+            <p>எங்கள் "nodetest" அடைவில் நிலையான html கோப்புகளுக்குப் பயன்படுத்தக்கூடிய ஒரு புதிய அடைவை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~/nodetest $ mkdir public</code></pre>
+            </div>
+            
+            <p>இப்போது ஒரு வலைச் சேவையகத்தை அமைப்போம். கோரிக்கை செய்யப்பட்ட கோப்பைத் திறந்து உள்ளடக்கத்தை வாடிக்கையாளருக்கு வழங்கும் ஒரு Node.js கோப்பை உருவாக்கவும். ஏதேனும் தவறு நடந்தால், 404 பிழையை வீசவும்.</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~/nodetest $ nano webserver.js</code></pre>
+            </div>
+            
+            <h3>webserver.js:</h3>
+            
+            <div class="code-example">
+                <pre><code>let http = require('http').createServer(handler); //require http server, and create server with function handler()
+let fs = require('fs'); //require filesystem module
+
+http.listen(8080); //listen to port 8080
+
+function handler (req, res) { //create server
+  fs.readFile(__dirname + '/public/index.html', function(err, data) { //read file index.html in public folder
+    if (err) {
+      res.writeHead(404, {'Content-Type': 'text/html'}); //display 404 on error
+      return res.end("404 Not Found");
+    }
+    res.writeHead(200, {'Content-Type': 'text/html'}); //write HTML
+    res.write(data); //write data from index.html
+    return res.end();
+  });
+}</code></pre>
+            </div>
+            
+            <p>"public" என்ற கோப்புறைக்குச் செல்லவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~/nodetest $ cd public</code></pre>
+            </div>
+            
+            <p>மற்றும் ஒரு HTML கோப்பை, index.html உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~/nodetest/public $ nano index.html</code></pre>
+            </div>
+            
+            <h3>index.html:</h3>
+            
+            <div class="code-example">
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1&gt;Control LED light&lt;/h1&gt;
+&lt;input id="light" type="checkbox"&gt;LED
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <p>இந்த கோப்பிற்கு இன்னும் எந்த செயல்பாடும் இருக்காது. இப்போதைக்கு அது只是一个 இடத்தைப் பிடிப்பதாகும். வலைச் சேவையகம் வேலை செய்கிறதா என்று பார்ப்போம்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~/nodetest/public $ cd ..
+pi@jassifteam:~/nodetest $ node webserver.js</code></pre>
+            </div>
+            
+            <p>http://[RaspberryPi_IP]:8080/ ஐப் பயன்படுத்தி ஒரு உலாவியில் வலைத்தளத்தைத் திறக்கவும்:</p>
+            
+            <p>வலைச் சேவையகம் இப்போது இயங்க வேண்டும், மேலும் நாம் WebSocket பகுதிக்கு செல்லலாம்.</p>
+        </section>
+
+        <!-- Install socket.io for Node.js -->
+        <section class="content-section" id="install-socketio">
+            <h2>Node.js க்கான socket.io ஐ நிறுவவும்</h2>
+            
+            <p>வலைச் சேவையகம் அமைக்கப்பட்டுள்ளது, உங்கள் Raspberry Pi கணினி தொகுப்புகளை அவற்றின் சமீபத்திய பதிப்புகளுக்கு புதுப்பிக்கவும்.</p>
+            
+            <p>உங்கள் கணினி தொகுப்பு பட்டியலைப் புதுப்பிக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ sudo apt-get update</code></pre>
+            </div>
+            
+            <p>உங்கள் நிறுவப்பட்ட அனைத்து தொகுப்புகளையும் அவற்றின் சமீபத்திய பதிப்பிற்கு மேம்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ sudo apt-get dist-upgrade</code></pre>
+            </div>
+            
+            <p>இதை தவறாமல் செய்வது உங்கள் Raspberry Pi நிறுவலை புதுப்பித்துக்கொண்டே இருக்கும்.</p>
+            
+            <p>socket.io இன் சமீபத்திய பதிப்பைப் பதிவிறக்கவும் மற்றும் நிறுவவும், பின்வரும் கட்டளையைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ npm install socket.io --save</code></pre>
+            </div>
+        </section>
+
+        <!-- Adding WebSocket to our Webserver -->
+        <section class="content-section" id="adding-websocket">
+            <h2>எங்கள் வலைச் சேவையகத்தில் WebSocket ஐச் சேர்த்தல்</h2>
+            
+            <p>இப்போது நமது பயன்பாட்டில் WebSocket ஐப் பயன்படுத்தலாம். எங்கள் index.html கோப்பைப் புதுப்பிப்போம்:</p>
+            
+            <h3>index.html:</h3>
+            
+            <div class="code-example">
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1&gt;Control LED light&lt;/h1&gt;
+&lt;p&gt;&lt;input type="checkbox" id="light"&gt;&lt;/p&gt;
+
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"&gt;&lt;/script&gt; &lt;!-- include socket.io client side script --&gt;
+&lt;script&gt;
+let socket = io(); //load socket.io-client and connect to the host that serves the page
+window.addEventListener("load", function(){ //when page loads
+  let lightbox = document.getElementById("light");
+  lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+    socket.emit("light", Number(this.checked)); //send button status to server (as 1 or 0)
+  });
+});
+socket.on('light', function (data) { //get button status from client
+  document.getElementById("light").checked = data; //change checkbox according to push button on Raspberry Pi
+  socket.emit("light", data); //send push button status to back to server
+});
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <p>மற்றும் எங்கள் webserver.js கோப்பு:</p>
+            
+            <h3>webserver.js:</h3>
+            
+            <div class="code-example">
+                <pre><code>let http = require('http').createServer(handler); //require http server, and create server with function handler()
+let fs = require('fs'); //require filesystem module
+let io = require('socket.io')(http) //require socket.io module and pass the http object (server)
+
+http.listen(8080); //listen to port 8080
+
+function handler (req, res) { //create server
+  fs.readFile(__dirname + '/public/index.html', function(err, data) { //read file index.html in public folder
+    if (err) {
+      res.writeHead(404, {'Content-Type': 'text/html'}); //display 404 on error
+      return res.end("404 Not Found");
+    }
+    res.writeHead(200, {'Content-Type': 'text/html'}); //write HTML
+    res.write(data); //write data from index.html
+    return res.end();
+  });
+}
+
+io.sockets.on('connection', function (socket) {// WebSocket Connection
+  let lightvalue = 0; //static variable for current status
+  socket.on('light', function(data) { //get light switch status from client
+    lightvalue = data;
+    if (lightvalue) {
+      console.log(lightvalue); //turn LED on or off, for now we will just show it in console.log
+    }
+  });
+});</code></pre>
+            </div>
+            
+            <p>சேவையகத்தை சோதிப்போம்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ node webserver.js</code></pre>
+            </div>
+            
+            <p>http://[RaspberryPi_IP]:8080/ ஐப் பயன்படுத்தி ஒரு உலாவியில் வலைத்தளத்தைத் திறக்கவும்:</p>
+            
+            <p>இப்போது சேவையகம் சரிபார்ப்புப் பெட்டியில் உள்ள அனைத்து மாற்றங்களையும் Raspberry Pi இல் உள்ள கன்சோலுக்கு வெளியீடு செய்ய வேண்டும்.</p>
+            
+            <p>வாடிக்கையாளர் மாற்றங்களை சேவையகத்திற்கு அனுப்புகிறார், மற்றும் சேவையகம் பதிலளிக்கிறது.</p>
+            
+            <p>முந்தைய அத்தியாயத்திலிருந்து புஷ் பட்டன் கட்டுப்படுத்தப்பட்ட LED ஐச் சேர்ப்போம்.</p>
+        </section>
+
+        <!-- Adding Hardware, and sending a response to the Client -->
+        <section class="content-section" id="hardware-response">
+            <h2>வன்பொருளைச் சேர்த்தல், மற்றும் வாடிக்கையாளருக்கு பதில் அனுப்புதல்</h2>
+            
+            <p>எங்கள் webserver.js கோப்பை மீண்டும் புதுப்பிப்போம். புஷ்பட்டன் கட்டுப்படுத்தப்பட்ட LED அத்தியாயத்திலிருந்து நிறைய குறியீட்டைப் பயன்படுத்துவோம்.</p>
+            
+            <h3>webserver.js:</h3>
+            
+            <div class="code-example">
+                <pre><code>let http = require('http').createServer(handler); //require http server, and create server with function handler()
+let fs = require('fs'); //require filesystem module
+let io = require('socket.io')(http) //require socket.io module and pass the http object (server)
+let Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+let LED = new Gpio(4, 'out'); //use GPIO pin 4 as output
+let pushButton = new Gpio(17, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
+
+http.listen(8080); //listen to port 8080
+
+function handler (req, res) { //create server
+  fs.readFile(__dirname + '/public/index.html', function(err, data) { //read file index.html in public folder
+    if (err) {
+      res.writeHead(404, {'Content-Type': 'text/html'}); //display 404 on error
+      return res.end("404 Not Found");
+    }
+    res.writeHead(200, {'Content-Type': 'text/html'}); //write HTML
+    res.write(data); //write data from index.html
+    return res.end();
+  });
+}
+
+io.sockets.on('connection', function (socket) {// WebSocket Connection
+  let lightvalue = 0; //static variable for current status
+  pushButton.watch(function (err, value) { //Watch for hardware interrupts on pushButton
+    if (err) { //if an error
+      console.error('There was an error', err); //output error message to console
+      return;
+    }
+    lightvalue = value;
+    socket.emit('light', lightvalue); //send button status to client
+  });
+  socket.on('light', function(data) { //get light switch status from client
+    lightvalue = data;
+    if (lightvalue != LED.readSync()) { //only change LED if status has changed
+      LED.writeSync(lightvalue); //turn LED on or off
+    }
+  });
+});
+
+process.on('SIGINT', function () { //on ctrl+c
+  LED.writeSync(0); // Turn LED off
+  LED.unexport(); // Unexport LED GPIO to free resources
+  pushButton.unexport(); // Unexport Button GPIO to free resources
+  process.exit(); //exit completely
+});</code></pre>
+            </div>
+            
+            <p>சேவையகத்தை சோதிப்போம்:</p>
+            
+            <div class="code-example">
+                <pre><code>pi@jassifteam:~ $ node webserver.js</code></pre>
+            </div>
+            
+            <p>http://[RaspberryPi_IP]:8080/ ஐப் பயன்படுத்தி ஒரு உலாவியில் வலைத்தளத்தைத் திறக்கவும்:</p>
+            
+            <p>இப்போது சேவையகம் சரிபார்ப்புப் பெட்டியில் உள்ள அனைத்து மாற்றங்களையும் Raspberry Pi இல் உள்ள கன்சோலுக்கு வெளியீடு செய்ய வேண்டும்.</p>
+            
+            <p>வாடிக்கையாளர் மாற்றங்களை சேவையகத்திற்கு அனுப்புகிறார், மற்றும் சேவையகம் பதிலளிக்கிறது.</p>
+            
+            <p>Ctrl+c உடன் நிரலை முடிக்கவும்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் WebSocket செயல்பாட்டிற்கு எந்த தொகுதி பொதுவாகப் பயன்படுத்தப்படுகிறது? தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ws தொகுதி</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ws தொகுதி பயன்படுத்தப்படலாம், ஆனால் socket.io மிகவும் பிரபலமானது மற்றும் அதிக அம்சங்களைக் கொண்டுள்ளது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">socket.io தொகுதி</div>
+                            <div class="option-feedback correct">✓ சரி! socket.io என்பது Node.js இல் WebSocket செயல்பாட்டிற்கான மிகவும் பிரபலமான தொகுதியாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">websocket தொகுதி</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "websocket" என்பது Node.js இல் ஒரு செல்லுபடியாகும் தொகுதி அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">realtime தொகுதி</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "realtime" என்பது Node.js இல் ஒரு செல்லுபடியாகும் தொகுதி அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Raspberry Pi GPIO - Flowing LEDs.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Raspberry Pi RGB LED with WebSocket.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#websocket">WebSocket என்றால் என்ன?</a></li>
+                    <li><a href="#requirements">தேவைகள்</a></li>
+                    <li><a href="#webserver">வலைச் சேவையகம்</a></li>
+                    <li><a href="#install-socketio">socket.io நிறுவுதல்</a></li>
+                    <li><a href="#hardware-response">வன்பொருள் சேர்த்தல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

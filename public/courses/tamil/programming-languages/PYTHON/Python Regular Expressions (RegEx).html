@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python RegEx - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* RegEx specific styling */
+        .regex-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .regex-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .regex-table th {
+            background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .regex-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+        }
+        
+        .regex-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .regex-table tr:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .regex-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .regex-pattern {
+            font-family: 'Courier New', monospace;
+            background: #2d2d2d;
+            color: #ff79c6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .regex-function {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .function-name {
+            font-family: 'Courier New', monospace;
+            color: #ffd700;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .function-desc {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .meta-character {
+            display: inline-block;
+            background: #2c3e50;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 2px;
+            font-weight: bold;
+        }
+        
+        .regex-example {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .regex-match {
+            color: #50fa7b;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python%20JSON.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python%20PIP.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python Regular Expressions (RegEx)</h2>
+            <p>Python இல் வழக்கமான வெளிப்பாடுகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- RegEx Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Python Regular Expressions</h2>
+            
+            <p>ஒரு RegEx, அல்லது வழக்கமான வெளிப்பாடு, ஒரு தேடல் முறையை உருவாக்கும் எழுத்துக்களின் வரிசையாகும்.</p>
+            
+            <p>ஒரு சரம் குறிப்பிடப்பட்ட தேடல் முறையைக் கொண்டுள்ளதா எனச் சரிபார்க்க RegEx பயன்படுத்தப்படலாம்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔍</span> RegEx பயன்பாடுகள்:</h4>
+                <p>• தரவு சரிபார்த்தல் (மின்னஞ்சல், தொலைபேசி எண் போன்றவை)<br>
+                • தரவு பிரித்தெடுத்தல்<br>
+                • தரவு மாற்றீடு<br>
+                • சரம் மேன்ச்சிங்</p>
+            </div>
+        </section>
+
+        <!-- RegEx Module -->
+        <section class="content-section" id="regex-module">
+            <h2>RegEx தொகுதி</h2>
+            
+            <p>Python இல் re என்று ஒரு உள்ளமைக்கப்பட்ட தொகுப்பு உள்ளது, இது வழக்கமான வெளிப்பாடுகளுடன் பணியாற்ற பயன்படுத்தப்படலாம்.</p>
+            
+            <h3>re தொகுதியை இறக்குமதி செய்யவும்:</h3>
+            
+            <div class="code-example">
+                <pre><code>import re</code></pre>
+            </div>
+            
+            <h3>Example</h3>
+            <p>சரம் "The" உடன் தொடங்கி "Spain" உடன் முடிவடைகிறதா எனப் பார்க்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>import re
+
+txt = "The rain in Spain"
+x = re.search("^The.*Spain$", txt)
+print(x)</code></pre>
+                <div class="command-output">Output: &lt;re.Match object; span=(0, 17), match='The rain in Spain'&gt;</div>
+            </div>
+        </section>
+
+        <!-- RegEx Functions -->
+        <section class="content-section" id="functions">
+            <h2>RegEx செயல்பாடுகள்</h2>
+            
+            <p>re தொகுதி ஒரு சரத்தில் பொருத்தத்தைத் தேட அனுமதிக்கும் செயல்பாடுகளின் தொகுப்பை வழங்குகிறது:</p>
+            
+            <div class="regex-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>செயல்பாடு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="regex-pattern">findall</span></td>
+                            <td>அனைத்து பொருத்தங்களையும் கொண்ட பட்டியலைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><span class="regex-pattern">search</span></td>
+                            <td>சரத்தில் எங்கேனும் பொருத்தம் இருந்தால் Match பொருளைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><span class="regex-pattern">split</span></td>
+                            <td>சரம் ஒவ்வொரு பொருத்தத்திலும் பிரிக்கப்பட்ட பட்டியலைத் திருப்பித் தருகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><span class="regex-pattern">sub</span></td>
+                            <td>ஒன்று அல்லது பல பொருத்தங்களை ஒரு சரத்துடன் மாற்றுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="regex-function">
+                <div class="function-name">findall()</div>
+                <div class="function-desc">அனைத்து பொருத்தங்களையும் கொண்ட பட்டியலைத் திருப்பித் தருகிறது</div>
+            </div>
+            
+            <h3>Example</h3>
+            <p>அனைத்து பொருத்தங்களின் பட்டியலையும் அச்சிடவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>import re
+
+txt = "The rain in Spain"
+x = re.findall("ai", txt)
+print(x)</code></pre>
+                <div class="command-output">Output: ['ai', 'ai']</div>
+            </div>
+            
+            <p>பட்டியல் காணப்படும் வரிசையில் பொருத்தங்களைக் கொண்டுள்ளது.</p>
+            
+            <p>பொருத்தங்கள் எதுவும் காணப்படவில்லை என்றால், ஒரு காலிபட்டியல் திரும்பப் பெறப்படும்:</p>
+            
+            <div class="code-example">
+                <pre><code>import re
+
+txt = "The rain in Spain"
+x = re.findall("Portugal", txt)
+print(x)</code></pre>
+                <div class="command-output">Output: []</div>
+            </div>
+        </section>
+
+        <!-- Metacharacters -->
+        <section class="content-section" id="metacharacters">
+            <h2>மெட்டாகேரக்டர்கள்</h2>
+            
+            <p>மெட்டாகேரக்டர்கள் சிறப்பு அர்த்தத்துடன் கூடிய எழுத்துக்கள்:</p>
+            
+            <div class="regex-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>எழுத்து</th>
+                            <th>விளக்கம்</th>
+                            <th>எடுத்துக்காட்டு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="meta-character">[ ]</span></td>
+                            <td>எழுத்துக்களின் தொகுப்பு</td>
+                            <td><span class="regex-pattern">"[a-m]"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\</span></td>
+                            <td>சிறப்பு வரிசையைக் குறிக்கிறது (சிறப்பு எழுத்துக்களை எஸ்கேப் செய்யவும் பயன்படுத்தலாம்)</td>
+                            <td><span class="regex-pattern">"\d"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">.</span></td>
+                            <td>எந்த எழுத்தும் (புதிய வரி எழுத்து தவிர)</td>
+                            <td><span class="regex-pattern">"he..o"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">^</span></td>
+                            <td>இதனுடன் தொடங்குகிறது</td>
+                            <td><span class="regex-pattern">"^hello"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">$</span></td>
+                            <td>இதனுடன் முடிகிறது</td>
+                            <td><span class="regex-pattern">"planet$"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">*</span></td>
+                            <td>பூஜ்ஜிய அல்லது அதற்கு மேற்பட்ட நிகழ்வுகள்</td>
+                            <td><span class="regex-pattern">"he.*o"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">+</span></td>
+                            <td>ஒன்று அல்லது அதற்கு மேற்பட்ட நிகழ்வுகள்</td>
+                            <td><span class="regex-pattern">"he.+o"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">?</span></td>
+                            <td>பூஜ்ஜிய அல்லது ஒரு நிகழ்வுகள்</td>
+                            <td><span class="regex-pattern">"he.?o"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">{ }</span></td>
+                            <td>குறிப்பிட்ட எண்ணிக்கையிலான நிகழ்வுகள்</td>
+                            <td><span class="regex-pattern">"he.{2}o"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">|</span></td>
+                            <td>அல்லது</td>
+                            <td><span class="regex-pattern">"falls|stays"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">( )</span></td>
+                            <td>பிடித்து குழுவாக்குதல்</td>
+                            <td><span class="regex-pattern">"(abc)"</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Special Sequences -->
+        <section class="content-section" id="special-sequences">
+            <h2>சிறப்பு வரிசைகள்</h2>
+            
+            <p>ஒரு சிறப்பு வரிசை என்பது பின்வரும் பட்டியலில் உள்ள எழுத்துகளில் ஒன்றைத் தொடர்ந்து வரும் \ ஆகும், மேலும் இது ஒரு சிறப்பு அர்த்தத்தைக் கொண்டுள்ளது:</p>
+            
+            <div class="regex-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>எழுத்து</th>
+                            <th>விளக்கம்</th>
+                            <th>எடுத்துக்காட்டு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="meta-character">\A</span></td>
+                            <td>குறிப்பிட்ட எழுத்துக்கள் சரத்தின் தொடக்கத்தில் இருந்தால் பொருத்தத்தைத் திருப்பித் தருகிறது</td>
+                            <td><span class="regex-pattern">"\AThe"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\b</span></td>
+                            <td>குறிப்பிட்ட எழுத்துக்கள் ஒரு வார்த்தையின் தொடக்கத்தில் அல்லது முடிவில் இருக்கும் இடத்தில் பொருத்தத்தைத் திருப்பித் தருகிறது</td>
+                            <td><span class="regex-pattern">r"\bain"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\B</span></td>
+                            <td>குறிப்பிட்ட எழுத்துக்கள் உள்ளன, ஆனால் ஒரு வார்த்தையின் தொடக்கத்தில் (அல்லது முடிவில்) இல்லாத இடத்தில் பொருத்தத்தைத் திருப்பித் தருகிறது</td>
+                            <td><span class="regex-pattern">r"\Bain"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\d</span></td>
+                            <td>சரம் இலக்கங்களைக் கொண்டிருக்கும் இடத்தில் பொருத்தத்தைத் திருப்பித் தருகிறது (0-9 எண்கள்)</td>
+                            <td><span class="regex-pattern">"\d"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\D</span></td>
+                            <td>சரம் இலக்கங்களைக் கொண்டிருக்காத இடத்தில் பொருத்தத்தைத் திருப்பித் தருகிறது</td>
+                            <td><span class="regex-pattern">"\D"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\s</span></td>
+                            <td>சரம் வெள்ளை இட எழுத்தைக் கொண்டிருக்கும் இடத்தில் பொருத்தத்தைத் திருப்பித் தருகிறது</td>
+                            <td><span class="regex-pattern">"\s"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\S</span></td>
+                            <td>சரம் வெள்ளை இட எழுத்தைக் கொண்டிருக்காத இடத்தில் பொருத்தத்தைத் திருப்பித் தருகிறது</td>
+                            <td><span class="regex-pattern">"\S"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\w</span></td>
+                            <td>சரம் எந்தவொரு வார்த்தை எழுத்தையும் கொண்டிருக்கும் இடத்தில் பொருத்தத்தைத் திருப்பித் தருகிறது (a முதல் Z வரை எழுத்துக்கள், 0 முதல் 9 வரை இலக்கங்கள் மற்றும் அன்டர்ஸ்கோர் _ எழுத்து)</td>
+                            <td><span class="regex-pattern">"\w"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\W</span></td>
+                            <td>சரம் எந்தவொரு வார்த்தை எழுத்தையும் கொண்டிருக்காத இடத்தில் பொருத்தத்தைத் திருப்பித் தருகிறது</td>
+                            <td><span class="regex-pattern">"\W"</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="meta-character">\Z</span></td>
+                            <td>குறிப்பிட்ட எழுத்துக்கள் சரத்தின் முடிவில் இருந்தால் பொருத்தத்தைத் திருப்பித் தருகிறது</td>
+                            <td><span class="regex-pattern">"Spain\Z"</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sets -->
+        <section class="content-section" id="sets">
+            <h2>செட்கள்</h2>
+            
+            <p>ஒரு செட் என்பது சதுர அடைப்புக்குறிகளுக்குள் உள்ள எழுத்துக்களின் தொகுப்பாகும் [] சிறப்பு அர்த்தத்துடன்:</p>
+            
+            <div class="regex-example">
+                <div><span class="regex-pattern">[arn]</span> → a, r, அல்லது n ஆகியவற்றில் ஒன்று இருக்கும் இடத்தில் பொருத்தம்</div>
+                <div><span class="regex-pattern">[a-n]</span> → a மற்றும் n க்கு இடையில் உள்ள எந்த சிறிய எழுத்துக்கும் பொருத்தம்</div>
+                <div><span class="regex-pattern">[^arn]</span> → a, r, மற்றும் n தவிர வேறு எந்த எழுத்துக்கும் பொருத்தம்</div>
+                <div><span class="regex-pattern">[0123]</span> → 0, 1, 2, அல்லது 3 ஆகியவற்றில் ஏதேனும் ஒன்று இருக்கும் இடத்தில் பொருத்தம்</div>
+                <div><span class="regex-pattern">[0-9]</span> → 0 மற்றும் 9 க்கு இடையில் உள்ள எந்த இலக்கத்திற்கும் பொருத்தம்</div>
+                <div><span class="regex-pattern">[a-zA-Z]</span> → a மற்றும் z க்கு இடையில் உள்ள எந்த எழுத்துக்கும் பொருத்தம், சிறிய எழுத்து அல்லது பெரிய எழுத்து</div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> செட்கள் பற்றி:</h4>
+                <p>செட்களில், +, *, ., |, (), $,{} ஆகியவற்றுக்கு சிறப்பு அர்த்தம் இல்லை, எனவே [+] என்பது: சரத்தில் உள்ள எந்த + எழுத்துக்கும் பொருத்தத்தைத் திருப்பித் தருகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Match Object -->
+        <section class="content-section" id="match-object">
+            <h2>Match பொருள்</h2>
+            
+            <p>ஒரு Match பொருள் என்பது தேடல் மற்றும் முடிவு பற்றிய தகவல்களைக் கொண்ட ஒரு பொருளாகும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>பொருத்தம் இல்லை என்றால், Match பொருளுக்குப் பதிலாக None மதிப்பு திரும்பப் பெறப்படும்.</p>
+            </div>
+            
+            <p>Match பொருளுக்கு தேடல் மற்றும் முடிவு பற்றிய தகவல்களைப் பெற பயன்படுத்தப்படும் பண்புகள் மற்றும் முறைகள் உள்ளன:</p>
+            
+            <div class="code-example">
+                <pre><code>import re
+
+txt = "The rain in Spain"
+x = re.search(r"\bS\w+", txt)
+
+print(x.span())   # Output: (12, 17) - பொருத்தத்தின் தொடக்க மற்றும் முடிவு நிலைகள்
+print(x.string)   # Output: The rain in Spain - செயல்பாட்டிற்குள் அனுப்பப்பட்ட சரம்
+print(x.group())  # Output: Spain - பொருத்தம் இருந்த சரத்தின் பகுதி</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சிகள் மூலம் கற்றல்</h2>
+            
+            <p>பின்வரும் குறியீட்டைக் கவனியுங்கள்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் குறியீட்டின் அச்சிடப்பட்ட முடிவு என்னவாக இருக்கும்?</h4>
+                <div class="code-example" style="margin: 1rem 0; background: #1e1e1e; color: white;">
+                    <pre><code style="color: #f8f8f2;">import re
+txt = 'The rain in Spain'
+x = re.findall('[a-c]', txt)
+print(x)</code></pre>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">['a', 'a']</div>
+                            <div class="option-feedback correct">✓ சரி! <code>[a-c]</code> a, b, அல்லது c எழுத்துக்களுக்கு பொருத்தம். 'The rain in Spain' இல் 'a' எழுத்து இரண்டு முறை தோன்றுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">'The rin in Spin'</div>
+                            <div class="option-feedback incorrect">✗ தவறு! findall() செயல்பாடு பொருத்தங்களின் பட்டியலைத் திருப்பித் தருகிறது, மாற்றப்பட்ட சரம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">2</div>
+                            <div class="option-feedback incorrect">✗ தவறு! findall() பொருத்தங்களின் எண்ணிக்கையை அல்ல, பொருத்தங்களின் பட்டியலைத் திருப்பித் தருகிறது</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tip-box" style="margin-top: 1.5rem;">
+                    <h4><span class="tip-icon">💡</span> விளக்கம்:</h4>
+                    <p><code>[a-c]</code> என்பது a, b, அல்லது c எழுத்துக்களுக்கு பொருத்தமாக இருக்கும் ஒரு RegEx செட் ஆகும்.</p>
+                    <p>'The rain in Spain' சரத்தில்:</p>
+                    <ul style="color: white; margin-left: 1.5rem;">
+                        <li>T → பொருத்தமில்லை (a-c வரம்பில் இல்லை)</li>
+                        <li>h → பொருத்தமில்லை</li>
+                        <li>e → பொருத்தமில்லை</li>
+                        <li>␣ → பொருத்தமில்லை</li>
+                        <li>r → பொருத்தமில்லை</li>
+                        <li><span class="regex-match">a</span> → பொருத்தம்!</li>
+                        <li>i → பொருத்தமில்லை</li>
+                        <li>n → பொருத்தமில்லை</li>
+                        <li>␣ → பொருத்தமில்லை</li>
+                        <li>i → பொருத்தமில்லை</li>
+                        <li>n → பொருத்தமில்லை</li>
+                        <li>␣ → பொருத்தமில்லை</li>
+                        <li>S → பொருத்தமில்லை (பெரிய எழுத்து)</li>
+                        <li>p → பொருத்தமில்லை</li>
+                        <li><span class="regex-match">a</span> → பொருத்தம்!</li>
+                        <li>i → பொருத்தமில்லை</li>
+                        <li>n → பொருத்தமில்லை</li>
+                    </ul>
+                    <p>எனவே <code>findall()</code> ['a', 'a'] பட்டியலைத் திருப்பித் தருகிறது, ஏனெனில் 'a' எழுத்து இரண்டு முறை தோன்றுகிறது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python%20JSON.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python%20PIP.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">RegEx அறிமுகம்</a></li>
+                    <li><a href="#regex-module">RegEx தொகுதி</a></li>
+                    <li><a href="#functions">RegEx செயல்பாடுகள்</a></li>
+                    <li><a href="#metacharacters">மெட்டாகேரக்டர்கள்</a></li>
+                    <li><a href="#special-sequences">சிறப்பு வரிசைகள்</a></li>
+                    <li><a href="#sets">செட்கள்</a></li>
+                    <li><a href="#match-object">Match பொருள்</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

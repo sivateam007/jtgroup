@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Mouse Events - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Mouse event demo styles */
+        .mouse-demo {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .demo-output {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #ddd;
+            min-height: 60px;
+        }
+        
+        .demo-btn {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            font-weight: 600;
+        }
+        
+        .demo-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .mouse-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            width: 100%;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .mouse-box:hover {
+            transform: scale(1.02);
+            border-color: var(--git-color);
+        }
+        
+        .demo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .event-log {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            margin-bottom: 0.3rem;
+            padding: 0.3rem;
+            border-bottom: 1px solid #444;
+        }
+        
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .coordinate-display {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+        }
+        
+        .drag-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            cursor: move;
+            transition: all 0.3s;
+            border: 2px dashed white;
+            user-select: none;
+            position: relative;
+            width: 150px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .drag-container {
+            background: #f0f0f0;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 2px solid #ddd;
+            min-height: 300px;
+            position: relative;
+        }
+        
+        .mouse-events-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .mouse-events-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        
+        .mouse-events-table th {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .mouse-events-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .mouse-events-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .mouse-events-table tr:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .event-name {
+            color: var(--git-color);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20Events.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20Keyboard%20Events.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript Mouse Events</h2>
+            <p>சுட்டி நிகழ்வுகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>JavaScript சுட்டி நிகழ்வுகள்</h2>
+            
+            <p>பயனர் சுட்டியுடன் தொடர்பு கொள்ளும் போது சுட்டி நிகழ்வுகள் நடக்கும்.</p>
+            
+            <p>பொதுவான சுட்டி நிகழ்வுகள்:</p>
+            
+            <ul>
+                <li>click</li>
+                <li>dblclick</li>
+                <li>mouseover / mouseout</li>
+                <li>mousemove</li>
+                <li>mousedown / mouseup</li>
+            </ul>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> குறிப்பு:</h4>
+                <p>சுட்டி நிகழ்வுகள் ஊடாடும் வலைப்பக்கங்கள் மற்றும் பயன்பாடுகளை உருவாக்குவதற்கு முக்கியமானவை, சுட்டி க்ளிக்குகள், ஸ்க்ரோல்கள் மற்றும் இயக்கங்கள் போன்ற பயனர் செயல்களுக்கு எதிர்வினையாக குறிப்பிட்ட செயல்பாடுகளைத் தூண்டுகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Mouseover and Mouseout Example -->
+        <section class="content-section" id="mouseover-example">
+            <h2>Mouseover மற்றும் Mouseout</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;div id="box" style="width:200px;height:100px;padding:16px;border:1px solid #000;"&gt;
+Move mouse over this box
+&lt;/div&gt;
+
+&lt;script&gt;
+const box = document.getElementById("box");
+
+// Let box listen for mouseover
+box.addEventListener("mouseover", function () {
+  box.innerHTML = "Mouse is over me!";
+});
+
+// Let box listen for mouseout
+box.addEventListener("mouseout", function () {
+  box.innerHTML = "Move is out!";
+});
+&lt;/script&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Interactive Mouseover Demo -->
+        <section class="content-section" id="interactive-demo">
+            <h2>ஊடாடும் Mouseover ஆர்ப்பாட்டம்</h2>
+            
+            <div class="mouse-demo">
+                <h4>சுட்டியை மேலே நகர்த்தி சோதிக்கவும்:</h4>
+                
+                <div id="mouseOverBox" class="mouse-box">
+                    <i class="fas fa-mouse-pointer fa-3x"></i>
+                    <h3 id="boxText">இந்த பெட்டியில் சுட்டியை நகர்த்தவும்</h3>
+                    <p id="boxStatus">சுட்டி நிலை: வெளியே</p>
+                </div>
+                
+                <div id="mouseOutput" class="demo-output">
+                    சுட்டி நிகழ்வுகள் வெளியீடு இங்கே தோன்றும்...
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Mouse Events Table -->
+        <section class="content-section" id="common-events">
+            <h2>பொதுவான சுட்டி நிகழ்வுகள்</h2>
+            
+            <div class="mouse-events-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>நிகழ்வு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="event-name">click</td>
+                            <td>அதே உறுப்பில் முக்கிய சுட்டி பொத்தானுடன் (பொதுவாக இடது) mousedown மற்றும் mouseup நிகழ்வுகள் இரண்டும் நடந்த பிறகு தூண்டுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">dblclick</td>
+                            <td>அதே உறுப்பில் இரண்டு விரைவான க்ளிக்குகளுக்குப் பிறகு தூண்டுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">mousedown / mouseup</td>
+                            <td>ஒரு சுட்டி பொத்தான் அழுத்தப்படும் போது (mousedown) அல்லது விடப்படும் போது (mouseup) இந்த நிகழ்வுகள் முறையே தூண்டுகின்றன</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">mousemove</td>
+                            <td>சுட்டி சுட்டியானது ஒரு உறுப்பின் மேல் நகரும் போது தொடர்ந்து தூண்டுகிறது, கர்சரைப் பற்றிய நிலைத் தகவல்களை (ஆயங்கள்) வழங்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">mouseover</td>
+                            <td>சுட்டியானது ஒரு உறுப்பின் மேல் (அல்லது அதன் குழந்தைகளில் ஒன்று) நகரும் போது தூண்டுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">mouseout</td>
+                            <td>சுட்டியானது ஒரு உறுப்பை விட்டு வெளியேறும் போது தூண்டுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">mouseenter</td>
+                            <td>mouseover போன்றது, ஆனால் சுட்டியானது ஒரு உறுப்பில் நுழையும் போது தூண்டுகிறது, அதன் வழித்தோன்றல்கள் அல்ல, இது CSS :hover நடத்தை போன்ற பயன்பாட்டு வழக்குகளுக்கு மிகவும் உணர்வுடையதாக ஆக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">mouseleave</td>
+                            <td>mouseout போன்றது, ஆனால் சுட்டியானது ஒரு உறுப்பை விட்டு வெளியேறும் போது தூண்டுகிறது, அதன் வழித்தோன்றல்கள் அல்ல, இது CSS :hover நடத்தை போன்ற பயன்பாட்டு வழக்குகளுக்கு மிகவும் உணர்வுடையதாக ஆக்குகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">contextmenu</td>
+                            <td>பயனர் சூழல் மெனுவை திறக்க முயற்சிக்கும் போது தூண்டுகிறது, பொதுவாக வலது-கிளிக் செய்வதன் மூலம்</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">wheel</td>
+                            <td>சுட்டி சக்கரம் சுழற்றப்படும் போது தூண்டுகிறது, பொதுவாக ஸ்க்ரோலிங் அல்லது ஜூமிங் செயல்பாட்டிற்குப் பயன்படுத்தப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td class="event-name">drag events</td>
+                            <td>இழுத்து-விடு இடைமுகங்களை செயல்படுத்த பயன்படுத்தப்படும் தொடர் நிகழ்வுகள் (dragstart, dragend, dragover, போன்றவை)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Mouse Position Demo -->
+        <section class="content-section" id="mouse-position">
+            <h2>சுட்டி நிலை</h2>
+            
+            <p>MouseEvent இடைமுகம் ஒரு நிகழ்வு பொருளை வழங்குகிறது, இது சுட்டி பொத்தான் அழுத்தப்படும் போது போன்ற பயனுள்ள பண்புகளைக் கொண்டுள்ளது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <p>event.clientX மற்றும் event.clientY ஐப் பயன்படுத்துதல்</p>
+                <pre><code>&lt;p id="demo"&gt;Move the mouse in this window!&lt;/p&gt;
+
+&lt;script&gt;
+// Let document listen for mousemove
+document.addEventListener("mousemove", function (event) {
+  document.getElementById("demo").innerHTML =
+  "X: " + event.clientX + " Y: " + event.clientY;
+});
+&lt;/script&gt;</code></pre>
+            </div>
+            
+            <div class="mouse-demo">
+                <h4>சுட்டி ஆயங்கள் ஆர்ப்பாட்டம்:</h4>
+                
+                <div class="coordinate-display" id="coordinateDisplay">
+                    X: 0, Y: 0<br>
+                    <small>சாளரத்தில் உங்கள் சுட்டியை நகர்த்தவும்</small>
+                </div>
+                
+                <div class="drag-container" id="dragContainer">
+                    <div class="drag-box" id="dragBox" draggable="true">
+                        <i class="fas fa-arrows-alt fa-2x"></i>
+                        <p>இழுக்கவும்</p>
+                    </div>
+                    <p style="position: absolute; bottom: 10px; left: 10px; color: #666;">
+                        <i class="fas fa-info-circle"></i> இந்த பெட்டியை இழுத்து நகர்த்தவும்
+                    </p>
+                </div>
+                
+                <div class="event-log" id="mouseEventLog">
+                    <div class="log-entry">🎯 சுட்டி நிகழ்வு பதிவு: இங்கே நிகழ்வுகள் தோன்றும்...</div>
+                </div>
+                
+                <div class="demo-controls">
+                    <button class="demo-btn" onclick="startClickTest()">
+                        <i class="fas fa-mouse-pointer"></i> க்ளிக் சோதனையைத் தொடங்கு
+                    </button>
+                    <button class="demo-btn" onclick="testDoubleClick()">
+                        <i class="fas fa-mouse-pointer"></i> இரட்டை க்ளிக் சோதனை
+                    </button>
+                    <button class="demo-btn" onclick="clearMouseLog()">
+                        <i class="fas fa-trash"></i> பதிவை அழி
+                    </button>
+                    <button class="demo-btn" onclick="toggleRightClick()">
+                        <i class="fas fa-hand-pointer"></i> வலது க்ளிக் மாற்று
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mouse Event Properties -->
+        <section class="content-section" id="event-properties">
+            <h2>சுட்டி நிகழ்வு பண்புகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-crosshairs"></i>
+                        <h4>ஆய பண்புகள்</h4>
+                    </div>
+                    <p class="event-name">clientX / clientY</p>
+                    <p>சாளரத்துடன் தொடர்புடைய சுட்டி ஆயங்கள்</p>
+                    <p class="event-name">pageX / pageY</p>
+                    <p>ஆவணத்துடன் தொடர்புடைய சுட்டி ஆயங்கள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-mouse"></i>
+                        <h4>பொத்தான் பண்புகள்</h4>
+                    </div>
+                    <p class="event-name">button</p>
+                    <p>அழுத்தப்பட்ட சுட்டி பொத்தான் (0=இடது, 1=மத்திய, 2=வலது)</p>
+                    <p class="event-name">buttons</p>
+                    <p>அழுத்தப்பட்ட அனைத்து சுட்டி பொத்தான்களும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-keyboard"></i>
+                        <h4>மாற்று விசை பண்புகள்</h4>
+                    </div>
+                    <p class="event-name">ctrlKey</p>
+                    <p>Ctrl விசை அழுத்தப்பட்டதா?</p>
+                    <p class="event-name">shiftKey</p>
+                    <p>Shift விசை அழுத்தப்பட்டதா?</p>
+                    <p class="event-name">altKey</p>
+                    <p>Alt விசை அழுத்தப்பட்டதா?</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bullseye"></i>
+                        <h4>இலக்கு பண்புகள்</h4>
+                    </div>
+                    <p class="event-name">target</p>
+                    <p>நிகழ்வு இலக்கு உறுப்பு</p>
+                    <p class="event-name">currentTarget</p>
+                    <p>தற்போதைய இலக்கு உறுப்பு</p>
+                    <p class="event-name">relatedTarget</td>
+                    <p>தொடர்புடைய உறுப்பு (mouseenter/mouseleave க்கு)</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>தொடுதல் மற்றும் பேனாவை உள்ளடக்கிய நவீன, சாதன சார்பற்ற உள்ளீட்டுக் கையாளுதலுக்கு, டெவலப்பர்கள் பெரும்பாலும் புதிய Pointer Events API ஐப் பயன்படுத்துகிறார்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Click Sequence Demo -->
+        <section class="content-section" id="click-sequence">
+            <h2>க்ளிக் வரிசை ஆர்ப்பாட்டம்</h2>
+            
+            <div class="mouse-demo">
+                <h4>க்ளிக் நிகழ்வுகளின் வரிசையைப் பாருங்கள்:</h4>
+                
+                <div id="clickSequenceBox" class="mouse-box" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                    <i class="fas fa-hand-pointer fa-3x"></i>
+                    <h3 id="clickText">இங்கே க்ளிக் செய்யவும்</h3>
+                    <p id="clickStatus">காத்திருக்கிறது...</p>
+                </div>
+                
+                <div class="event-log" id="clickSequenceLog">
+                    <div class="log-entry">🖱️ க்ளிக் வரிசை பதிவு: இங்கே நிகழ்வுகள் தோன்றும்...</div>
+                </div>
+                
+                <div class="demo-output">
+                    <h4>க்ளிக் வரிசை:</h4>
+                    <p>1. mousedown → 2. mouseup → 3. click</p>
+                    <p>இரட்டை க்ளிக்: 1. mousedown → 2. mouseup → 3. click → 4. mousedown → 5. mouseup → 6. click → 7. dblclick</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise - ONLY ONE EXERCISE -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வருவனவற்றில் எது பயனர் ஒரு உறுப்பில் சுட்டி பொத்தானை அழுத்தும்போது தூண்டப்படும் சரியான நிகழ்வு?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">mouseup</div>
+                            <div class="option-feedback incorrect">✗ தவறு! mouseup என்பது சுட்டி பொத்தான் விடப்படும் போது தூண்டப்படும் நிகழ்வாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">mousedown</div>
+                            <div class="option-feedback correct">✓ சரி! mousedown என்பது பயனர் ஒரு உறுப்பில் சுட்டி பொத்தானை அழுத்தும் போது தூண்டப்படும் சரியான நிகழ்வாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">click</div>
+                            <div class="option-feedback incorrect">✗ தவறு! click என்பது mousedown மற்றும் mouseup இரண்டும் நடந்த பிறகு தூண்டப்படும் நிகழ்வாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">mousepress</div>
+                            <div class="option-feedback incorrect">✗ தவறு! mousepress என்பது JavaScript இல் சட்டபூர்வமான நிகழ்வு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20Events.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20Keyboard%20Events.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">சுட்டி நிகழ்வுகள்</a></li>
+                    <li><a href="#mouseover-example">Mouseover எடுத்துக்காட்டு</a></li>
+                    <li><a href="#common-events">பொதுவான நிகழ்வுகள்</a></li>
+                    <li><a href="#mouse-position">சுட்டி நிலை</a></li>
+                    <li><a href="#event-properties">நிகழ்வு பண்புகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Mouse event demo functions
+        const mouseEventLog = document.getElementById('mouseEventLog');
+        const clickSequenceLog = document.getElementById('clickSequenceLog');
+        let rightClickEnabled = true;
+        
+        function addMouseLogEntry(message) {
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `🐭 ${new Date().toLocaleTimeString()}: ${message}`;
+            mouseEventLog.appendChild(entry);
+            mouseEventLog.scrollTop = mouseEventLog.scrollHeight;
+        }
+        
+        function addClickLogEntry(message) {
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `🖱️ ${new Date().toLocaleTimeString()}: ${message}`;
+            clickSequenceLog.appendChild(entry);
+            clickSequenceLog.scrollTop = clickSequenceLog.scrollHeight;
+        }
+        
+        function clearMouseLog() {
+            mouseEventLog.innerHTML = '<div class="log-entry">🧹 சுட்டி நிகழ்வு பதிவு அழிக்கப்பட்டது...</div>';
+            clickSequenceLog.innerHTML = '<div class="log-entry">🖱️ க்ளிக் வரிசை பதிவு: இங்கே நிகழ்வுகள் தோன்றும்...</div>';
+        }
+        
+        // Mouseover and mouseout demo
+        const mouseOverBox = document.getElementById('mouseOverBox');
+        const boxText = document.getElementById('boxText');
+        const boxStatus = document.getElementById('boxStatus');
+        const mouseOutput = document.getElementById('mouseOutput');
+        
+        mouseOverBox.addEventListener('mouseenter', function() {
+            boxText.textContent = 'சுட்டி மேலே உள்ளது!';
+            boxStatus.textContent = 'சுட்டி நிலை: உள்ளே';
+            this.style.background = 'linear-gradient(135deg, #ffd700, #ffa500)';
+            mouseOutput.innerHTML = '🎯 நிகழ்வு: mouseenter - சுட்டி பெட்டியில் நுழைந்தது';
+            addMouseLogEntry('mouseenter - சுட்டி பெட்டியில் நுழைந்தது');
+        });
+        
+        mouseOverBox.addEventListener('mouseleave', function() {
+            boxText.textContent = 'இந்த பெட்டியில் சுட்டியை நகர்த்தவும்';
+            boxStatus.textContent = 'சுட்டி நிலை: வெளியே';
+            this.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+            mouseOutput.innerHTML = '🏃 நிகழ்வு: mouseleave - சுட்டி பெட்டியை விட்டு வெளியேறியது';
+            addMouseLogEntry('mouseleave - சுட்டி பெட்டியை விட்டு வெளியேறியது');
+        });
+        
+        mouseOverBox.addEventListener('mouseover', function() {
+            addMouseLogEntry('mouseover - சுட்டி பெட்டியின் மேல் நகர்ந்தது');
+        });
+        
+        mouseOverBox.addEventListener('mouseout', function() {
+            addMouseLogEntry('mouseout - சுட்டி பெட்டியிலிருந்து வெளியேறியது');
+        });
+        
+        mouseOverBox.addEventListener('mousemove', function(e) {
+            // Throttle this event
+            if (!this.lastMove || Date.now() - this.lastMove > 300) {
+                const x = e.offsetX;
+                const y = e.offsetY;
+                mouseOutput.innerHTML = `📍 நிகழ்வு: mousemove - பெட்டியில் X: ${x}, Y: ${y}`;
+                this.lastMove = Date.now();
+            }
+        });
+        
+        // Mouse coordinates demonstration
+        const coordinateDisplay = document.getElementById('coordinateDisplay');
+        
+        document.addEventListener('mousemove', function(e) {
+            coordinateDisplay.innerHTML = `
+                X: ${e.clientX}, Y: ${e.clientY}<br>
+                <small>பக்கம் X: ${e.pageX}, Y: ${e.pageY}</small>
+            `;
+        });
+        
+        // Drag and drop demonstration
+        const dragBox = document.getElementById('dragBox');
+        const dragContainer = document.getElementById('dragContainer');
+        let isDragging = false;
+        let offsetX, offsetY;
+        
+        dragBox.addEventListener('dragstart', function(e) {
+            isDragging = true;
+            offsetX = e.offsetX;
+            offsetY = e.offsetY;
+            this.style.opacity = '0.7';
+            addMouseLogEntry('dragstart - இழுத்தல் தொடங்கப்பட்டது');
+        });
+        
+        dragContainer.addEventListener('dragover', function(e) {
+            e.preventDefault();
+        });
+        
+        dragContainer.addEventListener('drop', function(e) {
+            e.preventDefault();
+            if (isDragging) {
+                const x = e.clientX - dragContainer.getBoundingClientRect().left - offsetX;
+                const y = e.clientY - dragContainer.getBoundingClientRect().top - offsetY;
+                
+                dragBox.style.left = x + 'px';
+                dragBox.style.top = y + 'px';
+                dragBox.style.position = 'absolute';
+                
+                dragBox.style.opacity = '1';
+                isDragging = false;
+                addMouseLogEntry(`drop - இழுத்தல் முடிந்தது (X: ${Math.round(x)}, Y: ${Math.round(y)})`);
+            }
+        });
+        
+        dragBox.addEventListener('dragend', function() {
+            this.style.opacity = '1';
+            addMouseLogEntry('dragend - இழுத்தல் முடிவு');
+        });
+        
+        // Click sequence demonstration
+        const clickSequenceBox = document.getElementById('clickSequenceBox');
+        const clickText = document.getElementById('clickText');
+        const clickStatus = document.getElementById('clickStatus');
+        let clickTestActive = false;
+        let clickCount = 0;
+        let doubleClickTimeout;
+        
+        function startClickTest() {
+            clickTestActive = true;
+            clickText.textContent = 'இப்போது க்ளிக் செய்யவும்';
+            clickStatus.textContent = 'க்ளிக் எண்ணிக்கை: 0';
+            clickSequenceLog.innerHTML = '<div class="log-entry">🖱️ க்ளிக் சோதனை தொடங்கப்பட்டது...</div>';
+        }
+        
+        clickSequenceBox.addEventListener('mousedown', function(e) {
+            if (!clickTestActive) return;
+            
+            let buttonName = 'இடது';
+            if (e.button === 1) buttonName = 'மத்திய';
+            if (e.button === 2) buttonName = 'வலது';
+            
+            addClickLogEntry(`mousedown - ${buttonName} பொத்தான் அழுத்தப்பட்டது`);
+        });
+        
+        clickSequenceBox.addEventListener('mouseup', function(e) {
+            if (!clickTestActive) return;
+            
+            let buttonName = 'இடது';
+            if (e.button === 1) buttonName = 'மத்திய';
+            if (e.button === 2) buttonName = 'வலது';
+            
+            addClickLogEntry(`mouseup - ${buttonName} பொத்தான் விடப்பட்டது`);
+        });
+        
+        clickSequenceBox.addEventListener('click', function(e) {
+            if (!clickTestActive) return;
+            
+            clickCount++;
+            clickStatus.textContent = `க்ளிக் எண்ணிக்கை: ${clickCount}`;
+            
+            let buttonName = 'இடது';
+            if (e.button === 1) buttonName = 'மத்திய';
+            if (e.button === 2) buttonName = 'வலது';
+            
+            addClickLogEntry(`click - ${buttonName} க்ளிக் முடிந்தது (எண்ணிக்கை: ${clickCount})`);
+            
+            // Double click detection
+            clearTimeout(doubleClickTimeout);
+            doubleClickTimeout = setTimeout(() => {
+                clickCount = 0;
+            }, 500);
+        });
+        
+        clickSequenceBox.addEventListener('dblclick', function() {
+            if (!clickTestActive) return;
+            
+            addClickLogEntry('dblclick - இரட்டை க்ளிக் முடிந்தது!');
+            clickStatus.textContent = 'இரட்டை க்ளிக் கண்டறியப்பட்டது!';
+        });
+        
+        // Context menu (right click) handling
+        function toggleRightClick() {
+            rightClickEnabled = !rightClickEnabled;
+            if (rightClickEnabled) {
+                addMouseLogEntry('வலது க்ளிக் செயல்படுத்தப்பட்டது');
+            } else {
+                addMouseLogEntry('வலது க்ளிக் முடக்கப்பட்டது');
+            }
+        }
+        
+        clickSequenceBox.addEventListener('contextmenu', function(e) {
+            if (!rightClickEnabled) {
+                e.preventDefault();
+                addClickLogEntry('contextmenu - வலது க்ளிக் தடுக்கப்பட்டது');
+                return false;
+            }
+            addClickLogEntry('contextmenu - வலது க்ளிக் மெனு காட்டப்பட்டது');
+        });
+        
+        // Test double click function
+        function testDoubleClick() {
+            startClickTest();
+            clickSequenceBox.style.background = 'linear-gradient(135deg, #9b59b6, #8e44ad)';
+            clickText.textContent = 'இரட்டை க்ளிக் செய்யவும்';
+            clickStatus.textContent = 'இரட்டை க்ளிக் சோதனை...';
+            setTimeout(() => {
+                clickSequenceBox.style.background = 'linear-gradient(135deg, #3498db, #2980b9)';
+            }, 2000);
+        }
+        
+        // Wheel event demonstration
+        document.addEventListener('wheel', function(e) {
+            addMouseLogEntry(`wheel - சுட்டி சக்கரம் (deltaY: ${e.deltaY > 0 ? 'கீழே' : 'மேலே'})`);
+        });
+        
+        // Initialize
+        startClickTest();
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

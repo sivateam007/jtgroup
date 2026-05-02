@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Multimedia - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Multimedia styling */
+        .multimedia-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .multimedia-demo {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .format-card {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+            transition: transform 0.2s;
+        }
+        
+        .format-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .format-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .format-name {
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 0.3rem;
+        }
+        
+        .format-ext {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        
+        .browser-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .browser-timeline:before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--git-color), #3498db);
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            position: relative;
+            padding-left: 60px;
+        }
+        
+        .timeline-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            border: 4px solid var(--git-color);
+            color: var(--git-color);
+            font-size: 1.5rem;
+            z-index: 1;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .supported-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        
+        .supported {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .not-supported {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .media-preview {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin: 1rem 0;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .multimedia-container {
+                flex-direction: column;
+            }
+            
+            .format-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .browser-timeline:before {
+                left: 25px;
+            }
+            
+            .timeline-item {
+                padding-left: 50px;
+            }
+            
+            .timeline-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML SVG Graphics.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML Video.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML Multimedia</h2>
+            <p>HTML மல்டிமீடியாவைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- HTML Multimedia Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML மல்டிமீடியா</h2>
+            
+            <p>வலைத்தளத்தில் மல்டிமீடியா என்பது ஒலி, இசை, வீடியோக்கள், திரைப்படங்கள் மற்றும் அனிமேஷன்கள் ஆகும்.</p>
+            
+            <div class="multimedia-container">
+                <div class="multimedia-demo">
+                    <h3>மல்டிமீடியா வகைகள்</h3>
+                    <div class="format-grid">
+                        <div class="format-card">
+                            <div class="format-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="format-name">வீடியோ</div>
+                            <div class="format-ext">.mp4, .webm, .ogg</div>
+                        </div>
+                        
+                        <div class="format-card">
+                            <div class="format-icon">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <div class="format-name">ஆடியோ</div>
+                            <div class="format-ext">.mp3, .wav, .ogg</div>
+                        </div>
+                        
+                        <div class="format-card">
+                            <div class="format-icon">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="format-name">படங்கள்</div>
+                            <div class="format-ext">.jpg, .png, .gif</div>
+                        </div>
+                        
+                        <div class="format-card">
+                            <div class="format-icon">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <div class="format-name">அனிமேஷன்</div>
+                            <div class="format-ext">.gif, .webp</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="multimedia-demo">
+                    <h3>மல்டிமீடியா என்றால் என்ன?</h3>
+                    <p>மல்டிமீடியா பல்வேறு வடிவங்களில் வருகிறது. இது நீங்கள் கேட்கக்கூடிய அல்லது பார்க்கக்கூடிய எதுவும் இருக்கலாம், படங்கள், இசை, ஒலி, வீடியோக்கள், பதிவுகள், திரைப்படங்கள், அனிமேஷன்கள் மற்றும் பல.</p>
+                    
+                    <div class="tip-box">
+                        <h4><span class="tip-icon">🌐</span> வலைப்பக்கங்கள்:</h4>
+                        <p>வலைப்பக்கங்கள் பெரும்பாலும் வெவ்வேறு வகைகள் மற்றும் வடிவங்களின் மல்டிமீடியா உறுப்புகளைக் கொண்டிருக்கின்றன.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2>உலாவி ஆதரவு</h2>
+            
+            <div class="browser-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>ஆரம்ப உலாவிகள்</h4>
+                        <p>முதல் வலை உலாவிகளுக்கு உரை மட்டுமே ஆதரவு இருந்தது, ஒரு நிறத்தில் ஒரு எழுத்துருக்கு மட்டுப்படுத்தப்பட்டது.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>நிறங்கள் மற்றும் எழுத்துருக்கள்</h4>
+                        <p>பின்னர் நிறங்கள், எழுத்துருக்கள் மற்றும் படங்களை ஆதரிக்கும் உலாவிகள் வந்தன!</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-photo-video"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>மல்டிமீடியா ஆதரவு</h4>
+                        <p>இன்று, நவீன உலாவிகள் மல்டிமீடியா உறுப்புகளை முழுமையாக ஆதரிக்கின்றன!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="media-preview">
+                <div style="text-align: center; color: #666;">
+                    <i class="fas fa-play-circle" style="font-size: 3rem; color: var(--git-color); margin-bottom: 1rem;"></i>
+                    <p>நவீன உலாவிகள் வீடியோ, ஆடியோ மற்றும் அனிமேஷன்களை ஆதரிக்கின்றன</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multimedia Formats -->
+        <section class="content-section" id="multimedia-formats">
+            <h2>மல்டிமீடியா வடிவங்கள்</h2>
+            
+            <p>மல்டிமீடியா உறுப்புகள் (ஆடியோ அல்லது வீடியோ போன்றவை) ஊடகக் கோப்புகளில் சேமிக்கப்படுகின்றன.</p>
+            
+            <p>ஒரு கோப்பின் வகையைக் கண்டறிய மிகவும் பொதுவான வழி, கோப்பு நீட்டிப்பைப் பார்ப்பதாகும்.</p>
+            
+            <p>மல்டிமீடியா கோப்புகளுக்கு வடிவங்கள் மற்றும் வெவ்வேறு நீட்டிப்புகள் உள்ளன: .wav, .mp3, .mp4, .mpg, .wmv, மற்றும் .avi.</p>
+            
+            <div class="format-grid">
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-file-audio"></i>
+                    </div>
+                    <div class="format-name">WAV</div>
+                    <div class="format-ext">.wav</div>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-file-audio"></i>
+                    </div>
+                    <div class="format-name">MP3</div>
+                    <div class="format-ext">.mp3</div>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-file-video"></i>
+                    </div>
+                    <div class="format-name">MP4</div>
+                    <div class="format-ext">.mp4</div>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-file-video"></i>
+                    </div>
+                    <div class="format-name">WebM</div>
+                    <div class="format-ext">.webm</div>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-file-video"></i>
+                    </div>
+                    <div class="format-name">OGG</div>
+                    <div class="format-ext">.ogg</div>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-file-video"></i>
+                    </div>
+                    <div class="format-name">AVI</div>
+                    <div class="format-ext">.avi</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Video Formats -->
+        <section class="content-section" id="video-formats">
+            <h2>பொதுவான வீடியோ வடிவங்கள்</h2>
+            
+            <p>வெளியே பல வீடியோ வடிவங்கள் உள்ளன.</p>
+            
+            <p>MP4, WebM, மற்றும் Ogg வடிவங்கள் HTML ஆல் ஆதரிக்கப்படுகின்றன.</p>
+            
+            <p>MP4 வடிவம் YouTube ஆல் பரிந்துரைக்கப்படுகிறது.</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>வடிவம்</th>
+                            <th>கோப்பு</th>
+                            <th>விளக்கம்</th>
+                            <th>HTML ஆதரவு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MPEG</td>
+                            <td>.mpg .mpeg</td>
+                            <td>Moving Pictures Expert Group ஆல் உருவாக்கப்பட்டது. வலைத்தளத்தில் முதல் பிரபல வீடியோ வடிவம்.</td>
+                            <td><span class="supported-badge not-supported">ஆதரவு இல்லை</span></td>
+                        </tr>
+                        <tr>
+                            <td>AVI</td>
+                            <td>.avi</td>
+                            <td>Microsoft ஆல் உருவாக்கப்பட்டது. வீடியோ கேமராக்கள் மற்றும் TV வன்பொருளில் பொதுவாகப் பயன்படுத்தப்படுகிறது.</td>
+                            <td><span class="supported-badge not-supported">ஆதரவு இல்லை</span></td>
+                        </tr>
+                        <tr>
+                            <td>WMV</td>
+                            <td>.wmv</td>
+                            <td>Microsoft ஆல் உருவாக்கப்பட்டது. வீடியோ கேமராக்கள் மற்றும் TV வன்பொருளில் பொதுவாகப் பயன்படுத்தப்படுகிறது.</td>
+                            <td><span class="supported-badge not-supported">ஆதரவு இல்லை</span></td>
+                        </tr>
+                        <tr>
+                            <td>QuickTime</td>
+                            <td>.mov</td>
+                            <td>Apple ஆல் உருவாக்கப்பட்டது. வீடியோ கேமராக்கள் மற்றும் TV வன்பொருளில் பொதுவாகப் பயன்படுத்தப்படுகிறது.</td>
+                            <td><span class="supported-badge not-supported">ஆதரவு இல்லை</span></td>
+                        </tr>
+                        <tr>
+                            <td>Flash</td>
+                            <td>.swf .flv</td>
+                            <td>Macromedia ஆல் உருவாக்கப்பட்டது. வலை உலாவிகளில் விளையாட கூடுதல் கூறு (பிளக்-இன்) தேவைப்படும்.</td>
+                            <td><span class="supported-badge not-supported">ஆதரவு இல்லை</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ogg</td>
+                            <td>.ogg</td>
+                            <td>Xiph.Org Foundation ஆல் உருவாக்கப்பட்டது.</td>
+                            <td><span class="supported-badge supported">ஆதரவு உள்ளது</span></td>
+                        </tr>
+                        <tr>
+                            <td>WebM</td>
+                            <td>.webm</td>
+                            <td>Mozilla, Opera, Adobe, மற்றும் Google ஆல் உருவாக்கப்பட்டது.</td>
+                            <td><span class="supported-badge supported">ஆதரவு உள்ளது</span></td>
+                        </tr>
+                        <tr>
+                            <td>MPEG-4 / MP4</td>
+                            <td>.mp4</td>
+                            <td>Moving Pictures Expert Group ஆல் உருவாக்கப்பட்டது. அனைத்து உலாவிகளாலும் ஆதரிக்கப்படுகிறது மற்றும் YouTube ஆல் பரிந்துரைக்கப்படுகிறது.</td>
+                            <td><span class="supported-badge supported">ஆதரவு உள்ளது</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">📝</span> குறிப்பு:</h4>
+                <p>MP4, WebM, மற்றும் Ogg வீடியோ மட்டுமே HTML தரநிலையால் ஆதரிக்கப்படுகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Common Audio Formats -->
+        <section class="content-section" id="audio-formats">
+            <h2>பொதுவான ஆடியோ வடிவங்கள்</h2>
+            
+            <p>MP3 என்பது சுருக்கப்பட்ட பதிவு செய்யப்பட்ட இசைக்கான சிறந்த வடிவமாகும். MP3 என்ற சொல் டிஜிட்டல் இசையின் ஒத்ததாக மாறியுள்ளது.</p>
+            
+            <p>உங்கள் வலைத்தளம் பதிவு செய்யப்பட்ட இசையைப் பற்றியதாக இருந்தால், MP3 தேர்வாகும்.</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>வடிவம்</th>
+                            <th>கோப்பு</th>
+                            <th>விளக்கம்</th>
+                            <th>HTML ஆதரவு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MIDI</td>
+                            <td>.mid .midi</td>
+                            <td>அனைத்து மின்னணு இசை சாதனங்களுக்கான முக்கிய வடிவம். MIDI கோப்புகள் ஒலியைக் கொண்டிருக்கவில்லை, ஆனால் மின்னணுவால் வாசிக்கக்கூடிய டிஜிட்டல் குறிப்புகளைக் கொண்டுள்ளன.</td>
+                            <td><span class="supported-badge not-supported">ஆதரவு இல்லை</span></td>
+                        </tr>
+                        <tr>
+                            <td>WMA</td>
+                            <td>.wma</td>
+                            <td>Microsoft ஆல் உருவாக்கப்பட்டது. Windows கணினிகளில் நன்றாக விளையாடுகிறது.</td>
+                            <td><span class="supported-badge not-supported">ஆதரவு இல்லை</span></td>
+                        </tr>
+                        <tr>
+                            <td>AAC</td>
+                            <td>.aac</td>
+                            <td>Apple ஆல் iTunes க்கான இயல்புநிலை வடிவமாக உருவாக்கப்பட்டது.</td>
+                            <td><span class="supported-badge not-supported">ஆதரவு இல்லை</span></td>
+                        </tr>
+                        <tr>
+                            <td>WAV</td>
+                            <td>.wav</td>
+                            <td>IBM மற்றும் Microsoft ஆல் உருவாக்கப்பட்டது.</td>
+                            <td><span class="supported-badge supported">ஆதரவு உள்ளது</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ogg</td>
+                            <td>.ogg</td>
+                            <td>Xiph.Org Foundation ஆல் உருவாக்கப்பட்டது.</td>
+                            <td><span class="supported-badge supported">ஆதரவு உள்ளது</span></td>
+                        </tr>
+                        <tr>
+                            <td>MP3</td>
+                            <td>.mp3</td>
+                            <td>இசை பிளேயர்களுக்கான மிகவும் பிரபலமான வடிவம். நல்ல சுருக்கத்தை (சிறிய கோப்புகள்) உயர் தரத்துடன் இணைக்கிறது.</td>
+                            <td><span class="supported-badge supported">ஆதரவு உள்ளது</span></td>
+                        </tr>
+                        <tr>
+                            <td>MP4</td>
+                            <td>.mp4</td>
+                            <td>MP4 ஒரு வீடியோ வடிவம், ஆனால் ஆடியோவிற்கும் பயன்படுத்தலாம்.</td>
+                            <td><span class="supported-badge supported">ஆதரவு உள்ளது</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">📝</span> குறிப்பு:</h4>
+                <p>MP3, WAV, மற்றும் Ogg ஆடியோ மட்டுமே HTML தரநிலையால் ஆதரிக்கப்படுகின்றன.</p>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎵</span> MP3 பற்றி:</h4>
+                <p>MP3 கோப்புகள் உண்மையில் MPEG கோப்புகளின் ஒலி பகுதியாகும். MP3 என்பது இசை பிளேயர்களுக்கான மிகவும் பிரபலமான வடிவமாகும். நல்ல சுருக்கத்தை (சிறிய கோப்புகள்) உயர் தரத்துடன் இணைக்கிறது. அனைத்து உலாவிகளாலும் ஆதரிக்கப்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- HTML Standard Support -->
+        <section class="content-section" id="html-support">
+            <h2>HTML தரநிலை ஆதரவு</h2>
+            
+            <div class="multimedia-container">
+                <div class="multimedia-demo">
+                    <h3>ஆடியோ வடிவங்கள்</h3>
+                    <div style="text-align: center; margin: 1.5rem 0;">
+                        <div class="format-card" style="display: inline-block; margin: 0.5rem;">
+                            <div class="format-icon">
+                                <i class="fas fa-volume-up"></i>
+                            </div>
+                            <div class="format-name">MP3</div>
+                            <div class="format-ext">.mp3</div>
+                            <div class="supported-badge supported" style="margin-top: 0.5rem;">ஆதரவு உள்ளது</div>
+                        </div>
+                        
+                        <div class="format-card" style="display: inline-block; margin: 0.5rem;">
+                            <div class="format-icon">
+                                <i class="fas fa-volume-up"></i>
+                            </div>
+                            <div class="format-name">WAV</div>
+                            <div class="format-ext">.wav</div>
+                            <div class="supported-badge supported" style="margin-top: 0.5rem;">ஆதரவு உள்ளது</div>
+                        </div>
+                        
+                        <div class="format-card" style="display: inline-block; margin: 0.5rem;">
+                            <div class="format-icon">
+                                <i class="fas fa-volume-up"></i>
+                            </div>
+                            <div class="format-name">OGG</div>
+                            <div class="format-ext">.ogg</div>
+                            <div class="supported-badge supported" style="margin-top: 0.5rem;">ஆதரவு உள்ளது</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="multimedia-demo">
+                    <h3>வீடியோ வடிவங்கள்</h3>
+                    <div style="text-align: center; margin: 1.5rem 0;">
+                        <div class="format-card" style="display: inline-block; margin: 0.5rem;">
+                            <div class="format-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="format-name">MP4</div>
+                            <div class="format-ext">.mp4</div>
+                            <div class="supported-badge supported" style="margin-top: 0.5rem;">ஆதரவு உள்ளது</div>
+                        </div>
+                        
+                        <div class="format-card" style="display: inline-block; margin: 0.5rem;">
+                            <div class="format-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="format-name">WebM</div>
+                            <div class="format-ext">.webm</div>
+                            <div class="supported-badge supported" style="margin-top: 0.5rem;">ஆதரவு உள்ளது</div>
+                        </div>
+                        
+                        <div class="format-card" style="display: inline-block; margin: 0.5rem;">
+                            <div class="format-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="format-name">OGG</div>
+                            <div class="format-ext">.ogg</div>
+                            <div class="supported-badge supported" style="margin-top: 0.5rem;">ஆதரவு உள்ளது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🤔</span> சிந்தனைப் பயிற்சி</h4>
+                <p>கீழே உள்ள கேள்விகளைக் கவனியுங்கள்:</p>
+                
+                <div style="margin: 1.5rem 0;">
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h5 style="color: var(--git-color); margin-bottom: 0.5rem;">1. எந்த வீடியோ வடிவம் YouTube ஆல் பரிந்துரைக்கப்படுகிறது?</h5>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">MP4</span>
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">AVI</span>
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">WMV</span>
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">MOV</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h5 style="color: var(--git-color); margin-bottom: 0.5rem;">2. HTML தரநிலையால் ஆதரிக்கப்படாத ஆடியோ வடிவம் எது?</h5>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">MP3</span>
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">WAV</span>
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">WMA</span>
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">OGG</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h5 style="color: var(--git-color); margin-bottom: 0.5rem;">3. MP3 கோப்புகள் உண்மையில் எதன் ஒலி பகுதியாகும்?</h5>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">MPEG கோப்புகள்</span>
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">AVI கோப்புகள்</span>
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">WAV கோப்புகள்</span>
+                            <span style="padding: 5px 15px; background: #f0f0f0; border-radius: 4px;">MOV கோப்புகள்</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML SVG Graphics.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML Video.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">மல்டிமீடியா அறிமுகம்</a></li>
+                    <li><a href="#browser-support">உலாவி ஆதரவு</a></li>
+                    <li><a href="#multimedia-formats">மல்டிமீடியா வடிவங்கள்</a></li>
+                    <li><a href="#video-formats">வீடியோ வடிவங்கள்</a></li>
+                    <li><a href="#audio-formats">ஆடியோ வடிவங்கள்</a></li>
+                    <li><a href="#html-support">HTML ஆதரவு</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Interactive exercise
+        document.querySelectorAll('.exercise-box span').forEach(span => {
+            span.addEventListener('click', function() {
+                const text = this.textContent;
+                let correct = false;
+                let message = '';
+                
+                // Check answers
+                if (text === 'MP4') {
+                    correct = true;
+                    message = '✓ சரி! MP4 வடிவம் YouTube ஆல் பரிந்துரைக்கப்படுகிறது';
+                } else if (text === 'WMA') {
+                    correct = true;
+                    message = '✓ சரி! WMA HTML தரநிலையால் ஆதரிக்கப்படாத ஆடியோ வடிவம்';
+                } else if (text === 'MPEG கோப்புகள்') {
+                    correct = true;
+                    message = '✓ சரி! MP3 கோப்புகள் உண்மையில் MPEG கோப்புகளின் ஒலி பகுதியாகும்';
+                } else {
+                    message = '✗ மீண்டும் முயற்சிக்கவும்';
+                }
+                
+                if (correct) {
+                    this.style.background = '#d4edda';
+                    this.style.color = '#155724';
+                    this.style.border = '1px solid #c3e6cb';
+                } else {
+                    this.style.background = '#f8d7da';
+                    this.style.color = '#721c24';
+                    this.style.border = '1px solid #f5c6cb';
+                }
+                
+                // Show message
+                const parent = this.closest('.exercise-box');
+                let messageDiv = parent.querySelector('.answer-message');
+                if (!messageDiv) {
+                    messageDiv = document.createElement('div');
+                    messageDiv.className = 'answer-message';
+                    messageDiv.style.marginTop = '1rem';
+                    messageDiv.style.padding = '1rem';
+                    messageDiv.style.borderRadius = '8px';
+                    messageDiv.style.fontWeight = 'bold';
+                    parent.appendChild(messageDiv);
+                }
+                
+                messageDiv.textContent = message;
+                messageDiv.style.background = correct ? '#d4edda' : '#f8d7da';
+                messageDiv.style.color = correct ? '#155724' : '#721c24';
+                messageDiv.style.border = correct ? '1px solid #c3e6cb' : '1px solid #f5c6cb';
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

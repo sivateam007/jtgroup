@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Real-World Examples - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Zlib Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js and Raspberry Pi.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Real-World Examples</h2>
+            <p>நடைமுறை Node.js பயன்பாடுகள் மற்றும் உதாரணங்களை கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- RESTful API with Express -->
+        <section class="content-section" id="restful-api">
+            <h2>Express உடன் RESTful API</h2>
+            
+            <p>மிகவும் பொதுவான Node.js பயன்பாடுகளில் ஒன்று RESTful APIகளை உருவாக்குவதாகும். Express உடன் ஒரு எளிய ஆனால் நடைமுறை Todo API இன் உதாரணம் இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const app = express();
+
+// In-memory data store (in a real app, you would use a database)
+let todos = [
+  { id: 1, title: 'Learn Node.js', completed: false },
+  { id: 2, title: 'Build a REST API', completed: false }
+];
+
+// Middleware
+app.use(express.json());
+
+// Log all requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+// GET all todos
+app.get('/todos', (req, res) => {
+  res.json(todos);
+});
+
+// GET a single todo
+app.get('/todos/:id', (req, res) => {
+  const todo = todos.find(t => t.id === parseInt(req.params.id));
+  if (!todo) return res.status(404).json({ error: 'Todo not found' });
+  res.json(todo);
+});
+
+// POST a new todo
+app.post('/todos', (req, res) => {
+  if (!req.body.title) {
+    return res.status(400).json({ error: 'Title is required' });
+  }
+  
+  const newTodo = {
+    id: todos.length > 0 ? Math.max(...todos.map(t => t.id)) + 1 : 1,
+    title: req.body.title,
+    completed: req.body.completed || false
+  };
+  
+  todos.push(newTodo);
+  res.status(201).json(newTodo);
+});
+
+// PUT (update) a todo
+app.put('/todos/:id', (req, res) => {
+  const todo = todos.find(t => t.id === parseInt(req.params.id));
+  if (!todo) return res.status(404).json({ error: 'Todo not found' });
+  
+  if (req.body.title) todo.title = req.body.title;
+  if (req.body.completed !== undefined) todo.completed = req.body.completed;
+  
+  res.json(todo);
+});
+
+// DELETE a todo
+app.delete('/todos/:id', (req, res) => {
+  const index = todos.findIndex(t => t.id === parseInt(req.params.id));
+  if (index === -1) return res.status(404).json({ error: 'Todo not found' });
+  
+  const deletedTodo = todos[index];
+  todos.splice(index, 1);
+  
+  res.json(deletedTodo);
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
+});
+
+// Start the server
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});</code></pre>
+            </div>
+            
+            <p>இந்த உதாரணம் சரியான பிழை கையாளுதல் மற்றும் நிலை குறியீடுகளுடன் ஒரு முழுமையான CRUD (Create, Read, Update, Delete) API ஐ நிரூபிக்கிறது.</p>
+        </section>
+
+        <!-- Authentication System -->
+        <section class="content-section" id="authentication-system">
+            <h2>அங்கீகார அமைப்பு</h2>
+            
+            <p>பெரும்பாலான பயன்பாடுகளுக்கு அங்கீகாரம் தேவைப்படுகிறது. Node.js இல் JWT-அடிப்படையிலான அங்கீகாரத்தின் உதாரணம் இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+const app = express();
+app.use(express.json());
+
+// In a real app, use a database
+const users = [];
+
+// Secret key for JWT
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
+// Register a new user
+app.post('/register', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    
+    // Check if user already exists
+    if (users.find(u => u.username === username)) {
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+    
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    // Create new user
+    const user = {
+      id: users.length + 1,
+      username,
+      password: hashedPassword
+    };
+    
+    users.push(user);
+    
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Registration failed' });
+  }
+});
+
+// Login
+app.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    
+    // Find user
+    const user = users.find(u => u.username === username);
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    
+    // Check password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user.id, username: user.username },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+    
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ error: 'Authentication failed' });
+  }
+});
+
+// Middleware to verify JWT token
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token) return res.status(401).json({ error: 'Authentication required' });
+  
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: 'Invalid or expired token' });
+    req.user = user;
+    next();
+  });
+}
+
+// Protected route example
+app.get('/profile', authenticateToken, (req, res) => {
+  res.json({ user: req.user });
+});
+
+app.listen(8080, () => {
+  console.log('Authentication server running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- File Upload Service -->
+        <section class="content-section" id="file-upload">
+            <h2>கோப்பு பதிவேற்ற சேவை</h2>
+            
+            <p>Node.js கோப்பு பதிவேற்றங்களை கையாளுவதை எளிதாக்குகிறது, இது பல வலை பயன்பாடுகளில் பொதுவானது:</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const app = express();
+app.use(express.json());
+app.use(express.static('public'));
+
+// Configure multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = './uploads';
+    
+    // Create directory if it doesn't exist
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+    
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    // Generate unique filename with original extension
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+  }
+});
+
+// File filter function
+const fileFilter = (req, file, cb) => {
+  // Accept images and PDFs only
+  if (file.mimetype.startsWith('image/') || file.mimetype === 'application/pdf') {
+    cb(null, true);
+  } else {
+    cb(new Error('Unsupported file type'), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+});
+
+// Serve upload form
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Single file upload endpoint
+app.post('/upload/single', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  
+  res.json({
+    message: 'File uploaded successfully',
+    file: {
+      filename: req.file.filename,
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      size: req.file.size
+    }
+  });
+});
+
+// Multiple file upload endpoint (max 5)
+app.post('/upload/multiple', upload.array('files', 5), (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ error: 'No files uploaded' });
+  }
+  
+  res.json({
+    message: `${req.files.length} files uploaded successfully`,
+    files: req.files.map(file => ({
+      filename: file.filename,
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+      size: file.size
+    }))
+  });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    // Multer-specific errors
+    return res.status(400).json({ error: err.message });
+  } else if (err) {
+    // Other errors
+    return res.status(500).json({ error: err.message });
+  }
+  next();
+});
+
+app.listen(8080, () => {
+  console.log('File upload server running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Microservice Architecture -->
+        <section class="content-section" id="microservice-architecture">
+            <h2>மைக்ரோசர்விஸ் கட்டமைப்பு</h2>
+            
+            <p>Node.js மைக்ரோசர்விஸ்களை உருவாக்க சிறந்தது. சுகாதார சோதனைகள் மற்றும் சரியான கவனிப்பு பிரிப்புடன் ஒரு மைக்ரோசர்விஸின் எளிய உதாரணம் இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>// src/index.js
+const express = require('express');
+const routes = require('./routes');
+const errorHandler = require('./middleware/errorHandler');
+const logger = require('./middleware/logger');
+const config = require('./config');
+
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(logger);
+
+// Health check
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', service: 'product-catalog', timestamp: new Date() });
+});
+
+// Routes
+app.use('/api/products', routes.productRoutes);
+
+// Error handling
+app.use(errorHandler);
+
+// Start server
+app.listen(config.PORT, () => {
+  console.log(`Product catalog service running on port ${config.PORT}`);
+});
+
+// Handle graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  // Close database connections, etc.
+  process.exit(0);
+});</code></pre>
+            </div>
+
+            <div class="code-example">
+                <pre><code>// src/routes/productRoutes.js
+const express = require('express');
+const productController = require('../controllers/productController');
+
+const router = express.Router();
+
+router.get('/', productController.getAllProducts);
+router.get('/:id', productController.getProductById);
+router.post('/', productController.createProduct);
+router.put('/:id', productController.updateProduct);
+router.delete('/:id', productController.deleteProduct);
+
+module.exports = router;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🏗️</span> சிறந்த நடைமுறை:</h4>
+                <p>ஒரு உண்மையான மைக்ரோசர்விஸ் கட்டமைப்பில், ஒவ்வொரு சேவைக்கும் அதன் சொந்த களஞ்சியம், விநியோக குழாய் மற்றும் தரவுத்தளம் இருக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Task Scheduler -->
+        <section class="content-section" id="task-scheduler">
+            <h2>பணி திட்டமிடல்</h2>
+            
+            <p>Node.js திட்டமிடப்பட்ட பணிகள் மற்றும் பின்னணி வேலைகளை திறம்பட கையாள முடியும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const cron = require('node-cron');
+const nodemailer = require('nodemailer');
+const express = require('express');
+
+const app = express();
+
+// Configure mail transporter (this is just an example)
+const transporter = nodemailer.createTransport({
+  host: 'smtp.example.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: 'user@example.com',
+    pass: 'password'
+  }
+});
+
+// Schedule a task to run every day at 9:00 AM
+cron.schedule('0 9 * * *', async () => {
+  console.log('Running daily report task');
+  
+  try {
+    // Generate report data (in a real app, fetch from database)
+    const reportData = {
+      date: new Date().toISOString().split('T')[0],
+      metrics: {
+        users: 1250,
+        orders: 350,
+        revenue: 12500
+      }
+    };
+    
+    // Send email with report
+    await transporter.sendMail({
+      from: 'system@example.com',
+      to: 'admin@example.com',
+      subject: `Daily Report - ${reportData.date}`,
+      html: `
+        <h1>Daily Report</h1>
+        <p><strong>Date:</strong> ${reportData.date}</p>
+        <h2>Key Metrics</h2>
+        <ul>
+          <li>Users: ${reportData.metrics.users}</li>
+          <li>Orders: ${reportData.metrics.orders}</li>
+          <li>Revenue: $${reportData.metrics.revenue}</li>
+          </ul>
+        `
+    });
+    
+    console.log('Daily report email sent successfully');
+  } catch (error) {
+    console.error('Error sending daily report:', error);
+  }
+});
+
+// Schedule database backup every Sunday at midnight
+cron.schedule('0 0 * * 0', () => {
+  console.log('Running weekly database backup');
+  // In a real app, you would run a database backup command here
+});
+
+// Clean up temporary files every hour
+cron.schedule('0 * * * *', () => {
+  console.log('Cleaning up temporary files');
+  // In a real app, you would delete old temporary files here
+});
+
+// API to add a one-time job
+const scheduledJobs = new Map();
+app.use(express.json());
+
+app.post('/schedule-job', (req, res) => {
+  const { id, scheduledTime, task } = req.body;
+  
+  if (!id || !scheduledTime || !task) {
+    return res.status(400).json({ error: 'Missing required parameters' });
+  }
+  
+  const jobTime = new Date(scheduledTime).getTime();
+  const currentTime = Date.now();
+  
+  if (jobTime <= currentTime) {
+    return res.status(400).json({ error: 'Scheduled time must be in the future' });
+  }
+  
+  // Schedule the job
+  const timeout = setTimeout(() => {
+    console.log(`Executing job: ${id}`);
+    // In a real app, use a job queue like Bull to handle the tasks
+    console.log(`Task: ${task}`);
+    
+    scheduledJobs.delete(id);
+  }, jobTime - currentTime);
+  
+  scheduledJobs.set(id, { timeout, scheduledTime, task });
+  
+  res.status(201).json({
+    message: 'Job scheduled successfully',
+    job: { id, scheduledTime, task }
+  });
+});
+
+// Start server
+app.listen(8080, () => {
+  console.log('Task scheduler running on port 8080');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Real-time Analytics Dashboard -->
+        <section class="content-section" id="real-time-analytics">
+            <h2>நிகழ்நேர பகுப்பாய்வு டாஷ்போர்டு</h2>
+            
+            <p>WebSockets மற்றும் Chart.js உடன் பயன்பாட்டு அளவீடுகளை நிகழ்நேரத்தில் கண்காணித்து காட்சிப்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+const { v4: uuidv4 } = require('uuid');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: '*', // In production, replace with your frontend domain
+    methods: ['GET', 'POST']
+  }
+});
+
+// In-memory store for analytics data (use a database in production)
+const analyticsData = {
+  pageViews: {},
+  activeUsers: new Set(),
+  events: []
+};
+
+// Track page views
+app.use((req, res, next) => {
+  const page = req.path;
+  analyticsData.pageViews[page] = (analyticsData.pageViews[page] || 0) + 1;
+  
+  // Emit update to all connected clients
+  io.emit('analytics:update', {
+    type: 'pageView',
+    data: { page, count: analyticsData.pageViews[page] }
+  });
+  
+  next();
+});
+
+// Track custom events
+app.post('/track', express.json(), (req, res) => {
+  const { event, data } = req.body;
+  const eventId = uuidv4();
+  const timestamp = new Date().toISOString();
+  
+  const eventData = { id: eventId, event, data, timestamp };
+  analyticsData.events.push(eventData);
+  
+  // Keep only the last 1000 events
+  if (analyticsData.events.length > 1000) {
+    analyticsData.events.shift();
+  }
+  
+  // Emit event to all connected clients
+  io.emit('analytics:event', eventData);
+  
+  res.status(201).json({ success: true, eventId });
+});
+
+// WebSocket connection handling
+io.on('connection', (socket) => {
+  const userId = socket.handshake.query.userId || 'anonymous';
+  analyticsData.activeUsers.add(userId);
+  
+  // Send initial data to the newly connected client
+  socket.emit('analytics:init', {
+    pageViews: analyticsData.pageViews,
+    activeUsers: analyticsData.activeUsers.size,
+    recentEvents: analyticsData.events.slice(-50)
+  });
+  
+  // Update all clients about the new active user count
+  io.emit('analytics:update', {
+    type: 'activeUsers',
+    data: analyticsData.activeUsers.size
+  });
+  
+  // Handle disconnection
+  socket.on('disconnect', () => {
+    analyticsData.activeUsers.delete(userId);
+    io.emit('analytics:update', {
+      type: 'activeUsers',
+      data: analyticsData.activeUsers.size
+    });
+  });
+  
+  // Handle custom events from the client
+  socket.on('analytics:event', (data) => {
+    const eventId = uuidv4();
+    const timestamp = new Date().toISOString();
+    const eventData = { id: eventId, ...data, timestamp, userId };
+    
+    analyticsData.events.push(eventData);
+    if (analyticsData.events.length > 1000) {
+      analyticsData.events.shift();
+    }
+    
+    io.emit('analytics:event', eventData);
+  });
+});
+
+// API to get analytics data
+app.get('/api/analytics', (req, res) => {
+  res.json({
+    pageViews: analyticsData.pageViews,
+    activeUsers: analyticsData.activeUsers.size,
+    totalEvents: analyticsData.events.length,
+    recentEvents: analyticsData.events.slice(-50)
+  });
+});
+
+// Serve the dashboard
+app.use(express.static('public'));
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Analytics server running on port ${PORT}`);
+  console.log(`Dashboard available at http://localhost:${PORT}/dashboard.html`);
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> உற்பத்தி பயன்பாட்டிற்கான குறிப்பு:</h4>
+                <p>பகுப்பாய்வு தரவை தரவுத்தளத்தில் நிலைநிறுத்துவதையும் சரியான அங்கீகாரத்தை செயல்படுத்துவதையும் கருத்தில் கொள்ளுங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Best Practices for Real-World Node.js Applications -->
+        <section class="content-section" id="best-practices">
+            <h2>நடைமுறை Node.js பயன்பாடுகளுக்கான சிறந்த நடைமுறைகள்</h2>
+            
+            <p>உற்பத்தி Node.js பயன்பாடுகளை உருவாக்கும் போது, இந்த சிறந்த நடைமுறைகளைப் பின்பற்றவும்:</p>
+            
+            <h3>பயன்பாட்டு கட்டமைப்பு</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-sitemap"></i>
+                    <span><strong>தெளிவான திட்ட கட்டமைப்பைப் பயன்படுத்தவும்</strong> (MVC அல்லது ஒத்த)</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-code-branch"></i>
+                    <span><strong>வழிகளிலிருந்து வணிக தர்க்கத்தைப் பிரிக்கவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-cog"></i>
+                    <span><strong>சூழல் மாறிகளில் உள்ளமைப்பை வைத்திருங்கள்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-syringe"></i>
+                    <span><strong>தேவையான இடங்களில் சார்பு உட்செலுத்தலைப் பயன்படுத்தவும்</strong></span>
+                </div>
+            </div>
+
+            <h3>பிழை கையாளுதல்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-globe"></i>
+                    <span><strong>உலகளாவிய பிழை கையாளுதல் மிடில்வேரை செயல்படுத்தவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bug"></i>
+                    <span><strong>சரியான சூழலுடன் பிழைகளை பதிவு செய்யவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <span><strong>பொருத்தமான HTTP நிலை குறியீடுகளை வழங்கவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>கைப்பற்றப்படாத விதிவிலக்குகள் மற்றும் கையாளப்படாத வாக்குறுதிகளை கையாளவும்</strong></span>
+                </div>
+            </div>
+
+            <h3>பாதுகாப்பு</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span><strong>எப்போதும் பயனர் உள்ளீட்டை சரிபார்க்கவும் மற்றும் சுத்திகரிக்கவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-lock"></i>
+                    <span><strong>HTTPS மற்றும் பாதுகாப்பான குக்கீகளைப் பயன்படுத்தவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>APIகளுக்கு விகித வரம்பை செயல்படுத்தவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync"></i>
+                    <span><strong>சார்புகளை புதுப்பித்து வைக்கவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-helmet-safety"></i>
+                    <span><strong>பாதுகாப்பு தலைப்புகளைப் பயன்படுத்தவும் (Helmet.js)</strong></span>
+                </div>
+            </div>
+
+            <h3>செயல்திறன் & அளவிடுதிறன்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    <span><strong>HTTP பதில்களுக்கு சுருக்கத்தைப் பயன்படுத்தவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span><strong>சரியான தற்காலிக சேமிப்பு உத்திகளை செயல்படுத்தவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-server"></i>
+                    <span><strong>பல-கோர் பயன்பாட்டிற்கு கிளஸ்டர் அல்லது PM2 ஐப் பயன்படுத்தவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>நினைவக பயன்பாட்டை கண்காணிக்கவும் மற்றும் குப்பை சேகரிப்பை செயல்படுத்தவும்</strong></span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span><strong>சிறந்த வாசிப்புத்திறனுக்கு async/await ஐப் பயன்படுத்தவும்</strong></span>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> தொழில்முறை உதவிக்குறிப்பு:</h4>
+                <p>உற்பத்தி பயன்பாடுகளுக்கு, சிக்கல்களை விரைவாக அடையாளம் கண்டு தீர்க்க விரிவான கண்காணிப்பு, பதிவு மற்றும் எச்சரிக்கையை எப்போதும் சேர்க்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js பயன்பாடுகளில் அங்கீகாரத்திற்காக, தரப்புகளுக்கு இடையே கோரிக்கைகளை பாதுகாப்பாக பரிமாற பொதுவாகப் பயன்படுத்தப்படும் தொழில்நுட்பத்தைத் தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Cookies</div>
+                            <div class="option-feedback incorrect">✗ தவறு! குக்கீக்கள் அங்கீகாரத்திற்கு பயன்படுத்தப்படலாம், ஆனால் தரப்புகளுக்கு இடையே கோரிக்கைகளை பாதுகாப்பாக பரிமாறுவதற்கு JWTகள் பொதுவாகப் பயன்படுத்தப்படுகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Sessions</div>
+                            <div class="option-feedback incorrect">✗ தவறு! அமர்வுகள் அங்கீகாரத்திற்கு பயன்படுத்தப்படலாம், ஆனால் தரப்புகளுக்கு இடையே கோரிக்கைகளை பாதுகாப்பாக பரிமாறுவதற்கு JWTகள் பொதுவாகப் பயன்படுத்தப்படுகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">JWT</div>
+                            <div class="option-feedback correct">✓ சரி! JWTகள் (JSON Web Tokens) தரப்புகளுக்கு இடையே கோரிக்கைகளை பாதுகாப்பாக பரிமாற பொதுவாகப் பயன்படுத்தப்படும் ஒரு திறந்த தரநிலையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">OAuth</div>
+                            <div class="option-feedback incorrect">✗ தவறு! OAuth ஒரு அங்கீகார நெறிமுறையாகும், ஆனால் தரப்புகளுக்கு இடையே கோரிக்கைகளை பரிமாறுவதற்கு JWTகள் பொதுவாகப் பயன்படுத்தப்படும் டோக்கன்களாகும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Zlib Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js and Raspberry Pi.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#restful-api">RESTful API</a></li>
+                    <li><a href="#authentication-system">அங்கீகார அமைப்பு</a></li>
+                    <li><a href="#file-upload">கோப்பு பதிவேற்றம்</a></li>
+                    <li><a href="#microservice-architecture">மைக்ரோசர்விஸ்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

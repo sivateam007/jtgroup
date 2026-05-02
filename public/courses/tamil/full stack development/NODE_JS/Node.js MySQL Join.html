@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js MySQL Join - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js MySQL Limit.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js MongoDB.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js MySQL Join</h2>
+            <p>Node.js ஐப் பயன்படுத்தி MySQL இல் இரண்டு அல்லது அதற்கு மேற்பட்ட அட்டவணைகளை இணைக்க கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Join Two or More Tables -->
+        <section class="content-section" id="join-tables">
+            <h2>இரண்டு அல்லது அதற்கு மேற்பட்ட அட்டவணைகளை இணைத்தல்</h2>
+            
+            <p>அவற்றுக்கிடையேயான தொடர்புடைய நெடுவரிசையின் அடிப்படையில், இரண்டு அல்லது அதற்கு மேற்பட்ட அட்டவணைகளிலிருந்து வரிசைகளை JOIN அறிக்கையைப் பயன்படுத்தி இணைக்கலாம்.</p>
+            
+            <p>உங்களிடம் "users" அட்டவணை மற்றும் "products" அட்டவணை உள்ளது என்று கருதுங்கள்:</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>users அட்டவணை</h4>
+                    <div class="code-example">
+                        <pre><code>[
+  { id: 1, name: 'John', favorite_product: 154},
+  { id: 2, name: 'Peter', favorite_product: 154},
+  { id: 3, name: 'Amy', favorite_product: 155},
+  { id: 4, name: 'Hannah', favorite_product: null},
+  { id: 5, name: 'Michael', favorite_product: null}
+]</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>products அட்டவணை</h4>
+                    <div class="code-example">
+                        <pre><code>[
+  { id: 154, name: 'Chocolate Heaven' },
+  { id: 155, name: 'Tasty Lemons' },
+  { id: 156, name: 'Vanilla Dreams' }
+]</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <p>இந்த இரண்டு அட்டவணைகளும் users' favorite_product புலம் மற்றும் products' id புலத்தைப் பயன்படுத்தி இணைக்கப்படலாம்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>இரண்டு அட்டவணைகளிலும் பொருந்தும் பதிவுகளைத் தேர்ந்தெடுக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  let sql = "SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <p>குறிப்பு: JOIN க்கு பதிலாக INNER JOIN ஐப் பயன்படுத்தலாம். இரண்டும் உங்களுக்கு ஒரே முடிவைத் தரும்.</p>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_db_join.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_db_join.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { user: 'John', favorite: 'Chocolate Heaven' },
+  { user: 'Peter', favorite: 'Chocolate Heaven' },
+  { user: 'Amy', favorite: 'Tasty Lemons' }
+]</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள முடிவிலிருந்து நீங்கள் பார்க்க முடியும் என, இரண்டு அட்டவணைகளிலும் பொருந்தும் பதிவுகள் மட்டுமே திருப்பி அனுப்பப்படுகின்றன.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> JOIN முக்கிய குறிப்புகள்:</h4>
+                <ul>
+                    <li><strong>INNER JOIN:</strong> இரண்டு அட்டவணைகளிலும் பொருந்தும் பதிவுகள் மட்டுமே</li>
+                    <li><strong>தொடர்பு:</strong> ON கூற்று இணைக்கும் நிபந்தனையைக் குறிப்பிடுகிறது</li>
+                    <li><strong>அலியாஸ்:</strong> AS மூலம் நெடுவரிசை பெயர்களை மாற்றியமைக்கலாம்</li>
+                    <li><strong>பல அட்டவணைகள்:</strong> பல அட்டவணைகளை இணைக்கலாம்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Left Join -->
+        <section class="content-section" id="left-join">
+            <h2>Left Join</h2>
+            
+            <p>அவர்களுக்கு பிடித்த தயாரிப்பு இருந்தாலும் இல்லையாலும், அனைத்து பயனர்களையும் திருப்பி அனுப்ப விரும்பினால், LEFT JOIN அறிக்கையைப் பயன்படுத்தவும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>அனைத்து பயனர்களையும் அவர்களின் பிடித்த தயாரிப்பையும் தேர்ந்தெடுக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT users.name AS user,
+products.name AS favorite
+FROM users
+LEFT JOIN products ON users.favorite_product = products.id</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { user: 'John', favorite: 'Chocolate Heaven' },
+  { user: 'Peter', favorite: 'Chocolate Heaven' },
+  { user: 'Amy', favorite: 'Tasty Lemons' },
+  { user: 'Hannah', favorite: null },
+  { user: 'Michael', favorite: null }
+]</code></pre>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-left"></i>
+                        <h4>LEFT JOIN</h4>
+                    </div>
+                    <p>இடது அட்டவணையின் அனைத்து பதிவுகளும் + வலது அட்டவணையில் பொருந்தும் பதிவுகள்</p>
+                    <ul>
+                        <li>முதல் அட்டவணையின் அனைத்து வரிசைகளும்</li>
+                        <li>இரண்டாம் அட்டவணையில் பொருந்தும் வரிசைகள்</li>
+                        <li>பொருந்தாதவை NULL ஆக இருக்கும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Join -->
+        <section class="content-section" id="right-join">
+            <h2>Right Join</h2>
+            
+            <p>அனைத்து தயாரிப்புகளையும், அவற்றை தங்களுக்கு பிடித்ததாகக் கொண்ட பயனர்களையும், எந்த பயனரும் அவற்றை தங்களுக்கு பிடித்ததாகக் கொள்ளாவிட்டாலும் கூட, திருப்பி அனுப்ப விரும்பினால், RIGHT JOIN அறிக்கையைப் பயன்படுத்தவும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>அனைத்து தயாரிப்புகளையும் அவற்றை தங்களுக்கு பிடித்ததாகக் கொண்ட பயனர்களையும் தேர்ந்தெடுக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>SELECT users.name AS user,
+products.name AS favorite
+FROM users
+RIGHT JOIN products ON users.favorite_product = products.id</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { user: 'John', favorite: 'Chocolate Heaven' },
+  { user: 'Peter', favorite: 'Chocolate Heaven' },
+  { user: 'Amy', favorite: 'Tasty Lemons' },
+  { user: null, favorite: 'Vanilla Dreams' }
+]</code></pre>
+            </div>
+            
+            <p>குறிப்பு: பிடித்த தயாரிப்பு இல்லாத Hannah மற்றும் Michael ஆகியோர் முடிவில் சேர்க்கப்படவில்லை.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-right"></i>
+                        <h4>RIGHT JOIN</h4>
+                    </div>
+                    <p>வலது அட்டவணையின் அனைத்து பதிவுகளும் + இடது அட்டவணையில் பொருந்தும் பதிவுகள்</p>
+                    <ul>
+                        <li>இரண்டாம் அட்டவணையின் அனைத்து வரிசைகளும்</li>
+                        <li>முதல் அட்டவணையில் பொருந்தும் வரிசைகள்</li>
+                        <li>பொருந்தாதவை NULL ஆக இருக்கும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOIN Types Comparison -->
+        <section class="content-section" id="join-comparison">
+            <h2>JOIN வகைகள் ஒப்பீடு</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>JOIN வகை</th>
+                            <th>விளக்கம்</th>
+                            <th>வரைபடம்</th>
+                            <th>பயன்பாடு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>INNER JOIN</strong></td>
+                            <td>இரண்டு அட்டவணைகளிலும் பொருந்தும் பதிவுகள் மட்டுமே</td>
+                            <td>குறுக்குவெட்டு</td>
+                            <td>தொடர்புடைய தரவை மட்டும் தேவைப்படும் போது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LEFT JOIN</strong></td>
+                            <td>இடது அட்டவணையின் அனைத்து பதிவுகள் + வலது அட்டவணையில் பொருந்தும் பதிவுகள்</td>
+                            <td>இடது வென்படம்</td>
+                            <td>முதன்மை அட்டவணையின் அனைத்து பதிவுகளும் தேவைப்படும் போது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RIGHT JOIN</strong></td>
+                            <td>வலது அட்டவணையின் அனைத்து பதிவுகள் + இடது அட்டவணையில் பொருந்தும் பதிவுகள்</td>
+                            <td>வலது வென்படம்</td>
+                            <td>இரண்டாம் அட்டவணையின் அனைத்து பதிவுகளும் தேவைப்படும் போது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FULL OUTER JOIN</strong></td>
+                            <td>இரண்டு அட்டவணைகளின் அனைத்து பதிவுகளும் (MySQL இல் இல்லை)</td>
+                            <td>முழு ஒன்றியம்</td>
+                            <td>இரண்டு அட்டவணைகளின் அனைத்து தரவும் தேவைப்படும் போது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Advanced JOIN Examples -->
+        <section class="content-section" id="advanced-join">
+            <h2>மேம்பட்ட JOIN எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>மூன்று அட்டவணைகளை இணைத்தல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Join three tables: users, orders, products
+let sql = `
+  SELECT 
+    users.name AS customer,
+    products.name AS product,
+    orders.quantity,
+    orders.order_date
+  FROM users
+  INNER JOIN orders ON users.id = orders.user_id
+  INNER JOIN products ON orders.product_id = products.id
+  ORDER BY orders.order_date DESC
+`;
+
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Three table join result:", result);
+});</code></pre>
+            </div>
+            
+            <h3>குழுவாக்கத்துடன் JOIN</h3>
+            
+            <div class="code-example">
+                <pre><code>// JOIN with GROUP BY and aggregation
+let sql = `
+  SELECT 
+    users.name AS customer,
+    COUNT(orders.id) AS total_orders,
+    SUM(orders.amount) AS total_spent
+  FROM users
+  LEFT JOIN orders ON users.id = orders.user_id
+  GROUP BY users.id, users.name
+  ORDER BY total_spent DESC
+`;
+
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Customer order summary:", result);
+});</code></pre>
+            </div>
+            
+            <h3>துணை வினாவுடன் JOIN</h3>
+            
+            <div class="code-example">
+                <pre><code>// JOIN with subquery
+let sql = `
+  SELECT 
+    users.name,
+    recent_orders.order_count
+  FROM users
+  LEFT JOIN (
+    SELECT user_id, COUNT(*) as order_count
+    FROM orders 
+    WHERE order_date >= '2023-01-01'
+    GROUP BY user_id
+  ) recent_orders ON users.id = recent_orders.user_id
+`;
+
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Users with recent order counts:", result);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- JOIN Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>JOIN சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>செயல்திறன்</h4>
+                    </div>
+                    <ul>
+                        <li>குறியீட்டு நெடுவரிசைகளில் JOIN செய்யவும்</li>
+                        <li>தேவையான நெடுவரிசைகளை மட்டும் தேர்ந்தெடுக்கவும்</li>
+                        <li>சிக்கலான JOIN க்கு WHERE கூற்றுகளைப் பயன்படுத்தவும்</li>
+                        <li>பெரிய அட்டவணைகளுக்கு LIMIT ஐப் பயன்படுத்தவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>தரவு ஒருமைப்பாடு</h4>
+                    </div>
+                    <ul>
+                        <li>வெளிநாட்டு விசை உறவுகளைச் சரிபார்க்கவும்</li>
+                        <li>சரியான JOIN வகையைத் தேர்ந்தெடுக்கவும்</li>
+                        <li>NULL மதிப்புகளைக் கையாளவும்</li>
+                        <li>தரவு தொடர்புகளைப் புரிந்துகொள்ளவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>குறியீடு தரம்</h4>
+                    </div>
+                    <ul>
+                        <li>அலியாஸ்களைப் பயன்படுத்தி நெடுவரிசை பெயர்களைத் தெளிவுபடுத்தவும்</li>
+                        <li>சிக்கலான JOIN க்கு வடிவமைக்கவும்</li>
+                        <li>வாசிப்புக்காக வினாக்களை வடிவமைக்கவும்</li>
+                        <li>நிலையான குறியீட்டு மரபுகளைப் பின்பற்றவும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete Example -->
+        <section class="content-section" id="complete-example">
+            <h2>முழுமையான எடுத்துக்காட்டு</h2>
+            
+            <p>அனைத்து JOIN நுட்பங்களையும் உள்ளடக்கிய முழுமையான எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const mysql = require('mysql');
+
+// Create connection
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "company_db"
+});
+
+// Connect to MySQL
+con.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL:', err.message);
+    return;
+  }
+  
+  console.log('Connected to MySQL database');
+  
+  // Example 1: INNER JOIN
+  console.log('\n1. INNER JOIN - Users with favorite products:');
+  con.query(`
+    SELECT users.name AS user, products.name AS favorite 
+    FROM users 
+    INNER JOIN products ON users.favorite_product = products.id
+  `, (err, result) => {
+    if (err) {
+      console.error('Error in INNER JOIN:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 2: LEFT JOIN
+  console.log('\n2. LEFT JOIN - All users with their favorite products:');
+  con.query(`
+    SELECT users.name AS user, products.name AS favorite 
+    FROM users 
+    LEFT JOIN products ON users.favorite_product = products.id
+  `, (err, result) => {
+    if (err) {
+      console.error('Error in LEFT JOIN:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 3: RIGHT JOIN
+  console.log('\n3. RIGHT JOIN - All products with users who favorited them:');
+  con.query(`
+    SELECT users.name AS user, products.name AS favorite 
+    FROM users 
+    RIGHT JOIN products ON users.favorite_product = products.id
+  `, (err, result) => {
+    if (err) {
+      console.error('Error in RIGHT JOIN:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 4: Multiple table JOIN
+  console.log('\n4. Three table JOIN - Users, orders, and products:');
+  con.query(`
+    SELECT 
+      u.name AS customer,
+      p.name AS product,
+      o.quantity,
+      o.order_date
+    FROM users u
+    INNER JOIN orders o ON u.id = o.user_id
+    INNER JOIN products p ON o.product_id = p.id
+    ORDER BY o.order_date DESC
+    LIMIT 5
+  `, (err, result) => {
+    if (err) {
+      console.error('Error in three table JOIN:', err.message);
+      return;
+    }
+    console.log(result);
+    
+    // Close connection
+    setTimeout(() => {
+      con.end((err) => {
+        if (err) {
+          console.error('Error closing connection:', err.message);
+          return;
+        }
+        console.log('\nConnection closed');
+      });
+    }, 1000);
+  });
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> அவற்றுக்கிடையேயான தொடர்புடைய நெடுவரிசையின் அடிப்படையில் இரண்டு அல்லது அதற்கு மேற்பட்ட அட்டவணைகளிலிருந்து வரிசைகளை இணைக்க பயன்படுத்தப்படும் சரியான SQL அறிக்கையைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">COMBINE</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "COMBINE" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL அறிக்கை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">MERGE</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "MERGE" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL அறிக்கை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">JOIN</div>
+                            <div class="option-feedback correct">✓ சரி! "JOIN" என்பது தொடர்புடைய நெடுவரிசையின் அடிப்படையில் இரண்டு அல்லது அதற்கு மேற்பட்ட அட்டவணைகளிலிருந்து வரிசைகளை இணைக்க பயன்படும் சரியான SQL அறிக்கையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">LINK</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "LINK" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL அறிக்கை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js MySQL Limit.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js MongoDB.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#join-tables">அட்டவணைகளை இணைத்தல்</a></li>
+                    <li><a href="#left-join">Left Join</a></li>
+                    <li><a href="#right-join">Right Join</a></li>
+                    <li><a href="#join-comparison">JOIN வகைகள் ஒப்பீடு</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

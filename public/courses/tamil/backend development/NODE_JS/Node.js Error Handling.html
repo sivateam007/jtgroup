@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Error Handling - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Async-Await.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Modules.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Error Handling</h2>
+            <p>வலுவான Node.js பயன்பாடுகளை உருவாக்க பிழை கையாளுதலின் முக்கியத்துவத்தைப் புரிந்துகொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Why Handle Errors -->
+        <section class="content-section" id="why-handle-errors">
+            <h2>ஏன் பிழைகளைக் கையாள வேண்டும்?</h2>
+            
+            <p>பிழைகள் எந்த நிரலிலும் தவிர்க்க முடியாதவை, ஆனால் நீங்கள் அவற்றை எவ்வாறு கையாள்கிறீர்கள் என்பது அனைத்து வித்தியாசத்தையும் உருவாக்குகிறது. Node.js இல், சரியான பிழை கையாளுதல் முக்கியமானது, ஏனெனில்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>திடீர் செயலிழப்பைத் தடுக்கிறது</h4>
+                    </div>
+                    <p>பயன்பாடுகள் எதிர்பாராத விதமாக செயலிழப்பதைத் தடுக்கிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-user"></i>
+                        <h4>பயனர்களுக்கு அர்த்தமுள்ள கருத்து</h4>
+                    </div>
+                    <p>பயனர்களுக்கு அர்த்தமுள்ள கருத்தை வழங்குகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bug"></i>
+                        <h4>பிழைத்திருத்தத்தை எளிதாக்குகிறது</h4>
+                    </div>
+                    <p>சரியான பிழை சூழலுடன் பிழைத்திருத்தத்தை எளிதாக்குகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-rocket"></i>
+                        <h4>உற்பத்தியில் நிலைத்தன்மை</h4>
+                    </div>
+                    <p>உற்பத்தியில் பயன்பாட்டு நிலைத்தன்மையை பராமரிக்க உதவுகிறது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Error Types -->
+        <section class="content-section" id="error-types">
+            <h2>Node.js இல் பொதுவான பிழை வகைகள்</h2>
+            
+            <p>வெவ்வேறு பிழை வகைகளைப் புரிந்துகொள்வது அவற்றை சரியாகக் கையாள உதவுகிறது:</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>1. நிலையான JavaScript பிழைகள்</h4>
+                    <div class="code-example">
+                        <pre><code>// SyntaxError
+JSON.parse('{invalid json}');
+
+// TypeError
+null.someProperty;
+
+// ReferenceError
+unknownVariable;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>2. கணினி பிழைகள்</h4>
+                    <div class="code-example">
+                        <pre><code>// ENOENT: No such file or directory
+const fs = require('fs');
+fs.readFile('nonexistent.txt', (err) => {
+  console.error(err.code); // 'ENOENT'
+});
+
+// ECONNREFUSED: Connection refused
+const http = require('http');
+const req = http.get('http://nonexistent-site.com', (res) => {});
+req.on('error', (err) => {
+  console.error(err.code); // 'ECONNREFUSED' or 'ENOTFOUND'
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Basic Error Handling -->
+        <section class="content-section" id="basic-handling">
+            <h2>அடிப்படை பிழை கையாளுதல்</h2>
+            
+            <p>Node.js பிழை கையாளுதலுக்கு பல முறைகளைப் பின்பற்றுகிறது:</p>
+            
+            <div class="example-section">
+                <h3>பிழை-முதல் கால்பேக்குகள்</h3>
+                <p>Node.js முக்கிய தொகுதிகளில் மிகவும் பொதுவான முறை, இதில் கால்பேக்கிற்கான முதல் வாதம் ஒரு பிழை பொருளாகும் (ஏதேனும் ஏற்பட்டால்).</p>
+                
+                <div class="code-example">
+                    <h4>எடுத்துக்காட்டு: பிழை-முதல் கால்பேக்</h4>
+                    <pre><code>const fs = require('fs');
+
+function readConfigFile(filename, callback) {
+  fs.readFile(filename, 'utf8', (err, data) => {
+    if (err) {
+      // Handle specific error types
+      if (err.code === 'ENOENT') {
+        return callback(new Error(`Config file ${filename} not found`));
+      } else if (err.code === 'EACCES') {
+        return callback(new Error(`No permission to read ${filename}`));
+      }
+      // For all other errors
+      return callback(err);
+    }
+
+    // Process data if no error
+    try {
+      const config = JSON.parse(data);
+      callback(null, config);
+    } catch (parseError) {
+      callback(new Error(`Invalid JSON in ${filename}`));
+    }
+  });
+}
+
+// Usage
+readConfigFile('config.json', (err, config) => {
+  if (err) {
+    console.error('Failed to read config:', err.message);
+    // Handle the error (e.g., use default config)
+    return;
+  }
+  console.log('Config loaded successfully:', config);
+});</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modern Error Handling -->
+        <section class="content-section" id="modern-handling">
+            <h2>நவீன பிழை கையாளுதல்</h2>
+            
+            <div class="example-section">
+                <h3>Async/Await உடன் try...catch பயன்படுத்துதல்</h3>
+                <p>Async/await உடன், நீங்கள் ஒத்திசைவு மற்றும் அசிங்க்ரோனஸ் குறியீடு இரண்டிற்கும் try/catch தொகுதிகளைப் பயன்படுத்தலாம்:</p>
+                
+                <div class="code-example">
+                    <h4>எடுத்துக்காட்டு: Async/Await உடன் try/catch</h4>
+                    <pre><code>const fs = require('fs').promises;
+
+async function loadUserData(userId) {
+  try {
+    const data = await fs.readFile(`users/${userId}.json`, 'utf8');
+    const user = JSON.parse(data);
+
+    if (!user.email) {
+      throw new Error('Invalid user data: missing email');
+    }
+
+    return user;
+  } catch (error) {
+    // Handle different error types
+    if (error.code === 'ENOENT') {
+      throw new Error(`User ${userId} not found`);
+    } else if (error instanceof SyntaxError) {
+      throw new Error('Invalid user data format');
+    }
+    // Re-throw other errors
+    throw error;
+  } finally {
+    // Cleanup code that runs whether successful or not
+    console.log(`Finished processing user ${userId}`);
+  }
+}
+
+// Usage
+(async () => {
+  try {
+    const user = await loadUserData(123);
+    console.log('User loaded:', user);
+  } catch (error) {
+    console.error('Failed to load user:', error.message);
+    // Handle error (e.g., show to user, retry, etc.)
+  }
+})();</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Error Handling -->
+        <section class="content-section" id="global-handling">
+            <h2>உலகளாவிய பிழை கையாளுதல்</h2>
+            
+            <div class="example-section">
+                <h3>கைப்பற்றப்படாத விதிவிலக்குகள்</h3>
+                <p>எதிர்பாராத பிழைகளுக்கு, வெளியேறுவதற்கு முன் சுத்தம் செய்ய uncaughtException க்கு கேட்கலாம்:</p>
+                
+                <div class="code-example">
+                    <h4>எடுத்துக்காட்டு: உலகளாவிய பிழை கையாளுபவர்கள்</h4>
+                    <pre><code>// Handle uncaught exceptions (synchronous errors)
+process.on('uncaughtException', (error) => {
+  console.error('UNCAUGHT EXCEPTION! Shutting down...');
+  console.error(error.name, error.message);
+
+  // Perform cleanup (close database connections, etc.)
+  server.close(() => {
+    console.log('Process terminated due to uncaught exception');
+    process.exit(1); // Exit with failure
+  });
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('UNHANDLED REJECTION! Shutting down...');
+  console.error('Unhandled Rejection at:', promise, 'Reason:', reason);
+
+  // Close server and exit
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
+// Example of an unhandled promise rejection
+Promise.reject(new Error('Something went wrong'));
+
+// Example of an uncaught exception
+setTimeout(() => {
+  throw new Error('Uncaught exception after timeout');
+}, 1000);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Handling Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>பிழை கையாளுதல் சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>செய்ய வேண்டியவை</h4>
+                    <div class="best-practice-list">
+                        <div class="practice-item positive">
+                            <i class="fas fa-check-circle"></i>
+                            <span>பொருத்தமான நிலையில் பிழைகளைக் கையாளவும்</span>
+                        </div>
+                        <div class="practice-item positive">
+                            <i class="fas fa-check-circle"></i>
+                            <span>போதுமான சூழலுடன் பிழைகளைப் பதிவு செய்யவும்</span>
+                        </div>
+                        <div class="practice-item positive">
+                            <i class="fas fa-check-circle"></i>
+                            <span>வெவ்வேறு சூழ்நிலைகளுக்கு தனிப்பயன் பிழை வகைகளைப் பயன்படுத்தவும்</span>
+                        </div>
+                        <div class="practice-item positive">
+                            <i class="fas fa-check-circle"></i>
+                            <span>finally தொகுதிகளில் வளங்களை சுத்தம் செய்யவும்</span>
+                        </div>
+                        <div class="practice-item positive">
+                            <i class="fas fa-check-circle"></i>
+                            <span>பிழைகளை விரைவில் கைப்பற்ற உள்ளீட்டைச் சரிபார்க்கவும்</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>செய்ய வேண்டாம்</h4>
+                    <div class="best-practice-list">
+                        <div class="practice-item negative">
+                            <i class="fas fa-times-circle"></i>
+                            <span>பிழைகளைப் புறக்கணிக்கவும் (காலி catch தொகுதிகள்)</span>
+                        </div>
+                        <div class="practice-item negative">
+                            <i class="fas fa-times-circle"></i>
+                            <span>உணர்திறன் பிழை விவரங்களை வாடிக்கையாளர்களுக்கு வெளிப்படுத்தவும்</span>
+                        </div>
+                        <div class="practice-item negative">
+                            <i class="fas fa-times-circle"></i>
+                            <span>பாய்வு கட்டுப்பாட்டிற்கு try/catch ஐப் பயன்படுத்தவும்</span>
+                        </div>
+                        <div class="practice-item negative">
+                            <i class="fas fa-times-circle"></i>
+                            <span>அவற்றைப் பதிவு செய்யாமல் பிழைகளை விழுங்கவும்</span>
+                        </div>
+                        <div class="practice-item negative">
+                            <i class="fas fa-times-circle"></i>
+                            <span>மீட்க முடியாத பிழைகளுக்குப் பிறகு செயல்பாட்டைத் தொடரவும்</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h3>தனிப்பயன் பிழை வகைகள்</h3>
+                <div class="code-example">
+                    <pre><code>class ValidationError extends Error {
+  constructor(message, field) {
+    super(message);
+    this.name = 'ValidationError';
+    this.field = field;
+    this.statusCode = 400;
+  }
+}
+
+class NotFoundError extends Error {
+  constructor(resource) {
+    super(`${resource} not found`);
+    this.name = 'NotFoundError';
+    this.statusCode = 404;
+  }
+}
+
+// Usage
+function getUser(id) {
+  if (!id) {
+    throw new ValidationError('User ID is required', 'id');
+  }
+  // ...
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>திறம்பட்ட பிழை கையாளுதல் வலுவான Node.js பயன்பாடுகளை உருவாக்குவதின் முக்கிய அம்சமாகும்.</p>
+            
+            <p>வெவ்வேறு பிழை வகைகளைப் புரிந்துகொள்வதன் மூலம், பொருத்தமான முறைகளைப் பயன்படுத்துதல் மற்றும் சிறந்த நடைமுறைகளைப் பின்பற்றுதல் ஆகியவற்றின் மூலம், நீங்கள் மிகவும் நிலையான, பராமரிக்கக்கூடிய மற்றும் பயனர்-நட்பான பயன்பாடுகளை உருவாக்கலாம்.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>செயலிழப்பைத் தடுக்கிறது</h4>
+                    </div>
+                    <p>திடீர் செயலிழப்புகளைத் தடுக்கிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-comments"></i>
+                        <h4>அர்த்தமுள்ள கருத்து</h4>
+                    </div>
+                    <p>பயனர்களுக்கு அர்த்தமுள்ள கருத்தை வழங்குகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>தரவு ஒருமைப்பாடு</h4>
+                    </div>
+                    <p>தரவு ஒருமைப்பாட்டைப் பராமரிக்கிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-user-check"></i>
+                        <h4>பயனர் அனுபவம்</h4>
+                    </div>
+                    <p>பிரச்சினைகள் ஏற்பட்டாலும் நல்ல பயனர் அனுபவத்தை உறுதி செய்கிறது</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💎</span> முக்கிய புள்ளிகள்:</h4>
+                <ul>
+                    <li>நல்ல பிழை கையாளுதல் செயலிழப்புகளைத் தடுப்பதை மட்டும் குறிக்காது</li>
+                    <li>அர்த்தமுள்ள கருத்தை வழங்குவது, தரவு ஒருமைப்பாட்டைப் பராமரிப்பது மற்றும் பிரச்சினைகள் ஏற்பட்டாலும் நல்ல பயனர் அனுபவத்தை உறுதி செய்வது ஆகியவை அடங்கும்</li>
+                    <li>வெவ்வேறு பிழை வகைகளைப் புரிந்துகொள்ளுங்கள் மற்றும் பொருத்தமான முறைகளைப் பயன்படுத்துங்கள்</li>
+                    <li>எப்போதும் finally தொகுதிகளில் வளங்களை சுத்தம் செய்யுங்கள்</li>
+                    <li>தனிப்பயன் பிழை வகைகள் சிறந்த பிழை மேலாண்மைக்கு உதவுகின்றன</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான சொல்லை தேர்ந்தெடுக்கவும்.</h4>
+                <p>Node.js இல், பிழைகளை <strong>______</strong> தொகுதிகளுடன் கையாளலாம்.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">if...else</div>
+                            <div class="option-feedback incorrect">✗ தவறு! if...else தொகுதிகள் நிபந்தனை தர்க்கத்திற்குப் பயன்படுத்தப்படுகின்றன, பிழை கையாளுதலுக்கு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">try...catch</div>
+                            <div class="option-feedback correct">✓ சரி! try...catch தொகுதிகள் Node.js இல் ஒத்திசைவு மற்றும் அசிங்க்ரோனஸ் பிழைகளைக் கையாள பயன்படுத்தப்படுகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">switch...case</div>
+                            <div class="option-feedback incorrect">✗ தவறு! switch...case தொகுதிகள் பல நிபந்தனை கிளைகளுக்குப் பயன்படுத்தப்படுகின்றன, பிழை கையாளுதலுக்கு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">for...in</div>
+                            <div class="option-feedback incorrect">✗ தவறு! for...in தொகுதிகள் பொருள்களின் பண்புகள் வழியாக மறுசெயல்பாட்டிற்குப் பயன்படுத்தப்படுகின்றன, பிழை கையாளுதலுக்கு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Async-Await.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Modules.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#why-handle-errors">ஏன் பிழைகளைக் கையாள வேண்டும்</a></li>
+                    <li><a href="#error-types">பிழை வகைகள்</a></li>
+                    <li><a href="#basic-handling">அடிப்படை கையாளுதல்</a></li>
+                    <li><a href="#modern-handling">நவீன கையாளுதல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .architecture-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .flow-step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .step-content p {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .code-column h4 {
+            text-align: center;
+            margin-bottom: 0.8rem;
+            color: var(--git-color);
+            font-size: 1.1rem;
+        }
+        
+        .example-section {
+            margin-bottom: 3rem;
+        }
+        
+        .example-section h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+        
+        /* Best Practice Lists */
+        .best-practice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .practice-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        
+        .practice-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .practice-item.positive {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid #28a745;
+        }
+        
+        .practice-item.negative {
+            background: rgba(220, 53, 69, 0.1);
+            border-left: 4px solid #dc3545;
+        }
+        
+        .practice-item i {
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+        
+        .practice-item.positive i {
+            color: #28a745;
+        }
+        
+        .practice-item.negative i {
+            color: #dc3545;
+        }
+        
+        .practice-item span {
+            line-height: 1.5;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border-left: 6px solid #ff9ff3;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .warning-box:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .warning-box h4 {
+            color: #ff9ff3;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .warning-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .warning-box ul {
+            margin-left: 2rem;
+            margin-bottom: 0;
+        }
+        
+        .warning-box li {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .warning-icon {
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .architecture-flow {
+                gap: 1.5rem;
+            }
+            
+            .flow-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .examples-grid,
+            .comparison-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .practice-item {
+                padding: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .flow-step {
+                padding: 1rem;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .practice-item {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

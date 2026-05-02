@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL DROP DATABASE Statement - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Warning Styles */
+        .warning-section {
+            background: #f8d7da;
+            border-left: 6px solid #dc3545;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            color: #721c24;
+        }
+        
+        .warning-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .warning-header i {
+            font-size: 2rem;
+            color: #dc3545;
+        }
+        
+        .warning-header h3 {
+            margin: 0;
+            color: #721c24;
+        }
+        
+        /* Database Systems Grid */
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .system-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--git-color);
+        }
+        
+        .system-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .system-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .system-card h4 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .database-flow {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            margin: 0.5rem;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step-arrow {
+            font-size: 2rem;
+            color: #dc3545;
+            margin: 0 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .systems-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .flow-steps {
+                flex-direction: column;
+            }
+            
+            .step-arrow {
+                transform: rotate(90deg);
+                margin: 1rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .syntax-box {
+                padding: 1rem;
+            }
+            
+            .syntax-box pre {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL CREATE DATABASE Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL BACKUP DATABASE for SQL Server.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL DROP DATABASE Statement</h2>
+            <p>ஏற்கனவே உள்ள SQL தரவுத்தளத்தை நீக்க DROP DATABASE அறிக்கையைப் பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Warning Section -->
+        <section class="warning-section">
+            <div class="warning-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>எச்சரிக்கை!</h3>
+            </div>
+            <p><strong>தரவுத்தளத்தை நீக்குவதற்கு முன் கவனமாக இருங்கள். ஒரு தரவுத்தளத்தை நீக்குவது தரவுத்தளத்தில் சேமிக்கப்பட்டுள்ள முழு தகவலையும் இழப்பதற்கு வழிவகுக்கும்!</strong></p>
+        </section>
+
+        <!-- What is DROP DATABASE -->
+        <section class="content-section" id="what-is-drop-db">
+            <h2>SQL DROP DATABASE அறிக்கை</h2>
+            
+            <p>DROP DATABASE அறிக்கை ஏற்கனவே உள்ள SQL தரவுத்தளத்தை நீக்க பயன்படுகிறது.</p>
+            
+            <div class="database-flow">
+                <h3>தரவுத்தள நீக்கம் பணிப்பாய்வு</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <p>காப்புப்பிரதி எடுக்கவும்</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <p>நிர்வாக அனுமதி உறுதி</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <p>DROP DATABASE அறிக்கையை இயக்கு</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <p>தரவுத்தளம் நீக்கப்பட்டது</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DROP DATABASE Syntax -->
+        <section class="content-section" id="drop-db-syntax">
+            <h2>DROP DATABASE தொடரியல்</h2>
+            
+            <div class="syntax-box">
+                <pre><code>DROP DATABASE databasename;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>எந்த தரவுத்தளத்தையும் நீக்குவதற்கு முன்பு உங்களுக்கு நிர்வாக அனுமதி உள்ளது என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள். ஒரு தரவுத்தளம் நீக்கப்பட்ட பிறகு, பின்வரும் SQL கட்டளையுடன் தரவுத்தளங்களின் பட்டியலில் அது இல்லை என்பதைச் சரிபார்க்கலாம்: <code>SHOW DATABASES;</code></p>
+            </div>
+        </section>
+
+        <!-- DROP DATABASE Example -->
+        <section class="content-section" id="drop-db-example">
+            <h2>DROP DATABASE எடுத்துக்காட்டு</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை ஏற்கனவே உள்ள "testDB" தரவுத்தளத்தை நீக்குகிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>DROP DATABASE testDB;</code></pre>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <h3>தற்காலிக தரவுத்தளம்</h3>
+                    <p>சோதனை அல்லது மேம்பாட்டு தரவுத்தளங்களை நீக்குதல்</p>
+                    <div class="code-block small">
+                        <pre><code>DROP DATABASE TempTestDB;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-archive"></i>
+                    </div>
+                    <h3>பழைய தரவுத்தளம்</h3>
+                    <p>காலாவதியான தரவுத்தளங்களை நீக்குதல்</p>
+                    <div class="code-block small">
+                        <pre><code>DROP DATABASE OldBackupDB;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>மறுசீரமைப்பு</h3>
+                    <p>மறுசீரமைப்புக்கு முன் தரவுத்தளங்களை நீக்குதல்</p>
+                    <div class="code-block small">
+                        <pre><code>DROP DATABASE DevelopmentDB;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Database Systems Comparison -->
+        <section class="content-section" id="db-systems">
+            <h2>வெவ்வேறு தரவுத்தள அமைப்புகள்</h2>
+            
+            <div class="systems-grid">
+                <div class="system-card">
+                    <div class="system-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>MySQL</h4>
+                    <p>DROP DATABASE companydb;</p>
+                    <div class="code-block small">
+                        <pre><code>DROP DATABASE database_name;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h4>SQL Server</h4>
+                    <p>DROP DATABASE CompanyDB;</p>
+                    <div class="code-block small">
+                        <pre><code>DROP DATABASE database_name;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-icon">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h4>PostgreSQL</h4>
+                    <p>DROP DATABASE companydb;</p>
+                    <div class="code-block small">
+                        <pre><code>DROP DATABASE database_name;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="system-card">
+                    <div class="system-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>Oracle</h4>
+                    <p>DROP DATABASE companydb;</p>
+                    <div class="code-block small">
+                        <pre><code>DROP DATABASE database_name;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safety Measures -->
+        <section class="content-section" id="safety-measures">
+            <h2>பாதுகாப்பு நடவடிக்கைகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <h3>காப்புப்பிரதி</h3>
+                    <p>நீக்குவதற்கு முன் எப்போதும் காப்புப்பிரதி எடுக்கவும்</p>
+                    <div class="code-block small">
+                        <pre><code>-- Always backup first
+BACKUP DATABASE CompanyDB 
+TO DISK = 'C:\backup\CompanyDB.bak';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+                    <h3>இரட்டை சரிபார்ப்பு</h3>
+                    <p>தரவுத்தளப் பெயரை இரண்டு முறை சரிபார்க்கவும்</p>
+                    <div class="code-block small">
+                        <pre><code>-- Verify database name
+SELECT name FROM sys.databases 
+WHERE name = 'CompanyDB';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>அனுமதிகள்</h3>
+                    <p>நீக்குவதற்கு முன் செயலில் உள்ள பயனர்களைச் சரிபார்க்கவும்</p>
+                    <div class="code-block small">
+                        <pre><code>-- Check active connections
+SELECT * FROM sys.dm_exec_sessions 
+WHERE database_id = DB_ID('CompanyDB');</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL DROP DATABASE அறிக்கையின் நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தரவுத்தளத்திலிருந்து ஒரு அட்டவணையை நீக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது DROP TABLE அறிக்கைக்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையில் உள்ள அனைத்து பதிவுகளையும் நீக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது DELETE அறிக்கைக்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ஏற்கனவே உள்ள தரவுத்தளத்தை நீக்க</div>
+                            <div class="option-feedback correct">✓ சரி! DROP DATABASE அறிக்கையின் முதன்மை நோக்கம் ஏற்கனவே உள்ள SQL தரவுத்தளத்தை நீக்குவதாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தரவுத்தளத்திலிருந்து குறிப்பிட்ட வரிசைகளை நீக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது WHERE உடன் DELETE அறிக்கைக்கானது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL CREATE DATABASE Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL BACKUP DATABASE for SQL Server.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-drop-db">DROP DATABASE அறிக்கை</a></li>
+                    <li><a href="#drop-db-syntax">DROP DATABASE தொடரியல்</a></li>
+                    <li><a href="#drop-db-example">DROP DATABASE எடுத்துக்காட்டு</a></li>
+                    <li><a href="#safety-measures">பாதுகாப்பு நடவடிக்கைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

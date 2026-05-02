@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS Includes - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="AngularJS and W3 CSS.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="AngularJS Animations.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>AngularJS Includes</h2>
+            <p>வெளிப்புற HTML கோப்புகளைச் சேர்க்க AngularJS ஐப் பயன்படுத்தவும்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>AngularJS Includes</h2>
+            
+            <p>AngularJS உடன், நீங்கள் வெளிப்புற கோப்பில் இருந்து HTML ஐச் சேர்க்கலாம்.</p>
+        </section>
+
+        <!-- AngularJS Includes -->
+        <section class="content-section" id="includes">
+            <h2>AngularJS Includes</h2>
+            
+            <p>AngularJS உடன், நீங்கள் ng-include உத்தரவைப் பயன்படுத்தி HTML உள்ளடக்கத்தைச் சேர்க்கலாம்:</p>
+            
+            <h3>உதாரணம்</h3>
+            
+            <div class="code-example">
+                <pre><code>&lt;body ng-app=""&gt;
+
+&lt;div ng-include="'myFile.htm'"&gt;&lt;/div&gt;
+
+&lt;/body&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> குறிப்பு:</h4>
+                <p>சேர்க்கப்படும் கோப்பின் பெயர் ஒற்றை மேற்கோள்களுக்குள் இருக்க வேண்டும்: 'myFile.htm'</p>
+            </div>
+        </section>
+
+        <!-- Include AngularJS Code -->
+        <section class="content-section" id="include-code">
+            <h2>AngularJS குறியீட்டைச் சேர்க்கவும்</h2>
+            
+            <p>நீங்கள் ng-include உத்தரவுடன் சேர்க்கும் HTML கோப்புகள், AngularJS குறியீட்டையும் கொண்டிருக்கலாம்:</p>
+            
+            <h3>myTable.htm:</h3>
+            
+            <div class="code-example">
+                <pre><code>&lt;table&gt;
+  &lt;tr ng-repeat="x in names"&gt;
+    &lt;td&gt;{{ x.Name }}&lt;/td&gt;
+    &lt;td&gt;{{ x.Country }}&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+            </div>
+            
+            <p>"myTable.htm" கோப்பை உங்கள் வலைப்பக்கத்தில் சேர்க்கவும், மேலும் அனைத்து AngularJS குறியீடுகளும் செயல்படுத்தப்படும், சேர்க்கப்பட்ட கோப்புக்குள் இருக்கும் குறியீடு கூட:</p>
+            
+            <h3>உதாரணம்</h3>
+            
+            <div class="code-example">
+                <pre><code>&lt;body&gt;
+
+&lt;div ng-app="myApp" ng-controller="customersCtrl"&gt;
+  &lt;div ng-include="'myTable.htm'"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+  $http.get("customers.php").then(function (response) {
+    $scope.names = response.data.records;
+  });
+});
+&lt;/script&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> விளக்கம்:</h4>
+                <p>இந்த உதாரணத்தில், myTable.htm கோப்பு ng-include மூலம் சேர்க்கப்படுகிறது. இந்த கோப்பு ng-repeat உத்தரவைக் கொண்டுள்ளது, இது AngularJS கட்டுப்படுத்தியில் இருந்து தரவுகளைப் பயன்படுத்துகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Include Cross Domains -->
+        <section class="content-section" id="cross-domains">
+            <h2>குறுக்கு டொமைன்களைச் சேர்க்கவும்</h2>
+            
+            <p>இயல்பாக, ng-include உத்தரவு மற்ற டொமைன்களில் இருந்து கோப்புகளைச் சேர்க்க உங்களை அனுமதிக்காது.</p>
+            
+            <p>மற்றொரு டொமைனில் இருந்து கோப்புகளைச் சேர்க்க, உங்கள் பயன்பாட்டின் config செயல்பாட்டில் சட்டபூர்வமான கோப்புகள் மற்றும்/அல்லது டொமைன்களின் வெள்ளைப் பட்டியலைச் சேர்க்கலாம்:</p>
+            
+            <h3>உதாரணம்:</h3>
+            
+            <div class="code-example">
+                <pre><code>&lt;body ng-app="myApp"&gt;
+
+&lt;div ng-include="'https://tryit.jassifteam.com/angular_include.php'"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var app = angular.module('myApp', [])
+app.config(function($sceDelegateProvider) {
+  $sceDelegateProvider.resourceUrlWhitelist([
+    'https://tryit.jassifteam.com/**'
+  ]);
+});
+&lt;/script&gt;
+
+&lt;/body&gt;</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle warning-icon"></i> முக்கியமான குறிப்பு:</h4>
+                <p>இலக்கு சேவையகம் குறுக்கு டொமைன் கோப்பு அணுகலை அனுமதிக்கிறது என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள். சேவையகம் குறுக்கு டொமைன் கோரிக்கைகளைத் தடுக்கும் என்றால், கோப்பைச் சேர்க்க முடியாது.</p>
+            </div>
+        </section>
+
+        <!-- Benefits of Includes -->
+        <section class="content-section" id="benefits">
+            <h2>Includes பயன்கள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>குறியீடு மறுபயன்பாடு</h4>
+                    </div>
+                    <p>ஒரே HTML குறியீட்டை பல பக்கங்களில் பயன்படுத்தலாம்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>எளிதான பராமரிப்பு</h4>
+                    </div>
+                    <p>ஒரு இடத்தில் மாற்றம் செய்தால் அனைத்து பக்கங்களிலும் பிரதிபலிக்கும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>மாடுலர் கட்டமைப்பு</h4>
+                    </div>
+                    <p>பெரிய பயன்பாடுகளை சிறிய, நிர்வகிக்கக்கூடிய பகுதிகளாகப் பிரிக்கலாம்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file-code"></i>
+                        <h4>HTML மறுபிரிப்பு</h4>
+                    </div>
+                    <p>தலைப்பு, அடிக்குறிப்பு, வழிசெலுத்தல் போன்றவற்றை தனி கோப்புகளாக வைக்கலாம்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Example -->
+        <section class="content-section" id="practical-example">
+            <h2>நடைமுறை உதாரணம்</h2>
+            
+            <p>வலைத்தளத்தில் பொதுவான கூறுகளை சேர்க்க ng-include ஐ எவ்வாறு பயன்படுத்தலாம் என்பதற்கான உதாரணம்:</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>header.html</h4>
+                    <div class="code-example">
+                        <pre><code>&lt;header&gt;
+  &lt;nav&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;முகப்பு&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;பற்றி&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;தொடர்பு&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>main.html</h4>
+                    <div class="code-example">
+                        <pre><code>&lt;body ng-app="myApp"&gt;
+  &lt;div ng-include="'header.html'"&gt;&lt;/div&gt;
+  
+  &lt;main&gt;
+    &lt;h1&gt;வரவேற்கிறோம்&lt;/h1&gt;
+    &lt;p&gt;முக்கிய உள்ளடக்கம்&lt;/p&gt;
+  &lt;/main&gt;
+  
+  &lt;div ng-include="'footer.html'"&gt;&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <p>கீழே உள்ள பயிற்சியில் ng-include உத்தரவு பற்றிய உங்கள் புரிதலை சோதிக்கவும்:</p>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-code exercise-icon"></i> AngularJS Includes பயிற்சி</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">ng-include வெளிப்புற HTML கோப்புகளை சேர்க்கப் பயன்படுகிறது</div>
+                            <div class="option-feedback correct">✓ சரி! ng-include வெளிப்புற கோப்புகளை வலைப்பக்கத்தில் சேர்க்கப் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ng-include இயல்பாக மற்ற டொமைன்களில் இருந்து கோப்புகளைச் சேர்க்க அனுமதிக்கிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இயல்பாக ng-include குறுக்கு டொமைன் கோப்புகளைச் சேர்க்காது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">சேர்க்கப்பட்ட கோப்புகளில் AngularJS குறியீடு இருக்கலாம்</div>
+                            <div class="option-feedback correct">✓ சரி! சேர்க்கப்பட்ட கோப்புகள் AngularJS உத்தரவுகள் மற்றும் வெளிப்பாடுகளைக் கொண்டிருக்கலாம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">சேர்க்கப்படும் கோப்புப் பெயர் இரட்டை மேற்கோள்களுக்குள் மட்டுமே இருக்க வேண்டும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! கோப்புப் பெயர் ஒற்றை மேற்கோள்களுக்குள் இருக்க வேண்டும்: 'file.html'</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-book tip-icon"></i> சிறந்த நடைமுறை:</h4>
+                <p>தலைப்பு, அடிக்குறிப்பு, வழிசெலுத்தல் போன்ற மீண்டும் மீண்டும் வரும் HTML கூறுகளுக்கு ng-include ஐப் பயன்படுத்தவும். இது உங்கள் குறியீட்டை நிர்வகிக்க எளிதாக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="AngularJS and W3 CSS.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="AngularJS Animations.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#introduction">அறிமுகம்</a></li>
+                    <li><a href="#includes">Includes</a></li>
+                    <li><a href="#include-code">AngularJS குறியீடு</a></li>
+                    <li><a href="#cross-domains">குறுக்கு டொமைன்கள்</a></li>
+                    <li><a href="#benefits">பயன்கள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">தொடர்பு கொள்ள</a></li>
+                    <li><a href="#">இடம் & நேரம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>எங்களைப் பின்தொடருங்கள்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

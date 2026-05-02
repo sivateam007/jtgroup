@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Agent Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Server Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Request Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Agent Reference</h2>
+            <p>Node.js இல் HTTP/HTTPS client கோரிக்கைகளுக்கான இணைப்பு நிர்வாகத்தைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Agent Object -->
+        <section class="content-section" id="agent-object">
+            <h2>Agent பொருள்</h2>
+            
+            <p>Node.js இல் Agent வகுப்பு HTTP/HTTPS client கோரிக்கைகளுக்கான இணைப்பு நிலைத்தன்மை மற்றும் மறுபயன்பாட்டிற்கு பொறுப்பாகும். இது ஒரு குறிப்பிட்ட host மற்றும் port க்கு நிலுவையில் உள்ள கோரிக்கைகளின் வரிசையை பராமரிக்கிறது, அந்த host மற்றும் port க்கு ஒரு socket இணைப்பை மீண்டும் பயன்படுத்துகிறது.</p>
+            
+            <p>இரண்டு முதன்மையான Agent செயலாக்கங்கள் உள்ளன:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-globe"></i>
+                        <h4>http.Agent</h4>
+                    </div>
+                    <p>HTTP இணைப்புகளை நிர்வகிப்பதற்கு</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-lock"></i>
+                        <h4>https.Agent</h4>
+                    </div>
+                    <p>HTTPS இணைப்புகளை நிர்வகிப்பதற்கு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Importing Agent -->
+        <section class="content-section" id="importing-agent">
+            <h2>Agent ஐ இறக்குமதி செய்தல்</h2>
+            
+            <div class="code-example">
+                <pre><code>// HTTP தொகுதியை இறக்குமதி செய்க
+const http = require('http');
+
+// இயல்புநிலை agent
+const defaultAgent = http.globalAgent;
+
+// ஒரு தனிப்பயன் agent உருவாக்க
+const customAgent = new http.Agent({
+  keepAlive: true,
+  maxSockets: 25
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Agent Properties -->
+        <section class="content-section" id="agent-properties">
+            <h2>Agent பண்புகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>agent.freeSockets</strong></td>
+                            <td>keepAlive இயக்கப்பட்டால் Agent மூலம் தற்போது பயன்பாட்டிற்காக காத்திருக்கும் sockets கொண்ட ஒரு பொருள். நேரடியாக மாற்றியமைக்கக்கூடாது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent.maxFreeSockets</strong></td>
+                            <td>இலவச நிலையில் திறக்கப்படும் sockets இன் அதிகபட்ச எண்ணிக்கையை அமைக்கிறது. keepAlive true என அமைக்கப்பட்டால் மட்டுமே பொருத்தமானது. இயல்புநிலை: 256</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent.maxSockets</strong></td>
+                            <td>ஒரு origin க்கு agent கொண்டிருக்கக்கூடிய திறந்த sockets இன் அதிகபட்ச எண்ணிக்கையை அமைக்கிறது. இயல்புநிலை: Infinity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent.maxTotalSockets</strong></td>
+                            <td>அனைத்து origins இல் திறக்கப்படக்கூடிய sockets இன் அதிகபட்ச எண்ணிக்கையை அமைக்கிறது. இயல்புநிலை: Infinity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent.requests</strong></td>
+                            <td>இன்னும் sockets க்கு ஒதுக்கப்படாத வரிசையில் உள்ள கோரிக்கைகளைக் கொண்ட ஒரு பொருள். நேரடியாக மாற்றியமைக்கக்கூடாது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent.sockets</strong></td>
+                            <td>தற்போது Agent மூலம் பயன்படுத்தப்படும் sockets இன் வரிசைகளைக் கொண்ட ஒரு பொருள். நேரடியாக மாற்றியமைக்கக்கூடாது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Agent Methods -->
+        <section class="content-section" id="agent-methods">
+            <h2>Agent முறைகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>agent.createConnection(options[, callback])</strong></td>
+                            <td>HTTP கோரிக்கைகளுக்குப் பயன்படுத்த ஒரு socket/stream ஐ உருவாக்குகிறது. இயல்பாக, இந்த செயல்பாடு net.createConnection() ஐப் பயன்படுத்துகிறது ஆனால் அது மேலெழுதப்படலாம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent.destroy()</strong></td>
+                            <td>தற்போது agent மூலம் பயன்படுத்தப்படும் எந்த sockets ஐயும் அழிக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent.getName(options)</strong></td>
+                            <td>கோரிக்கை விருப்பங்களின் தொகுப்பிற்கு ஒரு தனித்துவமான பெயரைப் பெறுகிறது, ஒரு இணைப்பு மீண்டும் பயன்படுத்தப்பட முடியுமா என தீர்மானிக்க</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent.keepSocketAlive(socket)</strong></td>
+                            <td>socket ஒரு கோரிக்கையிலிருந்து பிரிக்கப்படும் போது அழைக்கப்படுகிறது மற்றும் Agent மூலம் நிலைநிறுத்தப்படலாம். இயல்புநிலை நடத்தை socket ஐ freeSockets பட்டியலில் சேர்க்க வேண்டும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent.reuseSocket(socket, request)</strong></td>
+                            <td>socket keep-alive விருப்பங்களின் காரணமாக நிலைநிறுத்தப்பட்ட பிறகு கோரிக்கையுடன் இணைக்கப்படும் போது அழைக்கப்படுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Using the Default Agent -->
+        <section class="content-section" id="default-agent">
+            <h2>இயல்புநிலை Agent ஐப் பயன்படுத்துதல்</h2>
+            
+            <p>இயல்பாக, HTTP/HTTPS client கோரிக்கைகள் global agent ஐப் பயன்படுத்துகின்றன (http.globalAgent அல்லது https.globalAgent):</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// இயல்புநிலை agent ஐப் பயன்படுத்தி ஒரு கோரிக்கையைச் செய்யவும்
+http.get('http://example.com', (res) => {
+  console.log(`Status Code: ${res.statusCode}`);
+  
+  // global agent தகவலைக் காட்டு
+  const agent = http.globalAgent;
+  console.log(`Current sockets: ${Object.keys(agent.sockets).length}`);
+  console.log(`Free sockets: ${Object.keys(agent.freeSockets).length}`);
+  console.log(`Queued requests: ${Object.keys(agent.requests).length}`);
+  
+  // பதில் தரவை உட்கொள்
+  res.resume();
+}).on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Creating a Custom Agent -->
+        <section class="content-section" id="custom-agent">
+            <h2>தனிப்பயன் Agent உருவாக்குதல்</h2>
+            
+            <p>குறிப்பிட்ட அமைப்புகளுடன் ஒரு தனிப்பயன் agent உருவாக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// keep-alive இயக்கப்பட்ட ஒரு தனிப்பயன் agent உருவாக்கு
+const keepAliveAgent = new http.Agent({
+  keepAlive: true,           // மறுபயன்பாட்டிற்கான இணைப்புகளைத் திறந்து வைக்கவும்
+  keepAliveMsecs: 1000,      // TCP KeepAlive பாக்கெட்டை அனுப்புவதற்கு முன் காத்திருக்க மில்லி விநாடிகள்
+  maxSockets: 10,            // ஒரு host க்கு அதிகபட்ச sockets எண்ணிக்கை
+  maxFreeSockets: 5,         // keepAlive true ஆக இருக்கும் போது செயலற்ற sockets இன் அதிகபட்ச எண்ணிக்கை
+  timeout: 60000,            // மில்லி விநாடிகளில் Socket timeout
+  scheduling: 'fifo'         // FIFO கோரிக்கை திட்டமிடல் (LIFO க்கு பதிலாக)
+});
+
+// தனிப்பயன் agent ஐப் பயன்படுத்தி ஒரு கோரிக்கையைச் செய்யவும்
+const options = {
+  hostname: 'example.com',
+  path: '/',
+  method: 'GET',
+  agent: keepAliveAgent     // எங்கள் தனிப்பயன் agent ஐப் பயன்படுத்தவும்
+};
+
+const req = http.request(options, (res) => {
+  console.log(`Status Code: ${res.statusCode}`);
+  
+  // தனிப்பயன் agent தகவலைக் காட்டு
+  console.log(`Current sockets: ${Object.keys(keepAliveAgent.sockets).length}`);
+  console.log(`Free sockets: ${Object.keys(keepAliveAgent.freeSockets).length}`);
+  
+  // பதில் தரவை உட்கொள்
+  
+  // socket reuse ஐ நிரூபிக்க இரண்டாவது கோரிக்கையைச் செய்யவும்
+  setTimeout(() => {
+    console.log('Making second request to demonstrate socket reuse...');
+    
+    http.request(options, (res2) => {
+      console.log(`Second request status: ${res2.statusCode}`);
+      console.log(`Current sockets: ${Object.keys(keepAliveAgent.sockets).length}`);
+      console.log(`Free sockets: ${Object.keys(keepAliveAgent.freeSockets).length}`);
+      
+      // சுத்தம்
+      setTimeout(() => {
+        keepAliveAgent.destroy();
+        console.log('Agent destroyed');
+      }, 1000);
+      
+      res2.resume();
+    }).end();
+  }, 2000);
+});
+
+req.on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});
+
+req.end();</code></pre>
+            </div>
+        </section>
+
+        <!-- HTTPS Agent -->
+        <section class="content-section" id="https-agent">
+            <h2>HTTPS Agent</h2>
+            
+            <p>HTTPS கோரிக்கைகளுக்கு, கூடுதல் SSL/TLS விருப்பங்களுடன் ஒரு HTTPS-குறிப்பிட்ட agent உருவாக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const https = require('https');
+const fs = require('fs');
+
+// SSL விருப்பங்களுடன் ஒரு தனிப்பயன் HTTPS agent உருவாக்கு
+const httpsAgent = new https.Agent({
+  keepAlive: true,
+  maxSockets: 10,
+  // SSL/TLS விருப்பங்கள்
+  ca: fs.readFileSync('ca-cert.pem'),      // Certificate authority
+  cert: fs.readFileSync('client-cert.pem'), // Client certificate
+  key: fs.readFileSync('client-key.pem'),   // Client private key
+  // கூடுதல் TLS விருப்பங்கள்
+  rejectUnauthorized: true,                // சேவையக certificate சரிபார்க்கவும்
+  secureProtocol: 'TLSv1_2_method',        // TLS v1.2 ஐப் பயன்படுத்தவும்
+  ciphers: 'HIGH:!aNULL:!MD5',             // அனுமதிக்கப்பட்ட ciphers ஐ அமைக்கவும்
+  honorCipherOrder: true                    // cipher வரிசையை மதிக்கவும்
+});
+
+// HTTPS agent ஐப் பயன்படுத்தி ஒரு பாதுகாப்பான கோரிக்கையைச் செய்யவும்
+const options = {
+  hostname: 'secure-example.com',
+  path: '/',
+  method: 'GET',
+  agent: httpsAgent
+};
+
+const req = https.request(options, (res) => {
+  console.log(`Status Code: ${res.statusCode}`);
+  
+  // TLS/SSL-குறிப்பிட்ட தகவலைக் காட்டு
+  console.log(`TLS Protocol: ${res.socket.getProtocol()}`);
+  console.log(`Cipher: ${res.socket.getCipher().name}`);
+  console.log(`Server Certificate Valid: ${res.socket.authorized}`);
+  
+  // பதில் தரவை உட்கொள்
+  
+  // சுத்தம்
+  setTimeout(() => {
+    httpsAgent.destroy();
+    console.log('HTTPS Agent destroyed');
+  }, 1000);
+});
+
+req.on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});
+
+req.end();</code></pre>
+            </div>
+        </section>
+
+        <!-- Disabling Connection Pooling -->
+        <section class="content-section" id="disabling-pooling">
+            <h2>இணைப்பு Pooling ஐ முடக்குதல்</h2>
+            
+            <p>agent ஐ false என அமைப்பதன் மூலம் இணைப்பு pooling ஐ முடக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// இணைப்பு pooling ஐ முடக்க agent: false உடன் ஒரு கோரிக்கையைச் செய்யவும்
+const options = {
+  hostname: 'example.com',
+  path: '/',
+  method: 'GET',
+  agent: false  // இணைப்பு pooling ஐ முடக்கு
+};
+
+const req = http.request(options, (res) => {
+  console.log(`Status Code: ${res.statusCode}`);
+  console.log('Using a new connection (no agent)');
+  
+  // பதில் தரவை உட்கொள்
+  res.resume();
+});
+
+req.on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});
+
+req.end();</code></pre>
+            </div>
+        </section>
+
+        <!-- Connection Pooling Example -->
+        <section class="content-section" id="connection-pooling">
+            <h2>இணைப்பு Pooling எடுத்துக்காட்டு</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு பல கோரிக்கைகளுடன் இணைப்பு pooling இன் செயல்திறன் நன்மைகளை நிரூபிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const { performance } = require('perf_hooks');
+
+// கொடுக்கப்பட்ட agent உடன் பல கோரிக்கைகளைச் செய்யும் செயல்பாடு
+async function makeMultipleRequests(useAgent, numRequests = 10) {
+  // இலக்கை வரையறுக்கவும்
+  const hostname = 'example.com';
+  const path = '/';
+  
+  // agent ஐத் தேர்ந்தெடுக்கவும்
+  const agent = useAgent ? new http.Agent({ keepAlive: true }) : false;
+  
+  console.log(`Making ${numRequests} requests with ${useAgent ? 'custom agent' : 'no agent'}`);
+  const startTime = performance.now();
+  
+  // பல கோரிக்கைகளைச் செய்யவும்
+  for (let i = 0; i < numRequests; i++) {
+    await new Promise((resolve, reject) => {
+      const req = http.request({
+        hostname,
+        path,
+        method: 'GET',
+        agent
+      }, (res) => {
+        // பதில் தரவை உட்கொள்
+        res.resume();
+        res.on('end', () => {
+          resolve();
+        });
+      });
+      
+      req.on('error', (err) => {
+        console.error(`Request ${i + 1} error: ${err.message}`);
+        reject(err);
+      });
+      
+      req.end();
+    }).catch(() => {}); // ஒரு கோரிக்கை தோல்வியடைந்தாலும் வளையத்தைத் தொடர catch
+  }
+  
+  const endTime = performance.now();
+  console.log(`Time taken: ${(endTime - startTime).toFixed(2)}ms`);
+  
+  // சுத்தம்
+  if (useAgent && agent) {
+    agent.destroy();
+  }
+  
+  return endTime - startTime;
+}
+
+// ஒப்பீட்டை இயக்கவும்
+async function runComparison() {
+  console.log('Testing HTTP request performance with and without Agent');
+  console.log('----------------------------------------------------');
+  
+  // agent இல்லாமல் (இணைப்பு pooling இல்லை)
+  const timeWithoutAgent = await makeMultipleRequests(false);
+  
+  console.log(''); // Separator
+  
+  // agent உடன் (இணைப்பு pooling)
+  const timeWithAgent = await makeMultipleRequests(true);
+  
+  console.log(''); // Separator
+  console.log('Results:');
+  console.log(`Without agent: ${timeWithoutAgent.toFixed(2)}ms`);
+  console.log(`With agent: ${timeWithAgent.toFixed(2)}ms`);
+  console.log(`Difference: ${(timeWithoutAgent - timeWithAgent).toFixed(2)}ms`);
+  console.log(`Performance improvement: ${(100 * (timeWithoutAgent - timeWithAgent) / timeWithoutAgent).toFixed(2)}%`);
+}
+
+// ஒப்பீட்டை இயக்கவும்
+runComparison().catch(console.error);</code></pre>
+            </div>
+        </section>
+
+        <!-- Creating a Proxy Agent -->
+        <section class="content-section" id="proxy-agent">
+            <h2>Proxy Agent உருவாக்குதல்</h2>
+            
+            <p>Proxy agent உருவாக்க Agent வகுப்பை நீட்டிக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const net = require('net');
+const { URL } = require('url');
+
+// ஒரு எளிய HTTP proxy agent செயலாக்கம்
+class HttpProxyAgent extends http.Agent {
+  constructor(proxyUri, options = {}) {
+    super(options);
+    this.proxyUri = new URL(proxyUri);
+  }
+  
+  // proxy மூலம் இணைக்க createConnection ஐ மேலெழுதவும்
+  createConnection(options, callback) {
+    // proxy சேவையகத்துடன் இணைக்கவும்
+    const proxySocket = net.connect({
+      host: this.proxyUri.hostname,
+      port: this.proxyUri.port || 80,
+    }, () => {
+      // proxy மூலம் இலக்குக்கு HTTP CONNECT கோரிக்கையை உருவாக்கவும்
+      proxySocket.write(
+        `CONNECT ${options.host}:${options.port} HTTP/1.1\r\n` +
+        `Host: ${options.host}:${options.port}\r\n` +
+        `Proxy-Connection: keep-alive\r\n` +
+        // proxy அங்கீகாரம் வழங்கப்பட்டால் சேர்க்கவும்
+        (this.proxyUri.username && this.proxyUri.password
+          ? `Proxy-Authorization: Basic ${Buffer.from(
+              `${this.proxyUri.username}:${this.proxyUri.password}`
+            ).toString('base64')}\r\n`
+          : '') +
+        '\r\n'
+      );
+      
+      // proxy பதிலுக்கான தரவு handler
+      let proxyResponse = '';
+      const onData = (chunk) => {
+        proxyResponse += chunk.toString();
+        
+        // முழு proxy பதிலையும் பெற்றுள்ளோமா எனச் சரிபார்க்கவும்
+        if (proxyResponse.includes('\r\n\r\n')) {
+          // நிலை வரியை parse செய்யவும்
+          const statusLine = proxyResponse.split('\r\n')[0];
+          const statusCode = parseInt(statusLine.split(' ')[1], 10);
+          
+          // proxy இணைப்பு வெற்றிகரமாக இருந்தால்
+          if (statusCode === 200) {
+            // தரவு listener ஐ அகற்று, அது இனி தேவையில்லை
+            proxySocket.removeListener('data', onData);
+            
+            // socket உடன் callback செய்யவும்
+            callback(null, proxySocket);
+          } else {
+            // proxy இணைப்பு தோல்வியடைந்தது
+            proxySocket.destroy();
+            callback(new Error(`Proxy connection failed: ${statusLine}`));
+          }
+        }
+      };
+      
+      proxySocket.on('data', onData);
+    });
+    
+    // socket பிழைகளைக் கையாளவும்
+    proxySocket.on('error', (err) => {
+      callback(err);
+    });
+    
+    return proxySocket;
+  }
+}
+
+// proxy agent இன் பயன்பாட்டு எடுத்துக்காட்டு
+const proxyAgent = new HttpProxyAgent('http://proxy.example.com:8080', {
+  keepAlive: true
+});
+
+// proxy மூலம் ஒரு கோரிக்கையைச் செய்யவும்
+const options = {
+  hostname: 'target-site.com',
+  path: '/',
+  method: 'GET',
+  agent: proxyAgent
+};
+
+const req = http.request(options, (res) => {
+  console.log(`Status Code: ${res.statusCode}`);
+  
+  // பதில் தரவை உட்கொள்
+  
+  // சுத்தம்
+  setTimeout(() => {
+    proxyAgent.destroy();
+    console.log('Proxy Agent destroyed');
+  }, 1000);
+});
+
+req.on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});
+
+req.end();</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-sync-alt"></i>
+                    <span><strong>keepAlive ஐப் பயன்படுத்தவும்:</strong> அதே சேவையகத்திற்கு பல கோரிக்கைகளைச் செய்யும் போது செயல்திறனை மேம்படுத்த நிலையான இணைப்புகளுக்கு keepAlive ஐ இயக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>maxSockets ஐ அமைக்கவும்:</strong> இலக்கு சேவையகத்தை அல்லது உங்கள் சொந்த அமைப்பின் வளங்களை மூழ்கடிப்பதைத் தடுக்க maxSockets ஐ வரம்பிடவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-broom"></i>
+                    <span><strong>சுத்தம் செய்யவும்:</strong> agent இனி தேவையில்லாதபோது agent.destroy() ஐ அழைத்து வளங்களை விடுவிக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-cogs"></i>
+                    <span><strong>தனிப்பயன் agents ஐப் பயன்படுத்தவும்:</strong> வெவ்வேறு இணைப்பு தேவைகள் அல்லது இலக்கு சேவையகங்களுக்கு வெவ்வேறு agent instances உருவாக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-heartbeat"></i>
+                    <span><strong>agent ஆரோக்கியத்தைக் கண்காணிக்கவும்:</strong> இணைப்பு பிரச்சினைகளைக் கண்டறிய செயலில் மற்றும் இலவச sockets இன் எண்ணிக்கையைக் கண்காணிக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span><strong>பாதுகாப்பு:</strong> HTTPS agents க்கு, எப்போதும் பொருத்தமான SSL/TLS விருப்பங்களை அமைத்து பாதுகாப்பு அமைப்புகளைப் புதுப்பித்து வைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>பிழை கையாளுதல்:</strong> HTTP கோரிக்கைகளில் சாத்தியமான பிழைகளை எப்போதும் கையாளுங்கள்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் HTTP client கோரிக்கைகளுக்கான இணைப்பு நிர்வாகத்திற்கு பயன்படுத்தப்படும் சரியான Agent வகையைத் தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.ConnectionManager</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.ConnectionManager" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">http.Agent</div>
+                            <div class="option-feedback correct">✓ சரி! "http.Agent" என்பது Node.js இல் HTTP client கோரிக்கைகளுக்கான இணைப்பு நிர்வாகத்திற்கு பயன்படும் சரியான Agent வகையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.PoolManager</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.PoolManager" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.ConnectionPool</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.ConnectionPool" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Server Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Request Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#agent-object">Agent பொருள்</a></li>
+                    <li><a href="#agent-properties">Agent பண்புகள்</a></li>
+                    <li><a href="#agent-methods">Agent முறைகள்</a></li>
+                    <li><a href="#custom-agent">தனிப்பயன் Agent</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

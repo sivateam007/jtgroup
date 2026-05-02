@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular First App - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        .step-container {
+            counter-reset: step-counter;
+            margin: 2rem 0;
+        }
+        
+        .step-item {
+            counter-increment: step-counter;
+            margin-bottom: 2.5rem;
+            padding-left: 3.5rem;
+            position: relative;
+            border-left: 2px solid var(--git-color);
+            padding-bottom: 1.5rem;
+        }
+        
+        .step-item:last-child {
+            border-left: none;
+            padding-bottom: 0;
+        }
+        
+        .step-item:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -1rem;
+            top: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .file-structure {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+        
+        .file-structure .folder {
+            color: #8be9fd;
+        }
+        
+        .file-structure .file {
+            color: #f1fa8c;
+        }
+        
+        .file-structure .important {
+            color: #ff79c6;
+            font-weight: bold;
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular Get Started.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Templates.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular First App</h2>
+<p>உங்கள் முதல் Angular பயன்பாட்டை உருவாக்குங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>முதல் Angular பயன்பாடு</h2>
+<p>இப்போது உங்கள் சூழல் தயாராக உள்ளது, ஒரு எளிய Angular பயன்பாட்டை உருவாக்குவோம்.</p>
+
+<div class="tip-box">
+<h4><span class="tip-icon"><i class="fas fa-rocket"></i></span>தயார்நிலை:</h4>
+<p>நீங்கள் ஏற்கனவே Angular CLI, Node.js மற்றும் npm ஐ நிறுவியிருப்பதாகக் கருதப்படுகிறது. இல்லையென்றால், "Angular Get Started" பகுதிக்குத் திரும்புக.</p>
+</div>
+</section>
+
+<!-- Step 1: Open src/main.ts -->
+<section class="content-section" id="step1">
+<h2>படி 1: src/main.ts ஐத் திறக்கவும்</h2>
+<p>Angular 20 பயன்பாடுகள் ஒரு ஸ்டேண்டலோன் ரூட் கூறை துவக்குகின்றன.</p>
+<p>நீங்கள் அதை main.ts இல் இன்லைனில் வரையறுக்கலாம்.</p>
+
+<div class="tip-box">
+<h4><span class="tip-icon"><i class="fas fa-code"></i></span>எடுத்துக்காட்டு:</h4>
+<p>உங்கள் சொந்த Angular சேவையகத்தைப் பெறுங்கள்</p>
+</div>
+
+<div class="code-example">
+<h3>main.ts</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `<h1>Hello, World!</h1>`
+})
+class App {}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon"><i class="fas fa-sync-alt"></i></span>நேரடி மீளேற்றம்:</h4>
+<p>Angular பயன்பாடு இயங்கும் போது (கடந்த அத்தியாயத்தில் காட்டப்பட்டுள்ளது போல ng serve உடன் தொடங்கப்பட்டது), உலாவி சேமிக்கும் போது தானாகவே மீளேற்றப்படும்.</p>
+</div>
+
+<div class="comparison-card" style="margin: 2rem 0; border-left: 4px solid #667eea;">
+<div class="comparison-header">
+<i class="fas fa-cube"></i>
+<h4>கூறுகள் பற்றிய விரைவு அறிமுகம்</h4>
+</div>
+<ul>
+<li><strong>கூறு</strong> என்பது ஒரு காட்சியைக் கட்டுப்படுத்தும் ஒரு வகுப்பாகும் (அதன் டெம்ப்ளேட்).</li>
+<li>ஒவ்வொரு கூறுக்கும் ஒரு தேர்வியும் உள்ளது (எ.கா., app-root) நீங்கள் HTML இல் வைக்கிறீர்கள்.</li>
+<li>ரூட் கூறு index.html இல் <code>&lt;app-root&gt;</code> உள்ளே ரெண்டர் செய்யப்படுகிறது.</li>
+<li>கூறுகளைப் பற்றி ஆழமாகப் படிப்போம்: கூறுகள் பகுதியில்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Step 2: Host element in index.html -->
+<section class="content-section" id="step2">
+<h2>படி 2: index.html இல் ஹோஸ்ட் உறுப்பு</h2>
+<p>Angular ரூட் கூறை அதன் தேர்வியின் தோன்றும் இடத்தில் ரெண்டர் செய்கிறது.</p>
+<p>src/index.html ஐத் திறந்து, ரூட் டேக் <code>&lt;body&gt;</code> உள்ளே இருப்பதை உறுதிப்படுத்தவும்.</p>
+
+<div class="tip-box">
+<h4><span class="tip-icon"><i class="fas fa-tag"></i></span>டேக் பொருத்தம்:</h4>
+<p>டேக் உங்கள் கூறு தேர்வியுடன் பொருந்த வேண்டும் படி 1 இலிருந்து (இங்கே அது app-root).</p>
+</div>
+
+<div class="code-example">
+<h3>index.html (குறைந்தது)</h3>
+<pre><code class="command-input">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;My Angular App&lt;/title&gt;
+    &lt;base href="/"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- Host element --&gt;
+    &lt;app-root&gt;&lt;/app-root&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon"><i class="fas fa-exclamation-triangle"></i></span>முக்கிய குறிப்பு:</h4>
+<p>ரூட்டிங் பின்னர் வேலை செய்வதற்கு <code>&lt;base href="/"&gt;</code> ஐ <code>&lt;head&gt;</code> இல் வைத்திருங்கள்.</p>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon"><i class="fas fa-check-circle"></i></span>CLI உடன் தானாக உருவாக்கப்பட்டது:</h4>
+<p>நீங்கள் CLI உடன் திட்டத்தை உருவாக்கியிருந்தால், இந்த டேக் பொதுவாக ஏற்கனவே இருக்கும்.</p>
+</div>
+</section>
+
+<!-- Step 3: Bind some data -->
+<section class="content-section" id="step3">
+<h2>படி 3: சில தரவுகளைப் பைண்ட் செய்யவும்</h2>
+<p>ஒரு பண்பைச் சேர்த்து இடைச்செருகல் மூலம் அதைக் காட்டவும்:</p>
+
+<div class="code-example">
+<h3>main.ts (மேம்படுத்தப்பட்டது)</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `<h1>Hello, {{ name }}!</h1>`
+})
+class App { name = 'Angular 20'; }
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="code-comparison">
+<div class="code-column">
+<h4>இடைச்செருகல் முன்</h4>
+<div class="code-example" style="margin: 0;">
+<pre><code>&lt;h1&gt;Hello, World!&lt;/h1&gt;</code></pre>
+</div>
+<p>நிலையான உரை</p>
+</div>
+<div class="code-column">
+<h4>இடைச்செருகல் பின்</h4>
+<div class="code-example" style="margin: 0;">
+<pre><code>&lt;h1&gt;Hello, {{ name }}!&lt;/h1&gt;</code></pre>
+</div>
+<p>டைனமிக் தரவு பைண்டிங்</p>
+</div>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon"><i class="fas fa-sync"></i></span>இடைச்செருகல்:</h4>
+<p>இடைச்செருகல் கூறு பண்பு மாறும்போது காட்சியை தானாகவே புதுப்பிக்கிறது.</p>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon"><i class="fas fa-bolt"></i></span>செயல்திறன் குறிப்பு:</h4>
+<ul>
+<li><strong>வெளிப்பாடுகளை எளிதாக வைத்திருங்கள்.</strong></li>
+<li><strong>செயல்திறனுக்காக டெம்ப்ளேட்டுகளில் நேரடியாக முறைகளை அழைப்பதை விட பண்புகளைப் பயன்படுத்தவும்.</strong></li>
+</ul>
+</div>
+</section>
+
+<!-- Project Structure -->
+<section class="content-section" id="project-structure">
+<h2>திட்ட அமைப்பு</h2>
+<p>ஒரு குறைந்தபட்ச Angular பணியிடத்தில் முக்கிய கோப்புகள்:</p>
+
+<div class="file-structure">
+<div class="folder">src/</div>
+<div class="file indent-1"><span class="important">main.ts</span> - bootstrapApplication உடன் பயன்பாட்டை துவக்குகிறது</div>
+<div class="folder indent-1">app/</div>
+<div class="file indent-2"><span class="important">app.component.ts</span> - ரூட் கூறு (பயன்படுத்தப்பட்டால்). ரூட் main.ts இல் இன்லைனிலும் வரையறுக்கலாம்</div>
+<div class="file indent-2">நீங்கள் உங்கள் கூறுகள் மற்றும் அம்சங்களைச் சேர்க்கும் இடம்</div>
+<div class="file indent-1"><span class="important">index.html</span> - <code>&lt;app-root&gt;</code> ஐக் கொண்டிருக்கும் ஹோஸ்ட் பக்கம்</div>
+<div class="file indent-1"><span class="important">styles.css</span> - பயன்பாட்டிற்கான உலகளாவிய பாணிகள்</div>
+<br>
+<div class="file"><span class="important">angular.json</span> - Angular பணியிட கட்டமைப்பு (கட்டமைத்தல், சேவை செய்தல், சோதனை)</div>
+<div class="file"><span class="important">package.json</span> - ஸ்கிரிப்ட்கள் மற்றும் சார்புகள்</div>
+</div>
+
+<div class="comparison-grid" style="margin-top: 2rem;">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-file-code"></i>
+<h4>TypeScript கோப்புகள்</h4>
+</div>
+<ul>
+<li>main.ts - பயன்பாடு நுழைவுப் புள்ளி</li>
+<li>app.component.ts - முதன்மை கூறு</li>
+<li>மற்ற கூறு கோப்புகள்</li>
+</ul>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-file-alt"></i>
+<h4>HTML/CSS கோப்புகள்</h4>
+</div>
+<ul>
+<li>index.html - முதன்மை HTML</li>
+<li>styles.css - உலகளாவிய பாணிகள்</li>
+<li>கூறு டெம்ப்ளேட்டுகள்</li>
+</ul>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-cogs"></i>
+<h4>கட்டமைப்பு கோப்புகள்</h4>
+</div>
+<ul>
+<li>angular.json - Angular கட்டமைப்பு</li>
+<li>package.json - npm சார்புகள்</li>
+<li>tsconfig.json - TypeScript கட்டமைப்பு</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- Exercise -->
+<section class="content-section" id="exercise">
+<h2>பயிற்சி</h2>
+<p>உங்கள் அறிவைச் சோதிக்க இந்தப் பயிற்சியை முயற்சிக்கவும்:</p>
+
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>main.ts இல் ஒரு ஸ்டேண்டலோன் Angular கூறை துவக்கும் API எது?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">bootstrapApplication</div>
+<div class="option-feedback correct">✓ சரி! <code>bootstrapApplication</code> ஒரு ஸ்டேண்டலோன் கூறை துவக்கப் பயன்படுகிறது.</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">bootstrapModule</div>
+<div class="option-feedback incorrect">✗ தவறானது! <code>bootstrapModule</code> NgModule-களுடன் பழைய Angular பதிப்புகளில் பயன்படுத்தப்பட்டது.</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">platformBrowserDynamic</div>
+<div class="option-feedback incorrect">✗ தவறானது! <code>platformBrowserDynamic</code> ஸ்டேண்டலோன் கூறுகளுக்குப் பயன்படுத்தப்படாத மற்றொரு பழைய API.</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon"><i class="fas fa-history"></i></span>API பரிணாமம்:</h4>
+<p>Angular 14+ ஸ்டேண்டலோன் கூறுகளை அறிமுகப்படுத்தியது. <code>bootstrapApplication</code> NgModule கட்டமைப்பு தேவையில்லாமல் கூறுகளை நேரடியாக துவக்கப் பயன்படுகிறது, குறியீட்டை எளிமையாக்குகிறது.</p>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular Get Started.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Templates.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>தமிழ் மொழியில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணிகக் கல்வி நிறுவனம்.</p>
+</div>
+<div class="footer-column">
+<h3>விரைவு இணைப்புகள்</h3>
+<ul>
+<li><a href="#introduction">முதல் Angular பயன்பாடு</a></li>
+<li><a href="#step1">படி 1: src/main.ts ஐத் திறக்கவும்</a></li>
+<li><a href="#step2">படி 2: index.html இல் ஹோஸ்ட் உறுப்பு</a></li>
+<li><a href="#step3">படி 3: தரவுகளைப் பைண்ட் செய்யவும்</a></li>
+<li><a href="#project-structure">திட்ட அமைப்பு</a></li>
+<li><a href="#exercise">பயிற்சி</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>தொடர்பு</h3>
+<ul>
+<li><a href="#">எங்களைப் பற்றி</a></li>
+<li><a href="#">எங்களைத் தொடர்பு கொள்ளவும்</a></li>
+<li><a href="#">இடம் மற்றும் நேரம்</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>எங்களைப் பின்தொடருங்கள்</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

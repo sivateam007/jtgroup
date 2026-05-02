@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Cluster Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Child Process Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Worker Threads Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Cluster Module</h2>
+            <p>Node.js பயன்பாடுகளை பல CPU கோர்களில் அளவிட கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is the Cluster Module? -->
+        <section class="content-section" id="what-is">
+            <h2>Cluster தொகுதி என்றால் என்ன?</h2>
+            
+            <p>Cluster தொகுதி ஒரே சேவையக போர்ட்டைப் பகிர்ந்து கொள்ளும் பல தொழிலாளர் செயல்முறைகளை உருவாக்க ஒரு வழியை வழங்குகிறது.</p>
+            
+            <p>Node.js இயல்பாக single-threaded ஆக இருப்பதால், Cluster தொகுதி பல-கோர் அமைப்புகளில் செயல்திறனைக் கணிசமாக மேம்படுத்த உங்கள் பயன்பாட்டை பல CPU கோர்களைப் பயன்படுத்த உதவுகிறது.</p>
+            
+            <p>ஒவ்வொரு தொழிலாளரும் தங்கள் சொந்த செயல்முறையில் தங்கள் சொந்த இவெண்ட் லூப் மற்றும் நினைவக இடத்தில் இயங்குகிறார்கள், ஆனால் அவர்கள் அனைவரும் ஒரே சேவையக போர்ட்டைப் பகிர்ந்து கொள்கிறார்கள்.</p>
+            
+            <p>மாஸ்டர் செயல்முறை தொழிலாளர்களை உருவாக்குவதற்கும் உள்வரும் இணைப்புகளை அவர்களுக்கிடையே விநியோகிப்பதற்கும் பொறுப்பாகும்.</p>
+        </section>
+
+        <!-- Importing the Cluster Module -->
+        <section class="content-section" id="importing">
+            <h2>Cluster தொகுதியை இறக்குமதி செய்தல்</h2>
+            
+            <p>Cluster தொகுதி Node.js இல் இயல்பாகச் சேர்க்கப்பட்டுள்ளது.</p>
+            
+            <p>உங்கள் ஸ்கிரிப்ட்டில் அதைத் தேவைப்படுவதன் மூலம் பயன்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const os = require('os');
+
+// Check if this is the master process
+if (cluster.isMaster) {
+  console.log(`Master process ${process.pid} is running`);
+} else {
+  console.log(`Worker process ${process.pid} started`);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- How Clustering Works -->
+        <section class="content-section" id="how-clustering-works">
+            <h2>Clustering எவ்வாறு செயல்படுகிறது</h2>
+            
+            <p>Cluster தொகுதி பல தொழிலாளர் செயல்முறைகளைத் தோற்றுவிக்கும் ஒரு மாஸ்டர் செயல்முறையை உருவாக்குவதன் மூலம் செயல்படுகிறது.</p>
+            
+            <p>மாஸ்டர் செயல்முறை பயன்பாட்டு குறியீட்டை இயக்காது, ஆனால் தொழிலாளர்களை நிர்வகிக்கிறது.</p>
+            
+            <p>ஒவ்வொரு தொழிலாளர் செயல்முறையும் உங்கள் பயன்பாட்டு குறியீட்டை சுயாதீனமாக இயக்கும் ஒரு புதிய Node.js நிகழ்வாகும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔧</span> குறிப்பு:</h4>
+                <p>அடிப்படையில், Cluster தொகுதி புதிய தொழிலாளர்களை உருவாக்க Child Process தொகுதியின் fork() முறையைப் பயன்படுத்துகிறது.</p>
+            </div>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>செயல்முறை வகை</th>
+                            <th>பொறுப்பு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>மாஸ்டர்</strong></td>
+                            <td>
+                                <ul>
+                                    <li>தொழிலாளர் செயல்முறைகளை உருவாக்குதல் மற்றும் நிர்வகித்தல்</li>
+                                    <li>தொழிலாளர் ஆரோக்கியத்தைக் கண்காணித்தல்</li>
+                                    <li>கிராஷ் செய்த தொழிலாளர்களை மீண்டும் தொடங்குதல்</li>
+                                    <li>சுமை சமநிலை (இணைப்புகளை விநியோகித்தல்)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>தொழிலாளர்</strong></td>
+                            <td>
+                                <ul>
+                                    <li>உண்மையான பயன்பாட்டு குறியீட்டை இயக்குதல்</li>
+                                    <li>உள்வரும் கோரிக்கைகளைக் கையாளுதல்</li>
+                                    <li>தரவைச் செயலாக்குதல்</li>
+                                    <li>வணிக தர்க்கத்தை இயக்குதல்</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Creating a Basic Cluster -->
+        <section class="content-section" id="basic-cluster">
+            <h2>அடிப்படை கிளஸ்டரை உருவாக்குதல்</h2>
+            
+            <p>ஒவ்வொரு CPU க்கும் தொழிலாளர் செயல்முறைகளுடன் ஒரு கிளஸ்டரை உருவாக்குவதற்கான ஒரு எளிய எடுத்துக்காட்டு இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster) {
+  // This is the master process
+
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers for each CPU core
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  // Listen for worker exits
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+    // You can fork a new worker to replace the dead one
+    console.log('Forking a new worker...');
+    cluster.fork();
+  });
+} else {
+  // This is a worker process
+
+  // Create an HTTP server
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Hello from Worker ${process.pid}\n`);
+
+    // Simulate CPU work
+    let i = 1e7;
+    while (i > 0) { i--; }
+
+  }).listen(8000);
+
+  console.log(`Worker ${process.pid} started`);
+}</code></pre>
+            </div>
+            
+            <p>இந்த எடுத்துக்காட்டில்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-microchip"></i>
+                    <span>மாஸ்டர் செயல்முறை CPU கோர்களின் எண்ணிக்கையைக் கண்டறிகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-users"></i>
+                    <span>இது CPU க்கு ஒரு தொழிலாளரை fork செய்கிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-server"></i>
+                    <span>ஒவ்வொரு தொழிலாளரும் ஒரே போர்ட்டில் (8000) ஒரு HTTP சேவையகத்தை உருவாக்குகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>கிளஸ்டர் தொகுதி உள்வரும் இணைப்புகளை தானாக சுமை சமநிலைப்படுத்துகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-redo"></i>
+                    <span>ஒரு தொழிலாளர் கிராஷ் செய்தால், மாஸ்டர் ஒரு புதியதை உருவாக்குகிறது</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Worker Communication -->
+        <section class="content-section" id="worker-communication">
+            <h2>தொழிலாளர் தொடர்பு</h2>
+            
+            <p>Child Process தொகுதியில் IPC எவ்வாறு செயல்படுகிறது என்பதைப் போலவே, send() முறை மற்றும் message events ஐப் பயன்படுத்தி மாஸ்டர் மற்றும் தொழிலாளர் செயல்முறைகளுக்கு இடையே தொடர்பு கொள்ளலாம்.</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Track request count for each worker
+  const requestCounts = {};
+
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    const worker = cluster.fork();
+    requestCounts[worker.id] = 0;
+
+    // Listen for messages from this worker
+    worker.on('message', (msg) => {
+      if (msg.cmd === 'incrementRequestCount') {
+        requestCounts[worker.id]++;
+        console.log(`Worker ${worker.id} (pid ${worker.process.pid}) has handled ${requestCounts[worker.id]} requests`);
+      }
+    });
+  }
+
+  // Every 10 seconds, send the request count to each worker
+  setInterval(() => {
+    for (const id in cluster.workers) {
+      cluster.workers[id].send({
+        cmd: 'requestCount',
+        requestCount: requestCounts[id]
+      });
+    }
+    console.log('Total request counts:', requestCounts);
+  }, 10000);
+
+  // Handle worker exit
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+    // Fork a new worker to replace it
+    const newWorker = cluster.fork();
+    requestCounts[newWorker.id] = 0;
+  });
+} else {
+  // Worker process
+  console.log(`Worker ${process.pid} started`);
+
+  let localRequestCount = 0;
+
+  // Handle messages from the master
+  process.on('message', (msg) => {
+    if (msg.cmd === 'requestCount') {
+      console.log(`Worker ${process.pid} has handled ${msg.requestCount} requests according to master`);
+    }
+  });
+
+  // Create an HTTP server
+  http.createServer((req, res) => {
+    // Notify the master that we handled a request
+    process.send({ cmd: 'incrementRequestCount' });
+
+    // Increment local count
+    localRequestCount++;
+
+    // Send response
+    res.writeHead(200);
+    res.end(`Hello from Worker ${process.pid}, I've handled ${localRequestCount} requests locally\n`);
+  }).listen(8000);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Zero-Downtime Restart -->
+        <section class="content-section" id="zero-downtime">
+            <h2>பூஜ்ய-கீழேறுதல் மறுதொடக்கம்</h2>
+            
+            <p>கிளஸ்டரிங்கின் முக்கிய நன்மைகளில் ஒன்று கீழேறுதல் இல்லாமல் தொழிலாளர்களை மீண்டும் தொடங்கும் திறனாகும். உங்கள் பயன்பாட்டிற்கான புதுப்பிப்புகளை வெளியிடுவதற்கு இது பயனுள்ளதாக இருக்கும்.</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Store workers
+  const workers = [];
+
+  // Fork initial workers
+  for (let i = 0; i < numCPUs; i++) {
+    workers.push(cluster.fork());
+  }
+
+  // Function to restart workers one by one
+  function restartWorkers() {
+    console.log('Starting zero-downtime restart...');
+    
+    let i = 0;
+    function restartWorker() {
+      if (i >= workers.length) {
+        console.log('All workers restarted successfully!');
+        return;
+      }
+
+      const worker = workers[i++];
+      console.log(`Restarting worker ${worker.process.pid}...`);
+
+      // Create a new worker
+      const newWorker = cluster.fork();
+      newWorker.on('listening', () => {
+        // Once the new worker is listening, kill the old one
+        worker.disconnect();
+
+        // Replace the old worker in our array
+        workers[workers.indexOf(worker)] = newWorker;
+
+        // Continue with the next worker
+        setTimeout(restartWorker, 1000);
+      });
+    }
+
+    // Start the recursive process
+    restartWorker();
+  }
+  
+  // Simulate a restart after 20 seconds
+  setTimeout(restartWorkers, 20000);
+
+  // Handle normal worker exit
+  cluster.on('exit', (worker, code, signal) => {
+    if (worker.exitedAfterDisconnect !== true) {
+      console.log(`Worker ${worker.process.pid} died unexpectedly, replacing it...`);
+      const newWorker = cluster.fork();
+      workers[workers.indexOf(worker)] = newWorker;
+    }
+  });
+} else {
+  // Worker process
+
+  // Create an HTTP server
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Worker ${process.pid} responding, uptime: ${process.uptime().toFixed(2)} seconds\n`);
+  }).listen(8000);
+
+  console.log(`Worker ${process.pid} started`);
+}</code></pre>
+            </div>
+            
+            <p>இந்த எடுத்துக்காட்டு விளக்குகிறது:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-plus"></i>
+                    <span>ஆரம்ப தொழிலாளர்களின் தொகுப்பை உருவாக்குதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync"></i>
+                    <span>ஒவ்வொரு தொழிலாளரையும் ஒவ்வொன்றாக மாற்றுதல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>பழையதைத் துண்டிக்கும் முன் ஒரு புதிய தொழிலாளர் கேட்பதை உறுதிசெய்தல்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>எதிர்பாராத தொழிலாளர் இறப்புகளை நேர்த்தியாகக் கையாளுதல்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Load Balancing -->
+        <section class="content-section" id="load-balancing">
+            <h2>சுமை சமநிலை</h2>
+            
+            <p>Cluster தொகுதி தொழிலாளர் செயல்முறைகளுக்கிடையே உள்வரும் இணைப்புகளை விநியோகிப்பதற்கான உள்ளமைக்கப்பட்ட சுமை சமநிலையைக் கொண்டுள்ளது.</p>
+            
+            <p>இரண்டு முதன்மை உத்திகள் உள்ளன:</p>
+            
+            <h3>Round-Robin (இயல்புநிலை)</h3>
+            
+            <p>விண்டோஸைத் தவிர அனைத்து தளங்களிலும், Node.js ஒரு சுற்று-ராபின் அணுகுமுறையைப் பயன்படுத்தி இணைப்புகளை விநியோகிக்கிறது, இதில் மாஸ்டர் இணைப்புகளை ஏற்றுக்கொண்டு ஒரு வட்ட வரிசையில் தொழிலாளர்களுக்கு விநியோகிக்கிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💻</span> குறிப்பு:</h4>
+                <p>விண்டோஸில், போர்ட்களை எவ்வாறு கையாள்கிறது என்பதன் காரணமாக சுமை விநியோகம் வித்தியாசமாக செயல்படுகிறது. விண்டோஸில், தொழிலாளர்கள் இணைப்புகளை ஏற்க போட்டியிடுகிறார்கள்.</p>
+            </div>
+            
+            <h3>முதன்மை தொழிலாளர்</h3>
+            
+            <p>cluster.schedulingPolicy ஐ அமைப்பதன் மூலம் ஒவ்வொரு தொழிலாளரும் இணைப்புகளை நேரடியாக ஏற்றுக்கொள்ள அனுமதிக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+// Set the scheduling policy to SCHED_NONE (let workers accept connections themselves)
+cluster.schedulingPolicy = cluster.SCHED_NONE;
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+    cluster.fork();
+  });
+} else {
+  // Worker process
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Hello from Worker ${process.pid}\n`);
+  }).listen(8000);
+
+  console.log(`Worker ${process.pid} started`);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Shared State -->
+        <section class="content-section" id="shared-state">
+            <h2>பகிரப்பட்ட நிலை</h2>
+            
+            <p>ஒவ்வொரு தொழிலாளரும் தங்கள் சொந்த செயல்முறையில் தங்கள் சொந்த நினைவக இடத்தில் இயங்குவதால், அவர்கள் மாறிகள் மூலம் நேரடியாக நிலையைப் பகிர்ந்து கொள்ள முடியாது. அதற்கு பதிலாக, நீங்கள்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-comments"></i>
+                    <span>IPC செய்தியைப் பயன்படுத்தவும் (தொடர்பு எடுத்துக்காட்டில் காட்டப்பட்டுள்ளது)</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span>Redis, MongoDB, அல்லது கோப்பு அமைப்பு போன்ற வெளிப்புற சேமிப்பகத்தைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-user"></i>
+                    <span>அமர்வு மேலாண்மைக்கான ஒட்டும் சுமை சமநிலையைப் பயன்படுத்தவும்</span>
+                </div>
+            </div>
+            
+            <h3>ஒட்டும் அமர்வுகள் எடுத்துக்காட்டு</h3>
+            
+            <p>ஒட்டும் அமர்வுகள் ஒரே கிளையண்டிலிருந்து வரும் கோரிக்கைகள் எப்போதும் ஒரே தொழிலாளர் செயல்முறைக்குச் செல்லும் என்பதை உறுதிசெய்கின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  // Store worker references by id
+  const workers = {};
+  for (const id in cluster.workers) {
+    workers[id] = cluster.workers[id];
+  }
+
+  // Create a server to route connections to workers
+  const server = http.createServer((req, res) => {
+    // Get client IP
+    const clientIP = req.connection.remoteAddress || req.socket.remoteAddress;
+
+    // Simple hash function to determine which worker to use
+    const workerIndex = clientIP.split('.').reduce((a, b) => a + parseInt(b), 0) % numCPUs;
+    const workerIds = Object.keys(workers);
+    const workerId = workerIds[workerIndex];
+
+    // Send the request to the selected worker
+    workers[workerId].send('sticky-session:connection', req.connection);
+
+    res.end(`Request routed to worker ${workerId}`);
+  }).listen(8000);
+
+  console.log('Master server listening on port 8000');
+
+  // Handle worker exit
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+
+    // Remove the dead worker
+    delete workers[worker.id];
+
+    // Create a replacement
+    const newWorker = cluster.fork();
+    workers[newWorker.id] = newWorker;
+  });
+} else {
+  // Worker process - just demonstrates the concept
+  // In a real implementation, you'd need more socket handling
+
+  process.on('message', (msg, socket) => {
+    if (msg === 'sticky-session:connection' && socket) {
+      console.log(`Worker ${process.pid} received sticky connection`);
+      
+      // In a real implementation, you'd handle the socket here
+      // socket.end(`Handled by worker ${process.pid}\n`);
+    }
+  });
+
+  // Workers would also run their own server
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Direct request to Worker ${process.pid}\n`);
+  }).listen(8001);
+
+  console.log(`Worker ${process.pid} started`);
+}</code></pre>
+            </div>
+            
+            <p>இது ஒட்டும் அமர்வுகளின் கருத்தைக் காட்டும் எளிமைப்படுத்தப்பட்ட எடுத்துக்காட்டு. உற்பத்தியில், நீங்கள் பொதுவாக:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <span>மேம்பட்ட ஹேஷிங் அல்காரிதத்தைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-cookie"></i>
+                    <span>IP முகவரிகளுக்குப் பதிலாக குக்கீகள் அல்லது பிற அமர்வு அடையாளங்காட்டிகளைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-plug"></i>
+                    <span>சாக்கெட் இணைப்புகளை மிகவும் கவனமாக கையாளவும்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Worker Lifecycle -->
+        <section class="content-section" id="worker-lifecycle">
+            <h2>தொழிலாளர் வாழ்க்கைச் சுழற்சி</h2>
+            
+            <p>உங்கள் கிளஸ்டரை சரியாக நிர்வகிப்பதற்கு தொழிலாளர் வாழ்க்கைச் சுழற்சியைப் புரிந்துகொள்வது முக்கியம்:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>நிகழ்வு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>fork</strong></td>
+                            <td>ஒரு புதிய தொழிலாளர் fork செய்யப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>online</strong></td>
+                            <td>தொழிலாளர் இயங்கும் போது மற்றும் செய்திகளைச் செயலாக்கத் தயாராக இருக்கும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>listening</strong></td>
+                            <td>தொழிலாளர் இணைப்புகளுக்குக் கேட்கத் தொடங்கும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>disconnect</strong></td>
+                            <td>ஒரு தொழிலாளரின் IPC சேனல் துண்டிக்கப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>exit</strong></td>
+                            <td>ஒரு தொழிலாளர் செயல்முறை வெளியேறும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork a worker
+  const worker = cluster.fork();
+
+  // Listen for all worker lifecycle events
+  worker.on('fork', () => {
+    console.log(`Worker ${worker.process.pid} is being forked`);
+  });
+
+  worker.on('online', () => {
+    console.log(`Worker ${worker.process.pid} is online`);
+  });
+
+  worker.on('listening', (address) => {
+    console.log(`Worker ${worker.process.pid} is listening on port ${address.port}`);
+  });
+
+  worker.on('disconnect', () => {
+    console.log(`Worker ${worker.process.pid} has disconnected`);
+  });
+
+  worker.on('exit', (code, signal) => {
+    console.log(`Worker ${worker.process.pid} exited with code ${code} and signal ${signal}`);
+
+     if (signal) {
+      console.log(`Worker was killed by signal: ${signal}`);
+    } else if (code !== 0) {
+      console.log(`Worker exited with error code: ${code}`);
+    } else {
+      console.log('Worker exited successfully');
+    }
+  });
+
+  // After 10 seconds, gracefully disconnect the worker
+  setTimeout(() => {
+    console.log('Gracefully disconnecting worker...');
+    worker.disconnect();
+  }, 10000);
+
+} else {
+  // Worker process
+  console.log(`Worker ${process.pid} started`);
+
+  // Create an HTTP server
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Hello from Worker ${process.pid}\n`);
+  }).listen(8000);
+
+  // If worker is disconnected, close the server
+  process.on('disconnect', () => {
+    console.log(`Worker ${process.pid} disconnected, closing server...`);
+    // In a real application, you'd want to close all connections and clean up resources
+    process.exit(0);
+  });
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Graceful Shutdown -->
+        <section class="content-section" id="graceful-shutdown">
+            <h2>நேர்த்தியான அணைப்பு</h2>
+            
+            <p>உங்கள் தொழிலாளர் செயல்முறைகள் வெளியேறும் முன் இருக்கும் கோரிக்கைகளை முடிக்க அனுமதிக்க ஒரு நேர்த்தியான அணைப்பு முக்கியமானது.</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  // Handle termination signals
+  process.on('SIGTERM', () => {
+    console.log('Master received SIGTERM, initiating graceful shutdown...');
+
+    // Notify all workers to finish their work and exit
+    Object.values(cluster.workers).forEach(worker => {
+      console.log(`Sending SIGTERM to worker ${worker.process.pid}`);
+      worker.send('shutdown');
+    });
+
+    // Set a timeout to force-kill workers if they don't exit gracefully
+    setTimeout(() => {
+      console.log('Some workers did not exit gracefully, forcing shutdown...');
+      Object.values(cluster.workers).forEach(worker => {
+        if (!worker.isDead()) {
+          console.log(`Killing worker ${worker.process.pid}`);
+          worker.process.kill('SIGKILL');
+        }
+    });
+
+    // Exit the master
+    console.log('All workers terminated, exiting master...');
+    process.exit(0);
+  }, 5000);
+  });
+
+  // Handle worker exits
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} exited (${signal || code})`);
+
+    // If all workers have exited, exit the master
+    if (Object.keys(cluster.workers).length === 0) {
+      console.log('All workers have exited, shutting down master...');
+      process.exit(0);
+    }
+  });
+
+  // Log to show the master is ready
+  console.log(`Master ${process.pid} is ready with ${Object.keys(cluster.workers).length} workers`);
+  console.log('Send SIGTERM to the master process to initiate graceful shutdown');
+
+} else {
+  // Worker process
+  console.log(`Worker ${process.pid} started`);
+
+  // Track if we're shutting down
+  let isShuttingDown = false;
+  let activeConnections = 0;
+
+  // Create HTTP server
+  const server = http.createServer((req, res) => {
+     // Track active connection
+     activeConnections++;
+
+    // Simulate a slow response
+    setTimeout(() => {
+      res.writeHead(200);
+      res.end(`Hello from Worker ${process.pid}\n`);
+
+      // Connection complete
+      activeConnections--;
+
+      // If we're shutting down and no active connections, close the server
+      if (isShuttingDown && activeConnections === 0) {
+        console.log(`Worker ${process.pid} has no active connections, closing server...`);
+        server.close(() => {
+          console.log(`Worker ${process.pid} closed server, exiting...`);
+          process.exit(0);
+        });
+      }
+    }, 2000);
+  });
+
+  // Start server
+  server.listen(8000);
+
+  // Handle shutdown message from master
+  process.on('message', (msg) => {
+     if (msg === 'shutdown') {
+      console.log(`Worker ${process.pid} received shutdown message, stopping new connections...`);
+
+      // Set shutdown flag
+      isShuttingDown = true;
+
+      // Stop accepting new connections
+      server.close(() => {
+        console.log(`Worker ${process.pid} closed server`);
+
+      // If no active connections, exit immediately
+      if (activeConnections === 0) {
+        console.log(`Worker ${process.pid} has no active connections, exiting...`);
+        process.exit(0);
+      } else {
+        console.log(`Worker ${process.pid} waiting for ${activeConnections} connections to finish...`);
+      }
+    });
+  }
+  });
+
+  // Also handle direct termination signal
+  process.on('SIGTERM', () => {
+    console.log(`Worker ${process.pid} received SIGTERM directly`);
+    // Use the same shutdown logic
+    isShuttingDown = true;
+    server.close(() => process.exit(0));
+  });
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-users"></i>
+                    <span><strong>தொழிலாளர்களின் எண்ணிக்கை:</strong> பெரும்பாலான சந்தர்ப்பங்களில், CPU கோருக்கு ஒரு தொழிலாளரை உருவாக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span><strong>நிலையற்ற வடிவமைப்பு:</strong> கிளஸ்டர்களுடன் திறம்பட வேலை செய்ய உங்கள் பயன்பாட்டை நிலையற்றதாக வடிவமைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-power-off"></i>
+                    <span><strong>நேர்த்தியான அணைப்பு:</strong>இணைப்புகளை கைவிடாமல் இருக்க சரியான அணைப்பு கையாளுதலை செயல்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-heartbeat"></i>
+                    <span><strong>தொழிலாளர் கண்காணிப்பு:</strong>கிராஷ் செய்த தொழிலாளர்களை விரைவாகக் கண்காணித்து மாற்றவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span><strong>தரவுத்தள இணைப்புகள்:</strong>ஒவ்வொரு தொழிலாளருக்கும் தனிச் சொந்த இணைப்பு குளம் உள்ளது, எனவே தரவுத்தள இணைப்புகளைத் தகுந்தவாறு கட்டமைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-share-alt"></i>
+                    <span><strong>பகிரப்பட்ட வளங்கள்:</strong>தொழிலாளர்களுக்கிடையே பகிரப்படும் வளங்களுடன் (கோப்பு பூட்டுகள் போன்றவை) கவனமாக இருங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-weight"></i>
+                    <span><strong>தொழிலாளர்களை இலகுவாக வைத்திருங்கள்:</strong>தொழிலாளர் செயல்முறைகளில் தேவையற்ற நினைவக பயன்பாட்டைத் தவிர்க்கவும்</span>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>பல தொழிலாளர்களைப் பயன்படுத்தும் போது கோப்பு-அடிப்படையிலான பூட்டு மற்றும் பிற பகிரப்பட்ட வளங்களுடன் கவனமாக இருங்கள். ஒற்றை-செயல்முறை பயன்பாட்டில் பாதுகாப்பான செயல்பாடுகள் பல தொழிலாளர்களுடன் போட்டி நிலைமைகளை ஏற்படுத்தக்கூடும்.</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Alternatives to the Cluster Module -->
+        <section class="content-section" id="alternatives">
+            <h2>Cluster தொகுதிக்கான மாற்றுகள்</h2>
+            
+            <p>Cluster தொகுதி சக்திவாய்ந்ததாக இருந்தாலும், பல கோர்களில் Node.js பயன்பாடுகளை இயக்குவதற்கு மாற்றுகள் உள்ளன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அணுகுமுறை</th>
+                            <th>விளக்கம்</th>
+                            <th>பயன்பாட்டு வழக்கு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>PM2</strong></td>
+                            <td>உள்ளமைக்கப்பட்ட சுமை சமநிலை மற்றும் கிளஸ்டரிங்குடன் Node.js பயன்பாடுகளுக்கான ஒரு செயல்முறை மேலாளர்</td>
+                            <td>வலுவான செயல்முறை மேலாண்மை தேவைப்படும் உற்பத்தி பயன்பாடுகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>சுமை சமநிலை</strong></td>
+                            <td>Nginx போன்ற சுமை சமநிலையின் பின்னால் பல Node.js நிகழ்வுகளை இயக்குதல்</td>
+                            <td>பல சேவையகங்கள் அல்லது கொள்கலன்களில் சுமையை விநியோகித்தல்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தொழிலாளர் நூல்கள்</strong></td>
+                            <td>CPU-தீவிர பணிகளுக்கான இலகுவான நூலிடல் (Node.js >= 10.5.0)</td>
+                            <td>ஒற்றை செயல்முறைக்குள் CPU-தீவிர செயல்பாடுகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>கொள்கலன்கள்</strong></td>
+                            <td>பல கொள்கலனாக்கப்பட்ட நிகழ்வுகளை இயக்குதல் (Docker மற்றும் Kubernetes உடன்)</td>
+                            <td>நவீன கிளவுட் சூழல்களில் அளவிடக்கூடிய, விநியோகிக்கப்பட்ட பயன்பாடுகள்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Advanced Load Balancing Strategies -->
+        <section class="content-section" id="advanced-load-balancing">
+            <h2>மேம்பட்ட சுமை சமநிலை உத்திகள்</h2>
+            
+            <p>Cluster தொகுதியின் இயல்புநிலை சுற்று-ராபின் சுமை சமநிலை பல பயன்பாடுகளுக்கு நன்றாக வேலை செய்யும் போது, குறிப்பிட்ட பயன்பாட்டு வழக்குகளுக்கு மேம்பட்ட உத்திகள் தேவைப்படலாம்.</p>
+            
+            <h3>1. எடை சுற்று-ராபின்</h3>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const os = require('os');
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Create workers with different weights
+  const workerWeights = [3, 2, 1]; // First worker gets 3x more load than the last
+  const workers = [];
+
+  // Create workers based on weights
+  workerWeights.forEach((weight, index) => {
+    for (let i = 0; i < weight; i++) {
+      const worker = cluster.fork({ WORKER_WEIGHT: weight });
+      worker.weight = weight;
+      workers.push(worker);
+    }
+  });
+
+  // Track the next worker to use
+  let workerIndex = 0;
+
+  // Create a load balancer server
+  http.createServer((req, res) => {
+    // Simple round-robin with weights
+    const worker = workers[workerIndex++ % workers.length];
+    worker.send('handle-request', req.socket);
+  }).listen(8000);
+
+} else {   // Worker code
+  process.on('message', (message, socket) => {
+    if (message === 'handle-request' && socket) {
+      // Handle the request
+      socket.end(`Handled by worker ${process.pid}\n`);
+    }
+  });
+}</code></pre>
+            </div>
+            
+            <h3>2.குறைந்த இணைப்புகள்</h3>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Create workers and track their connection counts
+  const workers = [];
+  const numCPUs = require('os').cpus().length;
+
+  for (let i = 0; i < numCPUs; i++) {
+    const worker = cluster.fork();
+    worker.connectionCount = 0;
+    workers.push(worker);
+
+    // Track worker connections
+    worker.on('message', (msg) => {       if (msg.type === 'connection') {         worker.connectionCount = msg.count;       }     });
+  }
+  // Create load balancer
+  http.createServer((req, res) => {
+    // Find worker with least connections
+    let minConnections = Infinity;
+    let selectedWorker = null;
+
+    for (const worker of workers) {
+      if (worker.connectionCount < minConnections) {
+        minConnections = worker.connectionCount;
+        selectedWorker = worker;
+      }
+    }
+
+    if (selectedWorker) {
+      selectedWorker.send('handle-request', req.socket);
+    }
+  }).listen(8000);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Monitoring and Metrics -->
+        <section class="content-section" id="performance-monitoring">
+            <h2>செயல்திறன் கண்காணிப்பு மற்றும் அளவீடுகள்</h2>
+            
+            <p>ஆரோக்கியமான பயன்பாட்டை பராமரிப்பதற்கு உங்கள் கிளஸ்டரின் செயல்திறனைக் கண்காணிப்பது முக்கியமானது. அடிப்படை அளவீடுகள் சேகரிப்பைச் செயல்படுத்துவது எப்படி என்பது இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const os = require('os');
+const promClient = require('prom-client');
+if (cluster.isMaster) {
+  // Create metrics registry
+  const register = new promClient.Registry();
+  promClient.collectDefaultMetrics({ register });
+
+  // Custom metrics
+  const workerRequests = new promClient.Counter({
+    name: 'worker_requests_total',
+    help: 'Total requests handled by worker',
+    labelNames: ['worker_pid']
+  });
+register.registerMetric(workerRequests);
+
+  // Fork workers
+  for (let i = 0; i < os.cpus().length; i++) {
+    const worker = cluster.fork();
+    worker.on('message', (msg) => {
+      if (msg.type === 'request_processed') {
+        workerRequests.inc({ worker_pid: worker.process.pid });
+      }
+    });
+  }
+
+  // Expose metrics endpoint
+  require('http').createServer(async (req, res) => {
+    if (req.url === '/metrics') {
+      res.setHeader('Content-Type', register.contentType);
+      res.end(await register.metrics());
+    }
+  }).listen(9090);
+} else {
+  // Worker code
+  let requestCount = 0;
+
+  require('http').createServer((req, res) => {
+    requestCount++;
+    process.send({ type: 'request_processed' });
+    res.end(`Request ${requestCount} handled by worker ${process.pid}\n`);
+  }).listen(8000);
+}</code></pre>
+            </div>
+            
+            <h3>கண்காணிக்க வேண்டிய முக்கிய அளவீடுகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>கோரிக்கை விகிதம்:</strong> ஒரு தொழிலாளருக்கு வினாடிக்கு கோரிக்கைகள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>பிழை விகிதம்:</strong> வினாடிக்கு பிழை பதில்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-clock"></i>
+                    <span><strong>பதில் நேரம்:</strong> P50, P90, P99 பதில் நேரங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-microchip"></i>
+                    <span><strong>CPU பயன்பாடு:</strong> ஒரு தொழிலாளருக்கு CPU பயன்பாடு</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>நினைவக பயன்பாடு:</strong> ஒரு தொழிலாளருக்கு Heap மற்றும் RSS நினைவகம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync"></i>
+                    <span><strong>இவெண்ட் லூப் பின்தங்கல்:</strong> இவெண்ட் லூப்பில் தாமதம்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Container Integration -->
+        <section class="content-section" id="container-integration">
+            <h2>கொள்கலன் ஒருங்கிணைப்பு</h2>
+            
+            <p>Docker மற்றும் Kubernetes போன்ற கொள்கலனாக்கப்பட்ட சூழல்களில் இயக்கும் போது, இந்த சிறந்த நடைமுறைகளைக் கவனியுங்கள்:</p>
+            
+            <h3>1. செயல்முறை மேலாண்மை</h3>
+            
+            <div class="code-example">
+                <pre><code>// Dockerfile example for a Node.js cluster app
+FROM node:16-slim
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --production
+
+# Copy application code
+COPY . .
+
+# Use the node process as PID 1 for proper signal handling
+CMD ["node", "cluster.js"]
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s \
+CMD curl -f http://localhost:8080/health || exit 1</code></pre>
+            </div>
+            
+            <h3>2. Kubernetes Deployment</h3>
+            
+            <div class="code-example">
+                <pre><code># k8s-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-cluster-app
+spec:
+  replicas: 3 # Number of pods
+  selector:
+    matchLabels:
+      app: node-cluster
+  template:
+    metadata:
+      labels:
+        app: node-cluster
+    spec:
+      containers:
+      - name: node-app
+        image: your-image:latest
+        ports:
+          - containerPort: 8000
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+        limits:
+          cpu: "1000m"
+          memory: "1Gi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10</code></pre>
+            </div>
+        </section>
+
+        <!-- Common Pitfalls and Solutions -->
+        <section class="content-section" id="common-pitfalls">
+            <h2>பொதுவான பொறிகுழிகள் மற்றும் தீர்வுகள்</h2>
+            
+            <h3>1. தொழிலாளர்களில் நினைவக கசிவுகள்</h3>
+            
+            <p><strong>சிக்கல்:</strong> தொழிலாளர் செயல்முறைகளில் நினைவக கசிவுகள் படிப்படியான நினைவக வளர்ச்சியை ஏற்படுத்தும்.</p>
+            
+            <p><strong>தீர்வு:</strong> நினைவக பயன்பாட்டின் அடிப்படையில் தொழிலாளர் மறுசுழற்சியை செயல்படுத்தவும்.</p>
+            
+            <div class="code-example">
+                <pre><code>// In worker process
+const MAX_MEMORY_MB = 500; // Max memory in MB before recycling
+
+function checkMemory() {
+  const memoryUsage = process.memoryUsage();
+  const memoryMB = memoryUsage.heapUsed / 1024 / 1024;
+
+  if (memoryMB > MAX_MEMORY_MB) {
+    console.log(`Worker ${process.pid} memory ${memoryMB.toFixed(2)}MB exceeds limit, exiting...`);
+    process.exit(1); // Let cluster restart the worker
+  }
+}
+
+// Check memory every 30 seconds
+setInterval(checkMemory, 30000);</code></pre>
+            </div>
+            
+            <h3>2. Thunder Herd சிக்கல்</h3>
+            
+            <p><strong>சிக்கல்:</strong> மறுதொடக்கத்திற்குப் பிறகு அனைத்து தொழிலாளர்களும் ஒரே நேரத்தில் இணைப்புகளை ஏற்றுக்கொள்கிறார்கள்.</p>
+            
+            <p><strong>தீர்வு:</strong> staggered startup ஐ செயல்படுத்தவும்.</p>
+            
+            <div class="code-example">
+                <pre><code>// In master process
+if (cluster.isMaster) {
+  const numWorkers = require('os').cpus().length;
+
+  function forkWorker(delay) {
+    setTimeout(() => {
+      const worker = cluster.fork();
+      console.log(`Worker ${worker.process.pid} started after ${delay}ms delay`);
+    }, delay);
+  }
+
+  // Stagger worker starts by 1 second
+  for (let i = 0; i < numWorkers; i++) {
+    forkWorker(i * 1000);
+  }
+}</code></pre>
+            </div>
+            
+            <h3>3. தொழிலாளர் பட்டினி</h3>
+            
+            <p><strong>சிக்கல்:</strong> சில தொழிலாளர்கள் மற்றவர்களை விட அதிக சுமையைப் பெறுகிறார்கள்.</p>
+            
+            <p><strong>தீர்வு:</strong> சரியான சுமை சமநிலை மற்றும் கண்காணிப்பை செயல்படுத்தவும்.</p>
+            
+            <div class="code-example">
+                <pre><code>// Track request distribution
+const requestDistribution = new Map();
+
+// In master process
+if (cluster.isMaster) {
+  // ...
+
+  // Monitor request distribution
+  setInterval(() => {
+    console.log('Request distribution:');
+    requestDistribution.forEach((count, pid) => {
+      console.log(` Worker ${pid}: ${count} requests`);
+    });
+  }, 60000);
+
+  // Track requests per worker
+  cluster.on('message', (worker, message) => {
+    if (message.type === 'request_handled') {
+      const count = requestDistribution.get(worker.process.pid) || 0;
+      requestDistribution.set(worker.process.pid, count + 1);
+    }
+  });
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>Node.js Cluster தொகுதி பல CPU கோர்களில் உங்கள் பயன்பாட்டை அளவிட ஒரு திறமையான வழியை வழங்குகிறது:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-crown"></i>
+                    <span>பல தொழிலாளர் செயல்முறைகளை நிர்வகிக்கும் ஒரு மாஸ்டர் செயல்முறையை உருவாக்குகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-share-alt"></i>
+                    <span>தொழிலாளர்கள் ஒரே சேவையக போர்ட்டைப் பகிர்ந்து கொள்கிறார்கள், சுமை சமநிலைப்படுத்தலை அனுமதிக்கிறார்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span>பயன்பாட்டு செயல்திறன் மற்றும் நெகிழ்வுத்தன்மையை மேம்படுத்துகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync"></i>
+                    <span>பூஜ்ய-கீழேறுதல் மறுதொடக்கங்கள் மற்றும் நேர்த்தியான அணைப்புகளை இயலுமைப்படுத்துகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-comments"></i>
+                    <span>மாஸ்டர் மற்றும் தொழிலாளர்களுக்கு இடையே தொடர்புக்கு IPC ஐப் பயன்படுத்துகிறது</span>
+                </div>
+            </div>
+            
+            <p>கிளஸ்டரிங்கைப் புரிந்துகொண்டு சரியாகச் செயல்படுத்துவதன் மூலம், கிடைக்கக்கூடிய அனைத்து CPU வளங்களையும் திறம்படப் பயன்படுத்தும் உயர்-செயல்திறன், நம்பகமான Node.js பயன்பாடுகளை உருவாக்க முடியும்.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான தொகுதி பெயரை தேர்வு செய்யவும்.</h4>
+                <p>The ______ module allows you to create child processes that run simultaneously and share the same server port.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">child_process</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "child_process" தொகுதி குழந்தை செயல்முறைகளை உருவாக்குகிறது, ஆனால் அவை ஒரே போர்ட்டைப் பகிர்ந்து கொள்ளாது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">worker_threads</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "worker_threads" தொகுதி நூல்களை உருவாக்குகிறது, குழந்தை செயல்முறைகளை அல்ல, மேலும் அவை போர்ட்டுகளைப் பகிர்ந்து கொள்ளாது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">cluster</div>
+                            <div class="option-feedback correct">✓ சரி! "cluster" தொகுதி ஒரே சேவையக போர்ட்டைப் பகிர்ந்து கொள்ளும் குழந்தை செயல்முறைகளை உருவாக்க உங்களை அனுமதிக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">os</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "os" தொகுதி இயக்க முறைமை-தொடர்பான தகவல்களை வழங்குகிறது, ஆனால் குழந்தை செயல்முறைகளை உருவாக்காது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Child Process Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Worker Threads Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is">Cluster தொகுதி</a></li>
+                    <li><a href="#basic-cluster">அடிப்படை கிளஸ்டர்</a></li>
+                    <li><a href="#load-balancing">சுமை சமநிலை</a></li>
+                    <li><a href="#worker-lifecycle">தொழிலாளர் வாழ்க்கைச் சுழற்சி</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

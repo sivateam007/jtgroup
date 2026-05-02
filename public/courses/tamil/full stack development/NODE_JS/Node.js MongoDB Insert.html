@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js MongoDB Insert - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js MongoDB Create Collection.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js MongoDB Find.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js MongoDB Insert</h2>
+            <p>Node.js ஐப் பயன்படுத்தி MongoDB தொகுப்புகளில் ஆவணங்களைச் செருக கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Insert Into Collection -->
+        <section class="content-section" id="insert-collection">
+            <h2>தொகுப்பில் செருகுதல்</h2>
+            
+            <p>ஒரு பதிவை, அல்லது MongoDB இல் ஆவணம் என்று அழைக்கப்படுவதை, ஒரு தொகுப்பில் செருக, நாங்கள் insertOne() முறையைப் பயன்படுத்துகிறோம்.</p>
+            
+            <p>MongoDB இல் உள்ள ஒரு ஆவணம் MySQL இல் உள்ள பதிவுக்கு சமமானதாகும்</p>
+            
+            <p>insertOne() முறையின் முதல் அளவுரு, நீங்கள் செருக விரும்பும் ஆவணத்தில் உள்ள ஒவ்வொரு புலத்தின் பெயர்(கள்) மற்றும் மதிப்பு(கள்) ஆகியவற்றைக் கொண்ட ஒரு பொருளாகும்.</p>
+            
+            <p>இது ஒரு கால்பேக் செயல்பாட்டையும் எடுக்கும், அங்கு நீங்கள் எந்தப் பிழைகளுடனும் அல்லது செருகுதலின் முடிவுடனும் பணியாற்றலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"customers" தொகுப்பில் ஒரு ஆவணத்தைச் செருகவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  let myobj = { name: "Company Inc", address: "Highway 37" };
+  dbo.collection("customers").insertOne(myobj, function(err, res) {
+    if (err) throw err;
+    console.log("1 document inserted");
+    db.close();
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_mongodb_insert.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_mongodb_insert.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>1 document inserted</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>இல்லாத தொகுப்பில் ஆவணங்களைச் செருக முயற்சித்தால், MongoDB தானாகவே தொகுப்பை உருவாக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Insert Multiple Documents -->
+        <section class="content-section" id="insert-multiple">
+            <h2>பல ஆவணங்களைச் செருகுதல்</h2>
+            
+            <p>MongoDB இல் ஒரு தொகுப்பில் பல ஆவணங்களைச் செருக, நாங்கள் insertMany() முறையைப் பயன்படுத்துகிறோம்.</p>
+            
+            <p>insertMany() முறையின் முதல் அளவுரு, நீங்கள் செருக விரும்பும் தரவைக் கொண்ட பொருட்களின் வரிசையாகும்.</p>
+            
+            <p>இது ஒரு கால்பேக் செயல்பாட்டையும் எடுக்கும், அங்கு நீங்கள் எந்தப் பிழைகளுடனும் அல்லது செருகுதலின் முடிவுடனும் பணியாற்றலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"customers" தொகுப்பில் பல ஆவணங்களைச் செருகவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  let myobj = [
+    { name: 'John', address: 'Highway 71'},
+    { name: 'Peter', address: 'Lowstreet 4'},
+    { name: 'Amy', address: 'Apple st 652'},
+    { name: 'Hannah', address: 'Mountain 21'},
+    { name: 'Michael', address: 'Valley 345'},
+    { name: 'Sandy', address: 'Ocean blvd 2'},
+    { name: 'Betty', address: 'Green Grass 1'},
+    { name: 'Richard', address: 'Sky st 331'},
+    { name: 'Susan', address: 'One way 98'},
+    { name: 'Vicky', address: 'Yellow Garden 2'},
+    { name: 'Ben', address: 'Park Lane 38'},
+    { name: 'William', address: 'Central st 954'},
+    { name: 'Chuck', address: 'Main Road 989'},
+    { name: 'Viola', address: 'Sideway 1633'}
+  ];
+  dbo.collection("customers").insertMany(myobj, function(err, res) {
+    if (err) throw err;
+    console.log("Number of documents inserted: " + res.insertedCount);
+    db.close();
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_mongodb_insert_multiple.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_mongodb_insert_multiple.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>Number of documents inserted: 14</code></pre>
+            </div>
+        </section>
+
+        <!-- The Result Object -->
+        <section class="content-section" id="result-object">
+            <h2>முடிவு பொருள்</h2>
+            
+            <p>insertMany() முறையை இயக்கும் போது, ஒரு முடிவு பொருள் திருப்பி அனுப்பப்படும்.</p>
+            
+            <p>முடிவு பொருள் செருகுதல் தரவுத்தளத்தை எவ்வாறு பாதித்தது என்பதைப் பற்றிய தகவல்களைக் கொண்டுள்ளது.</p>
+            
+            <p>மேலே உள்ள எடுத்துக்காட்டிலிருந்து திருப்பி அனுப்பப்பட்ட பொருள் இப்படித் தெரிகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>{
+  result: { ok: 1, n: 14 },
+  ops: [
+    { name: 'John', address: 'Highway 71', _id: 58fdbf5c0ef8a50b4cdd9a84 },
+    { name: 'Peter', address: 'Lowstreet 4', _id: 58fdbf5c0ef8a50b4cdd9a85 },
+    { name: 'Amy', address: 'Apple st 652', _id: 58fdbf5c0ef8a50b4cdd9a86 },
+    { name: 'Hannah', address: 'Mountain 21', _id: 58fdbf5c0ef8a50b4cdd9a87 },
+    { name: 'Michael', address: 'Valley 345', _id: 58fdbf5c0ef8a50b4cdd9a88 },
+    { name: 'Sandy', address: 'Ocean blvd 2', _id: 58fdbf5c0ef8a50b4cdd9a89 },
+    { name: 'Betty', address: 'Green Grass 1', _id: 58fdbf5c0ef8a50b4cdd9a8a },
+    { name: 'Richard', address: 'Sky st 331', _id: 58fdbf5c0ef8a50b4cdd9a8b },
+    { name: 'Susan', address: 'One way 98', _id: 58fdbf5c0ef8a50b4cdd9a8c },
+    { name: 'Vicky', address: 'Yellow Garden 2', _id: 58fdbf5c0ef8a50b4cdd9a8d },
+    { name: 'Ben', address: 'Park Lane 38', _id: 58fdbf5c0ef8a50b4cdd9a8e },
+    { name: 'William', address: 'Central st 954', _id: 58fdbf5c0ef8a50b4cdd9a8f },
+    { name: 'Chuck', address: 'Main Road 989', _id: 58fdbf5c0ef8a50b4cdd9a90 },
+    { name: 'Viola', address: 'Sideway 1633', _id: 58fdbf5c0ef8a50b4cdd9a91 } ],
+  insertedCount: 14,
+  insertedIds: [
+    58fdbf5c0ef8a50b4cdd9a84,
+    58fdbf5c0ef8a50b4cdd9a85,
+    58fdbf5c0ef8a50b4cdd9a86,
+    58fdbf5c0ef8a50b4cdd9a87,
+    58fdbf5c0ef8a50b4cdd9a88,
+    58fdbf5c0ef8a50b4cdd9a89,
+    58fdbf5c0ef8a50b4cdd9a8a,
+    58fdbf5c0ef8a50b4cdd9a8b,
+    58fdbf5c0ef8a50b4cdd9a8c,
+    58fdbf5c0ef8a50b4cdd9a8d,
+    58fdbf5c0ef8a50b4cdd9a8e,
+    58fdbf5c0ef8a50b4cdd9a8f,
+    58fdbf5c0ef8a50b4cdd9a90,
+    58fdbf5c0ef8a50b4cdd9a91 ]
+}</code></pre>
+            </div>
+            
+            <p>பண்புகளின் மதிப்புகளை இப்படி காட்டலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>செருகப்பட்ட ஆவணங்களின் எண்ணிக்கையைத் திருப்பி அனுப்பவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>console.log(res.insertedCount)</code></pre>
+            </div>
+            
+            <p>இது இந்த முடிவை உருவாக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>14</code></pre>
+            </div>
+        </section>
+
+        <!-- The _id Field -->
+        <section class="content-section" id="id-field">
+            <h2>_id புலம்</h2>
+            
+            <p>நீங்கள் _id புலத்தைக் குறிப்பிடவில்லை என்றால், MongoDB உங்களுக்காக ஒன்றைச் சேர்த்து ஒவ்வொரு ஆவணத்திற்கும் ஒரு தனிப்பட்ட id ஐ ஒதுக்கும்.</p>
+            
+            <p>மேலே உள்ள எடுத்துக்காட்டில் _id புலம் குறிப்பிடப்படவில்லை, மேலும் முடிவு பொருளிலிருந்து நீங்கள் பார்க்க முடியும் என, MongoDB ஒவ்வொரு ஆவணத்திற்கும் ஒரு தனிப்பட்ட _id ஐ ஒதுக்கியது.</p>
+            
+            <p>நீங்கள் _id புலத்தைக் குறிப்பிட்டால், மதிப்பு ஒவ்வொரு ஆவணத்திற்கும் தனிப்பட்டதாக இருக்க வேண்டும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"products" அட்டவணையில் குறிப்பிடப்பட்ட _id புலங்களுடன் மூன்று பதிவுகளைச் செருகவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  let myobj = [
+    { _id: 154, name: 'Chocolate Heaven'},
+    { _id: 155, name: 'Tasty Lemon'},
+    { _id: 156, name: 'Vanilla Dream'}
+  ];
+  dbo.collection("products").insertMany(myobj, function(err, res) {
+    if (err) throw err;
+    console.log(res);
+    db.close();
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_mongodb_insert_id.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_mongodb_insert_id.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>{
+  result: { ok: 1, n: 3 },
+  ops: [
+    { _id: 154, name: 'Chocolate Heaven },
+    { _id: 155, name: 'Tasty Lemon },
+    { _id: 156, name: 'Vanilla Dream } ],
+  insertedCount: 3,
+  insertedIds: [
+    154,
+    155,
+    156 ]
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Modern Insert Examples -->
+        <section class="content-section" id="modern-insert">
+            <h2>நவீன செருகல் எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>நவீன async/await தொடரியல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const { MongoClient } = require('mongodb');
+
+async function insertSingleDocument() {
+  const uri = "mongodb://localhost:27017/";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("mydb");
+    const collection = database.collection("customers");
+    
+    const result = await collection.insertOne({
+      name: "Modern Company",
+      address: "Digital Street 123",
+      email: "info@moderncompany.com",
+      createdAt: new Date()
+    });
+    
+    console.log(`Document inserted with _id: ${result.insertedId}`);
+    
+  } catch (err) {
+    console.error("Error inserting document:", err);
+  } finally {
+    await client.close();
+  }
+}
+
+insertSingleDocument();</code></pre>
+            </div>
+            
+            <h3>பல ஆவணங்களை நவீன முறையில் செருகுதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const { MongoClient } = require('mongodb');
+
+async function insertMultipleDocuments() {
+  const uri = "mongodb://localhost:27017/";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("mydb");
+    const collection = database.collection("users");
+    
+    const users = [
+      { name: "Alice", age: 25, city: "New York" },
+      { name: "Bob", age: 30, city: "London" },
+      { name: "Charlie", age: 35, city: "Tokyo" }
+    ];
+    
+    const result = await collection.insertMany(users);
+    
+    console.log(`${result.insertedCount} documents were inserted`);
+    console.log("Inserted IDs:", result.insertedIds);
+    
+  } catch (err) {
+    console.error("Error inserting documents:", err);
+  } finally {
+    await client.close();
+  }
+}
+
+insertMultipleDocuments();</code></pre>
+            </div>
+        </section>
+
+        <!-- Insert Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>செருகல் சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>செயல்திறன்</h4>
+                    </div>
+                    <ul>
+                        <li>பெரிய செருகுதல்களுக்கு insertMany() பயன்படுத்தவும்</li>
+                        <li>தொகுதி செருகல்களைப் பயன்படுத்தவும்</li>
+                        <li>தேவையற்ற புலங்களைத் தவிர்க்கவும்</li>
+                        <li>சரியான குறியீட்டு உத்திகளைப் பயன்படுத்தவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>பாதுகாப்பு</h4>
+                    </div>
+                    <ul>
+                        <li>பயனர் உள்ளீட்டை எப்போதும் சரிபார்க்கவும்</li>
+                        <li>தரவு சுத்திகரிப்பு செயல்பாடுகளைப் பயன்படுத்தவும்</li>
+                        <li>சரிபார்க்கப்பட்ட தொகுப்புகளைப் பயன்படுத்தவும்</li>
+                        <li>பிழை கையாளுதலையும் கண்காணிப்பையும் பயன்படுத்தவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>தரவு வடிவமைப்பு</h4>
+                    </div>
+                    <ul>
+                        <li>நிலையான புலப் பெயர்களைப் பயன்படுத்தவும்</li>
+                        <li>தேதி/நேரத்தை சரியாக வடிவமைக்கவும்</li>
+                        <li>தேவையான புலங்களைக் குறிப்பிடவும்</li>
+                        <li>ஆவண அளவைக் கண்காணிக்கவும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete Example -->
+        <section class="content-section" id="complete-example">
+            <h2>முழுமையான எடுத்துக்காட்டு</h2>
+            
+            <p>அனைத்து செருகல் நுட்பங்களையும் உள்ளடக்கிய முழுமையான எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const { MongoClient } = require('mongodb');
+
+class DataInserter {
+  constructor(connectionString, dbName) {
+    this.connectionString = connectionString;
+    this.dbName = dbName;
+    this.client = new MongoClient(connectionString);
+  }
+
+  async connect() {
+    try {
+      await this.client.connect();
+      console.log("Connected to MongoDB server");
+      this.database = this.client.db(this.dbName);
+      return true;
+    } catch (error) {
+      console.error("Connection failed:", error);
+      return false;
+    }
+  }
+
+  async insertSingle(collectionName, document) {
+    try {
+      const collection = this.database.collection(collectionName);
+      const result = await collection.insertOne(document);
+      console.log(`Inserted document with _id: ${result.insertedId}`);
+      return result;
+    } catch (error) {
+      console.error("Error inserting single document:", error);
+      throw error;
+    }
+  }
+
+  async insertMultiple(collectionName, documents) {
+    try {
+      const collection = this.database.collection(collectionName);
+      const result = await collection.insertMany(documents);
+      console.log(`Inserted ${result.insertedCount} documents`);
+      return result;
+    } catch (error) {
+      console.error("Error inserting multiple documents:", error);
+      throw error;
+    }
+  }
+
+  async insertWithCustomIds(collectionName, documentsWithIds) {
+    try {
+      const collection = this.database.collection(collectionName);
+      const result = await collection.insertMany(documentsWithIds);
+      console.log(`Inserted ${result.insertedCount} documents with custom IDs`);
+      return result;
+    } catch (error) {
+      console.error("Error inserting documents with custom IDs:", error);
+      throw error;
+    }
+  }
+
+  async close() {
+    try {
+      await this.client.close();
+      console.log("Connection closed");
+    } catch (error) {
+      console.error("Error closing connection:", error);
+    }
+  }
+}
+
+// Usage example
+async function main() {
+  const connectionString = "mongodb://localhost:27017/";
+  const dbName = "mydb";
+  
+  const inserter = new DataInserter(connectionString, dbName);
+
+  try {
+    const connected = await inserter.connect();
+    if (!connected) return;
+
+    // Insert single document
+    await inserter.insertSingle("customers", {
+      name: "Tech Solutions Inc",
+      address: "Tech Park 456",
+      industry: "Technology",
+      founded: 2020
+    });
+
+    // Insert multiple documents
+    const employees = [
+      { name: "Sarah", position: "Developer", salary: 60000 },
+      { name: "Mike", position: "Designer", salary: 55000 },
+      { name: "Lisa", position: "Manager", salary: 75000 }
+    ];
+    await inserter.insertMultiple("employees", employees);
+
+    // Insert with custom IDs
+    const products = [
+      { _id: "prod001", name: "Laptop", price: 999.99, category: "Electronics" },
+      { _id: "prod002", name: "Mouse", price: 29.99, category: "Electronics" },
+      { _id: "prod003", name: "Keyboard", price: 79.99, category: "Electronics" }
+    ];
+    await inserter.insertWithCustomIds("products", products);
+
+    console.log("All insert operations completed successfully!");
+    
+  } catch (error) {
+    console.error("Main function error:", error);
+  } finally {
+    await inserter.close();
+  }
+}
+
+// Run the example
+main();</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MongoDB இல் உள்ள ஒரு ஆவணம் MySQL இல் உள்ள ______ க்கு சமமானதாகும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தரவுத்தளம்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! தரவுத்தளம் என்பது MongoDB இல் உள்ள தரவுத்தளத்திற்கு சமமானதாகும், தனிப்பட்ட ஆவணம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணை</div>
+                            <div class="option-feedback incorrect">✗ தவறு! அட்டவணை என்பது MongoDB இல் உள்ள தொகுப்புக்கு சமமானதாகும், தனிப்பட்ட ஆவணம் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">பதிவு</div>
+                            <div class="option-feedback correct">✓ சரி! MongoDB இல் உள்ள ஒரு ஆவணம் MySQL இல் உள்ள பதிவுக்கு சமமானதாகும். இரண்டும் தனிப்பட்ட தரவு உருப்படிகளைக் குறிக்கின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">நெடுவரிசை</div>
+                            <div class="option-feedback incorrect">✗ தவறு! நெடுவரிசை என்பது MySQL இல் உள்ள ஒரு தனி தரவு புலமாகும், முழு பதிவு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js MongoDB Create Collection.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js MongoDB Find.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#insert-collection">தொகுப்பில் செருகுதல்</a></li>
+                    <li><a href="#insert-multiple">பல ஆவணங்களைச் செருகுதல்</a></li>
+                    <li><a href="#result-object">முடிவு பொருள்</a></li>
+                    <li><a href="#id-field">_id புலம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

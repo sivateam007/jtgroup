@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Aggregate Functions - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL TOP, LIMIT, FETCH FIRST or ROWNUM Clause.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL MIN() and MAX() Functions.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Aggregate Functions</h2>
+            <p>மதிப்புகளின் தொகுப்பில் கணக்கீடு செய்து ஒற்றை மதிப்பைத் திரும்பப் பெறும் Aggregate சார்புகளைப் பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What are Aggregate Functions -->
+        <section class="content-section" id="what-are-aggregate">
+            <h2>SQL Aggregate சார்புகள்</h2>
+            
+            <p>Aggregate சார்பு என்பது மதிப்புகளின் தொகுப்பில் கணக்கீடு செய்து ஒற்றை மதிப்பைத் திரும்பப் பெறும் ஒரு சார்பாகும்.</p>
+            
+            <p>Aggregate சார்புகள் பெரும்பாலும் SELECT அறிக்கையின் GROUP BY கிளாஸுடன் பயன்படுத்தப்படுகின்றன. GROUP BY கிளாஸ் முடிவுத் தொகுப்பை மதிப்புகளின் குழுக்களாகப் பிரிக்கிறது, மேலும் ஒவ்வொரு குழுவிற்கும் ஒற்றை மதிப்பைத் திரும்பப் பெற aggregate சார்பு பயன்படுத்தப்படலாம்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>Aggregate சார்புகள் NULL மதிப்புகளைப் புறக்கணிக்கின்றன (COUNT(*) தவிர).</p>
+            </div>
+        </section>
+
+        <!-- Common Aggregate Functions -->
+        <section class="content-section" id="common-functions">
+            <h2>பொதுவாகப் பயன்படுத்தப்படும் SQL Aggregate சார்புகள்</h2>
+            
+            <div class="functions-grid">
+                <div class="function-card">
+                    <div class="function-header">
+                        <i class="fas fa-arrow-down"></i>
+                        <h3>MIN()</h3>
+                    </div>
+                    <div class="function-content">
+                        <p>தேர்ந்தெடுக்கப்பட்ட நிரலில் உள்ள <strong>சிறிய மதிப்பை</strong> திரும்பப் பெறுகிறது</p>
+                        <div class="code-block small">
+                            <pre><code>SELECT MIN(column_name) 
+FROM table_name;</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <div class="function-header">
+                        <i class="fas fa-arrow-up"></i>
+                        <h3>MAX()</h3>
+                    </div>
+                    <div class="function-content">
+                        <p>தேர்ந்தெடுக்கப்பட்ட நிரலில் உள்ள <strong>பெரிய மதிப்பை</strong> திரும்பப் பெறுகிறது</p>
+                        <div class="code-block small">
+                            <pre><code>SELECT MAX(column_name) 
+FROM table_name;</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <div class="function-header">
+                        <i class="fas fa-hashtag"></i>
+                        <h3>COUNT()</h3>
+                    </div>
+                    <div class="function-content">
+                        <p>ஒரு தொகுப்பில் உள்ள <strong>வரிசைகளின் எண்ணிக்கையை</strong> திரும்பப் பெறுகிறது</p>
+                        <div class="code-block small">
+                            <pre><code>SELECT COUNT(column_name) 
+FROM table_name;</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <div class="function-header">
+                        <i class="fas fa-calculator"></i>
+                        <h3>SUM()</h3>
+                    </div>
+                    <div class="function-content">
+                        <p>ஒரு எண் நிரலின் <strong>மொத்த தொகையை</strong> திரும்பப் பெறுகிறது</p>
+                        <div class="code-block small">
+                            <pre><code>SELECT SUM(column_name) 
+FROM table_name;</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <div class="function-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>AVG()</h3>
+                    </div>
+                    <div class="function-content">
+                        <p>ஒரு எண் நிரலின் <strong>சராசரி மதிப்பை</strong> திரும்பப் பெறுகிறது</p>
+                        <div class="code-block small">
+                            <pre><code>SELECT AVG(column_name) 
+FROM table_name;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>உதாரணங்களில் பயன்படுத்தப்படும் Products அட்டவணையிலிருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ProductID</th>
+                                <th>ProductName</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>SupplierID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Chais</td>
+                                <td>Beverages</td>
+                                <td>18.00</td>
+                                <td>39</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Chang</td>
+                                <td>Beverages</td>
+                                <td>19.00</td>
+                                <td>17</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Aniseed Syrup</td>
+                                <td>Condiments</td>
+                                <td>10.00</td>
+                                <td>13</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Chef Anton's Cajun Seasoning</td>
+                                <td>Condiments</td>
+                                <td>22.00</td>
+                                <td>53</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Chef Anton's Gumbo Mix</td>
+                                <td>Condiments</td>
+                                <td>21.35</td>
+                                <td>0</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Grandma's Boysenberry Spread</td>
+                                <td>Condiments</td>
+                                <td>25.00</td>
+                                <td>120</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Uncle Bob's Organic Dried Pears</td>
+                                <td>Produce</td>
+                                <td>30.00</td>
+                                <td>15</td>
+                                <td>3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MIN() Function Examples -->
+        <section class="content-section" id="min-examples">
+            <h2>MIN() சார்பு உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <h3>குறைந்த விலை</h3>
+                    <p>Products அட்டவணையில் உள்ள குறைந்த விலையைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT MIN(Price) 
+FROM Products;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <h3>குறைந்த அளவு</h3>
+                    <p>Products அட்டவணையில் உள்ள குறைந்த அளவைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT MIN(Quantity) 
+FROM Products;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <h3>குழுவின் அடிப்படையில் குறைந்த விலை</h3>
+                    <p>ஒவ்வொரு வகைக்கும் குறைந்த விலையைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT Category, MIN(Price)
+FROM Products
+GROUP BY Category;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAX() Function Examples -->
+        <section class="content-section" id="max-examples">
+            <h2>MAX() சார்பு உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <h3>அதிக விலை</h3>
+                    <p>Products அட்டவணையில் உள்ள அதிக விலையைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT MAX(Price) 
+FROM Products;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <h3>அதிக அளவு</h3>
+                    <p>Products அட்டவணையில் உள்ள அதிக அளவைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT MAX(Quantity) 
+FROM Products;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <h3>குழுவின் அடிப்படையில் அதிக விலை</h3>
+                    <p>ஒவ்வொரு வகைக்கும் அதிக விலையைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT Category, MAX(Price)
+FROM Products
+GROUP BY Category;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COUNT() Function Examples -->
+        <section class="content-section" id="count-examples">
+            <h2>COUNT() சார்பு உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h3>மொத்த பொருட்கள்</h3>
+                    <p>Products அட்டவணையில் உள்ள மொத்த பொருட்களின் எண்ணிக்கை</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT COUNT(*) 
+FROM Products;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h3>குழுவின் அடிப்படையில் எண்ணிக்கை</h3>
+                    <p>ஒவ்வொரு வகையிலும் உள்ள பொருட்களின் எண்ணிக்கை</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT Category, COUNT(*)
+FROM Products
+GROUP BY Category;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h3>NULL அல்லாத மதிப்புகள்</h3>
+                    <p>NULL அல்லாத மதிப்புகளின் எண்ணிக்கை</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT COUNT(column_name)
+FROM table_name;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUM() and AVG() Function Examples -->
+        <section class="content-section" id="sum-avg-examples">
+            <h2>SUM() மற்றும் AVG() சார்பு உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>மொத்த அளவு</h3>
+                    <p>அனைத்து பொருட்களின் மொத்த அளவு</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT SUM(Quantity) 
+FROM Products;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>சராசரி விலை</h3>
+                    <p>அனைத்து பொருட்களின் சராசரி விலை</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT AVG(Price) 
+FROM Products;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>குழுவின் அடிப்படையில் சராசரி</h3>
+                    <p>ஒவ்வொரு வகைக்கும் சராசரி விலை</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT Category, AVG(Price)
+FROM Products
+GROUP BY Category;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Function Comparison -->
+        <section class="content-section" id="function-comparison">
+            <h2>சார்பு ஒப்பீடு</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-down"></i>
+                        <h4>MIN()</h4>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>SELECT MIN(Price)</code></pre>
+                    </div>
+                    <ul>
+                        <li>சிறிய மதிப்பைத் திரும்பப் பெறுகிறது</li>
+                        <li>எண் மற்றும் தேதி தரவு வகைகளில் வேலை செய்கிறது</li>
+                        <li>NULL மதிப்புகளைப் புறக்கணிக்கிறது</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>MAX()</h4>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>SELECT MAX(Price)</code></pre>
+                    </div>
+                    <ul>
+                        <li>பெரிய மதிப்பைத் திரும்பப் பெறுகிறது</li>
+                        <li>எண் மற்றும் தேதி தரவு வகைகளில் வேலை செய்கிறது</li>
+                        <li>NULL மதிப்புகளைப் புறக்கணிக்கிறது</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-hashtag"></i>
+                        <h4>COUNT()</h4>
+                    </div>
+                    <div class="code-block small">
+                        <pre><code>SELECT COUNT(*)</code></pre>
+                    </div>
+                    <ul>
+                        <li>வரிசைகளின் எண்ணிக்கையைத் திரும்பப் பெறுகிறது</li>
+                        <li>அனைத்து தரவு வகைகளிலும் வேலை செய்கிறது</li>
+                        <li>COUNT(*) NULL மதிப்புகளைக் கணக்கிடுகிறது</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் SQL aggregate சார்புகளில் எது ஒரு எண் நிரலின் சராசரி மதிப்பைக் கணக்கிட பயன்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">MIN()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! MIN() சிறிய மதிப்பைக் கண்டறிய பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">MAX()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! MAX() பெரிய மதிப்பைக் கண்டறிய பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">COUNT()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! COUNT() வரிசைகளின் எண்ணிக்கையைக் கணக்கிட பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">AVG()</div>
+                            <div class="option-feedback correct">✓ சரி! AVG() சார்பு ஒரு எண் நிரலின் சராசரி மதிப்பைக் கணக்கிட பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL TOP, LIMIT, FETCH FIRST or ROWNUM Clause.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL MIN() and MAX() Functions.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-are-aggregate">Aggregate சார்புகள்</a></li>
+                    <li><a href="#common-functions">பொதுவான சார்புகள்</a></li>
+                    <li><a href="#min-examples">MIN() உதாரணங்கள்</a></li>
+                    <li><a href="#max-examples">MAX() உதாரணங்கள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .functions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .function-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .function-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .function-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .function-header i {
+            font-size: 1.8rem;
+            color: var(--git-color);
+        }
+        
+        .function-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+        
+        .function-content p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            margin: 2rem 0;
+        }
+        
+        .responsive-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--git-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        @media (max-width: 768px) {
+            .functions-grid,
+            .examples-grid,
+            .comparison-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .function-header,
+            .comparison-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .responsive-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

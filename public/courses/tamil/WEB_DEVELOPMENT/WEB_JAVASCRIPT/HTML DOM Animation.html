@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML DOM Animation - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Animation demo styles */
+        .animation-demo {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        #animationContainer {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            margin: 1rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid var(--git-color);
+        }
+        
+        #animateBox {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            border-radius: 8px;
+            top: 0;
+            left: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .animation-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .animation-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .animation-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .animation-btn.stop {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+        
+        .animation-btn.reset {
+            background: linear-gradient(135deg, #6c757d, #495057);
+        }
+        
+        .code-preview {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML%20Form%20Validation.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML%20DOM%20Document.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML DOM Animation</h2>
+            <p>JavaScript ஐப் பயன்படுத்தி HTML அனிமேஷன்களை உருவாக்கக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML DOM அனிமேஷன்</h2>
+            
+            <p>JavaScript ஐப் பயன்படுத்தி HTML அனிமேஷன்களை உருவாக்க கற்றுக்கொள்ளுங்கள்.</p>
+        </section>
+
+        <!-- A Basic Web Page -->
+        <section class="content-section" id="basic-webpage">
+            <h2>ஒரு அடிப்படை வலைப்பக்கம்</h2>
+            
+            <p>JavaScript உடன் HTML அனிமேஷன்களை எவ்வாறு உருவாக்குவது என்பதை நிரூபிக்க, நாங்கள் ஒரு எளிய வலைப்பக்கத்தைப் பயன்படுத்துவோம்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1&gt;My First JavaScript Animation&lt;/h1&gt;
+
+&lt;div id="animation"&gt;My animation will go here&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Create an Animation Container -->
+        <section class="content-section" id="animation-container">
+            <h2>அனிமேஷன் கொள்கலனை உருவாக்குதல்</h2>
+            
+            <p>அனைத்து அனிமேஷன்களும் ஒரு கொள்கலன் உறுப்புடன் தொடர்புடையதாக இருக்க வேண்டும்.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;div id="container"&gt;
+  &lt;div id="animate"&gt;My animation will go here&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Style the Elements -->
+        <section class="content-section" id="style-elements">
+            <h2>உறுப்புகளை பாணிப்படுத்துதல்</h2>
+            
+            <p>கொள்கலன் உறுப்பு style = "position: relative" உடன் உருவாக்கப்பட வேண்டும்.</p>
+            
+            <p>அனிமேஷன் உறுப்பு style = "position: absolute" உடன் உருவாக்கப்பட வேண்டும்.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>#container {
+  width: 400px;
+  height: 400px;
+  position: relative;
+  background: yellow;
+}
+#animate {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  background: red;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Animation Code -->
+        <section class="content-section" id="animation-code">
+            <h2>அனிமேஷன் குறியீடு</h2>
+            
+            <p>JavaScript அனிமேஷன்கள் ஒரு உறுப்பின் பாணியில் படிப்படியான மாற்றங்களை நிரலாக்கம் செய்வதன் மூலம் செய்யப்படுகின்றன.</p>
+            
+            <p>மாற்றங்கள் ஒரு டைமர் மூலம் அழைக்கப்படுகின்றன. டைமர் இடைவெளி சிறியதாக இருக்கும்போது, அனிமேஷன் தொடர்ச்சியாக தோன்றுகிறது.</p>
+            
+            <p>அடிப்படை குறியீடு:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>id = setInterval(frame, 5);
+
+function frame() {
+  if (/* test for finished */) {
+    clearInterval(id);
+  } else {
+    /* code to change the element style */ 
+  }
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Create the Full Animation Using JavaScript -->
+        <section class="content-section" id="full-animation">
+            <h2>JavaScript ஐப் பயன்படுத்தி முழு அனிமேஷனையும் உருவாக்குதல்</h2>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>function myMove() {
+  let id = null;
+  const elem = document.getElementById("animate");
+  let pos = 0;
+  clearInterval(id);
+  id = setInterval(frame, 5);
+  function frame() {
+    if (pos == 350) {
+      clearInterval(id);
+    } else {
+      pos++;
+      elem.style.top = pos + 'px';
+      elem.style.left = pos + 'px';
+    }
+  }
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Interactive Animation Demo -->
+        <section class="content-section" id="interactive-demo">
+            <h2>ஊடாடும் அனிமேஷன் ஆர்ப்பாட்டம்</h2>
+            
+            <div class="animation-demo">
+                <h3>வாழும் அனிமேஷன் ஆர்ப்பாட்டம்</h3>
+                
+                <div id="animationContainer">
+                    <div id="animateBox"></div>
+                </div>
+                
+                <div class="animation-controls">
+                    <button class="animation-btn" onclick="startAnimation()">
+                        <i class="fas fa-play"></i> அனிமேஷனைத் தொடங்கு
+                    </button>
+                    <button class="animation-btn stop" onclick="stopAnimation()">
+                        <i class="fas fa-stop"></i> நிறுத்து
+                    </button>
+                    <button class="animation-btn reset" onclick="resetAnimation()">
+                        <i class="fas fa-redo"></i> மீட்டமை
+                    </button>
+                </div>
+                
+                <div class="code-preview">
+                    <span style="color: #8be9fd;">// அனிமேஷன் செயல்பாடுகள்</span><br>
+                    <span style="color: #ff79c6;">let</span> <span style="color: #50fa7b;">animationId</span> = <span style="color: #bd93f9;">null</span>;<br>
+                    <span style="color: #ff79c6;">let</span> <span style="color: #50fa7b;">position</span> = <span style="color: #bd93f9;">0</span>;<br><br>
+                    
+                    <span style="color: #ff79c6;">function</span> <span style="color: #50fa7b;">startAnimation</span>() {<br>
+                    &nbsp;&nbsp;<span style="color: #ff79c6;">const</span> <span style="color: #50fa7b;">elem</span> = <span style="color: #8be9fd;">document</span>.<span style="color: #50fa7b;">getElementById</span>(<span style="color: #f1fa8c;">"animateBox"</span>);<br>
+                    &nbsp;&nbsp;<span style="color: #50fa7b;">clearInterval</span>(animationId);<br>
+                    &nbsp;&nbsp;animationId = <span style="color: #50fa7b;">setInterval</span>(<span style="color: #50fa7b;">frame</span>, <span style="color: #bd93f9;">5</span>);<br><br>
+                    
+                    &nbsp;&nbsp;<span style="color: #ff79c6;">function</span> <span style="color: #50fa7b;">frame</span>() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff79c6;">if</span> (position == <span style="color: #bd93f9;">350</span>) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #50fa7b;">clearInterval</span>(animationId);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;} <span style="color: #ff79c6;">else</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position++;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elem.<span style="color: #50fa7b;">style</span>.<span style="color: #50fa7b;">top</span> = position + <span style="color: #f1fa8c;">'px'</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elem.<span style="color: #50fa7b;">style</span>.<span style="color: #50fa7b;">left</span> = position + <span style="color: #f1fa8c;">'px'</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Animation Tips -->
+        <section class="content-section" id="animation-tips">
+            <h2>அனிமேஷன் உதவிக்குறிப்புகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h4>நிகழ்வு இடைவெளி</h4>
+                    </div>
+                    <p>சிறிய இடைவெளிகள் (5-10ms) மென்மையான அனிமேஷன்களை வழங்குகின்றன, ஆனால் CPU பயன்பாட்டை அதிகரிக்கின்றன</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-compress-arrows-alt"></i>
+                        <h4>பொருத்தமான நிறுத்தங்கள்</h4>
+                    </div>
+                    <p>அனிமேஷன் முடிந்ததும் clearInterval() ஐப் பயன்படுத்துவதை உறுதிப்படுத்தவும், இல்லையெனில் நினைவகக் கசிவு ஏற்படலாம்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-calculator"></i>
+                        <h4>கணக்கீட்டு செயல்திறன்</h4>
+                    </div>
+                    <p>சிக்கலான கணக்கீடுகளைத் தவிர்க்கவும். CSS டிரான்ஸ்ஃபார்ம்கள் JavaScript ஐ விட செயல்திறனுடன் இருக்கும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-users"></i>
+                        <h4>உலாவி இணக்கத்தன்மை</h4>
+                    </div>
+                    <p>அனைத்து நவீன உலாவிகளிலும் setInterval() மற்றும் clearInterval() ஆதரவு உள்ளது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise - ONLY ONE EXERCISE -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> JavaScript இல் ஒரு அனிமேஷனை நிறுத்துவதற்கான சரியான முறை எது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">stopInterval(animationId);</div>
+                            <div class="option-feedback incorrect">✗ தவறு! stopInterval() என்பது JavaScript இல் சட்டபூர்வமான செயல்பாடு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">animationId.stop();</div>
+                            <div class="option-feedback incorrect">✗ தவறு! setInterval() மூலம் திரும்பிய ஐடியில் stop() முறை இல்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">clearInterval(animationId);</div>
+                            <div class="option-feedback correct">✓ சரி! clearInterval() என்பது setInterval() மூலம் உருவாக்கப்பட்ட டைமரை நிறுத்துவதற்கான சட்டபூர்வமான முறையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">removeInterval(animationId);</div>
+                            <div class="option-feedback incorrect">✗ தவறு! removeInterval() என்பது JavaScript இல் சட்டபூர்வமான செயல்பாடு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML%20Form%20Validation.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML%20DOM%20Document.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#basic-webpage">அடிப்படை வலைப்பக்கம்</a></li>
+                    <li><a href="#animation-container">அனிமேஷன் கொள்கலன்</a></li>
+                    <li><a href="#style-elements">உறுப்புகளை பாணிப்படுத்துதல்</a></li>
+                    <li><a href="#animation-code">அனிமேஷன் குறியீடு</a></li>
+                    <li><a href="#interactive-demo">ஊடாடும் ஆர்ப்பாட்டம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Animation variables and functions
+        let animationId = null;
+        let position = 0;
+
+        function startAnimation() {
+            const elem = document.getElementById("animateBox");
+            clearInterval(animationId);
+            animationId = setInterval(frame, 5);
+            
+            function frame() {
+                if (position == 350) {
+                    clearInterval(animationId);
+                } else {
+                    position++;
+                    elem.style.top = position + 'px';
+                    elem.style.left = position + 'px';
+                }
+            }
+        }
+
+        function stopAnimation() {
+            clearInterval(animationId);
+        }
+
+        function resetAnimation() {
+            clearInterval(animationId);
+            position = 0;
+            const elem = document.getElementById("animateBox");
+            elem.style.top = '0px';
+            elem.style.left = '0px';
+        }
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

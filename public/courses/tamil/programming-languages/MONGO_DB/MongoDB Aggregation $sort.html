@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Aggregation $sort - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MongoDB Aggregation $project.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MongoDB Aggregation $match.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MongoDB Aggregation $sort</h2>
+            <p>ஆவணங்களை வரிசைப்படுத்துதல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Aggregation $sort -->
+        <section class="content-section" id="aggregation-sort">
+            <h2>Aggregation $sort</h2>
+            
+            <p>இந்த ஒருங்கிணைப்பு நிலை குறிப்பிட்ட வரிசையில் அனைத்து ஆவணங்களையும் வரிசைப்படுத்துகிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> நினைவில் கொள்ளுங்கள்:</h4>
+                <p>உங்கள் நிலைகளின் வரிசை முக்கியமானது. ஒவ்வொரு நிலையும் முந்தைய நிலைகள் வழங்கும் ஆவணங்களின் மீது மட்டுமே செயல்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Example -->
+        <section class="content-section" id="example">
+            <h2>எடுத்துக்காட்டு</h2>
+            
+            <p>இந்த எடுத்துக்காட்டில், நாங்கள் "sample_airbnb" தரவுத்தளத்தைப் பயன்படுத்துகிறோம், இது ஒருங்கிணைப்புகள் அறிமுகப் பிரிவில் இருந்து எங்கள் மாதிரி தரவில் இருந்து ஏற்றப்பட்டது.</p>
+            
+            <div class="code-example">
+                <pre><code>db.listingsAndReviews.aggregate([ 
+  { 
+    $sort: { "accommodates": -1 } 
+  },
+  {
+    $project: {
+      "name": 1,
+      "accommodates": 1
+    }
+  },
+  {
+    $limit: 5
+  }
+])</code></pre>
+            </div>
+            
+            <p>இது accommodates புலத்தின் அடிப்படையில் இறங்கு வரிசையில் வரிசைப்படுத்தப்பட்ட ஆவணங்களைத் திரும்பப் பெறும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📊</span> வரிசை மதிப்புகள்:</h4>
+                <p>வரிசை வரிசையை 1 அல்லது -1 ஐப் பயன்படுத்தி தேர்ந்தெடுக்கலாம். 1 என்பது ஏறு வரிசை மற்றும் -1 என்பது இறங்கு வரிசை.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MongoDB ஒருங்கிணைப்பில் இறங்கு வரிசையில் வரிசைப்படுத்த எந்த மதிப்பு பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">1</div>
+                            <div class="option-feedback incorrect">✗ தவறு! 1 என்பது ஏறு வரிசையைக் குறிக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">-1</div>
+                            <div class="option-feedback correct">✓ சரி! -1 என்பது இறங்கு வரிசையைக் குறிக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">0</div>
+                            <div class="option-feedback incorrect">✗ தவறு! 0 என்பது வரிசைப்படுத்தலுக்கு செல்லுபடியாகும் மதிப்பு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">desc</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "desc" என்பது வரிசைப்படுத்தலுக்கு செல்லுபடியாகும் மதிப்பு அல்ல, -1 பயன்படுத்தப்படுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MongoDB Aggregation $project.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MongoDB Aggregation $match.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#aggregation-sort">Aggregation $sort</a></li>
+                    <li><a href="#example">எடுத்துக்காட்டு</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

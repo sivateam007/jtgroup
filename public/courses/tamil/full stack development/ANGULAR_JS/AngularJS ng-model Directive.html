@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS ng-model Directive - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+    <div class="logo-icon">
+        <img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+    </div>
+    <h1>Jassif Team <span>Institution</span></h1>
+</div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="AngularJS Directives.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="AngularJS Data Binding.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>AngularJS ng-model Directive</h2>
+            <p>AngularJS ng-model directive</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>AngularJS ng-model Directive</h2>
+            
+            <p>ng-model directive HTML கட்டுப்பாடுகளின் (input, select, textarea) மதிப்பை பயன்பாட்டு தரவுடன் இணைக்கிறது.</p>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-link tip-icon"></i> குறிப்பு:</h4>
+                <p>ng-model directive மூலம், நீங்கள் ஒரு உள்ளீட்டுப் புலத்தின் மதிப்பை AngularJS இல் உருவாக்கப்பட்ட ஒரு மாறிக்கு இணைக்கலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Basic Example -->
+        <section class="content-section" id="basic-example">
+            <h2>அடிப்படை உதாரணம்</h2>
+            
+            <div class="code-example">
+                <pre><code>&lt;div ng-app="myApp" ng-controller="myCtrl"&gt;
+  Name: &lt;input ng-model="name"&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+  $scope.name = "John Doe";
+});
+&lt;/script&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Two-Way Binding -->
+        <section class="content-section" id="two-way">
+            <h2>இரு வழி இணைப்பு</h2>
+            
+            <p>இணைப்பு இரண்டு வழிகளிலும் செல்கிறது.</p>
+            
+            <p>பயனர் உள்ளீட்டுப் புலத்திற்குள் மதிப்பை மாற்றினால், AngularJS பண்பும் அதன் மதிப்பை மாற்றும்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;div ng-app="myApp" ng-controller="myCtrl"&gt;
+  Name: &lt;input ng-model="name"&gt;
+  &lt;h1&gt;You entered: {{name}}&lt;/h1&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-right"></i>
+                        <h4>View → Model</h4>
+                    </div>
+                    <p>பயனர் உள்ளீட்டை மாற்றும்போது தரவு மாற்றம்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-left"></i>
+                        <h4>Model → View</h4>
+                    </div>
+                    <p>தரவு மாறும்போது காட்சி தானாக புதுப்பிக்கப்படுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>இரண்டு வழி</h4>
+                    </div>
+                    <p>தானியங்கி ஒத்திசைவு இரு திசைகளிலும்</p>
+                </div>
+            </div>
+        </section>
+
+       
+        <!-- Validate User Input -->
+        <section class="content-section" id="validation">
+            <h2>பயனர் உள்ளீட்டைச் சரிபார்க்கவும்</h2>
+            
+            <p>ng-model directive பயன்பாட்டு தரவுக்கான வகை சரிபார்ப்பை வழங்க முடியும் (number, e-mail, required):</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;form ng-app="" name="myForm"&gt;
+  Email:
+  &lt;input type="email" name="myAddress" ng-model="text"&gt;
+  &lt;span ng-show="myForm.myAddress.$error.email"&gt;Not a valid e-mail address&lt;/span&gt;
+&lt;/form&gt;</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள எடுத்துக்காட்டில், ng-show பண்புக்கூறில் உள்ள எக்ஸ்பிரஷன் true ஐத் திருப்பினால் மட்டுமே span காட்டப்படும்.</p>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-exclamation-circle tip-icon"></i> முக்கியமானது:</h4>
+                <p>ng-model பண்புக்கூறில் உள்ள பண்பு இல்லாவிட்டால், AngularJS உங்களுக்காக ஒன்றை உருவாக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Application Status -->
+        <section class="content-section" id="status">
+            <h2>பயன்பாட்டு நிலை</h2>
+            
+            <p>ng-model directive பயன்பாட்டு தரவுக்கான நிலையை வழங்க முடியும் (valid, dirty, touched, error):</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;form ng-app="" name="myForm" ng-init="myText = 'post@myweb.com'"&gt;
+  Email:
+  &lt;input type="email" name="myAddress" ng-model="myText" required&gt;
+  &lt;h1&gt;Status&lt;/h1&gt;
+  {{myForm.myAddress.$valid}}
+  {{myForm.myAddress.$dirty}}
+  {{myForm.myAddress.$touched}}
+&lt;/form&gt;</code></pre>
+            </div>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>நிலை</th>
+                            <th>விளக்கம்</th>
+                            <th>மதிப்பு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$valid</td>
+                            <td>உள்ளீடு செல்லுபடியாகுமா</td>
+                            <td>true / false</td>
+                        </tr>
+                        <tr>
+                            <td>$invalid</td>
+                            <td>உள்ளீடு செல்லாததா</td>
+                            <td>true / false</td>
+                        </tr>
+                        <tr>
+                            <td>$dirty</td>
+                            <td>பயனர் மதிப்பை மாற்றியுள்ளாரா</td>
+                            <td>true / false</td>
+                        </tr>
+                        <tr>
+                            <td>$pristine</td>
+                            <td>உள்ளீடு இன்னும் மாற்றப்படவில்லையா</td>
+                            <td>true / false</td>
+                        </tr>
+                        <tr>
+                            <td>$touched</td>
+                            <td>புலம் தொடப்பட்டதா</td>
+                            <td>true / false</td>
+                        </tr>
+                        <tr>
+                            <td>$untouched</td>
+                            <td>புலம் தொடப்படவில்லையா</td>
+                            <td>true / false</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Exercise: Form Status -->
+        <section class="content-section" id="exercise-status">
+            
+
+        <!-- CSS Classes -->
+        <section class="content-section" id="css-classes">
+            <h2>CSS வகுப்புகள்</h2>
+            
+            <p>ng-model directive அவற்றின் நிலையைப் பொறுத்து HTML உறுப்புகளுக்கான CSS வகுப்புகளை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;style&gt;
+input.ng-invalid {
+  background-color: lightblue;
+}
+&lt;/style&gt;
+&lt;body&gt;
+
+&lt;form ng-app="" name="myForm"&gt;
+  Enter your name:
+  &lt;input name="myName" ng-model="myText" required&gt;
+&lt;/form&gt;</code></pre>
+            </div>
+            
+            <p>படிவ புலத்தின் நிலையைப் பொறுத்து, ng-model directive பின்வரும் வகுப்புகளைச் சேர்க்கிறது/அகற்றுகிறது:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-square"></i>
+                        <h4>ng-empty / ng-not-empty</h4>
+                    </div>
+                    <p>புலம் காலியாக உள்ளதா இல்லையா</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-hand-point-up"></i>
+                        <h4>ng-touched / ng-untouched</h4>
+                    </div>
+                    <p>புலம் தொடப்பட்டதா இல்லையா</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>ng-valid / ng-invalid</h4>
+                    </div>
+                    <p>புலம் செல்லுபடியாகுமா இல்லையா</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-edit"></i>
+                        <h4>ng-dirty / ng-pristine</h4>
+                    </div>
+                    <p>புலம் மாற்றப்பட்டதா இல்லையா</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-clock"></i>
+                        <h4>ng-pending</h4>
+                    </div>
+                    <p>சரிபார்ப்பு நடந்து கொண்டிருக்கிறது</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical">
+            <h2>நடைமுறை உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h4>பயனர் பெயர்</h4>
+                    <div class="code-example" style="background: white; color: #333; padding: 0.5rem; font-size: 0.9rem; margin: 0.5rem 0;">
+                        <pre><code>&lt;input type="text" 
+       ng-model="user.name"
+       required&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>மின்னஞ்சல்</h4>
+                    <div class="code-example" style="background: white; color: #333; padding: 0.5rem; font-size: 0.9rem; margin: 0.5rem 0;">
+                        <pre><code>&lt;input type="email" 
+       ng-model="user.email"
+       required&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-venus-mars"></i>
+                    </div>
+                    <h4>தேர்வுப் பட்டியல்</h4>
+                    <div class="code-example" style="background: white; color: #333; padding: 0.5rem; font-size: 0.9rem; margin: 0.5rem 0;">
+                        <pre><code>&lt;select ng-model="user.gender"&gt;
+  &lt;option value="M"&gt;Male&lt;/option&gt;
+  &lt;option value="F"&gt;Female&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-comment"></i>
+                    </div>
+                    <h4>உரைப் பகுதி</h4>
+                    <div class="code-example" style="background: white; color: #333; padding: 0.5rem; font-size: 0.9rem; margin: 0.5rem 0;">
+                        <pre><code>&lt;textarea ng-model="message"
+          rows="4"&gt;
+&lt;/textarea&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Exercise -->
+        <section class="content-section" id="exercise-summary">
+            <div class="exercise-box">
+                <h4><i class="fas fa-brain exercise-icon"></i> பின்வருவனவற்றில் எது ng-model directive இன் திறன்கள்? (பல தேர்வுகள் சாத்தியம்)</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">இரு வழி தரவு இணைப்பு</div>
+                            <div class="option-feedback correct">✓ சரி! ng-model இரு வழி இணைப்பை வழங்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">உள்ளீட்டு சரிபார்ப்பு</div>
+                            <div class="option-feedback correct">✓ சரி! ng-model வகை சரிபார்ப்பை வழங்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">CSS வகுப்புகள் தானாக சேர்க்கப்படுதல்</div>
+                            <div class="option-feedback correct">✓ சரி! ng-model நிலைக்கு ஏற்ப CSS வகுப்புகளை சேர்க்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தரவுத்தள இணைப்பு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ng-model நேரடியாக தரவுத்தளத்துடன் இணைக்காது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த பயிற்சிகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>name பண்புக்கூறைப் பயன்படுத்தவும்:</strong> படிவ சரிபார்ப்பு மற்றும் நிலை பண்புகளுக்கு name பண்புக்கூறு அவசியம்.
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>தொடக்க மதிப்புகளை வழங்கவும்:</strong> ng-init அல்லது கட்டுப்பாட்டாளர் மூலம் தொடக்க மதிப்புகளை அமைக்கவும்.
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>சரிபார்ப்புக்கான பொருத்தமான input type பயன்படுத்தவும்:</strong> email, number, url போன்ற வகைகள் தானாக சரிபார்க்கப்படும்.
+                    </div>
+                </div>
+                
+                <div class="practice-item negative">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <strong>ng-init அதிகம் பயன்படுத்த வேண்டாம்:</strong> பெரிய பயன்பாடுகளுக்கு கட்டுப்பாட்டாளர்களைப் பயன்படுத்தவும்.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="AngularJS Directives.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="AngularJS Data Binding.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#introduction">அறிமுகம்</a></li>
+                    <li><a href="#two-way">இரு வழி இணைப்பு</a></li>
+                    <li><a href="#validation">சரிபார்ப்பு</a></li>
+                    <li><a href="#status">நிலை</a></li>
+                    <li><a href="#css-classes">CSS வகுப்புகள்</a></li>
+                    <li><a href="#best-practices">சிறந்த பயிற்சிகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">தொடர்பு கொள்ள</a></li>
+                    <li><a href="#">இடம் & நேரம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>எங்களைப் பின்தொடருங்கள்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

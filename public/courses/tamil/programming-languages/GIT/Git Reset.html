@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Reset - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Git Revert.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Git Amend.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Git Reset</h2>
+            <p>கமிட் வரலாற்றை மீண்டும் அமைக்கவும் மற்றும் மாற்றங்களை நிர்வகிக்கவும்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is Git Reset -->
+        <section class="content-section" id="what-is-reset">
+            <h2>Git Reset என்ன செய்கிறது?</h2>
+            
+            <p><code>git reset</code> கட்டளை உங்கள் தற்போதைய கிளையை (HEAD) வேறு ஒரு கமிட்டுக்கு நகர்த்துகிறது.</p>
+            
+            <p>விருப்பத்தைப் பொறுத்து, எந்த மாற்றங்கள் staged ஆக இருக்கின்றன என்பதை மாற்றலாம் அல்லது உங்கள் வேலை அடைவிலிருந்து மாற்றங்களை நீக்கலாம்.</p>
+            
+            <p>கமிட்டுகளை இரத்து செய்ய, கோப்புகளை unstage செய்ய அல்லது உங்கள் வரலாற்றை சுத்தம் செய்ய இதைப் பயன்படுத்தவும்.</p>
+        </section>
+
+        <!-- Git Reset Commands Summary -->
+        <section class="content-section" id="commands-summary">
+            <h2>Git Reset கட்டளைகள் மற்றும் விருப்பங்களின் சுருக்கம்</h2>
+            
+            <div class="commands-grid">
+                <div class="command-card">
+                    <div class="command-icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <h3>git reset --soft &lt;commit&gt;</h3>
+                    <p>HEAD-ஐ கமிட்டுக்கு நகர்த்தவும், மாற்றங்களை staged-ஆக வைக்கவும்</p>
+                </div>
+                
+                <div class="command-card">
+                    <div class="command-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>git reset --mixed &lt;commit&gt;</h3>
+                    <p>HEAD-ஐ கமிட்டுக்கு நகர்த்தவும், மாற்றங்களை unstage செய்யவும் (இயல்புநிலை)</p>
+                </div>
+                
+                <div class="command-card">
+                    <div class="command-icon">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <h3>git reset --hard &lt;commit&gt;</h3>
+                    <p>HEAD-ஐ கமிட்டுக்கு நகர்த்தவும், அனைத்து மாற்றங்களையும் நிராகரிக்கவும்</p>
+                </div>
+                
+                <div class="command-card">
+                    <div class="command-icon">
+                        <i class="fas fa-file"></i>
+                    </div>
+                    <h3>git reset &lt;file&gt;</h3>
+                    <p>ஒரு கோப்பை unstage செய்யவும்</p>
+                </div>
+                
+                <div class="command-card">
+                    <div class="command-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <h3>git log --oneline</h3>
+                    <p>கமிட் வரலாற்றைக் காட்டு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Find Commit to Reset -->
+        <section class="content-section" id="find-commit">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h2>மீண்டும் அமைக்க வேண்டிய கமிட்டைக் கண்டுபிடிப்பது எப்படி</h2>
+            </div>
+            
+            <p>முதலில், நீங்கள் திரும்பிச் செல்ல விரும்பும் கமிட்டைக் கண்டுபிடிக்க வேண்டும்.</p>
+            
+            <p>உங்கள் கமிட் வரலாற்றின் சுருக்கத்தைப் பார்க்க <code>git log --oneline</code> பயன்படுத்தவும்:</p>
+            
+            <p>முந்தைய அத்தியாயத்திற்குப் பிறகு, நாங்கள் திரும்பிச் செல்லக்கூடிய எங்கள் கமிட் வரலாற்றில் ஒரு பகுதி உள்ளது.</p>
+            
+            <p>அதை reset-உடன் முயற்சிப்போம்.</p>
+            
+            <p>முதலில், நாம் திரும்ப விரும்பும் புள்ளியைக் கண்டுபிடிக்க வேண்டும்.</p>
+            
+            <p>அதைச் செய்ய, நாம் லாக் வழியாக செல்ல வேண்டும்.</p>
+            
+            <p>மிக நீண்ட லாக் பட்டியலைத் தவிர்க்க, நாங்கள் <code>--oneline</code> விருப்பத்தைப் பயன்படுத்தப் போகிறோம், இது கமிட்டிற்கு ஒரு வரியை மட்டுமே காட்டுகிறது:</p>
+            
+            <ul>
+                <li>கமிட் ஹாஷின் முதல் ஏழு எழுத்துக்கள் - இதைத்தான் நமது reset கட்டளையில் குறிப்பிட வேண்டும்.</li>
+                <li>கமிட் செய்தி</li>
+            </ul>
+            
+            <p>எனவே நாம் reset செய்ய விரும்பும் புள்ளியைக் கண்டுபிடிப்போம்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">git log --oneline</code>
+<span class="command-output">e56ba1f (HEAD -> master) Revert "Just a regular update, definitely no accidents here..."
+52418f7 Just a regular update, definitely no accidents here...
+9a9add8 (origin/master) Added .gitignore
+81912ba Corrected spelling error
+3fdaa5b Merge pull request #1 from jassifteam-test/update-readme
+836e5bf (origin/update-readme, update-readme) Updated readme for GitHub Branches
+daf4f7c (origin/html-skeleton, html-skeleton) Updated index.html with basic meta
+facaeae (gh-page/master) Merge branch 'master' of https://github.com/jassifteam-test/hello-world
+e7de78f Updated index.html. Resized image
+5a04b6f Updated README.md with a line about focus
+d29d69f Updated README.md with a line about GitHub
+e0b6038 merged with hello-world-images after fixing conflicts
+1f1584e added new image
+dfa79db updated index.html with emergency fix
+0312c55 Added image to Hello World
+09f4acd Updated index.html with a new line
+221ec6e First release of Hello World!</span></code></pre>
+            </div>
+            
+            <p>நாங்கள் கமிட்டுக்குத் திரும்ப விரும்புகிறோம்: <code>9a9add8 (origin/master) Added .gitignore</code>, விஷயங்களைக் குழப்பத் தொடங்குவதற்கு முன் கடைசியாக.</p>
+        </section>
+
+        <!-- Git Reset --soft -->
+        <section class="content-section" id="reset-soft">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h2>Git Reset --soft</h2>
+            </div>
+            
+            <p><code>git reset --soft &lt;commit&gt;</code> HEAD-ஐ குறிப்பிட்ட கமிட்டுக்கு நகர்த்துகிறது, ஆனால் உங்கள் அனைத்து மாற்றங்களையும் staged ஆக வைக்கிறது (index-ல்).</p>
+            
+            <p>பல கமிட்டுகளை ஒன்றாக இணைக்க விரும்பினால் அல்லது வரலாற்றை மீண்டும் எழுத விரும்பினால், ஆனால் உங்கள் வேலையை கமிட் செய்ய தயாராக வைக்க விரும்பினால் இது பயனுள்ளதாக இருக்கும்.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">git reset --soft 9a9add8</code></pre>
+            </div>
+            
+            <p><code>9a9add8</code>க்குப் பிறகு அனைத்து மாற்றங்களும் இப்போது staged ஆக உள்ளன, புதிய கமிட்டிற்கு தயாராக உள்ளன.</p>
+        </section>
+
+        <!-- Git Reset --mixed -->
+        <section class="content-section" id="reset-mixed">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h2>Git Reset --mixed (இயல்புநிலை)</h2>
+            </div>
+            
+            <p><code>git reset --mixed &lt;commit&gt;</code> (அல்லது வெறும் <code>git reset &lt;commit&gt;</code>) HEAD-ஐ குறிப்பிட்ட கமிட்டுக்கு நகர்த்துகிறது மற்றும் எந்த மாற்றங்களையும் unstage செய்கிறது, ஆனால் அவற்றை உங்கள் வேலை அடைவில் வைக்கிறது.</p>
+            
+            <p>இது இயல்புநிலை விருப்பம் மற்றும் ஒரு கமிட்டை "இரத்து" செய்ய விரும்பினால், ஆனால் திருத்தம் அல்லது மீண்டும் கமிட் செய்வதற்கு உங்கள் மாற்றங்களை வைத்திருக்க விரும்பினால் பயனுள்ளதாக இருக்கும்.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">git reset --mixed 9a9add8</code></pre>
+            </div>
+            
+            <p><code>9a9add8</code>க்குப் பிறகு அனைத்து மாற்றங்களும் இப்போது unstage ஆக உள்ளன, ஆனால் இன்னும் உங்கள் கோப்புகளில் உள்ளன.</p>
+        </section>
+
+        <!-- Git Reset --hard -->
+        <section class="content-section" id="reset-hard">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h2>Git Reset --hard</h2>
+            </div>
+            
+            <p><code>git reset --hard &lt;commit&gt;</code> HEAD-ஐ குறிப்பிட்ட கமிட்டுக்கு நகர்த்துகிறது மற்றும் உங்கள் வேலை அடைவு மற்றும் staged மாற்றங்கள் அனைத்தையும் நிராகரிக்கிறது.</p>
+            
+            <p>இது ஆபத்தானது மற்றும் நீங்கள் உறுதியாக இழக்க விரும்பும் அனைத்து மாற்றங்களையும் நிரந்தரமாக நீக்குகிறது.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">git reset --hard 9a9add8</code></pre>
+            </div>
+            
+            <p><code>9a9add8</code>க்குப் பிறகு அனைத்து மாற்றங்களும் இப்போது நிரந்தரமாக நீக்கப்பட்டுள்ளன.</p>
+        </section>
+
+        <!-- Review Changes -->
+        <section class="content-section" id="review-changes">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h2>மாற்றங்களை மதிப்பாய்வு செய்யவும்</h2>
+            </div>
+            
+            <p>Git Reset இயக்கிய பிறகு, எல்லாம் எதிர்பார்த்ததுபோல் உள்ளதா என்பதை உறுதிப்படுத்த உங்கள் மாற்றங்களை மதிப்பாய்வு செய்யவும்.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">git status</code>
+<span class="command-output">On branch master
+Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+nothing to commit, working tree clean</span></code></pre>
+            </div>
+        </section>
+
+        <!-- Tips & Best Practices -->
+        <section class="content-section" id="tips">
+            <h2>உதவிக்குறிப்புகள் & சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <div class="tip-number">1</div>
+                    <div class="tip-content">
+                        <h4>கவனத்துடன் பயன்படுத்தவும்</h4>
+                        <p>Git Reset-ஐ கவனத்துடன் பயன்படுத்தவும், ஏனெனில் இது உங்கள் கமிட் வரலாற்றை மீண்டும் எழுதும்.</p>
+                    </div>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-number">2</div>
+                    <div class="tip-content">
+                        <h4>குழுவுடன் தொடர்பு கொள்ளவும்</h4>
+                        <p>ரிமோட் களஞ்சியத்தில் மாற்றங்களைச் செய்வதற்கு முன் உங்கள் குழுவுடன் தொடர்பு கொள்ளுங்கள்.</p>
+                    </div>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-number">3</div>
+                    <div class="tip-content">
+                        <h4>ரிமோட்டில் தள்ள வேண்டாம்</h4>
+                        <p>ரிமோட் களஞ்சியத்தில் ஏற்கனவே பகிரப்பட்ட கமிட்டுகளை reset செய்த பிறகு தள்ள வேண்டாம்.</p>
+                    </div>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-number">4</div>
+                    <div class="tip-content">
+                        <h4>--hard-ஐ தவிர்க்கவும்</h4>
+                        <p>சாத்தியமுள்ள时就 --hard reset-ஐத் தவிர்க்கவும், ஏனெனில் இது மாற்றங்களை நிரந்தரமாக நீக்கும்.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Warnings -->
+        <section class="content-section" id="warnings">
+            <h2>எச்சரிக்கைகள்</h2>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> முக்கியமான எச்சரிக்கை</h4>
+                <p>Git Reset-ஐ பயன்படுத்தும் போது கவனமாக இருங்கள், ஏனெனில் இது மாற்றங்களை நீக்கலாம் மற்றும் உங்கள் கமிட் வரலாற்றை மீண்டும் எழுதலாம்.</p>
+                <p>அவசியமான போது மட்டுமே இதைப் பயன்படுத்துவதை உறுதிப்படுத்திக் கொள்ளுங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="content-section" id="quick-reference">
+            <h2>விரைவு குறிப்பு</h2>
+            
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <h3>--soft</h3>
+                    <p>மாற்றங்களை staged-ஆக வைக்கவும்</p>
+                    <div class="code-block small">
+                        <pre><code>git reset --soft</code></pre>
+                    </div>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>--mixed</h3>
+                    <p>மாற்றங்களை unstage செய்யவும்</p>
+                    <div class="code-block small">
+                        <pre><code>git reset --mixed</code></pre>
+                    </div>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <h3>--hard</h3>
+                    <p>அனைத்து மாற்றங்களையும் நிராகரிக்கவும்</p>
+                    <div class="code-block small">
+                        <pre><code>git reset --hard</code></pre>
+                    </div>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>கமிட் வரலாறு</h3>
+                    <p>கமிட்களைப் பாருங்கள்</p>
+                    <div class="code-block small">
+                        <pre><code>git log --oneline</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Git Revert.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Git Amend.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-reset">Git Reset என்றால் என்ன?</a></li>
+                    <li><a href="#find-commit">கமிட்டைக் கண்டறிதல்</a></li>
+                    <li><a href="#reset-soft">Reset --soft</a></li>
+                    <li><a href="#reset-mixed">Reset --mixed</a></li>
+                    <li><a href="#reset-hard">Reset --hard</a></li>
+                    <li><a href="#warnings">எச்சரிக்கைகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .commands-grid, .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .command-card, .concept-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .command-card:hover, .concept-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .command-icon, .concept-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .command-card h3, .concept-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Step Header Styles */
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            background: var(--git-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* Tips Grid */
+        .tips-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tip-number {
+            background: var(--git-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .tip-content h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--dark);
+        }
+        
+        .tip-content p {
+            margin: 0;
+            color: #666;
+        }
+        
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            border-left: 6px solid #ffd700;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+        }
+        
+        .warning-icon {
+            margin-right: 10px;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.5rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .commands-grid, .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tip-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .command-card h3, .concept-card h3 {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+     <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+    <i class="fas fa-home"></i>
+</a>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Razorpay Test</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <button onclick="pay()">Test Razorpay</button>
+    <div id="status"></div>
+
+    <script>
+        function pay() {
+            console.log('Starting payment...');
+            if (typeof Razorpay === 'undefined') {
+                document.getElementById('status').textContent = 'Razorpay not loaded';
+                return;
+            }
+
+            const options = {
+                key: 'rzp_test_Sk1Qr5nGd7fPmU',
+                amount: 2900,
+                currency: 'INR',
+                name: 'Test',
+                description: 'Test Payment',
+                handler: function(response) {
+                    document.getElementById('status').textContent = 'Success: ' + response.razorpay_payment_id;
+                },
+                modal: {
+                    ondismiss: function() {
+                        document.getElementById('status').textContent = 'Cancelled';
+                    }
+                },
+                theme: { color: '#0c1f33' }
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.on('payment.failed', function(response) {
+                document.getElementById('status').textContent = 'Failed: ' + response.error.description;
+            });
+            rzp.open();
+        }
+    </script>
+</body>
+</html>

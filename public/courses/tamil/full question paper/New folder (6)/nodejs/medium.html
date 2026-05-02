@@ -1,0 +1,1251 @@
+﻿<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js MCQ Quiz - Medium Level | Jassif Team</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional Quiz-specific styles - EXACT SAME AS hard.html */
+        
+        /* Jassif Team Quiz Header - SAME AS hard.html */
+        .jassif-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--git-color); /* SAME AS hard.html */
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .team-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Quiz Hero - SAME COLOR AS hard.html */
+        .quiz-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quiz-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .quiz-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Question Selection Grid - ONLY CHANGE: ORANGE COLOR FOR MEDIUM */
+        .question-selection-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        /* ONLY CHANGE: Question number button with Medium level color (ORANGE) */
+        .question-number-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number-btn:hover {
+            border-color: var(--git-color); /* SAME AS hard.html */
+            transform: translateY(-3px);
+        }
+
+        .question-number-btn.active {
+            background: #ff9800; /* ONLY CHANGE: ORANGE for Medium */
+            color: white;
+            border-color: #ff9800;
+        }
+
+        .question-number-btn.answered {
+            background: #ffe0b2; /* Light orange for answered */
+            border-color: #ff9800;
+            color: var(--dark);
+        }
+
+        /* ONLY CHANGE: Difficulty level indicator - ORANGE for Medium */
+        .difficulty-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 8px 8px 0 0;
+            background-color: #ff9800; /* ONLY CHANGE: Orange for Medium */
+        }
+
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Quiz Container - EXACT SAME AS hard.html */
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color); /* SAME AS hard.html */
+        }
+
+        .current-question-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* REMOVED: Quiz info section - SAME AS hard.html */
+        .quiz-info {
+            display: none;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--git-color); /* SAME AS hard.html */
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        /* SAME AS hard.html */
+        .quiz-option.selected {
+            border-color: var(--secondary);
+            background: #e8f4fc;
+        }
+
+        /* SAME AS hard.html */
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--accent);
+            background: #f8d7da;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected .option-letter {
+            background: var(--secondary);
+        }
+
+        .quiz-option.correct .option-letter {
+            background: var(--success);
+        }
+
+        .quiz-option.incorrect .option-letter {
+            background: var(--accent);
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: var(--git-color); /* SAME AS hard.html */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-btn.prev {
+            background: #667eea;
+        }
+
+        .quiz-btn.submit {
+            background: var(--success);
+        }
+
+        /* Results Container - SAME AS hard.html */
+        .results-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .results-score {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--git-color); /* SAME AS hard.html */
+            margin: 1rem 0;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+        }
+
+        .results-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--git-color); /* SAME AS hard.html */
+            margin-top: 0.5rem;
+        }
+
+        .quiz-btn.restart {
+            background: var(--git-color); /* SAME AS hard.html */
+            margin-top: 1rem;
+        }
+
+        /* Footer - SAME AS hard.html */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: black;
+            padding: 0;
+        }
+
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive - SAME AS hard.html */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .team-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quiz-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .question-selection-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .question-number-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo - SAME AS hard.html -->
+    <header class="jassif-header">
+        <div class="header-container">
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <img src="logo.jpg" alt="Jassif Team Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">JASSIF TEAM</div>
+                    <div class="logo-sub">NODE.JS COURSE - MEDIUM LEVEL</div>
+                </div>
+            </a>
+            <div class="team-info">
+                <div class="team-badge">
+                    <i class="fas fa-database"></i>
+                    Node.js Course
+                </div>
+                <div class="team-badge">
+                    <i class="fas fa-question-circle"></i>
+                    Node.js MCQ Quiz
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Hero Section - SAME COLOR AS hard.html -->
+    <section class="quiz-hero">
+        <div class="quiz-hero-content">
+            <h2>Node.js MCQ Quiz - Medium Level Questions</h2>
+            <p>Test your intermediate Node.js knowledge with 30 medium difficulty multiple-choice questions in Tamil. All questions are marked with orange indicator in selection tab.</p>
+            <div class="quiz-badges">
+                <span class="info-badge level"><i class="fas fa-signal"></i> Node.js Medium</span>
+                <span class="info-badge"><i class="fas fa-clock"></i> 25-30 min</span>
+                <span class="info-badge"><i class="fas fa-question-circle"></i> 30 Questions</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Question Selection Grid - ONLY ORANGE COLOR HERE -->
+    <section class="question-selection-section">
+        <div class="section-title">
+            <h2>Node.js Medium Questions</h2>
+            <p>All Node.js questions are medium level. Click on any question number to jump directly to it.</p>
+        </div>
+        
+        <div class="question-selection-grid" id="questionSelectionGrid">
+            <!-- Question numbers will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Main Quiz Container - SAME AS hard.html -->
+    <main class="quiz-container">
+        <!-- Quiz Interface -->
+        <div class="quiz-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="current-question-number" id="questionNumber">
+                    Question 1 of 30
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <!-- Question -->
+            <div class="question-text" id="questionText">
+                Node.js à®‡à®²à¯ Callback à®ªà®£à®¿ à®Žà®©à¯à®©?
+            </div>
+            
+            <!-- Options -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="quiz-footer">
+                <button class="quiz-btn prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="quiz-btn next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="quiz-btn submit" id="submitBtn" style="display: none;">
+                    <i class="fas fa-paper-plane"></i> Submit Quiz
+                </button>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div class="results-container" id="resultsContainer">
+            <h2 class="section-title">Node.js Quiz Results</h2>
+            <div class="results-score" id="finalScore">0/30</div>
+            <div class="results-message" id="resultMessage">
+                Your performance message will appear here.
+            </div>
+            
+            <div class="results-details">
+                <div class="result-card">
+                    <h4><i class="fas fa-check-circle"></i> Correct Answers</h4>
+                    <div class="result-value" id="correctCount">0</div>
+                </div>
+                <div class="result-card">
+                    <h4><i class="fas fa-percentage"></i> Percentage</h4>
+                    <div class="result-value" id="percentage">0%</div>
+                </div>
+                <div class="result-card">
+                    <h4><i class="fas fa-trophy"></i> Performance</h4>
+                    <div class="result-value" id="performance">Intermediate</div>
+                </div>
+            </div>
+            
+            <div class="results-actions">
+                <p>Review your answers or try the quiz again.</p>
+                <button class="quiz-btn restart" id="restartBtn">
+                    <i class="fas fa-redo"></i> Restart Node.js Quiz
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <div class="footer-logo-image">
+                <img src="logo.jpg" alt="Jassif Team Logo">
+            </div>
+            <div>Jassif Team - Node.js Course</div>
+        </div>
+        <div class="footer-text">
+            &copy; 2024 Jassif Team. All rights reserved. | Medium Level Node.js MCQ Quiz
+        </div>
+    </footer>
+
+    <script>
+        // Node.js Medium Level Quiz data in Tamil - 30 QUESTIONS
+        const quizData = [
+            { 
+                question: "Node.js à®‡à®²à¯ Callback à®ªà®£à®¿ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®’à®¤à¯à®¤à®¿à®šà¯ˆà®µà®±à¯à®± à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ à®®à¯à®Ÿà®¿à®¨à¯à®¤ à®ªà®¿à®±à®•à¯ à®‡à®¯à®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®®à¯ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯",
+                    "à®’à®¤à¯à®¤à®¿à®šà¯ˆà®µà®¾à®© à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯",
+                    "à®ªà®¿à®´à¯ˆ à®•à¯ˆà®¯à®¾à®³à¯à®¤à®²à¯ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯",
+                    "à®®à¯à®¤à®©à¯à®®à¯ˆ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Promise-à®‡à®©à¯ à®®à¯‚à®©à¯à®±à¯ à®¨à®¿à®²à¯ˆà®•à®³à¯ à®¯à®¾à®µà¯ˆ?", 
+                options: [
+                    "Start, Process, End",
+                    "Pending, Fulfilled, Rejected",
+                    "Init, Execute, Complete",
+                    "Waiting, Done, Failed"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "async/await-à®‡à®©à¯ à®¨à®©à¯à®®à¯ˆ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®•à¯à®±à®¿à®¯à¯€à®Ÿà¯à®Ÿà¯ˆ à®®à¯†à®¤à¯à®µà®¾à®•à¯à®•à¯à®•à®¿à®±à®¤à¯",
+                    "à®’à®¤à¯à®¤à®¿à®šà¯ˆà®µà®±à¯à®± à®•à¯à®±à®¿à®¯à¯€à®Ÿà¯à®Ÿà¯ˆ à®’à®¤à¯à®¤à®¿à®šà¯ˆà®µà®¾à®•à®¤à¯ à®¤à¯‹à®±à¯à®±à®®à®³à®¿à®•à¯à®•à®šà¯ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯",
+                    "à®¨à®¿à®©à¯ˆà®µà®•à®¤à¯à®¤à¯ˆ à®…à®¤à®¿à®•à®°à®¿à®•à¯à®•à®¿à®±à®¤à¯",
+                    "à®ªà®¿à®´à¯ˆà®•à®³à¯ˆà®•à¯ à®•à¯à®±à¯ˆà®•à¯à®•à®¿à®±à®¤à¯"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Middleware-à®‡à®©à¯ à®ªà®™à¯à®•à¯ Express.js-à®‡à®²à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®•à¯‹à®°à®¿à®•à¯à®•à¯ˆ à®®à®±à¯à®±à¯à®®à¯ à®ªà®¤à®¿à®²à¯ à®ªà¯Šà®°à¯à®³à¯à®•à®³à¯ˆ à®®à®¾à®±à¯à®±à®¿à®¯à®®à¯ˆà®•à¯à®•à®¿à®±à®¤à¯",
+                    "HTML à® à®‰à®°à¯à®µà®¾à®•à¯à®•à¯à®•à®¿à®±à®¤à¯",
+                    "à®¤à®°à®µà¯à®¤à¯à®¤à®³à®¤à¯à®¤à¯ˆ à®¨à®¿à®°à¯à®µà®•à®¿à®•à¯à®•à®¿à®±à®¤à¯",
+                    "à®ªà®¯à®©à®°à¯ˆ à®…à®™à¯à®•à¯€à®•à®°à®¿à®•à¯à®•à®¿à®±à®¤à¯"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "REST API-à®‡à®²à¯ GET à®®à¯à®±à¯ˆà®¯à®¿à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®¤à®°à®µà¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®•",
+                    "à®¤à®°à®µà¯ˆà®ªà¯ à®ªà¯†à®±",
+                    "à®¤à®°à®µà¯ˆà®ªà¯ à®ªà¯à®¤à¯à®ªà¯à®ªà®¿à®•à¯à®•",
+                    "à®¤à®°à®µà¯ˆ à®¨à¯€à®•à¯à®•"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "JWT à®Ÿà¯‹à®•à¯à®•à®©à¯ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆ à®ªà®°à®¿à®®à®¾à®±",
+                    "à®ªà®¯à®©à®°à¯ à®…à®™à¯à®•à¯€à®•à®¾à®°à®¤à¯à®¤à®¿à®±à¯à®•à¯",
+                    "à®¤à®°à®µà¯ˆ à®•à¯à®±à®¿à®¯à®¾à®•à¯à®•",
+                    "à®µà®¿à®°à¯ˆà®µà¯ à®šà¯‡à®®à®¿à®ªà¯à®ªà¯à®•à¯à®•à¯"
+                ], 
+                correct: 2
+            },
+            { 
+                question: "MySQL à®‡à®²à¯ FOREIGN KEY-à®‡à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®®à¯à®¤à®©à¯à®®à¯ˆ à®®à¯à®•à¯à®•à®¿à®¯à®¤à¯à®¤à¯à®µà®¤à¯à®¤à¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®•",
+                    "à®…à®Ÿà¯à®Ÿà®µà®£à¯ˆà®•à®³à¯à®•à¯à®•à¯ à®‡à®Ÿà¯ˆà®¯à¯‡ à®‰à®±à®µà¯ˆ à®¨à®¿à®±à¯à®µ",
+                    "à®¤à®©à®¿à®¤à¯à®¤à¯à®µà®¤à¯à®¤à¯ˆ à®‰à®±à¯à®¤à®¿ à®šà¯†à®¯à¯à®¯",
+                    "à®¤à®°à®µà¯ˆ à®µà®°à®¿à®šà¯ˆà®ªà¯à®ªà®Ÿà¯à®¤à¯à®¤"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "MongoDB à®‡à®²à¯ à®’à®°à¯ à®Ÿà®¾à®•à¯à®•à¯à®®à¯†à®©à¯à®Ÿà¯à®Ÿà¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®• à®Žà®¨à¯à®¤ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "find()",
+                    "update()",
+                    "insertOne()",
+                    "delete()"
+                ], 
+                correct: 2
+            },
+            { 
+                question: "GraphQL-à®‡à®©à¯ à®®à¯à®•à¯à®•à®¿à®¯ à®…à®®à¯à®šà®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®ªà®¯à®©à®°à¯à®•à®³à¯ à®¤à¯‡à®µà¯ˆà®¯à®¾à®© à®¤à®°à®µà¯ˆ à®®à®Ÿà¯à®Ÿà¯à®®à¯‡ à®•à¯‡à®Ÿà¯à®•à®²à®¾à®®à¯",
+                    "à®¨à®¿à®²à¯ˆà®¯à®¾à®© à®®à¯à®Ÿà®¿à®µà¯à®•à®³à¯ˆ à®µà®´à®™à¯à®•à¯à®•à®¿à®±à®¤à¯",
+                    "SQL à®ªà¯‹à®©à¯à®±à®¤à¯",
+                    "à®®à¯†à®¤à¯à®µà®¾à®© à®šà¯†à®¯à®²à¯à®¤à®¿à®±à®©à¯"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "WebSocket-à®‡à®©à¯ à®¨à®©à¯à®®à¯ˆ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®‡à®°à¯à®ªà®•à¯à®• à®¤à®•à®µà®²à¯ à®¤à¯Šà®Ÿà®°à¯à®ªà¯",
+                    "à®’à®±à¯à®±à¯ˆà®ªà¯ à®ªà®•à¯à®• à®¤à®•à®µà®²à¯ à®¤à¯Šà®Ÿà®°à¯à®ªà¯",
+                    "à®¤à®°à®µà¯ à®šà¯‡à®®à®¿à®ªà¯à®ªà¯",
+                    "à®•à¯‹à®ªà¯à®ªà¯ à®ªà®°à®¿à®®à®¾à®±à¯à®±à®®à¯"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ environment variables-à® à®…à®£à¯à®• à®Žà®¤à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "process.env",
+                    "global.env",
+                    "system.env",
+                    "os.env"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Unit testing-à®‡à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®®à¯à®´à¯ à®…à®®à¯ˆà®ªà¯à®ªà¯ˆà®¯à¯à®®à¯ à®šà¯‹à®¤à®¿à®•à¯à®•",
+                    "à®¤à®©à®¿à®ªà¯à®ªà®Ÿà¯à®Ÿ à®•à¯‚à®±à¯à®•à®³à¯ˆ à®šà¯‹à®¤à®¿à®•à¯à®•",
+                    "à®ªà®¯à®©à®°à¯ à®‡à®Ÿà¯ˆà®®à¯à®•à®¤à¯à®¤à¯ˆ à®šà¯‹à®¤à®¿à®•à¯à®•",
+                    "à®šà¯†à®¯à®²à¯à®¤à®¿à®±à®©à¯ˆ à®šà¯‹à®¤à®¿à®•à¯à®•"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Child Process à®¤à¯Šà®•à¯à®¤à®¿ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®®à¯à®¤à®©à¯à®®à¯ˆ à®šà¯†à®¯à®²à¯à®®à¯à®±à¯ˆà®¯à¯ˆà®¤à¯ à®¤à¯Šà®Ÿà®™à¯à®•",
+                    "à®•à¯à®´à®¨à¯à®¤à¯ˆ à®šà¯†à®¯à®²à¯à®®à¯à®±à¯ˆà®•à®³à¯ˆà®¤à¯ à®¤à¯Šà®Ÿà®™à¯à®•à®¿ à®•à¯ˆà®¯à®¾à®³",
+                    "à®¨à®¿à®•à®´à¯à®µà¯à®•à®³à¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³",
+                    "à®¨à®¿à®©à¯ˆà®µà®•à®¤à¯à®¤à¯ˆ à®®à¯‡à®²à®¾à®£à¯à®®à¯ˆ à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Cluster à®¤à¯Šà®•à¯à®¤à®¿à®¯à®¿à®©à¯ à®¨à®©à¯à®®à¯ˆ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ˆ à®ªà®² à®šà¯†à®¯à®²à¯à®®à¯à®±à¯ˆà®•à®³à®¿à®²à¯ à®‡à®¯à®•à¯à®• à®…à®©à¯à®®à®¤à®¿à®•à¯à®•à®¿à®±à®¤à¯",
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆà®ªà¯ à®ªà®•à®¿à®° à®…à®©à¯à®®à®¤à®¿à®•à¯à®•à®¿à®±à®¤à¯",
+                    "à®¨à®¿à®©à¯ˆà®µà®•à®¤à¯à®¤à¯ˆà®•à¯ à®•à¯à®±à¯ˆà®•à¯à®•à®¿à®±à®¤à¯",
+                    "CPU à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ˆà®•à¯ à®•à¯à®±à¯ˆà®•à¯à®•à®¿à®±à®¤à¯"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Worker Threads à®¤à¯Šà®•à¯à®¤à®¿ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "CPU-à®šà¯à®®à¯ˆ à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ˆ à®‡à®£à¯ˆà®¯à®¾à®• à®‡à®¯à®•à¯à®•",
+                    "I/O à®šà¯†à®¯à®²à¯à®ªà®¾à®Ÿà¯à®•à®³à¯ˆ à®‡à®¯à®•à¯à®•",
+                    "à®¨à®¿à®©à¯ˆà®µà®•à®¤à¯à®¤à¯ˆ à®®à¯‡à®²à®¾à®£à¯à®®à¯ˆ à®šà¯†à®¯à¯à®¯",
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆà®ªà¯ à®ªà®•à®¿à®°"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Microservices à®•à®Ÿà¯à®Ÿà®®à¯ˆà®ªà¯à®ªà®¿à®©à¯ à®¨à®©à¯à®®à¯ˆ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®…à®©à¯ˆà®¤à¯à®¤à¯ à®…à®®à¯à®šà®™à¯à®•à®³à¯à®®à¯ à®’à®°à¯‡ à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®Ÿà®¿à®²à¯",
+                    "à®šà®¿à®±à®¿à®¯, à®šà¯à®¯à®¾à®¤à¯€à®©à®®à®¾à®• à®µà®³à®°à®•à¯à®•à¯‚à®Ÿà®¿à®¯ à®šà¯‡à®µà¯ˆà®•à®³à¯",
+                    "à®®à¯ˆà®¯à®ªà¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®Ÿ à®¤à®°à®µà¯à®¤à¯à®¤à®³à®®à¯",
+                    "à®Žà®³à®¿à®¯ à®ªà®¿à®´à¯ˆà®¤à¯à®¤à®¿à®°à¯à®¤à¯à®¤à®®à¯"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "HTTP/2-à®‡à®©à¯ à®®à¯à®•à¯à®•à®¿à®¯ à®®à¯‡à®®à¯à®ªà®¾à®Ÿà¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®ªà¯ˆà®©à®°à®¿ à®ªà¯à®°à¯‹à®Ÿà¯à®Ÿà¯‹à®•à®¾à®²à¯",
+                    "à®‰à®°à¯ˆ à®…à®Ÿà®¿à®ªà¯à®ªà®Ÿà¯ˆà®¯à®¿à®²à®¾à®© à®ªà¯à®°à¯‹à®Ÿà¯à®Ÿà¯‹à®•à®¾à®²à¯",
+                    "à®’à®±à¯à®±à¯ˆ à®‡à®£à¯ˆà®ªà¯à®ªà¯",
+                    "à®®à¯†à®¤à¯à®µà®¾à®© à®µà¯‡à®•à®®à¯"
+                ], 
+                correct: 2
+            },
+            { 
+                question: "VM à®¤à¯Šà®•à¯à®¤à®¿ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®®à¯†à®¯à¯à®¨à®¿à®•à®°à¯ à®‡à®¯à®¨à¯à®¤à®¿à®°à®™à¯à®•à®³à¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®•",
+                    "JavaScript à®•à¯à®±à®¿à®¯à¯€à®Ÿà¯à®Ÿà¯ˆ à®¤à®©à®¿à®®à¯ˆà®ªà¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®Ÿ à®šà¯‚à®´à®²à®¿à®²à¯ à®‡à®¯à®•à¯à®•",
+                    "à®µà®²à¯ˆ à®šà¯‡à®µà¯ˆà®¯à®•à®™à¯à®•à®³à¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®•",
+                    "à®¤à®°à®µà¯à®¤à¯à®¤à®³à®™à¯à®•à®³à¯ˆ à®¨à®¿à®°à¯à®µà®•à®¿à®•à¯à®•"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Zlib à®¤à¯Šà®•à¯à®¤à®¿ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆ à®•à¯à®±à¯à®•à¯à®•à¯€à®Ÿà¯ à®šà¯†à®¯à¯à®¯",
+                    "à®¤à®°à®µà¯ˆà®šà¯ à®šà¯à®°à¯à®•à¯à®•à®µà¯à®®à¯ à®µà®¿à®°à®¿à®µà®¾à®•à¯à®•à®µà¯à®®à¯",
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆ à®®à®¾à®±à¯à®±à®¿à®¯à®®à¯ˆà®•à¯à®•",
+                    "à®¤à®°à®µà¯ˆ à®•à¯à®±à®¿à®¯à®¾à®•à¯à®•"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Readline à®¤à¯Šà®•à¯à®¤à®¿à®¯à®¿à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆ à®µà®°à®¿ à®µà®°à®¿à®¯à®¾à®•à®ªà¯ à®ªà®Ÿà®¿à®•à¯à®•",
+                    "à®ªà®¯à®©à®°à¯ à®‰à®³à¯à®³à¯€à®Ÿà¯à®Ÿà¯ˆà®ªà¯ à®ªà®Ÿà®¿à®•à¯à®•",
+                    "à®µà®²à¯ˆà®ªà¯à®ªà®•à¯à®•à®™à¯à®•à®³à¯ˆà®ªà¯ à®ªà®Ÿà®¿à®•à¯à®•",
+                    "à®¤à®°à®µà¯à®¤à¯à®¤à®³ à®‰à®³à¯à®³à¯€à®Ÿà¯à®Ÿà¯ˆà®ªà¯ à®ªà®Ÿà®¿à®•à¯à®•"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Assert à®¤à¯Šà®•à¯à®¤à®¿ à®Žà®¤à®±à¯à®•à®¾à®•à®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "à®ªà®¿à®´à¯ˆà®•à®³à¯ˆ à®…à®šà¯à®šà®¿à®Ÿ",
+                    "à®šà¯‹à®¤à®©à¯ˆ à®¨à®¿à®ªà®¨à¯à®¤à®©à¯ˆà®•à®³à¯ˆ à®šà®°à®¿à®ªà®¾à®°à¯à®•à¯à®•",
+                    "à®¤à®°à®µà¯ˆ à®®à®¾à®±à¯à®±",
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆ à®‰à®°à¯à®µà®¾à®•à¯à®•"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Node.js à®‡à®²à¯ Buffer à®µà®°à¯à®•à¯à®•à®¤à¯à®¤à®¿à®©à¯ à®ªà®¯à®©à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®ªà¯ˆà®©à®°à®¿ à®¤à®°à®µà¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³",
+                    "à®‰à®°à¯ˆ à®¤à®°à®µà¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³",
+                    "JSON à®¤à®°à®µà¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³",
+                    "XML à®¤à®°à®µà¯ˆà®•à¯ à®•à¯ˆà®¯à®¾à®³"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "EventEmitter à®µà®°à¯à®•à¯à®•à®®à¯ à®Žà®¤à®¿à®²à¯ à®‰à®³à¯à®³à®¤à¯?", 
+                options: [
+                    "events à®¤à¯Šà®•à¯à®¤à®¿",
+                    "http à®¤à¯Šà®•à¯à®¤à®¿",
+                    "stream à®¤à¯Šà®•à¯à®¤à®¿",
+                    "util à®¤à¯Šà®•à¯à®¤à®¿"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Stream-à®‡à®©à¯ 'pipe()' à®®à¯à®±à¯ˆà®¯à®¿à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®‡à®°à®£à¯à®Ÿà¯ à®“à®Ÿà¯à®Ÿà®™à¯à®•à®³à¯ˆ à®‡à®£à¯ˆà®•à¯à®•",
+                    "à®•à¯‹à®ªà¯à®ªà¯ˆ à®®à¯‚à®Ÿ",
+                    "à®¤à®°à®µà¯ˆ à®®à®¾à®±à¯à®±",
+                    "à®ªà®¿à®´à¯ˆà®¯à¯ˆ à®…à®©à¯à®ªà¯à®ª"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "process.nextTick() à®®à®±à¯à®±à¯à®®à¯ setImmediate() à®‡à®Ÿà¯ˆà®¯à¯‡ à®‰à®³à¯à®³ à®µà¯‡à®±à¯à®ªà®¾à®Ÿà¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "process.nextTick() à®‰à®Ÿà®©à®Ÿà®¿à®¯à®¾à®• à®‡à®¯à®™à¯à®•à¯à®®à¯, setImmediate() à®…à®Ÿà¯à®¤à¯à®¤ à®šà¯à®´à®±à¯à®šà®¿à®¯à®¿à®²à¯",
+                    "setImmediate() à®‰à®Ÿà®©à®Ÿà®¿à®¯à®¾à®• à®‡à®¯à®™à¯à®•à¯à®®à¯, process.nextTick() à®…à®Ÿà¯à®¤à¯à®¤ à®šà¯à®´à®±à¯à®šà®¿à®¯à®¿à®²à¯",
+                    "à®‡à®°à®£à¯à®Ÿà¯à®®à¯ à®’à®°à¯‡ à®®à®¾à®¤à®¿à®°à®¿",
+                    "à®‡à®°à®£à¯à®Ÿà¯à®®à¯ à®µà¯†à®µà¯à®µà¯‡à®±à¯ à®¤à¯Šà®•à¯à®¤à®¿à®•à®³à®¿à®²à¯ à®‰à®³à¯à®³à®©"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "à®®à¯à®©à¯à®©à®¿à®°à¯à®ªà¯à®ªà®¾à®• Node.js à®Žà®¨à¯à®¤ à®ªà¯‹à®°à¯à®Ÿà¯à®Ÿà®¿à®²à¯ à®•à¯‡à®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "80",
+                    "443",
+                    "3000",
+                    "8080"
+                ], 
+                correct: 2
+            },
+            { 
+                question: "CORS-à®‡à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®µà¯†à®µà¯à®µà¯‡à®±à¯ à®¤à¯‹à®±à¯à®±à®™à¯à®•à®³à®¿à®²à®¿à®°à¯à®¨à¯à®¤à¯ à®µà®³à®™à¯à®•à®³à¯ˆà®ªà¯ à®ªà®•à®¿à®° à®…à®©à¯à®®à®¤à®¿à®•à¯à®•",
+                    "à®¤à®°à®µà¯ˆ à®•à¯à®±à®¿à®¯à®¾à®•à¯à®•",
+                    "à®ªà®¯à®©à®°à¯ˆ à®…à®™à¯à®•à¯€à®•à®°à®¿à®•à¯à®•",
+                    "à®•à¯‹à®ªà¯à®ªà¯à®•à®³à¯ˆà®ªà¯ à®ªà®•à®¿à®°"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Rate Limiting-à®‡à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "API à®ªà®¯à®©à¯à®ªà®¾à®Ÿà¯à®Ÿà¯ˆ à®µà®°à®®à¯à®ªà®¿à®Ÿ",
+                    "à®¤à®°à®µà¯ à®µà¯‡à®•à®¤à¯à®¤à¯ˆ à®…à®¤à®¿à®•à®°à®¿à®•à¯à®•",
+                    "à®ªà®¿à®´à¯ˆà®•à®³à¯ˆà®•à¯ à®•à¯à®±à¯ˆà®•à¯à®•",
+                    "à®¨à®¿à®©à¯ˆà®µà®•à®¤à¯à®¤à¯ˆ à®®à¯‡à®²à®¾à®£à¯à®®à¯ˆ à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Helmet.js-à®‡à®©à¯ à®¨à¯‹à®•à¯à®•à®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "HTTP à®¤à®²à¯ˆà®ªà¯à®ªà¯à®•à®³à¯ˆà®ªà¯ à®ªà®¾à®¤à¯à®•à®¾à®•à¯à®•",
+                    "HTML à® à®‰à®°à¯à®µà®¾à®•à¯à®•",
+                    "à®¤à®°à®µà¯à®¤à¯à®¤à®³à®¤à¯à®¤à¯ˆà®ªà¯ à®ªà®¾à®¤à¯à®•à®¾à®•à¯à®•",
+                    "à®ªà®¯à®©à®°à¯ˆ à®…à®™à¯à®•à¯€à®•à®°à®¿à®•à¯à®•"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Nodemon-à®‡à®©à¯ à®¨à®©à¯à®®à¯ˆ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®•à¯‹à®ªà¯à®ªà¯ à®®à®¾à®±à¯à®±à®™à¯à®•à®³à¯à®•à¯à®•à¯à®ªà¯ à®ªà®¿à®±à®•à¯ à®¤à®¾à®©à®¾à®• à®®à¯€à®£à¯à®Ÿà¯à®®à¯ à®¤à¯Šà®Ÿà®™à¯à®•à¯à®•à®¿à®±à®¤à¯",
+                    "à®ªà®¿à®´à¯ˆà®•à®³à¯ˆà®¤à¯ à®¤à®¾à®©à®¾à®•à®šà¯ à®šà®°à®¿à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯",
+                    "à®šà¯†à®¯à®²à¯à®¤à®¿à®±à®©à¯ˆ à®…à®¤à®¿à®•à®°à®¿à®•à¯à®•à®¿à®±à®¤à¯",
+                    "à®¨à®¿à®©à¯ˆà®µà®•à®¤à¯à®¤à¯ˆà®•à¯ à®•à¯à®±à¯ˆà®•à¯à®•à®¿à®±à®¤à¯"
+                ], 
+                correct: 0
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let isQuizSubmitted = false;
+
+        // DOM elements
+        const questionSelectionGrid = document.getElementById('questionSelectionGrid');
+        const quizCard = document.getElementById('quizCard');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const questionNumberElement = document.getElementById('questionNumber');
+        const questionTextElement = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressBar = document.getElementById('progressBar');
+        const finalScoreElement = document.getElementById('finalScore');
+        const resultMessageElement = document.getElementById('resultMessage');
+        const correctCountElement = document.getElementById('correctCount');
+        const percentageElement = document.getElementById('percentage');
+        const performanceElement = document.getElementById('performance');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Initialize question selection grid with ORANGE color (medium level)
+        function initializeQuestionGrid() {
+            questionSelectionGrid.innerHTML = '';
+            quizData.forEach((question, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'question-number-btn';
+                btn.dataset.index = index;
+                
+                // Add ORANGE difficulty indicator (ALL questions are medium)
+                const difficultyIndicator = document.createElement('div');
+                difficultyIndicator.className = 'difficulty-indicator';
+                btn.appendChild(difficultyIndicator);
+                
+                // Add question number
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'question-number';
+                numberSpan.textContent = index + 1;
+                btn.appendChild(numberSpan);
+                
+                if (index === 0) {
+                    btn.classList.add('active');
+                }
+                
+                if (userAnswers[index] !== null) {
+                    btn.classList.add('answered');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    updateQuestionGrid();
+                });
+                
+                questionSelectionGrid.appendChild(btn);
+            });
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const buttons = document.querySelectorAll('.question-number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                
+                if (userAnswers[index] !== null) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = quizData[currentQuestionIndex];
+            
+            // Update question number
+            questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            
+            // Update question text
+            questionTextElement.textContent = question.question;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                
+                // Check if this option was previously selected
+                if (userAnswers[currentQuestionIndex] === index) {
+                    optionElement.classList.add('selected');
+                }
+                
+                // Only show correct/incorrect if quiz is submitted
+                if (isQuizSubmitted && userAnswers[currentQuestionIndex] === index) {
+                    if (index === question.correct) {
+                        optionElement.classList.add('correct');
+                    } else {
+                        optionElement.classList.add('incorrect');
+                    }
+                }
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update navigation buttons
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.style.display = currentQuestionIndex < quizData.length - 1 ? 'block' : 'none';
+            submitBtn.style.display = currentQuestionIndex === quizData.length - 1 ? 'block' : 'none';
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            if (isQuizSubmitted) return;
+            
+            // Remove selected class from all options
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            const selectedOption = document.querySelectorAll('.quiz-option')[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            // Store the answer
+            userAnswers[currentQuestionIndex] = optionIndex;
+            
+            // Check if answer is correct
+            const question = quizData[currentQuestionIndex];
+            if (optionIndex === question.correct) {
+                if (!question.answered) {
+                    score++;
+                    question.answered = true;
+                }
+            } else {
+                if (question.answered) {
+                    score--;
+                    question.answered = false;
+                }
+            }
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        submitBtn.addEventListener('click', submitQuiz);
+
+        // Submit the quiz
+        function submitQuiz() {
+            isQuizSubmitted = true;
+            
+            const totalQuestions = quizData.length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Update results
+            finalScoreElement.textContent = `${score}/${totalQuestions}`;
+            correctCountElement.textContent = score;
+            percentageElement.textContent = `${percentage}%`;
+            
+            // Determine performance level - Adjusted for Medium level
+            let performance = '';
+            let message = '';
+            
+            if (percentage >= 90) {
+                performance = 'Node.js Master';
+                message = 'à®…à®±à¯à®ªà¯à®¤à®®à¯! à®¨à¯€à®™à¯à®•à®³à¯ Node.js à®‡à®Ÿà¯ˆà®¨à®¿à®²à¯ˆ à®•à®°à¯à®¤à¯à®¤à¯à®•à¯à®•à®³à¯ˆ à®®à¯à®´à¯à®®à¯ˆà®¯à®¾à®• à®¤à¯†à®°à®¿à®¨à¯à®¤à¯à®³à¯à®³à¯€à®°à¯à®•à®³à¯!';
+            } else if (percentage >= 70) {
+                performance = 'Advanced';
+                message = 'à®¨à®©à¯à®±à¯! Node.js à®‡à®Ÿà¯ˆà®¨à®¿à®²à¯ˆ à®•à®°à¯à®¤à¯à®¤à¯à®•à¯à®•à®³à¯ à®ªà®±à¯à®±à®¿ à®šà®¿à®±à®¨à¯à®¤ à®ªà¯à®°à®¿à®¤à®²à¯ à®‰à®³à¯à®³à®¤à¯.';
+            } else if (percentage >= 50) {
+                performance = 'Intermediate';
+                message = 'à®¨à®²à¯à®² à®®à¯à®¯à®±à¯à®šà®¿! Node.js à®‡à®Ÿà¯ˆà®¨à®¿à®²à¯ˆ à®•à®°à¯à®¤à¯à®¤à¯à®•à¯à®•à®³à¯ à®ªà®±à¯à®±à®¿ à®¨à®²à¯à®² à®ªà¯à®°à®¿à®¤à®²à¯ à®‰à®³à¯à®³à®¤à¯.';
+            } else {
+                performance = 'Beginner';
+                message = 'à®¤à¯Šà®Ÿà®°à¯à®¨à¯à®¤à¯ à®ªà®¯à®¿à®±à¯à®šà®¿ à®šà¯†à®¯à¯à®¯à¯à®™à¯à®•à®³à¯! Node.js à®‡à®Ÿà¯ˆà®¨à®¿à®²à¯ˆ à®•à®°à¯à®¤à¯à®¤à¯à®•à¯à®•à®³à¯ˆ à®®à¯€à®£à¯à®Ÿà¯à®®à¯ à®ªà®¾à®°à¯à®™à¯à®•à®³à¯.';
+            }
+            
+            performanceElement.textContent = performance;
+            resultMessageElement.textContent = message;
+            
+            // Show results container
+            quizCard.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            // Show correct/incorrect answers
+            loadQuestion();
+        }
+
+        // Restart quiz
+        restartBtn.addEventListener('click', () => {
+            // Reset quiz state
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            isQuizSubmitted = false;
+            
+            // Reset answered flag for all questions
+            quizData.forEach(question => {
+                question.answered = false;
+            });
+            
+            // Reset UI
+            resultsContainer.style.display = 'none';
+            quizCard.style.display = 'block';
+            
+            // Reload first question
+            loadQuestion();
+            initializeQuestionGrid();
+        });
+
+        // Initialize the quiz
+        initializeQuestionGrid();
+        loadQuestion();
+    </script>
+</body>
+</html>

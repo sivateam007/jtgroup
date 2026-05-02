@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript String Search - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .method-table th {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .method-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .method-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .method-table tr:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .search-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .string-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 1rem 0;
+        }
+        
+        .char-box {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dee2e6;
+            background: white;
+            font-weight: bold;
+        }
+        
+        .char-index {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .found-char {
+            background: #28a745;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20String%20Methods.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20String%20Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript String Search</h2>
+            <p>JavaScript சரம் தேடல் முறைகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>சரம் தேடல் முறைகள்</h2>
+            
+            <table class="method-table">
+                <thead>
+                    <tr>
+                        <th>முறை</th>
+                        <th>விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>indexOf()</code></td>
+                        <td>ஒரு சரத்தில் ஒரு சரத்தின் முதல் நிகழ்வின் குறியீட்டை வழங்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>lastIndexOf()</code></td>
+                        <td>ஒரு சரத்தில் ஒரு குறிப்பிட்ட உரையின் கடைசி நிகழ்வின் குறியீட்டை வழங்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>search()</code></td>
+                        <td>ஒரு சரத்தை (அல்லது வழக்கமான வெளிப்பாடு) தேடி பொருந்தும் நிலையை வழங்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>match()</code></td>
+                        <td>ஒரு சரத்தை ஒரு சரத்திற்கு (அல்லது வழக்கமான வெளிப்பாடு) பொருத்துவதன் முடிவுகளைக் கொண்ட ஒரு வரிசையை வழங்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>matchAll()</code></td>
+                        <td>ஒரு சரத்தை ஒரு சரத்திற்கு (அல்லது வழக்கமான வெளிப்பாடு) பொருத்துவதன் முடிவுகளைக் கொண்ட ஒரு இடைமுகத்தை வழங்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>includes()</code></td>
+                        <td>ஒரு சரம் ஒரு குறிப்பிட்ட மதிப்பைக் கொண்டிருந்தால் true ஐ வழங்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>startsWith()</code></td>
+                        <td>ஒரு சரம் ஒரு குறிப்பிட்ட மதிப்புடன் தொடங்கினால் true ஐ வழங்குகிறது</td>
+                    </tr>
+                    <tr>
+                        <td><code>endsWith()</code></td>
+                        <td>ஒரு சரம் ஒரு குறிப்பிட்ட மதிப்புடன் முடிந்தால் true ஐ வழங்குகிறது</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔍</span> மேலும் காண்க:</h4>
+                <ul>
+                    <li>சரம் டுடோரியல்</li>
+                    <li>சரம் முறைகள்</li>
+                    <li>சரம் டெம்ப்ளேட்டுகள்</li>
+                    <li>சரம் குறிப்பு</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- JavaScript String indexOf() -->
+        <section class="content-section" id="indexof">
+            <h2>JavaScript String indexOf()</h2>
+            <p><code>indexOf()</code> முறை ஒரு சரத்தில் ஒரு சரத்தின் முதல் நிகழ்வின் குறியீட்டை (நிலையை) வழங்குகிறது, அல்லது சரம் கண்டறியப்படாவிட்டால் -1 ஐ வழங்குகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>let text = "Please locate where 'locate' occurs!";
+let index = text.indexOf("locate");
+// index = 7</code></pre>
+            </div>
+            
+            <div class="search-visual">
+                <div class="string-box">
+                    <div class="char-box">P</div>
+                    <div class="char-box">l</div>
+                    <div class="char-box">e</div>
+                    <div class="char-box">a</div>
+                    <div class="char-box">s</div>
+                    <div class="char-box">e</div>
+                    <div class="char-box"> </div>
+                    <div class="char-box found-char">l</div>
+                    <div class="char-box found-char">o</div>
+                    <div class="char-box found-char">c</div>
+                    <div class="char-box found-char">a</div>
+                    <div class="char-box found-char">t</div>
+                    <div class="char-box found-char">e</div>
+                </div>
+                <div style="text-align: center; width: 100%;">
+                    <div class="char-index">குறியீடுகள்: 0 1 2 3 4 5 6 <strong>7</strong> 8 9 10 11 12</div>
+                    <p>"locate" இன் முதல் நிகழ்வு குறியீட்டு 7 இல் தொடங்குகிறது</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> குறிப்பு:</h4>
+                <p>JavaScript பூஜ்ஜியத்திலிருந்து நிலைகளை எண்ணுகிறது. 0 என்பது ஒரு சரத்தில் முதல் நிலை, 1 இரண்டாவது, 2 மூன்றாவது, ...</p>
+            </div>
+        </section>
+
+        <!-- JavaScript String lastIndexOf() -->
+        <section class="content-section" id="lastindexof">
+            <h2>JavaScript String lastIndexOf()</h2>
+            <p><code>lastIndexOf()</code> முறை ஒரு சரத்தில் ஒரு குறிப்பிட்ட உரையின் கடைசி நிகழ்வின் குறியீட்டை வழங்குகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>let text = "Please locate where 'locate' occurs!";
+let index = text.lastIndexOf("locate");
+// index = 21 (இரண்டாவது "locate" இன் தொடக்க குறியீடு)</code></pre>
+            </div>
+            
+            <p><code>indexOf()</code> மற்றும் <code>lastIndexOf()</code> இரண்டும் உரை கண்டறியப்படாவிட்டால் -1 ஐ வழங்குகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>let text = "Please locate where 'locate' occurs!";
+let index = text.lastIndexOf("John");
+// index = -1</code></pre>
+            </div>
+            
+            <p>இரண்டு முறைகளும் தேடலுக்கான தொடக்க நிலையாக இரண்டாவது அளவுருவை ஏற்கின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>let text = "Please locate where 'locate' occurs!";
+let index = text.indexOf("locate", 15);
+// குறியீட்டு 15 இலிருந்து தொடங்கும் தேடல்</code></pre>
+            </div>
+            
+            <p><code>lastIndexOf()</code> முறைகள் பின்னோக்கி (முடிவிலிருந்து தொடக்கத்திற்கு) தேடுகின்றன, அதாவது: இரண்டாவது அளவுரு 15 ஆக இருந்தால், தேடல் நிலை 15 இல் தொடங்கி, சரத்தின் தொடக்கத்திற்கு தேடுகிறது.</p>
+        </section>
+
+        <!-- JavaScript String search() -->
+        <section class="content-section" id="search">
+            <h2>JavaScript String search()</h2>
+            <p><code>search()</code> முறை ஒரு சரத்திற்காக ஒரு சரத்தை (அல்லது வழக்கமான வெளிப்பாடு) தேடி பொருந்தும் நிலையை வழங்குகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டுகள்</h3>
+            <div class="code-example">
+                <pre><code>let text = "Please locate where 'locate' occurs!";
+let position = text.search("locate");
+// position = 7
+
+let text = "Please locate where 'locate' occurs!";
+let position = text.search(/locate/);
+// position = 7</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> வேறுபாடுகள்:</h4>
+                <p><code>indexOf()</code> மற்றும் <code>search()</code> முறைகள் சமமாக இல்லை. இங்கே வேறுபாடுகள்:</p>
+                <ul>
+                    <li><code>search()</code> முறை இரண்டாவது தொடக்க நிலை வாதத்தை எடுக்க முடியாது</li>
+                    <li><code>indexOf()</code> முறை சக்திவாய்ந்த தேடல் மதிப்புகளை (வழக்கமான வெளிப்பாடுகள்) எடுக்க முடியாது</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- JavaScript String match() -->
+        <section class="content-section" id="match">
+            <h2>JavaScript String match()</h2>
+            <p><code>match()</code> முறை ஒரு சரத்தை ஒரு சரத்திற்கு (அல்லது வழக்கமான வெளிப்பாடு) பொருத்துவதன் முடிவுகளைக் கொண்ட ஒரு வரிசையை வழங்குகிறது.</p>
+            
+            <h3>எடுத்துக்காட்டுகள்</h3>
+            
+            <div class="code-example">
+                <pre><code>// "ain" க்கான தேடல் செய்யவும்:
+let text = "The rain in SPAIN stays mainly in the plain";
+let result = text.match("ain");
+// result = ["ain"] (முதல் பொருத்தம் மட்டுமே)</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// உலகளாவிய தேடல்:
+let text = "The rain in SPAIN stays mainly in the plain";
+let result = text.match(/ain/g);
+// result = ["ain", "ain", "ain"] (மூன்று பொருத்தங்கள்)</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// உலகளாவிய, வழக்கு-உணராத தேடல்:
+let text = "The rain in SPAIN stays mainly in the plain";
+let result = text.match(/ain/gi);
+// result = ["ain", "AIN", "ain", "ain"] (நான்கு பொருத்தங்கள்)</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> குறிப்பு:</h4>
+                <p>ஒரு வழக்கமான வெளிப்பாடு g மாற்றியை (உலகளாவிய தேடல்) உள்ளடக்கவில்லை என்றால், <code>match()</code> சரத்தில் முதல் பொருத்தத்தை மட்டுமே வழங்கும்.</p>
+            </div>
+        </section>
+
+        <!-- JavaScript String matchAll() -->
+        <section class="content-section" id="matchall">
+            <h2>JavaScript String matchAll()</h2>
+            <p><code>matchAll()</code> முறை ஒரு சரத்தை ஒரு சரத்திற்கு (அல்லது வழக்கமான வெளிப்பாடு) பொருத்துவதன் முடிவுகளைக் கொண்ட ஒரு இடைமுகத்தை வழங்குகிறது.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>const text = "Cats are great. Cats are fun.";
+const iterator = text.matchAll("Cats");
+// அனைத்து "Cats" நிகழ்வுகளுக்கான இடைமுகம்</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> குறிப்புகள்:</h4>
+                <ul>
+                    <li>அளவுரு ஒரு வழக்கமான வெளிப்பாடாக இருந்தால், உலகளாவிய கொடி (g) அமைக்கப்பட வேண்டும், இல்லையெனில் TypeError எறியப்படும்</li>
+                    <li>நீங்கள் வழக்கு உணராது தேட விரும்பினால், உணராத கொடி (i) அமைக்கப்பட வேண்டும்</li>
+                    <li><code>matchAll()</code> ஒரு ES2020 அம்சமாகும்</li>
+                    <li><code>matchAll()</code> Internet Explorer இல் வேலை செய்யாது</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- JavaScript String includes() -->
+        <section class="content-section" id="includes">
+            <h2>JavaScript String includes()</h2>
+            <p><code>includes()</code> முறை ஒரு சரம் ஒரு குறிப்பிட்ட மதிப்பைக் கொண்டிருந்தால் true ஐ வழங்குகிறது. இல்லையெனில் false ஐ வழங்குகிறது.</p>
+            
+            <h3>எடுத்துக்காட்டுகள்</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு சரம் "world" ஐ உள்ளடக்கியதா என சரிபார்க்கவும்:
+let text = "Hello world, welcome to the universe.";
+let result = text.includes("world");
+// result = true</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// நிலை 12 இலிருந்து தொடங்கி "world" ஐ உள்ளடக்கியதா என சரிபார்க்கவும்:
+let text = "Hello world, welcome to the universe.";
+let result = text.includes("world", 12);
+// result = false (நிலை 12 க்குப் பிறகு "world" இல்லை)</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> குறிப்புகள்:</h4>
+                <ul>
+                    <li><code>includes()</code> வழக்கு உணர்வுடையது</li>
+                    <li><code>includes()</code> ஒரு ES6 அம்சமாகும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- JavaScript String startsWith() -->
+        <section class="content-section" id="startswith">
+            <h2>JavaScript String startsWith()</h2>
+            <p><code>startsWith()</code> முறை ஒரு சரம் ஒரு குறிப்பிட்ட மதிப்புடன் தொடங்கினால் true ஐ வழங்குகிறது. இல்லையெனில் false ஐ வழங்குகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டுகள்</h3>
+            <div class="code-example">
+                <pre><code>let text = "Hello world, welcome to the universe.";
+let result = text.startsWith("Hello");
+// result = true</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>let text = "Hello world, welcome to the universe.";
+let result = text.startsWith("world");
+// result = false</code></pre>
+            </div>
+            
+            <p>தேடலுக்கான தொடக்க நிலையைக் குறிப்பிடலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>let text = "Hello world, welcome to the universe.";
+let result = text.startsWith("world", 5);
+// result = false (குறியீட்டு 5 இல் தொடங்குகிறது)</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>let text = "Hello world, welcome to the universe.";
+let result = text.startsWith("world", 6);
+// result = true (குறியீட்டு 6 இல் "world" தொடங்குகிறது)</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> குறிப்புகள்:</h4>
+                <ul>
+                    <li><code>startsWith()</code> வழக்கு உணர்வுடையது</li>
+                    <li><code>startsWith()</code> ஒரு ES6 அம்சமாகும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- JavaScript String endsWith() -->
+        <section class="content-section" id="endswith">
+            <h2>JavaScript String endsWith()</h2>
+            <p><code>endsWith()</code> முறை ஒரு சரம் ஒரு குறிப்பிட்ட மதிப்புடன் முடிந்தால் true ஐ வழங்குகிறது. இல்லையெனில் false ஐ வழங்குகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டுகள்</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு சரம் "Doe" உடன் முடிவதா என சரிபார்க்கவும்:
+let text = "John Doe";
+let result = text.endsWith("Doe");
+// result = true</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// ஒரு சரத்தின் முதல் 11 எழுத்துகள் "world" உடன் முடிவதா என சரிபார்க்கவும்:
+let text = "Hello world, welcome to the universe.";
+let result = text.endsWith("world", 11);
+// result = true (முதல் 11 எழுத்துகள் "Hello world")</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> குறிப்புகள்:</h4>
+                <ul>
+                    <li><code>endsWith()</code> வழக்கு உணர்வுடையது</li>
+                    <li><code>endsWith()</code> ஒரு ES6 அம்சமாகும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Complete JavaScript Reference -->
+        <section class="content-section" id="reference">
+            <h2>முழுமையான JavaScript குறிப்பு</h2>
+            <p>அனைத்து JavaScript பண்புகள் மற்றும் முறைகளுக்கான முழுமையான குறிப்பிற்கு, முழு விளக்கங்கள் மற்றும் பல எடுத்துக்காட்டுகளுடன், செல்லவும்:</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📚</span> Jassif Team இன் முழு JavaScript குறிப்பு</h4>
+                <p>குறிப்பு 1999 முதல் 2025 வரையிலான அனைத்து JavaScript புதுப்பிப்புகளையும் உள்ளடக்கியது.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section (ONLY ONE) -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் குறியீட்டைக் கவனியுங்கள்:</h4>
+                <div class="code-example" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);">
+                    <pre><code style="color: white;">let x = 'Hello world!';
+alert(x.indexOf('Hello'));</code></pre>
+                </div>
+                <h4>எச்சரிக்கை செய்தியில் என்ன முடிவு வரும்?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">-1</div>
+                            <div class="option-feedback incorrect">✗ தவறு! -1 சரம் கண்டறியப்படாதபோது மட்டுமே வழங்கப்படும். "Hello" சரம் "Hello world!" இல் குறியீட்டு 0 இல் தொடங்குகிறது, எனவே இது கண்டறியப்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">0</div>
+                            <div class="option-feedback correct">✓ சரி! <code>indexOf()</code> முறை சரத்தில் துணைச் சரத்தின் முதல் நிகழ்வின் குறியீட்டை வழங்குகிறது. JavaScript இல், சர குறியீடுகள் 0 இலிருந்து தொடங்குகின்றன. "Hello" "Hello world!" இல் குறியீட்டு 0 இல் தொடங்குகிறது, எனவே <code>indexOf('Hello')</code> 0 ஐ வழங்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">1</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "Hello" சரத்தின் முதல் எழுத்து 'H' குறியீட்டு 0 இல் உள்ளது, குறியீட்டு 1 இல் அல்ல. குறியீட்டு 1 என்பது இரண்டாவது எழுத்து 'e'</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">true</div>
+                            <div class="option-feedback incorrect">✗ தவறு! <code>indexOf()</code> முறை ஒரு பூலியன் மதிப்பை வழங்காது, இது ஒரு எண்ணை (குறியீடு) வழங்குகிறது. துணைச் சரத்தின் நிலையைக் கண்டுபிடிக்க இது பயன்படுகிறது, அதன் இருப்பைச் சரிபார்க்க அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20String%20Methods.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20String%20Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">சரம் தேடல் முறைகள்</a></li>
+                    <li><a href="#indexof">indexOf() முறை</a></li>
+                    <li><a href="#lastindexof">lastIndexOf() முறை</a></li>
+                    <li><a href="#search">search() முறை</a></li>
+                    <li><a href="#match">match() முறை</a></li>
+                    <li><a href="#includes">includes() முறை</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

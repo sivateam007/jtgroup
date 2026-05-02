@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Cipher Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Worker Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Decipher Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Cipher Reference</h2>
+            <p>Node.js இல் குறியாக்கம் மற்றும் கிரிப்டோ தொகுதியைப் பயன்படுத்துவதற்கான முழுமையான வழிகாட்டி</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Cipher Object -->
+        <section class="content-section" id="cipher-object">
+            <h2>Cipher Object</h2>
+            
+            <p>Cipher வகுப்பு Node.js இன் crypto தொகுதியின் ஒரு பகுதியாகும். இது பல்வேறு அல்காரிதம்களைப் பயன்படுத்தி தரவை குறியாக்கம் செய்ய ஒரு வழியை வழங்குகிறது. Cipher நிகழ்வுகள் crypto.createCipheriv() முறையைப் பயன்படுத்தி உருவாக்கப்படுகின்றன.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>crypto.createCipher() முறை பாதுகாப்பு கவலைகள் காரணமாக Node.js v10.0.0 முதல் மறக்கப்பட்டது. எப்போதும் crypto.createCipheriv() ஐப் பயன்படுத்தவும், இதற்கு வெளிப்படையான துவக்க திசையன் (IV) தேவைப்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Import Crypto Module -->
+        <section class="content-section" id="import-crypto">
+            <h2>Import Crypto Module</h2>
+            
+            <div class="code-example">
+                <pre><code>// Import the crypto module
+const crypto = require('crypto');
+
+// Create a cipher with createCipheriv
+const algorithm = 'aes-256-cbc';
+const key = crypto.randomBytes(32); // 32 bytes for AES-256
+const iv = crypto.randomBytes(16); // 16 bytes for AES
+const cipher = crypto.createCipheriv(algorithm, key, iv);</code></pre>
+            </div>
+        </section>
+
+        <!-- Cipher Methods -->
+        <section class="content-section" id="cipher-methods">
+            <h2>Cipher Methods</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>cipher.update(data[, inputEncoding][, outputEncoding])</strong></td>
+                            <td>தரவுடன் சைபரைப் புதுப்பிக்கிறது. inputEncoding வழங்கப்பட்டால், தரவு குறிப்பிட்ட குறியீட்டைப் பயன்படுத்தி ஒரு சரமாகும். outputEncoding குறிப்பிடப்பட்டால், திரும்பிய மதிப்பு குறிப்பிட்ட குறியீட்டைப் பயன்படுத்தி ஒரு சரமாக இருக்கும். இல்லையெனில், ஒரு Buffer திரும்பும்.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>cipher.final([outputEncoding])</strong></td>
+                            <td>மீதமுள்ள எந்தவொரு குறியாக்கப்பட்ட உள்ளடக்கங்களையும் திரும்பப் பெறுகிறது. outputEncoding குறிப்பிடப்பட்டால், ஒரு சரம் திரும்பும்; இல்லையெனில், ஒரு Buffer திரும்பும்.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>cipher.setAAD(buffer[, options])</strong></td>
+                            <td>ஒரு AEAD அல்காரிதத்தைப் (GCM அல்லது CCM போன்றவை) பயன்படுத்தும் போது, கூடுதல் அங்கீகரிக்கப்பட்ட தரவை (AAD) அமைக்கிறது.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>cipher.getAuthTag()</strong></td>
+                            <td>ஒரு AEAD அல்காரிதத்தைப் பயன்படுத்தும் போது, இந்த முறை அங்கீகார டேக்கைக் கொண்டுள்ள ஒரு Buffer ஐத் திரும்பப் பெறுகிறது.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>cipher.setAutoPadding([autoPadding])</strong></td>
+                            <td>autoPadding உண்மையாக இருக்கும் போது (இயல்புநிலை), padding பயன்படுத்தப்படும். தரவு கைமுறையாக padding செய்யப்பட்டால் முடக்கவும்.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Basic Encryption Example -->
+        <section class="content-section" id="basic-encryption">
+            <h2>Basic Encryption Example</h2>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு AES-256-CBC அல்காரிதத்தைப் பயன்படுத்தி தரவை எவ்வாறு குறியாக்கம் செய்வது என்பதை விளக்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Generate encryption key and initialization vector
+// In a real application, you would securely store and retrieve these values
+const key = crypto.randomBytes(32); // Key for AES-256 (32 bytes)
+const iv = crypto.randomBytes(16); // IV for AES (16 bytes)
+
+// Create a cipher
+const algorithm = 'aes-256-cbc';
+const cipher = crypto.createCipheriv(algorithm, key, iv);
+
+// Data to encrypt
+const plainText = 'This is a secret message';
+
+// Encrypt the data
+let encrypted = cipher.update(plainText, 'utf8', 'hex');
+encrypted += cipher.final('hex');
+
+console.log('Original Text:', plainText);
+console.log('Encrypted Text:', encrypted);
+console.log('Key (hex):', key.toString('hex'));
+console.log('IV (hex):', iv.toString('hex'));
+
+// The encrypted message, key, and IV would be needed for decryption</code></pre>
+            </div>
+        </section>
+
+        <!-- Encrypting with Different Algorithms -->
+        <section class="content-section" id="different-algorithms">
+            <h2>Encrypting with Different Algorithms</h2>
+            
+            <p>Node.js பல குறியாக்க அல்காரிதம்களை ஆதரிக்கிறது. வெவ்வேறு அல்காரிதம்களை எவ்வாறு பயன்படுத்துவது என்பது இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// The data to encrypt
+const plainText = 'Hello, this is a test message';
+
+// Function to encrypt data with different algorithms
+function encryptWithAlgorithm(algorithm, keySize, ivSize, plainText) {
+  // Generate key and IV
+  const key = crypto.randomBytes(keySize);
+  const iv = crypto.randomBytes(ivSize);
+  
+  // Create cipher
+  const cipher = crypto.createCipheriv(algorithm, key, iv);
+  
+  // Encrypt data
+  let encrypted = cipher.update(plainText, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
+  return {
+    algorithm,
+    encrypted,
+    key: key.toString('hex'),
+    iv: iv.toString('hex')
+  };
+}
+
+// Test different algorithms
+const algorithms = [
+  { name: 'aes-128-cbc', keySize: 16, ivSize: 16 },
+  { name: 'aes-192-cbc', keySize: 24, ivSize: 16 },
+  { name: 'aes-256-cbc', keySize: 32, ivSize: 16 },
+  { name: 'aes-256-gcm', keySize: 32, ivSize: 16 }
+];
+
+algorithms.forEach(algo => {
+  try {
+    const result = encryptWithAlgorithm(algo.name, algo.keySize, algo.ivSize, plainText);
+    console.log(`Encrypted with ${result.algorithm}: ${result.encrypted}`);
+  } catch (error) {
+    console.error(`Error with ${algo.name}: ${error.message}`);
+  }
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Encrypting Binary Data -->
+        <section class="content-section" id="binary-data">
+            <h2>Encrypting Binary Data</h2>
+            
+            <p>உரையுடன் கூடுதலாக பைனரி தரவையும் நீங்கள் குறியாக்கம் செய்யலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+const fs = require('fs');
+
+// Generate key and IV
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+
+// Create read and write streams
+const readStream = fs.createReadStream('input.jpg');
+const writeStream = fs.createWriteStream('encrypted.jpg.enc');
+
+// Create cipher stream
+const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+
+// Encrypt the file
+readStream
+  .pipe(cipher)
+  .pipe(writeStream);
+
+// Save the key and IV for decryption
+fs.writeFileSync('encryption_key.txt', key.toString('hex'));
+fs.writeFileSync('encryption_iv.txt', iv.toString('hex'));
+
+writeStream.on('finish', () => {
+  console.log('File encryption completed');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Using AEAD Encryption -->
+        <section class="content-section" id="aead-encryption">
+            <h2>Using AEAD Encryption</h2>
+            
+            <p>தொடர்புடைய தரவுடன் அங்கீகரிக்கப்பட்ட குறியாக்கம் (AEAD) இரண்டும் இரகசியத்தன்மை மற்றும் தரவு ஒருமைப்பாட்டை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Data to encrypt
+const plainText = 'Secret message';
+const associatedData = 'Additional data to authenticate';
+
+// Generate key and IV (nonce)
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(12); // 12 bytes (96 bits) is recommended for GCM
+
+// Create cipher using AES-GCM (an AEAD algorithm)
+const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+
+// Set the Additional Authenticated Data (AAD)
+cipher.setAAD(Buffer.from(associatedData));
+
+// Encrypt the data
+let encrypted = cipher.update(plainText, 'utf8', 'hex');
+encrypted += cipher.final('hex');
+
+// Get the authentication tag
+const authTag = cipher.getAuthTag();
+
+console.log('Encrypted Text:', encrypted);
+console.log('Auth Tag (hex):', authTag.toString('hex'));
+console.log('Key (hex):', key.toString('hex'));
+console.log('IV (hex):', iv.toString('hex'));
+console.log('Associated Data:', associatedData);
+
+// All this information is needed for decryption and verification</code></pre>
+            </div>
+        </section>
+
+        <!-- Manual Padding Control -->
+        <section class="content-section" id="manual-padding">
+            <h2>Manual Padding Control</h2>
+            
+            <p>நீங்கள் கைமுறையாக padding நடத்தையைக் கட்டுப்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Generate key and IV
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+
+// Data to encrypt
+const plainText = 'This is a test message';
+
+// Function to encrypt with different padding options
+function encryptWithPadding(usePadding) {
+  // Create cipher
+  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+  
+  // Set padding option
+  cipher.setAutoPadding(usePadding);
+  
+  try {
+    // Encrypt data
+    let encrypted = cipher.update(plainText, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
+  } catch (error) {
+    return `Error: ${error.message}`;
+  }
+}
+
+// With default padding (true)
+console.log('With padding:', encryptWithPadding(true));
+
+// Without padding
+// This will likely fail unless data length is a multiple of the block size
+console.log('Without padding:', encryptWithPadding(false));
+
+// Example with manual padding to block size (16 bytes for AES)
+function manualPadding(text) {
+  const blockSize = 16;
+  const padLength = blockSize - (text.length % blockSize);
+  return text + '\0'.repeat(padLength);
+}
+
+// Create cipher without auto padding
+const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+cipher.setAutoPadding(false);
+
+// Manually pad the data
+const paddedText = manualPadding(plainText);
+console.log('Original length:', plainText.length);
+console.log('Padded length:', paddedText.length);
+
+// Encrypt manually padded data
+let encrypted = cipher.update(paddedText, 'utf8', 'hex');
+encrypted += cipher.final('hex');
+console.log('With manual padding:', encrypted);</code></pre>
+            </div>
+        </section>
+
+        <!-- Complete Encryption/Decryption Example -->
+        <section class="content-section" id="complete-example">
+            <h2>Complete Encryption/Decryption Example</h2>
+            
+            <p>குறியாக்கம் மற்றும் குறிவிலக்கம் இரண்டையும் காட்டும் முழுமையான எடுத்துக்காட்டு இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// The message to encrypt
+const message = 'This is a secret message that needs to be encrypted';
+
+// Generate encryption key and IV
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+
+// Encryption function
+function encrypt(text) {
+  // Create cipher
+  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+  
+  // Encrypt data
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
+  return encrypted;
+}
+
+// Decryption function (using the Decipher class)
+function decrypt(encryptedText) {
+  // Create decipher with the same key and IV
+  const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+  
+  // Decrypt data
+  let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  
+  return decrypted;
+}
+
+// Encrypt the message
+const encryptedMessage = encrypt(message);
+console.log('Original Message:', message);
+console.log('Encrypted Message:', encryptedMessage);
+
+// Decrypt the message
+const decryptedMessage = decrypt(encryptedMessage);
+console.log('Decrypted Message:', decryptedMessage);
+
+// Verify the result
+console.log('Decryption successful:', message === decryptedMessage);</code></pre>
+            </div>
+        </section>
+
+        <!-- Encryption with a Password -->
+        <section class="content-section" id="password-encryption">
+            <h2>Encryption with a Password</h2>
+            
+            <p>பல பயன்பாடுகளுக்கு, நீங்கள் ஒரு கடவுச்சொல்லிலிருந்து குறியாக்க விசையைப் பெற விரும்பலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Password and salt
+const password = 'mysecretpassword';
+const salt = crypto.randomBytes(16);
+
+// Generate a key from the password
+function getKeyFromPassword(password, salt) {
+  // Use PBKDF2 to derive a key from the password
+  return crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha256');
+}
+
+// Password-based encryption
+function encryptWithPassword(text, password) {
+  // Generate key from password
+  const key = getKeyFromPassword(password, salt);
+  
+  // Generate IV
+  const iv = crypto.randomBytes(16);
+  
+  // Create cipher
+  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+  
+  // Encrypt data
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
+  // Return encrypted data and IV (we'll need both for decryption)
+  return {
+    iv: iv.toString('hex'),
+    salt: salt.toString('hex'),
+    encryptedData: encrypted
+  };
+}
+
+// Password-based decryption
+function decryptWithPassword(encryptedInfo, password) {
+  // Get the key from the password
+  const key = getKeyFromPassword(
+    password,
+    Buffer.from(encryptedInfo.salt, 'hex')
+  );
+  
+  // Get the IV from encryptedInfo
+  const iv = Buffer.from(encryptedInfo.iv, 'hex');
+  
+  // Create decipher
+  const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+  
+  // Decrypt data
+  let decrypted = decipher.update(encryptedInfo.encryptedData, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  
+  return decrypted;
+}
+
+// Test encryption with password
+const message = 'Secret message protected by a password';
+const encryptedInfo = encryptWithPassword(message, password);
+
+console.log('Encrypted:', encryptedInfo);
+
+// Test decryption with password
+const decryptedMessage = decryptWithPassword(encryptedInfo, password);
+console.log('Decrypted:', decryptedMessage);
+
+// Try with wrong password
+try {
+  const wrongPassword = 'wrongpassword';
+  const failedDecryption = decryptWithPassword(encryptedInfo, wrongPassword);
+  console.log('Decrypted with wrong password:', failedDecryption);
+} catch (error) {
+  console.log('Decryption failed with wrong password:', error.message);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Supported Encryption Algorithms -->
+        <section class="content-section" id="supported-algorithms">
+            <h2>Supported Encryption Algorithms</h2>
+            
+            <p>Node.js பல குறியாக்க அல்காரிதம்களை ஆதரிக்கிறது. நீங்கள் ஆதரிக்கப்படும் அனைத்து அல்காரிதம்களின் பட்டியலைப் பெறலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Get all supported cipher algorithms
+console.log(crypto.getCiphers());</code></pre>
+            </div>
+            
+            <p>பொதுவான அல்காரிதம்கள் அடங்கும்:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அல்காரிதம்</th>
+                            <th>விசை அளவு (bytes)</th>
+                            <th>IV அளவு (bytes)</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>aes-128-cbc</strong></td>
+                            <td>16</td>
+                            <td>16</td>
+                            <td>CBC பயன்முறையில் 128-பிட் விசையுடன் AES</td>
+                        </tr>
+                        <tr>
+                            <td><strong>aes-192-cbc</strong></td>
+                            <td>24</td>
+                            <td>16</td>
+                            <td>CBC பயன்முறையில் 192-பிட் விசையுடன் AES</td>
+                        </tr>
+                        <tr>
+                            <td><strong>aes-256-cbc</strong></td>
+                            <td>32</td>
+                            <td>16</td>
+                            <td>CBC பயன்முறையில் 256-பிட் விசையுடன் AES</td>
+                        </tr>
+                        <tr>
+                            <td><strong>aes-128-gcm</strong></td>
+                            <td>16</td>
+                            <td>12</td>
+                            <td>GCM பயன்முறையில் 128-பிட் விசையுடன் AES (AEAD)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>aes-256-gcm</strong></td>
+                            <td>32</td>
+                            <td>12</td>
+                            <td>GCM பயன்முறையில் 256-பிட் விசையுடன் AES (AEAD)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>chacha20-poly1305</strong></td>
+                            <td>32</td>
+                            <td>12</td>
+                            <td>ChaCha20-Poly1305 (AEAD)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Security Best Practices -->
+        <section class="content-section" id="security-best-practices">
+            <h2>Security Best Practices</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span><strong>மறக்கப்பட்ட createCipher() க்கு பதிலாக createCipheriv() ஐப் பயன்படுத்தவும்:</strong> நீங்கள் வெளிப்படையாக IV வழங்குகிறீர்கள் என்பதை உறுதிப்படுத்துகிறது.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-random"></i>
+                    <span><strong>பாதுகாப்பான சீரற்ற விசைகள் மற்றும் IVகளை உருவாக்கவும்:</strong> இந்த மதிப்புகளை உருவாக்க எப்போதும் crypto.randomBytes() ஐப் பயன்படுத்தவும்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync-alt"></i>
+                    <span><strong>ஒரே விசையுடன் IVகளை மீண்டும் பயன்படுத்த வேண்டாம்:</strong> இது குறியாக்கத்தை கடுமையாக பலவீனப்படுத்தும்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-double"></i>
+                    <span><strong>அங்கீகரிக்கப்பட்ட குறியாக்கத்தை விரும்பவும் (AEAD):</strong> AES-GCM அல்லது ChaCha20-Poly1305 போன்ற அல்காரிதம்கள் இரகசியத்தன்மை மற்றும் ஒருமைப்பாட்டை வழங்குகின்றன.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-lock"></i>
+                    <span><strong>விசைகளைப் பாதுகாப்பாக சேமிக்கவும்:</strong> உங்கள் பயன்பாட்டுக் குறியீட்டில் விசைகளைக் கடினமாக்க வேண்டாம்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-key"></i>
+                    <span><strong>விசை பெறுதல் செயல்பாடுகளைப் பயன்படுத்தவும்:</strong> கடவுச்சொற்களிலிருந்து விசைகளைப் பெறும் போது, பொருத்தமான அளவுருக்களுடன் PBKDF2, Scrypt, அல்லது Argon2 ஐப் பயன்படுத்தவும்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync"></i>
+                    <span><strong>உங்கள் Node.js பதிப்பைப் புதுப்பித்துக் கொள்ளுங்கள்:</strong> கிரிப்டோகிராஃபிக் பாதிப்புகள் பாதுகாப்பு புதுப்பிப்புகளில் சரி செய்யப்படுகின்றன.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் பாதுகாப்பான குறியாக்கத்திற்காக பயன்படுத்தப்பட வேண்டிய சரியான முறையை தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">crypto.createCipher()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "crypto.createCipher()" முறை பாதுகாப்பு காரணங்களுக்காக மறக்கப்பட்டது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">crypto.createCipheriv()</div>
+                            <div class="option-feedback correct">✓ சரி! "crypto.createCipheriv()" என்பது பாதுகாப்பான குறியாக்கத்திற்கான சரியான முறையாகும், இது வெளிப்படையான IV ஐ தேவைப்படுத்துகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">crypto.encrypt()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "crypto.encrypt()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">crypto.makeCipher()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "crypto.makeCipher()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Worker Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Decipher Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#cipher-object">Cipher Object</a></li>
+                    <li><a href="#cipher-methods">Cipher Methods</a></li>
+                    <li><a href="#basic-encryption">Basic Encryption</a></li>
+                    <li><a href="#security-best-practices">Security Best Practices</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

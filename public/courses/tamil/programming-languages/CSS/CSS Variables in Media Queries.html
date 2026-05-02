@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Variables in Media Queries - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-bg-color: #1e90ff;
+            --primary-color: #ffffff;
+            --secondary-color: #f0f0f0;
+            --border-color: #ddd;
+        }
+        
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Media Query Variable Demo Styles */
+        .demo-container {
+            margin: 1rem 0;
+            padding: 15px;
+            color: var(--primary-bg-color);
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .mq-variable-demo {
+            --fontsize: 20px;
+            --padding-size: 15px;
+            --border-radius: 8px;
+            
+            font-size: var(--fontsize);
+            padding: var(--padding-size);
+            background-color: var(--primary-color);
+            color: var(--primary-bg-color);
+            border: 2px solid var(--primary-bg-color);
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+        
+        .screen-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary-bg-color);
+            font-family: monospace;
+        }
+        
+        .variable-values {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .value-item {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-bg-color);
+        }
+    </style>
+    
+    <!-- Media Query Styles for Variables -->
+    <style>
+        /* Default styles */
+        .mq-variable-demo {
+            --fontsize: 16px;
+            --padding-size: 10px;
+            --border-radius: 5px;
+        }
+        
+        /* Media Query for screens 450px or wider */
+        @media screen and (min-width: 450px) {
+            .mq-variable-demo {
+                --fontsize: 24px;
+                --padding-size: 20px;
+                --border-radius: 12px;
+            }
+        }
+        
+        /* Media Query for screens 768px or wider */
+        @media screen and (min-width: 768px) {
+            .mq-variable-demo {
+                --fontsize: 32px;
+                --padding-size: 30px;
+                --border-radius: 16px;
+            }
+            
+            :root {
+                --primary-bg-color: #2ecc71;
+            }
+        }
+        
+        /* Media Query for screens 1024px or wider */
+        @media screen and (min-width: 1024px) {
+            .mq-variable-demo {
+                --fontsize: 40px;
+                --padding-size: 40px;
+                --border-radius: 20px;
+            }
+            
+            :root {
+                --primary-bg-color: #9b59b6;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-tabs">
+        <a href="CSS%20Variables%20and%20JavaScript.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20@property%20Rule.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Variables in Media Queries</h2>
+            <p>மீடியா வினவல்களில் CSS மாறிகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="content-section" id="mq-variables">
+            <h2>CSS Variables in Media Queries</h2>
+            <p>மீடியா வினவல்கள் வெவ்வேறு சாதனங்களுக்கு (திரைகள், டேப்லெட்டுகள், மொபைல் போன்கள் போன்றவை) வெவ்வேறு பாணி விதிகளை வரையறுப்பது பற்றியது. எங்கள் மீடியா வினவல்கள் அத்தியாயத்தில் மீடியா வினவல்கள் பற்றி மேலும் அறியலாம்.</p>
+            <p>இப்போது 450px அகலத்திற்கு கீழே உள்ள திரைகளுக்கு ஒரு மாறி மதிப்பையும், 450px அகலத்திற்கு மேல் உள்ள திரைகளுக்கு மற்றொரு மாறி மதிப்பையும் அமைக்க விரும்புகிறோம்.</p>
+        </section>
+
+        <section class="content-section" id="example1">
+            <h2>Example 1: Changing Font Size</h2>
+            <p>இங்கே, நாங்கள் முதலில் .container வகுப்பிற்கு --fontsize என்ற புதிய உள்ளூர் மாறியை அறிவிக்கிறோம். அதன் மதிப்பை 20 பிக்சல்களாக அமைக்கிறோம். பின்னர், "உலாவியின் அகலம் 450px அல்லது அதிகமாக இருக்கும்போது, .container வகுப்பின் --fontsize மாறி மதிப்பை 40px ஆக மாற்றவும்" என்று சொல்லும் ஒரு @media விதியை உருவாக்குகிறோம்:</p>
+            
+            <div class="demo-container">
+                <div class="mq-variable-demo">
+                    <h3>Responsive CSS Variables Demo</h3>
+                    <p>இந்த உரை அளவு மற்றும் பேடிங் திரையின் அகலத்தின் அடிப்படையில் CSS மாறிகள் மூலம் மாறுகிறது.</p>
+                    <p>திரையின் அகலத்தை மாற்றி விளைவைக் காண்க!</p>
+                </div>
+                
+                <div class="screen-info">
+                    <p><strong>தற்போதைய திரை அகலம்: <span id="screenWidth">0</span>px</strong></p>
+                    <p><strong>செயலில் உள்ள மீடியா வினவல்: <span id="activeMQ">None</span></strong></p>
+                </div>
+                
+                <div class="variable-values">
+                    <div class="value-item">
+                        <strong>--fontsize:</strong> <span id="fontsizeValue">16px</span>
+                    </div>
+                    <div class="value-item">
+                        <strong>--padding-size:</strong> <span id="paddingValue">10px</span>
+                    </div>
+                    <div class="value-item">
+                        <strong>--border-radius:</strong> <span id="radiusValue">5px</span>
+                    </div>
+                    <div class="value-item">
+                        <strong>--primary-bg-color:</strong> <span id="colorValue">#1e90ff</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>:root {
+  --primary-bg-color: #1e90ff;
+  --primary-color: #ffffff;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.container {
+  --fontsize: 20px;
+  color: var(--primary-bg-color);
+  background-color: var(--primary-color);
+  padding: 15px;
+  font-size: var(--fontsize);
+}
+
+.container h2 {
+  border-bottom: 2px solid var(--primary-bg-color);
+}
+
+@media screen and (min-width: 450px) {
+  .container {
+    --fontsize: 40px;
+  }
+}</code></pre>
+            </div>
+        </section>
+
+        <section class="content-section" id="example2">
+            <h2>Example 2: Changing Multiple Variables</h2>
+            <p>இங்கே மற்றொரு உதாரணம், அங்கு நாங்கள் @media விதியில் --primary-bg-color மாறியின் மதிப்பையும் மாற்றுகிறோம்:</p>
+            
+            <div class="code-example">
+                <pre><code>:root {
+  --primary-bg-color: #1e90ff;
+  --primary-color: #ffffff;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.container {
+  --fontsize: 20px;
+  color: var(--primary-bg-color);
+  background-color: var(--primary-color);
+  padding: 15px;
+  font-size: var(--fontsize);
+}
+
+.container h2 {
+  border-bottom: 2px solid var(--primary-bg-color);
+}
+
+@media screen and (min-width: 450px) {
+  .container {
+    --fontsize: 40px;
+  }
+  :root {
+    --primary-bg-color: lightblue;
+  }
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> பயனுள்ள உதவிக்குறிப்பு:</h4>
+                <p>மீடியா வினவல்களில் CSS மாறிகளைப் பயன்படுத்துவது பதிலளிக்கக்கூடிய வடிவமைப்புகளை உருவாக்குவதை மிகவும் எளிதாக்குகிறது. நீங்கள் ஒரு மாறியின் மதிப்பை மட்டும் மாற்றலாம், மேலும் அந்த மாறியைப் பயன்படுத்தும் அனைத்து உறுப்புகளும் தானாகவே புதுப்பிக்கப்படும்.</p>
+            </div>
+        </section>
+
+        <section class="content-section" id="benefits">
+            <h2>Benefits of Using Variables in Media Queries</h2>
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div><strong>மேம்பட்ட பராமரிப்பு</strong>: பிரேக்பாயிண்ட்களை மாற்ற வேண்டியிருக்கும்போது பல இடங்களில் மதிப்புகளை மாற்ற வேண்டியதில்லை</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div><strong>தெளிவான குறியீடு</strong>: மீடியா வினவல்கள் மாறி மதிப்புகளை மட்டும் மாற்றுகின்றன, முழு CSS விதிகளை அல்ல</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div><strong>சீரான வடிவமைப்பு</strong>: அனைத்து பிரேக்பாயிண்ட்களிலும் மாறிகள் சீரான வடிவமைப்பை உறுதி செய்கின்றன</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div><strong>எளிதான புதுப்பிப்புகள்</strong>: வடிவமைப்பை மாற்ற ஒரு மாறி மதிப்பை மட்டும் மாற்றவும்</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="exercise">
+            <h2>Exercise</h2>
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> மீடியா வினவல்களில் CSS மாறிகளைப் பயன்படுத்துவதன் முக்கிய நன்மை என்ன?</h4>
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">பதிலளிக்கக்கூடிய வடிவமைப்புகளை எளிதாக்குகிறது</div>
+                            <div class="option-feedback correct">✓ சரி! மீடியா வினவல்களில் மாறிகள் பயன்படுத்துவது பதிலளிக்கக்கூடிய வடிவமைப்புகளை உருவாக்குவதை மிகவும் எளிதாக்குகிறது</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">CSS கோப்பு அளவைக் குறைக்கிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! மாறிகள் CSS கோப்பு அளவைக் குறைக்கலாம், ஆனால் இது மீடியா வினவல்களில் அவற்றைப் பயன்படுத்துவதன் முக்கிய நன்மை அல்ல</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">உலாவி உள்ளமைவை மேம்படுத்துகிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! மாறிகள் உலாவி உள்ளமைவை நேரடியாக மேம்படுத்துவதில்லை</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">JavaScript செயல்திறனை மேம்படுத்துகிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! CSS மாறிகள் JavaScript செயல்திறனை நேரடியாக பாதிப்பதில்லை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="properties">
+            <h2>CSS var() Function</h2>
+            <p>பின்வரும் அட்டவணை CSS var() செயல்பாட்டை விவரிக்கிறது:</p>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Function</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>var()</td>
+                            <td>ஒரு CSS மாறியின் மதிப்பைச் செருகுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="bottom-nav">
+            <a href="CSS%20Variables%20and%20JavaScript.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20@property%20Rule.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#mq-variables">CSS Variables in Media Queries</a></li>
+                    <li><a href="#example1">Example 1: Changing Font Size</a></li>
+                    <li><a href="#example2">Example 2: Changing Multiple Variables</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#exercise">Exercise</a></li>
+                    <li><a href="#properties">var() Function</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Update screen width and active media query
+        function updateScreenInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            document.getElementById('screenWidth').textContent = width;
+            
+            // Determine active media query
+            let activeMQ = 'None';
+            if (width >= 1024) {
+                activeMQ = 'min-width: 1024px';
+            } else if (width >= 768) {
+                activeMQ = 'min-width: 768px';
+            } else if (width >= 450) {
+                activeMQ = 'min-width: 450px';
+            } else {
+                activeMQ = 'Default (below 450px)';
+            }
+            
+            document.getElementById('activeMQ').textContent = activeMQ;
+            
+            // Get current variable values
+            const rootStyles = getComputedStyle(document.documentElement);
+            const demoStyles = getComputedStyle(document.querySelector('.mq-variable-demo'));
+            
+            document.getElementById('fontsizeValue').textContent = demoStyles.fontSize;
+            document.getElementById('paddingValue').textContent = demoStyles.padding;
+            document.getElementById('radiusValue').textContent = demoStyles.borderRadius;
+            document.getElementById('colorValue').textContent = rootStyles.getPropertyValue('--primary-bg-color').trim();
+        }
+        
+        window.addEventListener('resize', updateScreenInfo);
+        updateScreenInfo();
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, {threshold: 0.1});
+        
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

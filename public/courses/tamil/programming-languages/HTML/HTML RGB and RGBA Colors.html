@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML RGB and RGBA Colors - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* RGB specific styles */
+        .color-display {
+            height: 100px;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .rgb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .rgb-example {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .slider-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .slider-group {
+            margin: 1rem 0;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .slider-value {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 25px;
+            -webkit-appearance: none;
+            background: #e9ecef;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--git-color);
+            cursor: pointer;
+        }
+        
+        .gray-scale {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .gray-box {
+            height: 60px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .alpha-scale {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .alpha-box {
+            flex: 1;
+            min-width: 100px;
+            height: 60px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .color-preview {
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .rgb-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .alpha-scale {
+                flex-direction: column;
+            }
+            
+            .alpha-box {
+                min-width: 100%;
+            }
+        }
+        
+        .formula-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+        }
+        
+        .value-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .value-item {
+            text-align: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .value-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--git-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Exercise specific style to ensure black color */
+        .exercise-hello {
+            color: rgb(0, 0, 0) !important;
+            font-size: 2rem;
+            margin: 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML%20Colors.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML%20HEX%20Colors.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML RGB and RGBA Colors</h2>
+            <p>RGB மற்றும் RGBA வண்ணங்கள் - முழு வண்ணக் கட்டுப்பாடு</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML RGB and RGBA Colors</h2>
+            
+            <p>ஒரு RGB வண்ண மதிப்பு RED, GREEN, மற்றும் BLUE ஒளி மூலங்களைக் குறிக்கிறது.</p>
+            
+            <p>ஒரு RGBA வண்ண மதிப்பு என்பது ஆல்பா சேனலுடன் (வெளிப்படைத்தன்மை) RGB இன் நீட்டிப்பாகும்.</p>
+            
+            <div class="comparison-container">
+                <div class="color-preview" style="background: linear-gradient(135deg, rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255));">
+                    RGB Colors<br>
+                    Red + Green + Blue
+                </div>
+                
+                <div class="color-preview" style="background: linear-gradient(135deg, rgba(255, 0, 0, 0.8), rgba(0, 255, 0, 0.6), rgba(0, 0, 255, 0.4));">
+                    RGBA Colors<br>
+                    RGB + Alpha (Opacity)
+                </div>
+            </div>
+        </section>
+
+        <!-- RGB Color Values -->
+        <section class="content-section" id="rgb-values">
+            <h2>RGB Color Values</h2>
+            
+            <p>HTML இல், ஒரு வண்ணத்தை பின்வரும் சூத்திரத்தைப் பயன்படுத்தி RGB மதிப்பாக குறிப்பிடலாம்:</p>
+            
+            <div class="formula-box">
+                rgb(red, green, blue)
+            </div>
+            
+            <p>ஒவ்வொரு அளவுருவும் (red, green, மற்றும் blue) 0 மற்றும் 255 க்கு இடையிலான மதிப்புடன் வண்ணத்தின் செறிவை வரையறுக்கிறது.</p>
+            
+            <div class="value-info">
+                <div class="value-item">
+                    <div class="value-number">256</div>
+                    <div>சிவப்பு மதிப்புகள்</div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-number">256</div>
+                    <div>பச்சை மதிப்புகள்</div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-number">256</div>
+                    <div>நீலம் மதிப்புகள்</div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-number">16.7M+</div>
+                    <div>மொத்த வண்ணங்கள்</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-calculator tip-icon"></i> Jassif Team கணக்கீடு:</h4>
+                <p>256 × 256 × 256 = 16,777,216 சாத்தியமான வண்ணங்கள்!</p>
+            </div>
+            
+            <h3>முக்கிய RGB மதிப்புகள்:</h3>
+            
+            <div class="rgb-grid">
+                <div class="rgb-example" style="background-color: rgb(255, 0, 0);">
+                    rgb(255, 0, 0)<br>
+                    <strong>சிவப்பு</strong>
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(0, 255, 0);">
+                    rgb(0, 255, 0)<br>
+                    <strong>பச்சை</strong>
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(0, 0, 255);">
+                    rgb(0, 0, 255)<br>
+                    <strong>நீலம்</strong>
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(0, 0, 0);">
+                    rgb(0, 0, 0)<br>
+                    <strong>கருப்பு</strong>
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(255, 255, 255); color: #333;">
+                    rgb(255, 255, 255)<br>
+                    <strong>வெள்ளை</strong>
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(128, 128, 128);">
+                    rgb(128, 128, 128)<br>
+                    <strong>சாம்பல்</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- RGB Examples -->
+        <section class="content-section" id="rgb-examples">
+            <h2>RGB எடுத்துக்காட்டுகள்</h2>
+            
+            <p>பொதுவான RGB வண்ணங்களின் எடுத்துக்காட்டுகள்:</p>
+            
+            <div class="rgb-grid">
+                <div class="rgb-example" style="background-color: rgb(255, 0, 0);">
+                    rgb(255, 0, 0)
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(0, 0, 255);">
+                    rgb(0, 0, 255)
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(60, 179, 113);">
+                    rgb(60, 179, 113)
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(238, 130, 238);">
+                    rgb(238, 130, 238)
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(255, 165, 0);">
+                    rgb(255, 165, 0)
+                </div>
+                
+                <div class="rgb-example" style="background-color: rgb(106, 90, 205);">
+                    rgb(106, 90, 205)
+                </div>
+            </div>
+        </section>
+
+        <!-- RGB Mixer -->
+        <section class="content-section" id="rgb-mixer">
+            <h2>RGB கலவை சோதனை</h2>
+            
+            <p>கீழே உள்ள RGB மதிப்புகளை கலந்து சோதனை செய்யுங்கள்:</p>
+            
+            <div class="slider-container">
+                <div class="color-display" id="rgbDisplay" style="background-color: rgb(255, 99, 71);">
+                    rgb(255, 99, 71)
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #e74c3c;">RED</span>
+                        <span class="slider-value" id="redValue">255</span>
+                    </div>
+                    <input type="range" min="0" max="255" value="255" class="slider" id="redSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #27ae60;">GREEN</span>
+                        <span class="slider-value" id="greenValue">99</span>
+                    </div>
+                    <input type="range" min="0" max="255" value="99" class="slider" id="greenSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #3498db;">BLUE</span>
+                        <span class="slider-value" id="blueValue">71</span>
+                    </div>
+                    <input type="range" min="0" max="255" value="71" class="slider" id="blueSlider">
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-flask tip-icon"></i> Jassif Team சோதனை:</h4>
+                <p>சிலிண்டர்களை நகர்த்துவதன் மூலம் வெவ்வேறு வண்ணங்களை உருவாக்க முயற்சிக்கவும். 0 முதல் 255 வரையிலான மதிப்புகள் ஒவ்வொரு வண்ணத்தின் செறிவையும் கட்டுப்படுத்துகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Shades of Gray -->
+        <section class="content-section" id="gray-shades">
+            <h2>சாம்பல் நிறத்தின் நிழல்கள்</h2>
+            
+            <p>சாம்பல் நிறத்தின் நிழல்கள் பெரும்பாலும் மூன்று அளவுருக்களுக்கும் சமமான மதிப்புகளைப் பயன்படுத்தி வரையறுக்கப்படுகின்றன:</p>
+            
+            <div class="gray-scale">
+                <div class="gray-box" style="background-color: rgb(60, 60, 60); color: white;">
+                    rgb(60, 60, 60)
+                </div>
+                
+                <div class="gray-box" style="background-color: rgb(100, 100, 100); color: white;">
+                    rgb(100, 100, 100)
+                </div>
+                
+                <div class="gray-box" style="background-color: rgb(140, 140, 140); color: white;">
+                    rgb(140, 140, 140)
+                </div>
+                
+                <div class="gray-box" style="background-color: rgb(180, 180, 180); color: #333;">
+                    rgb(180, 180, 180)
+                </div>
+                
+                <div class="gray-box" style="background-color: rgb(200, 200, 200); color: #333;">
+                    rgb(200, 200, 200)
+                </div>
+                
+                <div class="gray-box" style="background-color: rgb(240, 240, 240); color: #333;">
+                    rgb(240, 240, 240)
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><i class="fas fa-balance-scale warning-icon"></i> Jassif Team விதி:</h4>
+                <p>சாம்பல் நிறங்களுக்கு சிவப்பு, பச்சை மற்றும் நீலம் அனைத்தும் ஒரே மதிப்பைக் கொண்டிருக்க வேண்டும். மதிப்பு குறைவாக இருந்தால் கருப்பு நிறத்திற்கு அருகில், அதிகமாக இருந்தால் வெள்ளை நிறத்திற்கு அருகில்.</p>
+            </div>
+        </section>
+
+        <!-- RGBA Color Values -->
+        <section class="content-section" id="rgba-values">
+            <h2>RGBA Color Values</h2>
+            
+            <p>RGBA வண்ண மதிப்புகள் ஆல்பா சேனலுடன் RGB வண்ண மதிப்புகளின் நீட்டிப்பாகும் - இது ஒரு வண்ணத்திற்கான வெளிப்படைத்தன்மையை குறிப்பிடுகிறது.</p>
+            
+            <p>ஒரு RGBA வண்ண மதிப்பு இவ்வாறு குறிப்பிடப்படுகிறது:</p>
+            
+            <div class="formula-box">
+                rgba(red, green, blue, alpha)
+            </div>
+            
+            <p>ஆல்பா அளவுரு 0.0 (முழுமையாக வெளிப்படையானது) மற்றும் 1.0 (வெளிப்படையானது அல்ல) க்கு இடையே உள்ள ஒரு எண்ணாகும்:</p>
+            
+            <div class="alpha-scale">
+                <div class="alpha-box" style="background-color: rgba(255, 99, 71, 0); background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc); background-size: 20px 20px;">
+                    rgba(255, 99, 71, 0)<br>
+                    முழு வெளிப்படைத்தன்மை
+                </div>
+                
+                <div class="alpha-box" style="background-color: rgba(255, 99, 71, 0.2);">
+                    rgba(255, 99, 71, 0.2)
+                </div>
+                
+                <div class="alpha-box" style="background-color: rgba(255, 99, 71, 0.4);">
+                    rgba(255, 99, 71, 0.4)
+                </div>
+                
+                <div class="alpha-box" style="background-color: rgba(255, 99, 71, 0.6);">
+                    rgba(255, 99, 71, 0.6)
+                </div>
+                
+                <div class="alpha-box" style="background-color: rgba(255, 99, 71, 0.8);">
+                    rgba(255, 99, 71, 0.8)
+                </div>
+                
+                <div class="alpha-box" style="background-color: rgba(255, 99, 71, 1);">
+                    rgba(255, 99, 71, 1)<br>
+                    வெளிப்படைத்தன்மை இல்லை
+                </div>
+            </div>
+        </section>
+
+        <!-- RGBA Mixer -->
+        <section class="content-section" id="rgba-mixer">
+            <h2>RGBA கலவை சோதனை</h2>
+            
+            <p>கீழே உள்ள RGBA மதிப்புகளை கலந்து சோதனை செய்யுங்கள்:</p>
+            
+            <div class="slider-container">
+                <div class="color-display" id="rgbaDisplay" style="background-color: rgba(255, 99, 71, 0.5);">
+                    rgba(255, 99, 71, 0.5)
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #e74c3c;">RED</span>
+                        <span class="slider-value" id="rgbaRedValue">255</span>
+                    </div>
+                    <input type="range" min="0" max="255" value="255" class="slider" id="rgbaRedSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #27ae60;">GREEN</span>
+                        <span class="slider-value" id="rgbaGreenValue">99</span>
+                    </div>
+                    <input type="range" min="0" max="255" value="99" class="slider" id="rgbaGreenSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #3498db;">BLUE</span>
+                        <span class="slider-value" id="rgbaBlueValue">71</span>
+                    </div>
+                    <input type="range" min="0" max="255" value="71" class="slider" id="rgbaBlueSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #9b59b6;">ALPHA</span>
+                        <span class="slider-value" id="alphaValue">0.5</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="alphaSlider">
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-eye-dropper tip-icon"></i> Jassif Team வெளிப்படைத்தன்மை:</h4>
+                <p>ஆல்பா மதிப்பு 0.0 என்பது முழுமையாக வெளிப்படையானது (கண்ணுக்குப் புலப்படாதது), 0.5 என்பது 50% வெளிப்படைத்தன்மை, 1.0 என்பது வெளிப்படைத்தன்மை இல்லை (முழுமையானது).</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🎨</span> பின்வரும் RGB குறியீட்டின் வண்ணம் என்ன?</h4>
+                
+                <div class="comparison-container" style="justify-content: center;">
+                    <div style="background: white; border: 2px solid #ddd; border-radius: 10px; padding: 2rem; max-width: 300px; text-align: center;">
+                        <h3 class="exercise-hello">Hello</h3>
+                        <p style="margin: 1rem 0 0 0; font-size: 1rem; color: #333; font-family: 'Courier New', monospace;">
+                            color: rgb(0, 0, 0)
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">சிவப்பு</div>
+                            <div class="option-feedback incorrect">✗ தவறு! rgb(255, 0, 0) என்பது சிவப்பு நிறம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">பச்சை</div>
+                            <div class="option-feedback incorrect">✗ தவறு! rgb(0, 255, 0) என்பது பச்சை நிறம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">நீலம்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! rgb(0, 0, 255) என்பது நீல நிறம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">கருப்பு</div>
+                            <div class="option-feedback correct">✓ சரி! rgb(0, 0, 0) என்பது கருப்பு நிறம்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> Jassif Team RGB குறிப்பு:</h4>
+                <p>rgb(0, 0, 0) = கருப்பு (எல்லா வண்ணங்களும் 0)<br>
+                   rgb(255, 0, 0) = சிவப்பு (சிவப்பு அதிகபட்சம் 255, பச்சை மற்றும் நீலம் 0)<br>
+                   rgb(0, 255, 0) = பச்சை (பச்சை அதிகபட்சம் 255, சிவப்பு மற்றும் நீலம் 0)<br>
+                   rgb(0, 0, 255) = நீலம் (நீலம் அதிகபட்சம் 255, சிவப்பு மற்றும் பச்சை 0)</p>
+            </div>
+        </section>
+
+        <!-- RGB vs RGBA Comparison -->
+        <section class="content-section" id="comparison">
+            <h2>RGB vs RGBA ஒப்பீடு</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>RGB</th>
+                            <th>RGBA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>முழுப் பெயர்</strong></td>
+                            <td>Red Green Blue</td>
+                            <td>Red Green Blue Alpha</td>
+                        </tr>
+                        <tr>
+                            <td><strong>சூத்திரம்</strong></td>
+                            <td>rgb(r, g, b)</td>
+                            <td>rgba(r, g, b, a)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>மதிப்பு வரம்பு</strong></td>
+                            <td>0-255 (மூன்றும்)</td>
+                            <td>0-255 (r,g,b), 0.0-1.0 (a)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>வெளிப்படைத்தன்மை</strong></td>
+                            <td>இல்லை (முழுமையானது)</td>
+                            <td>ஆம் (0.0-1.0)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>பயன்பாடு</strong></td>
+                            <td>திட வண்ணங்கள்</td>
+                            <td>வெளிப்படையான வண்ணங்கள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>எடுத்துக்காட்டு</strong></td>
+                            <td style="color: rgb(255, 99, 71);">rgb(255, 99, 71)</td>
+                            <td style="color: rgba(255, 99, 71, 0.5);">rgba(255, 99, 71, 0.5)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML%20Colors.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML%20HEX%20Colors.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">RGB & RGBA Colors</a></li>
+                    <li><a href="#rgb-values">RGB Values</a></li>
+                    <li><a href="#rgb-mixer">RGB Mixer</a></li>
+                    <li><a href="#rgba-values">RGBA Values</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // RGB Slider functionality
+        const redSlider = document.getElementById('redSlider');
+        const greenSlider = document.getElementById('greenSlider');
+        const blueSlider = document.getElementById('blueSlider');
+        const rgbDisplay = document.getElementById('rgbDisplay');
+        const redValue = document.getElementById('redValue');
+        const greenValue = document.getElementById('greenValue');
+        const blueValue = document.getElementById('blueValue');
+
+        function updateRGBDisplay() {
+            const red = redSlider.value;
+            const green = greenSlider.value;
+            const blue = blueSlider.value;
+            
+            redValue.textContent = red;
+            greenValue.textContent = green;
+            blueValue.textContent = blue;
+            
+            rgbDisplay.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+            rgbDisplay.textContent = `rgb(${red}, ${green}, ${blue})`;
+            
+            // Adjust text color based on brightness
+            const brightness = (red * 299 + green * 587 + blue * 114) / 1000;
+            rgbDisplay.style.color = brightness > 125 ? 'black' : 'white';
+        }
+
+        redSlider.addEventListener('input', updateRGBDisplay);
+        greenSlider.addEventListener('input', updateRGBDisplay);
+        blueSlider.addEventListener('input', updateRGBDisplay);
+
+        // RGBA Slider functionality
+        const rgbaRedSlider = document.getElementById('rgbaRedSlider');
+        const rgbaGreenSlider = document.getElementById('rgbaGreenSlider');
+        const rgbaBlueSlider = document.getElementById('rgbaBlueSlider');
+        const alphaSlider = document.getElementById('alphaSlider');
+        const rgbaDisplay = document.getElementById('rgbaDisplay');
+        const rgbaRedValue = document.getElementById('rgbaRedValue');
+        const rgbaGreenValue = document.getElementById('rgbaGreenValue');
+        const rgbaBlueValue = document.getElementById('rgbaBlueValue');
+        const alphaValue = document.getElementById('alphaValue');
+
+        function updateRGBADisplay() {
+            const red = rgbaRedSlider.value;
+            const green = rgbaGreenSlider.value;
+            const blue = rgbaBlueSlider.value;
+            const alpha = (alphaSlider.value / 100).toFixed(2);
+            
+            rgbaRedValue.textContent = red;
+            rgbaGreenValue.textContent = green;
+            rgbaBlueValue.textContent = blue;
+            alphaValue.textContent = alpha;
+            
+            rgbaDisplay.style.backgroundColor = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+            rgbaDisplay.textContent = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+            
+            // Add checkered background pattern for transparency
+            rgbaDisplay.style.backgroundImage = `linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), 
+                                                 linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc)`;
+            rgbaDisplay.style.backgroundSize = '20px 20px';
+            rgbaDisplay.style.backgroundPosition = '0 0, 10px 10px';
+        }
+
+        rgbaRedSlider.addEventListener('input', updateRGBADisplay);
+        rgbaGreenSlider.addEventListener('input', updateRGBADisplay);
+        rgbaBlueSlider.addEventListener('input', updateRGBADisplay);
+        alphaSlider.addEventListener('input', updateRGBADisplay);
+
+        // Initialize displays
+        updateRGBDisplay();
+        updateRGBADisplay();
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

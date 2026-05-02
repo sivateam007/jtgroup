@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Set Logic - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Logic visualization */
+        .logic-visualization {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .logic-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            border: 2px solid var(--git-color);
+        }
+        
+        .logic-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Set visualization */
+        .set-visual {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .set-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .set-a {
+            background: rgba(52, 152, 219, 0.8);
+            border: 3px solid #2980b9;
+        }
+        
+        .set-b {
+            background: rgba(231, 76, 60, 0.8);
+            border: 3px solid #c0392b;
+        }
+        
+        .set-name {
+            position: absolute;
+            top: -25px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        
+        .set-elements {
+            font-size: 0.9rem;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        /* Methods grid */
+        .logic-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .logic-method-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .logic-method-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .method-icon {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .method-title {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .method-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        /* Browser support table */
+        .browser-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .browser-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .browser-table th {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .browser-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .browser-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .browser-table tr:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .browser-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .support-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .supported {
+            background: #28a745;
+            color: white;
+        }
+        
+        .not-supported {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20Set%20Methods.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20WeakSet.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript Set Logic</h2>
+            <p>தர்க்கரீதியான Set முறைகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>தர்க்க முறைகள்</h2>
+            
+            <p>JavaScript 2025 இல், 7 புதிய தர்க்க முறைகள் Set பொருளில் சேர்க்கப்பட்டன:</p>
+            
+            <div class="logic-methods-grid">
+                <div class="logic-method-card">
+                    <div class="method-header">
+                        <div class="method-icon">∪</div>
+                        <div class="method-title">union()</div>
+                    </div>
+                    <div class="method-desc">இரண்டு Sets இன் ஒன்றியத்தைத் தரும்</div>
+                </div>
+                
+                <div class="logic-method-card">
+                    <div class="method-header">
+                        <div class="method-icon">∩</div>
+                        <div class="method-title">intersection()</div>
+                    </div>
+                    <div class="method-desc">இரண்டு Sets இன் வெட்டுத்தொகுப்பைத் தரும்</div>
+                </div>
+                
+                <div class="logic-method-card">
+                    <div class="method-header">
+                        <div class="method-icon">-</div>
+                        <div class="method-title">difference()</div>
+                    </div>
+                    <div class="method-desc">இரண்டு Sets இன் வித்தியாசத்தைத் தரும்</div>
+                </div>
+                
+                <div class="logic-method-card">
+                    <div class="method-header">
+                        <div class="method-icon">△</div>
+                        <div class="method-title">symmetricDifference()</div>
+                    </div>
+                    <div class="method-desc">சமச்சீர் வித்தியாசத்தைத் தரும்</div>
+                </div>
+            </div>
+            
+            <div class="logic-methods-grid">
+                <div class="logic-method-card">
+                    <div class="method-header">
+                        <div class="method-icon">⊆</div>
+                        <div class="method-title">isSubsetOf()</div>
+                    </div>
+                    <div class="method-desc">துணைக்குழுவா எனச் சோதிக்கிறது</div>
+                </div>
+                
+                <div class="logic-method-card">
+                    <div class="method-header">
+                        <div class="method-icon">⊇</div>
+                        <div class="method-title">isSupersetOf()</div>
+                    </div>
+                    <div class="method-desc">மீத்தொகுப்பா எனச் சோதிக்கிறது</div>
+                </div>
+                
+                <div class="logic-method-card">
+                    <div class="method-header">
+                        <div class="method-icon">∅</div>
+                        <div class="method-title">isDisjointFrom()</div>
+                    </div>
+                    <div class="method-desc">தனித்தன்மை உள்ளதா எனச் சோதிக்கிறது</div>
+                </div>
+            </div>
+            
+            <div class="set-visual">
+                <div class="set-circle set-a">
+                    <div class="set-name">Set A</div>
+                    <div class="set-elements">a, b, c</div>
+                </div>
+                
+                <div class="set-circle set-b">
+                    <div class="set-name">Set B</div>
+                    <div class="set-elements">b, c, d</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2>உலாவி ஆதரவு</h2>
+            
+            <p>Set Logic ஒரு ES2025 அம்சமாகும்.</p>
+            
+            <p>JavaScript 2025 மே 2025 முதல் அனைத்து நவீன உலாவிகளிலும் முழுமையாக ஆதரிக்கப்படுகிறது:</p>
+            
+            <div class="browser-table">
+                <table>
+                    <tr>
+                        <th>உலாவி</th>
+                        <th>பதிப்பு</th>
+                        <th>வெளியீட்டு தேதி</th>
+                        <th>ஆதரவு</th>
+                    </tr>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>136</td>
+                        <td>Apr 2025</td>
+                        <td><span class="support-badge supported">ஆதரிக்கிறது</span></td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>136</td>
+                        <td>Apr 2025</td>
+                        <td><span class="support-badge supported">ஆதரிக்கிறது</span></td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>129</td>
+                        <td>Aug 2024</td>
+                        <td><span class="support-badge supported">ஆதரிக்கிறது</span></td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>18.2</td>
+                        <td>Dec 2024</td>
+                        <td><span class="support-badge supported">ஆதரிக்கிறது</span></td>
+                    </tr>
+                    <tr>
+                        <td>Opera</td>
+                        <td>120</td>
+                        <td>May 2025</td>
+                        <td><span class="support-badge supported">ஆதரிக்கிறது</span></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> கவனிக்க:</h4>
+                <p>இந்த தர்க்க முறைகள் மிகவும் புதியவை. பழைய உலாவிகளை ஆதரிக்க, polyfills ஐப் பயன்படுத்தவும் அல்லது Babel போன்ற டிரான்ஸ்பிலர்களைப் பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- The union() Method -->
+        <section class="content-section" id="union-method">
+            <h2>union() முறை</h2>
+            
+            <p>union() முறை இரண்டு Sets இன் ஒன்றியத்தைத் தரும்.</p>
+            
+            <p>union() முறை இந்த Set இல் உள்ள உறுப்புகள், அல்லது வாத Set இல் உள்ள உறுப்புகள், அல்லது இரண்டிலும் உள்ள உறுப்புகளைக் கொண்ட புதிய Set ஐத் தரும்:</p>
+            
+            <div class="logic-visualization">
+                <img src="logic1.jpg" alt="Union Visualization" class="logic-image">
+                <div class="logic-caption">Union - இரண்டு Sets இன் அனைத்து உறுப்புகளும்</div>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>const A = new Set(['a','b','c']);
+const B = new Set(['b','c','d']);
+
+const C = A.union(B);
+// C = {'a', 'b', 'c', 'd'}</code></pre>
+            </div>
+        </section>
+
+        <!-- The intersection() Method -->
+        <section class="content-section" id="intersection-method">
+            <h2>intersection() முறை</h2>
+            
+            <p>intersection() முறை இரண்டு Sets இன் வெட்டுத்தொகுப்பைத் தரும்.</p>
+            
+            <p>intersection() முறை இந்த Set இலும் மற்றும் வாத Set இலும் உள்ள உறுப்புகளைக் கொண்ட புதிய Set ஐத் தரும்:</p>
+            
+            <div class="logic-visualization">
+                <img src="logic2.jpg" alt="Intersection Visualization" class="logic-image">
+                <div class="logic-caption">Intersection - இரண்டு Sets இல் பொதுவான உறுப்புகள்</div>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>const A = new Set(['a','b','c']);
+const B = new Set(['b','c','d']);
+
+const C = A.intersection(B);
+// C = {'b', 'c'}</code></pre>
+            </div>
+        </section>
+
+        <!-- The difference() Method -->
+        <section class="content-section" id="difference-method">
+            <h2>difference() முறை</h2>
+            
+            <p>difference() முறை இரண்டு Sets இடையேயான வித்தியாசத்தைத் தரும்.</p>
+            
+            <p>difference() முறை இந்த Set இல் உள்ள ஆனால் வாத Set இல் இல்லாத உறுப்புகளைக் கொண்ட புதிய Set ஐத் தரும்:</p>
+            
+            <div class="logic-visualization">
+                <img src="logic3.jpg" alt="Difference Visualization" class="logic-image">
+                <div class="logic-caption">Difference - A இல் உள்ளது ஆனால் B இல் இல்லாதது</div>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>const A = new Set(['a','b','c']);
+const B = new Set(['b','c','d']);
+
+const C = A.difference(B);
+// C = {'a'}</code></pre>
+            </div>
+        </section>
+
+        <!-- The symmetricDifference() Method -->
+        <section class="content-section" id="symmetric-difference-method">
+            <h2>symmetricDifference() முறை</h2>
+            
+            <p>symmetricDifference() முறை இரண்டு Sets இடையேயான சமச்சீர் வித்தியாசத்தைத் தரும்.</p>
+            
+            <p>symmetricDifference() முறை இந்த Set இல் அல்லது வாத Set இல் உள்ள ஆனால் இரண்டிலும் இல்லாத உறுப்புகளைக் கொண்ட புதிய Set ஐத் தரும்:</p>
+            
+            <div class="logic-visualization">
+                <img src="logic4.jpg" alt="Symmetric Difference Visualization" class="logic-image">
+                <div class="logic-caption">Symmetric Difference - ஒரு Set இல் மட்டுமே உள்ள உறுப்புகள்</div>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>const A = new Set(['a','b','c']);
+const B = new Set(['b','c','d']);
+
+const C = A.symmetricDifference(B);
+// C = {'a', 'd'}</code></pre>
+            </div>
+        </section>
+
+        <!-- The isSubsetOf() Method -->
+        <section class="content-section" id="issubsetof-method">
+            <h2>isSubsetOf() முறை</h2>
+            
+            <p>isSubsetOf() முறை இந்த Set இன் அனைத்து உறுப்புகளும் வாத Set இன் உறுப்புகளாக இருந்தால் true தரும்:</p>
+            
+            <div class="logic-visualization">
+                <img src="logic5.jpg" alt="Subset Visualization" class="logic-image">
+                <div class="logic-caption">Subset - A இன் அனைத்து உறுப்புகளும் B இல் உள்ளன</div>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>const A = new Set(['a','b','c']);
+const B = new Set(['b','c','d']);
+
+let answer = A.isSubsetOf(B);
+// answer = false</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📐</span> உதாரணம்:</h4>
+                <p>Set {1, 2} என்பது Set {1, 2, 3} இன் துணைக்குழுவாகும்.</p>
+            </div>
+        </section>
+
+        <!-- The isSupersetOf() Method -->
+        <section class="content-section" id="issupersetof-method">
+            <h2>isSupersetOf() முறை</h2>
+            
+            <p>isSupersetOf() முறை வாத Set இன் அனைத்து உறுப்புகளும் இந்த Set இல் இருந்தால் true தரும்:</p>
+            
+            <div class="logic-visualization">
+                <img src="logic6.jpg" alt="Superset Visualization" class="logic-image">
+                <div class="logic-caption">Superset - B இன் அனைத்து உறுப்புகளும் A இல் உள்ளன</div>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>const A = new Set(['a','b','c']);
+const B = new Set(['b','c','d']);
+
+let answer = A.isSupersetOf(B);
+// answer = false</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📐</span> உதாரணம்:</h4>
+                <p>Set {1, 2, 3} என்பது Set {1, 2} இன் மீத்தொகுப்பாகும்.</p>
+            </div>
+        </section>
+
+        <!-- The isDisjointFrom() Method -->
+        <section class="content-section" id="isdisjointfrom-method">
+            <h2>isDisjointFrom() முறை</h2>
+            
+            <p>isDisjointFrom() முறை இந்த Set க்கு வாத Set உடன் பொதுவான உறுப்புகள் இல்லையென்றால் true தரும்:</p>
+            
+            <div class="logic-visualization">
+                <img src="logic7.jpg" alt="Disjoint Visualization" class="logic-image">
+                <div class="logic-caption">Disjoint - இரண்டு Sets க்கும் பொதுவான உறுப்புகள் இல்லை</div>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>const A = new Set(['a','b','c']);
+const B = new Set(['b','c','d']);
+
+let answer = A.isDisjointFrom(B);
+// answer = false (ஏனெனில் 'b' மற்றும் 'c' பொதுவானவை)</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📐</span> உதாரணம்:</h4>
+                <p>Set {1, 2} மற்றும் Set {3, 4} ஆகியவை தனித்தன்மை உடையவை.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Set Logic பயிற்சி</h2>
+            
+            <p>JavaScript Set தர்க்க முறைகளைப் புரிந்துகொள்வதை இந்த பயிற்சி சோதிக்கிறது.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் எடுத்துக்காட்டைக் கவனியுங்கள்:</h4>
+                
+                <div class="code-example" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);">
+                    <pre><code>const set1 = new Set([1, 2, 3]);
+const set2 = new Set([3, 4, 5]);
+const result = set1.intersection(set2);</code></pre>
+                </div>
+                
+                <p style="margin-top: 1.5rem;">result இன் மதிப்பு என்னவாக இருக்கும்?</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">{1, 2, 3, 4, 5}</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது union() முறையின் முடிவாக இருக்கும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">{3}</div>
+                            <div class="option-feedback correct">✓ சரி! intersection() இரண்டு Sets க்கும் பொதுவான உறுப்புகளைத் தரும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">{1, 2}</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது difference() முறையின் முடிவாக இருக்கும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">{1, 2, 4, 5}</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது symmetricDifference() முறையின் முடிவாக இருக்கும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learn More -->
+        <section class="content-section" id="learn-more">
+            <h2>மேலும் அறிய</h2>
+            
+            <p>Set Logic பற்றிய மேலும் விரிவான தகவலுக்கு:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>JavaScript Sets</h4>
+                    </div>
+                    <p>Sets அறிமுகம் மற்றும் அடிப்படைகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tools"></i>
+                        <h4>JavaScript Set Methods</h4>
+                    </div>
+                    <p>அடிப்படை Set முறைகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>JavaScript Weak Sets</h4>
+                    </div>
+                    <p>WeakSet மற்றும் அதன் பயன்பாடுகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-book"></i>
+                        <h4>JavaScript Set Reference</h4>
+                    </div>
+                    <p>முழுமையான Set குறிப்பு</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🗺️</span> JavaScript Maps:</h4>
+                <p>Sets போன்றே, Maps களும் தர்க்க முறைகளைக் கொண்டுள்ளன. Maps உடன் பணிபுரியும் போது இந்தக் கருத்துகள் உதவியாக இருக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20Set%20Methods.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20WeakSet.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">தர்க்க முறைகள்</a></li>
+                    <li><a href="#union-method">union() முறை</a></li>
+                    <li><a href="#intersection-method">intersection() முறை</a></li>
+                    <li><a href="#difference-method">difference() முறை</a></li>
+                    <li><a href="#symmetric-difference-method">symmetricDifference() முறை</a></li>
+                    <li><a href="#issubsetof-method">isSubsetOf() முறை</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Image fallback
+        document.querySelectorAll('.logic-image').forEach(img => {
+            img.addEventListener('error', function() {
+                this.style.display = 'none';
+                const caption = this.nextElementSibling;
+                if (caption && caption.classList.contains('logic-caption')) {
+                    caption.innerHTML = 'விசுவலைசேஷன் படம் கிடைக்கவில்லை. விளக்கத்தைப் படிக்கவும்.';
+                    caption.style.color = '#dc3545';
+                }
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Advanced DI - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid #ddd;
+        }
+
+        .bottom-nav .nav-tab {
+            margin: 0;
+        }
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20Dynamic%20Components.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Router%20Advanced.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Advanced DI</h2>
+<p>மேம்பட்ட சார்பு உட்செலுத்தலைக் கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Advanced DI</h2>
+<p>Angular-ல் மேம்பட்ட சார்பு உட்செலுத்தல் மென்மையான கட்டமைப்புகளை உருவாக்க படிநிலை injectors, தனிப்பட்ட InjectionToken, விருப்பமான மற்றும் பல வழங்குநர்கள் மற்றும் செயல்பாடு-பாணி inject() முறையைப் பயன்படுத்துகிறது.</p>
+
+<p>சார்பு உட்செலுத்தல் என்பது Angular-ன் மைய வடிவமைப்பு முறைகளில் ஒன்றாகும், இது கூறுகள் தங்கள் சார்புகளை வெளிப்படையாகக் கோர அனுமதிக்கிறது, இது கட்டமைப்பை சுருக்குகிறது மற்றும் சோதனை செய்வதை எளிதாக்குகிறது.</p>
+</section>
+
+<!-- Advanced DI Essentials -->
+<section class="content-section" id="essentials">
+<h2>Advanced DI Essentials</h2>
+<p><strong>வரம்பு:</strong> படிநிலை injectors என்பது பயன்பாடு/பாதை/கூறு நிலைகளில் உள்ள வழங்குநர்கள் நிகழ்வுகள் எங்கு வாழ்கின்றன என்பதை வரையறுக்கின்றன.</p>
+<p><strong>டோக்கன்கள்:</strong> வகுப்பு அல்லாத மதிப்புகள் மற்றும் கட்டமைப்பிற்கு InjectionToken பயன்படுத்தவும்.</p>
+<p><strong>செயல்பாடு inject:</strong> உருவாக்கிகளில் அல்லது பயன்பாட்டு செயல்பாடுகளில் inject() பயன்படுத்தவும்.</p>
+<p><strong>விருப்பமான & பல:</strong> விருப்பமான சார்புகள் மற்றும் பல வழங்குநர்கள் மென்மையான கலவையை செயல்படுத்துகின்றன.</p>
+
+<div class="code-example">
+<h3>Advanced DI Setup</h3>
+<pre><code>import { InjectionToken, inject, Optional } from '@angular/core';
+
+// Tokens
+export const CONFIG = new InjectionToken&lt;{ api: string }&gt;('CONFIG');
+export const FEATURES = new InjectionToken&lt;string[]&gt;('FEATURES');
+
+// Optional inject
+const cfg = inject(CONFIG, { optional: true });
+
+// Multi providers
+bootstrapApplication(App, {
+  providers: [
+    { provide: CONFIG, useValue: { api: '/api' } },
+    { provide: FEATURES, useValue: 'search', multi: true },
+    { provide: FEATURES, useValue: 'share', multi: true },
+  ]
+});</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>குறியீடு விளக்கம்:</h4>
+<p><strong>InjectionToken:</strong> வகுப்பு அல்லாத மதிப்புகள் மற்றும் கட்டமைப்பிற்கான ஒரு வகைப்படுத்தப்பட்ட டோக்கனை வரையறுக்கிறது.</p>
+<p><strong>inject(TOKEN, { optional: true }):</strong> ஒரு சார்பை மீட்டெடுக்கிறது மற்றும் காணாமல் போகும்போது null/undefined வழங்குகிறது.</p>
+<p><strong>multi: true:</strong> ஒரே டோக்கனுக்கு பல வழங்குநர் மதிப்புகளை ஒரு வரிசையில் சேகரிக்கிறது.</p>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">💡</span>Jassif Team குறிப்புகள்:</h4>
+<p>சேவைகள் & DI, ரவுட்டர், மற்றும் பயன்பாடு பூட்ஸ்ட்ராப் பற்றி காண்க.</p>
+<p>கட்டமைப்பிற்கு InjectionToken பயன்படுத்தவும், பயன்பாட்டு செயல்பாடுகளில் செயல்பாடு-பாணி inject() பயன்படுத்தவும், மற்றும் முடிந்தவரை பாதைகள்/கூறுகளுக்கு வழங்குநர்களை நோக்குநிலைப்படுத்தவும்.</p>
+<p><strong>முக்கியமானது:</strong> Angular-ன் DI அமைப்பு பயன்பாடுகளை மிகவும் மாடுலர் மற்றும் சோதனை செய்யக்கூடியதாக ஆக்குகிறது.</p>
+</div>
+</section>
+
+<!-- Advanced DI Example -->
+<section class="content-section" id="di-example">
+<h2>Advanced DI Example</h2>
+<div class="code-example">
+<h3>Multi Providers Example</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, InjectionToken, inject } from '@angular/core';
+
+const FEATURES = new InjectionToken&lt;string[]&gt;('FEATURES');
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;DI: Multi Providers&lt;/h3&gt;
+    &lt;p&gt;Features: {{ features.join(', ') }}&lt;/p&gt;
+  `
+})
+class App {
+  features = inject(FEATURES);
+}
+
+bootstrapApplication(App, {
+  providers: [
+    { provide: FEATURES, useValue: 'search', multi: true },
+    { provide: FEATURES, useValue: 'share', multi: true },
+    { provide: FEATURES, useValue: 'ai', multi: true }
+  ]
+});</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>எடுத்துக்காட்டு விளக்கம்:</h4>
+<p><strong>FEATURES token:</strong> வழங்குநர்களால் பங்களிக்கப்பட்ட சரங்களை தொகுக்கும் பல வழங்குநர் டோக்கன்.</p>
+<p><strong>inject(FEATURES):</strong> ரன்டைமில் தொகுக்கப்பட்ட வரிசையைப் படிக்கிறது.</p>
+<p><strong>Display:</strong> டெம்ப்ளேட் அம்சங்களை காற்புள்ளி பிரிக்கப்பட்ட பட்டியலில் இணைக்கிறது.</p>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">⚡</span>சிறந்த நடைமுறைகள்:</h4>
+<p><strong>வகைகளை விட டோக்கன்கள்:</strong> வகுப்புகளுக்கு அல்ல, மதிப்புகள் மற்றும் இடைமுகங்களுக்கு InjectionToken பயன்படுத்தவும்.</p>
+<p><strong>பல வழங்குநர்கள்:</strong> ஒரு டோக்கனின் கீழ் பல பங்களிப்புகளை சேகரிக்க multi: true சேர்க்கவும்.</p>
+<p><strong>வரம்பு வழங்குநர்கள்:</strong> தனிமைப்படுத்துதல் தேவைப்படும்போது root-க்கு பதிலாக பாதைகள்/கூறுகளில் வழங்க பயன்படுத்தவும்.</p>
+<p><strong>மையப்படுத்தப்பட்ட கட்டமைப்பு:</strong> பயன்பாட்டு-அகலமான அமைப்புகளை InjectionToken-கள் மூலம் மேலாண்மை செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Optional and Multi Providers -->
+<section class="content-section" id="optional-multi">
+<h2>Optional and Multi Providers</h2>
+<p>ஒரு சார்பு தேவையில்லாதபோது @Optional() அல்லது inject(TOKEN, { optional: true }) பயன்படுத்தவும்.</p>
+<p>பல வழங்குநர்கள் பல மதிப்புகள் ஒரே டோக்கனுக்கு பங்களிக்க அனுமதிக்கின்றன.</p>
+
+<div class="code-example">
+<h3>Optional DI Setup</h3>
+<pre><code>import { InjectionToken, inject, Optional } from '@angular/core';
+
+export const USER_NAME = new InjectionToken&lt;string&gt;('USER_NAME');
+
+// Constructor optional
+constructor(@Optional() public maybeName?: string) {}
+
+// Function optional
+const name = inject(USER_NAME, { optional: true });</code></pre>
+</div>
+
+<div class="code-example">
+<h3>Complete Example</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, InjectionToken, inject } from '@angular/core';
+
+const USER_NAME = new InjectionToken&lt;string&gt;('USER_NAME');
+const FEATURES = new InjectionToken&lt;string[]&gt;('FEATURES');
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Optional & Multi&lt;/h3&gt;
+    &lt;p&gt;Hello: {{ name || 'Anonymous' }}&lt;/p&gt;
+    &lt;p&gt;Features: {{ features?.join(', ') || '∅' }}&lt;/p&gt;
+  `
+})
+class App {
+  name = inject(USER_NAME, { optional: true });
+  features = inject(FEATURES, { optional: true });
+}
+
+bootstrapApplication(App, {
+  providers: [
+    // Try commenting USER_NAME to see optional behavior
+    { provide: USER_NAME, useValue: 'Dana' },
+    { provide: FEATURES, useValue: 'search', multi: true },
+    { provide: FEATURES, useValue: 'share', multi: true },
+  ]
+});</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>எடுத்துக்காட்டு விளக்கம்:</h4>
+<p><strong>Optional inject:</strong> inject(USER_NAME, { optional: true }) வழங்கப்படும் போது ஒரு மதிப்பை வழங்குகிறது அல்லது இல்லாதபோது null/undefined வழங்குகிறது.</p>
+<p><strong>பல வழங்குநர்கள்:</strong> பல FEATURES உள்ளீடுகள் ஒரு வரிசையில் இணைக்கப்படுகின்றன.</p>
+<p><strong>இயல்புநிலைகள்:</strong> விருப்பமான மதிப்புகள் காணாமல் போகும்போது டெம்ப்ளேட் இயல்புநிலைகளைக் காட்டுகிறது.</p>
+</div>
+
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-check-circle"></i>
+<div>
+<strong>விருப்பமான சார்புகள்:</strong> ஒரு சார்பு விருப்பமானதாக இருக்கும்போது எப்போதும் null கையாளவும்
+</div>
+</div>
+<div class="practice-item negative">
+<i class="fas fa-times-circle"></i>
+<div>
+<strong>மோதல்களைத் தவிர்க்கவும்:</strong> அம்சங்கள் முழுவதும் தற்செயலான மறுபயன்பாட்டைத் தடுக்க டோக்கன்களைத் தெளிவாக பெயரிடவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-cogs"></i>
+<div>
+<strong>கட்டமைப்பு முறை:</strong> டோக்கன்களுடன் உலகளாவிய அமைப்புகளை மாதிரியாக்கவும் மற்றும் தேவைக்கேற்ப ஒவ்வொரு பாதை/கூறுக்கும் மேலெழுதவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-layer-group"></i>
+<div>
+<strong>படிநிலை உட்செலுத்தல்:</strong> தனிப்பட்ட சூழல்களுக்கு பயன்பாடு, பாதை, மற்றும் கூறு நிலை வழங்குநர்களை பயன்படுத்தவும்
+</div>
+</div>
+</div>
+</section>
+
+<!-- DI Patterns Comparison -->
+<section class="content-section" id="patterns-comparison">
+<h2>DI Patterns Comparison</h2>
+<div class="comparison-table">
+<table>
+<thead>
+<tr>
+<th>முறை</th>
+<th>பயன் கூறு</th>
+<th>செயலாக்கம்</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>InjectionToken</strong></td>
+<td>கட்டமைப்பு மதிப்புகள், வகுப்பு அல்லாத சார்புகள்</td>
+<td>new InjectionToken('TOKEN_NAME')</td>
+</tr>
+<tr>
+<td><strong>Optional Dependencies</strong></td>
+<td>கிடைக்காத அம்சங்கள்</td>
+<td>inject(TOKEN, {optional: true}) or @Optional()</td>
+</tr>
+<tr>
+<td><strong>Multi Providers</strong></td>
+<td>பல பங்களிப்புகளை சேகரித்தல்</td>
+<td>{provide: TOKEN, useValue: X, multi: true}</td>
+</tr>
+<tr>
+<td><strong>Hierarchical Injectors</strong></td>
+<td>பாதை/கூறுக்கு ஸ்கோப் செய்யப்பட்ட சேவைகள்</td>
+<td>providers array in component/route</td>
+</tr>
+<tr>
+<td><strong>Function inject()</strong></td>
+<td>பயன்பாட்டு செயல்பாடுகள், அமைப்பு செயல்பாடுகள்</td>
+<td>const service = inject(Service)</td>
+</tr>
+<tr>
+<td><strong>Factory Providers</strong></td>
+<td>சிக்கலான உருவாக்க தர்க்கம்</td>
+<td>{provide: TOKEN, useFactory: () => new Service()}</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">📊</span>DI முறைகள் பயன்பாடு:</h4>
+<p>Angular-ன் மேம்பட்ட DI அம்சங்கள் நெகிழ்வான மற்றும் பராமரிக்கக்கூடிய பயன்பாடுகளை உருவாக்க உதவுகின்றன:</p>
+<ul>
+<li><strong>InjectionToken:</strong> வகுப்புகளுடன் கட்டுப்படுத்தப்படாத மதிப்புகளுக்கு பயன்படுத்தவும்</li>
+<li><strong>Optional DI:</strong> பயன்பாடுகள் தேவையில்லாத அம்சங்களுக்கு</li>
+<li><strong>Multi Providers:</strong> பயன்பாட்டு விரிவாக்கத்திற்கு சிறந்தது</li>
+<li><strong>Hierarchical DI:</strong> தனிமைப்படுத்தப்பட்ட சூழல்களுக்கு</li>
+</ul>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Advanced DI Quiz</h2>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>ஒரு வகுப்புடன் இணைக்கப்படாத DI கட்டமைப்பு மதிப்புகளுக்கு நீங்கள் எதைப் பயன்படுத்த வேண்டும்?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">InjectionToken</div>
+<div class="option-feedback correct">✓ சரி! InjectionToken என்பது Angular DI-ல் கட்டமைப்பு மதிப்புகள் மற்றும் வகுப்பு அல்லாத சார்புகளுக்காக வடிவமைக்கப்பட்டது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">OpaqueToken</div>
+<div class="option-feedback incorrect">✗ தவறு! OpaqueToken Angular-ல் காலாவதியாக்கப்பட்டது; அதற்கு பதிலாக InjectionToken பயன்படுத்தவும்</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">AbstractClass</div>
+<div class="option-feedback incorrect">✗ தவறு! Abstract classes வகுப்பு படிநிலைகளுக்கு, கட்டமைப்பு மதிப்புகளுக்கு அல்ல</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>Angular-ல் பல வழங்குநர்கள் பல மதிப்புகளை ஒரே டோக்கனுக்கு சேகரிக்க என்ன பயன்படுத்தப்படுகிறது?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">multi: true விருப்பம்</div>
+<div class="option-feedback correct">✓ சரி! multi: true விருப்பம் பல வழங்குநர்களை ஒரே டோக்கனுக்கு சேகரிக்க பயன்படுகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">optional: true விருப்பம்</div>
+<div class="option-feedback incorrect">✗ தவறு! optional: true விருப்பம் விருப்பமான சார்புகளுக்கு பயன்படுகிறது, பல மதிப்புகள் சேகரிப்பிற்கு அல்ல</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">provideMany() முறை</div>
+<div class="option-feedback incorrect">✗ தவறு! Angular-ல் provideMany() என்ற முறை இல்லை</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20Dynamic%20Components.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20Router%20Advanced.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team நிறுவனம்</h3>
+<p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+</div>
+<div class="footer-column">
+<h3>விரைவு இணைப்புகள்</h3>
+<ul>
+<li><a href="#introduction">Advanced DI</a></li>
+<li><a href="#essentials">DI அடிப்படைகள்</a></li>
+<li><a href="#di-example">DI எடுத்துக்காட்டு</a></li>
+<li><a href="#optional-multi">Optional & Multi</a></li>
+<li><a href="#patterns-comparison">DI முறைகள்</a></li>
+<li><a href="#exercise">வினாடி வினா</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>தொடர்பு</h3>
+<ul>
+<li><a href="#">எங்களைப் பற்றி</a></li>
+<li><a href="#">தொடர்பு கொள்ளவும்</a></li>
+<li><a href="#">இடம் &amp; நேரங்கள்</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>எங்களைப் பின்தொடருங்கள்</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team நிறுவனம். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test Payment Flow</title>
+</head>
+<body>
+    <h1>Payment Flow Test</h1>
+    
+    <button onclick="testFlow()">Start Test</button>
+    <div id="log"></div>
+
+    <script>
+    async function testFlow() {
+        const log = (msg) => {
+            document.getElementById('log').innerHTML += '<p>' + msg + '</p>';
+            console.log(msg);
+        };
+
+        try {
+            // 1. Login
+            log('1. Logging in...');
+            const loginRes = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: 'test@example.com', password: 'test123' }),
+                credentials: 'include'
+            });
+            
+            if (!loginRes.ok) throw new Error('Login failed');
+            log('✓ Logged in!');
+
+            // 2. Check auth
+            const userRes = await fetch('/api/auth/me', { credentials: 'include' });
+            const user = await userRes.json();
+            log('✓ Authenticated as: ' + user.name);
+
+            // 3. Create payment
+            log('Creating payment...');
+            const payRes = await fetch('/api/payment/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({}),
+                credentials: 'include'
+            });
+
+            if (!payRes.ok) {
+                const err = await payRes.json();
+                throw new Error(err.error || 'Payment creation failed');
+            }
+
+            const payData = await payRes.json();
+            log('✓ Payment link created: ' + payData.hostedUrl);
+            log('Redirecting to Razorpay...');
+            
+            // 4. Redirect
+            window.location.href = payData.hostedUrl;
+
+        } catch (err) {
+            log('✗ Error: ' + err.message);
+            console.error(err);
+        }
+    }
+    </script>
+</body>
+</html>

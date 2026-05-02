@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL CREATE INDEX Statement - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles specific to this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Syntax Grid */
+        .syntax-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .syntax-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .syntax-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .syntax-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .syntax-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .comparison-grid,
+            .syntax-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .syntax-header,
+            .comparison-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL DEFAULT Constraint.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL AUTO INCREMENT Field.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL CREATE INDEX Statement</h2>
+            <p>CREATE INDEX அறிக்கையைப் பற்றி அறிந்து, தரவுத்தள செயல்திறனை எவ்வாறு மேம்படுத்துவது என்பதைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is CREATE INDEX Statement -->
+        <section class="content-section" id="what-is-index">
+            <h2>SQL CREATE INDEX Statement என்றால் என்ன?</h2>
+            
+            <p>CREATE INDEX அறிக்கை அட்டவணைகளில் குறியீடுகளை (indexes) உருவாக்கப் பயன்படுகிறது.</p>
+            
+            <p>குறியீடுகள் தரவுத்தளத்திலிருந்து தரவை வேறுவிதமாக இருப்பதை விட விரைவாக மீட்டெடுக்கப் பயன்படுகின்றன. பயனர்கள் குறியீடுகளைப் பார்க்க முடியாது, அவை தேடல்கள்/குவெரிகளை விரைவுபடுத்த பயன்படுத்தப்படுகின்றன.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கியமான குறிப்பு:</h4>
+                <p>குறியீடுகள் உள்ள அட்டவணையைப் புதுப்பிப்பது குறியீடுகள் இல்லாத அட்டவணையைப் புதுப்பிப்பதை விட அதிக நேரம் எடுக்கும் (ஏனெனில் குறியீடுகளுக்கும் புதுப்பிப்பு தேவை). எனவே, அடிக்கடி தேடப்படும் நெடுவரிசைகளில் மட்டுமே குறியீடுகளை உருவாக்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- CREATE INDEX Syntax -->
+        <section class="content-section" id="create-index-syntax">
+            <h2>CREATE INDEX தொடரியல்</h2>
+            
+            <p>ஒரு அட்டவணையில் குறியீட்டை உருவாக்குகிறது. நகல் மதிப்புகள் அனுமதிக்கப்படுகின்றன:</p>
+            
+            <div class="code-example">
+                <h3>அடிப்படை CREATE INDEX தொடரியல்:</h3>
+                <pre><code>CREATE INDEX index_name
+ON table_name (column1, column2, ...);</code></pre>
+            </div>
+            
+            <h3>CREATE UNIQUE INDEX தொடரியல்</h3>
+            
+            <p>ஒரு அட்டவணையில் தனித்துவமான குறியீட்டை உருவாக்குகிறது. நகல் மதிப்புகள் அனுமதிக்கப்படாது:</p>
+            
+            <div class="code-example">
+                <h3>UNIQUE INDEX தொடரியல்:</h3>
+                <pre><code>CREATE UNIQUE INDEX index_name
+ON table_name (column1, column2, ...);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚠️</span> குறிப்பு:</h4>
+                <p>குறியீடுகளை உருவாக்குவதற்கான தொடரியல் வெவ்வேறு தரவுத்தளங்களில் மாறுபடும். எனவே: உங்கள் தரவுத்தளத்தில் குறியீடுகளை உருவாக்குவதற்கான தொடரியலைச் சரிபார்க்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- CREATE INDEX Example -->
+        <section class="content-section" id="create-index-example">
+            <h2>CREATE INDEX உதாரணம்</h2>
+            
+            <p>கீழே உள்ள SQL அறிக்கை "Persons" அட்டவணையில் "LastName" நெடுவரிசையில் "idx_lastname" என்ற பெயரில் ஒரு குறியீட்டை உருவாக்குகிறது:</p>
+            
+            <div class="code-example">
+                <h3>ஒற்றை நெடுவரிசை குறியீடு:</h3>
+                <pre><code>CREATE INDEX idx_lastname
+ON Persons (LastName);</code></pre>
+            </div>
+            
+            <p>நெடுவரிசைகளின் கலவையில் குறியீட்டை உருவாக்க விரும்பினால், நெடுவரிசை பெயர்களை அடைப்புக்குறிக்குள் பட்டியலிடலாம், காற்புள்ளிகளால் பிரிக்கப்பட்டு:</p>
+            
+            <div class="code-example">
+                <h3>பல நெடுவரிசை குறியீடு:</h3>
+                <pre><code>CREATE INDEX idx_pname
+ON Persons (LastName, FirstName);</code></pre>
+            </div>
+        </section>
+
+        <!-- DROP INDEX Statement -->
+        <section class="content-section" id="drop-index">
+            <h2>DROP INDEX அறிக்கை</h2>
+            
+            <p>DROP INDEX அறிக்கை ஒரு அட்டவணையில் உள்ள குறியீட்டை நீக்கப் பயன்படுகிறது.</p>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>MS Access:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>DROP INDEX index_name ON table_name;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>SQL Server:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>DROP INDEX table_name.index_name;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>DB2/Oracle:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>DROP INDEX index_name;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-database"></i>
+                        <h3>MySQL:</h3>
+                    </div>
+                    <div class="syntax-box">
+                        <pre><code>ALTER TABLE table_name
+DROP INDEX index_name;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Index Benefits and Considerations -->
+        <section class="content-section" id="benefits-considerations">
+            <h2>குறியீட்டின் நன்மைகள் மற்றும் கருத்துகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>நன்மைகள்</h4>
+                    </div>
+                    <ul>
+                        <li>தரவு மீட்பு வேகத்தை கணிசமாக மேம்படுத்துகிறது</li>
+                        <li>தேடல் மற்றும் வரிசைப்படுத்தல் செயல்திறனை மேம்படுத்துகிறது</li>
+                        <li>JOIN செயல்பாடுகளின் செயல்திறனை மேம்படுத்துகிறது</li>
+                        <li>WHERE விதிமுறைகளுடன் குவெரிகளை விரைவுபடுத்துகிறது</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>கருத்துகள்</h4>
+                    </div>
+                    <ul>
+                        <li>கூடுதல் சேமிப்பக இடம் தேவைப்படுகிறது</li>
+                        <li>INSERT, UPDATE, DELETE செயல்பாடுகளை மெதுவாக்குகிறது</li>
+                        <li>அடிக்கடி புதுப்பிக்கப்படும் நெடுவரிசைகளுக்கு பொருத்தமற்றது</li>
+                        <li>பல குறியீடுகள் பராமரிப்பு சிக்கல்களை உருவாக்கும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>சிறந்த நடைமுறைகள்</h4>
+                    </div>
+                    <ul>
+                        <li>அடிக்கடி தேடப்படும் நெடுவரிசைகளில் குறியீடுகளை உருவாக்கவும்</li>
+                        <li>பெரிய அட்டவணைகளில் முதன்மையாக குறியீடுகளைப் பயன்படுத்தவும்</li>
+                        <li>WHERE, JOIN, ORDER BY பயன்படுத்தும் நெடுவரிசைகளை முன்னுரிமைப்படுத்தவும்</li>
+                        <li>குறியீடுகளின் செயல்திறனை வழமையாக மதிப்பீடு செய்யவும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>பயனர்கள் அட்டவணை</h3>
+                    <p>அடிக்கடி தேடப்படும் நெடுவரிசைகளுக்கான குறியீடுகள்</p>
+                    <div class="code-example">
+                        <pre><code>-- Email மூலம் விரைவான தேடல்
+CREATE INDEX idx_users_email 
+ON Users (Email);
+
+-- பெயர் மூலம் தேடல்
+CREATE INDEX idx_users_name 
+ON Users (LastName, FirstName);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>ஆர்டர்கள் அட்டவணை</h3>
+                    <p>தேதி மற்றும் நிலை அடிப்படையில் குவெரிகள்</p>
+                    <div class="code-example">
+                        <pre><code>-- தேதி அடிப்படையில் ஆர்டர்கள்
+CREATE INDEX idx_orders_date 
+ON Orders (OrderDate);
+
+-- நிலை மற்றும் தேதி அடிப்படையில்
+CREATE INDEX idx_orders_status 
+ON Orders (Status, OrderDate);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3>தயாரிப்புகள் அட்டவணை</h3>
+                    <p>வகை மற்றும் விலை அடிப்படையில் வடிகட்டுதல்</p>
+                    <div class="code-example">
+                        <pre><code>-- வகை மூலம் தயாரிப்புகள்
+CREATE INDEX idx_products_category 
+ON Products (CategoryID);
+
+-- விலை வரம்பு குவெரிகள்
+CREATE INDEX idx_products_price 
+ON Products (Price);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- When to Use Indexes -->
+        <section class="content-section" id="when-to-use">
+            <h2>எப்போது குறியீடுகளைப் பயன்படுத்துவது</h2>
+            
+            <div class="syntax-grid">
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>குறியீடுகள் பயனுள்ளதாக இருக்கும் போது</h3>
+                    </div>
+                    <ul>
+                        <li>பெரிய அட்டவணைகள் (10,000+ வரிசைகள்)</li>
+                        <li>அடிக்கடி தேடப்படும் நெடுவரிசைகள்</li>
+                        <li>WHERE, JOIN, ORDER BY பயன்படுத்தும் நெடுவரிசைகள்</li>
+                        <li>குறைவான NULL மதிப்புகள் கொண்ட நெடுவரிசைகள்</li>
+                        <li>தனித்துவமான மதிப்புகள் கொண்ட நெடுவரிசைகள்</li>
+                    </ul>
+                </div>
+                
+                <div class="syntax-card">
+                    <div class="syntax-header">
+                        <i class="fas fa-times-circle"></i>
+                        <h3>குறியீடுகள் பயனுள்ளதாக இல்லாத போது</h3>
+                    </div>
+                    <ul>
+                        <li>சிறிய அட்டவணைகள்</li>
+                        <li>அடிக்கடி புதுப்பிக்கப்படும் நெடுவரிசைகள்</li>
+                        <li>பல NULL மதிப்புகள் கொண்ட நெடுவரிசைகள்</li>
+                        <li>குறைவான தனித்துவ மதிப்புகள் கொண்ட நெடுவரிசைகள்</li>
+                        <li>அரிதாக தேடப்படும் நெடுவரிசைகள்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL CREATE INDEX அறிக்கையின் நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையின் காப்புப்பிரதியை உருவாக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! CREATE INDEX அறிக்கை காப்புப்பிரதிகளை உருவாக்கப் பயன்படுவதில்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">குறியீடுகளை உருவாக்குவதன் மூலம் தரவை விரைவாக மீட்டெடுக்க</div>
+                            <div class="option-feedback correct">✓ சரி! CREATE INDEX அறிக்கை தரவுத்தள செயல்திறனை மேம்படுத்துவதற்காக குறியீடுகளை உருவாக்கப் பயன்படுகிறது, இது தரவு மீட்பை விரைவுபடுத்துகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையில் தரவு ஒருமைப்பாட்டை உறுதி செய்ய</div>
+                            <div class="option-feedback incorrect">✗ தவறு! தரவு ஒருமைப்பாடு PRIMARY KEY, FOREIGN KEY, CHECK போன்ற கட்டுப்பாடுகளால் உறுதி செய்யப்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">அட்டவணையில் இருக்கும் குறியீட்டை நீக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது DROP INDEX அறிக்கையின் நோக்கம்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL DEFAULT Constraint.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL AUTO INCREMENT Field.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-index">CREATE INDEX என்றால் என்ன?</a></li>
+                    <li><a href="#create-index-syntax">CREATE INDEX தொடரியல்</a></li>
+                    <li><a href="#create-index-example">CREATE INDEX உதாரணங்கள்</a></li>
+                    <li><a href="#benefits-considerations">நன்மைகள் மற்றும் கருத்துகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

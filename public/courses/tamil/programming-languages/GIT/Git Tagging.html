@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Tagging - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Git Commit.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Git Stash.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Git Tagging</h2>
+            <p>Learn how to mark important points in your project history with tags</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Key Commands Section -->
+        <section class="content-section" id="key-commands">
+            <h2>Tagging-க்கான முக்கிய கட்டளைகள்</h2>
+            
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h3>git tag &lt;tagname&gt;</h3>
+                    <p>ஒரு lightweight tag உருவாக்க</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>git tag -a &lt;tagname&gt; -m "message"</h3>
+                    <p>ஒரு annotated tag உருவாக்க</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h3>git tag &lt;tagname&gt; &lt;commit-hash&gt;</h3>
+                    <p>ஒரு குறிப்பிட்ட கமிட்டை tag செய்ய</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <h3>git tag</h3>
+                    <p>Tags-ஐ பட்டியலிடு</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3>git show &lt;tagname&gt;</h3>
+                    <p>Tag விவரங்களைக் காட்டு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is Tag Section -->
+        <section class="content-section" id="what-is-tag">
+            <h2>Tag என்றால் என்ன?</h2>
+            
+            <p>Git-ல் ஒரு tag என்பது ஒரு குறிப்பிட்ட கமிட்டுக்கான லேபிள் அல்லது புத்தகக்குறி போன்றது.</p>
+            
+            <p>Tags பெரும்பாலும் உங்கள் திட்ட வரலாற்றில் முக்கியமான புள்ளிகளைக் குறிக்கப் பயன்படுத்தப்படுகின்றன, வெளியீடுகள் போன்றவை (v1.0 அல்லது v2.0).</p>
+            
+            <p>Tags என்பது பதிப்புகளைக் கண்காணித்து உங்கள் குழுவுடன் அல்லது பயனர்களுடன் பகிர்ந்து கொள்வதற்கான எளிய மற்றும் நம்பகமான வழியாகும்.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🏷️</span> பொதுவான tag வகைகள்:</h4>
+                <ul>
+                    <li><strong>வெளியீடுகள்:</strong> உங்கள் திட்டம் வெளியிடத் தயாராக இருக்கும் போது குறிக்க tags உங்களை அனுமதிக்கின்றன, அதனால் நீங்கள் (மற்றவர்கள்) பின்னர் அந்த சரியான பதிப்பை எப்போதும் கண்டுபிடிக்க முடியும்.</li>
+                    <li><strong>மைல்கற்கள்:</strong> ஒரு பெரிய அம்சம் முடிந்ததும் அல்லது ஒரு பிழை சரிசெய்யப்பட்டதும் போன்ற முக்கிய மைல்கற்களை முன்னிலைப்படுத்த tags பயன்படுத்தவும்.</li>
+                    <li><strong>பயன்பாட்டிற்கு கொண்டு செல்லுதல்:</strong> எந்த பதிப்பு குறியீட்டை பயன்பாட்டிற்கு கொண்டு செல்ல வேண்டும் என்பதை அறிய பல பயன்பாட்டிற்கு கொண்டு செல்லும் கருவிகள் tags பயன்படுத்துகின்றன.</li>
+                    <li><strong>அவசர சரிசெய்தல்கள்:</strong> நீங்கள் ஒரு பழைய பதிப்பை சரிசெய்ய வேண்டும் என்றால், சரியான குறியீட்டை சரிபார்த்து patch செய்ய tags எளிதாக்குகின்றன.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Create Lightweight Tag Section -->
+        <section class="content-section" id="lightweight-tag">
+            <h2>Lightweight Tag உருவாக்கவும்</h2>
+            
+            <p>ஒரு lightweight tag என்பது ஒரு கமிட்டுக்கான ஒரு பெயர் மட்டுமே.</p>
+            
+            <p>இது விரைவானது மற்றும் எளிமையானது, ஆனால் கூடுதல் தகவல்களை சேமிக்காது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git tag v1.0</code></pre>
+            </div>
+        </section>
+
+        <!-- Annotated vs Lightweight Section -->
+        <section class="content-section" id="tag-types">
+            <h2>Annotated vs Lightweight Tags</h2>
+            
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Annotated Tag</h3>
+                    <p>ஆசிரியர், தேதி மற்றும் செய்தியை சேமிக்கிறது</p>
+                    <p>வெளியீடுகள் மற்றும் மற்றவர்களுடன் பகிர்வதற்கு பரிந்துரைக்கப்படுகிறது</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                    <h3>Lightweight Tag</h3>
+                    <p>ஒரு கமிட்டுக்கான எளிய பெயர் (கூடுதல் தகவல் இல்லை, ஒரு புத்தகக்குறி போன்றது)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Create Annotated Tag Section -->
+        <section class="content-section" id="annotated-tag">
+            <h2>Annotated Tag உருவாக்கவும் (-a -m)</h2>
+            
+            <p>ஒரு annotated tag உங்கள் பெயர், தேதி மற்றும் ஒரு செய்தியை சேமிக்கிறது.</p>
+            
+            <p>பெரும்பாலான பயன்பாடுகளுக்கு இது பரிந்துரைக்கப்படுகிறது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git tag -a v1.0 -m "Version 1.0 release"</code></pre>
+            </div>
+        </section>
+
+        <!-- Tag Specific Commit Section -->
+        <section class="content-section" id="tag-specific">
+            <h2>குறிப்பிட்ட கமிட்டை Tag செய்யவும்</h2>
+            
+            <p>அதன் hash-ஐ குறிப்பிடுவதன் மூலம் ஒரு பழைய கமிட்டை tag செய்யலாம்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git tag v1.1 1a2b3c4d</code></pre>
+            </div>
+
+            <div class="note-box">
+                <h4>குறிப்பு:</h4>
+                <p>1a2b3c4d-ஐ நீங்கள் tag செய்ய விரும்பும் கமிட் hash-உடன் மாற்றவும்.</p>
+            </div>
+        </section>
+
+        <!-- List Tags Section -->
+        <section class="content-section" id="list-tags">
+            <h2>Tags-ஐ பட்டியலிடுங்கள்</h2>
+            
+            <p>உங்கள் களஞ்சியத்தில் உள்ள அனைத்து tags-ஐயும் பார்க்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git tag</code></pre>
+            </div>
+        </section>
+
+        <!-- Show Tag Details Section -->
+        <section class="content-section" id="show-tag">
+            <h2>Tag விவரங்களைக் காட்டவும் (git show)</h2>
+            
+            <p>ஒரு tag மற்றும் அது சுட்டிக்காட்டும் கமிட்டின் விவரங்களைப் பார்க்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git show v1.0</code></pre>
+            </div>
+        </section>
+
+        <!-- Push Tags Section -->
+        <section class="content-section" id="push-tags">
+            <h2>Tags-ஐ தொலை களஞ்சியத்திற்கு Push செய்யவும்</h2>
+            
+            <p>இயல்பாக, tags உங்கள் உள்ளூர் கணினியில் மட்டுமே உள்ளன.</p>
+            
+            <p>மற்றவர்கள் உங்கள் tags-ஐப் பார்க்க விரும்பினால், அவற்றை உங்கள் தொலை களஞ்சியத்திற்கு push செய்ய வேண்டும்.</p>
+            
+            <div class="warning-box">
+                <h4>⚠️ குறிப்பு:</h4>
+                <p>உங்கள் tags-ஐ push செய்யவில்லை என்றால், உங்களைத் தவிர வேறு யாரும் அவற்றைப் பார்க்க மாட்டார்கள், மேலும் உள்ளூரில் மட்டுமே.</p>
+            </div>
+
+            <p>உங்கள் தொலை களஞ்சியத்திற்கு ஒரு tag-ஐ push செய்ய (எடுத்துக்காட்டாக, ஒரு வெளியீடு tag உருவாக்கிய பிறகு):</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: ஒரு tag-ஐ Push செய்யவும்</h3>
+                <pre><code class="command-input">git push origin v1.0</code></pre>
+            </div>
+
+            <div class="note-box">
+                <h4>தெரியுமா?</h4>
+                <p>git push உடன் கமிட்டுகளை push செய்வது உங்கள் tags-ஐ push செய்யாது!</p>
+                <p>மேலே காட்டப்பட்டுள்ளபடி நீங்கள் tags-ஐ வெளிப்படையாக push செய்ய வேண்டும்.</p>
+            </div>
+
+            <p>உங்கள் அனைத்து உள்ளூர் tags-ஐயும் ஒரே நேரத்தில் தொலை களஞ்சியத்திற்கு push செய்ய (நீங்கள் பல tags உருவாக்கியிருந்தால் பயனுள்ளது):</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: அனைத்து Tags-ஐயும் Push செய்யவும்</h3>
+                <pre><code class="command-input">git push --tags</code></pre>
+            </div>
+        </section>
+
+        <!-- Delete Tags Section -->
+        <section class="content-section" id="delete-tags">
+            <h2>Tags-ஐ நீக்கவும்</h2>
+            
+            <p>உள்ளூரில் ஒரு tag-ஐ நீக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git tag -d v1.0</code></pre>
+            </div>
+
+            <p>தொலை களஞ்சியத்தில் இருந்து ஒரு tag-ஐ நீக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git push origin --delete tag v1.0</code></pre>
+            </div>
+        </section>
+
+        <!-- Update Tags Section -->
+        <section class="content-section" id="update-tags">
+            <h2>Tag-ஐ புதுப்பிக்கவும் அல்லது மாற்றவும் (Force Push)</h2>
+            
+            <p>நீங்கள் ஒரு tag-ஐ வேறு கமிட்டுக்கு நகர்த்த வேண்டும் மற்றும் தொலை களஞ்சியத்தை புதுப்பிக்க வேண்டும் என்றால், --force பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code class="command-input">git tag -f v1.0 &lt;new-commit-hash&gt;
+git push --force origin v1.0</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="content-section" id="best-practices">
+            <h2>Tagging சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🌟</span> பரிந்துரைகள்:</h4>
+                <ul>
+                    <li>வெளியீடுகள், முக்கிய மைல்கற்கள் அல்லது உங்கள் திட்டத்தில் நிலையான புள்ளிகளைக் குறிக்க tags பயன்படுத்தவும்</li>
+                    <li>பொது அல்லது பகிரப்பட்ட எதற்கும் எப்போதும் annotated tags (-a -m உடன்) பயன்படுத்தவும்</li>
+                    <li>அனைத்து சோதனைகளும் தேர்ச்சி பெற்ற பிறகு அல்லது குறியீட்டை பயன்பாட்டிற்கு கொண்டு செல்வதற்கு முன் tags உருவாக்கவும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Troubleshooting Section -->
+        <section class="content-section" id="troubleshooting">
+            <h2>சிக்கல் தீர்வு</h2>
+            
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Tag ஏற்கனவே உள்ளதா?</h3>
+                    <p><strong>தீர்வு:</strong> அதை நீக்க git tag -d &lt;tagname&gt; பயன்படுத்தவும், பின்னர் மீண்டும் உருவாக்கவும்.</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>தவறான tag-ஐ Push செய்துவிட்டீர்களா?</h3>
+                    <p><strong>தீர்வு:</strong> அதை உள்ளூரிலும் தொலை களஞ்சியத்திலும் நீக்கவும், பின்னர் சரியான tag-ஐ push செய்யவும்.</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-eye-slash"></i>
+                    </div>
+                    <h3>Tag தொலை களஞ்சியத்தில் காட்டப்படவில்லையா?</h3>
+                    <p><strong>தீர்வு:</strong> git push origin &lt;tagname&gt; அல்லது git push --tags உடன் tags-ஐ push செய்ய நினைவில் கொள்ளுங்கள்.</p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <h3>தொலை களஞ்சியத்தில் ஒரு tag-ஐ மேலெழுத வேண்டுமா?</h3>
+                    <p><strong>தீர்வு:</strong> git push --force origin &lt;tagname&gt; உடன் ஒரு tag-ஐ force-push செய்யலாம், ஆனால் கவனமாக இருங்கள்! இது தொலை களஞ்சியத்தைப் பயன்படுத்தும் அனைவருக்கும் tag-ஐ மேலெழுதும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">✅</span> நீங்கள் இப்போது கற்றுக்கொண்டவை:</h4>
+                <ul>
+                    <li>Git tags என்றால் என்ன மற்றும் அவை ஏன் பயனுள்ளவை</li>
+                    <li>Lightweight மற்றும் annotated tags-க்கு இடையே உள்ள வித்தியாசம்</li>
+                    <li>புதிய tags உருவாக்குவது எப்படி</li>
+                    <li>குறிப்பிட்ட கமிட்டுகளை tag செய்வது எப்படி</li>
+                    <li>Tags-ஐ பட்டியலிடுவது மற்றும் அவற்றின் விவரங்களைப் பார்ப்பது எப்படி</li>
+                    <li>Tags-ஐ தொலை களஞ்சியத்திற்கு push செய்வது எப்படி</li>
+                    <li>Tags-ஐ நீக்குவது மற்றும் புதுப்பிப்பது எப்படி</li>
+                </ul>
+            </div>
+
+            <div class="note-box">
+                <h4>அடுத்து என்ன?</h4>
+                <p>இப்போது உங்கள் திட்ட வரலாற்றில் முக்கியமான புள்ளிகளைக் குறிக்க tags பயன்படுத்தத் தெரிந்து கொண்டீர்கள்! அடுத்த பாடத்தில், தற்காலிக மாற்றங்களைச் சேமிக்க Git stash பற்றிக் கற்றுக்கொள்வோம்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Git Commit.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Git Stash.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#key-commands">முக்கிய கட்டளைகள்</a></li>
+                    <li><a href="#what-is-tag">Tag என்றால் என்ன</a></li>
+                    <li><a href="#lightweight-tag">Lightweight Tag</a></li>
+                    <li><a href="#annotated-tag">Annotated Tag</a></li>
+                    <li><a href="#push-tags">Tags-ஐ Push செய்தல்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .concept-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .concept-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .concept-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .command-input {
+            color: #8be9fd;
+        }
+        
+        .command-output {
+            color: #50fa7b;
+        }
+        
+        .note-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .note-box h4 {
+            color: #1565c0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .warning-box {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box h4 {
+            color: #c62828;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Copy code functionality
+        document.querySelectorAll('.code-example').forEach(codeBlock => {
+            const copyButton = document.createElement('button');
+            copyButton.className = 'copy-btn';
+            copyButton.innerHTML = '<i class="far fa-copy"></i> நகலெடு';
+            copyButton.style.cssText = `
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: rgba(255,255,255,0.1);
+                border: 1px solid rgba(255,255,255,0.3);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.8rem;
+                transition: all 0.3s;
+            `;
+            
+            copyButton.addEventListener('mouseenter', () => {
+                copyButton.style.background = 'rgba(255,255,255,0.2)';
+            });
+            
+            copyButton.addEventListener('mouseleave', () => {
+                copyButton.style.background = 'rgba(255,255,255,0.1)';
+            });
+            
+            copyButton.addEventListener('click', () => {
+                const code = codeBlock.querySelector('code').textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    copyButton.innerHTML = '<i class="fas fa-check"></i> நகலெடுக்கப்பட்டது!';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '<i class="far fa-copy"></i> நகலெடு';
+                    }, 2000);
+                });
+            });
+            
+            codeBlock.style.position = 'relative';
+            codeBlock.appendChild(copyButton);
+        });
+    </script>
+     <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+    <i class="fas fa-home"></i>
+</a>
+</body>
+</html>

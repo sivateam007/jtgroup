@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js MongoDB Find - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js MongoDB Insert.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js MongoDB Query.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js MongoDB Find</h2>
+            <p>Node.js ஐப் பயன்படுத்தி MongoDB தொகுப்புகளில் தரவைக் கண்டறிய கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>அறிமுகம்</h2>
+            
+            <p>MongoDB இல் ஒரு தொகுப்பில் தரவைக் கண்டறிய find மற்றும் findOne முறைகளைப் பயன்படுத்துகிறோம்.</p>
+            
+            <p>MySQL தரவுத்தளத்தில் ஒரு அட்டவணையில் தரவைக் கண்டறிய SELECT அறிக்கை பயன்படுத்தப்படுவது போலவே.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>findOne()</h4>
+                    </div>
+                    <p>முதல் பொருத்தத்தை மட்டும் திருப்பித் தரும்</p>
+                    <ul>
+                        <li>ஒற்றை ஆவணம்</li>
+                        <li>விரைவான கண்டறிதல்</li>
+                        <li>குறிப்பிட்ட பதிவு</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>find()</h4>
+                    </div>
+                    <p>அனைத்து பொருத்தங்களையும் திருப்பித் தரும்</p>
+                    <ul>
+                        <li>பல ஆவணங்கள்</li>
+                        <li>முழு தொகுப்பு</li>
+                        <li>விரிவான முடிவுகள்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Find One -->
+        <section class="content-section" id="find-one">
+            <h2>ஒன்றைக் கண்டறிதல்</h2>
+            
+            <p>MongoDB இல் ஒரு தொகுப்பிலிருந்து தரவைத் தேர்ந்தெடுக்க, நாம் findOne() முறையைப் பயன்படுத்தலாம்.</p>
+            
+            <p>findOne() முறை தேர்வில் முதல் நிகழ்வைத் திருப்பித் தரும்.</p>
+            
+            <p>findOne() முறையின் முதல் அளவுரு ஒரு வினா பொருளாகும். இந்த எடுத்துக்காட்டில் நாம் ஒரு வெற்று வினா பொருளைப் பயன்படுத்துகிறோம், இது ஒரு தொகுப்பில் உள்ள அனைத்து ஆவணங்களையும் தேர்ந்தெடுக்கும் (ஆனால் முதல் ஆவணத்தை மட்டுமே திருப்பித் தரும்).</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>customers தொகுப்பில் முதல் ஆவணத்தைக் கண்டறியவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  dbo.collection("customers").findOne({}, function(err, result) {
+    if (err) throw err;
+    console.log(result.name);
+    db.close();
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_mongodb_findone.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_mongodb_findone.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>Company Inc.</code></pre>
+            </div>
+        </section>
+
+        <!-- Find All -->
+        <section class="content-section" id="find-all">
+            <h2>அனைத்தையும் கண்டறிதல்</h2>
+            
+            <p>MongoDB இல் ஒரு அட்டவணையிலிருந்து தரவைத் தேர்ந்தெடுக்க, நாம் find() முறையையும் பயன்படுத்தலாம்.</p>
+            
+            <p>find() முறை தேர்வில் உள்ள அனைத்து நிகழ்வுகளையும் திருப்பித் தரும்.</p>
+            
+            <p>find() முறையின் முதல் அளவுரு ஒரு வினா பொருளாகும். இந்த எடுத்துக்காட்டில் நாம் ஒரு வெற்று வினா பொருளைப் பயன்படுத்துகிறோம், இது தொகுப்பில் உள்ள அனைத்து ஆவணங்களையும் தேர்ந்தெடுக்கும்.</p>
+            
+            <p>find() முறையில் எந்த அளவுருக்களும் இல்லை என்பது MySQL இல் SELECT * போன்றதே.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>customers தொகுப்பில் உள்ள அனைத்து ஆவணங்களையும் கண்டறியவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  dbo.collection("customers").find({}).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_mongodb_find.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_mongodb_find.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { _id: 58fdbf5c0ef8a50b4cdd9a84 , name: 'John', address: 'Highway 71'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a85 , name: 'Peter', address: 'Lowstreet 4'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a86 , name: 'Amy', address: 'Apple st 652'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a87 , name: 'Hannah', address: 'Mountain 21'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a88 , name: 'Michael', address: 'Valley 345'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a89 , name: 'Sandy', address: 'Ocean blvd 2'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a8a , name: 'Betty', address: 'Green Grass 1'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a8b , name: 'Richard', address: 'Sky st 331'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a8c , name: 'Susan', address: 'One way 98'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a8d , name: 'Vicky', address: 'Yellow Garden 2'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a8e , name: 'Ben', address: 'Park Lane 38'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a8f , name: 'William', address: 'Central st 954'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a90 , name: 'Chuck', address: 'Main Road 989'},
+  { _id: 58fdbf5c0ef8a50b4cdd9a91 , name: 'Viola', address: 'Sideway 1633'}
+]</code></pre>
+            </div>
+        </section>
+
+        <!-- Find Some -->
+        <section class="content-section" id="find-some">
+            <h2>சிலவற்றைக் கண்டறிதல்</h2>
+            
+            <p>find() முறையின் இரண்டாவது அளவுரு என்பது முடிவில் சேர்க்க வேண்டிய புலங்களை விவரிக்கும் projection பொருளாகும்.</p>
+            
+            <p>இந்த அளவுரு விருப்பமானது, மற்றும் தவிர்க்கப்பட்டால், அனைத்து புலங்களும் முடிவில் சேர்க்கப்படும்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>customers தொகுப்பில் உள்ள அனைத்து ஆவணங்களின் "name" மற்றும் "address" புலங்களைத் திருப்பி அனுப்பவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  dbo.collection("customers").find({}, { projection: { _id: 0, name: 1, address: 1 } }).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_mongodb_find_fields.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_mongodb_find_fields.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { name: 'John', address: 'Highway 71'},
+  { name: 'Peter', address: 'Lowstreet 4'},
+  { name: 'Amy', address: 'Apple st 652'},
+  { name: 'Hannah', address: 'Mountain 21'},
+  { name: 'Michael', address: 'Valley 345'},
+  { name: 'Sandy', address: 'Ocean blvd 2'},
+  { name: 'Betty', address: 'Green Grass 1'},
+  { name: 'Richard', address: 'Sky st 331'},
+  { name: 'Susan', address: 'One way 98'},
+  { name: 'Vicky', address: 'Yellow Garden 2'},
+  { name: 'Ben', address: 'Park Lane 38'},
+  { name: 'William', address: 'Central st 954'},
+  { name: 'Chuck', address: 'Main Road 989'},
+  { name: 'Viola', address: 'Sideway 1633'}
+]</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> Projection விதிகள்:</h4>
+                <ul>
+                    <li>ஒரே பொருளில் 0 மற்றும் 1 மதிப்புகளைக் குறிப்பிட அனுமதி இல்லை (_id புலம் தவிர)</li>
+                    <li>0 மதிப்புடன் ஒரு புலத்தைக் குறிப்பிட்டால், மற்ற அனைத்து புலங்களும் 1 மதிப்பைப் பெறும்</li>
+                    <li>1 மதிப்புடன் ஒரு புலத்தைக் குறிப்பிட்டால், மற்ற அனைத்து புலங்களும் 0 மதிப்பைப் பெறும்</li>
+                    <li>_id புலத்தை விலக்க, அதன் மதிப்பை 0 ஆக அமைக்க வேண்டும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Additional Projection Examples -->
+        <section class="content-section" id="projection-examples">
+            <h2>கூடுதல் Projection எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>"address" புலத்தை விலக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  dbo.collection("customers").find({}, { projection: { address: 0 } }).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});</code></pre>
+            </div>
+            
+            <h3>மட்டும் "name" புலத்தைத் திருப்பி அனுப்புதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  dbo.collection("customers").find({}, { projection: { _id: 0, name: 1 } }).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});</code></pre>
+            </div>
+            
+            <h3>_id புலத்தைத் தவிர்த்து அனைத்து புலங்களையும் திருப்பி அனுப்புதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  dbo.collection("customers").find({}, { projection: { _id: 0 } }).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});</code></pre>
+            </div>
+            
+            <h3>பிழை எடுத்துக்காட்டு (0 மற்றும் 1 ஒன்றாக)</h3>
+            
+            <div class="code-example">
+                <pre><code>let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  dbo.collection("customers").find({}, { projection: { name: 1, address: 0 } }).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- The Result Object -->
+        <section class="content-section" id="result-object">
+            <h2>முடிவு பொருள்</h2>
+            
+            <p>மேலே உள்ள எடுத்துக்காட்டின் முடிவிலிருந்து நீங்கள் பார்க்க முடியும் என, முடிவை ஒவ்வொரு ஆவணத்தையும் ஒரு பொருளாகக் கொண்ட ஒரு வரிசையாக மாற்றலாம்.</p>
+            
+            <p>எ.கா., மூன்றாவது ஆவணத்தின் முகவரியைத் திருப்பி அனுப்ப, மூன்றாவது வரிசை பொருளின் முகவரி பண்புக்கூறைக் குறிக்கவும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>மூன்றாவது ஆவணத்தின் முகவரியைத் திருப்பி அனுப்பவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>console.log(result[2].address);</code></pre>
+            </div>
+            
+            <p>இது இந்த முடிவை உருவாக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>Apple st 652</code></pre>
+            </div>
+        </section>
+
+        <!-- Modern Find Examples -->
+        <section class="content-section" id="modern-find">
+            <h2>நவீன Find எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>நவீன async/await தொடரியல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const { MongoClient } = require('mongodb');
+
+async function findDocuments() {
+  const uri = "mongodb://localhost:27017/";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("mydb");
+    const collection = database.collection("customers");
+    
+    // Find first document
+    const firstDoc = await collection.findOne({});
+    console.log("First document:", firstDoc);
+    
+    // Find all documents
+    const allDocs = await collection.find({}).toArray();
+    console.log("All documents:", allDocs.length);
+    
+    // Find with projection
+    const projectedDocs = await collection.find({}, {
+      projection: { _id: 0, name: 1, address: 1 }
+    }).toArray();
+    console.log("Projected documents:", projectedDocs);
+    
+  } catch (err) {
+    console.error("Error finding documents:", err);
+  } finally {
+    await client.close();
+  }
+}
+
+findDocuments();</code></pre>
+            </div>
+        </section>
+
+        <!-- Find Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>Find சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>செயல்திறன்</h4>
+                    </div>
+                    <ul>
+                        <li>தேவையான புலங்களை மட்டும் தேர்ந்தெடுக்கவும்</li>
+                        <li>குறியீட்டு நெடுவரிசைகளில் வினா செய்யவும்</li>
+                        <li>பெரிய முடிவு செட்களுக்கு LIMIT பயன்படுத்தவும்</li>
+                        <li>தேவையற்ற தரவைத் தேர்ந்தெடுப்பதைத் தவிர்க்கவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>குறியீடு தரம்</h4>
+                    </div>
+                    <ul>
+                        <li>சரியான பிழை கையாளுதலையும் கண்காணிப்பையும் பயன்படுத்தவும்</li>
+                        <li>நவீன async/await தொடரியலைப் பயன்படுத்தவும்</li>
+                        <li>வாசிப்புக்காக வினாக்களை வடிவமைக்கவும்</li>
+                        <li>மறுபயன்பாட்டிற்காக find செயல்பாடுகளை உருவாக்கவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>தரவு அணுகல்</h4>
+                    </div>
+                    <ul>
+                        <li>தேவைக்கேற்ப findOne() அல்லது find() பயன்படுத்தவும்</li>
+                        <li>Projection மூலம் தரவுப் போக்குவரத்தைக் குறைக்கவும்</li>
+                        <li>முடிவு அளவைக் கண்காணிக்கவும்</li>
+                        <li>தரவு வடிவமைப்பைக் கருத்தில் கொள்ளவும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete Example -->
+        <section class="content-section" id="complete-example">
+            <h2>முழுமையான எடுத்துக்காட்டு</h2>
+            
+            <p>அனைத்து find நுட்பங்களையும் உள்ளடக்கிய முழுமையான எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const { MongoClient } = require('mongodb');
+
+class DataFinder {
+  constructor(connectionString, dbName) {
+    this.connectionString = connectionString;
+    this.dbName = dbName;
+    this.client = new MongoClient(connectionString);
+  }
+
+  async connect() {
+    try {
+      await this.client.connect();
+      console.log("Connected to MongoDB server");
+      this.database = this.client.db(this.dbName);
+      return true;
+    } catch (error) {
+      console.error("Connection failed:", error);
+      return false;
+    }
+  }
+
+  async findFirst(collectionName, query = {}) {
+    try {
+      const collection = this.database.collection(collectionName);
+      const result = await collection.findOne(query);
+      return result;
+    } catch (error) {
+      console.error("Error finding first document:", error);
+      throw error;
+    }
+  }
+
+  async findAll(collectionName, query = {}, projection = {}) {
+    try {
+      const collection = this.database.collection(collectionName);
+      const cursor = collection.find(query, { projection });
+      const result = await cursor.toArray();
+      return result;
+    } catch (error) {
+      console.error("Error finding all documents:", error);
+      throw error;
+    }
+  }
+
+  async findWithLimit(collectionName, limit = 10, query = {}, projection = {}) {
+    try {
+      const collection = this.database.collection(collectionName);
+      const cursor = collection.find(query, { projection }).limit(limit);
+      const result = await cursor.toArray();
+      return result;
+    } catch (error) {
+      console.error("Error finding with limit:", error);
+      throw error;
+    }
+  }
+
+  async close() {
+    try {
+      await this.client.close();
+      console.log("Connection closed");
+    } catch (error) {
+      console.error("Error closing connection:", error);
+    }
+  }
+}
+
+// Usage example
+async function main() {
+  const connectionString = "mongodb://localhost:27017/";
+  const dbName = "mydb";
+  
+  const finder = new DataFinder(connectionString, dbName);
+
+  try {
+    const connected = await finder.connect();
+    if (!connected) return;
+
+    // Find first document
+    const firstCustomer = await finder.findFirst("customers");
+    console.log("First customer:", firstCustomer);
+
+    // Find all documents with projection
+    const allCustomers = await finder.findAll("customers", {}, { 
+      projection: { _id: 0, name: 1, address: 1 } 
+    });
+    console.log("All customers (projected):", allCustomers);
+
+    // Find with limit
+    const limitedCustomers = await finder.findWithLimit("customers", 5);
+    console.log("First 5 customers:", limitedCustomers);
+
+    console.log("All find operations completed successfully!");
+    
+  } catch (error) {
+    console.error("Main function error:", error);
+  } finally {
+    await finder.close();
+  }
+}
+
+// Run the example
+main();</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MongoDB இல், ஒரு தொகுப்பிலிருந்து தரவைத் தேர்ந்தெடுக்க, நாங்கள் ______ முறைகளைப் பயன்படுத்துகிறோம்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SELECT மற்றும் SELECT ALL</div>
+                            <div class="option-feedback incorrect">✗ தவறு! SELECT மற்றும் SELECT ALL என்பது SQL இல் பயன்படுத்தப்படும் அறிக்கைகள், MongoDB முறைகள் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">GET மற்றும் GET ALL</div>
+                            <div class="option-feedback incorrect">✗ தவறு! GET மற்றும் GET ALL என்பது MongoDB இல் செல்லுபடியாகும் முறைகள் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">find மற்றும் findOne</div>
+                            <div class="option-feedback correct">✓ சரி! MongoDB இல், ஒரு தொகுப்பிலிருந்து தரவைத் தேர்ந்தெடுக்க find மற்றும் findOne முறைகளைப் பயன்படுத்துகிறோம். findOne ஒரு ஆவணத்தைத் திருப்பித் தரும், find பல ஆவணங்களைத் திருப்பித் தரும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">QUERY மற்றும் FETCH</div>
+                            <div class="option-feedback incorrect">✗ தவறு! QUERY மற்றும் FETCH என்பது MongoDB இல் செல்லுபடியாகும் முறைகள் அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js MongoDB Insert.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js MongoDB Query.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">அறிமுகம்</a></li>
+                    <li><a href="#find-one">ஒன்றைக் கண்டறிதல்</a></li>
+                    <li><a href="#find-all">அனைத்தையும் கண்டறிதல்</a></li>
+                    <li><a href="#find-some">சிலவற்றைக் கண்டறிதல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

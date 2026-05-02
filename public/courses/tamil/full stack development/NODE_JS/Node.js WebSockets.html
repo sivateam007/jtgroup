@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js WebSockets - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Socket.IO.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Advanced Debugging.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js WebSockets</h2>
+            <p>நிகழ்நேர, இரு-திசை தொடர்பு பயன்பாடுகளை உருவாக்க கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to WebSockets -->
+        <section class="content-section" id="introduction">
+            <h2>WebSockets அறிமுகம்</h2>
+            
+            <p>WebSockets கிளையன்ட் மற்றும் சேவையகத்திற்கு இடையே ஒரு நிலையான இணைப்பை வழங்குகின்றன, இது நிகழ்நேர, இரு-திசை தொடர்புக்கு அனுமதிக்கிறது.</p>
+            
+            <p>இது கோரிக்கை-பதில் மாதிரியைப் பின்பற்றும் பாரம்பரிய HTTP இலிருந்து வேறுபட்டது.</p>
+            
+            <h3>WebSockets இன் முக்கிய நன்மைகள்</h3>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>நிகழ்நேர புதுப்பிப்புகள்</h4>
+                    </div>
+                    <p>கிளையன்ட்களுக்கு உடனடியாக தரவைத் தள்ளவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h4>திறமையானது</h4>
+                    </div>
+                    <p>மீண்டும் மீண்டும் HTTP கோரிக்கைகள் தேவையில்லை</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h4>இரு-திசை</h4>
+                    </div>
+                    <p>கிளையன்ட் மற்றும் சேவையகம் இரண்டும் செய்திகளை அனுப்ப முடியும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-clock"></i>
+                        <h4>குறைந்த தாமதம்</h4>
+                    </div>
+                    <p>செய்திகள் உடனடியாக அனுப்பப்படும்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- WebSockets vs HTTP -->
+        <section class="content-section" id="websockets-vs-http">
+            <h2>WebSockets vs HTTP</h2>
+            
+            <p>நிகழ்நேர பயன்பாடுகளை திறம்பட உருவாக்க WebSockets மற்றும் HTTP இடையே உள்ள வித்தியாசத்தைப் புரிந்துகொள்வது முக்கியமானது.</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>WebSockets</th>
+                            <th>HTTP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>இணைப்பு</strong></td>
+                            <td>நிலையான, ஒற்றை இணைப்பு</td>
+                            <td>கோரிக்கைக்கு புதிய இணைப்பு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>தொடர்பு</strong></td>
+                            <td>இரு-திசை, முழு-இரட்டை</td>
+                            <td>ஒற்றை-திசை, கோரிக்கை-பதில்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>மேல்நிலை</strong></td>
+                            <td>கைக்குலுக்கலுக்குப் பிறகு குறைந்தது</td>
+                            <td>ஒவ்வொரு கோரிக்கையிலும் தலைப்புகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>பயன்பாட்டு நிகழ்வு</strong></td>
+                            <td>நிகழ்நேர பயன்பாடுகள்</td>
+                            <td>பாரம்பரிய வலைப்பக்கங்கள், APIகள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>எடுத்துக்காட்டு</strong></td>
+                            <td>அரட்டை பயன்பாடுகள், நேரடி ஊட்டங்கள்</td>
+                            <td>வலைப்பக்கங்களை ஏற்றுதல், படிவ சமர்ப்பிப்புகள்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> தொழில்நுட்ப குறிப்பு:</h4>
+                <p>WebSockets ஒரு HTTP கைக்குலுக்கலுடன் (நிலை குறியீடு 101) தொடங்குகின்றன, பின்னர் WebSocket நெறிமுறைக்கு (ws:// அல்லது wss://) மேம்படுத்தப்படுகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Setting Up WebSockets -->
+        <section class="content-section" id="setup">
+            <h2>WebSockets ஐ அமைத்தல்</h2>
+            
+            <h3>1. ws தொகுதியை நிறுவவும்</h3>
+            <p>முதலில், உங்கள் திட்டத்திற்கான ஒரு புதிய கோப்புறையை உருவாக்கி அதைத் தொடக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>mkdir websocket-demo
+cd websocket-demo
+npm init -y</code></pre>
+            </div>
+            
+            <p>பின்னர், ws தொகுப்பை நிறுவவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>npm install ws</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>ws தொகுதி ஒரு எளிய, வேகமான மற்றும் முழுமையாக சோதிக்கப்பட்ட WebSocket கிளையன்ட் மற்றும் சேவையக செயலாக்கமாகும்.</p>
+            </div>
+        </section>
+
+        <!-- Creating a WebSocket Server -->
+        <section class="content-section" id="creating-server">
+            <h2>WebSocket சேவையகத்தை உருவாக்குதல்</h2>
+            
+            <p>அது பெறும் எந்த செய்தியையும் எதிரொலிக்கும் ஒரு எளிய WebSocket சேவையகத்தை உருவாக்குவோம்.</p>
+            
+            <p>server.js என்ற புதிய கோப்பை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const WebSocket = require('ws');
+
+// போர்ட் 8080 இல் ஒரு WebSocket சேவையகத்தை உருவாக்கவும்
+const wss = new WebSocket.Server({ port: 8080 });
+
+console.log('WebSocket server is running on ws://localhost:8080');
+
+// இணைப்பு நிகழ்வு கையாளுதல்
+wss.on('connection', (ws) => {
+  console.log('New client connected');
+  
+  // கிளையன்டுக்கு ஒரு வரவேற்பு செய்தியை அனுப்பவும்
+  ws.send('Welcome to the WebSocket server!');
+
+  // செய்தி நிகழ்வு கையாளுதல்
+  ws.on('message', (message) => {
+    console.log(`Received: ${message}`);
+    // செய்தியை கிளையன்டுக்கு எதிரொலிக்கவும்
+    ws.send(`Server received: ${message}`);
+  });
+
+  // மூடு நிகழ்வு கையாளுதல்
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+});</code></pre>
+            </div>
+            
+            <h3>குறியீட்டைப் புரிந்துகொள்வது</h3>
+            <ul>
+                <li>நாங்கள் ws தொகுதியை இறக்குமதி செய்கிறோம்</li>
+                <li>போர்ட் 8080 இல் ஒரு புதிய WebSocket சேவையகத்தை உருவாக்கவும்</li>
+                <li>இணைப்புகள், செய்திகள் மற்றும் துண்டிப்புகளுக்கான நிகழ்வு கையாளிகளை அமைக்கவும்</li>
+                <li>பெறப்பட்ட எந்த செய்திகளையும் கிளையன்டுக்கு எதிரொலிக்கவும்</li>
+            </ul>
+            
+            <h3>முயற்சிக்கவும்</h3>
+            <ol>
+                <li>மேலே உள்ள குறியீட்டை server.js ஆக சேமிக்கவும்</li>
+                <li>சேவையகத்தை இயக்கவும்: <code>node server.js</code></li>
+                <li>சேவையகம் தொடங்கி ws://localhost:8080 இல் கேட்கும்</li>
+            </ol>
+        </section>
+
+        <!-- Creating a WebSocket Client -->
+        <section class="content-section" id="creating-client">
+            <h2>WebSocket கிளையன்டை உருவாக்குதல்</h2>
+            
+            <p>இப்போது எங்களிடம் ஒரு WebSocket சேவையகம் உள்ளது, அதனுடன் இணைய கிளையன்ட்களை உருவாக்குவோம். நாங்கள் ஒரு Node.js கிளையன்ட் மற்றும் ஒரு உலாவி கிளையன்ட் இரண்டையும் உருவாக்குவோம்.</p>
+            
+            <h3>1. Node.js கிளையன்ட்</h3>
+            <p>client.js என்ற புதிய கோப்பை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const WebSocket = require('ws');
+const readline = require('readline');
+
+// பயனர் உள்ளீட்டிற்கான readline இடைமுகத்தை உருவாக்கவும்
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+// WebSocket சேவையகத்துடன் இணையவும்
+const ws = new WebSocket('ws://localhost:8080');
+
+// இணைப்பு திறக்கப்பட்டது
+ws.on('open', () => {
+  console.log('Connected to the WebSocket server');
+  promptForMessage();
+});
+
+// சேவையகத்திலிருந்து செய்திகளைக் கேட்கவும்
+ws.on('message', (message) => {
+  console.log(`Server: ${message}`);
+});
+
+// பிழைகளைக் கையாளவும்
+ws.on('error', (error) => {
+  console.error('WebSocket error:', error);
+});
+
+// இணைப்பு மூடுவதைக் கையாளவும்
+ws.on('close', () => {
+  console.log('Disconnected from the server');
+  process.exit(0);
+});
+
+// பயனருக்கு செய்திகளைக் கேட்கும் செயல்பாடு
+function promptForMessage() {
+  rl.question('Enter a message (or "exit" to quit): ', (message) => {
+    if (message.toLowerCase() === 'exit') {
+      ws.close();
+      rl.close();
+      return;
+    }
+    ws.send(message);
+    promptForMessage();
+  });
+}</code></pre>
+            </div>
+            
+            <h4>Node.js கிளையன்டைப் பயன்படுத்துவது எப்படி</h4>
+            <ol>
+                <li>மேலே உள்ள குறியீட்டை client.js ஆக சேமிக்கவும்</li>
+                <li>WebSocket சேவையகம் இயங்குகிறது என்பதை உறுதிப்படுத்தவும்</li>
+                <li>கிளையன்டை இயக்கவும்: <code>node client.js</code></li>
+                <li>செய்திகளைத் தட்டச்சு செய்து Enter ஐ அழுத்தவும்</li>
+                <li>வெளியேற "exit" ஐ தட்டச்சு செய்யவும்</li>
+            </ol>
+            
+            <h3>2. உலாவி கிளையன்ட்</h3>
+            <p>எங்கள் WebSocket சேவையகத்துடன் இணைய ஒரு எளிய HTML பக்கத்தை JavaScript உடன் உருவாக்குவோம்.</p>
+            
+            <p>index.html என்ற கோப்பை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;WebSocket Client&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    #messages {
+      height: 300px;
+      border: 1px solid #ccc;
+      overflow-y: auto;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .message { margin: 5px 0; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;WebSocket Client&lt;/h1&gt;
+  &lt;div id="status"&gt;Connecting to server...&lt;/div&gt;
+  &lt;div id="messages"&gt;&lt;/div&gt;
+  &lt;div&gt;
+    &lt;input type="text" id="messageInput" placeholder="Type your message"&gt;
+    &lt;button onclick="sendMessage()"&gt;Send&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    const status = document.getElementById('status');
+    const messages = document.getElementById('messages');
+    const messageInput = document.getElementById('messageInput');
+
+    // WebSocket சேவையகத்துடன் இணையவும்
+    const ws = new WebSocket('ws://localhost:8080');
+
+    // இணைப்பு திறக்கப்பட்டது
+    ws.onopen = () => {
+      status.textContent = 'Connected to server';
+      status.style.color = 'green';
+    };
+
+    // செய்திகளைக் கேட்கவும்
+    ws.onmessage = (event) => {
+      const message = document.createElement('div');
+      message.className = 'message';
+      message.textContent = event.data;
+      messages.appendChild(message);
+      messages.scrollTop = messages.scrollHeight;
+    };
+
+    // பிழைகளைக் கையாளவும்
+    ws.onerror = (error) => {
+      status.textContent = 'Error: ' + error.message;
+      status.style.color = 'red';
+    };
+
+    // இணைப்பு மூடுவதைக் கையாளவும்
+    ws.onclose = () => {
+      status.textContent = 'Disconnected from server';
+      status.style.color = 'red';
+    };
+
+    // செய்தியை அனுப்பும் செயல்பாடு
+    function sendMessage() {
+      const message = messageInput.value.trim();
+      if (message) {
+        ws.send(message);
+        messageInput.value = '';
+      }
+    }
+
+    // Enter விசையில் செய்தியை அனுப்பவும்
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <h4>உலாவி கிளையன்டைப் பயன்படுத்துவது எப்படி</h4>
+            <ol>
+                <li>மேலே உள்ள குறியீட்டை index.html ஆக சேமிக்கவும்</li>
+                <li>WebSocket சேவையகம் இயங்குகிறது என்பதை உறுதிப்படுத்தவும்</li>
+                <li>ஒரு வலை உலாவியில் HTML கோப்பைத் திறக்கவும்</li>
+                <li>உள்ளீட்டுப் புலத்தில் செய்திகளைத் தட்டச்சு செய்து Send ஐக் கிளிக் செய்யவும் அல்லது Enter ஐ அழுத்தவும்</li>
+            </ol>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>உலாவி கிளையன்ட் வேலை செய்வதற்கு, உலாவி பாதுகாப்பு கட்டுப்பாடுகள் காரணமாக நீங்கள் HTML கோப்பை ஒரு வலை சேவையகம் (http-server அல்லது live-server போன்றவை) மூலம் வழங்க வேண்டும்.</p>
+            </div>
+        </section>
+
+        <!-- Testing the Application -->
+        <section class="content-section" id="testing">
+            <h2>பயன்பாட்டை சோதித்தல்</h2>
+            
+            <ol>
+                <li>WebSocket சேவையகத்தைத் தொடங்கவும்: <code>node server.js</code></li>
+                <li>கிளையன்ட் HTML பக்கத்துடன் பல உலாவி சாளரங்களைத் திறக்கவும்</li>
+                <li>வெவ்வேறு கிளையன்ட்களிலிருந்து செய்திகளை அனுப்பி அவை நிகழ்நேரத்தில் தோன்றுவதைக் காணவும்</li>
+                <li>உலாவி கிளையன்ட்களுடன் Node.js கிளையன்டையும் இயக்கலாம்</li>
+            </ol>
+            
+            <h3>செயலாக்கத்தைப் புரிந்துகொள்வது</h3>
+            <ul>
+                <li>சேவையகம் இணைக்கப்பட்ட அனைத்து கிளையன்ட்களின் தொகுப்பையும் பராமரிக்கிறது</li>
+                <li>ஒரு கிளையன்டிலிருந்து ஒரு செய்தி பெறப்பட்டால், அது மற்ற அனைவருக்கும் ஒலிபரப்பப்படும்</li>
+                <li>கிளையன்ட் இணைப்பு, துண்டிப்பு மற்றும் பிழை நிகழ்வுகளைக் கையாள்கிறது</li>
+                <li>செய்திகள் பெறப்பட்டவுடன் நிகழ்நேரத்தில் காட்டப்படும்</li>
+            </ul>
+        </section>
+
+        <!-- WebSocket Events -->
+        <section class="content-section" id="websocket-events">
+            <h2>WebSocket நிகழ்வுகள்</h2>
+            
+            <p>WebSockets ஒரு நிகழ்வு-இயக்கப்பட்ட மாதிரியைப் பயன்படுத்துகின்றன. முக்கிய நிகழ்வுகள் இங்கே:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>நிகழ்வு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>connection (சேவையகம்)</strong></td>
+                            <td>ஒரு கிளையன்ட் சேவையகத்துடன் இணையும் போது தீக்கொழுந்து விடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>open (கிளையன்ட்)</strong></td>
+                            <td>இணைப்பு நிறுவப்பட்டால் தீக்கொழுந்து விடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>message</strong></td>
+                            <td>ஒரு செய்தி பெறப்பட்டால் தீக்கொழுந்து விடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>error</strong></td>
+                            <td>ஒரு பிழை ஏற்பட்டால் தீக்கொழுந்து விடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>close</strong></td>
+                            <td>இணைப்பு மூடப்பட்டால் தீக்கொழுந்து விடப்படுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Real-world Applications -->
+        <section class="content-section" id="real-world">
+            <h2>நிஜ உலக பயன்பாடுகள்</h2>
+            
+            <p>WebSockets பல்வேறு நிஜ உலக பயன்பாடுகளில் பயன்படுத்தப்படுகின்றன:</p>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h4>அரட்டை பயன்பாடுகள்</h4>
+                    <p>உடனடி செய்தி விநியோகம்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h4>நேரடி டாஷ்போர்டுகள்</h4>
+                    <p>அளவீடுகள் மற்றும் தரவின் நிகழ்நேர புதுப்பிப்புகள்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h4>கூட்டு கருவிகள்</h4>
+                    <p>பல பயனர்கள் ஒரே ஆவணத்தைத் திருத்துகிறார்கள்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h4>கேமிங்</h4>
+                    <p>விரைவான தொடர்புகள் தேவைப்படும் பல வீரர் ஆன்லைன் விளையாட்டுகள்</p>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>நிதி தளங்கள்</h4>
+                    <p>நிகழ்நேர பங்கு டிக்கர்கள் மற்றும் வர்த்தக தளங்கள்</p>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h4>IoT பயன்பாடுகள்</h4>
+                    <p>இணைக்கப்பட்ட சாதனங்களை கண்காணித்தல் மற்றும் கட்டுப்படுத்துதல்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced WebSocket Features -->
+        <section class="content-section" id="advanced-features">
+            <h2>மேம்பட்ட WebSocket அம்சங்கள்</h2>
+            
+            <h3>1. பைனரி தரவு பரிமாற்றம்</h3>
+            <p>WebSockets பைனரி தரவை அனுப்புவதை ஆதரிக்கின்றன, இது சில வகையான தரவுகளுக்கு மிகவும் திறமையானது:</p>
+            
+            <div class="code-example">
+                <pre><code>// பைனரி தரவை அனுப்புதல் (சேவையக-சைடு)
+const buffer = Buffer.from([0x48, 0x65, 0x6c, 0x6c, 0x6f]); // 'Hello' in binary
+ws.send(buffer, { binary: true });
+
+// பைனரி தரவைப் பெறுதல் (கிளையன்ட்-சைடு)
+ws.binaryType = 'arraybuffer';
+ws.onmessage = (event) => {
+  if (event.data instanceof ArrayBuffer) {
+    const view = new Uint8Array(event.data);
+    console.log('Received binary data:', view);
+  }
+};</code></pre>
+            </div>
+            
+            <h3>2. இதயத் துடிப்புகள் மற்றும் இணைப்பு கண்காணிப்பு</h3>
+            <p>துண்டிப்புகளைக் கண்டறிந்து கையாள இதயத் துடிப்புகளைச் செயல்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>// சேவையக-சைடு இதயத் துடிப்பு
+function setupHeartbeat(ws) {
+  ws.isAlive = true;
+  ws.on('pong', () => { ws.isAlive = true; });
+}
+
+// ஒவ்வொரு 30 வினாடிகளுக்கும் அனைத்து கிளையன்ட்களுக்கும் பிங் செய்யவும்
+const interval = setInterval(() => {
+  wss.clients.forEach((ws) => {
+    if (ws.isAlive === false) return ws.terminate();
+    ws.isAlive = false;
+    ws.ping();
+  });
+}, 30000);
+
+// சேவையக மூடும் போது சுத்தம் செய்யவும்
+wss.on('close', () => {
+  clearInterval(interval);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Security Considerations -->
+        <section class="content-section" id="security">
+            <h2>பாதுகாப்பு பரிசீலனைகள்</h2>
+            
+            <h3>1. அங்கீகாரம்</h3>
+            <p>எப்போதும் WebSocket இணைப்புகளை அங்கீகரிக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const WebSocket = require('ws');
+const jwt = require('jsonwebtoken');
+
+const server = http.createServer();
+const wss = new WebSocket.Server({ noServer: true });
+
+// அங்கீகாரத்துடன் மேம்படுத்தலைக் கையாளவும்
+server.on('upgrade', (request, socket, head) => {
+  try {
+    const token = request.url.split('token=')[1];
+    if (!token) throw new Error('No token provided');
+    
+    // JWT டோக்கனை சரிபார்க்கவும்
+    jwt.verify(token, 'your-secret-key', (err, decoded) => {
+      if (err) {
+        socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+        socket.destroy();
+        return;
+      }
+      
+      // WebSocket கைக்குலுக்கலுடன் தொடரவும்
+      wss.handleUpgrade(request, socket, head, (ws) => {
+        ws.user = decoded; // WebSocket க்கு பயனர் தரவை இணைக்கவும்
+        wss.emit('connection', ws, request);
+      });
+    });
+  } catch (error) {
+    socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+    socket.destroy();
+  }
+});</code></pre>
+            </div>
+            
+            <h3>2. விகித வரம்பு</h3>
+            <p>தவறாகப் பயன்படுத்துவதைத் தடுக்க விகித வரம்புடன்:</p>
+            
+            <div class="code-example">
+                <pre><code>const rateLimit = require('ws-rate-limit');
+
+// இணைப்புக்கு நிமிடத்திற்கு 100 செய்திகள் வரம்பு
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 நிமிடம்
+  max: 100,
+  message: 'Too many messages, please slow down!',
+});
+
+wss.on('connection', (ws) => {
+  limiter(ws);
+  // ... உங்கள் இணைப்பு கையாளியின் மீதமுள்ளவை
+});</code></pre>
+            </div>
+            
+            <h3>3. உள்ளீட்டு சரிபார்ப்பு</h3>
+            <p>உள்வரும் செய்திகளை எப்போதும் சரிபார்க்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const Joi = require('joi');
+
+const messageSchema = Joi.object({
+  type: Joi.string().valid('chat', 'join', 'leave').required(),
+  username: Joi.string().alphanum().min(3).max(30),
+  message: Joi.string().max(1000),
+  room: Joi.string().alphanum().max(50),
+});
+
+ws.on('message', (data) => {
+  try {
+    const message = JSON.parse(data);
+    const { error, value } = messageSchema.validate(message);
+    if (error) {
+      throw new Error(`Invalid message: ${error.details[0].message}`);
+    }
+    // செல்லுபடியாகும் செய்தியை செயலாக்கவும்...
+  } catch (err) {
+    ws.send(JSON.stringify({ error: err.message }));
+  }
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Optimization -->
+        <section class="content-section" id="performance">
+            <h2>செயல்திறன் மேம்படுத்தல்</h2>
+            
+            <h3>சுருக்கம்</h3>
+            <p>பட்டைஅகல பயன்பாட்டைக் குறைக்க செய்திக்கு-செய்தி deflate ஐ இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const WebSocket = require('ws');
+
+const wss = new WebSocket.Server({
+  port: 8080,
+  perMessageDeflate: {
+    zlibDeflateOptions: {
+      chunkSize: 1024,
+      memLevel: 7,
+      level: 3
+    },
+    zlibInflateOptions: {
+      chunkSize: 10 * 1024
+    },
+    // பிற விருப்பங்கள்
+    clientNoContextTakeover: true,
+    serverNoContextTakeover: true,
+    concurrencyLimit: 10,
+  }
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🚀</span> சிறந்த நடைமுறை:</h4>
+                <p>உற்பத்தி பயன்பாடுகளுக்கு, WebSockets ஐ ஆதரிக்காத உலாவிகளுக்கான பின்வாங்கல்கள் போன்ற கூடுதல் அம்சங்களை வழங்கும் Socket.IO போன்ற நூலகங்களைப் பயன்படுத்தக் கவனியுங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> WebSockets கிளையன்ட் மற்றும் சேவையகத்திற்கு இடையே ஒரு ______ இணைப்பை வழங்குகின்றன.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">தற்காலிக</div>
+                            <div class="option-feedback incorrect">✗ தவறு! WebSockets ஒரு நிலையான இணைப்பை வழங்குகின்றன, தற்காலிக இணைப்பு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">கோரிக்கை-பதில்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! WebSockets ஒரு நிலையான இணைப்பை வழங்குகின்றன, கோரிக்கை-பதில் மாதிரி அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">நிலையான</div>
+                            <div class="option-feedback correct">✓ சரி! WebSockets கிளையன்ட் மற்றும் சேவையகத்திற்கு இடையே ஒரு நிலையான, நீடித்த இணைப்பை வழங்குகின்றன, இது நிகழ்நேர தொடர்புக்கு அனுமதிக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">மறைக்கப்பட்ட</div>
+                            <div class="option-feedback incorrect">✗ தவறு! WebSockets ஒரு நிலையான இணைப்பை வழங்குகின்றன, ஆனால் அது மறைக்கப்பட்டதல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Socket.IO.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Advanced Debugging.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">WebSockets அறிமுகம்</a></li>
+                    <li><a href="#websockets-vs-http">WebSockets vs HTTP</a></li>
+                    <li><a href="#setup">அமைத்தல்</a></li>
+                    <li><a href="#creating-server">சேவையகத்தை உருவாக்குதல்</a></li>
+                    <li><a href="#creating-client">கிளையன்டை உருவாக்குதல்</a></li>
+                    <li><a href="#testing">சோதனை</a></li>
+                    <li><a href="#websocket-events">நிகழ்வுகள்</a></li>
+                    <li><a href="#real-world">நிஜ உலக பயன்பாடுகள்</a></li>
+                    <li><a href="#advanced-features">மேம்பட்ட அம்சங்கள்</a></li>
+                    <li><a href="#security">பாதுகாப்பு</a></li>
+                    <li><a href="#performance">செயல்திறன்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

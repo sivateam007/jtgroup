@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Class Properties - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Properties styling */
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .property-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid;
+        }
+        
+        .property-access {
+            border-top-color: #28a745;
+        }
+        
+        .property-modify {
+            border-top-color: #ffc107;
+        }
+        
+        .property-delete {
+            border-top-color: #dc3545;
+        }
+        
+        .property-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .property-header i {
+            font-size: 1.5rem;
+        }
+        
+        .property-access .property-header i {
+            color: #28a745;
+        }
+        
+        .property-modify .property-header i {
+            color: #ffc107;
+        }
+        
+        .property-delete .property-header i {
+            color: #dc3545;
+        }
+        
+        .property-header h4 {
+            margin: 0;
+        }
+        
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-box {
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .instance-property {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-left: 6px solid #ffd700;
+        }
+        
+        .class-property {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-left: 6px solid #ff9ff3;
+        }
+        
+        .example-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .code-output {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .output-title {
+            color: #6a9955;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        
+        .syntax-highlight {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python%20self%20Parameter.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python%20Class%20Methods.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python Class Properties</h2>
+            <p>பைத்தான் வகுப்பு பண்புகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Class Properties -->
+        <section class="content-section" id="class-properties">
+            <h2>வகுப்பு பண்புகள்</h2>
+            
+            <p>பண்புகள் என்பது ஒரு வகுப்பைச் சேர்ந்த மாறிகள். அவை வகுப்பிலிருந்து உருவாக்கப்பட்ட ஒவ்வொரு பொருளுக்கும் தரவைச் சேமிக்கின்றன.</p>
+            
+            <div class="example-container">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>பண்புகளுடன் ஒரு வகுப்பை உருவாக்கவும்:</p>
+                <pre><code>class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+p1 = Person("Emil", 36)
+
+print(p1.name)
+print(p1.age)</code></pre>
+                
+                <div class="code-output">
+                    <div class="output-title">வெளியீடு:</div>
+                    Emil<br>
+                    36
+                </div>
+            </div>
+        </section>
+
+        <!-- Access Properties -->
+        <section class="content-section" id="access-properties">
+            <h2>பண்புகளை அணுகுதல்</h2>
+            
+            <p>புள்ளி குறியீட்டைப் பயன்படுத்தி பொருள் பண்புகளை அணுகலாம்:</p>
+            
+            <div class="property-grid">
+                <div class="property-card property-access">
+                    <div class="property-header">
+                        <i class="fas fa-key"></i>
+                        <h4>அணுகல் தொடரியல்</h4>
+                    </div>
+                    <p>பொருள் பண்புகளை அணுகுவதற்கான சரியான தொடரியல்:</p>
+                    <div class="syntax-highlight">
+                        object.property
+                    </div>
+                </div>
+                
+                <div class="property-card property-access">
+                    <div class="property-header">
+                        <i class="fas fa-car"></i>
+                        <h4>எடுத்துக்காட்டு</h4>
+                    </div>
+                    <pre><code>class Car:
+  def __init__(self, brand, model):
+    self.brand = brand
+    self.model = model
+
+car1 = Car("Toyota", "Corolla")
+
+print(car1.brand)
+print(car1.model)</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modify Properties -->
+        <section class="content-section" id="modify-properties">
+            <h2>பண்புகளை மாற்றுதல்</h2>
+            
+            <p>பொருள்களில் உள்ள பண்புகளின் மதிப்பை மாற்றலாம்:</p>
+            
+            <div class="example-container">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>வயது பண்பை மாற்றவும்:</p>
+                <pre><code>class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+p1 = Person("Tobias", 25)
+print("Original age:", p1.age)
+
+p1.age = 26
+print("Modified age:", p1.age)</code></pre>
+                
+                <div class="code-output">
+                    <div class="output-title">வெளியீடு:</div>
+                    Original age: 25<br>
+                    Modified age: 26
+                </div>
+            </div>
+        </section>
+
+        <!-- Delete Properties -->
+        <section class="content-section" id="delete-properties">
+            <h2>பண்புகளை நீக்குதல்</h2>
+            
+            <p>del விசைச் சொல்லைப் பயன்படுத்தி பொருள்களிலிருந்து பண்புகளை நீக்கலாம்:</p>
+            
+            <div class="example-container">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>வயது பண்பை நீக்கவும்:</p>
+                <pre><code>class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+p1 = Person("Linus", 30)
+
+del p1.age
+
+print(p1.name) # இது வேலை செய்யும்
+# print(p1.age) # இது பிழையை ஏற்படுத்தும்</code></pre>
+                
+                <div class="code-output">
+                    <div class="output-title">வெளியீடு:</div>
+                    Linus
+                </div>
+                
+                <div class="warning-box">
+                    <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                    <p>நீக்கப்பட்ட பண்பை அணுக முயற்சித்தால், AttributeError ஏற்படும். பண்புகளை நீக்குவதற்கு முன் சரியாக என்ன செய்கிறீர்கள் என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Class Properties vs Object Properties -->
+        <section class="content-section" id="class-vs-object">
+            <h2>வகுப்பு பண்புகள் vs பொருள் பண்புகள்</h2>
+            
+            <p>__init__() உள்ளே வரையறுக்கப்பட்ட பண்புகள் ஒவ்வொரு பொருளுக்கும் சொந்தமானவை (உதாரணம் பண்புகள்).</p>
+            
+            <p>முறைகளுக்கு வெளியே வரையறுக்கப்பட்ட பண்புகள் வகுப்புக்கே சொந்தமானவை (வகுப்பு பண்புகள்) மற்றும் அனைத்து பொருள்களாலும் பகிரப்படுகின்றன:</p>
+            
+            <div class="comparison-container">
+                <div class="comparison-box instance-property">
+                    <h4 style="color: white;">உதாரணம் பண்புகள்</h4>
+                    <pre style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 6px; color: white;"><code>class Person:
+  def __init__(self, name):
+    self.name = name  # உதாரணம் பண்பு
+
+p1 = Person("Emil")
+p2 = Person("Tobias")
+
+p1.name = "John"  # p1 மட்டும் மாற்றம்
+print(p1.name)  # John
+print(p2.name)  # Tobias</code></pre>
+                    <p style="color: white; margin-top: 1rem;">• ஒவ்வொரு பொருளுக்கும் தனித்தனியாக<br>• ஒரு பொருளில் மாற்றம் மற்ற பொருள்களை பாதிக்காது</p>
+                </div>
+                
+                <div class="comparison-box class-property">
+                    <h4 style="color: white;">வகுப்பு பண்புகள்</h4>
+                    <pre style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 6px; color: white;"><code>class Person:
+  species = "Human"  # வகுப்பு பண்பு
+
+  def __init__(self, name):
+    self.name = name
+
+p1 = Person("Emil")
+p2 = Person("Tobias")
+
+Person.species = "Homo Sapiens"
+print(p1.species)  # Homo Sapiens
+print(p2.species)  # Homo Sapiens</code></pre>
+                    <p style="color: white; margin-top: 1rem;">• அனைத்து பொருள்களுக்கும் பொதுவானது<br>• வகுப்பு மட்டத்தில் மாற்றம் அனைத்து பொருள்களையும் பாதிக்கிறது</p>
+                </div>
+            </div>
+            
+            <div class="example-container">
+                <h4>முழு எடுத்துக்காட்டு</h4>
+                <pre><code>class Person:
+  species = "Human"  # வகுப்பு பண்பு
+
+  def __init__(self, name):
+    self.name = name  # உதாரணம் பண்பு
+
+p1 = Person("Emil")
+p2 = Person("Tobias")
+
+print(p1.name)      # Emil
+print(p2.name)      # Tobias
+print(p1.species)   # Human
+print(p2.species)   # Human
+
+# வகுப்பு பண்பை மாற்றுதல்
+Person.species = "Homo Sapiens"
+print("After change:")
+print(p1.species)   # Homo Sapiens
+print(p2.species)   # Homo Sapiens</code></pre>
+                
+                <div class="code-output">
+                    <div class="output-title">வெளியீடு:</div>
+                    Emil<br>
+                    Tobias<br>
+                    Human<br>
+                    Human<br>
+                    After change:<br>
+                    Homo Sapiens<br>
+                    Homo Sapiens
+                </div>
+            </div>
+        </section>
+
+        <!-- Add New Properties -->
+        <section class="content-section" id="add-properties">
+            <h2>புதிய பண்புகளைச் சேர்த்தல்</h2>
+            
+            <p>ஏற்கனவே உள்ள பொருள்களுக்கு புதிய பண்புகளைச் சேர்க்கலாம்:</p>
+            
+            <div class="example-container">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>ஒரு பொருளுக்கு புதிய பண்புகளைச் சேர்க்கவும்:</p>
+                <pre><code>class Person:
+  def __init__(self, name):
+    self.name = name
+
+p1 = Person("Tobias")
+
+# புதிய பண்புகளைச் சேர்த்தல்
+p1.age = 25
+p1.city = "Oslo"
+
+print(p1.name)
+print(p1.age)
+print(p1.city)</code></pre>
+                
+                <div class="code-output">
+                    <div class="output-title">வெளியீடு:</div>
+                    Tobias<br>
+                    25<br>
+                    Oslo
+                </div>
+                
+                <div class="tip-box">
+                    <h4><span class="tip-icon">💡</span> முக்கியமான குறிப்பு:</h4>
+                    <p>இந்த வழியில் பண்புகளைச் சேர்ப்பது அந்த குறிப்பிட்ட பொருளுக்கு மட்டுமே அவற்றைச் சேர்க்கிறது, வகுப்பின் அனைத்து பொருள்களுக்கும் அல்ல. மற்ற பொருள்கள் இந்த புதிய பண்புகளைக் கொண்டிருக்காது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> ஒரு பொருளின் பண்பை எவ்வாறு அணுகுவது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">சுழல் அடைப்புக்குறிகளைப் பயன்படுத்தி: object(property)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! சுழல் அடைப்புக்குறிகள் செயல்பாடு அழைப்புகளுக்குப் பயன்படுத்தப்படுகின்றன, பண்பு அணுகலுக்கு அல்ல. இது பைத்தானில் ஒரு பண்பை அணுக முயற்சித்தால் பிழையை ஏற்படுத்தும்.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">சதுர அடைப்புக்குறிகளைப் பயன்படுத்தி: object[property]</div>
+                            <div class="option-feedback incorrect">✗ தவறு! சதுர அடைப்புக்குறிகள் பட்டியல்கள், சொற்களஞ்சியங்கள் மற்றும் பிற தரவு கட்டமைப்புகளுக்குப் பயன்படுத்தப்படுகின்றன, வகுப்பு பண்புகளுக்கு அல்ல. பைத்தானில் வகுப்பு பண்புகளை அணுக இது பயன்படுத்தப்படாது.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">புள்ளி குறியீட்டைப் பயன்படுத்தி: object.property</div>
+                            <div class="option-feedback correct">✓ சரி! இது பைத்தானில் வகுப்பு பண்புகளை அணுகுவதற்கான சரியான தொடரியல் ஆகும். புள்ளி குறியீட்டைப் பயன்படுத்தி பொருள் பண்புகளை அணுகவும். எடுத்துக்காட்டு: car.brand, person.name, student.age</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python%20self%20Parameter.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python%20Class%20Methods.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#class-properties">வகுப்பு பண்புகள்</a></li>
+                    <li><a href="#access-properties">பண்புகளை அணுகுதல்</a></li>
+                    <li><a href="#modify-properties">பண்புகளை மாற்றுதல்</a></li>
+                    <li><a href="#delete-properties">பண்புகளை நீக்குதல்</a></li>
+                    <li><a href="#class-vs-object">வகுப்பு vs பொருள் பண்புகள்</a></li>
+                    <li><a href="#add-properties">புதிய பண்புகளைச் சேர்த்தல்</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

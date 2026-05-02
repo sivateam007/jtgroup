@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Directives - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular Data Binding.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab next" href="Angular Events.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Directives</h2>
+<p>Existing elements மற்றும் components-க்கு behavior add செய்ய கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Directives</h2>
+<p>Directives existing elements மற்றும் components-க்கு behavior add செய்கின்றன.</p>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i> Directive Essentials</h4>
+<ul>
+<li><strong>உறுப்புகளுக்கு நடத்தை சேர்க்க:</strong> @Directive மற்றும் ஒரு selector உடன் elements-க்கு behavior add செய்யவும்.</li>
+<li><strong>கட்டமைப்பு directives:</strong> Structural directives (*ngIf, *ngFor) DOM-ஐ add/remove செய்கின்றன.</li>
+<li><strong>பண்புக்கூறு directives:</strong> Attribute directives ([ngClass], custom [w3X]) nodes create/remove செய்யாமல் look/behavior change செய்கின்றன.</li>
+<li><strong>நட்சத்திர தொடரியல்:</strong> Star syntax (*) sugar ஆகும், அது &lt;ng-template&gt;-க்கு expand செய்கிறது.</li>
+<li><strong>Directive inputs-ஐ வெளிப்படுத்த:</strong> @Input() உடன் directive inputs expose செய்யவும்; @Input('alias') உடன் alias செய்யவும் [alias] மூலம் bind செய்ய.</li>
+</ul>
+</div>
+
+<div class="code-example">
+<h3>Directive Examples</h3>
+<pre><code class="command-input">*ngIf="condition"
+*ngFor="let item of items"
+@Directive({ selector: '[w3Highlight]' })
+&lt;div w3Highlight&gt;&lt;/div&gt;</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-info-circle tip-icon"></i> Notes</h4>
+<ul>
+<li><strong>தொடர்புடையவை:</strong> Templates, Data Binding, Conditional Rendering, மற்றும் Lists ஆகியவற்றை காணவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Basic Directives -->
+<section class="content-section" id="basic-directives">
+<h2>Basic Directives</h2>
+<p><strong>*ngIf ஒரு நிபந்தனையின் அடிப்படையில் உள்ளடக்கத்தை காட்டுகிறது/மறைக்கிறது.</strong></p>
+<p><strong>*ngFor ஒவ்வொரு பட்டியல் உருப்படிக்கும் ஒரு தொகுதியை மீண்டும் செய்கிறது.</strong></p>
+<p><strong>பட்டியலை add/remove செய்ய ஒரு கொடியை toggle செய்யவும்; உருப்படிகளை *ngFor உடன் render செய்யவும்.</strong></p>
+
+<div class="code-example">
+<h3>Basic Directives Syntax</h3>
+<pre><code class="command-input">&lt;p *ngIf="items.length > 0"&gt;We have {{ items.length }} items&lt;/p&gt;
+&lt;li *ngFor="let item of items"&gt;{{ item }}&lt;/li&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>Basic Directives Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    &lt;h3&gt;Directives&lt;/h3&gt;
+    &lt;p *ngIf="items.length > 0"&gt;We have {{ items.length }} items&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li *ngFor="let item of items"&gt;{{ item }}&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;button (click)="toggle()"&gt;Toggle Items&lt;/button&gt;
+  `
+})
+export class App {
+  show = true;
+  get items() { return this.show ? ['Angular', 'Components', 'Directives'] : []; }
+  toggle() { this.show = !this.show; }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>*ngIf:</strong> நிபந்தனை உண்மை/பொய் ஆக இருக்கும் போது பத்தியை DOM-இலிருந்து add/remove செய்கிறது.</li>
+<li><strong>*ngFor:</strong> Items-ல் உள்ள ஒவ்வொரு உருப்படிக்கும் &lt;li&gt; தொகுதியை repeat செய்கிறது.</li>
+<li><strong>Toggle:</strong> பொத்தான் show-ஐ flip செய்கிறது, கணக்கிடப்பட்ட items getter-ஐ மாற்றுகிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>CommonModule தேவை:</strong> Standalone components-ல் built-in directives பயன்படுத்தும் போது CommonModule import செய்யவும்.</li>
+<li><strong>நட்சத்திர தொடரியல் sugar ஆகும்:</strong> *ngIf/*ngFor &lt;ng-template&gt;-க்கு expand செய்கின்றன; DOM nodes உண்மையில் தோன்றும்/மறையும்.</li>
+<li><strong>வார்ப்புருக்களில் கனரக வேலையைத் தவிர்க்கவும்:</strong> *ngFor-ல் விலையுயர்ந்த செயல்பாடுகளை call செய்யாதீர்கள். Component-ல் compute செய்யவும். நீண்ட பட்டியல்களுக்கு, Lists பார்க்கவும் மற்றும் trackBy பயன்படுத்தவும்.</li>
+<li><strong>ஒரு கட்டமைப்பு directive ஒரு host-க்கு:</strong> ஒரே உறுப்பில் இரண்டு * directives வைக்காதீர்கள். தேவைப்பட்டால் ஒன்றை &lt;ng-container&gt;-ல் wrap செய்யவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- ngIf with else -->
+<section class="content-section" id="ngif-else">
+<h2>ngIf with else</h2>
+<p><strong>Else உடன் *ngIf-ஐ ஒரு fallback வார்ப்புருவை சுட்டிக்காட்டவும்.</strong></p>
+<p><strong>இரண்டு கிளைகளையும் வெளிப்படையாக உருவாக்க then/else தொடரியலைப் பயன்படுத்தவும்.</strong></p>
+<p><strong>Angular DOM தொகுதிகளை முழுவதுமாக add/remove செய்கிறது.</strong></p>
+
+<div class="code-example">
+<h3>ngIf with else Syntax</h3>
+<pre><code class="command-input">&lt;ng-container *ngIf="loggedIn; else loggedOut"&gt;&lt;/ng-container&gt;
+&lt;ng-template #loggedOut&gt;...&lt;/ng-template&gt;
+
+&lt;ng-container *ngIf="hasAccess; then accessTpl; else noAccessTpl"&gt;&lt;/ng-container&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>ngIf with else Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    &lt;h3&gt;ngIf with else&lt;/h3&gt;
+
+    &lt;button (click)="loggedIn = !loggedIn"&gt;
+      {{ loggedIn ? 'Log out' : 'Log in' }}
+    &lt;/button&gt;
+
+    &lt;ng-container *ngIf="loggedIn; else loggedOut"&gt;
+      &lt;p&gt;Welcome back, {{ user }}!&lt;/p&gt;
+    &lt;/ng-container&gt;
+
+    &lt;ng-template #loggedOut&gt;
+      &lt;p&gt;Please log in to continue.&lt;/p&gt;
+    &lt;/ng-template&gt;
+
+    &lt;hr&gt;
+
+    &lt;h4&gt;ngIf then/else syntax&lt;/h4&gt;
+    &lt;button (click)="hasAccess = !hasAccess"&gt;
+      Toggle Access ({{ hasAccess ? 'granted' : 'denied' }})
+    &lt;/button&gt;
+
+    &lt;ng-container *ngIf="hasAccess; then accessTpl; else noAccessTpl"&gt;&lt;/ng-container&gt;
+
+    &lt;ng-template #accessTpl&gt;
+      &lt;p style="color: seagreen"&gt;Access granted.&lt;/p&gt;
+    &lt;/ng-template&gt;
+    &lt;ng-template #noAccessTpl&gt;
+      &lt;p style="color: crimson"&gt;Access denied.&lt;/p&gt;
+    &lt;/ng-template&gt;
+  `
+})
+export class App {
+  loggedIn = false;
+  user = 'Angular User';
+  hasAccess = true;
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>*ngIf ... else:</strong> நிபந்தனை உண்மையாக இருக்கும் போது முக்கிய தொகுதியை render செய்கிறது; இல்லையெனில் #loggedOut ஆல் குறிப்பிடப்படும் வார்ப்புருவை render செய்கிறது.</li>
+<li><strong>then/else:</strong> Then/else வடிவம் பெயரிடப்பட்ட வார்ப்புருக்கள் மூலம் இரண்டு கிளைகளையும் வெளிப்படையாக்குகிறது.</li>
+<li><strong>State:</strong> பொத்தான்கள் loggedIn மற்றும் hasAccess-ஐ toggle செய்கின்றன, இரண்டு கிளைகளையும் demonstrate செய்ய.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>வார்ப்புரு refs:</strong> Else/then-க்கு நீங்கள் pass செய்யும் #ref ஒரு &lt;ng-template&gt;-ஐ குறிப்பிடுகிறது. இந்த குறியீடு rendered ஆகும் வரை DOM-ல் இருக்காது என்பதை நினைவில் கொள்ளவும்.</li>
+<li><strong>கூடுதல் DOM-ஐத் தவிர்க்கவும்:</strong> கூடுதல் உறுப்புகளைச் சேர்க்காமல் கட்டமைப்பைக் குழுவாக்க &lt;ng-container&gt; பயன்படுத்தவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Attribute Directive -->
+<section class="content-section" id="attribute-directive">
+<h2>Attribute Directive (hover highlight)</h2>
+<p><strong>ஒரு இருக்கும் உறுப்பில் இயங்குகிறது (DOM created/destroyed இல்லை).</strong></p>
+<p><strong>தோற்றம் அல்லது நடத்தையை மாற்றுகிறது (எ.கா., styles, classes, attributes add செய்கிறது).</strong></p>
+<p><strong>எடுத்துக்காட்டு hover-ல் background set செய்ய @HostBinding மற்றும் @HostListener பயன்படுத்துகிறது.</strong></p>
+
+<div class="code-example">
+<h3>Attribute Directive Syntax</h3>
+<pre><code class="command-input">@Directive({ selector: '[w3Highlight]' })
+&lt;div [w3Highlight]="'lightyellow'"&gt;Hover me&lt;/div&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>Attribute Directive Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, Directive, Input, HostBinding, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Directive({
+  selector: '[w3Highlight]',
+  standalone: true
+})
+export class HighlightDirective {
+  @Input('w3Highlight') highlightColor = 'lightyellow';
+  @HostBinding('style.transition') transition = 'background-color 150ms ease-in-out';
+  @HostBinding('style.backgroundColor') bg = '';
+
+  @HostListener('mouseenter') onEnter() { this.bg = this.highlightColor; }
+  @HostListener('mouseleave') onLeave() { this.bg = ''; }
+}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, HighlightDirective],
+  styles: [`
+    .box { padding: 10px; border: 1px dashed #bbb; border-radius: 6px; }
+  `],
+  template: `
+    &lt;h3&gt;Attribute Directive (highlight)&lt;/h3&gt;
+    &lt;p&gt;Hover the first box to see the effect:&lt;/p&gt;
+    &lt;div class="box" [w3Highlight]="'lightyellow'"&gt;I get highlighted on hover&lt;/div&gt;
+    &lt;div class="box" style="margin-top:8px"&gt;I do not&lt;/div&gt;
+  `
+})
+export class App {}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>[w3Highlight]="'lightyellow'":</strong> அதன் input alias மூலம் directive-க்கு நிறத்தை pass செய்கிறது.</li>
+<li><strong>@HostBinding:</strong> உறுப்பின் style.backgroundColor மற்றும் transition பண்புகளை directive fields-லிருந்து bind செய்கிறது.</li>
+<li><strong>@HostListener:</strong> பின்னணி நிறத்தை set/clear செய்ய mouseenter/mouseleave-க்கு react செய்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Selector மோதல்கள்:</strong> Custom directives-க்கு குறிப்பிட்ட selectors பயன்படுத்தவும் (எ.கா., [w3Highlight]) மற்ற நூலகங்களுடன் மோதுவதைத் தவிர்க்க.</li>
+<li><strong>செயல்திறன்:</strong> Host listeners லேசானதாக வைக்கவும்; @HostListener handlers-ல் கனரக ஒத்திசைவு வேலையைத் தவிர்க்கவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Exercise</h2>
+<div class="exercise-box">
+<h4><i class="fas fa-question-circle exercise-icon"></i> ஒரு பட்டியலில் உள்ள ஒவ்வொரு உருப்படிக்கும் ஒரு தொகுதியை மீண்டும் செய்யும் directive எது?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">*ngFor</div>
+<div class="option-feedback correct">✓ சரி! *ngFor directive ஒரு பட்டியலில் உள்ள ஒவ்வொரு உருப்படிக்கும் ஒரு தொகுதியை மீண்டும் செய்கிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">*ngIf</div>
+<div class="option-feedback incorrect">✗ தவறு! *ngIf directive நிபந்தனையின் அடிப்படையில் உள்ளடக்கத்தைக் காட்டுகிறது/மறைக்கிறது, மீண்டும் செய்ய அல்ல</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">[ngClass]</div>
+<div class="option-feedback incorrect">✗ தவறு! [ngClass] attribute directive classes-ஐ toggle செய்ய பயன்படுகிறது, பட்டியலை மீண்டும் செய்ய அல்ல</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular Data Binding.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab next" href="Angular Events.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">Directives Introduction</a></li>
+<li><a href="#basic-directives">Basic Directives</a></li>
+<li><a href="#ngif-else">ngIf with else</a></li>
+<li><a href="#attribute-directive">Attribute Directive</a></li>
+<li><a href="#exercise">Exercise</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contact</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Location &amp; Hours</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

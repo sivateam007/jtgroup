@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Events - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular Directives.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Conditional Rendering.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Events</h2>
+<p>User actions ஐ handle செய்ய கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Events</h2>
+<p>Events உங்கள் template-கு user actions-கு react செய்ய அனுமதிக்கின்றன.</p>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i> Event Binding Essentials</h4>
+<p><strong>(event)</strong> மூலம் bind செய்து ஒரு component method-ஐ run செய்யவும்; $event என்பது native Event ஆகும்.</p>
+<p>Common DOM events பயன்படுத்தவும்: (click), (input), மற்றும் key filters போன்ற (keyup.enter).</p>
+<p>Fast input-ல் work limit செய்ய debounce handlers பயன்படுத்தவும்.</p>
+<p>Bubbling: Child events மேலே bubble செய்யும்; தேவைப்படும் போது $event.stopPropagation() call செய்யவும்.</p>
+</div>
+
+<div class="code-example">
+<h3>Event Binding Examples</h3>
+<pre><code class="command-input">&lt;button (click)="onClick()"&gt;Click&lt;/button&gt;
+&lt;input (input)="onInput($event)" (keyup.enter)="submit()"&gt;
+&lt;div (click)="onParentClick()"&gt;
+  &lt;button (click)="onChildClick($event)"&gt;Child&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-info-circle tip-icon"></i> Note</h4>
+<p>Templates for markup and interpolation, Data Binding for property/two-way binding, and Conditional Rendering for showing/hiding content ஆகியவற்றை காணவும்.</p>
+</div>
+</section>
+
+<!-- Basic Events -->
+<section class="content-section" id="basic-events">
+<h2>Basic Events</h2>
+<p>Component state update செய்ய (click) handle செய்யவும்.</p>
+<p>Input values-ஐ $event.target இலிருந்து read செய்யவும் (தேவைப்படும் போது cast அல்லது $any பயன்படுத்தவும்).</p>
+<p>கடைசி key pressed-ஐ (keyup) மூலம் track செய்யவும்.</p>
+
+<div class="code-example">
+<h3>Basic Event Examples</h3>
+<pre><code class="command-input">&lt;button (click)="increment()"&gt;Click me&lt;/button&gt;
+&lt;input (input)="onInput($event)" (keyup)="lastKey = $any($event).key"&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<p>Common events handle செய்து component state-ஐ user input-ல் sync-ல் வைக்கவும்:</p>
+
+<div class="code-example">
+<h3>Events Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Events&lt;/h3&gt;
+    &lt;p&gt;Count: {{ count }}&lt;/p&gt;
+    &lt;button (click)="increment()"&gt;Click me&lt;/button&gt;
+
+    &lt;div style="margin-top:12px"&gt;
+      &lt;input placeholder="Type..." (input)="onInput($event)" 
+             (keyup)="lastKey = $any($event).key"&gt;
+      &lt;p&gt;Value: {{ value }}&lt;/p&gt;
+      &lt;p&gt;Last key: {{ lastKey }}&lt;/p&gt;
+    &lt;/div&gt;
+  `
+})
+export class App {
+  count = 0;
+  value = '';
+  lastKey = '';
+
+  increment() { this.count++; }
+  onInput(e: Event) { this.value = (e.target as HTMLInputElement).value; }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>(click)="increment()":</strong> Count increase செய்ய component method-ஐ call செய்கிறது.</li>
+<li><strong>(input)="onInput($event)":</strong> Input-ன் current text-ஐ $event.target.value இலிருந்து read செய்து value-ல் store செய்கிறது.</li>
+<li><strong>(keyup)="lastKey = $any($event).key":</strong> கடைசி pressed key-ஐ lastKey-ல் store செய்கிறது.</li>
+<li><strong>Display:</strong> {{ count }}, {{ value }}, மற்றும் {{ lastKey }} component fields-ஐ show செய்கின்றன.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Keep handlers small:</strong> Event handlers-ல் minimal work செய்யவும்; heavy work-ஐ services-க்கு delegate செய்யவும்.</li>
+<li><strong>Type the event:</strong> $event-ஐ narrow செய்யவும் அல்லது inputs read செய்யும் போது $any($event.target) பயன்படுத்தவும்.</li>
+<li><strong>Propagation/default:</strong> தேவைப்படும் போது $event.stopPropagation() / $event.preventDefault() பயன்படுத்தவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Event Filtering -->
+<section class="content-section" id="event-filtering">
+<h2>Event Filtering (keyup.enter)</h2>
+<p>Specific keys (e.g., Enter) மட்டுமே handlers run செய்ய key aliases பயன்படுத்தவும்.</p>
+<p>Filtered events-ல் state update செய்வதன் மூலம் UI-ஐ reactive-காக வைக்கவும்.</p>
+
+<div class="code-example">
+<h3>Key Filter Example</h3>
+<pre><code class="command-input">&lt;input (keyup.enter)="add()" (keyup)="lastKey = $any($event).key"&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<p>Key aliases போன்ற keyup.enter உடன் keyboard events filter செய்யவும்:</p>
+
+<div class="code-example">
+<h3>Event Filtering Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
+  styles: [`
+    .toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    ul { margin-top: 10px; }
+    li { line-height: 1.8; }
+    input[type="text"] { padding: 6px 8px; }
+  `],
+  template: `
+    &lt;h3&gt;Event Filtering (keyup.enter)&lt;/h3&gt;
+
+    &lt;div class="toolbar"&gt;
+      &lt;input type="text" placeholder="Add item and press Enter"
+             [value]="draft"
+             (input)="draft = $any($event.target).value"
+             (keyup)="lastKey = $any($event).key"
+             (keyup.enter)="add()"&gt;
+      &lt;button (click)="add()"&gt;Add&lt;/button&gt;
+      &lt;button (click)="clear()" [disabled]="items.length === 0"&gt;Clear&lt;/button&gt;
+      &lt;span style="margin-left:8px;color:#666"&gt;Last key: {{ lastKey }}&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;ul&gt;
+      &lt;li *ngFor="let it of items; let i = index"&gt;{{ i + 1 }}. {{ it }}&lt;/li&gt;
+    &lt;/ul&gt;
+  `
+})
+export class App {
+  draft = '';
+  lastKey = '';
+  items = ['Buy milk', 'Learn Angular'];
+
+  add() {
+    const v = (this.draft || '').trim();
+    if (!v) return;
+    this.items = [...this.items, v];
+    this.draft = '';
+  }
+  clear() { this.items = []; }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>(keyup.enter)="add()":</strong> Enter key pressed ஆகும் போது மட்டும் run செய்கிறது, current draft-ஐ add செய்கிறது.</li>
+<li><strong>[value]="draft"/(input):</strong> Input element மற்றும் draft field-ஐ sync-ல் வைக்கிறது.</li>
+<li><strong>List:</strong> New items immutably append செய்யப்பட்டு *ngFor மூலம் render செய்யப்படுகின்றன; lastKey கடைசி pressed key-ஐ show செய்கிறது.</li>
+<li><strong>Buttons:</strong> "Add" மற்றும் "Clear" list state update செய்ய component methods-ஐ call செய்கின்றன.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Use key aliases:</strong> Key codes manually check செய்வதற்கு பதிலாக (keyup.enter) பயன்படுத்தவும்.</li>
+<li><strong>Immutable updates:</strong> Change detection predictable-காக new array references (e.g., spread) உடன் items add/remove செய்யவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Debounced Input -->
+<section class="content-section" id="debounced-input">
+<h2>Debounced Input</h2>
+<p>Excessive work avoid செய்ய typing pauses வரை updates-ஐ delay செய்யவும்.</p>
+<p>Input changes debounce செய்ய setTimeout அல்லது RxJS பயன்படுத்தவும்.</p>
+
+<div class="code-example">
+<h3>Debounce Pseudo Code</h3>
+<pre><code class="command-input">// Pseudo
+handle: any;
+onInput(e) {
+  clearTimeout(handle);
+  handle = setTimeout(() => doWork(e), 400);
+}</code></pre>
+</div>
+
+<h3>Example</h3>
+<p>Fast typing-ல் work reduce செய்ய user input-ஐ debounce செய்யவும்:</p>
+
+<div class="code-example">
+<h3>Debounced Input Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Debounced Input&lt;/h3&gt;
+    &lt;input type="text" placeholder="Type here" (input)="onInput($event)"&gt;
+    &lt;p&gt;Immediate: {{ immediate }}&lt;/p&gt;
+    &lt;p&gt;Debounced (400ms): {{ debounced }}&lt;/p&gt;
+  `
+})
+export class App {
+  immediate = '';
+  debounced = '';
+  private handle: any;
+
+  onInput(e: Event) {
+    const v = (e.target as HTMLInputElement)?.value ?? '';
+    this.immediate = v;
+    clearTimeout(this.handle);
+    this.handle = setTimeout(() => this.debounced = v, 400);
+  }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>Immediate vs debounced:</strong> Immediate ஒவ்வொரு input-லும் update செய்கிறது; debounced no typing-ன் 400ms க்கு பிறகு update செய்கிறது.</li>
+<li><strong>onInput(e):</strong> e.target.value-ஐ read செய்கிறது, immediate-ஐ set செய்கிறது, pending timer-ஐ clear செய்கிறது, மற்றும் debounced set செய்ய new timeout schedule செய்கிறது.</li>
+<li><strong>Timer handle:</strong> Handle timeout ID-ஐ store செய்கிறது அதனால் அது அடுத்த keystroke-ல் cleared ஆக முடியும்.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Cleanup timers:</strong> Stale updates avoid செய்ய ஒவ்வொரு input-லும் pending timers clear செய்யவும்.</li>
+<li><strong>Right delay:</strong> UX-க்கு fit ஆகும் debounce-ஐ தேர்ந்தெடுக்கவும் (e.g., 300-500ms).</li>
+<li><strong>Advanced cases:</strong> Streams-க்கு, RxJS consider செய்யவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Exercise</h2>
+<div class="exercise-box">
+<h4><i class="fas fa-question-circle exercise-icon"></i> Which syntax binds to a DOM event in Angular?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">{{ }}</div>
+<div class="option-feedback incorrect">✗ Incorrect! இது interpolation syntax ஆகும், event binding அல்ல</div>
+</div>
+</div>
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">(event)</div>
+<div class="option-feedback correct">✓ Correct! (event) syntax Angular-ல் DOM event-க்கு bind செய்ய பயன்படுகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">[prop]</div>
+<div class="option-feedback incorrect">✗ Incorrect! இது property binding syntax ஆகும், event binding அல்ல</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular Directives.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Conditional Rendering.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">Angular Events Introduction</a></li>
+<li><a href="#basic-events">Basic Events</a></li>
+<li><a href="#event-filtering">Event Filtering</a></li>
+<li><a href="#debounced-input">Debounced Input</a></li>
+<li><a href="#exercise">Exercise</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contact</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Location &amp; Hours</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

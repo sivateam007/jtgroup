@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Items - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Grid items styling */
+        .grid-example {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 1rem 0;
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            position: relative;
+        }
+        
+        .grid-demo-item {
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            padding: 20px;
+            font-size: 24px;
+            text-align: center;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+        }
+        
+        .item1 { background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); }
+        .item2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .item3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .item4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .item5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .item6 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; }
+        
+        .grid-line {
+            position: absolute;
+            background: rgba(231, 76, 60, 0.7);
+            pointer-events: none;
+        }
+        
+        .line-label {
+            position: absolute;
+            background: #e74c3c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .property-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .property-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--git-color);
+        }
+        
+        .drag-drop-exercise {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            margin: 2rem 0;
+        }
+        
+        .code-block {
+            background: rgba(0,0,0,0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+        }
+        
+        .drag-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .drag-option {
+            background: rgba(255,255,255,0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: move;
+            user-select: none;
+            transition: all 0.3s;
+        }
+        
+        .drag-option:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .code-placeholder {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 4px;
+            border: 2px dashed rgba(255,255,255,0.5);
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .property-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .property-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .property-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        @media (max-width: 768px) {
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Grid%20Container%20-%20Align%20Grid%20Content.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Naming%20Grid%20Items.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Grid Items</h2>
+            <p>CSS கிரிட் உருப்படிகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Grid Items Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS கிரிட் உருப்படிகள்</h2>
+            
+            <p>ஒரு கிரிட் கொண்டெய்னர் ஒன்று அல்லது அதற்கு மேற்பட்ட கிரிட் உருப்படிகளைக் கொண்டுள்ளது.</p>
+            
+            <p>கிரிட் கொண்டெய்னரின் அனைத்து நேரடி குழந்தை உறுப்புகளும் தானாகவே கிரிட் உருப்படிகளாக மாறும்.</p>
+            
+            <p>கீழே ஐந்து கிரிட் உருப்படிகளைக் கொண்ட கிரிட் கொண்டெய்னர் உள்ளது:</p>
+            
+            <div class="grid-demo">
+                <div class="grid-demo-item item1">1</div>
+                <div class="grid-demo-item item2">2</div>
+                <div class="grid-demo-item item3">3</div>
+                <div class="grid-demo-item item4">4</div>
+                <div class="grid-demo-item item5">5</div>
+            </div>
+        </section>
+
+        <!-- CSS Sizing/Spanning Grid Items -->
+        <section class="content-section" id="sizing-spanning">
+            <h2>CSS கிரிட் உருப்படி அளவிடல்/விரிவாக்கம்</h2>
+            
+            <p>ஒரு கிரிட் உருப்படி பல நெடுவரிசைகள் அல்லது வரிசைகளில் விரியலாம்.</p>
+            
+            <p>ஒரு கிரிட் உருப்படி எங்கு தொடங்கும் மற்றும் எங்கு முடியும் என்பதை பின்வரும் பண்புகளைப் பயன்படுத்தி குறிப்பிடலாம்:</p>
+            
+            <div class="property-grid">
+                <div class="property-card">
+                    <h4>grid-column-start</h4>
+                    <p>கிரிட் உருப்படி எந்த நெடுவரிசை-கோட்டில் தொடங்கும் என்பதைக் குறிப்பிடுகிறது</p>
+                </div>
+                
+                <div class="property-card">
+                    <h4>grid-column-end</h4>
+                    <p>கிரிட் உருப்படி எந்த நெடுவரிசை-கோட்டில் முடியும் என்பதைக் குறிப்பிடுகிறது</p>
+                </div>
+                
+                <div class="property-card">
+                    <h4>grid-column</h4>
+                    <p>grid-column-start மற்றும் grid-column-end பண்புகளுக்கான சுருக்கப் பண்பு</p>
+                </div>
+                
+                <div class="property-card">
+                    <h4>grid-row-start</h4>
+                    <p>கிரிட் உருப்படி எந்த வரிசை-கோட்டில் தொடங்கும் என்பதைக் குறிப்பிடுகிறது</p>
+                </div>
+                
+                <div class="property-card">
+                    <h4>grid-row-end</h4>
+                    <p>கிரிட் உருப்படி எந்த வரிசை-கோட்டில் முடியும் என்பதைக் குறிப்பிடுகிறது</p>
+                </div>
+                
+                <div class="property-card">
+                    <h4>grid-row</h4>
+                    <p>grid-row-start மற்றும் grid-row-end பண்புகளுக்கான சுருக்கப் பண்பு</p>
+                </div>
+            </div>
+            
+            <p>கிரிட்டில் நெடுவரிசைகளுக்கிடையே உள்ள கோடுகள் நெடுவரிசை-கோடுகள் என்றும், வரிசைகளுக்கிடையே உள்ள கோடுகள் வரிசை-கோடுகள் என்றும் அழைக்கப்படுகின்றன.</p>
+            
+            <p>கிரிட் கொண்டெய்னரில் ஒரு கிரிட் உருப்படியை வைக்கும்போது கோடு எண்களைக் குறிப்பிடலாம்.</p>
+            
+            <div class="grid-demo" style="height: 200px; margin: 2rem 0;">
+                <!-- Column lines -->
+                <div class="grid-line" style="left: 33.33%; top: 0; width: 2px; height: 100%;"></div>
+                <div class="grid-line" style="left: 66.66%; top: 0; width: 2px; height: 100%;"></div>
+                
+                <!-- Row lines -->
+                <div class="grid-line" style="top: 50%; left: 0; height: 2px; width: 100%;"></div>
+                
+                <!-- Line labels -->
+                <div class="line-label" style="top: 10px; left: 33.33%; transform: translateX(-50%);">நெடு-கோடு 2</div>
+                <div class="line-label" style="top: 10px; left: 66.66%; transform: translateX(-50%);">நெடு-கோடு 3</div>
+                <div class="line-label" style="top: 50%; left: 10px; transform: translateY(-50%);">வரிசை-கோடு 2</div>
+            </div>
+        </section>
+
+        <!-- CSS grid-column-start and grid-column-end -->
+        <section class="content-section" id="column-start-end">
+            <h2>CSS grid-column-start மற்றும் grid-column-end</h2>
+            
+            <p>grid-column-start பண்பு கிரிட் உருப்படி எந்த நெடுவரிசை-கோட்டில் தொடங்கும் என்பதைக் குறிப்பிடுகிறது.</p>
+            
+            <p>grid-column-end பண்பு கிரிட் உருப்படி எந்த நெடுவரிசை-கோட்டில் முடியும் என்பதைக் குறிப்பிடுகிறது.</p>
+            
+            <div class="grid-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>முதல் கிரிட் உருப்படி நெடுவரிசை-கோடு 1 இல் தொடங்கி, நெடுவரிசை-கோடு 3 இல் முடியட்டும்:</p>
+                
+                <div class="code-example">
+                    <pre><code>.item1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}</code></pre>
+                </div>
+                
+                <p><strong>முடிவு:</strong></p>
+                <div class="grid-demo" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="grid-demo-item item1" style="grid-column-start: 1; grid-column-end: 3;">1</div>
+                    <div class="grid-demo-item item2">2</div>
+                    <div class="grid-demo-item item3">3</div>
+                    <div class="grid-demo-item item4">4</div>
+                    <div class="grid-demo-item item5">5</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The CSS grid-column Property -->
+        <section class="content-section" id="grid-column">
+            <h2>CSS grid-column பண்பு</h2>
+            
+            <p>grid-column பண்பு grid-column-start மற்றும் grid-column-end பண்புகளுக்கான சுருக்கப் பண்பாகும்.</p>
+            
+            <div class="grid-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>முதல் கிரிட் உருப்படி நெடுவரிசை-கோடு 1 இல் தொடங்கி, அது 2 நெடுவரிசைகளை விரியட்டும்:</p>
+                
+                <div class="code-example">
+                    <pre><code>.item1 {
+  grid-column: 1 / span 2;
+}</code></pre>
+                </div>
+                
+                <p><strong>முடிவு:</strong></p>
+                <div class="grid-demo" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="grid-demo-item item1" style="grid-column: 1 / span 2;">1</div>
+                    <div class="grid-demo-item item2">2</div>
+                    <div class="grid-demo-item item3">3</div>
+                    <div class="grid-demo-item item4">4</div>
+                    <div class="grid-demo-item item5">5</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS grid-row-start and grid-row-end -->
+        <section class="content-section" id="row-start-end">
+            <h2>CSS grid-row-start மற்றும் grid-row-end</h2>
+            
+            <p>grid-row-start பண்பு கிரிட் உருப்படி எந்த வரிசை-கோட்டில் தொடங்கும் என்பதைக் குறிப்பிடுகிறது.</p>
+            
+            <p>grid-row-end பண்பு கிரிட் உருப்படி எந்த வரிசை-கோட்டில் முடியும் என்பதைக் குறிப்பிடுகிறது.</p>
+            
+            <div class="grid-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>முதல் கிரிட் உருப்படி வரிசை-கோடு 1 இல் தொடங்கி, வரிசை-கோடு 3 இல் முடியட்டும்:</p>
+                
+                <div class="code-example">
+                    <pre><code>.item1 {
+  grid-row-start: 1;
+  grid-row-end: 3;
+}</code></pre>
+                </div>
+                
+                <p><strong>முடிவு:</strong></p>
+                <div class="grid-demo" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); height: 300px;">
+                    <div class="grid-demo-item item1" style="grid-row-start: 1; grid-row-end: 3;">1</div>
+                    <div class="grid-demo-item item2">2</div>
+                    <div class="grid-demo-item item3">3</div>
+                    <div class="grid-demo-item item4">4</div>
+                    <div class="grid-demo-item item5">5</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The CSS grid-row Property -->
+        <section class="content-section" id="grid-row">
+            <h2>CSS grid-row பண்பு</h2>
+            
+            <p>grid-row பண்பு grid-row-start மற்றும் grid-row-end பண்புகளுக்கான சுருக்கப் பண்பாகும்.</p>
+            
+            <div class="grid-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>முதல் கிரிட் உருப்படி வரிசை-கோடு 1 இல் தொடங்கி, அது 2 வரிசைகளை விரியட்டும்:</p>
+                
+                <div class="code-example">
+                    <pre><code>.item1 {
+  grid-row: 1 / span 2;
+}</code></pre>
+                </div>
+                
+                <p><strong>முடிவு:</strong></p>
+                <div class="grid-demo" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); height: 300px;">
+                    <div class="grid-demo-item item1" style="grid-row: 1 / span 2;">1</div>
+                    <div class="grid-demo-item item2">2</div>
+                    <div class="grid-demo-item item3">3</div>
+                    <div class="grid-demo-item item4">4</div>
+                    <div class="grid-demo-item item5">5</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Combine grid-column and grid-row -->
+        <section class="content-section" id="combine-column-row">
+            <h2>grid-column மற்றும் grid-row ஆகியவற்றை இணைத்தல்</h2>
+            
+            <p>இங்கே grid-column மற்றும் grid-row பண்புகள் இரண்டையும் பயன்படுத்தி ஒரு கிரிட் உருப்படி நெடுவரிசைகள் மற்றும் வரிசைகள் இரண்டிலும் விரியட்டும்.</p>
+            
+            <div class="grid-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>முதல் கிரிட் உருப்படி நெடுவரிசை-கோடு 1 இல் தொடங்கி, அது 2 நெடுவரிசைகளை விரியட்டும், மேலும் முதல் கிரிட் உருப்படி வரிசை-கோடு 1 இல் தொடங்கி, அது 2 வரிசைகளை விரியட்டும்:</p>
+                
+                <div class="code-example">
+                    <pre><code>.item1 {
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
+}</code></pre>
+                </div>
+                
+                <p><strong>முடிவு:</strong></p>
+                <div class="grid-demo" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); height: 300px;">
+                    <div class="grid-demo-item item1" style="grid-column: 1 / span 2; grid-row: 1 / span 2;">1</div>
+                    <div class="grid-demo-item item2">2</div>
+                    <div class="grid-demo-item item3">3</div>
+                    <div class="grid-demo-item item4">4</div>
+                    <div class="grid-demo-item item5">5</div>
+                    <div class="grid-demo-item item6">6</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- All CSS Grid Item Properties -->
+        <section class="content-section" id="all-properties">
+            <h2>அனைத்து CSS கிரிட் உருப்படி பண்புகள்</h2>
+            
+            <p>CSS கிரிட் உருப்படி பண்புகள் மற்றும் அவற்றின் விளக்கங்கள்:</p>
+            
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>பண்பு</th>
+                        <th>விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>align-self</td><td>குறிப்பிட்ட கிரிட் உருப்படிக்கான உள்ளடக்கத்தை நெடுவரிசை அச்சில் சீரமைக்கிறது</td></tr>
+                    <tr><td>grid-area</td><td>grid-row-start, grid-column-start, grid-row-end மற்றும் grid-column-end பண்புகளுக்கான சுருக்கப் பண்பு</td></tr>
+                    <tr><td>grid-column</td><td>grid-column-start மற்றும் grid-column-end பண்புகளுக்கான சுருக்கப் பண்பு</td></tr>
+                    <tr><td>grid-column-end</td><td>கிரிட் உருப்படி எங்கு முடியும் என்பதைக் குறிப்பிடுகிறது</td></tr>
+                    <tr><td>grid-column-start</td><td>கிரிட் உருப்படி எங்கு தொடங்கும் என்பதைக் குறிப்பிடுகிறது</td></tr>
+                    <tr><td>grid-row</td><td>grid-row-start மற்றும் grid-row-end பண்புகளுக்கான சுருக்கப் பண்பு</td></tr>
+                    <tr><td>grid-row-end</td><td>கிரிட் உருப்படி எங்கு முடியும் என்பதைக் குறிப்பிடுகிறது</td></tr>
+                    <tr><td>grid-row-start</td><td>கிரிட் உருப்படி எங்கு தொடங்கும் என்பதைக் குறிப்பிடுகிறது</td></tr>
+                    <tr><td>justify-self</td><td>குறிப்பிட்ட கிரிட் உருப்படிக்கான உள்ளடக்கத்தை வரிசை அச்சில் சீரமைக்கிறது</td></tr>
+                    <tr><td>place-self</td><td>align-self மற்றும் justify-self பண்புகளுக்கான சுருக்கப் பண்பு</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>CSS கிரிட் உருப்படிகள் பயிற்சி</h2>
+            
+            <p>கிரிட் உருப்படிகள் பற்றிய உங்கள் அறிவை இந்தப் பயிற்சி சோதிக்கும்:</p>
+            
+            <div class="drag-drop-exercise">
+                <h4><span class="exercise-icon">🧩</span> இழுத்து விடுதல் பயிற்சி</h4>
+                <p>கொண்டெய்னரை கிரிட் லேஅவுட்டாக மாற்ற சரியான பண்பு மற்றும் மதிப்பை இழுத்து விடவும்.</p>
+                
+                <div class="code-block">
+                    <code>
+                        .container {<br>
+                        &nbsp;&nbsp;<span class="code-placeholder" id="property-drop">பண்பு</span>: <span class="code-placeholder" id="value-drop">மதிப்பு</span>;<br>
+                        }
+                    </code>
+                </div>
+                
+                <div class="drag-options">
+                    <div class="drag-option" draggable="true" data-type="property" data-value="display">display</div>
+                    <div class="drag-option" draggable="true" data-type="property" data-value="position">position</div>
+                    <div class="drag-option" draggable="true" data-type="value" data-value="grid">grid</div>
+                    <div class="drag-option" draggable="true" data-type="value" data-value="flex">flex</div>
+                    <div class="drag-option" draggable="true" data-type="value" data-value="block">block</div>
+                    <div class="drag-option" draggable="true" data-type="value" data-value="inline-grid">inline-grid</div>
+                </div>
+                
+                <div class="exercise-box" style="background: rgba(0,0,0,0.2); margin-top: 2rem; display: none;" id="success-box">
+                    <h4><span class="tip-icon">✅</span> சரியான பதில்!</h4>
+                    <p>கிரிட் லேஅவுட்டை உருவாக்க, <strong>display: grid;</strong> அல்லது <strong>display: inline-grid;</strong> பயன்படுத்த வேண்டும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Grid%20Container%20-%20Align%20Grid%20Content.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Naming%20Grid%20Items.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">கிரிட் உருப்படிகள்</a></li>
+                    <li><a href="#sizing-spanning">அளவிடல்/விரிவாக்கம்</a></li>
+                    <li><a href="#column-start-end">grid-column-start/end</a></li>
+                    <li><a href="#grid-column">grid-column</a></li>
+                    <li><a href="#row-start-end">grid-row-start/end</a></li>
+                    <li><a href="#grid-row">grid-row</a></li>
+                    <li><a href="#combine-column-row">இணைத்தல்</a></li>
+                    <li><a href="#all-properties">அனைத்து பண்புகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Drag and drop functionality for exercise
+        const dragOptions = document.querySelectorAll('.drag-option');
+        const propertyDrop = document.getElementById('property-drop');
+        const valueDrop = document.getElementById('value-drop');
+        const successBox = document.getElementById('success-box');
+        
+        let draggedItem = null;
+        
+        // Drag events for options
+        dragOptions.forEach(option => {
+            option.addEventListener('dragstart', function(e) {
+                draggedItem = this;
+                e.dataTransfer.setData('text/plain', this.dataset.value);
+                this.style.opacity = '0.5';
+            });
+            
+            option.addEventListener('dragend', function() {
+                this.style.opacity = '1';
+                draggedItem = null;
+            });
+        });
+        
+        // Drop events for placeholders
+        [propertyDrop, valueDrop].forEach(dropZone => {
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = 'rgba(255,255,255,0.3)';
+            });
+            
+            dropZone.addEventListener('dragleave', function() {
+                this.style.backgroundColor = 'rgba(255,255,255,0.1)';
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                
+                if (draggedItem) {
+                    const dataType = draggedItem.dataset.type;
+                    const dropZoneId = this.id;
+                    
+                    // Check if dropping in correct zone
+                    if ((dataType === 'property' && dropZoneId === 'property-drop') ||
+                        (dataType === 'value' && dropZoneId === 'value-drop')) {
+                        this.textContent = draggedItem.dataset.value;
+                        
+                        // Check if answer is correct
+                        checkAnswer();
+                    }
+                }
+            });
+        });
+        
+        function checkAnswer() {
+            const property = propertyDrop.textContent;
+            const value = valueDrop.textContent;
+            
+            if ((property === 'display' && value === 'grid') || 
+                (property === 'display' && value === 'inline-grid')) {
+                successBox.style.display = 'block';
+            }
+        }
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

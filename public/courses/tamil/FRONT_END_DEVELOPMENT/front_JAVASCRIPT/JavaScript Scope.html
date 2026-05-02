@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Scope - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20Display%20Objects.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20Code%20Blocks.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript Scope</h2>
+            <p>JavaScript வைஸ்பிளிட்டி பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>JavaScript Scope</h2>
+            
+            <p>Scope = Visibility</p>
+            <p>Scope என்பது மாறிகளின் அணுகல் (தோற்றம்) தீர்மானிக்கிறது.</p>
+            
+            <p>JavaScript மாறிகள் 3 வகையான scope கொண்டுள்ளன:</p>
+            
+            <ul>
+                <li>Global scope</li>
+                <li>Function scope</li>
+                <li>Block scope</li>
+            </ul>
+        </section>
+
+        <!-- Global Scope -->
+        <section class="content-section" id="global-scope">
+            <h2>Global Scope</h2>
+            
+            <p>Globally அறிவிக்கப்பட்ட மாறிகள் (எந்த தொகுதி அல்லது செயல்பாட்டிற்கும் வெளியே) Global Scope கொண்டுள்ளன.</p>
+            
+            <p>Global மாறிகள் ஒரு JavaScript நிரலில் எங்கிருந்தும் அணுக முடியும்.</p>
+            
+            <p>var, let மற்றும் const உடன் அறிவிக்கப்பட்ட மாறிகள் ஒரு தொகுதிக்கு வெளியே அறிவிக்கப்படும் போது மிகவும் ஒத்திருக்கும்.</p>
+            
+            <p>அவை அனைத்தும் Global Scope கொண்டுள்ளன:</p>
+            
+            <div class="code-example">
+                <pre><code>var x = 1;    // Global scope
+
+let y = 2;    // Global scope
+
+const z = 3;  // Global scope</code></pre>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>ஒரு செயல்பாட்டிற்கு வெளியே அறிவிக்கப்பட்ட மாறி, GLOBAL ஆக மாறுகிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>let carName = "Volvo";
+// இங்குள்ள குறியீடு carName ஐப் பயன்படுத்தலாம்
+
+function myFunction() {
+// இங்குள்ள குறியீடும் carName ஐப் பயன்படுத்தலாம்
+}</code></pre>
+            </div>
+            
+            <p>Global மாறிகள் Global Scope கொண்டுள்ளன:</p>
+            <p>அதே வலைப்பக்கத்தில் உள்ள அனைத்து ஸ்கிரிப்டுகள் மற்றும் செயல்பாடுகளும் global scope உடன் ஒரு மாறியை அணுக முடியும்.</p>
+        </section>
+
+        <!-- Function Scope -->
+        <section class="content-section" id="function-scope">
+            <h2>Function Scope</h2>
+            
+            <p>ஒவ்வொரு JavaScript செயல்பாடும் அதன் சொந்த scope கொண்டுள்ளது.</p>
+            
+            <p>ஒரு செயல்பாட்டின் உள்ளே வரையறுக்கப்பட்ட மாறிகள் வெளியில் இருந்து அணுக முடியாது (காணப்படாது).</p>
+            
+            <p>var, let மற்றும் const உடன் அறிவிக்கப்பட்ட மாறிகள் ஒரு செயல்பாட்டின் உள்ளே அறிவிக்கப்படும் போது மிகவும் ஒத்திருக்கும்.</p>
+            
+            <p>அவை அனைத்தும் Function Scope கொண்டுள்ளன:</p>
+            
+            <div class="code-example">
+                <pre><code>function myFunction1() {
+  var carName = "Volvo";  // Function Scope
+}
+
+function myFunction2() {
+  let carName = "Volvo";  // Function Scope
+}
+
+function myFunction3() {
+  const carName = "Volvo";  // Function Scope
+}</code></pre>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>ஒரு JavaScript செயல்பாட்டிற்குள் அறிவிக்கப்பட்ட மாறிகள், செயல்பாட்டிற்கு LOCAL ஆகும்:</p>
+            
+            <div class="code-example">
+                <pre><code>// இங்குள்ள குறியீடு carName ஐப் பயன்படுத்த முடியாது
+
+function myFunction() {
+  let carName = "Volvo";
+  // இங்குள்ள குறியீடு carName ஐப் பயன்படுத்தலாம்
+}
+
+// இங்குள்ள குறியீடு carName ஐப் பயன்படுத்த முடியாது</code></pre>
+            </div>
+            
+            <p>Local மாறிகள் Function Scope கொண்டுள்ளன:</p>
+            <ul>
+                <li>அவை செயல்பாட்டிற்குள் இருந்து மட்டுமே அணுக முடியும்</li>
+                <li>செயல்பாட்டிற்கு வெளியே உள்ள எந்த ஸ்கிரிப்டுகள் அல்லது செயல்பாடுகளும் அவற்றை அணுக முடியாது</li>
+                <li>அதே பெயரைக் கொண்ட மாறிகள் செயல்பாட்டிற்கு வெளியே பயன்படுத்தப்படலாம்</li>
+                <li>அதே பெயரைக் கொண்ட மாறிகள் வெவ்வேறு செயல்பாடுகளில் பயன்படுத்தப்படலாம்</li>
+                <li>Local மாறிகள் ஒரு செயல்பாடு தொடங்கும் போது உருவாக்கப்படுகின்றன</li>
+                <li>Local மாறிகள் செயல்பாடு நிறைவடையும் போது நீக்கப்படும்</li>
+                <li>Arguments (parameters) செயல்பாடுகளுக்குள் local மாறிகளாக வேலை செய்கின்றன</li>
+            </ul>
+        </section>
+
+        <!-- Block Scope -->
+        <section class="content-section" id="block-scope">
+            <h2>Block Scope</h2>
+            
+            <p>ES6 க்கு முன், JavaScript மாறிகள் Global Scope அல்லது Function Scope மட்டுமே கொண்டிருக்க முடியும்.</p>
+            
+            <p>ES6 இரண்டு முக்கியமான புதிய JavaScript வார்த்தைகளை அறிமுகப்படுத்தியது: let மற்றும் const.</p>
+            
+            <p>இந்த இரண்டு வார்த்தைகள் JavaScript இல் Block Scope வழங்குகின்றன.</p>
+            
+            <p>let மற்றும் const உடன் ஒரு குறியீடு தொகுதிக்குள் அறிவிக்கப்பட்ட மாறிகள் "block-scoped," அதாவது அவை அந்த தொகுதிக்குள் மட்டுமே அணுக முடியும்.</p>
+            
+            <p>இது தற்செயலான மாறி மேலெழுதலைத் தடுக்கவும் சிறந்த குறியீடு அமைப்பை ஊக்குவிக்கவும் உதவுகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>{
+  let x = 2;
+}
+// x இங்கே பயன்படுத்த முடியாது</code></pre>
+            </div>
+            
+            <p>var வார்த்தையுடன் அறிவிக்கப்பட்ட மாறிகள் block scope கொண்டிருக்க முடியாது.</p>
+            <p>var வார்த்தையுடன் அறிவிக்கப்பட்ட மாறிகள், ஒரு { } தொகுதிக்குள்; தொகுதிக்கு வெளியே இருந்து அணுக முடியும்.</p>
+            
+            <h3>எடுத்துக்காட்டு (பரிந்துரைக்கப்படாதது)</h3>
+            <div class="code-example">
+                <pre><code>{
+  var x = 2;
+}
+// x இங்கே பயன்படுத்தலாம்</code></pre>
+            </div>
+        </section>
+
+        <!-- Automatically Global -->
+        <section class="content-section" id="automatically-global">
+            <h2>Automatically Global</h2>
+            
+            <p>நீங்கள் அறிவிக்கப்படாத ஒரு மாறிக்கு ஒரு மதிப்பை ஒதுக்கினால், அது GLOBAL மாறியாக மாறும்.</p>
+            
+            <p>இந்த குறியீடு எடுத்துக்காட்டு ஒரு global மாறி carName ஐ அறிவிக்கும், மதிப்பு ஒரு செயல்பாட்டிற்குள் ஒதுக்கப்பட்டிருந்தாலும் கூட.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>myFunction();
+
+// இங்குள்ள குறியீடு carName ஐப் பயன்படுத்தலாம்
+
+function myFunction() {
+  carName = "Volvo";
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Strict Mode -->
+        <section class="content-section" id="strict-mode">
+            <h2>Strict Mode</h2>
+            
+            <p>அனைத்து நவீன உலாவிகளும் "Strict Mode" இல் JavaScript ஐ இயக்குவதை ஆதரிக்கின்றன.</p>
+            
+            <p>"Strict Mode" இல், அறிவிக்கப்படாத மாறிகள் தானாகவே global ஆக மாறாது.</p>
+        </section>
+
+        <!-- Global Variables in HTML -->
+        <section class="content-section" id="global-variables-html">
+            <h2>Global Variables in HTML</h2>
+            
+            <p>JavaScript உடன், global scope என்பது JavaScript சூழல் ஆகும்.</p>
+            
+            <p>HTML இல், global scope என்பது window object ஆகும்.</p>
+            
+            <p>var வார்த்தையுடன் வரையறுக்கப்பட்ட global மாறிகள் window object க்கு சொந்தமானவை:</p>
+            
+            <h3>எடுத்துக்காட்டு (பரிந்துரைக்கப்படாதது)</h3>
+            <div class="code-example">
+                <pre><code>var carName = "Volvo";
+// இங்குள்ள குறியீடு window.carName ஐப் பயன்படுத்தலாம்</code></pre>
+            </div>
+            
+            <p>let வார்த்தையுடன் வரையறுக்கப்பட்ட global மாறிகள் window object க்கு சொந்தமானவை அல்ல:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>let carName = "Volvo";
+// இங்குள்ள குறியீடு window.carName ஐப் பயன்படுத்த முடியாது</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>நீங்கள் உத்தேசிக்காவிட்டால் global மாறிகளை உருவாக்க வேண்டாம்.</p>
+                <p>உங்கள் global மாறிகள் (அல்லது செயல்பாடுகள்) window மாறிகள் (அல்லது செயல்பாடுகளை) மேலெழுதலாம்.</p>
+                <p>எந்த செயல்பாடும், window object உட்பட, உங்கள் global மாறிகள் மற்றும் செயல்பாடுகளை மேலெழுதலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Lifetime of Variables -->
+        <section class="content-section" id="lifetime">
+            <h2>The Lifetime of JavaScript Variables</h2>
+            
+            <p>ஒரு JavaScript மாறியின் வாழ்நாள் அது அறிவிக்கப்படும் போது தொடங்குகிறது.</p>
+            
+            <p>Function (local) மாறிகள் செயல்பாடு நிறைவடையும் போது நீக்கப்படும்.</p>
+            
+            <p>ஒரு வலை உலாவியில், global மாறிகள் நீங்கள் உலாவி சாளரத்தை (அல்லது தாவலை) மூடும் போது நீக்கப்படும்.</p>
+        </section>
+
+        <!-- Exercise Section (Only One Exercise) -->
+        <section class="content-section" id="exercise">
+            <h2>Exercise</h2>
+            
+            <p>பின்வரும் குறியீட்டைக் கவனியுங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>let x = 5;
+{
+  let x = 3;
+}
+alert(x);</code></pre>
+            </div>
+            
+            <p>அலர்ட் செய்யப்பட்ட முடிவு என்னவாக இருக்கும்?</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> அலர்ட் செய்யப்பட்ட முடிவு என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">5</div>
+                            <div class="option-feedback correct">✓ சரி! block scope காரணமாக உள் x (3) வெளி x (5) ஐ மறைக்கிறது. alert() வெளி x ஐ அணுகுகிறது, இது 5 ஆகும்.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">3</div>
+                            <div class="option-feedback incorrect">✗ தவறு! block scope காரணமாக உள் x தொகுதிக்கு வெளியே அணுக முடியாது. alert() வெளி x ஐ மட்டுமே அணுகுகிறது.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20Display%20Objects.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20Code%20Blocks.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">JavaScript Scope</a></li>
+                    <li><a href="#global-scope">Global Scope</a></li>
+                    <li><a href="#function-scope">Function Scope</a></li>
+                    <li><a href="#block-scope">Block Scope</a></li>
+                    <li><a href="#automatically-global">Automatically Global</a></li>
+                    <li><a href="#strict-mode">Strict Mode</a></li>
+                    <li><a href="#global-variables-html">Global Variables in HTML</a></li>
+                    <li><a href="#lifetime">Lifetime of Variables</a></li>
+                    <li><a href="#exercise">Exercise</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

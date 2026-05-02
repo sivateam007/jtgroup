@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js MySQL Limit - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js MySQL Update.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js MySQL Join.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js MySQL Limit</h2>
+            <p>Node.js ஐப் பயன்படுத்தி MySQL வினா முடிவுகளின் எண்ணிக்கையை வரம்பிட கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Limit the Result -->
+        <section class="content-section" id="limit-result">
+            <h2>முடிவை வரம்பிடுதல்</h2>
+            
+            <p>வினாவிலிருந்து திருப்பி அனுப்பப்படும் பதிவுகளின் எண்ணிக்கையை "LIMIT" அறிக்கையைப் பயன்படுத்தி வரம்பிடலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"customers" அட்டவணையில் முதல் 5 பதிவுகளைத் தேர்ந்தெடுக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  let sql = "SELECT * FROM customers LIMIT 5";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_db_limit.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_db_limit.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { id: 1, name: 'John', address: 'Highway 71'},
+  { id: 2, name: 'Peter', address: 'Lowstreet 4'},
+  { id: 3, name: 'Amy', address: 'Apple st 652'},
+  { id: 4, name: 'Hannah', address: 'Mountain 21'},
+  { id: 5, name: 'Michael', address: 'Valley 345'}
+]</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> LIMIT முக்கிய குறிப்புகள்:</h4>
+                <ul>
+                    <li><strong>செயல்திறன்:</strong> பெரிய அட்டவணைகளில் செயல்திறனை மேம்படுத்துகிறது</li>
+                    <li><strong>நினைவகம்:</strong> நினைவக பயன்பாட்டைக் குறைக்கிறது</li>
+                    <li><strong>பக்கமிடல்:</strong> வலை பக்கமிடலுக்கு அத்தியாவசியமானது</li>
+                    <li><strong>காட்சிப்படுத்தல்:</strong> பயனர் இடைமுகத்தில் காட்டப்படும் தரவைக் கட்டுப்படுத்துகிறது</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Start From Another Position -->
+        <section class="content-section" id="offset">
+            <h2>வேறு நிலையில் இருந்து தொடங்கவும்</h2>
+            
+            <p>மூன்றாவது பதிவில் இருந்து தொடங்கி, அடுத்த ஐந்து பதிவுகளைத் திருப்பி அனுப்ப விரும்பினால், "OFFSET" முக்கியச்சொல்லைப் பயன்படுத்தலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>நிலை 3 இல் இருந்து தொடங்கி, அடுத்த 5 பதிவுகளைத் திருப்பி அனுப்பவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  let sql = "SELECT * FROM customers LIMIT 5 OFFSET 2";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <p>குறிப்பு: "OFFSET 2" என்பது இரண்டாவது நிலையில் இருந்து அல்ல, மூன்றாவது நிலையில் இருந்து தொடங்குவதாகும்!</p>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_db_offset.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_db_offset.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { id: 3, name: 'Amy', address: 'Apple st 652'},
+  { id: 4, name: 'Hannah', address: 'Mountain 21'},
+  { id: 5, name: 'Michael', address: 'Valley 345'},
+  { id: 6, name: 'Sandy', address: 'Ocean blvd 2'},
+  { id: 7, name: 'Betty', address: 'Green Grass 1'}
+]</code></pre>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>OFFSET செயல்பாடு</h4>
+                    </div>
+                    <ul>
+                        <li><strong>பூஜ்ஜிய-அடிப்படை:</strong> OFFSET 0 முதல் பதிவில் இருந்து தொடங்குகிறது</li>
+                        <li><strong>தவிர்க்கும்:</strong> OFFSET N முதல் N பதிவுகளைத் தவிர்க்கிறது</li>
+                        <li><strong>பக்கமிடல்:</strong> பக்கமிடல் செயல்பாடுகளுக்கு பயனுள்ளதாக இருக்கிறது</li>
+                        <li><strong>செயல்திறன்:</strong> பெரிய OFFSET மதிப்புகள் செயல்திறனைக் குறைக்கலாம்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shorter Syntax -->
+        <section class="content-section" id="shorter-syntax">
+            <h2>குறுகிய தொடரியல்</h2>
+            
+            <p>உங்கள் SQL அறிக்கையை "LIMIT 2, 5" போன்று எழுதலாம், இது மேலே உள்ள offset எடுத்துக்காட்டின் அதே முடிவைத் தரும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>நிலை 3 இல் இருந்து தொடங்கி, அடுத்த 5 பதிவுகளைத் திருப்பி அனுப்பவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  let sql = "SELECT * FROM customers LIMIT 2, 5";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <p>குறிப்பு: எண்கள் தலைகீழாக உள்ளன: "LIMIT 2, 5" என்பது "LIMIT 5 OFFSET 2" போன்றதே</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>தொடரியல்</th>
+                            <th>விளக்கம்</th>
+                            <th>முடிவு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>LIMIT 5</strong></td>
+                            <td>முதல் 5 பதிவுகள்</td>
+                            <td>பதிவுகள் 1-5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LIMIT 5 OFFSET 2</strong></td>
+                            <td>முதல் 2 பதிவுகளைத் தவிர்த்து அடுத்த 5 பதிவுகள்</td>
+                            <td>பதிவுகள் 3-7</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LIMIT 2, 5</strong></td>
+                            <td>முதல் 2 பதிவுகளைத் தவிர்த்து அடுத்த 5 பதிவுகள்</td>
+                            <td>பதிவுகள் 3-7</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LIMIT 0, 10</strong></td>
+                            <td>முதல் 10 பதிவுகள்</td>
+                            <td>பதிவுகள் 1-10</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LIMIT 10, 10</strong></td>
+                            <td>முதல் 10 பதிவுகளைத் தவிர்த்து அடுத்த 10 பதிவுகள்</td>
+                            <td>பதிவுகள் 11-20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Advanced LIMIT Techniques -->
+        <section class="content-section" id="advanced-limit">
+            <h2>மேம்பட்ட LIMIT நுட்பங்கள்</h2>
+            
+            <h3>ORDER BY உடன் LIMIT</h3>
+            
+            <div class="code-example">
+                <pre><code>// Get top 5 customers by name
+con.query("SELECT * FROM customers ORDER BY name ASC LIMIT 5", function (err, result) {
+  if (err) throw err;
+  console.log("Top 5 customers by name:", result);
+});
+
+// Get most recent 10 orders
+con.query("SELECT * FROM orders ORDER BY order_date DESC LIMIT 10", function (err, result) {
+  if (err) throw err;
+  console.log("Most recent 10 orders:", result);
+});</code></pre>
+            </div>
+            
+            <h3>WHERE உடன் LIMIT</h3>
+            
+            <div class="code-example">
+                <pre><code>// Get first 3 active customers
+con.query("SELECT * FROM customers WHERE status = 'active' LIMIT 3", function (err, result) {
+  if (err) throw err;
+  console.log("First 3 active customers:", result);
+});
+
+// Get limited results with complex conditions
+con.query("SELECT * FROM products WHERE price > 100 AND category = 'electronics' LIMIT 5", function (err, result) {
+  if (err) throw err;
+  console.log("Expensive electronics (limited to 5):", result);
+});</code></pre>
+            </div>
+            
+            <h3>மாறிகள் மூலம் பக்கமிடல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Pagination with variables
+const page = 2;
+const pageSize = 10;
+const offset = (page - 1) * pageSize;
+
+let sql = "SELECT * FROM customers LIMIT ? OFFSET ?";
+con.query(sql, [pageSize, offset], function (err, result) {
+  if (err) throw err;
+  console.log(`Page ${page} results:`, result);
+});
+
+// Dynamic pagination function
+function getPaginatedResults(page, pageSize) {
+  const offset = (page - 1) * pageSize;
+  let sql = "SELECT * FROM customers ORDER BY id LIMIT ? OFFSET ?";
+  
+  con.query(sql, [pageSize, offset], function (err, result) {
+    if (err) throw err;
+    console.log(`Page ${page} (${pageSize} items):`, result);
+  });
+}
+
+// Usage
+getPaginatedResults(1, 5); // Page 1, 5 items
+getPaginatedResults(2, 5); // Page 2, 5 items</code></pre>
+            </div>
+        </section>
+
+        <!-- LIMIT with Different Scenarios -->
+        <section class="content-section" id="limit-scenarios">
+            <h2>வெவ்வேறு சூழ்நிலைகளில் LIMIT</h2>
+            
+            <h3>முதல் N பதிவுகள்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Get first record only
+con.query("SELECT * FROM customers LIMIT 1", function (err, result) {
+  if (err) throw err;
+  console.log("First customer:", result[0]);
+});
+
+// Get last 5 records (assuming ordered by ID)
+con.query("SELECT * FROM customers ORDER BY id DESC LIMIT 5", function (err, result) {
+  if (err) throw err;
+  console.log("Last 5 customers:", result);
+});</code></pre>
+            </div>
+            
+            <h3>சீரற்ற மாதிரிகள்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Get random 3 records
+con.query("SELECT * FROM customers ORDER BY RAND() LIMIT 3", function (err, result) {
+  if (err) throw err;
+  console.log("Random 3 customers:", result);
+});
+
+// Get sample data for testing
+con.query("SELECT * FROM products ORDER BY RAND() LIMIT 10", function (err, result) {
+  if (err) throw err;
+  console.log("Random product sample:", result);
+});</code></pre>
+            </div>
+            
+            <h3>குழுவாக்கத்துடன் LIMIT</h3>
+            
+            <div class="code-example">
+                <pre><code>// Get top product from each category
+con.query(`
+  SELECT * FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY category ORDER BY price DESC) as rank
+    FROM products
+  ) ranked 
+  WHERE rank = 1
+`, function (err, result) {
+  if (err) throw err;
+  console.log("Top product from each category:", result);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- LIMIT Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>LIMIT சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>செயல்திறன்</h4>
+                    </div>
+                    <ul>
+                        <li>பெரிய முடிவு செட்களுக்கு எப்போதும் LIMIT பயன்படுத்தவும்</li>
+                        <li>ORDER BY உடன் குறியீட்டு நெடுவரிசைகளைப் பயன்படுத்தவும்</li>
+                        <li>பெரிய OFFSET மதிப்புகளைத் தவிர்க்கவும்</li>
+                        <li>பக்கமிடலுக்கு WHERE உடன் கூடிய குறியீட்டு நெடுவரிசைகளைப் பயன்படுத்தவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-user"></i>
+                        <h4>பயனர் அனுபவம்</h4>
+                    </div>
+                    <ul>
+                        <li>பக்கத்திற்கு 10-50 பதிவுகளைக் காட்டவும்</li>
+                        <li>மொத்த எண்ணிக்கையைக் காட்டவும் (பக்கமிடலுக்கு)</li>
+                        <li>அதிகபட்ச வரம்பை அமைக்கவும்</li>
+                        <li>பயனர் தேர்வு வரம்புகளை அனுமதிக்கவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>குறியீடு தரம்</h4>
+                    </div>
+                    <ul>
+                        <li>மாறிகள் மூலம் வரம்புகளை மாற்றக்கூடியதாக்கவும்</li>
+                        <li>பக்கமிடல் செயல்பாடுகளை மறுபயன்பாட்டிற்காக உருவாக்கவும்</li>
+                        <li>வரம்பு மதிப்புகளை உள்ளீட்டிலிருந்து சரிபார்க்கவும்</li>
+                        <li>வரம்புகள் இல்லாத வினாக்களுக்கு கவனமாக இருங்கள்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete Example -->
+        <section class="content-section" id="complete-example">
+            <h2>முழுமையான எடுத்துக்காட்டு</h2>
+            
+            <p>அனைத்து LIMIT நுட்பங்களையும் உள்ளடக்கிய முழுமையான எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const mysql = require('mysql');
+
+// Create connection
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "company_db"
+});
+
+// Connect to MySQL
+con.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL:', err.message);
+    return;
+  }
+  
+  console.log('Connected to MySQL database');
+  
+  // Example 1: Basic LIMIT
+  console.log('\n1. First 5 customers:');
+  con.query("SELECT * FROM customers LIMIT 5", (err, result) => {
+    if (err) {
+      console.error('Error in query 1:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 2: LIMIT with OFFSET
+  console.log('\n2. Customers with OFFSET (records 3-7):');
+  con.query("SELECT * FROM customers LIMIT 5 OFFSET 2", (err, result) => {
+    if (err) {
+      console.error('Error in query 2:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 3: Shorter syntax LIMIT
+  console.log('\n3. Customers with shorter syntax (records 3-7):');
+  con.query("SELECT * FROM customers LIMIT 2, 5", (err, result) => {
+    if (err) {
+      console.error('Error in query 3:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 4: Pagination system
+  console.log('\n4. Pagination example:');
+  function getCustomersPage(page, pageSize) {
+    const offset = (page - 1) * pageSize;
+    const sql = "SELECT * FROM customers ORDER BY id LIMIT ? OFFSET ?";
+    
+    con.query(sql, [pageSize, offset], (err, result) => {
+      if (err) {
+        console.error('Error in pagination:', err.message);
+        return;
+      }
+      console.log(`Page ${page} (items ${offset + 1}-${offset + result.length}):`, result);
+    });
+  }
+  
+  // Get multiple pages
+  getCustomersPage(1, 3); // Page 1: records 1-3
+  getCustomersPage(2, 3); // Page 2: records 4-6
+  
+  // Example 5: Get total count for pagination
+  console.log('\n5. Pagination with total count:');
+  con.query("SELECT COUNT(*) as total FROM customers", (err, countResult) => {
+    if (err) {
+      console.error('Error getting count:', err.message);
+      return;
+    }
+    
+    const totalCustomers = countResult[0].total;
+    const pageSize = 5;
+    const totalPages = Math.ceil(totalCustomers / pageSize);
+    
+    console.log(`Total customers: ${totalCustomers}`);
+    console.log(`Page size: ${pageSize}`);
+    console.log(`Total pages: ${totalPages}`);
+    
+    // Close connection
+    setTimeout(() => {
+      con.end((err) => {
+        if (err) {
+          console.error('Error closing connection:', err.message);
+          return;
+        }
+        console.log('\nConnection closed');
+      });
+    }, 2000);
+  });
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MySQL வினாவிலிருந்து திருப்பி அனுப்பப்படும் பதிவுகளின் எண்ணிக்கையை வரம்பிட பயன்படுத்தப்படும் சரியான SQL கூற்றைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">RESTRICT</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "RESTRICT" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL கூற்று அல்ல. RESTRICT என்பது வெளிநாட்டு விசை கட்டுப்பாடுகளில் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">MAXROWS</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "MAXROWS" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL கூற்று அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">LIMIT</div>
+                            <div class="option-feedback correct">✓ சரி! "LIMIT" என்பது MySQL வினாவிலிருந்து திருப்பி அனுப்பப்படும் பதிவுகளின் எண்ணிக்கையை வரம்பிட பயன்படும் சரியான SQL கூற்றாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">TOP</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "TOP" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL கூற்று அல்ல. TOP என்பது SQL Server இல் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js MySQL Update.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js MySQL Join.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#limit-result">முடிவை வரம்பிடுதல்</a></li>
+                    <li><a href="#offset">வேறு நிலையில் இருந்து தொடங்கவும்</a></li>
+                    <li><a href="#shorter-syntax">குறுகிய தொடரியல்</a></li>
+                    <li><a href="#advanced-limit">மேம்பட்ட LIMIT நுட்பங்கள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

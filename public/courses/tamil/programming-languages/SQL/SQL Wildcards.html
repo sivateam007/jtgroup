@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Wildcards - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL LIKE Operator.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL IN Operator.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL Wildcards</h2>
+            <p>ஒரு சரத்தில் ஒன்று அல்லது அதற்கு மேற்பட்ட எழுத்துகளை மாற்றுவதற்கு வைல்ட்கார்ட் எழுத்துகளைப் பயன்படுத்துவது பற்றி அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What are Wildcard Characters -->
+        <section class="content-section" id="what-are-wildcards">
+            <h2>SQL வைல்ட்கார்ட் எழுத்துகள்</h2>
+            
+            <p>ஒரு சரத்தில் ஒன்று அல்லது அதற்கு மேற்பட்ட எழுத்துகளை மாற்றுவதற்கு ஒரு வைல்ட்கார்ட் எழுத்து பயன்படுத்தப்படுகிறது.</p>
+            
+            <p>வைல்ட்கார்ட் எழுத்துகள் LIKE ஆபரேட்டருடன் பயன்படுத்தப்படுகின்றன. LIKE ஆபரேட்டர் ஒரு நிரலில் குறிப்பிட்ட முறையைத் தேட WHERE கிளாஸில் பயன்படுத்தப்படுகிறது.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>'a' என்ற எழுத்தில் தொடங்கும் அனைத்து வாடிக்கையாளர்களையும் திரும்பப் பெற:</p>
+                <pre><code>SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%';</code></pre>
+            </div>
+        </section>
+
+        <!-- Wildcard Characters Table -->
+        <section class="content-section" id="wildcard-characters">
+            <h2>வைல்ட்கார்ட் எழுத்துகள்</h2>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>குறியீடு</th>
+                                <th>விளக்கம்</th>
+                                <th>உதாரணம்</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>%</strong></td>
+                                <td>பூஜ்ஜியம் அல்லது அதற்கு மேற்பட்ட எழுத்துகளை பிரதிநிதித்துவப்படுத்துகிறது</td>
+                                <td>'a%' - a, ab, abc போன்றவை</td>
+                            </tr>
+                            <tr>
+                                <td><strong>_</strong></td>
+                                <td>ஒரு ஒற்றை எழுத்தை பிரதிநிதித்துவப்படுத்துகிறது</td>
+                                <td>'a_' - ab, ac, ad போன்றவை</td>
+                            </tr>
+                            <tr>
+                                <td><strong>[]</strong></td>
+                                <td>அடைப்புக்குறிக்குள் உள்ள எந்த ஒற்றை எழுத்தையும் பிரதிநிதித்துவப்படுத்துகிறது *</td>
+                                <td>'[abc]%' - a, b, c இல் தொடங்கும்</td>
+                            </tr>
+                            <tr>
+                                <td><strong>^</strong></td>
+                                <td>அடைப்புக்குறிக்குள் இல்லாத எந்த எழுத்தையும் பிரதிநிதித்துவப்படுத்துகிறது *</td>
+                                <td>'[^abc]%' - a, b, c தவிர்த்து தொடங்கும்</td>
+                            </tr>
+                            <tr>
+                                <td><strong>-</strong></td>
+                                <td>குறிப்பிட்ட வரம்பிற்குள் உள்ள எந்த ஒற்றை எழுத்தையும் பிரதிநிதித்துவப்படுத்துகிறது *</td>
+                                <td>'[a-f]%' - a முதல் f வரை தொடங்கும்</td>
+                            </tr>
+                            <tr>
+                                <td><strong>{}</strong></td>
+                                <td>எந்த தப்பிப்பிழைத்த எழுத்தையும் பிரதிநிதித்துவப்படுத்துகிறது **</td>
+                                <td>Oracle இல் மட்டும்</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> தரவுத்தள ஆதரவு:</h4>
+                <p>* PostgreSQL மற்றும் MySQL தரவுத்தளங்களில் ஆதரிக்கப்படவில்லை.<br>
+                ** Oracle தரவுத்தளங்களில் மட்டும் ஆதரிக்கப்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>உதாரணங்களில் பயன்படுத்தப்படும் Customers அட்டவணையிலிருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CustomerID</th>
+                                <th>CustomerName</th>
+                                <th>ContactName</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>PostalCode</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Alfreds Futterkiste</td>
+                                <td>Maria Anders</td>
+                                <td>Obere Str. 57</td>
+                                <td>Berlin</td>
+                                <td>12209</td>
+                                <td>Germany</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Ana Trujillo Emparedados y helados</td>
+                                <td>Ana Trujillo</td>
+                                <td>Avda. de la Constitución 2222</td>
+                                <td>México D.F.</td>
+                                <td>05021</td>
+                                <td>Mexico</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Antonio Moreno Taquería</td>
+                                <td>Antonio Moreno</td>
+                                <td>Mataderos 2312</td>
+                                <td>México D.F.</td>
+                                <td>05023</td>
+                                <td>Mexico</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Around the Horn</td>
+                                <td>Thomas Hardy</td>
+                                <td>120 Hanover Sq.</td>
+                                <td>London</td>
+                                <td>WA1 1DP</td>
+                                <td>UK</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Berglunds snabbköp</td>
+                                <td>Christina Berglund</td>
+                                <td>Berguvsvägen 8</td>
+                                <td>Luleå</td>
+                                <td>S-958 22</td>
+                                <td>Sweden</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Using the % Wildcard -->
+        <section class="content-section" id="percent-wildcard">
+            <h2>% வைல்ட்கார்டைப் பயன்படுத்துதல்</h2>
+            
+            <p>% வைல்ட்கார்ட் <strong>எந்த எண்ணிக்கையிலான எழுத்துகளையும்</strong>, பூஜ்ஜிய எழுத்துகள் கூட பிரதிநிதித்துவப்படுத்துகிறது.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>'es' என்ற முறையில் முடியும் அனைத்து வாடிக்கையாளர்களையும் திரும்பப் பெற:</p>
+                <pre><code>SELECT * FROM Customers
+WHERE CustomerName LIKE '%es';</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>'mer' என்ற முறையைக் கொண்ட அனைத்து வாடிக்கையாளர்களையும் திரும்பப் பெற:</p>
+                <pre><code>SELECT * FROM Customers
+WHERE CustomerName LIKE '%mer%';</code></pre>
+            </div>
+        </section>
+
+        <!-- Using the _ Wildcard -->
+        <section class="content-section" id="underscore-wildcard">
+            <h2>_ வைல்ட்கார்டைப் பயன்படுத்துதல்</h2>
+            
+            <p>_ வைல்ட்கார்ட் ஒரு <strong>ஒற்றை எழுத்தை</strong> பிரதிநிதித்துவப்படுத்துகிறது.</p>
+            
+            <p>இது எந்த எழுத்து அல்லது எண்ணாகவும் இருக்கலாம், ஆனால் ஒவ்வொரு _ ம் ஒரு, மற்றும் ஒரே ஒரு எழுத்தை மட்டுமே பிரதிநிதித்துவப்படுத்துகிறது.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>எந்த எழுத்துடன் தொடங்கி, "ondon" உடன் முடியும் City உள்ள அனைத்து வாடிக்கையாளர்களையும் திரும்பப் பெற:</p>
+                <pre><code>SELECT * FROM Customers
+WHERE City LIKE '_ondon';</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>"L" உடன் தொடங்கி, ஏதேனும் 3 எழுத்துகள், "on" உடன் முடியும் City உள்ள அனைத்து வாடிக்கையாளர்களையும் திரும்பப் பெற:</p>
+                <pre><code>SELECT * FROM Customers
+WHERE City LIKE 'L___on';</code></pre>
+            </div>
+        </section>
+
+        <!-- Using the [] Wildcard -->
+        <section class="content-section" id="brackets-wildcard">
+            <h2>[] வைல்ட்கார்டைப் பயன்படுத்துதல்</h2>
+            
+            <p>[] வைல்ட்கார்ட் உள்ளே உள்ள எழுத்துகளில் ஏதேனும் ஒன்று பொருந்தினால் ஒரு முடிவைத் திரும்பப் பெறுகிறது.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>"b", "s", அல்லது "p" இல் தொடங்கும் அனைத்து வாடிக்கையாளர்களையும் திரும்பப் பெற:</p>
+                <pre><code>SELECT * FROM Customers
+WHERE CustomerName LIKE '[bsp]%';</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>இந்த வைல்ட்கார்ட் PostgreSQL மற்றும் MySQL தரவுத்தளங்களில் ஆதரிக்கப்படவில்லை.</p>
+            </div>
+        </section>
+
+        <!-- Using the - Wildcard -->
+        <section class="content-section" id="range-wildcard">
+            <h2>- வைல்ட்கார்டைப் பயன்படுத்துதல்</h2>
+            
+            <p>- வைல்ட்கார்ட் [] வைல்ட்கார்டிற்குள் எழுத்துகளின் வரம்பைக் குறிப்பிட உங்களை அனுமதிக்கிறது.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>"a", "b", "c", "d", "e" அல்லது "f" இல் தொடங்கும் அனைத்து வாடிக்கையாளர்களையும் திரும்பப் பெற:</p>
+                <pre><code>SELECT * FROM Customers
+WHERE CustomerName LIKE '[a-f]%';</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>இந்த வைல்ட்கார்ட் PostgreSQL மற்றும் MySQL தரவுத்தளங்களில் ஆதரிக்கப்படவில்லை.</p>
+            </div>
+        </section>
+
+        <!-- Combine Wildcards -->
+        <section class="content-section" id="combine-wildcards">
+            <h2>வைல்ட்கார்ட்களை இணைக்கவும்</h2>
+            
+            <p>எந்த வைல்ட்கார்டும், % மற்றும் _ போன்றவை, மற்ற வைல்ட்கார்ட்களுடன் இணைந்து பயன்படுத்தப்படலாம்.</p>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <h3>குறைந்தபட்ச நீளம்</h3>
+                    <p>"a" இல் தொடங்கி குறைந்தது 3 எழுத்துகள் நீளம்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT * FROM Customers
+WHERE CustomerName LIKE 'a__%';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <h3>குறிப்பிட்ட நிலை</h3>
+                    <p>இரண்டாம் நிலையில் "r" உள்ள பெயர்கள்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT * FROM Customers
+WHERE CustomerName LIKE '_r%';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <h3>வரம்பு மற்றும் நிலை</h3>
+                    <p>a-f வரம்பில் தொடங்கி 3 எழுத்துகள்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT * FROM Customers
+WHERE CustomerName LIKE '[a-f]___%';</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Without Wildcard -->
+        <section class="content-section" id="without-wildcard">
+            <h2>வைல்ட்கார்ட் இல்லாமல்</h2>
+            
+            <p>வைல்ட்கார்ட் குறிப்பிடப்படவில்லை என்றால், முடிவைத் திரும்பப் பெற சொற்றொடர் சரியாக பொருந்த வேண்டும்.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>ஸ்பெயினிலிருந்து அனைத்து வாடிக்கையாளர்களையும் திரும்பப் பெற:</p>
+                <pre><code>SELECT * FROM Customers
+WHERE Country LIKE 'Spain';</code></pre>
+            </div>
+        </section>
+
+        <!-- Microsoft Access Wildcards -->
+        <section class="content-section" id="access-wildcards">
+            <h2>மைக்ரோசாப்ட் அக்சஸ் வைல்ட்கார்ட்கள்</h2>
+            
+            <p>மைக்ரோசாப்ட் அக்சஸ் தரவுத்தளத்தில் வேறு சில வைல்ட்கார்ட்கள் உள்ளன:</p>
+            
+            <div class="table-container">
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>குறியீடு</th>
+                                <th>விளக்கம்</th>
+                                <th>உதாரணம்</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>*</strong></td>
+                                <td>பூஜ்ஜியம் அல்லது அதற்கு மேற்பட்ட எழுத்துகளை பிரதிநிதித்துவப்படுத்துகிறது</td>
+                                <td>bl* → bl, black, blue, blob</td>
+                            </tr>
+                            <tr>
+                                <td><strong>?</strong></td>
+                                <td>ஒரு ஒற்றை எழுத்தை பிரதிநிதித்துவப்படுத்துகிறது</td>
+                                <td>h?t → hot, hat, hit</td>
+                            </tr>
+                            <tr>
+                                <td><strong>[]</strong></td>
+                                <td>அடைப்புக்குறிக்குள் உள்ள எந்த ஒற்றை எழுத்தையும் பிரதிநிதித்துவப்படுத்துகிறது</td>
+                                <td>h[oa]t → hot, hat (hit இல்லை)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>!</strong></td>
+                                <td>அடைப்புக்குறிக்குள் இல்லாத எந்த எழுத்தையும் பிரதிநிதித்துவப்படுத்துகிறது</td>
+                                <td>h[!oa]t → hit (hot, hat இல்லை)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>-</strong></td>
+                                <td>குறிப்பிட்ட வரம்பிற்குள் உள்ள எந்த ஒற்றை எழுத்தையும் பிரதிநிதித்துவப்படுத்துகிறது</td>
+                                <td>c[a-b]t → cat, cbt</td>
+                            </tr>
+                            <tr>
+                                <td><strong>#</strong></td>
+                                <td>எந்த ஒற்றை எண் எழுத்தையும் பிரதிநிதித்துவப்படுத்துகிறது</td>
+                                <td>2#5 → 205, 215, 225, ... 295</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Database Support Comparison -->
+        <section class="content-section" id="database-support">
+            <h2>தரவுத்தள ஆதரவு ஒப்பீடு</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>SQL Server</h4>
+                    </div>
+                    <ul>
+                        <li>% - ஆதரிக்கப்படுகிறது</li>
+                        <li>_ - ஆதரிக்கப்படுகிறது</li>
+                        <li>[] - ஆதரிக்கப்படுகிறது</li>
+                        <li>^ - ஆதரிக்கப்படுகிறது</li>
+                        <li>- - ஆதரிக்கப்படுகிறது</li>
+                        <li>{} - ஆதரிக்கப்படவில்லை</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>MySQL</h4>
+                    </div>
+                    <ul>
+                        <li>% - ஆதரிக்கப்படுகிறது</li>
+                        <li>_ - ஆதரிக்கப்படுகிறது</li>
+                        <li>[] - ஆதரிக்கப்படவில்லை</li>
+                        <li>^ - ஆதரிக்கப்படவில்லை</li>
+                        <li>- - ஆதரிக்கப்படவில்லை</li>
+                        <li>{} - ஆதரிக்கப்படவில்லை</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-database"></i>
+                        <h4>PostgreSQL</h4>
+                    </div>
+                    <ul>
+                        <li>% - ஆதரிக்கப்படுகிறது</li>
+                        <li>_ - ஆதரிக்கப்படுகிறது</li>
+                        <li>[] - ஆதரிக்கப்படவில்லை</li>
+                        <li>^ - ஆதரிக்கப்படவில்லை</li>
+                        <li>- - ஆதரிக்கப்படவில்லை</li>
+                        <li>{} - ஆதரிக்கப்படவில்லை</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை உதாரணங்கள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>மின்னஞ்சல் டொமைன்</h3>
+                    <p>குறிப்பிட்ட டொமைனில் மின்னஞ்சல்கள்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT * FROM Users
+WHERE Email LIKE '%@gmail.com';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3>ஐடி வடிவம்</h3>
+                    <p>குறிப்பிட்ட வடிவத்தில் ஐடி</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT * FROM Employees
+WHERE EmpID LIKE 'EMP____';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>தொலைபேசி எண்</h3>
+                    <p>குறிப்பிட்ட பகுதி குறியீடு</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT * FROM Customers
+WHERE Phone LIKE '+91-9_______';</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-file"></i>
+                    </div>
+                    <h3>கோப்பு வகைகள்</h3>
+                    <p>பட கோப்புகள்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT * FROM Documents
+WHERE FileName LIKE '%.jpg'
+OR FileName LIKE '%.png'
+OR FileName LIKE '%.gif';</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> SQL இல் % வைல்ட்கார்ட் எதைப் பிரதிநிதித்துவப்படுத்துகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">பூஜ்ஜியம் அல்லது அதற்கு மேற்பட்ட எழுத்துகள்</div>
+                            <div class="option-feedback correct">✓ சரி! % வைல்ட்கார்ட் பூஜ்ஜியம் அல்லது அதற்கு மேற்பட்ட எழுத்துகளைப் பிரதிநிதித்துவப்படுத்துகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு ஒற்றை எழுத்து</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது _ வைல்ட்கார்டின் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு வரம்பிற்குள் உள்ள எந்த ஒற்றை எழுத்து</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது - வைல்ட்கார்டின் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு சரத்திற்கான சரியான பொருத்தம்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! வைல்ட்கார்ட் இல்லாமல் இது பொருந்தும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL LIKE Operator.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL IN Operator.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-are-wildcards">வைல்ட்கார்ட் எழுத்துகள்</a></li>
+                    <li><a href="#percent-wildcard">% வைல்ட்கார்ட்</a></li>
+                    <li><a href="#underscore-wildcard">_ வைல்ட்கார்ட்</a></li>
+                    <li><a href="#combine-wildcards">வைல்ட்கார்ட்களை இணைக்கவும்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.8rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            margin: 2rem 0;
+        }
+        
+        .responsive-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--git-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .examples-grid,
+            .comparison-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .comparison-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .responsive-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

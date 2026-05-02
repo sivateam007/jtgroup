@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Conditional Rendering - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular Events.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Lists.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Conditional Rendering</h2>
+<p>State-அடிப்படையில் template-ன் பகுதிகளை காட்ட அல்லது மறைக்க கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Conditional Rendering</h2>
+<p>Conditional rendering state-அடிப்படையில் template-ன் பகுதிகளை காட்டுகிறது அல்லது மறைக்கிறது.</p>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i> Conditional Rendering Essentials</h4>
+<ul>
+<li>Conditional logic-க்கு <strong>@if / @else if / @else</strong> பயன்படுத்தவும்.</li>
+<li>பல view-களில் ஒன்றை தேர்ந்தெடுக்க <strong>@switch</strong> பயன்படுத்தவும்.</li>
+<li>Signals: Conditions-ஐ signals-லிருந்து drive செய்யவும் மற்றும் அவற்றை templates-ல் sig() மூலம் read செய்யவும்.</li>
+<li>Hide vs remove: @if DOM-இலிருந்து remove செய்கிறது; destroy செய்யாமல் மறைக்க [hidden] அல்லது CSS பயன்படுத்தவும்.</li>
+<li>Legacy: *ngIf மற்றும் [ngSwitch] ஆதரிக்கப்படுகின்றன ஆனால் இங்கு காட்டப்படவில்லை.</li>
+</ul>
+</div>
+
+<div class="code-example">
+<h3>Conditional Rendering Syntax</h3>
+<pre><code class="command-input">@if (condition) { &lt;p&gt;Shown&lt;/p&gt; } @else { &lt;p&gt;Hidden&lt;/p&gt; }
+
+@switch (value) {
+  @case ('x') { &lt;p&gt;X&lt;/p&gt; }
+  @default { &lt;p&gt;Other&lt;/p&gt; }
+}
+
+&lt;div [hidden]="!isVisible"&gt;Hidden but in DOM&lt;/div&gt;</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-info-circle tip-icon"></i> Note</h4>
+<p>Control Flow for @if/@switch/@for, Templates for markup/interpolation, Events for handling input, and Lists for rendering collections ஆகியவற்றை காணவும்.</p>
+</div>
+</section>
+
+<!-- Basic Conditional Rendering -->
+<section class="content-section" id="basic-conditional">
+<h2>Basic Conditional Rendering</h2>
+<p>@if / @else மூலம் content render செய்யவும்.</p>
+<p>Booleans-ஐ signals-லிருந்து drive செய்யவும்; template expressions-ஐ simple-காக வைக்கவும்.</p>
+
+<div class="code-example">
+<h3>Basic Conditional Example</h3>
+<pre><code class="command-input">@if (show()) { &lt;p&gt;Now you see me!&lt;/p&gt; } @else { &lt;p&gt;Now I'm hidden.&lt;/p&gt; }</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>Conditional Rendering Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Conditional Rendering&lt;/h3&gt;
+    &lt;button (click)="show.set(!show())"&gt;Toggle&lt;/button&gt;
+    @if (show()) { &lt;p&gt;Now you see me!&lt;/p&gt; } @else { &lt;p&gt;Now I'm hidden.&lt;/p&gt; }
+  `
+})
+export class App {
+  show = signal(true);
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>@if (show()):</strong> show signal-ஐ read செய்கிறது; true ஆக இருக்கும் போது first block-ஐ render செய்கிறது, இல்லையெனில் @else block.</li>
+<li><strong>Toggle:</strong> Button show.set(!show()) call செய்கிறது signal value flip செய்ய.</li>
+<li><strong>Signals in templates:</strong> Signals-ஐ அவற்றை call செய்வதன் மூலம் read செய்யவும் (e.g., show()).</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Keep expressions light:</strong> Templates-ல் methods call செய்வதை தவிர்க்கவும்; handlers/services-ல் signals update செய்யவும்.</li>
+<li><strong>Legacy:</strong> *ngIf with then/else ஆதரிக்கப்படுகிறது.</li>
+<li><strong>Be explicit:</strong> Complex truthy/falsy checks-க்கு பதிலாக clear conditions பயன்படுத்தவும் (e.g., isVisible).</li>
+</ul>
+</div>
+</section>
+
+<!-- @switch Section -->
+<section class="content-section" id="switch-section">
+<h2>@switch</h2>
+<p>ஒரு single value-ல் switch செய்து matching case-ஐ render செய்யவும்.</p>
+<p>Unexpected values-க்கு எப்போதும் explicit default வழங்கவும் @default உடன்.</p>
+
+<div class="code-example">
+<h3>@switch Example Syntax</h3>
+<pre><code class="command-input">@switch (status) {
+  @case ('loading') { &lt;p&gt;Loading...&lt;/p&gt; }
+  @case ('success') { &lt;p&gt;Success!&lt;/p&gt; }
+  @case ('error') { &lt;p style="color:crimson"&gt;Error!&lt;/p&gt; }
+  @default { &lt;p&gt;Unknown status&lt;/p&gt; }
+}</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>@switch Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Conditional Rendering with @switch&lt;/h3&gt;
+    &lt;label&gt;
+      Status:
+      &lt;select (change)="status.set($any($event.target).value)"&gt;
+        &lt;option value="loading"&gt;loading&lt;/option&gt;
+        &lt;option value="success"&gt;success&lt;/option&gt;
+        &lt;option value="error"&gt;error&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+
+    @switch (status()) {
+      @case ('loading') { &lt;p&gt;Loading...&lt;/p&gt; }
+      @case ('success') { &lt;p&gt;Success!&lt;/p&gt; }
+      @case ('error') { &lt;p style="color:crimson"&gt;Error!&lt;/p&gt; }
+      @default { &lt;p&gt;Unknown status&lt;/p&gt; }
+    }
+  `
+})
+export class App {
+  status = signal<'loading' | 'success' | 'error' | string>('loading');
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>@switch (status()):</strong> தற்போதைய status signal value-அடிப்படையில் render செய்ய ஒரு case-ஐ தேர்ந்தெடுக்கிறது.</li>
+<li><strong>@case / @default:</strong> Matching @case-ஐ render செய்கிறது; எந்த case-உம் match செய்யாத போது @default-க்கு fallback செய்கிறது.</li>
+<li><strong>Change handler:</strong> Select status.set($any($event.target).value) மூலம் status-ஐ set செய்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Default matters:</strong> Unexpected values-க்கு எப்போதும் @default case வழங்கவும்.</li>
+<li><strong>Stable values:</strong> Predictable matching-க்கு objects-க்கு பதிலாக simple primitives-ல் switch செய்யவும் (e.g., strings).</li>
+</ul>
+</div>
+</section>
+
+<!-- Multi-state with @if -->
+<section class="content-section" id="multi-state">
+<h2>Multi-state with @if</h2>
+<p>Readable multi-state flows-க்கு @if / @else if / @else பயன்படுத்தவும்.</p>
+<p>Component-லிருந்து state transitions-ஐ drive செய்யவும் (e.g., timers, flags) signals மூலம்.</p>
+
+<div class="code-example">
+<h3>Multi-state @if Syntax</h3>
+<pre><code class="command-input">@if (!loading() && !error()) {
+  &lt;p&gt;Content loaded successfully.&lt;/p&gt;
+} @else if (loading()) {
+  &lt;p&gt;Loading...&lt;/p&gt;
+} @else {
+  &lt;p style="color:crimson"&gt;Something went wrong.&lt;/p&gt;
+}</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>Multi-state Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  styles: [`
+    .toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  `],
+  template: `
+    &lt;h3&gt;Multi-state with @if&lt;/h3&gt;
+
+    &lt;div class="toolbar"&gt;
+      &lt;button (click)="startLoading()"&gt;Start Loading&lt;/button&gt;
+      &lt;button (click)="showError()"&gt;Set Error&lt;/button&gt;
+      &lt;button (click)="reset()"&gt;Reset&lt;/button&gt;
+      &lt;span style="margin-left:8px;color:#666"&gt;loading={{ loading() }} error={{ error() }}&lt;/span&gt;
+    &lt;/div&gt;
+
+    @if (!loading() && !error()) {
+      &lt;p&gt;Content loaded successfully.&lt;/p&gt;
+    } @else if (loading()) {
+      &lt;p&gt;Loading...&lt;/p&gt;
+    } @else {
+      &lt;p style="color:crimson"&gt;Something went wrong.&lt;/p&gt;
+    }
+  `
+})
+export class App {
+  loading = signal(false);
+  error = signal(false);
+  private _timer: any;
+
+  startLoading() {
+    this.loading.set(true);
+    this.error.set(false);
+    clearTimeout(this._timer);
+    this._timer = setTimeout(() => {
+      this.loading.set(false);
+    }, 800);
+  }
+  showError() {
+    this.error.set(true);
+    this.loading.set(false);
+  }
+  reset() {
+    this.loading.set(false);
+    this.error.set(false);
+  }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>Multi-branch @if:</strong> loading() மற்றும் error() signals-அடிப்படையில் success, loading, அல்லது error sections-ஐ render செய்கிறது.</li>
+<li><strong>startLoading():</strong> Loading-ஐ true-க்கு set செய்கிறது, error-ஐ clear செய்கிறது, பின்னர் 800ms க்கு பிறகு loading-ஐ off செய்கிறது (async work simulate செய்கிறது).</li>
+<li><strong>showError() / reset():</strong> showError() error-ஐ set செய்து loading-ஐ clear செய்கிறது; reset() இரண்டையும் clear செய்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Readable flows:</strong> Multi-state UIs-க்கு @else if chains-ஐ விரும்பவும்; blocks dynamically reference செய்ய தேவைப்படும் போது மட்டுமே named templates பயன்படுத்தவும்.</li>
+<li><strong>Avoid flicker:</strong> Component-லிருந்து state-ஐ drive செய்யவும்; transitions-ல் UI flicker prevent செய்ய timers மற்றும் async work clear செய்யவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Exercise</h2>
+<div class="exercise-box">
+<h4><i class="fas fa-question-circle exercise-icon"></i> Which control flow syntax conditionally adds or removes elements from the DOM?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">@if</div>
+<div class="option-feedback correct">✓ Correct! @if syntax conditionally elements-ஐ DOM-இலிருந்து add அல்லது remove செய்கிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">@for</div>
+<div class="option-feedback incorrect">✗ Incorrect! @if என்பது iteration-க்கு பயன்படுகிறது, conditional rendering-க்கு அல்ல</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">[hidden]</div>
+<div class="option-feedback incorrect">✗ Incorrect! [hidden] element-ஐ CSS மூலம் மறைக்கிறது ஆனால் DOM-இலிருந்து remove செய்யாது</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular Events.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Lists.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">Conditional Rendering Introduction</a></li>
+<li><a href="#basic-conditional">Basic Conditional</a></li>
+<li><a href="#switch-section">@switch</a></li>
+<li><a href="#multi-state">Multi-state with @if</a></li>
+<li><a href="#exercise">Exercise</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contact</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Location &amp; Hours</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

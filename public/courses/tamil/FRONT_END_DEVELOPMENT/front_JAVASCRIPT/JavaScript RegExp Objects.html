@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript RegExp Objects - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20RegExp%20Patterns.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="RegExp%20Methods.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript RegExp Objects</h2>
+            <p>RegExp பொருள்களைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- The RegExp Object -->
+        <section class="content-section" id="regexp-object">
+            <h2>RegExp பொருள்</h2>
+            
+            <p>JavaScript இல், RegExp என்பது முன்வரையறுக்கப்பட்ட பண்புகள் மற்றும் முறைகளுடன் கூடிய ஒரு வழக்கமான வெளிப்பாட்டு பொருள்.</p>
+        </section>
+
+        <!-- Using test() -->
+        <section class="content-section" id="test-method">
+            <h2>test() பயன்படுத்துதல்</h2>
+            
+            <p>test() முறை ஒரு RegExp வெளிப்பாடு முறை.</p>
+            
+            <p>இது ஒரு சரத்தில் ஒரு முறையைத் தேடுகிறது, முடிவைப் பொறுத்து true அல்லது false ஐ வழங்குகிறது.</p>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு ஒரு சரத்தில் "e" எழுத்தைத் தேடுகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>const pattern = /e/;
+pattern.test("The best things in life are free!");</code></pre>
+            </div>
+            
+            <p>சரத்தில் "e" இருப்பதால், மேலே உள்ள குறியீட்டின் வெளியீடு:</p>
+            
+            <div class="code-example">
+                <pre><code>true</code></pre>
+            </div>
+            
+            <p>நீங்கள் வழக்கமான வெளிப்பாட்டை முதலில் ஒரு மாறியில் வைக்க வேண்டியதில்லை. மேலே உள்ள இரண்டு வரிகள் ஒன்றாக குறுக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>/e/.test("The best things in life are free!");</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> test() முறை பயன்பாடுகள்:</h4>
+                <ul>
+                    <li>உள்ளீட்டு சரிபார்ப்பு (மின்னஞ்சல், தொலைபேசி எண் போன்றவை)</li>
+                    <li>சரத்தில் ஒரு முறை உள்ளதா என சோதித்தல்</li>
+                    <li>நிபந்தனை சோதனைகள்</li>
+                    <li>படிவ சரிபார்ப்பு</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Using exec() -->
+        <section class="content-section" id="exec-method">
+            <h2>exec() பயன்படுத்துதல்</h2>
+            
+            <p>exec() முறை ஒரு RegExp வெளிப்பாடு முறை.</p>
+            
+            <p>இது ஒரு சரத்தில் குறிப்பிட்ட முறையைத் தேடுகிறது, மற்றும் கண்டுபிடிக்கப்பட்ட உரையை ஒரு பொருளாக வழங்குகிறது.</p>
+            
+            <p>பொருத்தம் காணப்படவில்லை என்றால், இது வெற்று (null) பொருளை வழங்குகிறது.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>பின்வரும் எடுத்துக்காட்டு ஒரு சரத்தில் "e" எழுத்தைத் தேடுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>/e/.exec("The best things in life are free!");</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔍</span> exec() vs test():</h4>
+                <ul>
+                    <li><strong>test()</strong>: பொருத்தம் உள்ளதா என்பதை மட்டும் சோதிக்கிறது (true/false)</li>
+                    <li><strong>exec()</strong>: பொருத்தத்தின் விவரங்களை வழங்குகிறது (இடம், குழுக்கள் போன்றவை)</li>
+                    <li><strong>test()</strong> வேகமானது, பூலியன் முடிவு மட்டும் தேவைப்படும் போது</li>
+                    <li><strong>exec()</strong> பொருத்த விவரங்கள் தேவைப்படும் போது</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Detailed exec() Example -->
+        <section class="content-section" id="detailed-exec">
+            <h2>விரிவான exec() எடுத்துக்காட்டு</h2>
+            
+            <div class="code-example">
+                <pre><code>const pattern = /\b\w+\b/g;
+let text = "Hello Jassif Team";
+let result;
+
+while ((result = pattern.exec(text)) !== null) {
+  console.log(`Found: ${result[0]} at position: ${result.index}`);
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> exec() வெளியீடு:</h4>
+                <p>exec() பின்வரும் பண்புகளைக் கொண்ட ஒரு வரிசையை வழங்குகிறது:</p>
+                <ul>
+                    <li><code>[0]</code>: முழு பொருத்தம்</li>
+                    <li><code>[1]</code>, <code>[2]</code>, ...: குழு பொருத்தங்கள்</li>
+                    <li><code>index</code>: பொருத்தம் தொடங்கும் குறியீடு</li>
+                    <li><code>input</code>: அசல் உள்ளீட்டு சரம்</li>
+                    <li><code>groups</code>: பெயரிடப்பட்ட குழுக்களின் பொருள்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- The RegExp.escape() Method -->
+        <section class="content-section" id="escape-method">
+            <h2>RegExp.escape() முறை</h2>
+            
+            <p>RegExp.escape() முறை வழக்கமான வெளிப்பாடு தொடரியலுக்கு சொந்தமான எழுத்துகள் தப்பிக்கப்பட்ட ஒரு சரத்தை வழங்குகிறது.</p>
+            
+            <p>இது +, *, ?, ^, $, (, ), [, ], {, }, |, மற்றும் \ போன்ற எழுத்துகளை உண்மையில் சிகிச்சையளிக்கவும், ஒரு வழக்கமான வெளிப்பாட்டின் ஒரு பகுதியாக அல்லவும் செய்கிறது.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"[*]" சரத்தை பொருத்தும் ஒரு வழக்கமான வெளிப்பாட்டை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>// ஒரு வழக்கமான வெளிப்பாடாகப் பயன்படுத்த உரையை தப்பிக்கவும்
+const safe = RegExp.escape("[*]");
+
+// புதிய வழக்கமான வெளிப்பாட்டை உருவாக்கவும்
+const regex = new RegExp(safe);
+
+// மாற்ற வேண்டிய உரை
+const oldText = "[*] is a web school.";
+
+// மாற்றீட்டை செயல்படுத்தவும்
+const newText = oldText.replace(regex, "Jassif Team");</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🛡️</span> RegExp.escape() முக்கியத்துவம்:</h4>
+                <p>பயனர் உள்ளீடு அடிப்படையில் வழக்கமான வெளிப்பாடுகளை உருவாக்கும் போது RegExp.escape() மிகவும் முக்கியமானது. இது:</p>
+                <ul>
+                    <li>சாத்தியமான ரெக்ஸ் இன்ஜெக்ஷன் தாக்குதல்களைத் தடுக்கிறது</li>
+                    <li>சிறப்பு எழுத்துகள் உண்மையில் பொருள்படுவதை உறுதிசெய்கிறது</li>
+                    <li>மிகவும் பாதுகாப்பான குறியீட்டை எழுத உதவுகிறது</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2>உலாவி ஆதரவு</h2>
+            
+            <p>RegExp.escape() ஒரு ES2025 அம்சம்.</p>
+            
+            <p>JavaScript 2025 மே 2025 முதல் அனைத்து நவீன உலாவிகளிலும் முழுமையாக ஆதரிக்கப்படுகிறது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <tr>
+                        <th>உலாவி</th>
+                        <th>பதிப்பு</th>
+                        <th>தேதி</th>
+                    </tr>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>136</td>
+                        <td>ஏப்ரல் 2025</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>136</td>
+                        <td>ஏப்ரல் 2025</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>129</td>
+                        <td>ஆகஸ்ட் 2024</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>18.2</td>
+                        <td>டிசம்பர் 2024</td>
+                    </tr>
+                    <tr>
+                        <td>Opera</td>
+                        <td>120</td>
+                        <td>மே 2025</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> பின்னணி ஆதரவு:</h4>
+                <p>பழைய உலாவிகளுக்கு RegExp.escape() கிடைக்கவில்லை என்றால், நீங்கள் உங்கள் சொந்த தப்பிப்பு செயல்பாட்டை எழுதலாம்:</p>
+                <div class="code-example">
+                    <pre><code>function regexEscape(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- RegExp Object Properties -->
+        <section class="content-section" id="regexp-properties">
+            <h2>RegExp பொருள் பண்புகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h4>global</h4>
+                    <p>/g கொடி அமைக்கப்பட்டுள்ளதா என சோதிக்கிறது</p>
+                    <div class="code-example">
+                        <pre><code>const regex = /test/g;
+console.log(regex.global); // true</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-eye-slash"></i>
+                    </div>
+                    <h4>ignoreCase</h4>
+                    <p>/i கொடி அமைக்கப்பட்டுள்ளதா என சோதிக்கிறது</p>
+                    <div class="code-example">
+                        <pre><code>const regex = /test/i;
+console.log(regex.ignoreCase); // true</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-align-left"></i>
+                    </div>
+                    <h4>multiline</h4>
+                    <p>/m கொடி அமைக்கப்பட்டுள்ளதா என சோதிக்கிறது</p>
+                    <div class="code-example">
+                        <pre><code>const regex = /test/m;
+console.log(regex.multiline); // true</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>source</h4>
+                    <p>வழக்கமான வெளிப்பாட்டின் மூல உரை</p>
+                    <div class="code-example">
+                        <pre><code>const regex = /test/gi;
+console.log(regex.source); // "test"</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>மின்னஞ்சல் சரிபார்ப்பு</h4>
+                    </div>
+                    <div class="code-example">
+                        <pre><code>function isValidEmail(email) {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+}
+
+console.log(isValidEmail("user@jassifteam.com")); // true</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>பாதுகாப்பான தேடல்</h4>
+                    </div>
+                    <div class="code-example">
+                        <pre><code>function safeSearch(text, searchTerm) {
+  // சிறப்பு எழுத்துகளை தப்பிக்கவும்
+  const escaped = RegExp.escape(searchTerm);
+  const pattern = new RegExp(escaped, 'gi');
+  return pattern.test(text);
+}
+
+console.log(safeSearch("Test [special]", "[special]")); // true</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-filter"></i>
+                        <h4>தரவு பிரித்தெடுத்தல்</h4>
+                    </div>
+                    <div class="code-example">
+                        <pre><code>function extractEmails(text) {
+  const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+  return text.match(emailPattern) || [];
+}
+
+const text = "Contact: info@jassifteam.com or support@example.com";
+console.log(extractEmails(text)); // ["info@jassifteam.com", "support@example.com"]</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>டைனமிக் பேட்டர்ன்</h4>
+                    </div>
+                    <div class="code-example">
+                        <pre><code>function createSearchPattern(keywords) {
+  // ஒவ்வொரு முக்கிய வார்த்தையையும் தப்பிக்கவும்
+  const escapedKeywords = keywords.map(k => RegExp.escape(k));
+  // OR ஆபரேட்டருடன் இணைக்கவும்
+  const patternStr = escapedKeywords.join('|');
+  return new RegExp(patternStr, 'gi');
+}
+
+const pattern = createSearchPattern(["test", "example", "demo"]);
+console.log(pattern.test("This is a test example")); // true</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- See Also Section -->
+        <section class="content-section" id="see-also">
+            <h2>மேலும் அறிய</h2>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📚</span> Jassif Team குறிப்பு:</h4>
+                <p>
+                <ul>
+                    <li>JavaScript RegExp டுடோரியல்</li>
+                    <li>JavaScript RegExp கொடிகள்</li>
+                    <li>JavaScript RegExp எழுத்து வகுப்புகள்</li>
+                    <li>JavaScript RegExp மெட்டாஎழுத்துகள்</li>
+                    <li>JavaScript RegExp உறுதிப்படுத்தல்கள்</li>
+                    <li>JavaScript RegExp அளவீடுகள்</li>
+                    <li>JavaScript RegExp முறைகள்</li>
+                </ul>
+                </p>
+            </div>
+        </section>
+
+        <!-- Single Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>RegExp பொருள்கள் பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> ஒரு சரத்தில் ஒரு முறை உள்ளதா இல்லையா என சோதிக்க பின்வரும் எந்த RegExp முறை பயன்படுத்தப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">RegExp.exec()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! exec() பொருத்த விவரங்களை வழங்குகிறது, ஆனால் பூலியன் முடிவு மட்டுமே தேவைப்படும் போது test() பயன்படுத்தப்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">RegExp.test()</div>
+                            <div class="option-feedback correct">✓ சரி! test() முறை ஒரு சரத்தில் ஒரு முறை உள்ளதா இல்லையா என சோதிக்க பயன்படுகிறது மற்றும் true/false முடிவை வழங்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">RegExp.escape()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! escape() முறை சிறப்பு எழுத்துகளை தப்பிக்க பயன்படுகிறது, சரத்தில் முறை உள்ளதா என சோதிக்க அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">RegExp.match()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! match() ஒரு String முறை, RegExp முறை அல்ல. மேலும் இது பொருத்தங்களின் வரிசையை வழங்குகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20RegExp%20Patterns.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="RegExp%20Methods.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#regexp-object">RegExp பொருள்</a></li>
+                    <li><a href="#test-method">test() முறை</a></li>
+                    <li><a href="#exec-method">exec() முறை</a></li>
+                    <li><a href="#detailed-exec">விரிவான exec()</a></li>
+                    <li><a href="#escape-method">escape() முறை</a></li>
+                    <li><a href="#browser-support">உலாவி ஆதரவு</a></li>
+                    <li><a href="#regexp-properties">RegExp பண்புகள்</a></li>
+                    <li><a href="#practical-examples">நடைமுறை எடுத்துக்காட்டுகள்</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

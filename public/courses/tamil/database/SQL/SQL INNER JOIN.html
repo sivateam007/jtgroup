@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL INNER JOIN - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL Joins.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL LEFT JOIN Keyword.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL INNER JOIN</h2>
+            <p>இரண்டு அட்டவணைகளிலும் பொருந்தக்கூடிய மதிப்புகளைக் கொண்ட பதிவுகளைத் தேர்ந்தெடுக்க INNER JOIN பற்றி அறிந்து கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is INNER JOIN -->
+        <section class="content-section" id="what-is-inner-join">
+            <h2>INNER JOIN என்றால் என்ன?</h2>
+            
+            <p>INNER JOIN keyword இரண்டு அட்டவணைகளிலும் பொருந்தக்கூடிய மதிப்புகளைக் கொண்ட பதிவுகளைத் தேர்ந்தெடுக்கிறது.</p>
+            
+            <p>Products அட்டவணையில் இருந்து ஒரு தேர்வைப் பார்ப்போம்:</p>
+            
+            <div class="code-example">
+                <h3>Products அட்டவணை</h3>
+                <pre><code>+-----------+----------------+------------+-------+
+| ProductID | ProductName    | CategoryID | Price |
++-----------+----------------+------------+-------+
+| 1         | Chais          | 1          | 18    |
+| 2         | Chang          | 1          | 19    |
+| 3         | Aniseed Syrup  | 2          | 10    |
++-----------+----------------+------------+-------+</code></pre>
+            </div>
+            
+            <p>மற்றும் Categories அட்டவணையில் இருந்து ஒரு தேர்வைப் பார்ப்போம்:</p>
+            
+            <div class="code-example">
+                <h3>Categories அட்டவணை</h3>
+                <pre><code>+------------+----------------+----------------------------------------------------+
+| CategoryID | CategoryName   | Description                                        |
++------------+----------------+----------------------------------------------------+
+| 1          | Beverages      | Soft drinks, coffees, teas, beers, and ales        |
+| 2          | Condiments     | Sweet and savory sauces, relishes, spreads, etc.   |
+| 3          | Confections    | Desserts, candies, and sweet breads                |
++------------+----------------+----------------------------------------------------+</code></pre>
+            </div>
+            
+            <p>நாம் Products அட்டவணையை Categories அட்டவணையுடன் இணைப்போம், இரண்டு அட்டவணைகளில் இருந்தும் CategoryID புலத்தைப் பயன்படுத்தி:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>Products மற்றும் Categories-ஐ INNER JOIN keyword-ஐப் பயன்படுத்தி இணைக்கவும்:</p>
+                <pre><code class="command-input">SELECT ProductID, ProductName, CategoryName
+FROM Products
+INNER JOIN Categories ON Products.CategoryID = Categories.CategoryID;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> குறிப்பு:</h4>
+                <p>INNER JOIN keyword பொருந்தக்கூடிய மதிப்புகளைக் கொண்ட வரிசைகளை மட்டுமே தரும். அதாவது உங்களிடம் CategoryID இல்லாத ஒரு பொருள் இருந்தால், அல்லது Categories அட்டவணையில் இல்லாத CategoryID-ஐக் கொண்ட ஒரு பொருள் இருந்தால், அந்தப் பதிவு முடிவில் திரும்பப் பெறப்படாது.</p>
+            </div>
+        </section>
+
+        <!-- Syntax -->
+        <section class="content-section" id="syntax">
+            <h2>தொடரியல்</h2>
+            
+            <div class="code-example">
+                <pre><code class="command-input">SELECT column_name(s)
+FROM table1
+INNER JOIN table2
+ON table1.column_name = table2.column_name;</code></pre>
+            </div>
+        </section>
+
+        <!-- Naming the Columns -->
+        <section class="content-section" id="naming-columns">
+            <h2>நெடுவரிசைகளுக்குப் பெயரிடுதல்</h2>
+            
+            <p>SQL statement-ல் நெடுவரிசைகளைக் குறிப்பிடும் போது அட்டவணைப் பெயரைச் சேர்ப்பது ஒரு நல்ல பழக்கமாகும்.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>அட்டவணைப் பெயர்களைக் குறிப்பிடவும்:</p>
+                <pre><code class="command-input">SELECT Products.ProductID, Products.ProductName, Categories.CategoryName
+FROM Products
+INNER JOIN Categories ON Products.CategoryID = Categories.CategoryID;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> குறிப்பு:</h4>
+                <p>மேலே உள்ள உதாரணம் அட்டவணைப் பெயர்களைக் குறிப்பிடாமல் வேலை செய்கிறது, ஏனெனில் குறிப்பிடப்பட்ட நெடுவரிசைப் பெயர்கள் எதுவும் இரண்டு அட்டவணைகளிலும் இல்லை. நீங்கள் SELECT statement-ல் CategoryID-ஐச் சேர்க்க முயற்சித்தால், நீங்கள் அட்டவணைப் பெயரைக் குறிப்பிடாவிட்டால் பிழை கிடைக்கும் (CategoryID இரண்டு அட்டவணைகளிலும் இருப்பதால்).</p>
+            </div>
+        </section>
+
+        <!-- JOIN or INNER JOIN -->
+        <section class="content-section" id="join-vs-innerjoin">
+            <h2>JOIN அல்லது INNER JOIN</h2>
+            
+            <p>JOIN மற்றும் INNER JOIN ஒரே முடிவைத் தரும்.</p>
+            
+            <p>INNER என்பது JOIN-க்கான இயல்புநிலை join வகை, எனவே நீங்கள் JOIN என்று எழுதும் போது, parser உண்மையில் INNER JOIN என்று எழுதுகிறது.</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <p>JOIN என்பது INNER JOIN-க்கு சமமானது:</p>
+                <pre><code class="command-input">SELECT Products.ProductID, Products.ProductName, Categories.CategoryName
+FROM Products
+JOIN Categories ON Products.CategoryID = Categories.CategoryID;</code></pre>
+            </div>
+        </section>
+
+        <!-- JOIN Three Tables -->
+        <section class="content-section" id="join-three-tables">
+            <h2>மூன்று அட்டவணைகளை JOIN செய்தல்</h2>
+            
+            <p>பின்வரும் SQL statement வாடிக்கையாளர் மற்றும் ஷிப்பர் தகவல்களுடன் அனைத்து ஆர்டர்களையும் தேர்ந்தெடுக்கிறது:</p>
+            
+            <p>இங்கே Shippers அட்டவணை உள்ளது:</p>
+            
+            <div class="code-example">
+                <h3>Shippers அட்டவணை</h3>
+                <pre><code>+-----------+-------------------+------------------+
+| ShipperID | ShipperName       | Phone            |
++-----------+-------------------+------------------+
+| 1         | Speedy Express    | (503) 555-9831   |
+| 2         | United Package    | (503) 555-3199   |
+| 3         | Federal Shipping  | (503) 555-9931   |
++-----------+-------------------+------------------+</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+FROM ((Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> புரிதல்:</h4>
+                <p>இந்த உதாரணம் மூன்று அட்டவணைகளை எவ்வாறு இணைக்க வேண்டும் என்பதைக் காட்டுகிறது. முதலில் Orders மற்றும் Customers இணைக்கப்படுகின்றன, பின்னர் அந்த முடிவு Shippers அட்டவணையுடன் இணைக்கப்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Visual Representation -->
+        <section class="content-section" id="visual-representation">
+            <h2>INNER JOIN காட்சிப் பிரதிநிதித்துவம்</h2>
+            
+            <div class="visual-container">
+                <div class="tables-comparison">
+                    <div class="table-box">
+                        <h4>Products அட்டவணை</h4>
+                        <div class="table-data">
+                            <div class="table-row header">
+                                <div>ProductID</div>
+                                <div>ProductName</div>
+                                <div>CategoryID</div>
+                            </div>
+                            <div class="table-row">
+                                <div>1</div>
+                                <div>Chais</div>
+                                <div class="match">1</div>
+                            </div>
+                            <div class="table-row">
+                                <div>2</div>
+                                <div>Chang</div>
+                                <div class="match">1</div>
+                            </div>
+                            <div class="table-row">
+                                <div>3</div>
+                                <div>Aniseed Syrup</div>
+                                <div class="match">2</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="join-arrow">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>INNER JOIN</span>
+                    </div>
+                    
+                    <div class="table-box">
+                        <h4>Categories அட்டவணை</h4>
+                        <div class="table-data">
+                            <div class="table-row header">
+                                <div>CategoryID</div>
+                                <div>CategoryName</div>
+                            </div>
+                            <div class="table-row">
+                                <div class="match">1</div>
+                                <div>Beverages</div>
+                            </div>
+                            <div class="table-row">
+                                <div class="match">2</div>
+                                <div>Condiments</div>
+                            </div>
+                            <div class="table-row">
+                                <div>3</div>
+                                <div>Confections</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-box">
+                    <h4>INNER JOIN முடிவு</h4>
+                    <div class="table-data">
+                        <div class="table-row header">
+                            <div>ProductID</div>
+                            <div>ProductName</div>
+                            <div>CategoryName</div>
+                        </div>
+                        <div class="table-row">
+                            <div>1</div>
+                            <div>Chais</div>
+                            <div>Beverages</div>
+                        </div>
+                        <div class="table-row">
+                            <div>2</div>
+                            <div>Chang</div>
+                            <div>Beverages</div>
+                        </div>
+                        <div class="table-row">
+                            <div>3</div>
+                            <div>Aniseed Syrup</div>
+                            <div>Condiments</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <p><strong>கவனிக்க:</strong> CategoryID = 3 உள்ள தயாரிப்புகள் இல்லாததால், "Confections" வகை முடிவில் தோன்றாது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> SQL INNER JOIN keyword-ன் நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">இடது அட்டவணையில் இருந்து பொருந்தாத பதிவுகளைத் தர</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது LEFT JOIN-ன் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">வலது அட்டவணையில் இருந்து பொருந்தாத பதிவுகளைத் தர</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது RIGHT JOIN-ன் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">இரண்டு அட்டவணைகளிலும் பொருந்தக்கூடிய மதிப்புகளைக் கொண்ட பதிவுகளை மட்டுமே தேர்ந்தெடுக்க</div>
+                            <div class="option-feedback correct">✓ சரி! INNER JOIN இரண்டு அட்டவணைகளுக்கும் இடையே பொருந்தும் தரவை மட்டுமே தரும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL Joins.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL LEFT JOIN Keyword.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-inner-join">INNER JOIN என்றால் என்ன?</a></li>
+                    <li><a href="#syntax">தொடரியல்</a></li>
+                    <li><a href="#naming-columns">நெடுவரிசைப் பெயர்கள்</a></li>
+                    <li><a href="#join-three-tables">மூன்று அட்டவணைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .visual-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .tables-comparison {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .table-box {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .table-box h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .table-data {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .table-row.header {
+            background: var(--git-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .table-row > div {
+            padding: 0.5rem;
+            text-align: center;
+            border-right: 1px solid #ddd;
+        }
+        
+        .table-row > div:last-child {
+            border-right: none;
+        }
+        
+        .table-row.header > div {
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .match {
+            background: rgba(46, 204, 113, 0.2);
+            font-weight: bold;
+        }
+        
+        .join-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 1rem;
+        }
+        
+        .join-arrow i {
+            font-size: 2rem;
+            color: var(--git-color);
+        }
+        
+        .join-arrow span {
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .result-box {
+            margin-bottom: 1rem;
+        }
+        
+        .result-box h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .explanation {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .explanation p {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        /* Exercise Styles */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .tables-comparison {
+                flex-direction: column;
+            }
+            
+            .join-arrow {
+                flex-direction: row;
+                padding: 1rem 0;
+            }
+            
+            .table-box {
+                width: 100%;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .table-row {
+                grid-template-columns: 1fr 1fr 1fr;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .table-row {
+                grid-template-columns: 1fr 1fr 1fr;
+                font-size: 0.7rem;
+            }
+            
+            .table-row > div {
+                padding: 0.3rem;
+            }
+            
+            .visual-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

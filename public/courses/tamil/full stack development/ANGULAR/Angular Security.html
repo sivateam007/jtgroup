@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Security - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20Testing.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20SSR%20Hydration.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Security</h2>
+<p>Angular பாதுகாப்பு அம்சங்களைக் கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Security</h2>
+<p>Angular டெம்ப்ளேட் பைண்டிங்களைத் தூய்மைப்படுத்துவதன் மூலம் XSS-க்கு எதிராக பாதுகாக்கிறது.</p>
+</section>
+
+<!-- Security Essentials -->
+<section class="content-section" id="essentials">
+<h2>பாதுகாப்பு அத்தியாவசியங்கள்</h2>
+<p><strong>XSS பாதுகாப்பு:</strong> Angular ஸ்கிரிப்ட் ஊசி போடுவதைத் தடுக்க டெம்ப்ளேட் பைண்டிங்களைத் தூய்மைப்படுத்துகிறது.</p>
+<p><strong>தூய்மைப்படுத்தல்:</strong> ஆபத்தான மதிப்புகள் DOM-க்கு எழுதுவதற்கு முன் நீக்கப்படுகின்றன அல்லது மாற்றப்படுகின்றன.</p>
+<p><strong>பண்பு பைண்டிங்:</strong> URLs/HTML-க்கு சரம் இணைப்புகளை விட property bindings பயன்படுத்தவும்.</p>
+<p><strong>தவிர்க்க:</strong> DomSanitizer-ஐ audit செய்யப்பட்ட, அரிதான சந்தர்ப்பங்களில் மட்டுமே பயன்படுத்தவும்.</p>
+
+<div class="code-example">
+<h3>Angular தூய்மைப்படுத்தல்</h3>
+<pre><code>// Angular sanitizes [innerHTML], [href], [src]
+@Component({ template: `&lt;div [innerHTML]="html"&gt;&lt;/div&gt;` })
+class C { html = '&lt;b&gt;Hello&lt;/b&gt; &lt;script&gt;alert(1)&lt;/script&gt;'; }</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">🔒</span>Jassif Team பாதுகாப்பு குறிப்புகள்:</h4>
+<p>HTTP மற்றும் டெம்ப்ளேட்டுகள் பற்றி காண்க.</p>
+<p>[href]/[src]/[innerHTML] உடன் bind செய்யவும் மற்றும் Angular தூய்மைப்படுத்த அனுமதிக்கவும்.</p>
+<p>DomSanitizer-ஐ audit செய்யப்பட்ட, அரிதான சந்தர்ப்பங்களில் மட்டுமே பயன்படுத்தவும்.</p>
+</div>
+</section>
+
+<!-- Sanitization Basics -->
+<section class="content-section" id="sanitization-basics">
+<h2>தூய்மைப்படுத்தல் அடிப்படைகள்</h2>
+<div class="code-example">
+<h3>தூய்மைப்படுத்தலுடன் பண்பு பைண்டிங்</h3>
+<pre><code>// Property binding runs the sanitizer
+&lt;img [src]="photoUrl" alt="..."&gt;
+&lt;a [href]="profileUrl"&gt;Profile&lt;/a&gt;</code></pre>
+</div>
+
+<div class="code-example">
+<h3>முழுமையான எடுத்துக்காட்டு</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    &lt;h3&gt;Sanitized HTML&lt;/h3&gt;
+    &lt;div [innerHTML]="html"&gt;&lt;/div&gt;
+  `
+})
+class App {
+  html = `Hello &lt;script&gt;alert('xss')&lt;/script&gt;`;
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">⚠️</span>எடுத்துக்காட்டு விளக்கம்:</h4>
+<p><strong>[innerHTML]:</strong> Angular bound HTML-ஐ தூய்மைப்படுத்துகிறது, ஆபத்தான உள்ளடக்கத்தை (எ.கா., ஸ்கிரிப்ட்கள்) நீக்குகிறது.</p>
+<p><strong>Property bindings:</strong> தூய்மைப்படுத்தி இயங்குவதற்கு [innerHTML]/[href]/[src] பயன்படுத்தவும்.</p>
+<p><strong>Interpolation:</strong> {{ ... }} முன்னிருப்பாக HTML-ஐ escape செய்கிறது; பாதுகாப்பான HTML செருகுவதற்கு bindings பயன்படுத்தவும்.</p>
+</div>
+
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-shield-alt"></i>
+<h4>முக்கிய பாதுகாப்பு புள்ளிகள்</h4>
+</div>
+<p>Angular [innerHTML], [src], மற்றும் [href] க்கு bind செய்யப்பட்ட மதிப்புகளைத் தூய்மைப்படுத்துகிறது.</p>
+<p>HTML/URLs-க்கு சரம் இணைப்புகளைத் தவிர்க்கவும்.</p>
+<p>தூய்மைப்படுத்தி இயங்குவதற்கு property bindings பயன்படுத்தவும்.</p>
+<p>தூய்மைப்படுத்தியைத் தவிர்க்க தவிர்க்கவும்; பாதுகாப்பான தரவு ஓட்டம் மற்றும் டெம்ப்ளேட்டுகளைப் பயன்படுத்தவும்.</p>
+</div>
+</div>
+</section>
+
+<!-- Safe DOM APIs -->
+<section class="content-section" id="safe-dom-apis">
+<h2>பாதுகாப்பான DOM APIs</h2>
+<p>தூய்மைப்படுத்தி இயங்குவதை உறுதிப்படுத்த URLs மற்றும் HTML-க்கு property bindings பயன்படுத்தவும்.</p>
+<p>DomSanitizer.bypassSecurityTrust*-ன் எந்தப் பயன்பாட்டையும் audit செய்யவும்; நோக்கம் மற்றும் காரணத்தை ஆவணப்படுத்தவும்.</p>
+<p>சிறிய utilities-இல் encapsulated, சோதனை செய்யப்பட்ட, நிலையான உள்ளடக்க பாதைகளுக்கு மட்டுமே bypass-ஐ வரம்பிடவும்.</p>
+
+<div class="code-example">
+<h3>DomSanitizer பயன்பாடு</h3>
+<pre><code>import { DomSanitizer } from '@angular/platform-browser';
+
+// Use: [href]="safeUrl" with validated values
+// Avoid bypass unless strictly necessary and audited:
+// const safe = sanitizer.bypassSecurityTrustUrl(untrusted);</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🚨</span>பாதுகாப்பு வழிகாட்டுதல்கள்:</h4>
+<p><strong>கடக்க வேண்டாம்</strong> விசுவாசமற்ற/பயனர் உள்ளீட்டை bypassSecurityTrust* க்கு.</p>
+<p><strong>மட்டுமே bypass செய்யவும்</strong> சோதனை செய்யப்பட்ட, நிலையான மூலங்களுக்கு; கருத்துகளுடன் ஒரு சிறிய utility-இல் encapsulated செய்யவும்.</p>
+<p><strong>Content Security Policy (CSP) ஐ செயல்படுத்தவும்;</strong> வலுவான XSS பாதுகாப்புக்கு Trusted Types ஐக் கருத்தில் கொள்ளவும்.</p>
+</div>
+
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-check-circle"></i>
+<div>
+<strong>பரிந்துரைக்கப்படுகிறது:</strong> பாதுகாப்புக்காக Angular-ன் உள்ளமைக்கப்பட்ட தூய்மைப்படுத்தலைப் பயன்படுத்தவும்
+</div>
+</div>
+<div class="practice-item negative">
+<i class="fas fa-times-circle"></i>
+<div>
+<strong>தவிர்க்க:</strong> விசுவாசமற்ற பயனர் உள்ளீட்டுடன் DomSanitizer bypass செய்தல்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-lock"></i>
+<div>
+<strong>அத்தியாவசியம்:</strong> உங்கள் பயன்பாட்டில் Content Security Policy (CSP) ஐச் செயல்படுத்தவும்
+</div>
+</div>
+</div>
+</section>
+
+<!-- Security Comparison -->
+<section class="content-section" id="security-comparison">
+<h2>பாதுகாப்பு சிறந்த நடைமுறைகள்</h2>
+<div class="comparison-table">
+<table>
+<thead>
+<tr>
+<th>நடைமுறை</th>
+<th>பாதுகாப்பான அணுகுமுறை</th>
+<th>ஆபத்து</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HTML பைண்டிங்</strong></td>
+<td>தூய்மைப்படுத்தலுடன் [innerHTML]</td>
+<td>XSS தாக்குதல்கள்</td>
+</tr>
+<tr>
+<td><strong>URL பைண்டிங்</strong></td>
+<td>[href]/[src] property binding</td>
+<td>JavaScript URL injection</td>
+</tr>
+<tr>
+<td><strong>பயனர் உள்ளீடு</strong></td>
+<td>எப்போதும் தூய்மைப்படுத்து/சரிபார்க்கவும்</td>
+<td>குறியீடு injection</td>
+</tr>
+<tr>
+<td><strong>DOM கையாளுதல்</strong></td>
+<td>Angular டெம்ப்ளேட்டுகள்</td>
+<td>நேரடி DOM கையாளுதல் ஆபத்துகள்</td>
+</tr>
+<tr>
+<td><strong>CSP</strong></td>
+<td>Content Security Policy ஐ செயல்படுத்தவும்</td>
+<td>பல தாக்குதல் திசைகள்</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>பாதுகாப்பு அறிவு சரிபார்ப்பு</h2>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>Angular-ன் உள்ளமைக்கப்பட்ட தூய்மைப்படுத்தல் முதன்மையாக எந்த அச்சுறுத்தலைக் குறைக்கிறது?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">XSS (குறுக்கு தள ஸ்கிரிப்டிங்)</div>
+<div class="option-feedback correct">✓ சரி! Angular-ன் தூய்மைப்படுத்தல் பைண்டிங்களிலிருந்து ஆபத்தான உள்ளடக்கத்தை தூய்மைப்படுத்துவதன் மூலம் XSS தாக்குதல்களுக்கு எதிராக முதன்மையாக பாதுகாக்கிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">CSRF (குறுக்கு தள கோரிக்கை போலி)</div>
+<div class="option-feedback incorrect">✗ தவறு! CSRF பாதுகாப்புக்கு டோக்கன்கள் போன்ற வெவ்வேறு வழிமுறைகள் தேவை, தூய்மைப்படுத்தல் அல்ல</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">SQL Injection</div>
+<div class="option-feedback incorrect">✗ தவறு! SQL injection பாதுகாப்பு தரவுத்தள/API மட்டத்தில் நடைபெறுகிறது, Angular டெம்ப்ளேட்டுகளில் அல்ல</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20Testing.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20SSR%20Hydration.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+</div>
+<div class="footer-column">
+<h3>விரைவு இணைப்புகள்</h3>
+<ul>
+<li><a href="#introduction">Angular Security</a></li>
+<li><a href="#essentials">பாதுகாப்பு அத்தியாவசியங்கள்</a></li>
+<li><a href="#sanitization-basics">தூய்மைப்படுத்தல் அடிப்படைகள்</a></li>
+<li><a href="#safe-dom-apis">பாதுகாப்பான DOM APIs</a></li>
+<li><a href="#security-comparison">பாதுகாப்பு சிறந்த நடைமுறைகள்</a></li>
+<li><a href="#exercise">பாதுகாப்பு சரிபார்ப்பு</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>தொடர்பு</h3>
+<ul>
+<li><a href="#">எங்களைப் பற்றி</a></li>
+<li><a href="#">எங்களைத் தொடர்பு கொள்ள</a></li>
+<li><a href="#">இடம் &amp; நேரங்கள்</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>எங்களைப் பின்தொடரவும்</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

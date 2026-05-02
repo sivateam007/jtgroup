@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Response Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Request Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Message Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Response Reference</h2>
+            <p>Node.js இல் HTTP பதில் பொருளைப் பயன்படுத்தி client க்கு தரவைத் திருப்பி அனுப்ப கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- HTTP Response Object -->
+        <section class="content-section" id="response-object">
+            <h2>HTTP பதில் பொருள்</h2>
+            
+            <p>Node.js இல் HTTP பதில் பொருள் (http.ServerResponse) உள்நாட்டில் ஒரு HTTP சேவையகத்தால் உருவாக்கப்படுகிறது, பயனரால் அல்ல. இது 'request' நிகழ்வு callback செயல்பாட்டிற்கு இரண்டாவது அளவுருவாக அனுப்பப்படுகிறது.</p>
+            
+            <p>இந்த பொருள் client க்கு தரவைத் திருப்பி அனுப்ப பயன்படுத்தப்படுகிறது மற்றும் Writable Stream இடைமுகத்தை செயல்படுத்துகிறது. பதில் பொருள் சேவையகம் கோரிக்கை செய்த client க்கு தரவை எவ்வாறு அனுப்புகிறது என்பதாகும்.</p>
+            
+            <h3>பதில் பொருளைப் பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// ஒரு HTTP சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  // 'res' என்பது ServerResponse பொருள்
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World\n');
+});
+
+server.listen(8080, () => {
+  console.log('Server running at http://localhost:8080/');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Response Properties -->
+        <section class="content-section" id="response-properties">
+            <h2>பதில் பண்புகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>response.finished</strong></td>
+                            <td>பதில் முடிந்ததா என்பதைக் குறிக்கும் boolean</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.headersSent</strong></td>
+                            <td>தலைப்புகள் client க்கு அனுப்பப்பட்டதா என்பதைக் குறிக்கும் boolean</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.sendDate</strong></td>
+                            <td>true ஆக இருக்கும் போது, Date தலைப்பு ஏற்கனவே அமைக்கப்படாவிட்டால் தானாகவே உருவாக்கப்பட்டு பதிலில் அனுப்பப்படும். இயல்புநிலை: true</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.statusCode</strong></td>
+                            <td>client க்கு அனுப்பப்படும் நிலை குறியீடு (எ.க., 200, 404, 500)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.statusMessage</strong></td>
+                            <td>client க்கு அனுப்பப்படும் நிலை செய்தி</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.socket</strong></td>
+                            <td>அடிப்படை socket க்கான குறிப்பு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.writableEnded</strong></td>
+                            <td>response.end() அழைக்கப்பட்டதா என்பதைக் குறிக்கும் boolean</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.writableFinished</strong></td>
+                            <td>அனைத்து தரவும் அடிப்படை அமைப்புக்கு flush செய்யப்பட்டதா என்பதைக் குறிக்கும் boolean</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Response Methods -->
+        <section class="content-section" id="response-methods">
+            <h2>பதில் முறைகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>response.addTrailers(headers)</strong></td>
+                            <td>பதிலுக்கு HTTP trailing தலைப்புகளைச் சேர்க்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.cork()</strong></td>
+                            <td>பதிலுக்கு எழுதப்பட்ட தரவை buffer செய்ய கட்டாயப்படுத்துகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.end([data[, encoding]][, callback])</strong></td>
+                            <td>அனைத்து பதில் தலைப்புகள் மற்றும் உடல் அனுப்பப்பட்டுள்ளது என சேவையகத்திற்கு சைகை செய்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.flushHeaders()</strong></td>
+                            <td>பதில் தலைப்புகளை flush செய்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.getHeader(name)</strong></td>
+                            <td>வரிசையில் உள்ள ஆனால் இன்னும் அனுப்பப்படாத வெளிச்செல்லும் தலைப்பின் மதிப்பைப் பெறுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.getHeaderNames()</strong></td>
+                            <td>வெளிச்செல்லும் செய்திக்கு வரிசையில் உள்ள தலைப்புகளின் பெயர்களைக் கொண்ட வரிசையைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.getHeaders()</strong></td>
+                            <td>தற்போதைய வெளிச்செல்லும் தலைப்புகளின் shallow copy ஐத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.hasHeader(name)</strong></td>
+                            <td>name மூலம் அடையாளம் காணப்படும் தலைப்பு தற்போது அமைக்கப்பட்டால் true தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.removeHeader(name)</strong></td>
+                            <td>அனுப்புவதற்கு வரிசையில் உள்ள தலைப்பை அகற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.setHeader(name, value)</strong></td>
+                            <td>தலைப்பு பொருளுக்கு ஒரு தனி தலைப்பு மதிப்பை அமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.setTimeout(msecs[, callback])</strong></td>
+                            <td>socket இன் timeout மதிப்பை அமைக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.uncork()</strong></td>
+                            <td>cork() மூலம் buffer செய்யப்பட்ட தரவை flush செய்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.write(chunk[, encoding][, callback])</strong></td>
+                            <td>பதில் உடலின் ஒரு chunk ஐ அனுப்புகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.writeContinue()</strong></td>
+                            <td>client க்கு HTTP/1.1 100 Continue செய்தியை அனுப்புகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.writeHead(statusCode[, statusMessage][, headers])</strong></td>
+                            <td>கோரிக்கைக்கு ஒரு பதில் தலைப்பை அனுப்புகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>response.writeProcessing()</strong></td>
+                            <td>client க்கு HTTP/1.1 102 Processing செய்தியை அனுப்புகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Basic Response Example -->
+        <section class="content-section" id="basic-response">
+            <h2>அடிப்படை பதில் எடுத்துக்காட்டு</h2>
+            
+            <p>பல்வேறு பதில் முறைகளைப் பயன்படுத்தும் ஒரு அடிப்படை எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// ஒரு HTTP சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  // நிலை குறியீடு மற்றும் செய்தியை அமை
+  res.statusCode = 200;
+  res.statusMessage = 'OK';
+  
+  // தலைப்புகளை அமை
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('X-Powered-By', 'Node.js');
+  
+  // பதில் தகவலை log செய்
+  console.log(`Response status: ${res.statusCode} ${res.statusMessage}`);
+  console.log(`Headers sent: ${res.headersSent}`);
+  
+  // writeHead ஐப் பயன்படுத்தி கூடுதல் தலைப்புகளை அனுப்பு (முன்பு அமைக்கப்பட்டவற்றை மேலெழுதும்)
+  res.writeHead(200, {
+    'Content-Type': 'text/html',
+    'X-Custom-Header': 'Custom Value'
+  });
+  
+  // இப்போது தலைப்புகள் அனுப்பப்பட்டதா எனச் சரிபார்க்கவும்
+  console.log(`Headers sent after writeHead: ${res.headersSent}`);
+  
+  // chunks இல் பதில் உடலை எழுது
+  res.write('<!DOCTYPE html>\n');
+  res.write('<html>\n');
+  res.write('<head><title>Node.js Response Example</title></head>\n');
+  res.write('<body>\n');
+  res.write('  <h1>Hello from Node.js!</h1>\n');
+  res.write('  <p>This response was sent using the ServerResponse object.</p>\n');
+  res.write('</body>\n');
+  res.write('</html>');
+  
+  // பதிலை முடி
+  res.end();
+  
+  // நிறைவு நிலையை log செய்
+  console.log(`Response finished: ${res.finished}`);
+  console.log(`Response writableEnded: ${res.writableEnded}`);
+  console.log(`Response writableFinished: ${res.writableFinished}`);
+});
+
+// சேவையகத்தைத் தொடங்கு
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Setting Response Headers -->
+        <section class="content-section" id="setting-headers">
+            <h2>பதில் தலைப்புகளை அமைத்தல்</h2>
+            
+            <p>பதில் தலைப்புகளை அமைப்பதற்கான வெவ்வேறு வழிகள்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// HTTP சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  // முறை 1: setHeader உடன் தனிப்பட்ட தலைப்புகளை அமை
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', 'max-age=3600');
+  res.setHeader('X-Custom-Header', 'Method 1');
+  
+  // ஒரு தலைப்பு மதிப்பைப் பெறு
+  const contentType = res.getHeader('Content-Type');
+  console.log(`Content-Type header: ${contentType}`);
+  
+  // ஒரு தலைப்பு உள்ளதா எனச் சரிபார்க்கவும்
+  console.log(`Has Cache-Control header: ${res.hasHeader('Cache-Control')}`);
+  
+  // அனைத்து தலைப்பு பெயர்களையும் பெறு
+  console.log('Header names:', res.getHeaderNames());
+  
+  // பொருளாக அனைத்து தலைப்புகளையும் பெறு
+  console.log('All headers:', res.getHeaders());
+  
+  // ஒரு தலைப்பை அகற்று
+  res.removeHeader('X-Custom-Header');
+  console.log(`After removal, has X-Custom-Header: ${res.hasHeader('X-Custom-Header')}`);
+  
+  // முறை 2: writeHead உடன் பல தலைப்புகளை அமை
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
+    'X-Custom-Header': 'Method 2',
+    'X-Powered-By': 'Node.js'
+  });
+  
+  // JSON பதிலை அனுப்பு
+  const responseObject = {
+    message: 'Headers demonstration',
+    headers: Object.fromEntries(
+      Object.entries(res.getHeaders())
+    ),
+    headersSent: res.headersSent
+  };
+  
+  res.end(JSON.stringify(responseObject, null, 2));
+});
+
+// சேவையகத்தைத் தொடங்கு
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- HTTP Status Codes -->
+        <section class="content-section" id="status-codes">
+            <h2>HTTP நிலை குறியீடுகள்</h2>
+            
+            <p>வெவ்வேறு HTTP நிலை குறியீடுகளை அமைத்தல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const url = require('url');
+
+// வெவ்வேறு நிலை குறியீடுகளை நிரூபிக்கும் HTTP சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  // கோரிக்கை URL ஐ parse செய்
+  const parsedUrl = url.parse(req.url, true);
+  const path = parsedUrl.pathname;
+  
+  // Content-Type தலைப்பை அமை
+  res.setHeader('Content-Type', 'text/html');
+  
+  // வெவ்வேறு பாதைகளை வெவ்வேறு நிலை குறியீடுகளுடன் கையாளவும்
+  if (path === '/') {
+    // 200 OK
+    res.writeHead(200, 'OK');
+    res.end(`
+      <h1>HTTP Status Codes Demo</h1>
+      <p>This page demonstrates different HTTP status codes.</p>
+      <ul>
+        <li><a href="/">200 OK (this page)</a></li>
+        <li><a href="/redirect">301 Moved Permanently</a></li>
+        <li><a href="/not-modified">304 Not Modified</a></li>
+        <li><a href="/bad-request">400 Bad Request</a></li>
+        <li><a href="/unauthorized">401 Unauthorized</a></li>
+        <li><a href="/forbidden">403 Forbidden</a></li>
+        <li><a href="/not-found">404 Not Found</a></li>
+        <li><a href="/server-error">500 Internal Server Error</a></li>
+      </ul>
+    `);
+  }
+  else if (path === '/redirect') {
+    // 301 Moved Permanently
+    res.writeHead(301, {
+      'Location': '/'
+    });
+    res.end();
+  }
+  else if (path === '/not-modified') {
+    // 304 Not Modified
+    res.writeHead(304);
+    res.end();
+  }
+  else if (path === '/bad-request') {
+    // 400 Bad Request
+    res.writeHead(400, 'Bad Request');
+    res.end(`
+      <h1>400 Bad Request</h1>
+      <p>The server could not understand the request due to invalid syntax.</p>
+      <p><a href="/">Go back to home</a></p>
+    `);
+  }
+  else if (path === '/unauthorized') {
+    // 401 Unauthorized
+    res.writeHead(401, {
+      'WWW-Authenticate': 'Basic realm="Access to the site"'
+    });
+    res.end(`
+      <h1>401 Unauthorized</h1>
+      <p>Authentication is required but was not provided.</p>
+      <p><a href="/">Go back to home</a></p>
+    `);
+  }
+  else if (path === '/forbidden') {
+    // 403 Forbidden
+    res.writeHead(403, 'Forbidden');
+    res.end(`
+      <h1>403 Forbidden</h1>
+      <p>The server understood the request but refuses to authorize it.</p>
+      <p><a href="/">Go back to home</a></p>
+    `);
+  }
+  else if (path === '/not-found') {
+    // 404 Not Found
+    res.writeHead(404, 'Not Found');
+    res.end(`
+      <h1>404 Not Found</h1>
+      <p>The requested resource could not be found on this server.</p>
+      <p><a href="/">Go back to home</a></p>
+    `);
+  }
+  else if (path === '/server-error') {
+    // 500 Internal Server Error
+    res.writeHead(500, 'Internal Server Error');
+    res.end(`
+      <h1>500 Internal Server Error</h1>
+      <p>The server has encountered a situation it doesn't know how to handle.</p>
+      <p><a href="/">Go back to home</a></p>
+    `);
+  }
+  else {
+    // இயல்புநிலை: 404 Not Found
+    res.writeHead(404, 'Not Found');
+    res.end(`
+      <h1>404 Not Found</h1>
+      <p>The requested resource could not be found on this server.</p>
+      <p><a href="/">Go back to home</a></p>
+    `);
+  }
+});
+
+// சேவையகத்தைத் தொடங்கு
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Streaming Responses -->
+        <section class="content-section" id="streaming-responses">
+            <h2>Streaming பதில்கள்</h2>
+            
+            <p>தரவை stream செய்ய பதில் பொருளைப் பயன்படுத்துதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+// ஒரு HTTP சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  const parsedUrl = new URL(req.url, 'http://localhost');
+  const pathname = parsedUrl.pathname;
+  
+  // வெவ்வேறு பாதைகளைக் கையாளவும்
+  if (pathname === '/') {
+    // ஒரு வழக்கமான பதிலை அனுப்பு
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end(`
+      <h1>Streaming Examples</h1>
+      <ul>
+        <li><a href="/stream-text">Stream a large text response</a></li>
+        <li><a href="/stream-file">Stream a file</a></li>
+        <li><a href="/stream-json">Stream a JSON response</a></li>
+      </ul>
+    `);
+  }
+  else if (pathname === '/stream-text') {
+    // ஒரு பெரிய உரை பதிலை stream செய்யவும்
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    
+    let count = 1;
+    const max = 10;
+    
+    // தாமதத்துடன் chunks இல் பதிலை எழுதவும்
+    const interval = setInterval(() => {
+      res.write(`Chunk ${count} of data\n`.repeat(20));
+      
+      if (count >= max) {
+        clearInterval(interval);
+        res.end('\nStreaming complete!');
+      }
+      count++;
+    }, 500);
+    
+    // client துண்டிப்பைக் கையாளவும்
+    req.on('close', () => {
+      clearInterval(interval);
+      console.log('Client closed connection');
+    });
+  }
+  else if (pathname === '/stream-file') {
+    // ஒரு மாதிரி கோப்பை உருவாக்கு
+    const filePath = path.join(__dirname, 'sample-large-file.txt');
+    if (!fs.existsSync(filePath)) {
+      const writeStream = fs.createWriteStream(filePath);
+      for (let i = 0; i < 10000; i++) {
+        writeStream.write(`Line ${i}: This is a sample line of text for streaming demonstration.\n`);
+      }
+      writeStream.end();
+    }
+    
+    // கோப்பு புள்ளிவிவரங்களைப் பெறு
+    const stat = fs.statSync(filePath);
+    
+    // தலைப்புகளை அமை
+    res.writeHead(200, {
+      'Content-Type': 'text/plain',
+      'Content-Length': stat.size
+    });
+    
+    // read stream உருவாக்கி பதிலுக்கு pipe செய்யவும்
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.pipe(res);
+    
+    // கோப்பு ஸ்ட்ரீம் பிழைகளைக் கையாளவும்
+    fileStream.on('error', (err) => {
+      console.error(`Error streaming file: ${err.message}`);
+      res.end('Error streaming file');
+    });
+    
+    // பதில் அனுப்பப்பட்ட பிறகு சுத்தம் செய்யவும்
+    res.on('finish', () => {
+      fs.unlink(filePath, (err) => {
+        if (err) console.error(`Error deleting sample file: ${err.message}`);
+      });
+    });
+  }
+  else if (pathname === '/stream-json') {
+    // ஒரு பெரிய JSON பதிலை stream செய்யவும்
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    
+    // JSON வரிசையைத் தொடங்கவும்
+    res.write('[\n');
+    
+    let count = 0;
+    const max = 100;
+    let isFirst = true;
+    
+    // தாமதத்துடன் JSON பொருள்களை எழுதவும்
+    const interval = setInterval(() => {
+      // முதல் உருப்படி தவிர அனைத்திற்கும் கமாவைச் சேர்க்கவும்
+      if (!isFirst) {
+        res.write(',\n');
+      } else {
+        isFirst = false;
+      }
+      
+      // ஒரு JSON பொருளை உருவாக்கு
+      const obj = {
+        id: count,
+        name: `Item ${count}`,
+        timestamp: new Date().toISOString(),
+        data: `Sample data for item ${count}`
+      };
+      
+      // பொருளை JSON ஆக எழுதவும்
+      res.write(JSON.stringify(obj, null, 2));
+      
+      if (count >= max) {
+        clearInterval(interval);
+        // JSON வரிசையை முடிக்கவும்
+        res.write('\n]');
+        res.end();
+      }
+      count++;
+    }, 100);
+    
+    // client துண்டிப்பைக் கையாளவும்
+    req.on('close', () => {
+      clearInterval(interval);
+      console.log('Client closed connection during JSON streaming');
+    });
+  }
+  else {
+    // அறியப்படாத பாதைகளைக் கையாளவும்
+    res.writeHead(404, {'Content-Type': 'text/plain'});
+    res.end('Not Found');
+  }
+});
+
+// சேவையகத்தைத் தொடங்கு
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Streaming server running at http://localhost:${PORT}/`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Compression -->
+        <section class="content-section" id="compression">
+            <h2>சுருக்கம்</h2>
+            
+            <p>gzip அல்லது deflate உடன் பதில்களைச் சுருக்குதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const zlib = require('zlib');
+
+// சுருக்கத்துடன் ஒரு HTTP சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  // Accept-Encoding தலைப்பைப் பெறு
+  const acceptEncoding = req.headers['accept-encoding'] || '';
+  
+  // ஒரு மாதிரி பதிலை உருவாக்கு (பெரிய சரம்)
+  const sampleData = 'This is a sample text that will be compressed. '.repeat(1000);
+  
+  // பொருத்தமான தலைப்புகளுடன் பதிலை அனுப்பும் செயல்பாடு
+  function sendResponse(data, encoding) {
+    // சுருக்கம் பயன்படுத்தப்பட்டால் Content-Encoding தலைப்பை அமை
+    if (encoding) {
+      res.setHeader('Content-Encoding', encoding);
+    }
+    
+    res.setHeader('Content-Type', 'text/plain');
+    res.setHeader('Vary', 'Accept-Encoding');
+    res.writeHead(200);
+    res.end(data);
+  }
+  
+  // client எந்த encodings ஆதரிக்கிறது எனச் சரிபார்க்கவும்
+  if (/\bgzip\b/.test(acceptEncoding)) {
+    // Client gzip ஐ ஆதரிக்கிறது
+    console.log('Using gzip compression');
+    zlib.gzip(sampleData, (err, compressed) => {
+      if (err) {
+        console.error('Gzip compression failed:', err);
+        sendResponse(sampleData); // சுருக்கமில்லாததற்கு fall back
+      } else {
+        sendResponse(compressed, 'gzip');
+        console.log(`Original size: ${sampleData.length}, Compressed size: ${compressed.length}`);
+        console.log(`Compression ratio: ${(compressed.length / sampleData.length * 100).toFixed(2)}%`);
+      }
+    });
+  } else if (/\bdeflate\b/.test(acceptEncoding)) {
+    // Client deflate ஐ ஆதரிக்கிறது
+    console.log('Using deflate compression');
+    zlib.deflate(sampleData, (err, compressed) => {
+      if (err) {
+        console.error('Deflate compression failed:', err);
+        sendResponse(sampleData); // சுருக்கமில்லாததற்கு fall back
+      } else {
+        sendResponse(compressed, 'deflate');
+        console.log(`Original size: ${sampleData.length}, Compressed size: ${compressed.length}`);
+        console.log(`Compression ratio: ${(compressed.length / sampleData.length * 100).toFixed(2)}%`);
+      }
+    });
+  } else if (/\bbr\b/.test(acceptEncoding)) {
+    // Client Brotli ஐ ஆதரிக்கிறது (Node.js பதிப்பு ஆதரித்தால்)
+    if (typeof zlib.brotliCompress === 'function') {
+      console.log('Using Brotli compression');
+      zlib.brotliCompress(sampleData, (err, compressed) => {
+        if (err) {
+          console.error('Brotli compression failed:', err);
+          sendResponse(sampleData); // சுருக்கமில்லாததற்கு fall back
+        } else {
+          sendResponse(compressed, 'br');
+          console.log(`Original size: ${sampleData.length}, Compressed size: ${compressed.length}`);
+          console.log(`Compression ratio: ${(compressed.length / sampleData.length * 100).toFixed(2)}%`);
+        }
+      });
+    } else {
+      console.log('Brotli not supported in this Node.js version');
+      sendResponse(sampleData); // சுருக்கமில்லாததற்கு fall back
+    }
+  } else {
+    // client ஆல் சுருக்கம் ஆதரிக்கப்படவில்லை
+    console.log('No compression used');
+    sendResponse(sampleData);
+  }
+});
+
+// சேவையகத்தைத் தொடங்கு
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Compression server running at http://localhost:${PORT}/`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-heading"></i>
+                    <span><strong>எப்போதும் Content-Type அமைக்கவும்:</strong> உங்கள் பதில்களுக்கு எப்போதும் பொருத்தமான Content-Type தலைப்பை அமைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-code"></i>
+                    <span><strong>சரியான நிலை குறியீடுகளைப் பயன்படுத்தவும்:</strong> கோரிக்கையின் முடிவைக் குறிக்க பொருத்தமான HTTP நிலை குறியீடுகளைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-layer-group"></i>
+                    <span><strong>சரியான தலைப்புகளை அமைக்கவும்:</strong> Cache-Control, Content-Length, முதலியன போன்ற பொருத்தமான தலைப்புகளை அமைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>பிழைகளைச் சரியாகக் கையாளவும்:</strong> அர்த்தமுள்ள பிழை செய்திகளுடன் பொருத்தமான நிலை குறியீடுகளை (4xx, 5xx) திருப்பி அனுப்பவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-stream"></i>
+                    <span><strong>பெரிய பதில்களை stream செய்யவும்:</strong> பெரிய பதில்களுக்கு, எல்லாவற்றையும் நினைவகத்தில் ஏற்றுவதற்குப் பதிலாக streaming ஐப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-compress"></i>
+                    <span><strong>சுருக்கத்தைச் செயல்படுத்தவும்:</strong> bandwidth பயன்பாட்டைக் குறைக்க உரை-அடிப்படையிலான பதில்களுக்கு சுருக்கத்தைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span><strong>பாதுகாப்பு தலைப்புகள்:</strong> Content-Security-Policy, X-Content-Type-Options, முதலியன போன்ற பாதுகாப்பு தலைப்புகளைச் சேர்க்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>எப்போதும் பதிலை முடிக்கவும்:</strong> பதிலை இறுதிப்படுத்த எப்போதும் response.end() ஐ அழைக்கவும்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் HTTP சேவையகத்தில் client க்கு தரவைத் திருப்பி அனுப்ப பயன்படுத்தப்படும் சரியான பதில் வகையைத் தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.ClientResponse</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.ClientResponse" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">http.ServerResponse</div>
+                            <div class="option-feedback correct">✓ சரி! "http.ServerResponse" என்பது Node.js இல் HTTP சேவையகத்தில் client க்கு தரவைத் திருப்பி அனுப்ப பயன்படும் சரியான பதில் வகையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.OutgoingResponse</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.OutgoingResponse" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">http.ResponseObject</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "http.ResponseObject" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Request Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Message Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#response-object">பதில் பொருள்</a></li>
+                    <li><a href="#response-properties">பதில் பண்புகள்</a></li>
+                    <li><a href="#response-methods">பதில் முறைகள்</a></li>
+                    <li><a href="#status-codes">நிலை குறியீடுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

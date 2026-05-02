@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Child Process Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Performance Diagnostics.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Cluster Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Child Process Module</h2>
+            <p>Node.js இல் குழந்தை செயல்முறைகளை உருவாக்கவும் நிர்வகிக்கவும் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is the Child Process Module? -->
+        <section class="content-section" id="what-is">
+            <h2>Child Process தொகுதி என்றால் என்ன?</h2>
+            
+            <p>Child Process தொகுதி என்பது உள்ளமைக்கப்பட்ட Node.js தொகுதியாகும், இது குழந்தை செயல்முறைகளை உருவாக்கவும் நிர்வகிக்கவும் உங்களை அனுமதிக்கிறது.</p>
+            
+            <p>இது வெளிப்புற கட்டளைகளை இயக்கவும் துணைச் செயல்முறை நிகழ்வுகளுடன் தொடர்பு கொள்ளவும் பல வழிகளை வழங்குகிறது.</p>
+            
+            <p>இந்த திறன் பின்வரும் பணிகளுக்கு அவசியம்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-terminal"></i>
+                        <h4>கணினி கட்டளைகளை இயக்குதல்</h4>
+                    </div>
+                    <p>உங்கள் Node.js பயன்பாட்டிலிருந்து கணினி கட்டளைகளை இயக்கவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-microchip"></i>
+                        <h4>CPU-தீவிர பணிகளை இயக்குதல்</h4>
+                    </div>
+                    <p>தனி செயல்முறைகளில் CPU-தீவிர பணிகளை இயக்கவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>இணை செயல்முறைகள்</h4>
+                    </div>
+                    <p>பல CPU கோர்களைப் பயன்படுத்த பல செயல்முறைகளை இணையாக இயக்கவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-external-link-alt"></i>
+                        <h4>வெளிப்புற நிரல்களுடன் இடைமுகம்</h4>
+                    </div>
+                    <p>வெளிப்புற நிரல்கள் மற்றும் ஸ்கிரிப்ட்களுடன் இடைமுகப்படுத்தவும்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Importing the Child Process Module -->
+        <section class="content-section" id="importing">
+            <h2>Child Process தொகுதியை இறக்குமதி செய்தல்</h2>
+            
+            <p>Child Process தொகுதி Node.js இல் இயல்பாகச் சேர்க்கப்பட்டுள்ளது.</p>
+            
+            <p>உங்கள் ஸ்கிரிப்ட்டில் அதைத் தேவைப்படுவதன் மூலம் பயன்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const childProcess = require('child_process');
+
+// Or using destructuring to access specific methods
+const { exec, spawn, fork } = require('child_process');</code></pre>
+            </div>
+        </section>
+
+        <!-- Methods for Creating Child Processes -->
+        <section class="content-section" id="methods">
+            <h2>குழந்தை செயல்முறைகளை உருவாக்கும் முறைகள்</h2>
+            
+            <p>Child Process தொகுதி குழந்தை செயல்முறைகளை உருவாக்கவும் நிர்வகிக்கவும் நான்கு முதன்மை முறைகளை வழங்குகிறது, ஒவ்வொன்றும் வெவ்வேறு நடத்தைகள் மற்றும் பயன்பாட்டு வழக்குகளைக் கொண்டுள்ளது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                            <th>பயன்பாட்டு வழக்கு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>exec()</strong></td>
+                            <td>ஒரு ஷெல்லைத் தோற்றுவித்து ஒரு கட்டளையை இயக்குகிறது, வெளியீட்டை பஃப்பர் செய்கிறது</td>
+                            <td>ஒரு ஷெல் கட்டளையை இயக்க வேண்டும் மற்றும் முழு வெளியீட்டையும் ஒரே முறையில் பெற வேண்டும் போது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>execFile()</strong></td>
+                            <td>exec() போன்றது ஆனால் ஷெல்லைத் தோற்றுவிக்காது</td>
+                            <td>ஷெல் விளக்கமின்றி கோப்பு-அடிப்படையிலான கட்டளைகளை இயக்குவதற்கு மிகவும் திறமையானது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>spawn()</strong></td>
+                            <td>ஷெல் உருவாக்காமல் ஒரு புதிய செயல்முறையைத் தோற்றுவிக்கிறது, ஸ்ட்ரீமிங் I/O உடன்</td>
+                            <td>நீண்ட-இயங்கும் செயல்முறைகள் அல்லது பெரிய வெளியீட்டைக் கையாளும் போது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>fork()</strong></td>
+                            <td>Node.js செயல்முறைகளை உருவாக்குவதற்கான spawn() இன் ஒரு சிறப்பு வழக்கு</td>
+                            <td>மற்றொரு Node.js தொகுதியை தனி செயல்முறையாக IPC உடன் இயக்க வேண்டும் போது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- The exec() Method -->
+        <section class="content-section" id="exec-method">
+            <h2>exec() முறை</h2>
+            
+            <p>exec() முறை ஒரு ஷெல்லை உருவாக்கி அந்த ஷெல்லுக்குள் ஒரு கட்டளையை இயக்குகிறது.</p>
+            
+            <p>இது முழு வெளியீட்டையும் பஃப்பர் செய்து கட்டளை நிறைவடையும் போது ஒரு கால்பேக் மூலம் வழங்குகிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>const { exec } = require('child_process');
+
+// Execute the 'ls -la' command (or 'dir' on Windows)
+const command = process.platform === 'win32' ? 'dir' : 'ls -la';
+
+exec(command, (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Error executing command: ${error.message}`);
+    return;
+  }
+
+  if (stderr) {
+    console.error(`Command stderr: ${stderr}`);
+  }
+
+  console.log(`Command output:\n${stdout}`);
+});
+
+// With options
+exec('echo $HOME', {
+  env: { HOME: '/custom/home/directory' }
+}, (error, stdout, stderr) => {
+  console.log(`Custom home directory: ${stdout.trim()}`);
+});</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>exec() க்கு சுத்திகரிக்கப்படாத பயனர் உள்ளீட்டை ஒருபோதும் அனுப்ப வேண்டாம், ஏனெனில் இது முழு ஷெல் தொடரியல் கொண்ட கட்டளைகளை இயக்குகிறது, இது கட்டளை ஊசி தாக்குதல்களுக்கு வழிவகுக்கும்.</p>
+            </div>
+            
+            <h3>Promise உடன் exec()</h3>
+            
+            <p>கால்பேக்கைக் கையாள ஒரு promise wrapper ஐப் பயன்படுத்துதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { exec } = require('child_process');
+const util = require('util');
+
+// Convert exec to a promise-based function
+const execPromise = util.promisify(exec);
+
+async function executeCommand(command) {
+  try {
+    const { stdout, stderr } = await execPromise(command);
+
+    if (stderr) {
+      console.error(`Command stderr: ${stderr}`);
+    }
+
+    console.log(`Command output:\n${stdout}`);
+    return stdout;
+  } catch (error) {
+    console.error(`Error executing command: ${error.message}`);
+    throw error;
+  }
+}
+
+// Using the promise-based function
+executeCommand('node --version')
+  .then(version => console.log(`Node.js version: ${version.trim()}`))
+  .catch(err => console.error('Failed to get Node.js version'));</code></pre>
+            </div>
+        </section>
+
+        <!-- The execFile() Method -->
+        <section class="content-section" id="execfile-method">
+            <h2>execFile() முறை</h2>
+            
+            <p>execFile() முறை exec() போன்றது, ஆனால் அது ஒரு ஷெல்லைத் தோற்றுவிக்காது.</p>
+            
+            <p>வெளிப்புற பைனரிகளை இயப்பதற்கு இது மிகவும் திறமையானது.</p>
+            
+            <div class="code-example">
+                <pre><code>const { execFile } = require('child_process');
+
+// Execute 'node' with arguments
+execFile('node', ['--version'], (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Error executing file: ${error.message}`);
+    return;
+  }
+
+  console.log(`Node.js version: ${stdout.trim()}`);
+});
+
+// On Windows, execute a batch file
+if (process.platform === 'win32') {
+  execFile('C:\\Windows\\System32\\cmd.exe', ['/c', 'echo Hello from batch!'], (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error: ${error.message}`);
+      return;
+    }
+
+    console.log(`Output: ${stdout.trim()}`);
+  });
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔒</span> குறிப்பு:</h4>
+                <p>execFile() பயனர் உள்ளீட்டுடன் கட்டளைகளை இயக்குவதற்கு exec() ஐ விட மிகவும் பாதுகாப்பானது, ஏனெனில் இது ஷெல் மெட்டா எழுத்துகளை செயலாக்காது.</p>
+            </div>
+        </section>
+
+        <!-- The spawn() Method -->
+        <section class="content-section" id="spawn-method">
+            <h2>spawn() முறை</h2>
+            
+            <p>spawn() முறை கொடுக்கப்பட்ட கட்டளையுடன் ஒரு புதிய செயல்முறையைத் தொடங்குகிறது.</p>
+            
+            <p>exec() போலன்றி, இது வெளியீட்டை பஃப்பர் செய்யாது, மாறாக stdout மற்றும் stderr க்கு ஸ்ட்ரீம்-அடிப்படையிலான அணுகலை வழங்குகிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>const { spawn } = require('child_process');
+
+// Spawn a process to list files
+const ls = process.platform === 'win32'
+  ? spawn('cmd', ['/c', 'dir'])
+  : spawn('ls', ['-la']);
+
+// Handle process output streams
+ls.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
+
+ls.stderr.on('data', (data) => {
+  console.error(`stderr: ${data}`);
+});
+
+ls.on('close', (code) => {
+  console.log(`Child process exited with code ${code}`);
+});
+
+// Spawn with options
+const grep = spawn('grep', ['hello', 'input.txt'], {
+  cwd: '/tmp', // Working directory
+  env: { ...process.env, CUSTOM_ENV: 'value' },
+  stdio: 'pipe', // Configure stdio
+  detached: false, // Process group behavior
+  shell: false // Whether to run in a shell
+});
+
+// Handling errors
+grep.on('error', (err) => {
+  console.error(`Failed to start subprocess: ${err.message}`);
+});</code></pre>
+            </div>
+            
+            <h3>spawn() ஐ எப்போது பயன்படுத்துவது</h3>
+            
+            <p>spawn() குறிப்பாக பயனுள்ளதாக இருக்கும்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-clock"></i>
+                    <span>நீண்ட-இயங்கும் செயல்முறைகள் (சேவையக செயல்முறைகள் அல்லது கண்காணிப்பாளர்கள் போன்றவை)</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-database"></i>
+                    <span>பெரிய அளவிலான வெளியீட்டை உருவாக்கும் செயல்முறைகள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <span>நிறைவுக்காகக் காத்திருக்காமல் தரவு உருவாக்கப்படும்போது அதைச் செயலாக்க வேண்டிய போது</span>
+                </div>
+            </div>
+            
+            <h3>stdin உடன் spawn() பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const { spawn } = require('child_process');
+
+// Spawn a process that reads from stdin
+const process = spawn('wc', ['-w']); // Word count
+
+// Send data to the process's stdin
+process.stdin.write('Hello world from Node.js!');
+process.stdin.end(); // Signal the end of input
+
+// Capture output
+process.stdout.on('data', (data) => {
+  console.log(`Number of words: ${data}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- The fork() Method -->
+        <section class="content-section" id="fork-method">
+            <h2>fork() முறை</h2>
+            
+            <p>fork() முறை என்பது Node.js செயல்முறைகளை உருவாக்குவதற்கான spawn() இன் ஒரு சிறப்பு வழக்காகும். இது பெற்றோர் மற்றும் குழந்தை செயல்முறைகளுக்கு இடையே செய்திகளை அனுப்ப அனுமதிக்கும் ஒரு IPC சேனலை அமைக்கிறது.</p>
+            
+            <div class="code-example">
+                <pre><code>// In the main file (parent.js)
+const { fork } = require('child_process');
+
+// Fork a child process
+const child = fork('child.js');
+
+// Send a message to the child
+child.send({ message: 'Hello from parent' });
+
+// Receive messages from the child
+child.on('message', (message) => {
+  console.log('Message from child:', message);
+});
+
+// Handle child process exit
+child.on('close', (code) => {
+  console.log(`Child process exited with code ${code}`);
+});</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// In the child file (child.js)
+console.log('Child process started', process.pid);
+
+// Listen for messages from the parent
+process.on('message', (message) => {
+  console.log('Message from parent:', message);
+
+  // Send a message back to the parent
+  process.send({ response: 'Hello from child' });
+
+  // After 3 seconds, exit the process
+  setTimeout(() => {
+    process.exit(0);
+  }, 8080);
+});</code></pre>
+            </div>
+            
+            <h3>fork() இன் நன்மைகள்</h3>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-cube"></i>
+                    <span>ஒவ்வொரு forked செயல்முறையும் அதன் சொந்த V8 நிகழ்வு மற்றும் நினைவகத்தைப் பெறுகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>முக்கிய இவெண்ட் லூப்பிலிருந்து CPU-தீவிர வேலையை தனிமைப்படுத்துகிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-comments"></i>
+                    <span>செயல்முறைகளுக்கு இடையே செய்திகள் மூலம் தொடர்பு கொள்ள அனுமதிக்கிறது</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-microchip"></i>
+                    <span>பல CPU கோர்களைப் பயன்படுத்த உதவுகிறது</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interprocess Communication (IPC) -->
+        <section class="content-section" id="ipc">
+            <h2>செயல்முறைக்கு இடையேயான தொடர்பு (IPC)</h2>
+            
+            <p>fork() உடன் உருவாக்கப்பட்ட குழந்தை செயல்முறைகள் send() மற்றும் message event ஐப் பயன்படுத்தி உள்ளமைக்கப்பட்ட IPC சேனல் மூலம் பெற்றோர் செயல்முறையுடன் தொடர்பு கொள்ள முடியும்.</p>
+            
+            <h3>சிக்கலான தரவை அனுப்புதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// In parent.js
+const { fork } = require('child_process');
+const child = fork('worker.js');
+
+// Send different types of data
+child.send({
+  command: 'compute',
+  data: [1, 2, 3, 4, 5],
+  options: {
+    multiply: 2,
+    subtract: 1
+  }
+});
+
+// Receive the result
+child.on('message', (result) => {
+  console.log('Computation result:', result);
+  child.disconnect(); // Clean up the IPC channel
+});</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// In worker.js
+process.on('message', (msg) => {
+   if (msg.command === 'compute') {
+    const result = msg.data.map(num => num * msg.options.multiply - msg.options.subtract);
+
+    // Send the result back to the parent
+    process.send({ result });
+  }
+});</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💬</span> குறிப்பு:</h4>
+                <p>செய்திகள் JSON ஐப் பயன்படுத்தி தொடரப்படுகின்றன, எனவே நீங்கள் JSON-இணக்க தரவை மட்டுமே அனுப்ப முடியும் (பொருள்கள், வரிசைகள், சரங்கள், எண்கள், பூலியன்கள் மற்றும் null).</p>
+            </div>
+        </section>
+
+        <!-- Managing Child Processes -->
+        <section class="content-section" id="managing">
+            <h2>குழந்தை செயல்முறைகளை நிர்வகித்தல்</h2>
+            
+            <h3>குழந்தை செயல்முறையைக் கொல்லுதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const { spawn } = require('child_process');
+
+// Spawn a long-running process
+const child = spawn('node', ['-e', `
+  setInterval(() => {
+    console.log('Still running...', Date.now());
+  }, 1000);
+`]);
+
+// Output from the process
+child.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
+
+// Kill the process after 5 seconds
+setTimeout(() => {
+  console.log('Killing the child process...');
+
+  // Send a SIGTERM signal
+  child.kill('SIGTERM');
+
+  // Alternative: child.kill() - uses SIGTERM by default
+}, 5000);
+
+// Handle the exit event
+child.on('exit', (code, signal) => {
+  console.log(`Child process exited with code ${code} and signal ${signal}`);
+});</code></pre>
+            </div>
+            
+            <h3>பிரிக்கப்பட்ட செயல்முறைகள்</h3>
+            
+            <p>பெற்றோரிடமிருந்து சுயாதீனமாக தொடர்ந்து இயங்கும் பிரிக்கப்பட்ட குழந்தை செயல்முறைகளை நீங்கள் உருவாக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const { spawn } = require('child_process');
+const fs = require('fs');
+
+// Create a detached process
+const child = spawn('node', ['long_running_script.js'], {
+  detached: true,
+  stdio: ['ignore',
+    fs.openSync('output.log', 'w'),
+    fs.openSync('error.log', 'w')
+  ]
+});
+
+// Unref the child to allow the parent to exit independently
+child.unref();
+
+console.log(`Started detached process with PID: ${child.pid}`);
+console.log('Parent will exit while child continues running.');
+
+// The parent can now exit, and the child will continue running</code></pre>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <h3>ஒரு எளிய பணி வரிசையை உருவாக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>// In tasks.js (parent)
+const { fork } = require('child_process');
+const numCPUs = require('os').cpus().length;
+
+class TaskQueue {
+  constructor() {
+    this.tasks = [];
+    this.workers = [];
+    this.maxWorkers = numCPUs;
+  }
+
+  addTask(task) {
+    this.tasks.push(task);
+    this.runNext();
+  }
+
+  runNext() {
+    // If we have tasks and available workers
+    if (this.tasks.length > 0 && this.workers.length < this.maxWorkers) {
+      const task = this.tasks.shift();
+      const worker = fork('worker.js');
+
+      console.log(`Starting worker for task ${task.id}`);
+      this.workers.push(worker);
+
+      worker.send(task);
+
+      worker.on('message', (result) => {
+        console.log(`Task ${task.id} completed with result:`, result);
+
+        // Remove this worker from our workers list
+        this.workers = this.workers.filter(w => w !== worker);
+
+        // Run the next task if we have one
+        this.runNext();
+      });
+
+      worker.on('error', (err) => {
+        console.error(`Worker for task ${task.id} had an error:`, err);
+        this.workers = this.workers.filter(w => w !== worker);
+        this.runNext();
+      });
+
+      worker.on('exit', (code) => {
+        if (code !== 0) {
+          console.error(`Worker for task ${task.id} exited with code ${code}`);
+        }
+      });
+    }
+  }
+
+// Usage
+const queue = new TaskQueue();
+
+// Add some tasks
+for (let i = 1; i <= 10; i++) {
+  queue.addTask({
+    id: i,
+    type: 'calculation',
+    data: Array.from({ length: 1000000 }, () => Math.random())
+  });
+}</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <pre><code>// In worker.js
+process.on('message', (task) => {
+  console.log(`Worker ${process.pid} received task ${task.id}`);
+
+  // Simulate CPU-intensive work
+  let result;
+
+  if (task.type === 'calculation') {
+    // For example, find sum and average
+    const sum = task.data.reduce((acc, val) => acc + val, 0);
+    const avg = sum / task.data.length;
+
+    result = { sum, avg };
+  }
+
+  // Send result back to parent
+  process.send({ taskId: task.id, result });
+
+  // Exit this worker
+  process.exit(0);
+});</code></pre>
+            </div>
+            
+            <h3>வெளிப்புற பயன்பாடுகளை இயக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const { spawn } = require('child_process');
+const path = require('path');
+const fs = require('fs');
+
+// Function to convert a video using ffmpeg
+function convertVideo(inputFile, outputFile, options = {}) {
+  return new Promise((resolve, reject) => {
+    // Make sure input file exists
+    if (!fs.existsSync(inputFile)) {
+      return reject(new Error(`Input file ${inputFile} does not exist`));
+    }
+
+    // Prepare ffmpeg arguments
+    const args = ['-i', inputFile];
+
+    if (options.scale) {
+      args.push('-vf', `scale=${options.scale}`);
+    }
+
+    if (options.format) {
+      args.push('-f', options.format);
+    }
+
+    args.push(outputFile);
+
+    // Spawn ffmpeg process
+    const ffmpeg = spawn('ffmpeg', args);
+
+    // Collect output for logging
+    let stdoutData = '';
+    let stderrData = '';
+
+    ffmpeg.stdout.on('data', (data) => {
+      stdoutData += data;
+    });
+
+    ffmpeg.stderr.on('data', (data) => {
+      stderrData += data;
+    });
+
+    // Handle process completion
+    ffmpeg.on('close', (code) => {
+      if (code === 0) {
+        resolve({
+          inputFile,
+          outputFile,
+          stdout: stdoutData,
+          stderr: stderrData
+      });
+      } else {
+        reject(new Error(`ffmpeg exited with code ${code}\n${stderrData}`));
+      }
+    });
+
+    // Handle process errors
+    ffmpeg.on('error', reject);
+   });
+}
+
+// Example usage (commented out)
+/*
+convertVideo('input.mp4', 'output.webm', {
+  scale: '640:480',
+  format: 'webm'
+})
+  .then(result => {
+    console.log('Video conversion successful!');
+    console.log(`Output file: ${result.outputFile}`)
+;   })
+  .catch(error => {
+    console.error('Video conversion failed:', error.message);
+  });
+*/</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span><strong>உள்ளீட்டு சுத்திகரிப்பு:</strong> கட்டளை ஊசி தாக்குதல்களைத் தடுக்க எப்போதும் பயனர் உள்ளீடுகளை சுத்திகரிக்கவும், குறிப்பாக exec() உடன்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-cogs"></i>
+                    <span><strong>வள மேலாண்மை:</strong> குழந்தை செயல்முறைகளால் பயன்படுத்தப்படும் வளங்களை (நினைவகம், கோப்பு விவரிப்பான்கள்) கண்காணித்து கையாளவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>பிழை கையாளுதல்:</strong> குழந்தை செயல்முறைகளுக்கு எப்போதும் சரியான பிழை கையாளுதல் இருக்க வேண்டும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tools"></i>
+                    <span><strong>சரியான முறையைத் தேர்ந்தெடுக்கவும்:</strong>
+                        <ul>
+                            <li>வரையறுக்கப்பட்ட வெளியீட்டுடன் கூடிய எளிய கட்டளைகளுக்கு exec() ஐப் பயன்படுத்தவும்</li>
+                            <li>நீண்ட-இயங்கும் செயல்முறைகள் அல்லது பெரிய வெளியீடுகளுக்கு spawn() ஐப் பயன்படுத்தவும்</li>
+                            <li>CPU-தீவிர Node.js செயல்பாடுகளுக்கு fork() ஐப் பயன்படுத்தவும்</li>
+                        </ul>
+                    </span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-broom"></i>
+                    <span><strong>சுத்தம்:</strong> குழந்தை செயல்முறைகள் இனி தேவையில்லாதபோது அவற்றை சரியாகக் கொல்லவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sliders-h"></i>
+                    <span><strong>ஒரே நேரத்தில் இயங்கும் எண்ணிக்கையைக் கட்டுப்படுத்தவும்:</strong> கணினி சுமையைத் தவிர்க்க ஒரே நேரத்தில் இயங்கும் குழந்தை செயல்முறைகளின் எண்ணிக்கையைக் கட்டுப்படுத்தவும்</span>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> எச்சரிக்கை:</h4>
+                <p>பல குழந்தை செயல்முறைகளை இயக்குவது விரைவாக கணினி வளங்களை தீர்த்துவிடும். எப்போதும் விகித வரம்பு மற்றும் ஒரே நேரத்தில் இயங்கும் கட்டுப்பாட்டை செயல்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- Security Considerations -->
+        <section class="content-section" id="security">
+            <h2>பாதுகாப்பு பரிசீலனைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item negative">
+                    <i class="fas fa-bug"></i>
+                    <span><strong>கட்டளை ஊசி:</strong> exec() அல்லது spawn() க்கு சுத்திகரிக்கப்படாத பயனர் உள்ளீட்டை நேரடியாக ஒருபோதும் அனுப்ப வேண்டாம்</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-key"></i>
+                    <span><strong>சூழல் மாறிகள்:</strong> குழந்தை செயல்முறைகளுக்கு சூழல் மாறிகளை அனுப்புவதில் கவனமாக இருங்கள்</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-file"></i>
+                    <span><strong>கோப்பு அணுகல்:</strong> குழந்தை செயல்முறைகளுக்கு இருக்கக்கூடிய அனுமதிகளைப் புரிந்து கொள்ளுங்கள்</span>
+                </div>
+                <div class="practice-item negative">
+                    <i class="fas fa-stopwatch"></i>
+                    <span><strong>வள வரம்புகள்:</strong> குழந்தை செயல்முறைகளுக்கான நேரக்கெடு மற்றும் நினைவக வரம்புகளை செயல்படுத்துவதைக் கவனியுங்கள்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான தொகுதி பெயரை தேர்வு செய்யவும்.</h4>
+                <p>The ______ module provides the ability to spawn child processes in Node.js.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">cluster</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "cluster" தொகுதி கிளஸ்டரிங் மூலம் பயன்பாட்டு செயல்திறனை மேம்படுத்த உதவுகிறது, ஆனால் குழந்தை செயல்முறைகளைத் தோற்றுவிக்காது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">worker_threads</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "worker_threads" தொகுதி worker threads ஐ உருவாக்குகிறது, குழந்தை செயல்முறைகளை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">child_process</div>
+                            <div class="option-feedback correct">✓ சரி! "child_process" தொகுதி Node.js இல் குழந்தை செயல்முறைகளைத் தோற்றுவிக்கும் திறனை வழங்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">process</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "process" தொகுதி தற்போதைய செயல்முறை பற்றிய தகவல்களை வழங்குகிறது, ஆனால் குழந்தை செயல்முறைகளைத் தோற்றுவிக்காது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Performance Diagnostics.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Cluster Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is">Child Process தொகுதி</a></li>
+                    <li><a href="#methods">முறைகள்</a></li>
+                    <li><a href="#exec-method">exec() முறை</a></li>
+                    <li><a href="#fork-method">fork() முறை</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

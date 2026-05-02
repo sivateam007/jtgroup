@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL ANY and ALL Operators - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL EXISTS Operator.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL SELECT INTO Statement.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL ANY and ALL Operators</h2>
+            <p>ஒற்றை நெடுவரிசை மதிப்புக்கும் மற்ற மதிப்புகளின் வரம்புக்கும் இடையே ஒப்பீடு செய்ய ANY மற்றும் ALL operators பற்றி அறிந்து கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What are ANY and ALL Operators -->
+        <section class="content-section" id="what-are-any-all">
+            <h2>SQL ANY மற்றும் ALL Operators என்றால் என்ன?</h2>
+            
+            <p>ANY மற்றும் ALL operators ஒரு ஒற்றை நெடுவரிசை மதிப்புக்கும் மற்ற மதிப்புகளின் வரம்புக்கும் இடையே ஒப்பீடு செய்ய உங்களை அனுமதிக்கின்றன.</p>
+        </section>
+
+        <!-- The SQL ANY Operator -->
+        <section class="content-section" id="any-operator">
+            <h2>SQL ANY Operator</h2>
+            
+            <p>ANY operator:</p>
+            <ul>
+                <li>முடிவாக ஒரு boolean மதிப்பை தரும்</li>
+                <li>Subquery மதிப்புகளில் <strong>ஏதேனும்</strong> ஒன்று நிபந்தனையை பூர்த்தி செய்தால் TRUE-ஐ தரும்</li>
+            </ul>
+            
+            <p>ANY என்பது வரம்பில் உள்ள மதிப்புகளில் <strong>ஏதேனும்</strong> ஒன்றுக்கு செயல்பாடு true ஆக இருந்தால் நிபந்தனை true ஆக இருக்கும் என்பதாகும்.</p>
+            
+            <div class="code-example">
+                <h3>ANY தொடரியல்</h3>
+                <pre><code class="command-input">SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ANY
+  (SELECT column_name
+  FROM table_name
+  WHERE condition);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> குறிப்பு:</h4>
+                <p>Operator ஒரு நிலையான ஒப்பீடு operator ஆக இருக்க வேண்டும் (=, &lt;&gt;, !=, &gt;, &gt;=, &lt;, or &lt;=).</p>
+            </div>
+        </section>
+
+        <!-- The SQL ALL Operator -->
+        <section class="content-section" id="all-operator">
+            <h2>SQL ALL Operator</h2>
+            
+            <p>ALL operator:</p>
+            <ul>
+                <li>முடிவாக ஒரு boolean மதிப்பை தரும்</li>
+                <li>Subquery மதிப்புகள் <strong>அனைத்தும்</strong> நிபந்தனையை பூர்த்தி செய்தால் TRUE-ஐ தரும்</li>
+                <li>SELECT, WHERE மற்றும் HAVING statements-உடன் பயன்படுத்தப்படுகிறது</li>
+            </ul>
+            
+            <p>ALL என்பது வரம்பில் உள்ள மதிப்புகள் <strong>அனைத்திற்கும்</strong> செயல்பாடு true ஆக இருந்தால் மட்டுமே நிபந்தனை true ஆக இருக்கும் என்பதாகும்.</p>
+            
+            <div class="code-example">
+                <h3>SELECT உடன் ALL தொடரியல்</h3>
+                <pre><code class="command-input">SELECT ALL column_name(s)
+FROM table_name
+WHERE condition;</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>WHERE அல்லது HAVING உடன் ALL தொடரியல்</h3>
+                <pre><code class="command-input">SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ALL
+  (SELECT column_name
+  FROM table_name
+  WHERE condition);</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> குறிப்பு:</h4>
+                <p>Operator ஒரு நிலையான ஒப்பீடு operator ஆக இருக்க வேண்டும் (=, &lt;&gt;, !=, &gt;, &gt;=, &lt;, or &lt;=).</p>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் "Products" அட்டவணையில் இருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="code-example">
+                <h3>Products அட்டவணை</h3>
+                <pre><code>+-----------+------------------------------+------------+------------+-----------------------+-------+
+| ProductID | ProductName                  | SupplierID | CategoryID | Unit                  | Price |
++-----------+------------------------------+------------+------------+-----------------------+-------+
+| 1         | Chais                        | 1          | 1          | 10 boxes x 20 bags    | 18    |
+| 2         | Chang                        | 1          | 1          | 24 - 12 oz bottles    | 19    |
+| 3         | Aniseed Syrup                | 1          | 2          | 12 - 550 ml bottles   | 10    |
+| 4         | Chef Anton's Cajun Seasoning | 2          | 2          | 48 - 6 oz jars        | 22    |
+| 5         | Chef Anton's Gumbo Mix       | 2          | 2          | 36 boxes              | 21.35 |
+| 6         | Grandma's Boysenberry Spread | 3          | 2          | 12 - 8 oz jars        | 25    |
+| 7         | Uncle Bob's Organic Dried... | 3          | 7          | 12 - 1 lb pkgs.       | 30    |
+| 8         | Northwoods Cranberry Sauce   | 3          | 2          | 12 - 12 oz jars       | 40    |
+| 9         | Mishi Kobe Niku              | 4          | 6          | 18 - 500 g pkgs.      | 97    |
++-----------+------------------------------+------------+------------+-----------------------+-------+</code></pre>
+            </div>
+            
+            <p>மற்றும் "OrderDetails" அட்டவணையில் இருந்து ஒரு தேர்வு:</p>
+            
+            <div class="code-example">
+                <h3>OrderDetails அட்டவணை</h3>
+                <pre><code>+---------------+---------+-----------+----------+
+| OrderDetailID | OrderID | ProductID | Quantity |
++---------------+---------+-----------+----------+
+| 1             | 10248   | 11        | 12       |
+| 2             | 10248   | 42        | 10       |
+| 3             | 10248   | 72        | 5        |
+| 4             | 10249   | 14        | 9        |
+| 5             | 10249   | 51        | 40       |
+| 6             | 10250   | 41        | 10       |
+| 7             | 10250   | 51        | 35       |
+| 8             | 10250   | 65        | 15       |
+| 9             | 10251   | 22        | 6        |
+| 10            | 10251   | 57        | 15       |
++---------------+---------+-----------+----------+</code></pre>
+            </div>
+        </section>
+
+        <!-- SQL ANY Examples -->
+        <section class="content-section" id="any-examples">
+            <h2>SQL ANY உதாரணங்கள்</h2>
+            
+            <p>பின்வரும் SQL statement ProductName-ஐ பட்டியலிடுகிறது, OrderDetails அட்டவணையில் Quantity 10-க்கு சமமான <strong>ஏதேனும்</strong> பதிவுகள் இருந்தால் (Quantity நெடுவரிசையில் 10 மதிப்புகள் இருப்பதால் இது TRUE-ஐ தரும்):</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT ProductName
+FROM Products
+WHERE ProductID = ANY
+  (SELECT ProductID
+  FROM OrderDetails
+  WHERE Quantity = 10);</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL statement ProductName-ஐ பட்டியலிடுகிறது, OrderDetails அட்டவணையில் Quantity 99-ஐ விட பெரிய <strong>ஏதேனும்</strong> பதிவுகள் இருந்தால் (Quantity நெடுவரிசையில் 99-ஐ விட பெரிய சில மதிப்புகள் இருப்பதால் இது TRUE-ஐ தரும்):</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT ProductName
+FROM Products
+WHERE ProductID = ANY
+  (SELECT ProductID
+  FROM OrderDetails
+  WHERE Quantity > 99);</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL statement ProductName-ஐ பட்டியலிடுகிறது, OrderDetails அட்டவணையில் Quantity 1000-ஐ விட பெரிய <strong>ஏதேனும்</strong> பதிவுகள் இருந்தால் (Quantity நெடுவரிசையில் 1000-ஐ விட பெரிய மதிப்புகள் இல்லாததால் இது FALSE-ஐ தரும்):</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT ProductName
+FROM Products
+WHERE ProductID = ANY
+  (SELECT ProductID
+  FROM OrderDetails
+  WHERE Quantity > 1000);</code></pre>
+            </div>
+        </section>
+
+        <!-- SQL ALL Examples -->
+        <section class="content-section" id="all-examples">
+            <h2>SQL ALL உதாரணங்கள்</h2>
+            
+            <p>பின்வரும் SQL statement <strong>அனைத்து</strong> தயாரிப்பு பெயர்களையும் பட்டியலிடுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT ALL ProductName
+FROM Products
+WHERE TRUE;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL statement ProductName-ஐ பட்டியலிடுகிறது, OrderDetails அட்டவணையில் உள்ள <strong>அனைத்து</strong> பதிவுகளும் Quantity 10-க்கு சமமாக இருந்தால். Quantity நெடுவரிசையில் பல வெவ்வேறு மதிப்புகள் இருப்பதால் (10 மதிப்பு மட்டும் இல்லை) இது FALSE-ஐ தரும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT ProductName
+FROM Products
+WHERE ProductID = ALL
+  (SELECT ProductID
+  FROM OrderDetails
+  WHERE Quantity = 10);</code></pre>
+            </div>
+        </section>
+
+        <!-- Visual Comparison -->
+        <section class="content-section" id="visual-comparison">
+            <h2>ANY vs ALL காட்சிப் பிரதிநிதித்துவம்</h2>
+            
+            <div class="visual-container">
+                <div class="operator-comparison">
+                    <div class="operator-example">
+                        <div class="operator-header">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>ANY Operator</h4>
+                        </div>
+                        <div class="scenario">
+                            <p><strong>நிபந்தனை:</strong> Quantity = 10 உள்ள <strong>ஏதேனும்</strong> தயாரிப்புகள்</p>
+                            <div class="data-set">
+                                <div class="data-item match">Product A - Quantity: 10</div>
+                                <div class="data-item">Product B - Quantity: 5</div>
+                                <div class="data-item">Product C - Quantity: 8</div>
+                                <div class="data-item match">Product D - Quantity: 10</div>
+                            </div>
+                            <div class="result">
+                                <div class="result-true">✓ முடிவு: TRUE (2 பொருந்தும் பதிவுகள்)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="operator-example">
+                        <div class="operator-header">
+                            <i class="fas fa-check-double"></i>
+                            <h4>ALL Operator</h4>
+                        </div>
+                        <div class="scenario">
+                            <p><strong>நிபந்தனை:</strong> Quantity = 10 உள்ள <strong>அனைத்து</strong> தயாரிப்புகள்</p>
+                            <div class="data-set">
+                                <div class="data-item match">Product A - Quantity: 10</div>
+                                <div class="data-item no-match">Product B - Quantity: 5</div>
+                                <div class="data-item no-match">Product C - Quantity: 8</div>
+                                <div class="data-item match">Product D - Quantity: 10</div>
+                            </div>
+                            <div class="result">
+                                <div class="result-false">✗ முடிவு: FALSE (அனைத்தும் பொருந்தவில்லை)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <p><strong>கவனிக்க:</strong> ANY <strong>ஏதேனும்</strong> ஒரு பொருந்தும் பதிவு இருந்தால் TRUE-ஐ தரும், ALL <strong>அனைத்து</strong> பதிவுகளும் பொருந்தும் போது மட்டுமே TRUE-ஐ தரும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Use Cases -->
+        <section class="content-section" id="use-cases">
+            <h2>நடைமுறை பயன்பாட்டு நிகழ்வுகள்</h2>
+            
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>சராசரி மதிப்புகளை விட அதிகம்</h4>
+                    <p>சராசரி விலையை விட அதிக விலை கொண்ட <strong>ஏதேனும்</strong> தயாரிப்புகள்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT ProductName
+FROM Products
+WHERE Price > ANY (
+    SELECT AVG(Price) 
+    FROM Products 
+    GROUP BY CategoryID
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h4>அனைத்து நிபந்தனைகளும்</h4>
+                    <p><strong>அனைத்து</strong> வாடிக்கையாளர்களும் ஆர்டர் இட்ட தயாரிப்புகள்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT ProductName
+FROM Products
+WHERE ProductID = ALL (
+    SELECT DISTINCT ProductID 
+    FROM Orders 
+    WHERE CustomerID IN (
+        SELECT CustomerID FROM Customers
+    )
+);</code></pre>
+                    </div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h4>குறைந்தபட்ச மதிப்பு வடிகட்டுதல்</h4>
+                    <p>குறைந்தபட்ச விலையை விட குறைவான <strong>ஏதேனும்</strong> தயாரிப்புகள்</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT ProductName
+FROM Products
+WHERE Price < ANY (
+    SELECT MIN(Price) 
+    FROM Products 
+    GROUP BY SupplierID
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ANY vs IN Comparison -->
+        <section class="content-section" id="any-vs-in">
+            <h2>ANY vs IN ஒப்பீடு</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>ANY Operator</h4>
+                    </div>
+                    <ul>
+                        <li>Comparison operators-உடன் பயன்படுத்தலாம் (&gt;, &lt;, =, etc.)</li>
+                        <li>மதிப்புகளின் வரம்புடன் ஒப்பீடு செய்ய பயனுள்ளது</li>
+                        <li>சிக்கலான நிபந்தனைகளுக்கு ஏற்றது</li>
+                        <li>Subquery முடிவுகளுடன் வேலை செய்கிறது</li>
+                    </ul>
+                    <div class="code-block small">
+                        <pre><code>WHERE Price > ANY (subquery)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-list"></i>
+                        <h4>IN Operator</h4>
+                    </div>
+                    <ul>
+                        <li>சமமான மதிப்புகளை சோதிக்க பயன்படுகிறது (=)</li>
+                        <li>நிலையான மதிப்புப் பட்டியல்களுக்கு ஏற்றது</li>
+                        <li>எளிமையான சமத்துவ சோதனைகளுக்கு ஏற்றது</li>
+                        <li>Static lists அல்லது subqueries-உடன் வேலை செய்கிறது</li>
+                    </ul>
+                    <div class="code-block small">
+                        <pre><code>WHERE Price IN (10, 20, 30)</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> குறிப்பு:</h4>
+                <p><code>= ANY</code> என்பது <code>IN</code>-க்கு சமமானது, ஆனால் <code>&gt; ANY</code> அல்லது <code>&lt; ANY</code> போன்ற மற்ற comparison operators ANY-உடன் பயன்படுத்தப்படும் போது அதிக நெகிழ்வுத்தன்மையை வழங்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> எந்த SQL statement ANY operator-ஐ சரியாக பயன்படுத்துகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SELECT * FROM Products WHERE ProductID ANY (SELECT ProductID FROM OrderDetails);</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ANY-க்கு comparison operator தேவை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">SELECT * FROM Products WHERE ProductID = ANY (SELECT ProductID FROM OrderDetails);</div>
+                            <div class="option-feedback correct">✓ சரி! ANY operator சரியான comparison operator (=) உடன் பயன்படுத்தப்பட்டுள்ளது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SELECT ProductName ANY (SELECT ProductID FROM OrderDetails WHERE Quantity > 10);</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ANY SELECT list-ல் பயன்படுத்த முடியாது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SELECT * FROM Products WHERE ANY ProductID IN (SELECT ProductID FROM OrderDetails);</div>
+                            <div class="option-feedback incorrect">✗ தவறு! ANY syntax தவறானது, இது WHERE clause-ல் comparison operator-உடன் பயன்படுத்தப்பட வேண்டும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL EXISTS Operator.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL SELECT INTO Statement.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-are-any-all">ANY மற்றும் ALL Operators</a></li>
+                    <li><a href="#any-examples">ANY உதாரணங்கள்</a></li>
+                    <li><a href="#all-examples">ALL உதாரணங்கள்</a></li>
+                    <li><a href="#any-vs-in">ANY vs IN</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .visual-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .operator-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .operator-example {
+            text-align: center;
+        }
+        
+        .operator-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .operator-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .operator-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .scenario {
+            margin-bottom: 1rem;
+        }
+        
+        .scenario p {
+            margin-bottom: 1rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .data-set {
+            border: 2px solid var(--git-color);
+            border-radius: 8px;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.05);
+            margin-bottom: 1rem;
+        }
+        
+        .data-item {
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .data-item.match {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+        }
+        
+        .data-item.no-match {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+        }
+        
+        .result {
+            padding: 0.8rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .result-true {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            border: 1px solid #2ecc71;
+        }
+        
+        .result-false {
+            background: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            border: 1px solid #e74c3c;
+        }
+        
+        .explanation {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary);
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .explanation p {
+            margin: 0;
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        /* Use Cases Grid */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .use-case-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .use-case-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .use-case-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .use-case-card h4 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .use-case-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .comparison-card li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Exercise Styles */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .operator-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .use-cases-grid,
+            .comparison-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .visual-container {
+                padding: 1rem;
+            }
+            
+            .data-item {
+                font-size: 0.8rem;
+                padding: 0.3rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS Filters - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+    <div class="logo-icon">
+        <img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+    </div>
+    <h1>Jassif Team <span>Institution</span></h1>
+</div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="AngularJS Scope.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="AngularJS Services.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>AngularJS Filters</h2>
+            <p>தரவை வடிவமைக்க AngularJS பில்டர்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>AngularJS பில்டர்கள்</h2>
+            
+            <p>தரவை வடிவமைக்க AngularJS இல் பில்டர்களைச் சேர்க்கலாம்.</p>
+            
+            <p>AngularJS தரவை மாற்ற பில்டர்களை வழங்குகிறது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <tr>
+                        <th>பில்டர்</th>
+                        <th>விளக்கம்</th>
+                        <th>பயன்பாடு</th>
+                    </tr>
+                    <tr>
+                        <td><strong>currency</strong></td>
+                        <td>ஒரு எண்ணை நாணய வடிவத்தில் வடிவமைக்கிறது</td>
+                        <td>{{ price | currency }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>date</strong></td>
+                        <td>ஒரு தேதியை குறிப்பிட்ட வடிவத்தில் வடிவமைக்கிறது</td>
+                        <td>{{ today | date:'yyyy-MM-dd' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>filter</strong></td>
+                        <td>வரிசையிலிருந்து உருப்படிகளின் துணைக்குழுவைத் தேர்ந்தெடுக்கிறது</td>
+                        <td>items | filter:'search'</td>
+                    </tr>
+                    <tr>
+                        <td><strong>json</strong></td>
+                        <td>ஒரு பொருளை JSON சரமாக வடிவமைக்கிறது</td>
+                        <td>{{ obj | json }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>limitTo</strong></td>
+                        <td>வரிசை/சரத்தை குறிப்பிட்ட எண்ணிக்கையிலான உறுப்புகள்/எழுத்துக்களாக மட்டுப்படுத்துகிறது</td>
+                        <td>{{ text | limitTo:10 }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>lowercase</strong></td>
+                        <td>சரத்தை சிற்றெழுத்தில் வடிவமைக்கிறது</td>
+                        <td>{{ name | lowercase }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>number</strong></td>
+                        <td>ஒரு எண்ணை சரமாக வடிவமைக்கிறது</td>
+                        <td>{{ count | number }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>orderBy</strong></td>
+                        <td>ஒரு வெளிப்பாட்டின் மூலம் வரிசையை வரிசைப்படுத்துகிறது</td>
+                        <td>items | orderBy:'name'</td>
+                    </tr>
+                    <tr>
+                        <td><strong>uppercase</strong></td>
+                        <td>சரத்தை பெரிய எழுத்தில் வடிவமைக்கிறது</td>
+                        <td>{{ name | uppercase }}</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Adding Filters to Expressions -->
+        <section class="content-section" id="filters-expressions">
+            <h2>வெளிப்பாடுகளில் பில்டர்களைச் சேர்த்தல்</h2>
+            
+            <p>பைப் கேரக்டர் | பயன்படுத்தி, அதைத் தொடர்ந்து ஒரு பில்டர், வெளிப்பாடுகளில் பில்டர்களைச் சேர்க்கலாம்.</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>uppercase பில்டர்</h4>
+                    <div class="code-example">
+                        <pre><code>&lt;div ng-app="myApp" ng-controller="personCtrl"&gt;
+    &lt;p&gt;The name is {{ lastName | uppercase }}&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>lowercase பில்டர்</h4>
+                    <div class="code-example">
+                        <pre><code>&lt;div ng-app="myApp" ng-controller="personCtrl"&gt;
+    &lt;p&gt;The name is {{ lastName | lowercase }}&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adding Filters to Directives -->
+        <section class="content-section" id="filters-directives">
+            <h2>டைரக்டிவ்களில் பில்டர்களைச் சேர்த்தல்</h2>
+            
+            <p>பைப் கேரக்டர் | பயன்படுத்தி, அதைத் தொடர்ந்து ஒரு பில்டர், ng-repeat போன்ற டைரக்டிவ்களில் பில்டர்கள் சேர்க்கப்படுகின்றன:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>orderBy பில்டர் ஒரு வரிசையை வரிசைப்படுத்துகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;div ng-app="myApp" ng-controller="namesCtrl"&gt;
+    &lt;ul&gt;
+        &lt;li ng-repeat="x in names | orderBy:'country'"&gt;
+            {{ x.name + ', ' + x.country }}
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- The currency Filter -->
+        <section class="content-section" id="currency-filter">
+            <h2>currency பில்டர்</h2>
+            
+            <p>currency பில்டர் ஒரு எண்ணை நாணயமாக வடிவமைக்கிறது:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;div ng-app="myApp" ng-controller="costCtrl"&gt;
+    &lt;h1&gt;Price: {{ price | currency }}&lt;/h1&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-money-bill-wave tip-icon"></i> currency பில்டர் விருப்பங்கள்:</h4>
+                <p>currency பில்டருக்கு கூடுதல் விருப்பங்களைக் குறிப்பிடலாம்: {{ price | currency:"₹":0 }} - இது இந்திய ரூபாயாக ₹ குறியீட்டுடன் தசமங்கள் இல்லாமல் காட்டும்.</p>
+            </div>
+        </section>
+
+        <!-- The filter Filter -->
+        <section class="content-section" id="filter-filter">
+            <h2>filter பில்டர்</h2>
+            
+            <p>filter பில்டர் ஒரு வரிசையின் துணைக்குழுவைத் தேர்ந்தெடுக்கிறது.</p>
+            
+            <p>filter பில்டர் வரிசைகளில் மட்டுமே பயன்படுத்தப்படலாம், மேலும் பொருந்தக்கூடிய உருப்படிகளை மட்டுமே கொண்ட வரிசையை இது திருப்பித் தரும்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"i" என்ற எழுத்தைக் கொண்ட பெயர்களைத் திருப்பித் தரவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;div ng-app="myApp" ng-controller="namesCtrl"&gt;
+    &lt;ul&gt;
+        &lt;li ng-repeat="x in names | filter : 'i'"&gt;
+            {{ x }}
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Filter an Array Based on User Input -->
+        <section class="content-section" id="user-input-filter">
+            <h2>பயனர் உள்ளீட்டின் அடிப்படையில் வரிசையை வடிகட்டுதல்</h2>
+            
+            <p>ஒரு உள்ளீட்டுப் புலத்தில் ng-model டைரக்டிவை அமைப்பதன் மூலம், பில்டரில் உள்ளீட்டுப் புலத்தின் மதிப்பை ஒரு வெளிப்பாடாகப் பயன்படுத்தலாம்.</p>
+            
+            <p>உள்ளீட்டுப் புலத்தில் ஒரு எழுத்தைத் தட்டச்சு செய்யவும், பொருத்தத்தைப் பொறுத்து பட்டியல் சுருங்கும்/வளரும்:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;div ng-app="myApp" ng-controller="namesCtrl"&gt;
+    &lt;p&gt;&lt;input type="text" ng-model="test"&gt;&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li ng-repeat="x in names | filter : test"&gt;
+            {{ x }}
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-search tip-icon"></i> உண்மையான நேர தேடல்:</h4>
+                <p>filter பில்டர் ng-model உடன் இணைந்து உண்மையான நேர தேடல் செயல்பாட்டை வழங்குகிறது. பயனர் தட்டச்சு செய்யும் போதே பட்டியல் தானாகவே புதுப்பிக்கப்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Sort an Array Based on User Input -->
+        <section class="content-section" id="user-input-sort">
+            <h2>பயனர் உள்ளீட்டின் அடிப்படையில் வரிசையை வரிசைப்படுத்துதல்</h2>
+            
+            <p>அட்டவணை தலைப்புகளில் கிளிக் செய்து வரிசைப்படுத்தும் வரிசையை மாற்றவும்:</p>
+            
+            <div class="code-example">
+                <h3>HTML:</h3>
+                <pre><code>&lt;div ng-app="myApp" ng-controller="namesCtrl"&gt;
+    &lt;table border="1" width="100%"&gt;
+        &lt;tr&gt;
+            &lt;th ng-click="orderByMe('name')"&gt;Name&lt;/th&gt;
+            &lt;th ng-click="orderByMe('country')"&gt;Country&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr ng-repeat="x in names | orderBy:myOrderBy"&gt;
+            &lt;td&gt;{{x.name}}&lt;/td&gt;
+            &lt;td&gt;{{x.country}}&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+                
+                <h3>JavaScript:</h3>
+                <pre><code>&lt;script&gt;
+angular.module('myApp', []).controller('namesCtrl', function($scope) {
+    $scope.names = [
+        {name:'Jani',country:'Norway'},
+        {name:'Carl',country:'Sweden'},
+        {name:'Margareth',country:'England'},
+        {name:'Hege',country:'Norway'},
+        {name:'Joe',country:'Denmark'},
+        {name:'Gustav',country:'Sweden'},
+        {name:'Birgit',country:'Denmark'},
+        {name:'Mary',country:'England'},
+        {name:'Kai',country:'Norway'}
+    ];
+    $scope.orderByMe = function(x) {
+        $scope.myOrderBy = x;
+    }
+});
+&lt;/script&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Custom Filters -->
+        <section class="content-section" id="custom-filters">
+            <h2>தனிப்பயன் பில்டர்கள்</h2>
+            
+            <p>உங்கள் மாட்யூலுடன் ஒரு புதிய பில்டர் தொழிற்சாலை செயல்பாட்டைப் பதிவு செய்வதன் மூலம் உங்கள் சொந்த பில்டர்களை உருவாக்கலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"myFormat" என்ற தனிப்பயன் பில்டரை உருவாக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>HTML:</h3>
+                <pre><code>&lt;ul ng-app="myApp" ng-controller="namesCtrl"&gt;
+    &lt;li ng-repeat="x in names"&gt;
+        {{x | myFormat}}
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                
+                <h3>JavaScript:</h3>
+                <pre><code>&lt;script&gt;
+var app = angular.module('myApp', []);
+app.filter('myFormat', function() {
+    return function(x) {
+        var i, c, txt = "";
+        for (i = 0; i < x.length; i++) {
+            c = x[i];
+            if (i % 2 == 0) {
+                c = c.toUpperCase();
+            }
+            txt += c;
+        }
+        return txt;
+    };
+});
+app.controller('namesCtrl', function($scope) {
+    $scope.names = ['Jani', 'Carl', 'Margareth', 'Hege', 'Joe', 'Gustav', 'Birgit', 'Mary', 'Kai'];
+});
+&lt;/script&gt;</code></pre>
+            </div>
+            
+            <p>myFormat பில்டர் ஒவ்வொரு இரண்டாவது எழுத்தையும் பெரிய எழுத்தாக வடிவமைக்கும்.</p>
+        </section>
+
+        <!-- Learning by Exercises -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சிகள் மூலம் கற்றல்</h2>
+            
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> பில்டர்களை வெளிப்பாடுகளில் எப்படிச் சேர்க்கிறீர்கள்?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">பைப் சின்னத்தைப் பயன்படுத்தி (|)</div>
+                            <div class="option-feedback correct">✓ சரி! பில்டர்கள் பைப் சின்னத்தைப் பயன்படுத்தி சேர்க்கப்படுகின்றன</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">கமாவைப் பயன்படுத்தி (,)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! பில்டர்கள் கமாவுடன் சேர்க்கப்படுவதில்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">கூட்டல் சின்னத்தைப் பயன்படுத்தி (+)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! பில்டர்கள் கூட்டல் சின்னத்துடன் சேர்க்கப்படுவதில்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">கழித்தல் சின்னத்தைப் பயன்படுத்தி (-)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! பில்டர்கள் கழித்தல் சின்னத்துடன் சேர்க்கப்படுவதில்லை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            </div>
+        </section>
+
+        <!-- Multiple Filters -->
+        <section class="content-section" id="multiple-filters">
+            <h2>பல பில்டர்கள்</h2>
+            
+            <p>நீங்கள் பல பில்டர்களை ஒன்றன் பின் ஒன்றாகப் பயன்படுத்தலாம்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>&lt;div ng-app="myApp" ng-controller="personCtrl"&gt;
+    &lt;p&gt;Name: {{ name | uppercase | limitTo:5 }}&lt;/p&gt;
+    &lt;p&gt;Price: {{ price | currency:"₹":0 | lowercase }}&lt;/p&gt;
+    &lt;p&gt;Date: {{ today | date:'fullDate' | uppercase }}&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle warning-icon"></i> பில்டர் வரிசை முக்கியம்:</h4>
+                <p>பில்டர்கள் இடமிருந்து வலமாக செயல்படுத்தப்படுகின்றன. பில்டர்களின் வரிசை வெளியீட்டை கணிசமாக பாதிக்கும். எப்போதும் பில்டர்களை சரியான வரிசையில் பயன்படுத்துங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Filter Parameters -->
+        <section class="content-section" id="filter-parameters">
+            <h2>பில்டர் பாராமீட்டர்கள்</h2>
+            
+            <p>பல பில்டர்கள் கூடுதல் பாராமீட்டர்களை ஏற்கின்றன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <tr>
+                        <th>பில்டர்</th>
+                        <th>பாராமீட்டர்கள்</th>
+                        <th>எடுத்துக்காட்டு</th>
+                    </tr>
+                    <tr>
+                        <td><strong>date</strong></td>
+                        <td>தேதி வடிவம்</td>
+                        <td>{{ today | date:'yyyy-MM-dd' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>currency</strong></td>
+                        <td>நாணய குறியீடு, தசம இலக்கங்கள்</td>
+                        <td>{{ price | currency:"₹":2 }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>limitTo</strong></td>
+                        <td>வரம்பு எண்</td>
+                        <td>{{ text | limitTo:20 }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>number</strong></td>
+                        <td>தசம இலக்கங்கள்</td>
+                        <td>{{ value | number:2 }}</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="AngularJS Scope.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="AngularJS Services.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">பில்டர்கள் அறிமுகம்</a></li>
+                    <li><a href="#filters-expressions">வெளிப்பாடுகளில் பில்டர்கள்</a></li>
+                    <li><a href="#currency-filter">currency பில்டர்</a></li>
+                    <li><a href="#custom-filters">தனிப்பயன் பில்டர்கள்</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#filter-filter">filter பில்டர்</a></li>
+                    <li><a href="#user-input-filter">பயனர் உள்ளீட்டு வடிகட்டுதல்</a></li>
+                    <li><a href="#multiple-filters">பல பில்டர்கள்</a></li>
+                    <li><a href="#filter-parameters">பில்டர் பாராமீட்டர்கள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                
+                // Show feedback for clicked option
+                const feedback = this.querySelector('.option-feedback');
+                feedback.style.display = 'block';
+                
+                // Highlight correct/incorrect
+                if (isCorrect) {
+                    this.style.borderColor = '#28a745';
+                    this.style.backgroundColor = 'rgba(40, 167, 69, 0.2)';
+                } else {
+                    this.style.borderColor = '#dc3545';
+                    this.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
+                    
+                    // Also show correct answer
+                    document.querySelectorAll('.option-card[data-correct="true"]').forEach(correctCard => {
+                        correctCard.querySelector('.option-feedback').style.display = 'block';
+                        correctCard.style.borderColor = '#28a745';
+                        correctCard.style.backgroundColor = 'rgba(40, 167, 69, 0.2)';
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

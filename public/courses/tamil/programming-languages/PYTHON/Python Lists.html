@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Lists - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* List visualization */
+        .list-visual {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid var(--git-color);
+            overflow-x: auto;
+        }
+        
+        .list-item-box {
+            min-width: 100px;
+            padding: 1rem;
+            margin: 0 0.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 3px solid var(--git-color);
+            position: relative;
+        }
+        
+        .list-index {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--git-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .list-content {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+        
+        .data-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .data-type-card {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid var(--git-color);
+        }
+        
+        .data-type-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--git-color);
+        }
+        
+        .collection-comparison {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: rgba(240, 83, 51, 0.05);
+        }
+        
+        .feature-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 2px;
+        }
+        
+        .feature-yes {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+        }
+        
+        .feature-no {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+        
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .property-card {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .property-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--git-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python Operator Precedence.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python - Access List Items.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python Lists</h2>
+            <p>பைத்தான் பட்டியல்களைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Python Lists</h2>
+            
+            <div class="code-example">
+                <pre><code>mylist = ["apple", "banana", "cherry"]</code></pre>
+            </div>
+            
+            <p>பட்டியல்கள் ஒரு மாறியில் பல உருப்படிகளைச் சேமிக்கப் பயன்படுகின்றன.</p>
+            
+            <p>பட்டியல்கள் தரவு தொகுப்புகளைச் சேமிக்க பைத்தானில் உள்ள 4 உள்ளமை தரவு வகைகளில் ஒன்றாகும், மற்ற 3 டூப்பிள், செட் மற்றும் அகராதி ஆகும், இவை அனைத்தும் வெவ்வேறு தரங்கள் மற்றும் பயன்பாட்டைக் கொண்டுள்ளன.</p>
+        </section>
+
+        <!-- Creating Lists -->
+        <section class="content-section" id="creating-lists">
+            <h2>பட்டியல்களை உருவாக்குதல்</h2>
+            
+            <p>பட்டியல்கள் சதுர அடைப்புக்குறிகளைப் பயன்படுத்தி உருவாக்கப்படுகின்றன:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>thislist = ["apple", "banana", "cherry"]
+print(thislist)  # Output: ['apple', 'banana', 'cherry']</code></pre>
+            </div>
+            
+            <div class="list-visual">
+                <div class="list-item-box">
+                    <div class="list-index">0</div>
+                    <div class="list-content">"apple"</div>
+                </div>
+                <div class="list-item-box">
+                    <div class="list-index">1</div>
+                    <div class="list-content">"banana"</div>
+                </div>
+                <div class="list-item-box">
+                    <div class="list-index">2</div>
+                    <div class="list-content">"cherry"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- List Properties -->
+        <section class="content-section" id="list-properties">
+            <h2>பட்டியல் பண்புகள்</h2>
+            
+            <div class="property-grid">
+                <div class="property-card">
+                    <div class="property-icon">
+                        <i class="fas fa-sort-amount-down"></i>
+                    </div>
+                    <h4>Ordered</h4>
+                    <p>வரிசைப்படுத்தப்பட்டது</p>
+                    <p>உருப்படிகளுக்கு வரையறுக்கப்பட்ட வரிசை உள்ளது</p>
+                </div>
+                
+                <div class="property-card">
+                    <div class="property-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h4>Changeable</h4>
+                    <p>மாற்றக்கூடியது</p>
+                    <p>உருப்படிகளை மாற்ற, சேர்க்க, நீக்கலாம்</p>
+                </div>
+                
+                <div class="property-card">
+                    <div class="property-icon">
+                        <i class="fas fa-clone"></i>
+                    </div>
+                    <h4>Allow Duplicates</h4>
+                    <p>நகல்களை அனுமதிக்கும்</p>
+                    <p>ஒரே மதிப்புகளைக் கொண்ட உருப்படிகளைக் கொள்ளலாம்</p>
+                </div>
+                
+                <div class="property-card">
+                    <div class="property-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h4>Indexed</h4>
+                    <p>குறியிடப்பட்டது</p>
+                    <p>முதல் உருப்படி குறியீடு [0], இரண்டாவது [1], போன்றவை</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ordered Property -->
+        <section class="content-section" id="ordered">
+            <h2>Ordered (வரிசைப்படுத்தப்பட்டது)</h2>
+            
+            <p>பட்டியல்கள் வரிசைப்படுத்தப்பட்டவை என்று சொல்லும்போது, உருப்படிகளுக்கு வரையறுக்கப்பட்ட வரிசை உள்ளது, மேலும் அந்த வரிசை மாறாது என்று பொருள்.</p>
+            
+            <p>நீங்கள் பட்டியலில் புதிய உருப்படிகளைச் சேர்க்கும்போது, புதிய உருப்படிகள் பட்டியலின் இறுதியில் வைக்கப்படும்.</p>
+            
+            <div class="code-example">
+                <pre><code>fruits = ["apple", "banana", "cherry"]
+fruits.append("orange")  # Add new item
+print(fruits)  # Output: ['apple', 'banana', 'cherry', 'orange']</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>வரிசையை மாற்றும் சில பட்டியல் முறைகள் உள்ளன, ஆனால் பொதுவாக: உருப்படிகளின் வரிசை மாறாது.</p>
+            </div>
+        </section>
+
+        <!-- Changeable Property -->
+        <section class="content-section" id="changeable">
+            <h2>Changeable (மாற்றக்கூடியது)</h2>
+            
+            <p>பட்டியல் மாற்றக்கூடியது, அதாவது பட்டியல் உருவாக்கப்பட்ட பிறகு, பட்டியலில் உள்ள உருப்படிகளை மாற்றலாம், சேர்க்கலாம் மற்றும் நீக்கலாம்.</p>
+            
+            <div class="code-example">
+                <pre><code>thislist = ["apple", "banana", "cherry"]
+thislist[1] = "blackcurrant"  # Change item at index 1
+print(thislist)  # Output: ['apple', 'blackcurrant', 'cherry']</code></pre>
+            </div>
+        </section>
+
+        <!-- Allow Duplicates -->
+        <section class="content-section" id="duplicates">
+            <h2>Allow Duplicates (நகல்களை அனுமதிக்கும்)</h2>
+            
+            <p>பட்டியல்கள் குறியிடப்பட்டிருப்பதால், பட்டியல்கள் ஒரே மதிப்பைக் கொண்ட உருப்படிகளைக் கொண்டிருக்கலாம்:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>thislist = ["apple", "banana", "cherry", "apple", "cherry"]
+print(thislist)  # Output: ['apple', 'banana', 'cherry', 'apple', 'cherry']</code></pre>
+            </div>
+            
+            <div class="list-visual">
+                <div class="list-item-box">
+                    <div class="list-index">0</div>
+                    <div class="list-content">"apple"</div>
+                </div>
+                <div class="list-item-box">
+                    <div class="list-index">1</div>
+                    <div class="list-content">"banana"</div>
+                </div>
+                <div class="list-item-box">
+                    <div class="list-index">2</div>
+                    <div class="list-content">"cherry"</div>
+                </div>
+                <div class="list-item-box">
+                    <div class="list-index">3</div>
+                    <div class="list-content">"apple"</div>
+                </div>
+                <div class="list-item-box">
+                    <div class="list-index">4</div>
+                    <div class="list-content">"cherry"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- List Length -->
+        <section class="content-section" id="list-length">
+            <h2>பட்டியல் நீளம்</h2>
+            
+            <p>ஒரு பட்டியலில் எத்தனை உருப்படிகள் உள்ளன என்பதைத் தீர்மானிக்க, <code>len()</code> செயல்பாட்டைப் பயன்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>thislist = ["apple", "banana", "cherry"]
+print(len(thislist))  # Output: 3</code></pre>
+            </div>
+            
+            <div class="list-visual">
+                <div class="list-item-box">
+                    <div class="list-index">0</div>
+                    <div class="list-content">"apple"</div>
+                </div>
+                <div class="list-item-box">
+                    <div class="list-index">1</div>
+                    <div class="list-content">"banana"</div>
+                </div>
+                <div class="list-item-box">
+                    <div class="list-index">2</div>
+                    <div class="list-content">"cherry"</div>
+                </div>
+            </div>
+            <p class="text-center"><strong>len() = 3</strong> (3 உருப்படிகள்)</p>
+        </section>
+
+        <!-- List Items - Data Types -->
+        <section class="content-section" id="data-types">
+            <h2>பட்டியல் உருப்படிகள் - தரவு வகைகள்</h2>
+            
+            <p>பட்டியல் உருப்படிகள் எந்த தரவு வகையிலும் இருக்கலாம்:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>list1 = ["apple", "banana", "cherry"]   # Strings
+list2 = [1, 5, 7, 9, 3]                # Integers
+list3 = [True, False, False]           # Booleans</code></pre>
+            </div>
+            
+            <p>ஒரு பட்டியல் வெவ்வேறு தரவு வகைகளைக் கொண்டிருக்கலாம்:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>list1 = ["abc", 34, True, 40, "male"]
+print(list1)  # Output: ['abc', 34, True, 40, 'male']</code></pre>
+            </div>
+            
+            <div class="data-type-grid">
+                <div class="data-type-card">
+                    <div class="data-type-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h4>Strings</h4>
+                    <p>சரங்கள்</p>
+                    <code>"apple", "banana"</code>
+                </div>
+                
+                <div class="data-type-card">
+                    <div class="data-type-icon">
+                        <i class="fas fa-sort-numeric-up"></i>
+                    </div>
+                    <h4>Integers</h4>
+                    <p>முழு எண்கள்</p>
+                    <code>1, 5, 7, 9</code>
+                </div>
+                
+                <div class="data-type-card">
+                    <div class="data-type-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4>Booleans</h4>
+                    <p>பூலியன் மதிப்புகள்</p>
+                    <code>True, False</code>
+                </div>
+                
+                <div class="data-type-card">
+                    <div class="data-type-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <h4>Mixed Types</h4>
+                    <p>கலப்பு வகைகள்</p>
+                    <code>["abc", 34, True]</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- type() Function -->
+        <section class="content-section" id="type-function">
+            <h2>type() செயல்பாடு</h2>
+            
+            <p>பைத்தானின் கண்ணோட்டத்தில், பட்டியல்கள் 'list' தரவு வகையைக் கொண்ட பொருள்களாக வரையறுக்கப்படுகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>&lt;class 'list'&gt;</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>mylist = ["apple", "banana", "cherry"]
+print(type(mylist))  # Output: &lt;class 'list'&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- The list() Constructor -->
+        <section class="content-section" id="list-constructor">
+            <h2>The list() Constructor</h2>
+            
+            <p>புதிய பட்டியலை உருவாக்கும் போது <code>list()</code> கட்டுமானியைப் பயன்படுத்துவதும் சாத்தியமாகும்.</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>thislist = list(("apple", "banana", "cherry"))  # note the double round-brackets
+print(thislist)  # Output: ['apple', 'banana', 'cherry']</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p><code>list()</code> கட்டுமானியைப் பயன்படுத்தும்போது, இரட்டை வட்ட அடைப்புக்குறிகள் பயன்படுத்தப்படுகின்றன. இது ஒரு டூப்பிளை பட்டியலாக மாற்றுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Python Collections (Arrays) -->
+        <section class="content-section" id="collections">
+            <h2>Python Collections (Arrays)</h2>
+            
+            <p>பைத்தான் நிரலாக்க மொழியில் நான்கு தொகுப்பு தரவு வகைகள் உள்ளன:</p>
+            
+            <div class="collection-comparison">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Collection Type</th>
+                            <th>Ordered</th>
+                            <th>Changeable</th>
+                            <th>Duplicate Members</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>List</strong></td>
+                            <td><span class="feature-tag feature-yes">Yes</span></td>
+                            <td><span class="feature-tag feature-yes">Yes</span></td>
+                            <td><span class="feature-tag feature-yes">Yes</span></td>
+                            <td><code>["a", "b", "c"]</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tuple</strong></td>
+                            <td><span class="feature-tag feature-yes">Yes</span></td>
+                            <td><span class="feature-tag feature-no">No</span></td>
+                            <td><span class="feature-tag feature-yes">Yes</span></td>
+                            <td><code>("a", "b", "c")</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Set</strong></td>
+                            <td><span class="feature-tag feature-no">No</span></td>
+                            <td><span class="feature-tag feature-yes">Yes*</span></td>
+                            <td><span class="feature-tag feature-no">No</span></td>
+                            <td><code>{"a", "b", "c"}</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dictionary</strong></td>
+                            <td><span class="feature-tag feature-yes">Yes**</span></td>
+                            <td><span class="feature-tag feature-yes">Yes</span></td>
+                            <td><span class="feature-tag feature-no">No</span></td>
+                            <td><code>{"a": 1, "b": 2}</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்புகள்:</h4>
+                <p>* செட் உருப்படிகள் மாற்ற முடியாதவை, ஆனால் நீங்கள் எப்போது வேண்டுமானாலும் உருப்படிகளை நீக்க/சேர்க்கலாம்.<br>
+                ** பைத்தான் பதிப்பு 3.7 முதல், அகராதிகள் வரிசைப்படுத்தப்பட்டவை. பைத்தான் 3.6 மற்றும் அதற்கு முந்தைய பதிப்புகளில், அகராதிகள் வரிசைப்படுத்தப்படாதவை.</p>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> முக்கியம்:</h4>
+                <p>ஒரு தொகுப்பு வகையைத் தேர்ந்தெடுக்கும்போது, அந்த வகையின் பண்புகளைப் புரிந்துகொள்வது பயனுள்ளதாக இருக்கும். ஒரு குறிப்பிட்ட தரவுத் தொகுப்பிற்கு சரியான வகையைத் தேர்ந்தெடுப்பது அர்த்தத்தைத் தக்கவைத்துக்கொள்ளவும், செயல்திறன் அல்லது பாதுகாப்பை அதிகரிக்கவும் உதவும்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சிகள் மூலம் கற்றல்</h2>
+            
+            <p>இந்த டுடோரியலில் உள்ள பல அத்தியாயங்கள் உங்கள் அறிவு நிலையைச் சரிபார்க்கக்கூடிய பயிற்சியுடன் முடிகின்றன.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் தொடரியலின் முடிவு என்னவாக இருக்கும்:</h4>
+                
+                <div class="code-example">
+                    <pre><code>mylist = ['apple', 'banana', 'cherry']
+print(mylist[1])</code></pre>
+                </div>
+                
+                <div class="list-visual" style="margin: 1rem 0;">
+                    <div class="list-item-box">
+                        <div class="list-index">0</div>
+                        <div class="list-content">'apple'</div>
+                    </div>
+                    <div class="list-item-box" style="border-color: #27ae60; background: rgba(39, 174, 96, 0.1);">
+                        <div class="list-index">1</div>
+                        <div class="list-content">'banana'</div>
+                    </div>
+                    <div class="list-item-box">
+                        <div class="list-index">2</div>
+                        <div class="list-content">'cherry'</div>
+                    </div>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">apple</div>
+                            <div class="option-feedback incorrect">✗ தவறு! பட்டியல் குறியீடு 0 இலிருந்து தொடங்குகிறது, எனவே mylist[0] = 'apple'</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">banana</div>
+                            <div class="option-feedback correct">✓ சரி! பட்டியல்கள் 0 இலிருந்து குறியிடப்படுகின்றன. mylist[1] இரண்டாவது உருப்படியைக் குறிக்கிறது, அதாவது 'banana'</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">cherry</div>
+                            <div class="option-feedback incorrect">✗ தவறு! mylist[2] = 'cherry' (மூன்றாவது உருப்படி). mylist[1] இரண்டாவது உருப்படி</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section class="content-section" id="key-takeaways">
+            <h2>முக்கிய கருத்துகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>பட்டியல் உருவாக்கம்:</strong> சதுர அடைப்புக்குறிகளைப் பயன்படுத்தவும்<br>
+                        <code>mylist = [1, 2, 3]</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>குறியீடு:</strong> பட்டியல்கள் 0 இலிருந்து குறியிடப்படுகின்றன<br>
+                        <code>mylist[0]  # முதல் உருப்படி</code><br>
+                        <code>mylist[1]  # இரண்டாவது உருப்படி</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>நீளம்:</strong> <code>len()</code> செயல்பாட்டைப் பயன்படுத்தவும்<br>
+                        <code>len(mylist)  # உருப்படிகளின் எண்ணிக்கை</code>
+                    </div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>தரவு வகைகள்:</strong> பல்வேறு வகையான உருப்படிகளைக் கொள்ளலாம்<br>
+                        <code>mixed = ["text", 123, True, 45.6]</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python Operator Precedence.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python - Access List Items.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Python Lists</a></li>
+                    <li><a href="#creating-lists">பட்டியல்களை உருவாக்குதல்</a></li>
+                    <li><a href="#list-properties">பட்டியல் பண்புகள்</a></li>
+                    <li><a href="#ordered">Ordered Property</a></li>
+                    <li><a href="#changeable">Changeable Property</a></li>
+                    <li><a href="#duplicates">Allow Duplicates</a></li>
+                    <li><a href="#list-length">பட்டியல் நீளம்</a></li>
+                    <li><a href="#data-types">தரவு வகைகள்</a></li>
+                    <li><a href="#type-function">type() செயல்பாடு</a></li>
+                    <li><a href="#list-constructor">list() Constructor</a></li>
+                    <li><a href="#collections">Python Collections</a></li>
+                    <li><a href="#exercises">பயிற்சிகள்</a></li>
+                    <li><a href="#key-takeaways">முக்கிய கருத்துகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

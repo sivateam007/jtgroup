@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS The position Property - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Position examples styling */
+        .position-demo-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 2px solid #e9ecef;
+            min-height: 150px;
+            position: relative;
+        }
+        
+        .static-demo {
+            position: static;
+            border: 3px solid #73AD21;
+            padding: 15px;
+            background-color: white;
+            margin-bottom: 10px;
+        }
+        
+        .relative-demo {
+            position: relative;
+            left: 30px;
+            border: 3px solid #73AD21;
+            padding: 15px;
+            background-color: white;
+            margin: 20px 0;
+        }
+        
+        .fixed-demo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 250px;
+            border: 3px solid #73AD21;
+            padding: 15px;
+            background-color: white;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .absolute-container {
+            position: relative;
+            width: 400px;
+            height: 200px;
+            border: 3px solid green;
+            margin: 20px 0;
+            background-color: #f0fff0;
+        }
+        
+        .absolute-demo {
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            width: 200px;
+            height: 100px;
+            border: 3px solid red;
+            padding: 15px;
+            background-color: #fff0f0;
+        }
+        
+        .sticky-demo-container {
+            height: 300px;
+            overflow-y: auto;
+            border: 2px solid #ddd;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        
+        .sticky-demo {
+            position: sticky;
+            top: 0;
+            background-color: green;
+            color: white;
+            padding: 15px;
+            border: 2px solid #4CAF50;
+            z-index: 100;
+        }
+        
+        .sticky-content {
+            padding: 10px;
+            height: 800px;
+        }
+        
+        /* Image text positioning */
+        .image-position-container {
+            position: relative;
+            width: 100%;
+            margin: 2rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .position-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .image-text {
+            position: absolute;
+            color: white;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .bottom-left {
+            bottom: 20px;
+            left: 20px;
+        }
+        
+        .top-left {
+            top: 20px;
+            left: 20px;
+        }
+        
+        .top-right {
+            top: 20px;
+            right: 20px;
+        }
+        
+        .bottom-right {
+            bottom: 20px;
+            right: 20px;
+        }
+        
+        .centered {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 40px;
+            font-size: 1.5rem;
+        }
+        
+        /* Try it yourself section */
+        .try-yourself {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            color: white;
+        }
+        
+        .try-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .try-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .try-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+        
+        /* Position properties table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .properties-table th {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .properties-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .properties-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .properties-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Demo labels */
+        .demo-label {
+            font-weight: bold;
+            color: var(--git-color);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20The%20max-width%20Property.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20The%20z-index%20Property.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS The position Property</h2>
+            <p>வலைப்பக்கத்தில் உறுப்புகளின் இடத்தைக் கட்டுப்படுத்துங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Positioning -->
+        <section class="content-section" id="css-positioning">
+            <h2>CSS Positioning</h2>
+            
+            <p>CSS positioning என்பது வலைப்பக்கத்திற்குள் உறுப்புகளின் இடத்தைக் கட்டுப்படுத்துவது பற்றியது.</p>
+            
+            <p>CSS positioning உடன், நீங்கள் இயல்பான ஆவணப் பாய்வை மீறலாம்.</p>
+        </section>
+
+        <!-- The CSS position Property -->
+        <section class="content-section" id="position-property">
+            <h2>The CSS position Property</h2>
+            
+            <p>position பண்பானது ஒரு உறுப்புக்கான positioning வகையைக் குறிப்பிடுகிறது.</p>
+            
+            <p>இந்த பண்பு பின்வரும் மதிப்புகளில் ஒன்றைக் கொண்டிருக்கலாம்:</p>
+            
+            <ul>
+                <li>static - இது இயல்புநிலை</li>
+                <li>relative</li>
+                <li>fixed</li>
+                <li>absolute</li>
+                <li>sticky</li>
+            </ul>
+            
+            <p>உறுப்புகள் பின்னர் top, bottom, left, மற்றும் right பண்புகளுடன் அவற்றின் இறுதி இடத்தில் வைக்கப்படுகின்றன.</p>
+        </section>
+
+        <!-- CSS position: static -->
+        <section class="content-section" id="position-static">
+            <h2>CSS position: static</h2>
+            
+            <p>அனைத்து HTML உறுப்புகளும் இயல்பாக static ஆக வைக்கப்பட்டுள்ளன.</p>
+            
+            <p>Static வைக்கப்பட்ட உறுப்புகள் top, bottom, left, மற்றும் right பண்புகளால் பாதிக்கப்படாது.</p>
+            
+            <p>position: static; கொண்ட உறுப்பு எப்போதும் பக்கத்தின் இயல்பான பாய்வின்படி வைக்கப்படுகிறது:</p>
+            
+            <div class="position-demo-container">
+                <div class="demo-label">position: static</div>
+                <div class="static-demo">
+                    இந்த &lt;div&gt; உறுப்பு position: static; கொண்டது;
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div.static {
+  position: static;
+  border: 3px solid #73AD21;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS position: relative -->
+        <section class="content-section" id="position-relative">
+            <h2>CSS position: relative</h2>
+            
+            <p>position: relative; கொண்ட உறுப்பு ஆவணப் பாய்வில் அதன் இயல்பான நிலையுடன் தொடர்புடையதாக வைக்கப்படுகிறது.</p>
+            
+            <p>top, right, bottom, மற்றும் left பண்புகளை அமைப்பது உறுப்பை அதன் இயல்பான நிலையிலிருந்து சரிசெய்ய காரணமாகும். மற்ற உள்ளடக்கம் உறுப்பால் விடப்பட்ட இடைவெளியில் பொருந்த சரிசெய்யப்படாது.</p>
+            
+            <div class="position-demo-container">
+                <div class="demo-label">position: relative (left: 30px)</div>
+                <div class="relative-demo">
+                    இந்த &lt;div&gt; position: relative கொண்டது, மற்றும் அதன் இயல்பான நிலையிலிருந்து வலதுபுறம் 30px சாய்வாக உள்ளது
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div.relative {
+  position: relative;
+  left: 30px;
+  border: 3px solid #73AD21;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS position: fixed -->
+        <section class="content-section" id="position-fixed">
+            <h2>CSS position: fixed</h2>
+            
+            <p>position: fixed; கொண்ட உறுப்பு viewport உடன் தொடர்புடையதாக வைக்கப்படுகிறது, அதாவது பக்கம் உருளப்பட்டாலும் அது எப்போதும் அதே இடத்தில் இருக்கும். top, right, bottom, மற்றும் left பண்புகள் உறுப்பின் இறுதி இடத்தை அமைக்க பயன்படுத்தப்படுகின்றன.</p>
+            
+            <p>ஒரு fixed உறுப்பு பக்கத்தில் ஒரு இடைவெளியை விட்டுவைக்காது, அது பொதுவாக அமைந்திருக்கும்.</p>
+            
+            <div class="fixed-demo">
+                <div class="demo-label">position: fixed</div>
+                <p>இந்த &lt;div&gt; உறுப்பு position: fixed; கொண்டது;</p>
+                <p>பக்கத்தின் கீழ்-வலது மூலையில் உள்ள fixed உறுப்பைக் கவனிக்கவும்.</p>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div.fixed {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  border: 3px solid #73AD21;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS position: absolute -->
+        <section class="content-section" id="position-absolute">
+            <h2>CSS position: absolute</h2>
+            
+            <p>position: absolute; கொண்ட உறுப்பு அருகிலுள்ள position வைக்கப்பட்ட மூதாதையுடன் (static அல்லாத position கொண்ட) தொடர்புடையதாக வைக்கப்படுகிறது.</p>
+            
+            <p>இருப்பினும்; ஒரு absolute வைக்கப்பட்ட உறுப்புக்கு position வைக்கப்பட்ட மூதாதைகள் இல்லை என்றால், அது ஆவண உடலைப் பயன்படுத்துகிறது, மேலும் பக்கம் உருள்வதன் மூலம் நகரும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">📌</span> குறிப்பு:</h4>
+                <p>Absolute வைக்கப்பட்ட உறுப்புகள் இயல்பான ஆவணப் பாய்விலிருந்து அகற்றப்படுகின்றன, மேலும் மற்ற உறுப்புகளுடன் ஒன்று மேலொன்றாக இருக்கலாம்.</p>
+            </div>
+            
+            <div class="position-demo-container">
+                <div class="demo-label">position: absolute within position: relative container</div>
+                <div class="absolute-container">
+                    இந்த &lt;div&gt; உறுப்பு position: relative; கொண்டது
+                    <div class="absolute-demo">
+                        இந்த &lt;div&gt; உறுப்பு position: absolute; கொண்டது
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div.relative {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  border: 3px solid green;
+}
+
+div.absolute {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 200px;
+  height: 100px;
+  border: 3px solid red;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS position: sticky -->
+        <section class="content-section" id="position-sticky">
+            <h2>CSS position: sticky</h2>
+            
+            <p>position: sticky; கொண்ட உறுப்பு உருளல் நிலையைப் பொறுத்து relative மற்றும் fixed position இடையே மாறுகிறது.</p>
+            
+            <p>ஒரு sticky உறுப்பு ஒரு குறிப்பிட்ட உருளல் நிலை அடையும் வரை relative ஆக வைக்கப்படுகிறது - பின்னர் அது அந்த இடத்தில் "ஒட்டிக்கொள்கிறது" (position:fixed போல).</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> குறிப்பு:</h4>
+                <p>sticky positioning வேலை செய்ய, top, right, bottom அல்லது left பண்புகளில் குறைந்தது ஒன்றை நீங்கள் குறிப்பிட வேண்டும்.</p>
+            </div>
+            
+            <div class="position-demo-container">
+                <div class="demo-label">position: sticky (scroll to see effect)</div>
+                <div class="sticky-demo-container">
+                    <div class="sticky-demo">
+                        இந்த &lt;div&gt; உறுப்பு position: sticky; கொண்டது (top: 0)
+                    </div>
+                    <div class="sticky-content">
+                        <p>கீழே உருளவும்... sticky உறுப்பு மேல் பகுதியை அடையும் போது, அது ஒட்டிக்கொள்ளும்.</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                        <p>மேலும் உள்ளடக்கம்...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div.sticky {
+  position: sticky;
+  top: 0;
+  background-color: green;
+  border: 2px solid #4CAF50;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Positioning Text On an Image -->
+        <section class="content-section" id="image-positioning">
+            <h2>Positioning Text On an Image</h2>
+            
+            <p>படத்தின் மேல் உரையை எவ்வாறு வைப்பது:</p>
+            
+            <div class="image-position-container">
+                <img src="4.jpg" alt="Forest Image" class="position-image">
+                <div class="image-text bottom-left">Bottom Left</div>
+                <div class="image-text top-left">Top Left</div>
+                <div class="image-text top-right">Top Right</div>
+                <div class="image-text bottom-right">Bottom Right</div>
+                <div class="image-text centered">Centered</div>
+            </div>
+            
+            <div class="try-yourself">
+                <h4>Try it Yourself:</h4>
+                <p>படத்தின் மேல் உரையை வெவ்வேறு இடங்களில் வைக்க position மதிப்புகளை மாற்றவும்.</p>
+                
+                <div class="try-controls">
+                    <button class="try-btn" onclick="changeTextPosition('static')">Static</button>
+                    <button class="try-btn" onclick="changeTextPosition('relative')">Relative</button>
+                    <button class="try-btn" onclick="changeTextPosition('absolute')">Absolute</button>
+                    <button class="try-btn" onclick="changeTextPosition('fixed')">Fixed</button>
+                    <button class="try-btn" onclick="resetTextPosition()">Reset</button>
+                </div>
+                
+                <p id="position-status" style="margin-top: 15px;">உரை தற்போது absolute position இல் உள்ளது.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <p>HTML உறுப்புகளுக்கான position பண்பின் இயல்புநிலை மதிப்பு என்ன?</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> HTML உறுப்புகளுக்கான position பண்பின் இயல்புநிலை மதிப்பு என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">relative</div>
+                            <div class="option-feedback incorrect">✗ தவறு! relative என்பது கைமுறையாக அமைக்கப்பட வேண்டிய மதிப்பு, இயல்புநிலை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">static</div>
+                            <div class="option-feedback correct">✓ சரி! அனைத்து HTML உறுப்புகளுக்கும் இயல்புநிலை position மதிப்பு static ஆகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">absolute</div>
+                            <div class="option-feedback incorrect">✗ தவறு! absolute position கைமுறையாக அமைக்கப்பட வேண்டும், இயல்புநிலை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">fixed</div>
+                            <div class="option-feedback incorrect">✗ தவறு! fixed position குறிப்பிட்ட காட்சி நிலைகளுக்கு பயன்படுத்தப்படுகிறது, இயல்புநிலை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Position Properties -->
+        <section class="content-section" id="position-properties">
+            <h2>CSS Position Properties</h2>
+            
+            <p>Positioning தொடர்பான CSS பண்புகள்:</p>
+            
+            <table class="properties-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>position</td>
+                    <td>உறுப்புக்கான positioning வகையைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>top</td>
+                    <td>உறுப்பின் மேல் விளிம்பை அமைக்கிறது</td>
+                </tr>
+                <tr>
+                    <td>right</td>
+                    <td>உறுப்பின் வலது விளிம்பை அமைக்கிறது</td>
+                </tr>
+                <tr>
+                    <td>bottom</td>
+                    <td>உறுப்பின் கீழ் விளிம்பை அமைக்கிறது</td>
+                </tr>
+                <tr>
+                    <td>left</td>
+                    <td>உறுப்பின் இடது விளிம்பை அமைக்கிறது</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20The%20max-width%20Property.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20The%20z-index%20Property.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#css-positioning">CSS Positioning</a></li>
+                    <li><a href="#position-static">position: static</a></li>
+                    <li><a href="#position-relative">position: relative</a></li>
+                    <li><a href="#position-fixed">position: fixed</a></li>
+                    <li><a href="#position-absolute">position: absolute</a></li>
+                    <li><a href="#position-sticky">position: sticky</a></li>
+                    <li><a href="#image-positioning">Image Positioning</a></li>
+                    <li><a href="#exercises">Exercise</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Try it yourself functions
+        function changeTextPosition(position) {
+            const textElements = document.querySelectorAll('.image-text');
+            const status = document.getElementById('position-status');
+            
+            textElements.forEach(text => {
+                text.style.position = position;
+                
+                // Adjust positioning based on type
+                if (position === 'static') {
+                    text.style.top = '';
+                    text.style.bottom = '';
+                    text.style.left = '';
+                    text.style.right = '';
+                    text.style.transform = '';
+                } else if (position === 'relative') {
+                    // Add some offset for relative
+                    if (text.classList.contains('centered')) {
+                        text.style.top = '50%';
+                        text.style.left = '50%';
+                        text.style.transform = 'translate(-50%, -50%)';
+                    }
+                } else if (position === 'fixed') {
+                    // Fixed to viewport
+                    if (text.classList.contains('bottom-left')) {
+                        text.style.bottom = '20px';
+                        text.style.left = '20px';
+                    } else if (text.classList.contains('top-left')) {
+                        text.style.top = '20px';
+                        text.style.left = '20px';
+                    } else if (text.classList.contains('top-right')) {
+                        text.style.top = '20px';
+                        text.style.right = '20px';
+                    } else if (text.classList.contains('bottom-right')) {
+                        text.style.bottom = '20px';
+                        text.style.right = '20px';
+                    } else if (text.classList.contains('centered')) {
+                        text.style.top = '50%';
+                        text.style.left = '50%';
+                        text.style.transform = 'translate(-50%, -50%)';
+                    }
+                }
+            });
+            
+            status.textContent = `உரை தற்போது ${position} position இல் உள்ளது.`;
+        }
+        
+        function resetTextPosition() {
+            const textElements = document.querySelectorAll('.image-text');
+            const status = document.getElementById('position-status');
+            
+            textElements.forEach(text => {
+                text.style.position = 'absolute';
+                
+                // Reset to original positions
+                if (text.classList.contains('bottom-left')) {
+                    text.style.bottom = '20px';
+                    text.style.left = '20px';
+                    text.style.right = '';
+                    text.style.top = '';
+                    text.style.transform = '';
+                } else if (text.classList.contains('top-left')) {
+                    text.style.top = '20px';
+                    text.style.left = '20px';
+                    text.style.right = '';
+                    text.style.bottom = '';
+                    text.style.transform = '';
+                } else if (text.classList.contains('top-right')) {
+                    text.style.top = '20px';
+                    text.style.right = '20px';
+                    text.style.left = '';
+                    text.style.bottom = '';
+                    text.style.transform = '';
+                } else if (text.classList.contains('bottom-right')) {
+                    text.style.bottom = '20px';
+                    text.style.right = '20px';
+                    text.style.left = '';
+                    text.style.top = '';
+                    text.style.transform = '';
+                } else if (text.classList.contains('centered')) {
+                    text.style.top = '50%';
+                    text.style.left = '50%';
+                    text.style.transform = 'translate(-50%, -50%)';
+                    text.style.right = '';
+                    text.style.bottom = '';
+                }
+            });
+            
+            status.textContent = 'உரை தற்போது absolute position இல் உள்ளது (மீட்டமைக்கப்பட்டது).';
+        }
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

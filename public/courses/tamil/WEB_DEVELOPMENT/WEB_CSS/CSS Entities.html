@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Entities - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Entities table styling */
+        .entities-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.85rem;
+        }
+        
+        .entities-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        .entities-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+            line-height: 1.4;
+        }
+        
+        .entities-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .entities-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .char-cell {
+            font-size: 1.2rem;
+            text-align: center;
+            min-width: 60px;
+            font-weight: bold;
+        }
+        
+        .entity-cell {
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            min-width: 70px;
+        }
+        
+        .name-cell {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        /* Filter and search */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--git-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .category-filter {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .category-btn.active {
+            background: var(--git-color);
+            color: white;
+            border-color: var(--git-color);
+        }
+        
+        /* Responsive table */
+        @media (max-width: 768px) {
+            .entities-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .entities-table th,
+            .entities-table td {
+                min-width: 120px;
+            }
+            
+            .table-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+            
+            .category-filter {
+                justify-content: center;
+            }
+            
+            .char-cell {
+                font-size: 1rem;
+                min-width: 50px;
+            }
+            
+            .entity-cell {
+                font-size: 0.75rem;
+                min-width: 60px;
+            }
+        }
+        
+        /* Copy to clipboard */
+        .copy-btn {
+            background: var(--git-color);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #e74c3c;
+        }
+        
+        /* Demo section */
+        .demo-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .demo-box {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .demo-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-code {
+            font-family: 'Courier New', monospace;
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        /* Entity groups */
+        .entity-group {
+            margin: 3rem 0 2rem 0;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+        
+        .entity-group h3 {
+            color: var(--dark);
+        }
+        
+        .group-description {
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Default%20Values%20Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="certificate.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Entities</h2>
+            <p>முழுமையான CSS எண்டிட்டி குறிப்பு</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Complete CSS Entity Reference</h2>
+            
+            <p>HTML இல் இவற்றில் ஏதேனும் எழுத்துக்களைக் காண்பிக்க CSS ஐப் பயன்படுத்தினால், கீழே உள்ள அட்டவணையில் காணப்படும் CSS எண்டிட்டியைப் பயன்படுத்தலாம்.</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>&lt;style&gt;
+h2:after {
+  content: ' \00A7';
+}
+&lt;/style&gt;</code></pre>
+                <p>அனைத்து &lt;h2&gt; உறுப்புகளும் இறுதியில் இந்த எழுத்துடன் காண்பிக்கப்படும்:</p>
+                <p style="font-size: 1.2rem; font-weight: bold;">I will display §</p>
+            </div>
+        </section>
+
+        <!-- Demo Section -->
+        <section class="content-section" id="demo">
+            <h2>CSS Entities Usage</h2>
+            
+            <div class="demo-section">
+                <p>CSS எண்டிட்டிகளைப் பயன்படுத்தி சிறப்பு எழுத்துக்களைச் சேர்க்கலாம்:</p>
+                
+                <div class="demo-box">
+                    <div class="demo-title">Using CSS content property:</div>
+                    <div class="demo-code">.element:before {
+  content: '\00A9'; /* Copyright symbol */
+}</div>
+                    <p>Result: <span style="font-size: 1.2rem;">©</span></p>
+                </div>
+                
+                <div class="demo-box">
+                    <div class="demo-title">Using CSS in HTML:</div>
+                    <div class="demo-code">&lt;div class="icon"&gt;&amp;#x2714;&lt;/div&gt;
+.icon {
+  font-family: 'Arial';
+}</div>
+                    <p>Result: <span style="font-size: 1.2rem;">✔</span></p>
+                </div>
+                
+                <div class="tip-box">
+                    <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                    <p>CSS எண்டிட்டிகள் பொதுவாக Unicode ஹெக்ஸாடெசிமல் மதிப்புகளுடன் பயன்படுத்தப்படுகின்றன. எண்டிட்டி மதிப்புக்கு முன் பின்சாய்வு (\) சேர்க்க வேண்டும்.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table Controls -->
+        <div class="table-controls">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="எழுத்து, எண்டிட்டி அல்லது பெயரைத் தேடுக...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            
+            <div class="category-filter">
+                <button class="category-btn active" data-category="all">அனைத்தும்</button>
+                <button class="category-btn" data-category="basic">அடிப்படை</button>
+                <button class="category-btn" data-category="symbols">சின்னங்கள்</button>
+                <button class="category-btn" data-category="arrows">அம்புகள்</button>
+                <button class="category-btn" data-category="math">கணிதம்</button>
+            </div>
+        </div>
+
+        <!-- Basic Latin Entities -->
+        <section class="content-section" id="basic-entities">
+            <div class="entity-group">
+                <h3>Basic Latin Characters</h3>
+                <div class="group-description">அடிப்படை இலத்தீன் எழுத்துக்கள் மற்றும் நிறுத்தற்குறிகள்</div>
+            </div>
+            
+            <table class="entities-table" id="entities-table">
+                <thead>
+                    <tr>
+                        <th width="15%">Char</th>
+                        <th width="20%">CSS Entity</th>
+                        <th width="50%">Name</th>
+                        <th width="15%">Copy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-categories="basic">
+                        <td class="char-cell"> </td>
+                        <td class="entity-cell">\0020</td>
+                        <td class="name-cell">SPACE</td>
+                        <td><button class="copy-btn" data-entity="\0020">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">!</td>
+                        <td class="entity-cell">\0021</td>
+                        <td class="name-cell">EXCLAMATION MARK</td>
+                        <td><button class="copy-btn" data-entity="\0021">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">"</td>
+                        <td class="entity-cell">\0022</td>
+                        <td class="name-cell">QUOTATION MARK</td>
+                        <td><button class="copy-btn" data-entity="\0022">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">#</td>
+                        <td class="entity-cell">\0023</td>
+                        <td class="name-cell">NUMBER SIGN</td>
+                        <td><button class="copy-btn" data-entity="\0023">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">$</td>
+                        <td class="entity-cell">\0024</td>
+                        <td class="name-cell">DOLLAR SIGN</td>
+                        <td><button class="copy-btn" data-entity="\0024">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">%</td>
+                        <td class="entity-cell">\0025</td>
+                        <td class="name-cell">PERCENT SIGN</td>
+                        <td><button class="copy-btn" data-entity="\0025">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">&</td>
+                        <td class="entity-cell">\0026</td>
+                        <td class="name-cell">AMPERSAND</td>
+                        <td><button class="copy-btn" data-entity="\0026">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">'</td>
+                        <td class="entity-cell">\0027</td>
+                        <td class="name-cell">APOSTROPHE</td>
+                        <td><button class="copy-btn" data-entity="\0027">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">(</td>
+                        <td class="entity-cell">\0028</td>
+                        <td class="name-cell">LEFT PARENTHESIS</td>
+                        <td><button class="copy-btn" data-entity="\0028">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">)</td>
+                        <td class="entity-cell">\0029</td>
+                        <td class="name-cell">RIGHT PARENTHESIS</td>
+                        <td><button class="copy-btn" data-entity="\0029">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">*</td>
+                        <td class="entity-cell">\002A</td>
+                        <td class="name-cell">ASTERISK</td>
+                        <td><button class="copy-btn" data-entity="\002A">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">+</td>
+                        <td class="entity-cell">\002B</td>
+                        <td class="name-cell">PLUS SIGN</td>
+                        <td><button class="copy-btn" data-entity="\002B">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">,</td>
+                        <td class="entity-cell">\002C</td>
+                        <td class="name-cell">COMMA</td>
+                        <td><button class="copy-btn" data-entity="\002C">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">-</td>
+                        <td class="entity-cell">\002D</td>
+                        <td class="name-cell">HYPHEN-MINUS</td>
+                        <td><button class="copy-btn" data-entity="\002D">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">.</td>
+                        <td class="entity-cell">\002E</td>
+                        <td class="name-cell">FULL STOP</td>
+                        <td><button class="copy-btn" data-entity="\002E">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="basic">
+                        <td class="char-cell">/</td>
+                        <td class="entity-cell">\002F</td>
+                        <td class="name-cell">SOLIDUS</td>
+                        <td><button class="copy-btn" data-entity="\002F">நகலெடு</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Common Symbols -->
+        <section class="content-section" id="symbols-entities">
+            <div class="entity-group">
+                <h3>Common Symbols</h3>
+                <div class="group-description">பொதுவாகப் பயன்படுத்தப்படும் சிறப்பு சின்னங்கள்</div>
+            </div>
+            
+            <table class="entities-table">
+                <thead>
+                    <tr>
+                        <th width="15%">Char</th>
+                        <th width="20%">CSS Entity</th>
+                        <th width="50%">Name</th>
+                        <th width="15%">Copy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-categories="symbols">
+                        <td class="char-cell">©</td>
+                        <td class="entity-cell">\00A9</td>
+                        <td class="name-cell">COPYRIGHT SIGN</td>
+                        <td><button class="copy-btn" data-entity="\00A9">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">®</td>
+                        <td class="entity-cell">\00AE</td>
+                        <td class="name-cell">REGISTERED SIGN</td>
+                        <td><button class="copy-btn" data-entity="\00AE">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">™</td>
+                        <td class="entity-cell">\2122</td>
+                        <td class="name-cell">TRADE MARK SIGN</td>
+                        <td><button class="copy-btn" data-entity="\2122">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">€</td>
+                        <td class="entity-cell">\20AC</td>
+                        <td class="name-cell">EURO SIGN</td>
+                        <td><button class="copy-btn" data-entity="\20AC">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">$</td>
+                        <td class="entity-cell">\0024</td>
+                        <td class="name-cell">DOLLAR SIGN</td>
+                        <td><button class="copy-btn" data-entity="\0024">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">£</td>
+                        <td class="entity-cell">\00A3</td>
+                        <td class="name-cell">POUND SIGN</td>
+                        <td><button class="copy-btn" data-entity="\00A3">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">¥</td>
+                        <td class="entity-cell">\00A5</td>
+                        <td class="name-cell">YEN SIGN</td>
+                        <td><button class="copy-btn" data-entity="\00A5">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">§</td>
+                        <td class="entity-cell">\00A7</td>
+                        <td class="name-cell">SECTION SIGN</td>
+                        <td><button class="copy-btn" data-entity="\00A7">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">¶</td>
+                        <td class="entity-cell">\00B6</td>
+                        <td class="name-cell">PILCROW SIGN</td>
+                        <td><button class="copy-btn" data-entity="\00B6">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">†</td>
+                        <td class="entity-cell">\2020</td>
+                        <td class="name-cell">DAGGER</td>
+                        <td><button class="copy-btn" data-entity="\2020">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">‡</td>
+                        <td class="entity-cell">\2021</td>
+                        <td class="name-cell">DOUBLE DAGGER</td>
+                        <td><button class="copy-btn" data-entity="\2021">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">•</td>
+                        <td class="entity-cell">\2022</td>
+                        <td class="name-cell">BULLET</td>
+                        <td><button class="copy-btn" data-entity="\2022">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">°</td>
+                        <td class="entity-cell">\00B0</td>
+                        <td class="name-cell">DEGREE SIGN</td>
+                        <td><button class="copy-btn" data-entity="\00B0">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">±</td>
+                        <td class="entity-cell">\00B1</td>
+                        <td class="name-cell">PLUS-MINUS SIGN</td>
+                        <td><button class="copy-btn" data-entity="\00B1">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="symbols">
+                        <td class="char-cell">µ</td>
+                        <td class="entity-cell">\00B5</td>
+                        <td class="name-cell">MICRO SIGN</td>
+                        <td><button class="copy-btn" data-entity="\00B5">நகலெடு</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Arrows -->
+        <section class="content-section" id="arrows-entities">
+            <div class="entity-group">
+                <h3>Arrow Symbols</h3>
+                <div class="group-description">அம்பு சின்னங்கள் மற்றும் திசைகாட்டிகள்</div>
+            </div>
+            
+            <table class="entities-table">
+                <thead>
+                    <tr>
+                        <th width="15%">Char</th>
+                        <th width="20%">CSS Entity</th>
+                        <th width="50%">Name</th>
+                        <th width="15%">Copy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-categories="arrows">
+                        <td class="char-cell">←</td>
+                        <td class="entity-cell">\2190</td>
+                        <td class="name-cell">LEFTWARDS ARROW</td>
+                        <td><button class="copy-btn" data-entity="\2190">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">↑</td>
+                        <td class="entity-cell">\2191</td>
+                        <td class="name-cell">UPWARDS ARROW</td>
+                        <td><button class="copy-btn" data-entity="\2191">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">→</td>
+                        <td class="entity-cell">\2192</td>
+                        <td class="name-cell">RIGHTWARDS ARROW</td>
+                        <td><button class="copy-btn" data-entity="\2192">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">↓</td>
+                        <td class="entity-cell">\2193</td>
+                        <td class="name-cell">DOWNWARDS ARROW</td>
+                        <td><button class="copy-btn" data-entity="\2193">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">↔</td>
+                        <td class="entity-cell">\2194</td>
+                        <td class="name-cell">LEFT RIGHT ARROW</td>
+                        <td><button class="copy-btn" data-entity="\2194">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">↕</td>
+                        <td class="entity-cell">\2195</td>
+                        <td class="name-cell">UP DOWN ARROW</td>
+                        <td><button class="copy-btn" data-entity="\2195">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">↵</td>
+                        <td class="entity-cell">\21B5</td>
+                        <td class="name-cell">DOWNWARDS ARROW WITH CORNER LEFTWARDS</td>
+                        <td><button class="copy-btn" data-entity="\21B5">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">⇐</td>
+                        <td class="entity-cell">\21D0</td>
+                        <td class="name-cell">LEFTWARDS DOUBLE ARROW</td>
+                        <td><button class="copy-btn" data-entity="\21D0">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">⇑</td>
+                        <td class="entity-cell">\21D1</td>
+                        <td class="name-cell">UPWARDS DOUBLE ARROW</td>
+                        <td><button class="copy-btn" data-entity="\21D1">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">⇒</td>
+                        <td class="entity-cell">\21D2</td>
+                        <td class="name-cell">RIGHTWARDS DOUBLE ARROW</td>
+                        <td><button class="copy-btn" data-entity="\21D2">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">⇓</td>
+                        <td class="entity-cell">\21D3</td>
+                        <td class="name-cell">DOWNWARDS DOUBLE ARROW</td>
+                        <td><button class="copy-btn" data-entity="\21D3">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="arrows">
+                        <td class="char-cell">⇔</td>
+                        <td class="entity-cell">\21D4</td>
+                        <td class="name-cell">LEFT RIGHT DOUBLE ARROW</td>
+                        <td><button class="copy-btn" data-entity="\21D4">நகலெடு</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Mathematical Symbols -->
+        <section class="content-section" id="math-entities">
+            <div class="entity-group">
+                <h3>Mathematical Symbols</h3>
+                <div class="group-description">கணித சின்னங்கள் மற்றும் குறியீடுகள்</div>
+            </div>
+            
+            <table class="entities-table">
+                <thead>
+                    <tr>
+                        <th width="15%">Char</th>
+                        <th width="20%">CSS Entity</th>
+                        <th width="50%">Name</th>
+                        <th width="15%">Copy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-categories="math">
+                        <td class="char-cell">≠</td>
+                        <td class="entity-cell">\2260</td>
+                        <td class="name-cell">NOT EQUAL TO</td>
+                        <td><button class="copy-btn" data-entity="\2260">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">≡</td>
+                        <td class="entity-cell">\2261</td>
+                        <td class="name-cell">IDENTICAL TO</td>
+                        <td><button class="copy-btn" data-entity="\2261">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">≤</td>
+                        <td class="entity-cell">\2264</td>
+                        <td class="name-cell">LESS-THAN OR EQUAL TO</td>
+                        <td><button class="copy-btn" data-entity="\2264">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">≥</td>
+                        <td class="entity-cell">\2265</td>
+                        <td class="name-cell">GREATER-THAN OR EQUAL TO</td>
+                        <td><button class="copy-btn" data-entity="\2265">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">∞</td>
+                        <td class="entity-cell">\221E</td>
+                        <td class="name-cell">INFINITY</td>
+                        <td><button class="copy-btn" data-entity="\221E">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">√</td>
+                        <td class="entity-cell">\221A</td>
+                        <td class="name-cell">SQUARE ROOT</td>
+                        <td><button class="copy-btn" data-entity="\221A">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">∑</td>
+                        <td class="entity-cell">\2211</td>
+                        <td class="name-cell">N-ARY SUMMATION</td>
+                        <td><button class="copy-btn" data-entity="\2211">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">∫</td>
+                        <td class="entity-cell">\222B</td>
+                        <td class="name-cell">INTEGRAL</td>
+                        <td><button class="copy-btn" data-entity="\222B">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">∂</td>
+                        <td class="entity-cell">\2202</td>
+                        <td class="name-cell">PARTIAL DIFFERENTIAL</td>
+                        <td><button class="copy-btn" data-entity="\2202">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">∏</td>
+                        <td class="entity-cell">\220F</td>
+                        <td class="name-cell">N-ARY PRODUCT</td>
+                        <td><button class="copy-btn" data-entity="\220F">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">π</td>
+                        <td class="entity-cell">\03C0</td>
+                        <td class="name-cell">GREEK SMALL LETTER PI</td>
+                        <td><button class="copy-btn" data-entity="\03C0">நகலெடு</button></td>
+                    </tr>
+                    
+                    <tr data-categories="math">
+                        <td class="char-cell">θ</td>
+                        <td class="entity-cell">\03B8</td>
+                        <td class="name-cell">GREEK SMALL LETTER THETA</td>
+                        <td><button class="copy-btn" data-entity="\03B8">நகலெடு</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Usage Examples -->
+        <section class="content-section" id="usage">
+            <h2>How to Use CSS Entities</h2>
+            
+            <div class="code-example">
+                <h3>Method 1: In CSS content property</h3>
+                <pre><code>/* Add copyright symbol after element */
+.element:after {
+  content: '\00A9';
+  margin-left: 5px;
+}
+
+/* Add arrow before element */
+.button:before {
+  content: '\2192';
+  margin-right: 8px;
+}</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>Method 2: In HTML with CSS</h3>
+                <pre><code>&lt;!-- Using hex code in HTML --&gt;
+&lt;span class="icon"&gt;&amp;#x2714;&lt;/span&gt;
+
+/* CSS for styling */
+.icon {
+  font-family: 'Arial', sans-serif;
+  color: green;
+  font-size: 20px;
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> முக்கிய குறிப்புகள்:</h4>
+                <p>1. CSS எண்டிட்டிகள் எப்போதும் பின்சாய்வு (\) உடன் தொடங்குகின்றன</p>
+                <p>2. ஹெக்ஸாடெசிமல் மதிப்புகள் பயன்படுத்தப்படுகின்றன (உதாரணம்: \00A9)</p>
+                <p>3. எண்டிட்டிக்குப் பிறகு ஒரு இடம் சேர்க்க வேண்டாம்</p>
+                <p>4. சில எண்டிட்டிகள் அனைத்து எழுத்துருக்களிலும் ஆதரிக்கப்படுவதில்லை</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் CSS எண்டிட்டிகளில் எது Copyright சின்னத்திற்கானது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">\00AE</div>
+                            <div class="option-feedback incorrect">✗ தவறு! \00AE என்பது Registered (®) சின்னத்திற்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">\00A9</div>
+                            <div class="option-feedback correct">✓ சரி! \00A9 என்பது Copyright (©) சின்னத்திற்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">\2122</div>
+                            <div class="option-feedback incorrect">✗ தவறு! \2122 என்பது Trademark (™) சின்னத்திற்கானது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">\00A7</div>
+                            <div class="option-feedback incorrect">✗ தவறு! \00A7 என்பது Section (§) சின்னத்திற்கானது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Default%20Values%20Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="certificate.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">CSS எண்டிட்டிகள்</a></li>
+                    <li><a href="#demo">பயன்பாடு</a></li>
+                    <li><a href="#basic-entities">அடிப்படை எழுத்துக்கள்</a></li>
+                    <li><a href="#symbols-entities">பொதுச் சின்னங்கள்</a></li>
+                    <li><a href="#arrows-entities">அம்பு சின்னங்கள்</a></li>
+                    <li><a href="#math-entities">கணித சின்னங்கள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Table filtering functionality
+        const searchInput = document.getElementById('search-input');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const tableRows = document.querySelectorAll('.entities-table tbody tr');
+        
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            tableRows.forEach(row => {
+                const char = row.querySelector('.char-cell').textContent.toLowerCase();
+                const entity = row.querySelector('.entity-cell').textContent.toLowerCase();
+                const name = row.querySelector('.name-cell').textContent.toLowerCase();
+                
+                if (char.includes(searchTerm) || entity.includes(searchTerm) || name.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+        
+        // Category filter functionality
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const category = this.getAttribute('data-category');
+                
+                tableRows.forEach(row => {
+                    if (category === 'all') {
+                        row.style.display = '';
+                    } else {
+                        const categories = row.getAttribute('data-categories');
+                        if (categories && categories.includes(category)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+        
+        // Copy to clipboard functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const entity = this.getAttribute('data-entity');
+                navigator.clipboard.writeText(entity).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = 'Copied!';
+                    this.style.background = '#27ae60';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

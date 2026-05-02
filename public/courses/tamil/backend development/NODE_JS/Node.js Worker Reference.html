@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Worker Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .methods-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .methods-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .methods-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .methods-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .methods-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .method-name {
+            font-weight: 600;
+            color: var(--git-color);
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js EventEmitter Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Cipher Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Worker Reference</h2>
+            <p>Node.js கிளஸ்டர் தொகுதியில் Worker பொருள்கள் மற்றும் பல-செயல்முறை பயன்பாடுகளை அறிக</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Worker Object -->
+        <section class="content-section" id="worker-object">
+            <h2>Worker பொருள்</h2>
+            
+            <p>Worker வகுப்பு Node.js கிளஸ்டர் தொகுதியின் ஒரு பகுதியாகும், இது ஒரே நேரத்தில் இயங்கும் மற்றும் சேவையக போர்ட்களைப் பகிரும் சைல்ட் செயல்முறைகளை (வேலையாட்கள்) உருவாக்க இயலுமைப்படுத்துகிறது. சுமையைக் கையாள பல-கோர் அமைப்புகளின் பயனை எடுக்க இது குறிப்பாக பயனுள்ளதாக இருக்கிறது.</p>
+        </section>
+
+        <!-- Import Worker -->
+        <section class="content-section" id="import-worker">
+            <h2>Worker ஐ இறக்குமதி செய்தல்</h2>
+            
+            <p>Worker பொருள்கள் கிளஸ்டர் தொகுதியைப் பயன்படுத்தும் போது தானாகவே உருவாக்கப்படுகின்றன:</p>
+            
+            <div class="code-example">
+                <pre><code>// Workers are created via the cluster module
+const cluster = require('cluster');
+
+// To access a Worker object
+if (cluster.isPrimary) {
+  // Fork workers
+  const worker = cluster.fork();
+  
+  // Now 'worker' is a Worker object
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Worker Properties -->
+        <section class="content-section" id="worker-properties">
+            <h2>Worker பண்புகள்</h2>
+            
+            <table class="methods-table">
+                <thead>
+                    <tr>
+                        <th>பண்பு</th>
+                        <th>விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="method-name">worker.id</td>
+                        <td>ஒவ்வொரு worker க்கும் ஒரு தனிப்பட்ட id ஒதுக்கப்படும்.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">worker.process</td>
+                        <td>அனைத்து workers களும் child_process.fork() பயன்படுத்தி உருவாக்கப்படுகின்றன, மேலும் இந்த பண்பு அந்த அழைப்பின் முடிவைக் கொண்டுள்ளது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">worker.exitedAfterDisconnect</td>
+                        <td>worker .kill() அல்லது .disconnect() காரணமாக வெளியேறினால் இந்த பண்பு true ஆக இருக்கும், இல்லையெனில் இது undefined ஆக இருக்கும்.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">worker.isConnected()</td>
+                        <td>worker அதன் முதன்மையுடன் இணைக்கப்பட்டிருந்தால் true ஐ வழங்குகிறது, இல்லையெனில் false.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">worker.isDead()</td>
+                        <td>worker இன் செயல்முறை முடிவடைந்தால் (சிக்னல் அல்லது வெளியேறும் குறியீடு மூலம்) true ஐ வழங்குகிறது, இல்லையெனில் false.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Worker Methods -->
+        <section class="content-section" id="worker-methods">
+            <h2>Worker முறைகள்</h2>
+            
+            <table class="methods-table">
+                <thead>
+                    <tr>
+                        <th>முறை</th>
+                        <th>விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="method-name">worker.disconnect()</td>
+                        <td>ஒரு worker இல், இந்த செயல்பாடு அனைத்து சேவையகங்களையும் மூடுகிறது, அந்த சேவையகங்களில் 'close' நிகழ்வுக்காக காத்திருக்கிறது, பின்னர் IPC சேனலைத் துண்டிக்கிறது.<br><br>முதன்மையில், ஒரு உள் செய்தி worker க்கு அனுப்பப்படுகிறது, அது தன்னைத் தானே .disconnect() அழைக்கக் காரணமாகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">worker.kill([signal='SIGTERM'])</td>
+                        <td>worker செயல்முறையைக் கொல்கிறது. இந்த செயல்பாடு worker.process.kill() போன்றது. விருப்ப சிக்னல் அளவுரு worker க்கு என்ன சிக்னல் அனுப்ப வேண்டும் என்பதைக் குறிப்பிடுகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">worker.send(message[, sendHandle[, options]][, callback])</td>
+                        <td>'message' நிகழ்வாகப் பெறப்படும் worker க்கு ஒரு செய்தியை அனுப்புகிறது. உள்நாட்டில் child_process.send() பயன்படுத்துகிறது.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Worker Events -->
+        <section class="content-section" id="worker-events">
+            <h2>Worker நிகழ்வுகள்</h2>
+            
+            <table class="methods-table">
+                <thead>
+                    <tr>
+                        <th>நிகழ்வு</th>
+                        <th>விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="method-name">'disconnect'</td>
+                        <td>ஒரு worker IPC சேனல் துண்டிக்கப்பட்ட பிறகு வெளியிடப்படுகிறது. இது ஒரு worker நேர்த்தியாக வெளியேறும் போது, கொல்லப்படும் போது அல்லது கைமுறையாக துண்டிக்கப்படும் போது (worker.disconnect() பயன்படுத்தி) ஏற்படுகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">'error'</td>
+                        <td>worker thread கைப்பற்றப்படாத விதிவிலக்கை வீசினால் வெளியிடப்படுகிறது.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">'exit'</td>
+                        <td>worker செயல்முறை முடிவடையும் போது வெளியிடப்படுகிறது. கேட்போர் வாதங்களைப் பெறுகிறது (code, signal) இங்கு code என்பது வெளியேறும் குறியீடு மற்றும் signal என்பது செயல்முறையை முடிக்கக் காரணமான சிக்னலின் பெயர்.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">'listening'</td>
+                        <td>ஒரு worker உள்ள ஒரு சேவையகம் இணைப்புகளுக்குக் கேட்கத் தொடங்கும் போது வெளியிடப்படுகிறது. கேட்போர் வாதங்களைப் பெறுகிறது (address) பயன்படுத்தப்படும் முகவரியைப் பற்றிய தகவலுடன்.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">'message'</td>
+                        <td>ஒரு worker செய்தியைப் பெறும் போது வெளியிடப்படுகிறது. கேட்போர் வாதங்களைப் பெறுகிறது (message, handle) இங்கு message என்பது அனுப்பப்பட்ட செய்தி மற்றும் handle என்பது net.Socket அல்லது net.Server பொருள் அல்லது undefined.</td>
+                    </tr>
+                    <tr>
+                        <td class="method-name">'online'</td>
+                        <td>worker செயல்முறை forked மற்றும் செய்திகளைப் பெறத் தயாராக இருக்கும் போது வெளியிடப்படுகிறது.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Basic Cluster Example -->
+        <section class="content-section" id="basic-cluster-example">
+            <h2>அடிப்படை கிளஸ்டர் எடுத்துக்காட்டு</h2>
+            
+            <p>பல-செயல்முறை HTTP சேவையகத்தை உருவாக்க Worker பொருள்களுடன் கிளஸ்டரைப் பயன்படுத்துவதற்கான அடிப்படை எடுத்துக்காட்டு இங்கே:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isPrimary) {
+  console.log(`Primary ${process.pid} is running`);
+
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  // Listen for dying workers
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died with code: ${code} and signal: ${signal}`);
+    console.log('Starting a new worker');
+    cluster.fork();
+  });
+  
+  // Event handlers for Worker objects
+  cluster.on('fork', (worker) => {
+    console.log(`Worker ${worker.id} (PID: ${worker.process.pid}) has been forked`);
+  });
+  
+  cluster.on('online', (worker) => {
+    console.log(`Worker ${worker.id} is online`);
+  });
+  
+  cluster.on('listening', (worker, address) => {
+    console.log(`Worker ${worker.id} is listening on ${address.address}:${address.port}`);
+  });
+  
+  cluster.on('disconnect', (worker) => {
+    console.log(`Worker ${worker.id} has disconnected`);
+  });
+
+} else {
+  // Workers can share any TCP connection
+  // In this case it is an HTTP server
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Hello from Worker ${process.pid}\n`);
+  }).listen(8000);
+
+  console.log(`Worker ${process.pid} started`);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Worker Communication -->
+        <section class="content-section" id="worker-communication">
+            <h2>Worker தகவல்தொடர்பு</h2>
+            
+            <p>முதன்மை செயல்முறை மற்றும் worker செயல்முறைகளுக்கு இடையே செய்திகளை அனுப்பலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+
+if (cluster.isPrimary) {
+  // Keep track of http requests
+  let numRequests = 0;
+  
+  // Create two workers
+  const worker1 = cluster.fork();
+  const worker2 = cluster.fork();
+  
+  // Count requests
+  function messageHandler(msg) {
+    if (msg.cmd && msg.cmd === 'notifyRequest') {
+      numRequests += 1;
+      console.log(`Total requests: ${numRequests}`);
+    }
+  }
+  
+  // Listen for messages from workers
+  worker1.on('message', messageHandler);
+  worker2.on('message', messageHandler);
+  
+  // Send periodic messages to workers
+  setInterval(() => {
+    // Send a message to both workers
+    worker1.send({ cmd: 'updateTime', time: Date.now() });
+    worker2.send({ cmd: 'updateTime', time: Date.now() });
+  }, 5000);
+
+} else {
+  // Worker process
+  
+  // Track the last update time
+  let lastUpdate = Date.now();
+  
+  // Receive messages from the primary
+  process.on('message', (msg) => {
+    if (msg.cmd && msg.cmd === 'updateTime') {
+      lastUpdate = msg.time;
+      console.log(`Worker ${process.pid} received time update: ${new Date(lastUpdate)}`);
+    }
+  });
+  
+  // Create an HTTP server
+  http.createServer((req, res) => {
+    // Notify the primary about the request
+    process.send({ cmd: 'notifyRequest' });
+    
+    // Respond to the request
+    res.writeHead(200);
+    res.end(`Hello from Worker ${process.pid}. Last update: ${new Date(lastUpdate)}\n`);
+  }).listen(8000);
+  
+  console.log(`Worker ${process.pid} started`);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Graceful Shutdown -->
+        <section class="content-section" id="graceful-shutdown">
+            <h2>நேர்த்தியான மூடுதல்</h2>
+            
+            <p>Production பயன்பாடுகளுக்கு workers இன் நேர்த்தியான மூடுதலைக் கையாள்வது முக்கியமானது:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+
+if (cluster.isPrimary) {
+  console.log(`Primary ${process.pid} is running`);
+
+  // Fork workers
+  const numCPUs = require('os').cpus().length;
+  const workers = [];
+  
+  for (let i = 0; i < numCPUs; i++) {
+    workers.push(cluster.fork());
+  }
+  
+  // Graceful shutdown function
+  const shutdown = () => {
+    console.log('Primary: starting graceful shutdown...');
+    
+    // Disconnect all workers
+    for (const worker of workers) {
+      console.log(`Disconnecting worker ${worker.id}`);
+      worker.disconnect();
+    }
+    
+    // Exit after a timeout if workers haven't exited
+    setTimeout(() => {
+      console.log('Primary: some workers did not exit, forcing shutdown');
+      process.exit(1);
+    }, 5000);
+  };
+
+  // Listen for worker events
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died (${signal || code}). ` +
+                `exitedAfterDisconnect: ${worker.exitedAfterDisconnect}`);
+    
+    // If it's a planned disconnect, don't restart
+    if (!worker.exitedAfterDisconnect) {
+      console.log('Worker died unexpectedly, replacing it...');
+      workers.push(cluster.fork());
+    }
+    
+    // Check if all workers are gone
+    let activeWorkers = 0;
+    for (const id in cluster.workers) {
+      activeWorkers++;
+    }
+    
+    console.log(`Active workers: ${activeWorkers}`);
+    
+    if (activeWorkers === 0) {
+      console.log('All workers have exited, shutting down primary');
+      process.exit(0);
+    }
+  });
+
+  // Handle signals for graceful shutdown
+  process.on('SIGTERM', shutdown);
+  process.on('SIGINT', shutdown);
+
+} else {
+  // Worker process
+  
+  // Create a server
+  const server = http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Hello from worker ${process.pid}\n`);
+  });
+  
+  server.listen(8000);
+  
+  console.log(`Worker ${process.pid} started`);
+  
+  // Handle disconnect signal from primary
+  process.on('disconnect', () => {
+    console.log(`Worker ${process.pid} disconnected, closing server...`);
+    
+    // Close the server
+    server.close(() => {
+      console.log(`Worker ${process.pid} closed server, exiting`);
+      process.exit(0);
+    });
+    
+    // Forcefully exit after timeout
+    setTimeout(() => {
+      console.log(`Worker ${process.pid} timed out closing server, forcing exit`);
+      process.exit(1);
+    }, 2000);
+  });
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Worker Zero-Downtime Restart -->
+        <section class="content-section" id="zero-downtime-restart">
+            <h2>Worker பூஜ்ஜிய-இடைநிறுத்தம் மீண்டும் தொடக்கம்</h2>
+            
+            <p>ரோலிங் worker புதுப்பிப்புகளுக்கான பூஜ்ஜிய-இடைநிறுத்தம் மீண்டும் தொடக்க முறையை செயல்படுத்துதல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
+
+if (cluster.isPrimary) {
+  console.log(`Primary ${process.pid} is running`);
+
+  // Fork initial workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  // Store worker refs
+  let workers = Object.values(cluster.workers);
+
+  // Restart one worker at a time
+  function restartWorker(workerIndex) {
+    const worker = workers[workerIndex];
+    console.log(`Restarting worker #${worker.id}`);
+
+    // Create a new worker
+    const newWorker = cluster.fork();
+    
+    // Add the new worker to our array
+    workers.push(newWorker);
+    
+    // When the new worker is online, disconnect the old worker
+    newWorker.on('online', () => {
+      if (worker) {
+        console.log(`New worker #${newWorker.id} is online, disconnecting old worker #${worker.id}`);
+        worker.disconnect();
+      }
+    });
+
+    // When the old worker is disconnected, remove it from the array
+    worker.on('disconnect', () => {
+      console.log(`Worker #${worker.id} disconnected`);
+      workers = workers.filter(w => w.id !== worker.id);
+    });
+
+    // Continue the process if there are more workers to restart
+    if (workerIndex + 1 < workers.length) {
+      setTimeout(() => {
+        restartWorker(workerIndex + 1);
+      }, 5000);
+    }
+  }
+
+  // Example: trigger a rolling restart after 15 seconds
+  setTimeout(() => {
+    console.log('Starting rolling restart of workers...');
+    restartWorker(0);
+  }, 15000);
+
+  // Additional event handlers
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} exited with code ${code}`);
+  });
+
+} else {
+  // Worker process
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(`Hello from worker ${process.pid}, started at ${new Date().toISOString()}\n`);
+  }).listen(8000);
+
+  console.log(`Worker ${process.pid} started`);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Worker Status Monitoring -->
+        <section class="content-section" id="worker-status-monitoring">
+            <h2>Worker நிலை கண்காணிப்பு</h2>
+            
+            <p>Worker நிலையைக் கண்காணித்தல் மற்றும் அளவீடுகளைச் சேகரித்தல்:</p>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+const os = require('os');
+
+if (cluster.isPrimary) {
+  console.log(`Primary ${process.pid} is running`);
+
+  // Fork workers
+  const workers = [];
+  for (let i = 0; i < os.cpus().length; i++) {
+    workers.push(cluster.fork());
+  }
+
+  // Store metrics for each worker
+  const workerMetrics = {};
+
+  // Set up metrics collection
+  for (const worker of workers) {
+    workerMetrics[worker.id] = {
+      id: worker.id,
+      pid: worker.process.pid,
+      requests: 0,
+      errors: 0,
+      lastActive: Date.now(),
+      memoryUsage: {}
+    };
+
+    // Handle messages from workers
+    worker.on('message', (msg) => {
+      if (msg.type === 'metrics') {
+        // Update metrics
+        workerMetrics[worker.id] = {
+          ...workerMetrics[worker.id],
+          ...msg.data,
+          lastActive: Date.now()
+        };
+      }
+    });
+  }
+
+  // Create an HTTP server for monitoring
+  http.createServer((req, res) => {
+    if (req.url === '/metrics') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        workers: Object.values(workerMetrics),
+        system: {
+          loadAvg: os.loadavg(),
+          totalMem: os.totalmem(),
+          freeMem: os.freemem(),
+          uptime: os.uptime()
+        }
+      }, null, 2));
+    } else {
+      res.writeHead(404);
+      res.end('Not found');
+    }
+  }).listen(8001);
+
+  console.log('Primary: Monitoring server running on port 8001');
+
+  // Check for unresponsive workers
+  setInterval(() => {
+    const now = Date.now();
+    
+    for (const worker of workers) {
+      const metrics = workerMetrics[worker.id];
+      
+      // If worker hasn't reported in 30 seconds
+      if (now - metrics.lastActive > 80800) {
+        console.warn(`Worker ${worker.id} appears unresponsive, restarting...`);
+        
+        // Kill the unresponsive worker
+        worker.kill();
+        
+        // Fork a replacement
+        const newWorker = cluster.fork();
+        
+        // Set up metrics for new worker
+        workerMetrics[newWorker.id] = {
+          id: newWorker.id,
+          pid: newWorker.process.pid,
+          requests: 0,
+          errors: 0,
+          lastActive: Date.now(),
+          memoryUsage: {}
+        };
+        
+        // Replace in workers array
+        const index = workers.indexOf(worker);
+        if (index !== -1) {
+          workers[index] = newWorker;
+        }
+        
+        // Clean up old metrics
+        delete workerMetrics[worker.id];
+      }
+    }
+  }, 10000);
+
+} else {
+  // Worker process
+  console.log(`Worker ${process.pid} started`);
+  
+  // Track metrics
+  let requestCount = 0;
+  let errorCount = 0;
+  
+  // Report metrics to primary every 5 seconds
+  setInterval(() => {
+    process.send({
+      type: 'metrics',
+      data: {
+        requests: requestCount,
+        errors: errorCount,
+        memoryUsage: process.memoryUsage()
+      }
+    });
+  }, 5000);
+
+  // Create HTTP server
+  http.createServer((req, res) => {
+    requestCount++;
+    
+    try {
+      res.writeHead(200);
+      res.end(`Hello from worker ${process.pid}\n`);
+    } catch (error) {
+      errorCount++;
+      console.error(`Worker ${process.pid} error:`, error);
+    }
+  }).listen(8000);
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Worker Best Practices -->
+        <section class="content-section" id="worker-best-practices">
+            <h2>Worker சிறந்த நடைமுறைகள்</h2>
+            
+            <h3>1. நிலை தனிமைப்படுத்தலை உறுதி செய்யுங்கள்</h3>
+            <p>Worker செயல்முறைகளை நிலையற்றதாக வைத்திருங்கள் அல்லது சரியான நிலை மேலாண்மையை உறுதி செய்யுங்கள்:</p>
+            
+            <div class="code-example">
+                <pre><code>// BAD - State shared across forked processes won't work as expected
+let requestCount = 0;
+
+// GOOD - Each worker has its own isolated state
+if (cluster.isPrimary) {
+  // Primary logic
+} else {
+  // Worker-specific state
+  let workerRequestCount = 0;
+}</code></pre>
+            </div>
+            
+            <h3>2. எதிர்பாராத Worker முடிவைக் கையாளுங்கள்</h3>
+            
+            <div class="code-example">
+                <pre><code>if (cluster.isPrimary) {
+  cluster.on('exit', (worker, code, signal) => {
+    if (code !== 0 && !worker.exitedAfterDisconnect) {
+      console.log(`Worker ${worker.id} crashed. Restarting...`);
+      cluster.fork();
+    }
+  });
+}</code></pre>
+            </div>
+            
+            <h3>3. Worker Sticky Sessions பயன்படுத்தவும்</h3>
+            
+            <div class="code-example">
+                <pre><code>const cluster = require('cluster');
+const http = require('http');
+
+if (cluster.isPrimary) {
+  // Setup sticky session logic
+  cluster.schedulingPolicy = cluster.SCHED_NONE;
+  
+  // Start workers
+  const numCPUs = require('os').cpus().length;
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+  
+  // Create routes based on connection's remote IP
+  cluster.on('connection', (connection, address) => {
+    // Calculate which worker gets connection based on IP
+    const worker = Object.values(cluster.workers)[
+      Number(address.toString().split(':')[3]) % Object.keys(cluster.workers).length
+    ];
+    worker.send('sticky-session:connection', connection);
+  });
+} else {
+  // Worker code
+  http.createServer((req, res) => {
+    res.end(`Handled by worker ${process.pid}`);
+  }).listen(8000, () => {
+    console.log(`Worker ${process.pid} listening`);
+  });
+  
+  // Receive sticky connections
+  process.on('message', (message, connection) => {
+    if (message !== 'sticky-session:connection') return;
+    
+    // Emulate a connection event on the server
+    server.emit('connection', connection);
+    connection.resume();
+  });
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js கிளஸ்டர் தொகுதியில் worker செயல்முறையை உருவாக்க எந்த முறை பயன்படுத்தப்படுகிறது? தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">cluster.create()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! cluster.create() என்பது கிளஸ்டர் தொகுதியில் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">cluster.fork()</div>
+                            <div class="option-feedback correct">✓ சரி! cluster.fork() முறை புதிய worker செயல்முறைகளை உருவாக்க பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">cluster.spawn()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! cluster.spawn() என்பது கிளஸ்டர் தொகுதியில் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">worker.start()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! worker.start() என்பது கிளஸ்டர் தொகுதியில் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js EventEmitter Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Cipher Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#worker-object">Worker பொருள்</a></li>
+                    <li><a href="#worker-properties">Worker பண்புகள்</a></li>
+                    <li><a href="#worker-methods">Worker முறைகள்</a></li>
+                    <li><a href="#basic-cluster-example">அடிப்படை எடுத்துக்காட்டு</a></li>
+                    <li><a href="#worker-best-practices">சிறந்த நடைமுறைகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

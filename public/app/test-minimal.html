@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minimal Razorpay Test</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button { padding: 20px 40px; font-size: 18px; cursor: pointer; }
+        #status { margin: 20px 0; padding: 15px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Minimal Razorpay Test</h1>
+    <p>Testing with hardcoded test key and order...</p>
+    
+    <button onclick="openRazorpay()">Pay ₹29</button>
+    <div id="status"></div>
+
+    <script>
+        console.log('Script loaded');
+        console.log('Razorpay type:', typeof Razorpay);
+
+        function log(msg, type) {
+            console.log(msg);
+            const status = document.getElementById('status');
+            status.innerText = msg;
+            if (type) {
+                status.className = type;
+            }
+        }
+
+        async function createOrder() {
+            log('Creating order...');
+            try {
+                const response = await fetch('/api/payment/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: 11 }),
+                    credentials: 'include'
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to create order');
+                }
+                
+                const data = await response.json();
+                log('Order created: ' + data.orderId, 'success');
+                return data;
+            } catch (err) {
+                log('Error: ' + err.message, 'error');
+                throw err;
+            }
+        }
+
+        async function openRazorpay() {
+            try {
+                log('Starting Razorpay...');
+                
+                // First create order
+                const orderData = await createOrder();
+                
+                log('Opening Razorpay with order: ' + orderData.orderId);
+                
+                const options = {
+                    key: 'rzp_test_Sk1Qr5nGd7fPmU',
+                    amount: orderData.amount,
+                    currency: orderData.currency,
+                    name: 'JT Group Test',
+                    description: 'Test Payment',
+                    order_id: orderData.orderId,
+                    handler: function(response) {
+                        log('SUCCESS! Payment ID: ' + response.razorpay_payment_id, 'success');
+                    },
+                    modal: {
+                        ondismiss: function() {
+                            log('CANCELLED by user');
+                        }
+                    },
+                    theme: { color: '#0c1f33' },
+                    _debug: true  // Enable debug mode
+                };
+
+                log('Creating Razorpay instance...');
+                const rzp = new Razorpay(options);
+                
+                rzp.on('payment.failed', function(response) {
+                    log('FAILED: ' + (response.error?.description || response.error?.reason), 'error');
+                });
+                
+                log('Calling rzp.open()...');
+                rzp.open();
+                
+                log('rzp.open() called. Check if popup appears...');
+                
+            } catch (err) {
+                log('ERROR: ' + err.message, 'error');
+                console.error('Full error:', err);
+            }
+        }
+        
+        // Check on load
+        window.addEventListener('load', function() {
+            log('Page loaded. Razorpay loaded: ' + (typeof Razorpay !== 'undefined'), 
+                typeof Razorpay !== 'undefined' ? 'success' : 'error');
+        });
+    </script>
+</body>
+</html>

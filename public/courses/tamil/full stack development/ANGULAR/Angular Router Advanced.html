@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Router Advanced - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid #ddd;
+        }
+
+        .bottom-nav .nav-tab {
+            margin: 0;
+        }
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular%20Advanced%20DI.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20HTTP%20Interceptors.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Router Advanced</h2>
+<p>மேம்பட்ட ரவுட்டிங் நுட்பங்களைக் கற்றுக்கொள்ளுங்கள்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Router Advanced</h2>
+<p>Angular-ல் மேம்பட்ட ரவுட்டிங் inject() உடன் செயல்பாட்டு காவல்கள்/தீர்வாளர்கள், பல பார்வைகளுக்கான துணை outlets, மற்றும் முன்-ஏற்றும் உத்திகளை உள்ளடக்கியது; திருப்பி அனுப்புவதற்கு ஒரு UrlTree வழங்கவும்.</p>
+
+<p>Angular Router என்பது ஒரு சக்திவாய்ந்த டீம்-அக உருவாக்கும் கருவியாகும், இது பயன்பாடுகளில் சிக்கலான வழிசெலுத்தல் தேவைகளைக் கையாள அனுமதிக்கிறது. இது லேசான லோடிங், பாதை காவல்கள், தரவு தீர்வு மற்றும் மேம்பட்ட வழிசெலுத்தல் வடிவங்களை ஆதரிக்கிறது.</p>
+</section>
+
+<!-- Router Advanced Essentials -->
+<section class="content-section" id="essentials">
+<h2>Router Advanced Essentials</h2>
+<p><strong>செயல்பாட்டு காவல்கள்/தீர்வாளர்கள்:</strong> வகை-பாதுகாக்கப்பட்ட வழிசெலுத்தலுக்கு inject() உடன் செயல்பாடுகளைப் பயன்படுத்தவும்.</p>
+<p><strong>துணை outlets:</strong> பெயரிடப்பட்ட RouterOutlets பல பார்வைகளை வழங்குகின்றன (எ.கா., /inbox(compose:modal)).</p>
+<p><strong>முன்-ஏற்றுதல் & தரவு:</strong> நிலையான கொடிகளுக்கு (தலைப்புகள், அனுமதிகள்) பாதை தரவைப் பயன்படுத்தவும் மற்றும் வழிசெலுத்தலை மேம்படுத்த முன்-ஏற்றும் உத்திகளைப் பயன்படுத்தவும்.</p>
+
+<div class="code-example">
+<h3>Advanced Router Setup</h3>
+<pre><code>import { inject } from '@angular/core';
+import { Router, Routes, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
+
+function canActivate() {
+  const router = inject(Router);
+  return /* condition */ true || router.createUrlTree(['/']);
+}
+
+const routes: Routes = [
+  { path: 'feature', loadComponent: () => import('./feature').then(m => m.Feature), data: { title: 'Feature' }, canActivate: [canActivate] },
+  { path: 'inbox', loadComponent: () => import('./inbox').then(m => m.Inbox) },
+  { path: 'compose', outlet: 'modal', loadComponent: () => import('./compose').then(m => m.Compose) }
+];
+
+provideRouter(routes, withPreloading(PreloadAllModules));</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>குறியீடு விளக்கம்:</h4>
+<p><strong>inject(Router):</strong> ஒரு காவல் செயல்பாட்டிற்குள் Router-ஐ அணுகுகிறது.</p>
+<p><strong>UrlTree திருப்பி அனுப்புதல்:</strong> கட்டாயமாக வழிசெலுத்துவதற்குப் பதிலாக திருப்பி அனுப்புவதற்கு router.createUrlTree(['/']) வழங்கவும்.</p>
+<p><strong>துணை outlet:</strong> outlet: 'modal' உடன் ஒரு பாதை ஒரு பெயரிடப்பட்ட RouterOutlet-ஐ இலக்காகக் கொண்டுள்ளது.</p>
+<p><strong>முன்-ஏற்றுதல்:</strong> withPreloading(PreloadAllModules) ஆரம்ப ஏற்றலுக்குப் பிறகு லேசான லோட் செய்யப்பட்ட தொகுதிகளை முன்கூட்டியே ஏற்றுகிறது.</p>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">💡</span>Jassif Team குறிப்புகள்:</h4>
+<p>Router, Services, மற்றும் App Bootstrap பற்றி காண்க.</p>
+<p>inject() உடன் செயல்பாட்டு காவல்களைப் பயன்படுத்தவும்.</p>
+<p><strong>காவல் வகைகள்:</strong> canActivate, canDeactivate, canMatch (ஒரு பாதை கட்டமைப்பு பொருந்துமா என முடிவு செய்ய), canLoad (சோம்பேறி உள்ளடக்கத்தை ஏற்றுவதைத் தடுக்க).</p>
+<p>திருப்பி அனுப்புதல்களுக்கு ஒரு UrlTree வழங்கவும்.</p>
+</div>
+
+<div class="code-example">
+<h3>Advanced Guard Types</h3>
+<pre><code>import { CanDeactivateFn, CanMatchFn } from '@angular/router';
+
+// canDeactivate: confirm navigation away
+const canDeactivate: CanDeactivateFn&lt;any&gt; = (component, curr, currState, nextState) => confirm('Leave this page?');
+
+// canMatch: decide if a route config should match current URL
+const canMatch: CanMatchFn = (route, segments) => segments[0]?.path === 'secret';</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔒</span>Guard Types Explained:</h4>
+<p><strong>CanDeactivateFn:</strong> விலகிச் செல்ல அனுமதிக்கப்படுகிறதா என முடிவு செய்யவும் (எ.கா., உறுதிப்படுத்தும் உரையாடல்).</p>
+<p><strong>CanMatchFn:</strong> ஒரு பாதை வரையறை தற்போதைய URL பகுதிகளுடன் பொருந்த வேண்டுமா என முடிவு செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Functional Guards with inject() -->
+<section class="content-section" id="functional-guards">
+<h2>Functional Guards with inject()</h2>
+<div class="code-example">
+<h3>Complete Example</h3>
+<pre><code>import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, signal, inject } from '@angular/core';
+import { Routes, provideRouter, Router, RouterOutlet } from '@angular/router';
+
+const isLoggedIn = signal(false);
+
+function canActivate() {
+  const router = inject(Router);
+  return isLoggedIn() || router.createUrlTree(['/']);
+}
+
+@Component({ selector: 'home-page', standalone: true, template: `&lt;p&gt;Home&lt;/p&gt; &lt;button (click)="login()"&gt;Login&lt;/button&gt;` })
+class Home { login() { isLoggedIn.set(true); } }
+
+@Component({ selector: 'secret-page', standalone: true, template: `&lt;p&gt;Top Secret&lt;/p&gt;` })
+class Secret {}
+
+const routes: Routes = [
+  { path: '', component: Home },
+  { path: 'secret', component: Secret, canActivate: [canActivate] }
+];
+
+@Component({ selector: 'app-root', standalone: true, imports: [RouterOutlet], template: `&lt;a [routerLink]="['/']"&gt;Home&lt;/a&gt; | &lt;a [routerLink]="['/secret']"&gt;Secret&lt;/a&gt; &lt;router-outlet&gt;&lt;/router-outlet&gt;` })
+class App {}
+
+bootstrapApplication(App, { providers: [provideRouter(routes)] });</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">🔍</span>Example Explained:</h4>
+<p><strong>செயல்பாட்டு காவல்:</strong> canActivate() inject(Router) பயன்படுத்துகிறது மற்றும் தடுக்கப்படும்போது ஒரு UrlTree வழங்குகிறது.</p>
+<p><strong>சிக்னல் நிலை:</strong> isLoggedIn signal காவலின் அனுமதி/மறுப்பு முடிவை இயக்குகிறது.</p>
+<p><strong>இணைப்புகள் + outlet:</strong> வழிசெலுத்தல் routerLink பயன்படுத்துகிறது மற்றும் &lt;router-outlet&gt; செயலில் உள்ள பாதையை வழங்குகிறது.</p>
+</div>
+
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-function"></i>
+<div>
+<strong>செயல்பாடுகளைப் பயன்படுத்தவும்:</strong> காவல்களை தூய செயல்பாடுகளாக எழுதவும் மற்றும் சேவைகளை அணுக inject() பயன்படுத்தவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-redo"></i>
+<div>
+<strong>திருப்பி அனுப்புதல்கள்:</strong> கட்டாயமாக வழிசெலுத்துவதற்குப் பதிலாக ஒரு UrlTree வழங்கவும்
+</div>
+</div>
+<div class="practice-item negative">
+<i class="fas fa-hourglass-end"></i>
+<div>
+<strong>அவற்றை விரைவாக வைத்திருங்கள்:</strong> காவல்களில் கனரக வேலையைத் தவிர்க்கவும்; சேவைகளுக்கு ஒப்படைக்கவும் மற்றும் முடிந்தவரை கேச் செய்யவும்
+</div>
+</div>
+<div class="practice-item positive">
+<i class="fas fa-layer-group"></i>
+<div>
+<strong>ஒருங்கிணைப்பு:</strong> காவல்களை சேவைகள் மற்றும் வழங்குநர்களுடன் ஒருங்கிணைக்கவும் முறையான பாதுகாப்பை உறுதி செய்ய
+</div>
+</div>
+</div>
+</section>
+
+<!-- Preloading and Route Data -->
+<section class="content-section" id="preloading-data">
+<h2>Preloading and Route Data</h2>
+<p>நிலையான கொடிகளுக்கு (தலைப்புகள், அனுமதிகள்) பாதை தரவைப் பயன்படுத்தவும்.</p>
+<p>சோம்பேறி அம்சங்களை ஏற்றவும் மற்றும் வழிசெலுத்தலை மேம்படுத்த முன்-ஏற்றலை இயக்கவும்.</p>
+
+<div class="code-example">
+<h3>Preloading Configuration</h3>
+<pre><code>provideRouter(routes, withPreloading(PreloadAllModules));
+// Route with data
+{ path: 'feature', loadComponent: () => import('./feature').then(m => m.Feature), data: { title: 'Feature' } }</code></pre>
+</div>
+
+<div class="warning-box">
+<h4><span class="warning-icon">⚡</span>குறியீடு விளக்கம்:</h4>
+<p><strong>withPreloading(PreloadAllModules):</strong> ஆரம்ப ஏற்றலுக்குப் பிறகு பின்னணியில் சோம்பேறி பாதைகளை முன்-ஏற்றுகிறது.</p>
+<p><strong>தரவு:</strong> நிலையான பாதை தரவு மறுபயன்பாட்டிற்கான தலைப்புகள்/கொடிகள் போன்ற மெட்டாடேட்டாவை வைத்திருக்கிறது.</p>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">🚀</span>Best Practices:</h4>
+<p><strong>பாதை தரவு:</strong> கூறுகளில் கடினக் குறியீடு செய்வதை விட நிலையான கொடிகளுக்கு (தலைப்புகள், அனுமதிகள்) தரவைப் பயன்படுத்தவும்.</p>
+<p><strong>முன்-ஏற்றுதல்:</strong> அடுத்து வரக்கூடிய தொகுதிகளை பின்னணியில் பெற உத்திகளைப் பயன்படுத்தவும்.</p>
+<p><strong>அளவிடவும்:</strong> முன்-ஏற்றலை இயக்குவதற்கு முன்னும் பின்னும் தொகுப்பு அளவுகள் மற்றும் வழிசெலுத்தல் நேரத்தை சுயவிவரப்படுத்தவும்.</p>
+<p><strong>தனிப்பயன் உத்திகள்:</strong> குறிப்பிட்ட பயன்பாட்டு தேவைகளுக்காக உங்கள் சொந்த முன்-ஏற்றல் உத்திகளை உருவாக்கவும்.</p>
+</div>
+</section>
+
+<!-- Router Features Comparison -->
+<section class="content-section" id="router-features">
+<h2>Router Features Comparison</h2>
+<div class="comparison-table">
+<table>
+<thead>
+<tr>
+<th>அம்சம்</th>
+<th>விளக்கம்</th>
+<th>பயன் கூறு</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>செயல்பாட்டு காவல்கள்</strong></td>
+<td>inject() உடன் வகை-பாதுகாக்கப்பட்ட காவல்கள்</td>
+<td>அங்கீகாரம், அங்கீகாரம்</td>
+</tr>
+<tr>
+<td><strong>துணை Outlets</strong></td>
+<td>பல பெயரிடப்பட்ட RouterOutlets</td>
+<td>மாடல்கள், பக்கப்பட்டிகள், பல-பார்வை உருவரை</td>
+</tr>
+<tr>
+<td><strong>முன்-ஏற்றல் உத்திகள்</strong></td>
+<td>சோம்பேறி பாதைகளின் பின்னணி ஏற்றுதல்</td>
+<td>வழிசெலுத்தல் செயல்திறனை மேம்படுத்துதல்</td>
+</tr>
+<tr>
+<td><strong>பாதை தரவு</strong></td>
+<td>பாதைகளுடன் இணைக்கப்பட்ட நிலையான மெட்டாடேட்டா</td>
+<td>பக்கம் தலைப்புகள், அனுமதி கொடிகள்</td>
+</tr>
+<tr>
+<td><strong>UrlTree திருப்பி அனுப்புதல்கள்</strong></td>
+<td>விவரிக்கும் வழிசெலுத்தல் திருப்பி அனுப்புதல்கள்</td>
+<td>காவல்-அடிப்படையிலான வழிசெலுத்தல் கட்டுப்பாடு</td>
+</tr>
+<tr>
+<td><strong>CanMatch காவல்கள்</strong></td>
+<td>பாதை பொருத்துதல் தர்க்கம்</td>
+<td>அம்சம் கொடிகள், நிபந்தனை ரவுட்டிங்</td>
+</tr>
+<tr>
+<td><strong>இலக்கு பாதைகள்</strong></td>
+<td>இலக்குகளுக்கான பாதைகள் மூலம் இணைப்பு</td>
+<td>உட்புற மற்றும் வெளிப்புற இணைப்புகள்</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="tip-box">
+<h4><span class="tip-icon">📊</span>ரவுட்டர் அம்சங்கள் பயன்பாடு:</h4>
+<p>Angular Router-ன் மேம்பட்ட அம்சங்கள் நவீன வலை பயன்பாடுகளின் சிக்கலான வழிசெலுத்தல் தேவைகளைக் கையாள உதவுகின்றன:</p>
+<ul>
+<li><strong>செயல்பாட்டு காவல்கள்:</strong> உள்நுழைவு மற்றும் அங்கீகாரத்திற்கு சிறந்தது</li>
+<li><strong>துணை outlets:</strong> சிக்கலான பக்க தளவமைப்புகளுக்கு</li>
+<li><strong>முன்-ஏற்றுதல்:</strong> பயனர் அனுபவத்தை மேம்படுத்துதல்</li>
+<li><strong>பாதை தரவு:</strong> மெட்டாடேட்டா மேலாண்மை</li>
+</ul>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Router Advanced Quiz</h2>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>செயல்பாட்டு காவலில், எந்த மீட்டெடுக்கும் மதிப்பு ஒரு திருப்பி அனுப்புதலுக்கு காரணமாகிறது?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">UrlTree</div>
+<div class="option-feedback correct">✓ சரி! ஒரு காவலில் இருந்து UrlTree-ஐ வழங்குவது அந்த URL-க்கு திருப்பி அனுப்புதலுக்கு காரணமாகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">undefined</div>
+<div class="option-feedback incorrect">✗ தவறு! undefined வழிசெலுத்தல் தொடர அனுமதிக்கிறது, திருப்பி அனுப்பாது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">HttpResponse</div>
+<div class="option-feedback incorrect">✗ தவறு! HttpResponse HTTP பதில்களுக்கு, ரவுட்டர் வழிசெலுத்தலுக்கு அல்ல</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>Angular-ல் சோம்பேறி ஏற்றப்பட்ட தொகுதிகளை பின்னணியில் ஏற்றுவதற்கு எது பயன்படுத்தப்படுகிறது?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">Preloading Strategies</div>
+<div class="option-feedback correct">✓ சரி! Preloading Strategies சோம்பேறி ஏற்றப்பட்ட தொகுதிகளை பின்னணியில் ஏற்ற பயன்படுகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">Lazy Loading</div>
+<div class="option-feedback incorrect">✗ தவறு! Lazy Loading தொகுதிகளை தாமதமாக ஏற்றுகிறது, பின்னணியில் ஏற்றாது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">Eager Loading</div>
+<div class="option-feedback incorrect">✗ தவறு! Eager Loading ஆரம்பத்தில் அனைத்து தொகுதிகளையும் ஏற்றுகிறது</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular%20Advanced%20DI.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular%20HTTP%20Interceptors.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team நிறுவனம்</h3>
+<p>தமிழில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணி கல்வி நிறுவனம்.</p>
+</div>
+<div class="footer-column">
+<h3>விரைவு இணைப்புகள்</h3>
+<ul>
+<li><a href="#introduction">Router Advanced</a></li>
+<li><a href="#essentials">Router அடிப்படைகள்</a></li>
+<li><a href="#functional-guards">செயல்பாட்டு காவல்கள்</a></li>
+<li><a href="#preloading-data">முன்-ஏற்றுதல் & தரவு</a></li>
+<li><a href="#router-features">Router அம்சங்கள்</a></li>
+<li><a href="#exercise">வினாடி வினா</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>தொடர்பு</h3>
+<ul>
+<li><a href="#">எங்களைப் பற்றி</a></li>
+<li><a href="#">தொடர்பு கொள்ளவும்</a></li>
+<li><a href="#">இடம் &amp; நேரங்கள்</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>எங்களைப் பின்தொடருங்கள்</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team நிறுவனம். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

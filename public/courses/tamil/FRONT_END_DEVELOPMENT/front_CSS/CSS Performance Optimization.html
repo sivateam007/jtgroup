@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Performance Optimization - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Performance demonstration styles */
+        .demo-container {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .demo-title {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            border-bottom: 2px solid var(--git-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .bad-example {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .good-example {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .performance-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .performance-icon {
+            font-size: 1.5rem;
+            color: var(--git-color);
+            margin-right: 1rem;
+        }
+        
+        /* Animation demos */
+        .animation-demo {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .demo-box {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .bad-animation {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            animation: bad-animation 2s infinite alternate;
+        }
+        
+        .good-animation {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            animation: good-animation 2s infinite alternate;
+        }
+        
+        @keyframes bad-animation {
+            0% { width: 100px; height: 100px; }
+            100% { width: 200px; height: 200px; }
+        }
+        
+        @keyframes good-animation {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.5); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Math%20Functions.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Accessibility%20Styling.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Performance Optimization</h2>
+            <p>CSS செயல்திறன் தேர்வுமுறை</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS செயல்திறன் தேர்வுமுறை</h2>
+            
+            <p>CSS செயல்திறன் தேர்வுமுறை உங்கள் வலைத்தளம் வேகமாக ஏற்றப்படுவதையும் மென்மையாக இயங்குவதையும் செய்கிறது; இது ஒரு சிறந்த பயனர் அனுபவத்தையும் விளைவிக்கிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">⚡</span> செயல்திறன் தாக்கம்:</h4>
+                <p>CSS செயல்திறன் தேர்வுமுறை வலைத்தள ஏற்ற வேகம், வழங்கல் திறன் மற்றும் ஒட்டுமொத்த பயனர் அனுபவத்தை நேரடியாக பாதிக்கிறது. திறமையான CSS உலாவி வேலையைக் குறைக்கிறது, பக்க ஏற்ற நேரத்தைக் குறைக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- 1. Use Simple Selectors -->
+        <section class="content-section" id="simple-selectors">
+            <h2>1. எளிய தேர்விகளைப் பயன்படுத்துங்கள்</h2>
+            
+            <p>முடிந்தால் எளிய தேர்விகளைப் பயன்படுத்துங்கள். சிக்கலான தேர்விகள் பாகுபடுத்தும் நேரத்தை அதிகரிக்கின்றன.</p>
+            
+            <div class="comparison-grid">
+                <div class="bad-example">
+                    <h4><i class="fas fa-times-circle" style="color: #dc3545;"></i> மோசமான எடுத்துக்காட்டு</h4>
+                    <div class="code-example">
+                        <pre><code>body #navlist ul li a.button:hover {
+  background-color: blue;
+}</code></pre>
+                    </div>
+                    <p><strong>பிரச்சனைகள்:</strong><br>
+                    • மிகவும் குறிப்பிட்ட தேர்வி<br>
+                    • 5 நிலை வம்சாவளி<br>
+                    • மெதுவான பாகுபடுத்தல்</p>
+                </div>
+                
+                <div class="good-example">
+                    <h4><i class="fas fa-check-circle" style="color: #28a745;"></i> சிறந்த எடுத்துக்காட்டு</h4>
+                    <div class="code-example">
+                        <pre><code>.button:hover {
+  background-color: blue;
+}</code></pre>
+                    </div>
+                    <p><strong>நன்மைகள்:</strong><br>
+                    • எளிய வகுப்பு தேர்வி<br>
+                    • வேகமான பாகுபடுத்தல்<br>
+                    • பராமரிக்க எளிதானது</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🎯</span> தேர்வி செயல்திறன்:</h4>
+                <p>CSS தேர்வி சிக்கலானது வழங்கல் செயல்திறனை கணிசமாக பாதிக்கிறது. உலாவியின் வலமிருந்து-இடமாக தேர்வி பொருத்துதல் என்பது வலதுபுறத்தில் உள்ள தேர்வி மிகவும் குறிப்பிட்டதாக இருந்தால், செயல்திறன் சிறப்பாக இருக்கும்.</p>
+            </div>
+        </section>
+
+        <!-- 2. Avoid Universal Selector -->
+        <section class="content-section" id="universal-selector">
+            <h2>2. பாணியிடலுக்கு உலகளாவிய தேர்வியைத் தவிர்க்கவும்</h2>
+            
+            <p>கண்டிப்பாக தேவையில்லாதபோது உலகளாவிய தேர்வியை (*) தவிர்க்கவும். உலகளாவிய தேர்வி (*) ஒவ்வொரு உறுப்பையும் பாதிக்கிறது மற்றும் பக்க வழங்கலை மெதுவாக்கலாம்.</p>
+            
+            <div class="demo-container">
+                <div class="demo-title">மோசமான எடுத்துக்காட்டு:</div>
+                <div class="code-example">
+                    <pre><code>* {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}</code></pre>
+                </div>
+                <p><strong>பிரச்சனைகள்:</strong><br>
+                • அனைத்து உறுப்புகளுக்கும் மீண்டும் பாணியிடல்<br>
+                • செயல்திறன் போட்டல்கள்<br>
+                • பாணி மோதல்கள்</p>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> சிறந்த நடைமுறை:</h4>
+                <p>CSS மீட்டமைக்க பின்வருவனவற்றைப் பயன்படுத்துங்கள்:</p>
+                <div class="code-example">
+                    <pre><code>body, h1, h2, h3, p, ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Avoid Inline Styles -->
+        <section class="content-section" id="inline-styles">
+            <h2>3. உள்நிலை பாணிகளைத் தவிர்க்கவும்</h2>
+            
+            <p>தேவையில்லாதபோது உள்நிலை பாணிகளைத் தவிர்க்கவும். உள்நிலை பாணிகள் உங்கள் HTML ஐ கனமாக்குகின்றன மற்றும் நிர்வகிக்க கடினமாக உள்ளன.</p>
+            
+            <div class="comparison-grid">
+                <div class="bad-example">
+                    <h4><i class="fas fa-times-circle" style="color: #dc3545;"></i> மோசமான எடுத்துக்காட்டு</h4>
+                    <div class="code-example">
+                        <pre><code>&lt;div style="color: red; font-size: 18px;"&gt;Hello&lt;/div&gt;
+&lt;p style="color: blue; font-size: 16px;"&gt;Test&lt;/p&gt;</code></pre>
+                    </div>
+                    <p><strong>பிரச்சனைகள்:</strong><br>
+                    • HTML கோப்பு அளவு அதிகரிப்பு<br>
+                    • மறுபயன்பாடு இல்லை<br>
+                    • பராமரிப்பு கடினம்</p>
+                </div>
+                
+                <div class="good-example">
+                    <h4><i class="fas fa-check-circle" style="color: #28a745;"></i> சிறந்த எடுத்துக்காட்டு</h4>
+                    <div class="code-example">
+                        <pre><code>&lt;div class="alert"&gt;Hello&lt;/div&gt;
+&lt;p class="info"&gt;Test&lt;/p&gt;</code></pre>
+                    </div>
+                    <div class="code-example">
+                        <pre><code>.alert {
+  color: red;
+  font-size: 18px;
+}
+
+.info {
+  color: blue;
+  font-size: 16px;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Avoid @import -->
+        <section class="content-section" id="avoid-import">
+            <h2>4. @import ஐத் தவிர்க்கவும்</h2>
+            
+            <p>வெளிப்புற CSS ஐ ஏற்றுவதற்கு @import ஐப் பயன்படுத்துவதைத் தவிர்க்கவும், ஏனெனில் இது பாணித் தாள் ஏற்றத்தை தாமதப்படுத்துகிறது.</p>
+            
+            <p>பக்கத்தை வழங்குவதற்கு முன் ஏற்றப்படும் வகையில் தலைப்புப் பிரிவில் &lt;link&gt; குறிச்சொல்லுடன் வெளிப்புற CSS ஐச் சேர்க்கவும்.</p>
+            
+            <div class="comparison-grid">
+                <div class="bad-example">
+                    <h4><i class="fas fa-times-circle" style="color: #dc3545;"></i> @import பயன்பாடு (தவறு)</h4>
+                    <div class="code-example">
+                        <pre><code>&lt;style&gt;
+@import url("style.css");
+@import url("components.css");
+&lt;/style&gt;</code></pre>
+                    </div>
+                    <p><strong>பிரச்சனைகள்:</strong><br>
+                    • தொடர்ச்சியான ஏற்றம்<br>
+                    • வழங்கல் தடுப்பு<br>
+                    • மெதுவான பக்க ஏற்றம்</p>
+                </div>
+                
+                <div class="good-example">
+                    <h4><i class="fas fa-check-circle" style="color: #28a745;"></i> &lt;link&gt; பயன்பாடு (சரி)</h4>
+                    <div class="code-example">
+                        <pre><code>&lt;link rel="stylesheet" href="style.css"&gt;
+&lt;link rel="stylesheet" href="components.css"&gt;</code></pre>
+                    </div>
+                    <p><strong>நன்மைகள்:</strong><br>
+                    • இணையான ஏற்றம்<br>
+                    • வேகமான பக்க ஏற்றம்<br>
+                    • சிறந்த செயல்திறன்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Use Shorthand Properties -->
+        <section class="content-section" id="shorthand-properties">
+            <h2>5. குறுக்குப் பண்புகளைப் பயன்படுத்துங்கள்</h2>
+            
+            <p>முடிந்தால் குறுக்குப் பண்புகளைப் பயன்படுத்துங்கள். இது இடத்தைச் சேமிக்கிறது மற்றும் பாகுபடுத்த வேகமானது.</p>
+            
+            <div class="comparison-grid">
+                <div class="bad-example">
+                    <h4><i class="fas fa-times-circle" style="color: #dc3545;"></i> நீண்ட பதிப்பு</h4>
+                    <div class="code-example">
+                        <pre><code>margin-top: 10px;
+margin-right: 20px;
+margin-bottom: 10px;
+margin-left: 20px;</code></pre>
+                    </div>
+                    <p><strong>பிரச்சனைகள்:</strong><br>
+                    • அதிக குறியீடு<br>
+                    • மெதுவான பாகுபடுத்தல்<br>
+                    • பராமரிப்பு கடினம்</p>
+                </div>
+                
+                <div class="good-example">
+                    <h4><i class="fas fa-check-circle" style="color: #28a745;"></i> குறுக்குப் பதிப்பு</h4>
+                    <div class="code-example">
+                        <pre><code>margin: 10px 20px;</code></pre>
+                    </div>
+                    <p><strong>நன்மைகள்:</strong><br>
+                    • குறைந்த குறியீடு<br>
+                    • வேகமான பாகுபடுத்தல்<br>
+                    • பராமரிக்க எளிதானது</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📦</span> பிற குறுக்குப் பண்புகள்:</h4>
+                <div class="code-example">
+                    <pre><code>/* Border shorthand */
+border: 1px solid #000;
+
+/* Background shorthand */
+background: #fff url(bg.jpg) no-repeat center;
+
+/* Font shorthand */
+font: bold 16px/1.5 Arial, sans-serif;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6 & 7. Animation Optimization -->
+        <section class="content-section" id="animation-optimization">
+            <h2>6. தேவையில்லாத அனிமேஷன்களைக் குறைக்கவும்</h2>
+            
+            <p>அதிக எண்ணிக்கையிலான அனிமேஷன்கள் மற்றும் பெரிய அனிமேஷன்களுக்கு கையாள அதிக செயலாக்க சக்தி தேவைப்படுகிறது, இது செயல்திறனைக் குறைக்கிறது. எனவே, தேவையில்லாத அனிமேஷன்களை அகற்றவும்.</p>
+            
+            <h2>7. மறுசீரமைப்பை ஏற்படுத்தாத பண்புகளைப் பயன்படுத்துங்கள்</h2>
+            
+            <p>அனிமேஷன் செயல்திறன் நீங்கள் என்ன பண்புகளை அனிமேஷன் செய்கிறீர்கள் என்பதைப் பொறுத்தது.</p>
+            
+            <p>சில பண்புகள் (width, height, left, top போன்றவை), அனிமேஷன் செய்யப்படும்போது ஒரு தளவமைப்பு மறுகணக்கீட்டைத் தூண்டுகின்றன, மேலும் அவை தவிர்க்கப்பட வேண்டும்.</p>
+            
+            <p>முடிந்தால், மறுசீரமைப்பை ஏற்படுத்தாத அனிமேஷன் பண்புகளைப் பயன்படுத்துங்கள், transforms, opacity மற்றும் filter போன்றவை.</p>
+            
+            <div class="animation-demo">
+                <div class="demo-container">
+                    <div class="demo-title">மோசமான அனிமேஷன் (மறுசீரமைப்பு)</div>
+                    <div class="demo-box bad-animation">
+                        width/height
+                    </div>
+                    <p>width மற்றும் height பண்புகள் ஒவ்வொரு பிரேமிலும் தளவமைப்பு மறுகணக்கீட்டைத் தூண்டுகின்றன.</p>
+                </div>
+                
+                <div class="demo-container">
+                    <div class="demo-title">சிறந்த அனிமேஷன் (GPU-முடுக்கம்)</div>
+                    <div class="demo-box good-animation">
+                        transform
+                    </div>
+                    <p>transform மற்றும் opacity பண்புகள் GPU முடுக்கம் பெறுகின்றன மற்றும் மறுசீரமைப்பை ஏற்படுத்தாது.</p>
+                </div>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="bad-example">
+                    <h4><i class="fas fa-times-circle" style="color: #dc3545;"></i> தவறான பண்புகள்</h4>
+                    <ul>
+                        <li>width / height</li>
+                        <li>top / left / right / bottom</li>
+                        <li>margin / padding</li>
+                        <li>border-width</li>
+                    </ul>
+                    <p><strong>பிரச்சனைகள்:</strong><br>
+                    • தளவமைப்பு மறுகணக்கீடு<br>
+                    • மெதுவான அனிமேஷன்கள்<br>
+                    • அதிக CPU பயன்பாடு</p>
+                </div>
+                
+                <div class="good-example">
+                    <h4><i class="fas fa-check-circle" style="color: #28a745;"></i> சரியான பண்புகள்</h4>
+                    <ul>
+                        <li>transform (translate, scale, rotate)</li>
+                        <li>opacity</li>
+                        <li>filter</li>
+                        <li>background-color (modern browsers)</li>
+                    </ul>
+                    <p><strong>நன்மைகள்:</strong><br>
+                    • GPU முடுக்கம்<br>
+                    • மென்மையான அனிமேஷன்கள்<br>
+                    • குறைந்த CPU பயன்பாடு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Combine and Minify CSS -->
+        <section class="content-section" id="combine-minify">
+            <h2>8. CSS ஐ இணைத்து சுருக்கவும்</h2>
+            
+            <p>முடிந்தால் ஒரு CSS கோப்பைப் பயன்படுத்துங்கள், மேலும் கோப்பு அளவைக் குறைக்க இடைவெளிகள் மற்றும் கருத்துகளை அகற்றவும்.</p>
+            
+            <p>நீங்கள் பின்வரும் கருவிகளைப் பயன்படுத்தலாம்:</p>
+            
+            <div class="performance-card">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-tools performance-icon"></i>
+                    <h4 style="margin: 0;">CSS சுருக்கிகள்</h4>
+                </div>
+                <ul>
+                    <li><strong>CSS Minifier:</strong> CSS கோப்புகளை ஆன்லைனில் சுருக்குகிறது</li>
+                    <li><strong>PostCSS:</strong> CSS ஐ JavaScript பிளக்-இன்களுடன் மாற்றுகிறது</li>
+                    <li><strong>CSSNano:</strong> CSS ஐ மேம்படுத்தும் மாடுலர் மினிஃபையர்</li>
+                    <li><strong>PurgeCSS:</strong> பயன்படுத்தப்படாத CSS ஐ அகற்றுகிறது</li>
+                </ul>
+            </div>
+            
+            <div class="demo-container">
+                <div class="demo-title">சுருக்கத்திற்கு முன் மற்றும் பின்:</div>
+                <div class="comparison-grid">
+                    <div class="bad-example">
+                        <h4>சுருக்கத்திற்கு முன் (வளர்ச்சி)</h4>
+                        <div class="code-example">
+                            <pre><code>/* Header Styles */
+.header {
+    margin: 0;
+    padding: 1rem;
+    background-color: #ffffff;
+}
+
+.header .logo {
+    width: 100px;
+    height: 50px;
+}
+
+/* Navigation */
+.nav-list {
+    list-style: none;
+    display: flex;
+}</code></pre>
+                        </div>
+                        <p>கோப்பு அளவு: ~500 பைட்டுகள்</p>
+                    </div>
+                    
+                    <div class="good-example">
+                        <h4>சுருக்கத்திற்குப் பின் (உற்பத்தி)</h4>
+                        <div class="code-example">
+                            <pre><code>.header{margin:0;padding:1rem;background-color:#fff}.header .logo{width:100px;height:50px}.nav-list{list-style:none;display:flex}</code></pre>
+                        </div>
+                        <p>கோப்பு அளவு: ~150 பைட்டுகள்</p>
+                        <p><strong>70% அளவு குறைப்பு!</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Cache Your CSS -->
+        <section class="content-section" id="cache-css">
+            <h2>9. உங்கள் CSS ஐ கேச் செய்யுங்கள்</h2>
+            
+            <p>உங்கள் CSS கோப்பு உலாவியால் கேச் செய்யப்படுவதை உறுதிப்படுத்திக் கொள்ளுங்கள், அதற்கு உங்கள் சேவையக அமைப்புகளில் நீண்ட காலத்திற்கு காலாவதி நேரத்தைக் கொடுப்பதன் மூலம். இது பயனர்கள் அதை மீண்டும் ஏற்ற வேண்டிய அதிர்வெண்ணைக் குறைக்கிறது.</p>
+            
+            <div class="performance-card">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-database performance-icon"></i>
+                    <h4 style="margin: 0;">HTTP கேச் எதிர்வினை தலைப்புகள்</h4>
+                </div>
+                <div class="code-example">
+                    <pre><code>Cache-Control: public, max-age=31536000
+Expires: Wed, 01 Jan 2025 00:00:00 GMT
+ETag: "33a64df551425fcc55e4d42a148795d9f25f89d4"
+Last-Modified: Wed, 21 Oct 2023 07:28:00 GMT</code></pre>
+                </div>
+                <p><strong>நன்மைகள்:</strong><br>
+                • மீண்டும் ஏற்றங்கள் குறைவு<br>
+                • வேகமான பக்க ஏற்றம்<br>
+                • குறைந்த சேவையக வேலை</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section (ONLY ONE) -->
+        <section class="content-section" id="exercises">
+            <h2>CSS செயல்திறன் தேர்வுமுறை பயிற்சி</h2>
+            
+            <p>செயல்திறன் தேர்வுமுறை பற்றிய உங்கள் அறிவை இந்த பயிற்சியுடன் சோதிக்கவும்.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> மறுசீரமைப்புகளை ஏற்படுத்தாது மற்றும் GPU-முடுக்கம் பெறுவதால் அனிமேஷன்களுக்கு எந்த CSS பண்புகள் பரிந்துரைக்கப்படுகின்றன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">width and height</div>
+                            <div class="option-feedback incorrect">✗ தவறு! width மற்றும் height பண்புகள் ஒவ்வொரு பிரேமிலும் தளவமைப்பு மறுகணக்கீட்டைத் தூண்டுகின்றன, இது செயல்திறனைக் குறைக்கிறது. இவை "மோசமான" அனிமேஷன் பண்புகள் என கருதப்படுகின்றன.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">top and left</div>
+                            <div class="option-feedback incorrect">✗ தவறு! top மற்றும் left பண்புகள் தளவமைப்பு மறுகணக்கீட்டைத் தூண்டுகின்றன மற்றும் GPU முடுக்கம் பெறுவதில்லை. position: absolute அல்லது fixed உடன் இணைந்தாலும், இவை transform: translate() ஐ விட மோசமான செயல்திறனைக் கொண்டுள்ளன.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">transform and opacity</div>
+                            <div class="option-feedback correct">✓ சரி! transform மற்றும் opacity பண்புகள் GPU முடுக்கம் பெறுகின்றன மற்றும் மறுசீரமைப்பை ஏற்படுத்தாது. transform பண்பு translate(), scale(), rotate() மற்றும் opacity பண்புகளை உள்ளடக்கியது. இவை மென்மையான, செயல்திறன் அனிமேஷன்களுக்கு பரிந்துரைக்கப்படுகின்றன.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">margin and padding</div>
+                            <div class="option-feedback incorrect">✗ தவறு! margin மற்றும் padding பண்புகள் தளவமைப்பு மாற்றங்களைத் தூண்டுகின்றன மற்றும் GPU முடுக்கம் பெறுவதில்லை. இவை அனிமேஷன்களுக்கு பரிந்துரைக்கப்படுவதில்லை, ஏனெனில் அவை ஒவ்வொரு பிரேமிலும் தளவமைப்பு மறுகணக்கீட்டை ஏற்படுத்துகின்றன.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-bolt"></i>
+                    <div><strong>தேர்விகளை குறுகியதாகவும் எளிமையாகவும் வைத்திருங்கள்</strong> - குறிப்பிட்ட தேர்விகளைப் பயன்படுத்துங்கள் மற்றும் தேவையற்ற வம்சாவளி தேர்விகளைத் தவிர்க்கவும்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-ban"></i>
+                    <div><strong>தளவமைப்பு-நொறுக்கும் செயல்பாடுகளைத் தவிர்க்கவும்</strong> - அனிமேஷன்களுக்கு transform மற்றும் opacity ஐப் பயன்படுத்துங்கள்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-play-circle"></i>
+                    <div><strong>திறமையான அனிமேஷன் நுட்பங்களைப் பயன்படுத்துங்கள்</strong> - GPU-முடுக்கம் பெற்ற பண்புகளைத் தேர்ந்தெடுக்கவும் மற்றும் அனிமேஷன்-சார்ந்த பாதைகளில் கணக்கீடுகளைத் தவிர்க்கவும்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-file-code"></i>
+                    <div><strong>வெளிப்புற, சுருக்கப்பட்ட மற்றும் கேச் செய்யப்பட்ட பாணித் தாள்களைப் பயன்படுத்துங்கள்</strong> - ஒரு CSS கோப்பை இணைக்கவும், சுருக்கவும் மற்றும் கேச் செய்யவும்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <div><strong>அளவீடு மற்றும் கண்காணிப்பு</strong> - உலாவி DevTools, Lighthouse தணிக்கைகள் மற்றும் WebPageTest ஆகியவை CSS செயல்திறன் போட்டல்களைப் பற்றிய நுண்ணறிவை வழங்குகின்றன</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🚀</span> நவீன CSS அம்சங்கள்:</h4>
+                <p>CSS Grid, Flexbox மற்றும் container queries போன்ற புதிய CSS அம்சங்கள் பெரும்பாலும் பாரம்பரிய தளவமைப்பு முறைகளை விட செயல்திறன் கூடியவை. இந்த சொந்த தீர்வுகள் JavaScript-சார்ந்த தளவமைப்பு கணக்கீடுகளின் தேவையைக் குறைக்கின்றன மற்றும் சிறந்த வழங்கல் செயல்திறனை வழங்குகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Math%20Functions.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Accessibility%20Styling.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">செயல்திறன் தேர்வுமுறை</a></li>
+                    <li><a href="#simple-selectors">எளிய தேர்விகள்</a></li>
+                    <li><a href="#universal-selector">உலகளாவிய தேர்வி</a></li>
+                    <li><a href="#inline-styles">உள்நிலை பாணிகள்</a></li>
+                    <li><a href="#avoid-import">@import தவிர்த்தல்</a></li>
+                    <li><a href="#shorthand-properties">குறுக்குப் பண்புகள்</a></li>
+                    <li><a href="#animation-optimization">அனிமேஷன் தேர்வுமுறை</a></li>
+                    <li><a href="#combine-minify">இணைத்தல் மற்றும் சுருக்கல்</a></li>
+                    <li><a href="#cache-css">CSS கேச்</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Performance measurement demo
+        const badAnimationBox = document.querySelector('.bad-animation');
+        const goodAnimationBox = document.querySelector('.good-animation');
+        
+        if (badAnimationBox && goodAnimationBox) {
+            let badFrameCount = 0;
+            let goodFrameCount = 0;
+            let lastTime = performance.now();
+            
+            function measurePerformance() {
+                const currentTime = performance.now();
+                const elapsed = currentTime - lastTime;
+                
+                if (elapsed > 1000) { // Update every second
+                    const badFps = Math.round((badFrameCount / elapsed) * 1000);
+                    const goodFps = Math.round((goodFrameCount / elapsed) * 1000);
+                    
+                    // Update display
+                    const badDemoContainer = badAnimationBox.closest('.demo-container');
+                    const goodDemoContainer = goodAnimationBox.closest('.demo-container');
+                    
+                    if (badDemoContainer && goodDemoContainer) {
+                        const badTitle = badDemoContainer.querySelector('.demo-title');
+                        const goodTitle = goodDemoContainer.querySelector('.demo-title');
+                        
+                        if (badTitle && goodTitle) {
+                            badTitle.innerHTML = `மோசமான அனிமேஷன் (மறுசீரமைப்பு) ~${badFps} FPS`;
+                            goodTitle.innerHTML = `சிறந்த அனிமேஷன் (GPU-முடுக்கம்) ~${goodFps} FPS`;
+                        }
+                    }
+                    
+                    // Reset counters
+                    badFrameCount = 0;
+                    goodFrameCount = 0;
+                    lastTime = currentTime;
+                }
+                
+                // Count frames for each animation
+                badFrameCount++;
+                goodFrameCount++;
+                
+                requestAnimationFrame(measurePerformance);
+            }
+            
+            // Start measurement
+            requestAnimationFrame(measurePerformance);
+        }
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

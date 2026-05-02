@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NODE.JS - JT GROUP OF INSTITUTION</title>
+    <link rel="icon" href="/assets/images/jt_logo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin:0;
+            background: #f5f7fa;
+        }
+        /* Professional Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 1px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+        }
+        .home-link:hover {
+            opacity: 0.8;
+        }
+        .dashboard-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+            font-weight: 600;
+        }
+        .dashboard-link:hover {
+            opacity: 0.8;
+        }
+        /* Hero Section */
+        .course-hero {
+            background: linear-gradient(135deg, #68a063, #3c8737);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .course-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+        .course-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .course-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .course-hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .start-learning-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #68a063;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 15px rgba(104, 160, 99, 0.4);
+        }
+        .start-learning-btn:hover {
+            background: #3c8737;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(104, 160, 99, 0.6);
+        }
+        /* Topics Grid */
+        .topics-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .topic-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid #68a063;
+            text-align: center;
+        }
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .topic-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #68a063, #3c8737);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        .topic-card h3 {
+            color: var(--dark);
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+        }
+        .topic-card p {
+            color: #666;
+            margin: 0 0 1.5rem 0;
+        }
+        .topic-card a {
+            display: inline-block;
+            padding: 0.7rem 2rem;
+            background: #68a063;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s;
+        }
+        .topic-card a:hover {
+            background: #3c8737;
+        }
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        .footer-column a:hover {
+            color: white;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 2rem 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo">
+                <h1>JT GROUP OF INSTITUTION</h1>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="home-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="/app/dashboard.html" class="dashboard-link">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="course-hero">
+        <div class="course-hero-content">
+            <h1><i class="fab fa-node-js"></i> Node.js</h1>
+            <p>Build server-side applications with Node.js JavaScript runtime</p>
+            <a href="Node.js Tutorial.html" class="start-learning-btn">Start Learning <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Topics -->
+    <div class="topics-container">
+        <h2 style="text-align: center; color: var(--dark); margin-bottom: 2rem;">Available Topics</h2>
+        <div class="topics-grid">
+            <div class="topic-card" style="border-top: 5px solid #e74c3c;">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js API Authentication Guide</h3>
+                <p>Learn Node.js API Authentication Guide</p>
+                <a href="Node.js API Authentication Guide.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Advanced Debugging</h3>
+                <p>Learn Node.js Advanced Debugging</p>
+                <a href="Node.js Advanced Debugging.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Advanced TypeScript</h3>
+                <p>Learn Node.js Advanced TypeScript</p>
+                <a href="Node.js Advanced TypeScript.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Agent Reference</h3>
+                <p>Learn Node.js Agent Reference</p>
+                <a href="Node.js Agent Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Architecture</h3>
+                <p>Learn Node.js Architecture</p>
+                <a href="Node.js Architecture.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Assert Module</h3>
+                <p>Learn Node.js Assert Module</p>
+                <a href="Node.js Assert Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Async-Await</h3>
+                <p>Learn Node.js Async-Await</p>
+                <a href="Node.js Async-Await.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Asynchronous Programming</h3>
+                <p>Learn Node.js Asynchronous Programming</p>
+                <a href="Node.js Asynchronous Programming.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Buffer Module</h3>
+                <p>Learn Node.js Buffer Module</p>
+                <a href="Node.js Buffer Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Built-in Modules</h3>
+                <p>Learn Node.js Built-in Modules</p>
+                <a href="Node.js Built-in Modules.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js CI_CD</h3>
+                <p>Learn Node.js CI_CD</p>
+                <a href="Node.js CI_CD.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Child Process Module</h3>
+                <p>Learn Node.js Child Process Module</p>
+                <a href="Node.js Child Process Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Cipher Reference</h3>
+                <p>Learn Node.js Cipher Reference</p>
+                <a href="Node.js Cipher Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Cluster Module</h3>
+                <p>Learn Node.js Cluster Module</p>
+                <a href="Node.js Cluster Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Command Line Usage</h3>
+                <p>Learn Node.js Command Line Usage</p>
+                <a href="Node.js Command Line Usage.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Crypto Module</h3>
+                <p>Learn Node.js Crypto Module</p>
+                <a href="Node.js Crypto Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js DNS Module</h3>
+                <p>Learn Node.js DNS Module</p>
+                <a href="Node.js DNS Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Decipher Reference</h3>
+                <p>Learn Node.js Decipher Reference</p>
+                <a href="Node.js Decipher Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Deployment</h3>
+                <p>Learn Node.js Deployment</p>
+                <a href="Node.js Deployment.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Development vs Production</h3>
+                <p>Learn Node.js Development vs Production</p>
+                <a href="Node.js Development vs Production.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js DiffieHellman Reference</h3>
+                <p>Learn Node.js DiffieHellman Reference</p>
+                <a href="Node.js DiffieHellman Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js ECDH Reference</h3>
+                <p>Learn Node.js ECDH Reference</p>
+                <a href="Node.js ECDH Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js ES Modules</h3>
+                <p>Learn Node.js ES Modules</p>
+                <a href="Node.js ES Modules.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js ES6+ Features</h3>
+                <p>Learn Node.js ES6+ Features</p>
+                <a href="Node.js ES6+ Features.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Environment Variables</h3>
+                <p>Learn Node.js Environment Variables</p>
+                <a href="Node.js Environment Variables.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Error Handling</h3>
+                <p>Learn Node.js Error Handling</p>
+                <a href="Node.js Error Handling.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Event Loop</h3>
+                <p>Learn Node.js Event Loop</p>
+                <a href="Node.js Event Loop.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js EventEmitter Reference</h3>
+                <p>Learn Node.js EventEmitter Reference</p>
+                <a href="Node.js EventEmitter Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Events</h3>
+                <p>Learn Node.js Events</p>
+                <a href="Node.js Events.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Express.js</h3>
+                <p>Learn Node.js Express.js</p>
+                <a href="Node.js Express.js.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js File System Module</h3>
+                <p>Learn Node.js File System Module</p>
+                <a href="Node.js File System Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Frameworks</h3>
+                <p>Learn Node.js Frameworks</p>
+                <a href="Node.js Frameworks.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Get Started</h3>
+                <p>Learn Node.js Get Started</p>
+                <a href="Node.js Get Started.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js GraphQL</h3>
+                <p>Learn Node.js GraphQL</p>
+                <a href="Node.js GraphQL.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js HTTP Module</h3>
+                <p>Learn Node.js HTTP Module</p>
+                <a href="Node.js HTTP Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js HTTP2 Module</h3>
+                <p>Learn Node.js HTTP2 Module</p>
+                <a href="Node.js HTTP2 Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js HTTPS Module</h3>
+                <p>Learn Node.js HTTPS Module</p>
+                <a href="Node.js HTTPS Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Hash Reference</h3>
+                <p>Learn Node.js Hash Reference</p>
+                <a href="Node.js Hash Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Hmac Reference</h3>
+                <p>Learn Node.js Hmac Reference</p>
+                <a href="Node.js Hmac Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Interface Reference</h3>
+                <p>Learn Node.js Interface Reference</p>
+                <a href="Node.js Interface Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Introduction</h3>
+                <p>Learn Node.js Introduction</p>
+                <a href="Node.js Introduction.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js JavaScript Requirements</h3>
+                <p>Learn Node.js JavaScript Requirements</p>
+                <a href="Node.js JavaScript Requirements.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Linting & Formatting</h3>
+                <p>Learn Node.js Linting & Formatting</p>
+                <a href="Node.js Linting & Formatting.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Logging</h3>
+                <p>Learn Node.js Logging</p>
+                <a href="Node.js Logging.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Managing Dependencies</h3>
+                <p>Learn Node.js Managing Dependencies</p>
+                <a href="Node.js Managing Dependencies.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Message Reference</h3>
+                <p>Learn Node.js Message Reference</p>
+                <a href="Node.js Message Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Microservices</h3>
+                <p>Learn Node.js Microservices</p>
+                <a href="Node.js Microservices.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Middleware</h3>
+                <p>Learn Node.js Middleware</p>
+                <a href="Node.js Middleware.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Modules</h3>
+                <p>Learn Node.js Modules</p>
+                <a href="Node.js Modules.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Create Collection</h3>
+                <p>Learn Node.js MongoDB Create Collection</p>
+                <a href="Node.js MongoDB Create Collection.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Create Database</h3>
+                <p>Learn Node.js MongoDB Create Database</p>
+                <a href="Node.js MongoDB Create Database.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Delete</h3>
+                <p>Learn Node.js MongoDB Delete</p>
+                <a href="Node.js MongoDB Delete.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Drop</h3>
+                <p>Learn Node.js MongoDB Drop</p>
+                <a href="Node.js MongoDB Drop.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Find</h3>
+                <p>Learn Node.js MongoDB Find</p>
+                <a href="Node.js MongoDB Find.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Insert</h3>
+                <p>Learn Node.js MongoDB Insert</p>
+                <a href="Node.js MongoDB Insert.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Join</h3>
+                <p>Learn Node.js MongoDB Join</p>
+                <a href="Node.js MongoDB Join.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Limit</h3>
+                <p>Learn Node.js MongoDB Limit</p>
+                <a href="Node.js MongoDB Limit.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Query</h3>
+                <p>Learn Node.js MongoDB Query</p>
+                <a href="Node.js MongoDB Query.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Sort</h3>
+                <p>Learn Node.js MongoDB Sort</p>
+                <a href="Node.js MongoDB Sort.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB Update</h3>
+                <p>Learn Node.js MongoDB Update</p>
+                <a href="Node.js MongoDB Update.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MongoDB</h3>
+                <p>Learn Node.js MongoDB</p>
+                <a href="Node.js MongoDB.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Monitoring & Observability</h3>
+                <p>Learn Node.js Monitoring & Observability</p>
+                <a href="Node.js Monitoring & Observability.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Create Database</h3>
+                <p>Learn Node.js MySQL Create Database</p>
+                <a href="Node.js MySQL Create Database.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Create Table</h3>
+                <p>Learn Node.js MySQL Create Table</p>
+                <a href="Node.js MySQL Create Table.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Delete</h3>
+                <p>Learn Node.js MySQL Delete</p>
+                <a href="Node.js MySQL Delete.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Drop Table</h3>
+                <p>Learn Node.js MySQL Drop Table</p>
+                <a href="Node.js MySQL Drop Table.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Insert Into</h3>
+                <p>Learn Node.js MySQL Insert Into</p>
+                <a href="Node.js MySQL Insert Into.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Join</h3>
+                <p>Learn Node.js MySQL Join</p>
+                <a href="Node.js MySQL Join.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Limit</h3>
+                <p>Learn Node.js MySQL Limit</p>
+                <a href="Node.js MySQL Limit.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Order By</h3>
+                <p>Learn Node.js MySQL Order By</p>
+                <a href="Node.js MySQL Order By.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Select From</h3>
+                <p>Learn Node.js MySQL Select From</p>
+                <a href="Node.js MySQL Select From.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Update</h3>
+                <p>Learn Node.js MySQL Update</p>
+                <a href="Node.js MySQL Update.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL Where</h3>
+                <p>Learn Node.js MySQL Where</p>
+                <a href="Node.js MySQL Where.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js MySQL</h3>
+                <p>Learn Node.js MySQL</p>
+                <a href="Node.js MySQL.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js NPM Scripts</h3>
+                <p>Learn Node.js NPM Scripts</p>
+                <a href="Node.js NPM Scripts.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js NPM</h3>
+                <p>Learn Node.js NPM</p>
+                <a href="Node.js NPM.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Net Module</h3>
+                <p>Learn Node.js Net Module</p>
+                <a href="Node.js Net Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js OS Module</h3>
+                <p>Learn Node.js OS Module</p>
+                <a href="Node.js OS Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Path Module</h3>
+                <p>Learn Node.js Path Module</p>
+                <a href="Node.js Path Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Performance Diagnostics</h3>
+                <p>Learn Node.js Performance Diagnostics</p>
+                <a href="Node.js Performance Diagnostics.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Performance Hooks Module</h3>
+                <p>Learn Node.js Performance Hooks Module</p>
+                <a href="Node.js Performance Hooks Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Process Management</h3>
+                <p>Learn Node.js Process Management</p>
+                <a href="Node.js Process Management.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Promises</h3>
+                <p>Learn Node.js Promises</p>
+                <a href="Node.js Promises.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Publish a Package</h3>
+                <p>Learn Node.js Publish a Package</p>
+                <a href="Node.js Publish a Package.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js RESTful API</h3>
+                <p>Learn Node.js RESTful API</p>
+                <a href="Node.js RESTful API.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Raspberry Pi - Blinking LED</h3>
+                <p>Learn Node.js Raspberry Pi - Blinking LED</p>
+                <a href="Node.js Raspberry Pi - Blinking LED.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Raspberry Pi - Components</h3>
+                <p>Learn Node.js Raspberry Pi - Components</p>
+                <a href="Node.js Raspberry Pi - Components.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Raspberry Pi - GPIO Introduction</h3>
+                <p>Learn Node.js Raspberry Pi - GPIO Introduction</p>
+                <a href="Node.js Raspberry Pi - GPIO Introduction.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Raspberry Pi GPIO - Flowing LEDs</h3>
+                <p>Learn Node.js Raspberry Pi GPIO - Flowing LEDs</p>
+                <a href="Node.js Raspberry Pi GPIO - Flowing LEDs.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Raspberry Pi GPIO - LED and Pushbutton</h3>
+                <p>Learn Node.js Raspberry Pi GPIO - LED and Pushbutton</p>
+                <a href="Node.js Raspberry Pi GPIO - LED and Pushbutton.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Raspberry Pi RGB LED with WebSocket</h3>
+                <p>Learn Node.js Raspberry Pi RGB LED with WebSocket</p>
+                <a href="Node.js Raspberry Pi RGB LED with WebSocket.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js ReadStream Reference</h3>
+                <p>Learn Node.js ReadStream Reference</p>
+                <a href="Node.js ReadStream Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Readline Module</h3>
+                <p>Learn Node.js Readline Module</p>
+                <a href="Node.js Readline Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Real-World Examples</h3>
+                <p>Learn Node.js Real-World Examples</p>
+                <a href="Node.js Real-World Examples.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Request Reference</h3>
+                <p>Learn Node.js Request Reference</p>
+                <a href="Node.js Request Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Response Reference</h3>
+                <p>Learn Node.js Response Reference</p>
+                <a href="Node.js Response Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Security</h3>
+                <p>Learn Node.js Security</p>
+                <a href="Node.js Security.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Server Reference</h3>
+                <p>Learn Node.js Server Reference</p>
+                <a href="Node.js Server Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Sign Reference</h3>
+                <p>Learn Node.js Sign Reference</p>
+                <a href="Node.js Sign Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Socket Reference</h3>
+                <p>Learn Node.js Socket Reference</p>
+                <a href="Node.js Socket Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Socket.IO</h3>
+                <p>Learn Node.js Socket.IO</p>
+                <a href="Node.js Socket.IO.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Streams</h3>
+                <p>Learn Node.js Streams</p>
+                <a href="Node.js Streams.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js TLS SSL Module</h3>
+                <p>Learn Node.js TLS SSL Module</p>
+                <a href="Node.js TLS SSL Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Test Runner</h3>
+                <p>Learn Node.js Test Runner</p>
+                <a href="Node.js Test Runner.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Testing Frameworks</h3>
+                <p>Learn Node.js Testing Frameworks</p>
+                <a href="Node.js Testing Frameworks.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Testing</h3>
+                <p>Learn Node.js Testing</p>
+                <a href="Node.js Testing.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Timers Module</h3>
+                <p>Learn Node.js Timers Module</p>
+                <a href="Node.js Timers Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Tutorial</h3>
+                <p>Learn Node.js Tutorial</p>
+                <a href="Node.js Tutorial.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js TypeScript</h3>
+                <p>Learn Node.js TypeScript</p>
+                <a href="Node.js TypeScript.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js URL Module</h3>
+                <p>Learn Node.js URL Module</p>
+                <a href="Node.js URL Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Util Module</h3>
+                <p>Learn Node.js Util Module</p>
+                <a href="Node.js Util Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js V8 Engine</h3>
+                <p>Learn Node.js V8 Engine</p>
+                <a href="Node.js V8 Engine.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js VM Module</h3>
+                <p>Learn Node.js VM Module</p>
+                <a href="Node.js VM Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Verify Reference</h3>
+                <p>Learn Node.js Verify Reference</p>
+                <a href="Node.js Verify Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js WebAssembly</h3>
+                <p>Learn Node.js WebAssembly</p>
+                <a href="Node.js WebAssembly.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js WebSockets</h3>
+                <p>Learn Node.js WebSockets</p>
+                <a href="Node.js WebSockets.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Worker Reference</h3>
+                <p>Learn Node.js Worker Reference</p>
+                <a href="Node.js Worker Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Worker Threads Module</h3>
+                <p>Learn Node.js Worker Threads Module</p>
+                <a href="Node.js Worker Threads Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js WriteStream Reference</h3>
+                <p>Learn Node.js WriteStream Reference</p>
+                <a href="Node.js WriteStream Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js Zlib Module</h3>
+                <p>Learn Node.js Zlib Module</p>
+                <a href="Node.js Zlib Module.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js and Raspberry Pi - Webserver with WebSocket</h3>
+                <p>Learn Node.js and Raspberry Pi - Webserver with WebSocket</p>
+                <a href="Node.js and Raspberry Pi - Webserver with WebSocket.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js and Raspberry Pi</h3>
+                <p>Learn Node.js and Raspberry Pi</p>
+                <a href="Node.js and Raspberry Pi.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js package.json</h3>
+                <p>Learn Node.js package.json</p>
+                <a href="Node.js package.json.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js vs Browser</h3>
+                <p>Learn Node.js vs Browser</p>
+                <a href="Node.js vs Browser.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js with Frontend Frameworks</h3>
+                <p>Learn Node.js with Frontend Frameworks</p>
+                <a href="Node.js with Frontend Frameworks.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>JT GROUP OF INSTITUTION</h3>
+                <p style="color: #ddd; line-height: 1.6;">Leading educational institution providing quality programming education in multiple languages.</p>
+                <div style="padding: 1rem; margin-top: 1rem;">
+                    <h4 style="color: white; margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> Help Center</h4>
+                    <p style="color: #ddd;">jassifteam@jtgroupofinstitution.com</p>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/app/dashboard.html">Dashboard</a></li>
+                    <li><a href="/courses/tamil/">Courses</a></li>
+                    <li><a href="/app/login.html">Login</a></li>
+                    <li><a href="/app/signup.html">Sign Up</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Course Categories</h3>
+                <ul>
+                    <li><a href="/courses/tamil/FRONT_END_DEVELOPMENT/">Front End</a></li>
+                    <li><a href="/courses/tamil/full stack development/">Full Stack</a></li>
+                    <li><a href="/courses/tamil/backend development/">Backend</a></li>
+                    <li><a href="/courses/tamil/programming-languages/">Programming</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 JT GROUP OF INSTITUTION. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+

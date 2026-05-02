@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL UPDATE Statement - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .data-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="MySQL NULL Values.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="MySQL DELETE Statement.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>MySQL UPDATE Statement</h2>
+            <p>MySQL UPDATE அறிக்கை</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- UPDATE Statement Section -->
+        <section class="content-section" id="update-statement">
+            <h2>MySQL UPDATE அறிக்கை</h2>
+            
+            <p>UPDATE அறிக்கை ஒரு அட்டவணையில் உள்ள இருக்கும் பதிவுகளை மாற்ற பயன்படுகிறது.</p>
+        </section>
+
+        <!-- UPDATE Syntax -->
+        <section class="content-section" id="update-syntax">
+            <h2>UPDATE தொடரமைப்பு</h2>
+            
+            <div class="code-example">
+                <pre><code>UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>ஒரு அட்டவணையில் பதிவுகளைப் புதுப்பிக்கும்போது கவனமாக இருங்கள்! UPDATE அறிக்கையில் WHERE விதியைக் கவனியுங்கள். எந்த பதிவு(கள்) புதுப்பிக்கப்பட வேண்டும் என்பதை WHERE விதி குறிப்பிடுகிறது. நீங்கள் WHERE விதியைத் தவிர்த்தால், அட்டவணையில் உள்ள அனைத்து பதிவுகளும் புதுப்பிக்கப்படும்!</p>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>டெமோ தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் உள்ள "Customers" அட்டவணையில் இருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>CustomerID</th>
+                        <th>CustomerName</th>
+                        <th>ContactName</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>PostalCode</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Maria Anders</td>
+                        <td>Obere Str. 57</td>
+                        <td>Berlin</td>
+                        <td>12209</td>
+                        <td>Germany</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ana Trujillo Emparedados y helados</td>
+                        <td>Ana Trujillo</td>
+                        <td>Avda. de la Constitución 2222</td>
+                        <td>México D.F.</td>
+                        <td>05021</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Antonio Moreno Taquería</td>
+                        <td>Antonio Moreno</td>
+                        <td>Mataderos 2312</td>
+                        <td>México D.F.</td>
+                        <td>05023</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Around the Horn</td>
+                        <td>Thomas Hardy</td>
+                        <td>120 Hanover Sq.</td>
+                        <td>London</td>
+                        <td>WA1 1DP</td>
+                        <td>UK</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- UPDATE Table -->
+        <section class="content-section" id="update-table">
+            <h2>அட்டவணையைப் புதுப்பிக்கவும்</h2>
+            
+            <p>பின்வரும் SQL அறிக்கை முதல் வாடிக்கையாளரை (CustomerID = 1) ஒரு புதிய தொடர்பு நபர் மற்றும் ஒரு புதிய நகரத்துடன் புதுப்பிக்கிறது.</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு: உங்கள் சொந்த SQL சர்வரைப் பெறுங்கள்</h3>
+                <pre><code>UPDATE Customers
+SET ContactName = 'Alfred Schmidt', City = 'Frankfurt'
+WHERE CustomerID = 1;</code></pre>
+            </div>
+            
+            <p>"Customers" அட்டவணையில் இருந்து தேர்வு இப்போது இப்படித் தோன்றும்:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>CustomerID</th>
+                        <th>CustomerName</th>
+                        <th>ContactName</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>PostalCode</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Alfred Schmidt</td>
+                        <td>Obere Str. 57</td>
+                        <td>Frankfurt</td>
+                        <td>12209</td>
+                        <td>Germany</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ana Trujillo Emparedados y helados</td>
+                        <td>Ana Trujillo</td>
+                        <td>Avda. de la Constitución 2222</td>
+                        <td>México D.F.</td>
+                        <td>05021</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Antonio Moreno Taquería</td>
+                        <td>Antonio Moreno</td>
+                        <td>Mataderos 2312</td>
+                        <td>México D.F.</td>
+                        <td>05023</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Around the Horn</td>
+                        <td>Thomas Hardy</td>
+                        <td>120 Hanover Sq.</td>
+                        <td>London</td>
+                        <td>WA1 1DP</td>
+                        <td>UK</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- UPDATE Multiple Records -->
+        <section class="content-section" id="update-multiple">
+            <h2>பல பதிவுகளைப் புதுப்பிக்கவும்</h2>
+            
+            <p>எத்தனை பதிவுகள் புதுப்பிக்கப்படும் என்பதை WHERE விதியே தீர்மானிக்கிறது.</p>
+            
+            <p>பின்வரும் SQL அறிக்கை country "Mexico" ஆக உள்ள அனைத்து பதிவுகளுக்கும் PostalCode ஐ 00000 ஆக புதுப்பிக்கும்:</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>UPDATE Customers
+SET PostalCode = 00000
+WHERE Country = 'Mexico';</code></pre>
+            </div>
+            
+            <p>"Customers" அட்டவணையில் இருந்து தேர்வு இப்போது இப்படித் தோன்றும்:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>CustomerID</th>
+                        <th>CustomerName</th>
+                        <th>ContactName</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>PostalCode</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Alfred Schmidt</td>
+                        <td>Obere Str. 57</td>
+                        <td>Frankfurt</td>
+                        <td>12209</td>
+                        <td>Germany</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ana Trujillo Emparedados y helados</td>
+                        <td>Ana Trujillo</td>
+                        <td>Avda. de la Constitución 2222</td>
+                        <td>México D.F.</td>
+                        <td>00000</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Antonio Moreno Taquería</td>
+                        <td>Antonio Moreno</td>
+                        <td>Mataderos 2312</td>
+                        <td>México D.F.</td>
+                        <td>00000</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Around the Horn</td>
+                        <td>Thomas Hardy</td>
+                        <td>120 Hanover Sq.</td>
+                        <td>London</td>
+                        <td>WA1 1DP</td>
+                        <td>UK</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Update Warning -->
+        <section class="content-section" id="update-warning">
+            <h2>புதுப்பிப்பு எச்சரிக்கை!</h2>
+            
+            <p>பதிவுகளைப் புதுப்பிக்கும்போது கவனமாக இருங்கள். நீங்கள் WHERE விதியைத் தவிர்த்தால், அனைத்து பதிவுகளும் புதுப்பிக்கப்படும்!</p>
+            
+            <div class="code-example">
+                <h3>எடுத்துக்காட்டு</h3>
+                <pre><code>UPDATE Customers
+SET PostalCode = 00000;</code></pre>
+            </div>
+            
+            <p>"Customers" அட்டவணையில் இருந்து தேர்வு இப்போது இப்படித் தோன்றும்:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>CustomerID</th>
+                        <th>CustomerName</th>
+                        <th>ContactName</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>PostalCode</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Alfred Schmidt</td>
+                        <td>Obere Str. 57</td>
+                        <td>Frankfurt</td>
+                        <td>00000</td>
+                        <td>Germany</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ana Trujillo Emparedados y helados</td>
+                        <td>Ana Trujillo</td>
+                        <td>Avda. de la Constitución 2222</td>
+                        <td>México D.F.</td>
+                        <td>00000</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Antonio Moreno Taquería</td>
+                        <td>Antonio Moreno</td>
+                        <td>Mataderos 2312</td>
+                        <td>México D.F.</td>
+                        <td>00000</td>
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Around the Horn</td>
+                        <td>Thomas Hardy</td>
+                        <td>120 Hanover Sq.</td>
+                        <td>London</td>
+                        <td>00000</td>
+                        <td>UK</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> அனைத்து City புலங்களிலும் 'Oslo' மதிப்பைச் செருக சரியான முக்கிய வார்த்தைகளைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">UPDATE</div>
+                            <div class="option-feedback correct">✓ சரி! UPDATE என்பது பதிவுகளைப் புதுப்பிக்க பயன்படும் முக்கிய வார்த்தையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">SET</div>
+                            <div class="option-feedback correct">✓ சரி! SET என்பது புதிய மதிப்புகளை அமைக்க பயன்படும் முக்கிய வார்த்தையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">INSERT</div>
+                            <div class="option-feedback incorrect">✗ தவறு! INSERT என்பது புதிய பதிவுகளைச் செருக பயன்படுகிறது, புதுப்பிக்க அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">CREATE</div>
+                            <div class="option-feedback incorrect">✗ தவறு! CREATE என்பது புதிய அட்டவணைகள் அல்லது தரவுத்தளங்களை உருவாக்க பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="MySQL NULL Values.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="MySQL DELETE Statement.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#update-statement">UPDATE அறிக்கை</a></li>
+                    <li><a href="#update-syntax">UPDATE தொடரமைப்பு</a></li>
+                    <li><a href="#update-table">அட்டவணை புதுப்பிப்பு</a></li>
+                    <li><a href="#update-multiple">பல பதிவுகள் புதுப்பிப்பு</a></li>
+                    <li><a href="#update-warning">புதுப்பிப்பு எச்சரிக்கை</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

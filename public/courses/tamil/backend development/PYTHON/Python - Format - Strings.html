@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python - Format Strings - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Format visualization styles */
+        .format-visual {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .format-visual .string-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .format-visual .string-part {
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .format-visual .placeholder {
+            padding: 0.8rem;
+            background: rgba(255,215,0,0.3);
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            border: 2px solid #ffd700;
+        }
+        
+        .format-visual .arrow {
+            font-size: 1.5rem;
+            color: #ffd700;
+        }
+        
+        .format-visual .result-box {
+            padding: 1rem;
+            background: rgba(255,215,0,0.2);
+            border-radius: 8px;
+            min-width: 200px;
+            font-family: 'Courier New', monospace;
+            border: 2px solid #ffd700;
+            margin-top: 1rem;
+        }
+        
+        /* F-string highlight */
+        .fstring-highlight {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            color: white;
+            border-left: 6px solid #8BC34A;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Python - String Concatenation.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Python - Escape Characters.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Python - Format Strings</h2>
+            <p>சர வடிவமைத்தல் - நவீன முறைகள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Python - சர வடிவமைத்தல்</h2>
+            
+            <p>பைத்தான் மாறிகள் அத்தியாயத்தில் நாம் கற்றுக்கொண்டது போல, சரங்களையும் எண்களையும் இவ்வாறு இணைக்க முடியாது:</p>
+            
+            <div class="code-example">
+                <h3>Error Example</h3>
+                <pre><code>age = 36
+# This will produce an error:
+txt = "My name is John, I am " + age
+print(txt)
+# TypeError: can only concatenate str to str</code></pre>
+            </div>
+            
+            <p>ஆனால் f-strings அல்லது format() முறையைப் பயன்படுத்தி சரங்களையும் எண்களையும் இணைக்கலாம்!</p>
+        </section>
+
+        <!-- F-Strings Introduction -->
+        <section class="content-section" id="fstrings-intro">
+            <h2>F-Strings</h2>
+            
+            <div class="fstring-highlight">
+                <h3><i class="fas fa-bolt"></i> F-String என்ன?</h3>
+                <p>F-String பைத்தான் 3.6 இல் அறிமுகப்படுத்தப்பட்டது, மேலும் இப்போது சரங்களை வடிவமைக்க விரும்பப்படும் வழியாகும்.</p>
+            </div>
+            
+            <p>ஒரு சரத்தை f-string ஆக குறிப்பிட, சர மாறிலிக்கு முன்னால் f ஐ வைத்து, மாறிகள் மற்றும் பிற செயல்பாடுகளுக்கான இடங்களாக சுருள் பிரேஸ்களை {} சேர்க்கவும்.</p>
+            
+            <div class="format-visual">
+                <h3>F-String வடிவமைப்பு</h3>
+                <div class="string-flow">
+                    <div class="string-part">f</div>
+                    <div class="string-part">"My name is John, I am</div>
+                    <div class="placeholder">{age}</div>
+                    <div class="string-part">"</div>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="result-box">My name is John, I am 36</div>
+                <p>age = 36 என்ற மாறி {} இடத்தில் செருகப்படுகிறது</p>
+            </div>
+            
+            <div class="code-example">
+                <h3>F-String Example</h3>
+                <pre><code># Create an f-string
+age = 36
+txt = f"My name is John, I am {age}"
+print(txt)  # Output: My name is John, I am 36</code></pre>
+            </div>
+        </section>
+
+        <!-- Placeholders and Modifiers -->
+        <section class="content-section" id="placeholders-modifiers">
+            <h2>இடத்தக்கங்கள் மற்றும் மாற்றிகள்</h2>
+            
+            <p>ஒரு இடத்தக்கத்தில் மாறிகள், செயல்பாடுகள், சார்புகள் மற்றும் மதிப்பை வடிவமைக்க மாற்றிகள் இருக்கலாம்.</p>
+            
+            <h3>அடிப்படை இடத்தக்கங்கள்</h3>
+            <div class="code-example">
+                <h3>Basic Placeholder Example</h3>
+                <pre><code># Add a placeholder for the price variable
+price = 59
+txt = f"The price is {price} dollars"
+print(txt)  # Output: The price is 59 dollars</code></pre>
+            </div>
+            
+            <h3>மாற்றிகளுடன் இடத்தக்கங்கள்</h3>
+            <p>ஒரு மாற்றி சேர்க்கப்பட்டுள்ளது : அதைத் தொடர்ந்து ஒரு சட்டப்பூர்வ வடிவமைப்பு வகையைச் சேர்ப்பதன் மூலம், .2f என்பது 2 தசமங்களைக் கொண்ட நிலையான புள்ளி எண்ணைக் குறிக்கிறது:</p>
+            
+            <div class="format-visual">
+                <h3>மாற்றி வடிவமைப்பு</h3>
+                <div class="string-flow">
+                    <div class="string-part">f"The price is</div>
+                    <div class="placeholder">{price:<span style="color: #ffd700;">.2f</span>}</div>
+                    <div class="string-part">dollars"</div>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="result-box">The price is 59.00 dollars</div>
+                <p>.2f மாற்றி 2 தசம இடங்களுக்கு வடிவமைக்கிறது</p>
+            </div>
+            
+            <div class="code-example">
+                <h3>Format Modifier Example</h3>
+                <pre><code># Display the price with 2 decimals
+price = 59
+txt = f"The price is {price:.2f} dollars"
+print(txt)  # Output: The price is 59.00 dollars</code></pre>
+            </div>
+        </section>
+
+        <!-- Operations in Placeholders -->
+        <section class="content-section" id="operations-placeholders">
+            <h2>இடத்தக்கங்களில் செயல்பாடுகள்</h2>
+            
+            <p>ஒரு இடத்தக்கத்தில் பைத்தான் குறியீடு இருக்கலாம், கணித செயல்பாடுகள் போன்றவை:</p>
+            
+            <div class="code-example">
+                <h3>Operations in Placeholders Example</h3>
+                <pre><code># Perform a math operation in the placeholder
+txt = f"The price is {20 * 59} dollars"
+print(txt)  # Output: The price is 1180 dollars
+
+# Complex expressions
+a = 10
+b = 20
+txt = f"The sum is {a + b} and product is {a * b}"
+print(txt)  # Output: The sum is 30 and product is 200
+
+# Function calls
+name = "john"
+txt = f"Name in uppercase: {name.upper()}"
+print(txt)  # Output: Name in uppercase: JOHN
+
+# Multiple operations
+items = 5
+price_per_item = 12.5
+txt = f"Total: ${items * price_per_item:.2f}"
+print(txt)  # Output: Total: $62.50</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> F-String சக்தி:</h4>
+                <p>F-strings ஒரு இடத்தக்கத்தின் உள்ளே எந்தவொரு செல்லுபடியாகும் பைத்தான் வெளிப்பாடையும் செயல்படுத்த அனுமதிக்கின்றன, இது அவற்றை மிகவும் சக்திவாய்ந்ததாக்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Common Format Modifiers -->
+        <section class="content-section" id="common-modifiers">
+            <h2>பொதுவான வடிவமைப்பு மாற்றிகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>மாற்றி</th>
+                            <th>விளக்கம்</th>
+                            <th>எடுத்துக்காட்டு</th>
+                            <th>வெளியீடு</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>:.2f</code></td>
+                            <td>2 தசம இடங்களுடன் மிதவை எண்</td>
+                            <td><code>f"{3.14159:.2f}"</code></td>
+                            <td>3.14</td>
+                        </tr>
+                        <tr>
+                            <td><code>:.0f</code></td>
+                            <td>தசமங்கள் இல்லாமல் மிதவை எண்</td>
+                            <td><code>f"{3.14159:.0f}"</code></td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td><code>:d</code></td>
+                            <td>முழு எண் வடிவமைப்பு</td>
+                            <td><code>f"{42:d}"</code></td>
+                            <td>42</td>
+                        </tr>
+                        <tr>
+                            <td><code>:x</code></td>
+                            <td>பதினறும எண் (சிறிய எழுத்துகள்)</td>
+                            <td><code>f"{255:x}"</code></td>
+                            <td>ff</td>
+                        </tr>
+                        <tr>
+                            <td><code>:X</code></td>
+                            <td>பதினறும எண் (பெரிய எழுத்துகள்)</td>
+                            <td><code>f"{255:X}"</code></td>
+                            <td>FF</td>
+                        </tr>
+                        <tr>
+                            <td><code>:b</code></td>
+                            <td>இரும எண்</td>
+                            <td><code>f"{5:b}"</code></td>
+                            <td>101</td>
+                        </tr>
+                        <tr>
+                            <td><code>:o</code></td>
+                            <td>அஷ்ட எண்</td>
+                            <td><code>f"{8:o}"</code></td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td><code>:,</code></td>
+                            <td>ஆயிரம் பிரிப்பான்</td>
+                            <td><code>f"{1000000:,}"</code></td>
+                            <td>1,000,000</td>
+                        </tr>
+                        <tr>
+                            <td><code>:&lt;10</code></td>
+                            <td>இடது சீரமைப்பு (10 இடங்கள்)</td>
+                            <td><code>f"{'Hi':&lt;10}"</code></td>
+                            <td>Hi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><code>:&gt;10</code></td>
+                            <td>வலது சீரமைப்பு (10 இடங்கள்)</td>
+                            <td><code>f"{'Hi':&gt;10}"</code></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hi</td>
+                        </tr>
+                        <tr>
+                            <td><code>:^10</code></td>
+                            <td>மைய சீரமைப்பு (10 இடங்கள்)</td>
+                            <td><code>f"{'Hi':^10}"</code></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;Hi&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><code>:%</code></td>
+                            <td>சதவீத வடிவம்</td>
+                            <td><code>f"{0.25:%}"</code></td>
+                            <td>25.000000%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>பயிற்சி - F-String வடிவமைத்தல்</h2>
+            
+            <p>x = 9 எனில், 'The price is 9.00 dollars' என அச்சிடுவதற்கான சரியான தொடரியல் எது?</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான தொடரியலைத் தேர்ந்தெடுக்கவும்:</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">print(f'The price is {x:.2f} dollars')</div>
+                            <div class="option-feedback correct">✓ சரி! .2f மாற்றி 2 தசம இடங்களுடன் மிதவை எண்ணாக வடிவமைக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">print(f'The price is {x:2} dollars')</div>
+                            <div class="option-feedback incorrect">✗ தவறு! :2 என்பது சீரமைப்புக்கானது, தசம இடங்களுக்கு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">print(f'The price is {x:format(2)} dollars')</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது செல்லுபடியாகும் தொடரியல் அல்ல. F-strings இல் format() முறையைப் பயன்படுத்த முடியாது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="format-visual" style="background: rgba(102, 126, 234, 0.2); color: #333;">
+                <h3>விளக்கம்:</h3>
+                <div class="string-flow">
+                    <div class="string-part" style="background: rgba(102, 126, 234, 0.1);">f'The price is</div>
+                    <div class="placeholder" style="background: rgba(40, 167, 69, 0.2); border-color: #28a745;">{x:<span style="color: #28a745;">.2f</span>}</div>
+                    <div class="string-part" style="background: rgba(102, 126, 234, 0.1);">dollars'</div>
+                </div>
+                <div class="arrow" style="color: var(--git-color);">↓</div>
+                <div class="result-box" style="background: rgba(40, 167, 69, 0.1); border-color: #28a745;">The price is 9.00 dollars</div>
+                <p>.2f மாற்றி x மதிப்பை 2 தசம இடங்களுடன் வடிவமைக்கிறது</p>
+            </div>
+        </section>
+
+        <!-- format() Method -->
+        <section class="content-section" id="format-method">
+            <h2>format() முறை</h2>
+            
+            <p>F-strings க்கு முன், format() முறை பரவலாகப் பயன்படுத்தப்பட்டது:</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>format() முறை</h4>
+                    <div class="code-example">
+                        <pre><code># Using format() method
+name = "John"
+age = 36
+txt = "My name is {}, I am {}".format(name, age)
+print(txt)  # Output: My name is John, I am 36
+
+# With index positions
+txt = "My name is {0}, I am {1}".format(name, age)
+print(txt)  # Output: My name is John, I am 36
+
+# With named parameters
+txt = "My name is {n}, I am {a}".format(n=name, a=age)
+print(txt)  # Output: My name is John, I am 36</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>F-String (நவீன முறை)</h4>
+                    <div class="code-example">
+                        <pre><code># Using f-string (modern way)
+name = "John"
+age = 36
+txt = f"My name is {name}, I am {age}"
+print(txt)  # Output: My name is John, I am 36
+
+# With expressions
+txt = f"My name is {name.upper()}, I am {age + 5}"
+print(txt)  # Output: My name is JOHN, I am 41</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔄</span> F-String vs format():</h4>
+                <p>F-strings வாசிக்க எளிதானவை, எழுத எளிதானவை மற்றும் format() முறையை விட வேகமானவை. புதிய குறியீட்டுக்கு எப்போதும் f-strings பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- Advanced Formatting -->
+        <section class="content-section" id="advanced-formatting">
+            <h2>மேம்பட்ட வடிவமைத்தல்</h2>
+            
+            <h3>கூட்டு மாற்றிகள்</h3>
+            <div class="code-example">
+                <pre><code># Combine multiple modifiers
+number = 1234567.8912
+
+# Currency with 2 decimals and thousand separators
+print(f"${number:,.2f}")  # Output: $1,234,567.89
+
+# Percentage with 1 decimal
+percentage = 0.856
+print(f"{percentage:.1%}")  # Output: 85.6%
+
+# Scientific notation
+print(f"{number:.2e}")  # Output: 1.23e+06
+
+# Different width and alignment
+name = "Python"
+print(f"|{name:<20}|")  # Output: |Python              |
+print(f"|{name:>20}|")  # Output: |              Python|
+print(f"|{name:^20}|")  # Output: |       Python       |</code></pre>
+            </div>
+            
+            <h3>நிபந்தனை வெளிப்பாடுகள்</h3>
+            <div class="code-example">
+                <pre><code># Conditional expressions in f-strings
+score = 85
+grade = f"Score: {score} - {'Pass' if score >= 50 else 'Fail'}"
+print(grade)  # Output: Score: 85 - Pass
+
+# Multiple conditions
+temperature = 22
+feeling = f"It feels {'hot' if temperature > 30 else 'warm' if temperature > 20 else 'cool'}"
+print(feeling)  # Output: It feels warm
+
+# Formatting based on value
+value = 42
+formatted = f"Value: {value:0>5}"  # Pad with zeros to width 5
+print(formatted)  # Output: Value: 00042</code></pre>
+            </div>
+        </section>
+
+        <!-- Practical Examples -->
+        <section class="content-section" id="practical-examples">
+            <h2>நடைமுறை எடுத்துக்காட்டுகள்</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h4>விலைப்பட்டியல்</h4>
+                    <div class="code-example" style="margin: 0.5rem 0; padding: 0.5rem;">
+                        <pre style="margin: 0;"><code>item = "Python Book"
+price = 29.99
+quantity = 3
+total = price * quantity
+invoice = f"""
+Item: {item}
+Price: ${price:.2f}
+Quantity: {quantity}
+Total: ${total:.2f}
+"""</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>தரவு அறிக்கை</h4>
+                    <div class="code-example" style="margin: 0.5rem 0; padding: 0.5rem;">
+                        <pre style="margin: 0;"><code>users = 1500
+growth = 0.25
+report = f"""
+Total Users: {users:,}
+Growth Rate: {growth:.1%}
+Projected: {int(users * (1 + growth)):,}
+"""</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>பயனர் சுயவிவரம்</h4>
+                    <div class="code-example" style="margin: 0.5rem 0; padding: 0.5rem;">
+                        <pre style="margin: 0;"><code>name = "John Doe"
+age = 30
+salary = 75000.50
+profile = f"""
+Name: {name:>15}
+Age: {age:>16}
+Salary: ${salary:>12,.2f}
+"""</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>டீபக் செய்தி</h4>
+                    <div class="code-example" style="margin: 0.5rem 0; padding: 0.5rem;">
+                        <pre style="margin: 0;"><code>variable = "test"
+value = 42.123456
+debug = f"[DEBUG] {variable}={value:.3f}"
+# [DEBUG] test=42.123</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Old String Formatting Methods -->
+        <section class="content-section" id="old-methods">
+            <h2>பழைய சர வடிவமைத்தல் முறைகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>எடுத்துக்காட்டு</th>
+                            <th>விளக்கம்</th>
+                            <th>பரிந்துரை</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>% ஆபரேட்டர்</td>
+                            <td><code>"Name: %s, Age: %d" % ("John", 30)</code></td>
+                            <td>மிகவும் பழைய முறை, C இல் இருந்து கடன்</td>
+                            <td>தவிர்க்கவும்</td>
+                        </tr>
+                        <tr>
+                            <td>str.format()</td>
+                            <td><code>"Name: {}, Age: {}".format("John", 30)</code></td>
+                            <td>Python 2.6+</td>
+                            <td>பழைய குறியீட்டுக்கு</td>
+                        </tr>
+                        <tr style="background: rgba(76, 175, 80, 0.1);">
+                            <td><strong>f-string</strong></td>
+                            <td><code>f"Name: {'John'}, Age: {30}"</code></td>
+                            <td>Python 3.6+</td>
+                            <td><strong>பரிந்துரைக்கப்படுகிறது</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> சர வடிவமைத்தல் பற்றி மேலும் அறிய:</h4>
+                <p>சர வடிவமைத்தல் பற்றி மேலும் அறிய எங்கள் <a href="#" style="color: #ff9ff3; text-decoration: underline;">String Formatting</a> அத்தியாயத்தைப் பார்க்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Python - String Concatenation.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Python - Escape Characters.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">சர வடிவமைத்தல்</a></li>
+                    <li><a href="#fstrings-intro">F-Strings</a></li>
+                    <li><a href="#placeholders-modifiers">இடத்தக்கங்கள் & மாற்றிகள்</a></li>
+                    <li><a href="#operations-placeholders">செயல்பாடுகள்</a></li>
+                    <li><a href="#common-modifiers">பொதுவான மாற்றிகள்</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                    <li><a href="#format-method">format() முறை</a></li>
+                    <li><a href="#practical-examples">நடைமுறை எடுத்துக்காட்டுகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Python Topics</h3>
+                <ul>
+                    <li><a href="Python - String Concatenation.html">Python String Concatenation</a></li>
+                    <li><a href="#current">Python Format Strings</a></li>
+                    <li><a href="Python - Escape Characters.html">Python Escape Characters</a></li>
+                    <li><a href="#">Python String Methods</a></li>
+                    <li><a href="#">Python String Operations</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+                
+                // Highlight correct/incorrect borders
+                document.querySelectorAll('.option-card').forEach(c => {
+                    const isCorrect = c.getAttribute('data-correct') === 'true';
+                    if (isCorrect) {
+                        c.style.borderColor = '#28a745';
+                        c.style.boxShadow = '0 0 0 2px rgba(40, 167, 69, 0.3)';
+                    } else {
+                        c.style.borderColor = '#dc3545';
+                        c.style.boxShadow = '0 0 0 2px rgba(220, 53, 69, 0.3)';
+                    }
+                });
+            });
+        });
+        
+        // Interactive format visualization
+        const formatVisuals = document.querySelectorAll('.format-visual');
+        formatVisuals.forEach((visual) => {
+            visual.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+                this.style.transition = 'all 0.3s ease';
+            });
+            
+            visual.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.3)';
+            });
+        });
+        
+        // Create interactive f-string playground
+        const interactivePlayground = document.createElement('div');
+        interactivePlayground.className = 'content-section';
+        interactivePlayground.id = 'interactive-playground';
+        interactivePlayground.innerHTML = `
+            <h2>ஊடாடும் F-String மைதானம்</h2>
+            <p>வெவ்வேறு F-String வடிவமைப்புகளை முயற்சித்துப் பார்க்கவும்:</p>
+            
+            <div style="margin: 1.5rem 0;">
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label for="var-value">மதிப்பு:</label>
+                        <input type="text" id="var-value" value="42.56789" style="padding: 0.5rem; margin: 0.5rem 0; border: 2px solid var(--git-color); border-radius: 4px; width: 100%;">
+                    </div>
+                    <div>
+                        <label for="format-modifier">வடிவமைப்பு மாற்றி:</label>
+                        <select id="format-modifier" style="padding: 0.5rem; margin: 0.5rem 0; border: 2px solid var(--git-color); border-radius: 4px; width: 100%;">
+                            <option value=".2f">.2f (2 தசமங்கள்)</option>
+                            <option value=".0f">.0f (தசமங்கள் இல்லை)</option>
+                            <option value="d">d (முழு எண்)</option>
+                            <option value=",">, (ஆயிரம் பிரிப்பான்)</option>
+                            <option value=".1%">.1% (1 தசமம் சதவீதம்)</option>
+                            <option value=".2e">.2e (அறிவியல் குறியீடு)</option>
+                            <option value="0>5">0>5 (5 இடங்களுக்கு பூஜ்ஜிய நிரப்பு)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="format-visual" id="live-format-visual" style="background: rgba(76, 175, 80, 0.1); color: #333;">
+                    <div class="string-flow">
+                        <div class="string-part" style="background: rgba(76, 175, 80, 0.2);">f"The value is</div>
+                        <div class="placeholder" id="live-placeholder" style="background: rgba(76, 175, 80, 0.3); border-color: #4CAF50;">{value:<span id="live-modifier" style="color: #4CAF50;">.2f</span>}</div>
+                        <div class="string-part" style="background: rgba(76, 175, 80, 0.2);">"</div>
+                    </div>
+                    <div class="arrow" style="color: #4CAF50;">↓</div>
+                    <div class="result-box" id="live-format-result" style="background: rgba(76, 175, 80, 0.2); border-color: #4CAF50;">The value is 42.57</div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; text-align: center;">
+                    <button id="update-format" class="platform-btn active" style="background: #4CAF50; color: white; padding: 0.75rem 1.5rem;">
+                        <i class="fas fa-sync-alt"></i> புதுப்பிக்கவும்
+                    </button>
+                    
+                    <div id="code-output" class="code-example" style="margin-top: 1rem;">
+                        <h4>பைத்தான் குறியீடு:</h4>
+                        <pre><code id="generated-code">value = 42.56789
+print(f"The value is {value:.2f}")</code></pre>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Insert after common modifiers section
+        const commonModifiersSection = document.getElementById('common-modifiers');
+        if (commonModifiersSection) {
+            commonModifiersSection.parentNode.insertBefore(interactivePlayground, commonModifiersSection.nextSibling);
+            
+            // Add interactive functionality
+            const valueInput = document.getElementById('var-value');
+            const modifierSelect = document.getElementById('format-modifier');
+            const updateButton = document.getElementById('update-format');
+            
+            function updateFormatVisualization() {
+                const value = valueInput.value;
+                const modifier = modifierSelect.value;
+                
+                // Try to evaluate the value
+                let parsedValue;
+                try {
+                    parsedValue = eval(value);
+                } catch {
+                    parsedValue = value;
+                }
+                
+                document.getElementById('live-modifier').textContent = modifier;
+                
+                // Generate formatted result
+                let result;
+                try {
+                    result = eval(`f\`The value is {${JSON.stringify(parsedValue)}:${modifier}}\``);
+                } catch (error) {
+                    result = `Error: ${error.message}`;
+                }
+                
+                document.getElementById('live-format-result').textContent = result;
+                
+                // Update generated code
+                const generatedCode = `value = ${typeof parsedValue === 'string' ? `"${parsedValue}"` : parsedValue}
+print(f"The value is {value:${modifier}}")`;
+                document.getElementById('generated-code').textContent = generatedCode;
+            }
+            
+            valueInput.addEventListener('input', updateFormatVisualization);
+            modifierSelect.addEventListener('change', updateFormatVisualization);
+            updateButton.addEventListener('click', updateFormatVisualization);
+            
+            // Initialize
+            updateFormatVisualization();
+        }
+        
+        // Add code highlighting
+        document.querySelectorAll('pre code').forEach((block) => {
+            const html = block.innerHTML;
+            const highlighted = html
+                .replace(/#.*$/gm, '<span class="comment">$&</span>')
+                .replace(/\b(print|format|eval|f|if|else)\b/g, '<span class="keyword">$1</span>')
+                .replace(/["']([^"']*)["']/g, '<span class="string">$&</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span class="number">$1</span>')
+                .replace(/\{([^}]+)\}/g, '<span class="placeholder">{$1}</span>');
+            block.innerHTML = highlighted;
+        });
+        
+        // Add CSS for syntax highlighting
+        const style = document.createElement('style');
+        style.textContent = `
+            .comment { color: #6a9955; }
+            .keyword { color: #569cd6; font-weight: bold; }
+            .number { color: #b5cea8; }
+            .string { color: #ce9178; }
+            .placeholder { color: #ffd700; }
+            .fstring-highlight h3 { color: white; margin-bottom: 1rem; }
+            .fstring-highlight h3 i { margin-right: 10px; }
+        `;
+        document.head.appendChild(style);
+        
+        // Highlight table rows on hover
+        document.querySelectorAll('.comparison-table tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = 'rgba(102, 126, 234, 0.1)';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

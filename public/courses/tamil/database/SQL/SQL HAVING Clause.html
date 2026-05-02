@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL HAVING Clause - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="SQL GROUP BY Statement.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="SQL EXISTS Operator.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>SQL HAVING Clause</h2>
+            <p>Aggregate functions-உடன் WHERE keyword பயன்படுத்த முடியாததால் HAVING clause SQL-ல் சேர்க்கப்பட்டது</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is HAVING Clause -->
+        <section class="content-section" id="what-is-having">
+            <h2>HAVING Clause என்றால் என்ன?</h2>
+            
+            <p>HAVING clause SQL-ல் சேர்க்கப்பட்டது, ஏனெனில் WHERE keyword aggregate functions-உடன் பயன்படுத்த முடியாது.</p>
+            
+            <div class="code-example">
+                <h3>HAVING தொடரியல்</h3>
+                <pre><code class="command-input">SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s);</code></pre>
+            </div>
+        </section>
+
+        <!-- Demo Database -->
+        <section class="content-section" id="demo-database">
+            <h2>ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் "Customers" அட்டவணையில் இருந்து ஒரு தேர்வு கீழே உள்ளது:</p>
+            
+            <div class="code-example">
+                <h3>Customers அட்டவணை</h3>
+                <pre><code>+------------+--------------------------------+----------------+-------------------+----------+------------+---------+
+| CustomerID | CustomerName                   | ContactName    | Address           | City     | PostalCode | Country |
++------------+--------------------------------+----------------+-------------------+----------+------------+---------+
+| 1          | Alfreds Futterkiste            | Maria Anders   | Obere Str. 57     | Berlin   | 12209      | Germany |
+| 2          | Ana Trujillo Emparedados...    | Ana Trujillo   | Avda. Constitución| México   | 05021      | Mexico  |
+| 3          | Antonio Moreno Taquería        | Antonio Moreno | Mataderos 2312    | México   | 05023      | Mexico  |
+| 4          | Around the Horn                | Thomas Hardy   | 120 Hanover Sq.   | London   | WA1 1DP    | UK      |
+| 5          | Berglunds snabbköp             | Christina Berg | Berguvsvägen 8    | Luleå    | S-958 22   | Sweden  |
++------------+--------------------------------+----------------+-------------------+----------+------------+---------+</code></pre>
+            </div>
+        </section>
+
+        <!-- SQL HAVING Examples -->
+        <section class="content-section" id="having-examples">
+            <h2>SQL HAVING உதாரணங்கள்</h2>
+            
+            <p>பின்வரும் SQL statement ஒவ்வொரு நாட்டிலும் உள்ள வாடிக்கையாளர்களின் எண்ணிக்கையை பட்டியலிடுகிறது. 5 க்கும் மேற்பட்ட வாடிக்கையாளர்கள் உள்ள நாடுகளை மட்டும் சேர்க்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL statement ஒவ்வொரு நாட்டிலும் உள்ள வாடிக்கையாளர்களின் எண்ணிக்கையை பட்டியலிடுகிறது, உயர் முதல் குறைந்த வரிசையில் வரிசைப்படுத்தப்பட்டது (5 க்கும் மேற்பட்ட வாடிக்கையாளர்கள் உள்ள நாடுகளை மட்டும் சேர்க்கவும்):</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5
+ORDER BY COUNT(CustomerID) DESC;</code></pre>
+            </div>
+        </section>
+
+        <!-- Additional Demo Database -->
+        <section class="content-section" id="additional-demo">
+            <h2>கூடுதல் ஆர்ப்பாட்ட தரவுத்தளம்</h2>
+            
+            <p>Northwind மாதிரி தரவுத்தளத்தில் "Orders" அட்டவணையில் இருந்து ஒரு தேர்வு:</p>
+            
+            <div class="code-example">
+                <h3>Orders அட்டவணை</h3>
+                <pre><code>+---------+------------+-----------+------------+------------+
+| OrderID | CustomerID | EmployeeID | OrderDate | ShipperID |
++---------+------------+-----------+------------+------------+
+| 10248   | 90         | 5         | 1996-07-04 | 3         |
+| 10249   | 81         | 6         | 1996-07-05 | 1         |
+| 10250   | 34         | 4         | 1996-07-08 | 2         |
++---------+------------+-----------+------------+------------+</code></pre>
+            </div>
+            
+            <p>மற்றும் "Employees" அட்டவணையில் இருந்து ஒரு தேர்வு:</p>
+            
+            <div class="code-example">
+                <h3>Employees அட்டவணை</h3>
+                <pre><code>+------------+-----------+-----------+------------+------------+----------------------+
+| EmployeeID | LastName  | FirstName | BirthDate  | Photo      | Notes                |
++------------+-----------+-----------+------------+------------+----------------------+
+| 1          | Davolio   | Nancy     | 1968-12-08 | EmpID1.pic | Education includes...|
+| 2          | Fuller    | Andrew    | 1952-02-19 | EmpID2.pic | Andrew received...   |
+| 3          | Leverling | Janet     | 1963-08-30 | EmpID3.pic | Janet has a BS...    |
++------------+-----------+-----------+------------+------------+----------------------+</code></pre>
+            </div>
+        </section>
+
+        <!-- More HAVING Examples -->
+        <section class="content-section" id="more-having-examples">
+            <h2>மேலும் HAVING உதாரணங்கள்</h2>
+            
+            <p>பின்வரும் SQL statement 10 க்கும் மேற்பட்ட ஆர்டர்களை பதிவு செய்துள்ள ஊழியர்களை பட்டியலிடுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM (Orders
+INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID)
+GROUP BY LastName
+HAVING COUNT(Orders.OrderID) > 10;</code></pre>
+            </div>
+            
+            <p>பின்வரும் SQL statement "Davolio" அல்லது "Fuller" ஊழியர்கள் 25 க்கும் மேற்பட்ட ஆர்டர்களை பதிவு செய்திருந்தால் பட்டியலிடுகிறது:</p>
+            
+            <div class="code-example">
+                <h3>உதாரணம்</h3>
+                <pre><code class="command-input">SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM Orders
+INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+WHERE LastName = 'Davolio' OR LastName = 'Fuller'
+GROUP BY LastName
+HAVING COUNT(Orders.OrderID) > 25;</code></pre>
+            </div>
+        </section>
+
+        <!-- WHERE vs HAVING -->
+        <section class="content-section" id="where-vs-having">
+            <h2>WHERE vs HAVING</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-filter"></i>
+                        <h4>WHERE Clause</h4>
+                    </div>
+                    <ul>
+                        <li>வரிசைகளை <strong>குழுவாக்குவதற்கு முன்</strong> வடிகட்ட பயன்படுகிறது</li>
+                        <li>தனிப்பட்ட வரிசைகளில் வேலை செய்கிறது</li>
+                        <li>Aggregate functions-உடன் பயன்படுத்த <strong>முடியாது</strong></li>
+                        <li>GROUP BY-க்கு <strong>முன்</strong> வருகிறது</li>
+                    </ul>
+                    <div class="code-block small">
+                        <pre><code>SELECT Country, COUNT(*)
+FROM Customers
+WHERE Country IN ('Germany', 'France')
+GROUP BY Country;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h4>HAVING Clause</h4>
+                    </div>
+                    <ul>
+                        <li>குழுக்களை <strong>குழுவாக்கிய பின்</strong> வடிகட்ட பயன்படுகிறது</li>
+                        <li>குழுவாக்கப்பட்ட முடிவுகளில் வேலை செய்கிறது</li>
+                        <li>Aggregate functions-உடன் பயன்படுத்த <strong>முடியும்</strong></li>
+                        <li>GROUP BY-க்கு <strong>பின்</strong> வருகிறது</li>
+                    </ul>
+                    <div class="code-block small">
+                        <pre><code>SELECT Country, COUNT(*)
+FROM Customers
+GROUP BY Country
+HAVING COUNT(*) > 5;</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> முக்கிய வேறுபாடு:</h4>
+                <p><strong>WHERE</strong> தனிப்பட்ட வரிசைகளை வடிகட்டுகிறது, <strong>HAVING</strong> குழுவாக்கப்பட்ட முடிவுகளை வடிகட்டுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Visual Representation -->
+        <section class="content-section" id="visual-representation">
+            <h2>WHERE vs HAVING காட்சிப் பிரதிநிதித்துவம்</h2>
+            
+            <div class="visual-container">
+                <div class="query-flow">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>FROM & WHERE</h4>
+                            <p>அட்டவணையில் இருந்து தரவு பெறப்பட்டு WHERE-ல் வரிசைகள் வடிகட்டப்படுகின்றன</p>
+                            <div class="code-snippet">
+                                <code>FROM Customers WHERE Country='Germany'</code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>GROUP BY</h4>
+                            <p>வடிகட்டப்பட்ட வரிசைகள் குழுவாக்கப்படுகின்றன</p>
+                            <div class="code-snippet">
+                                <code>GROUP BY City</code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>HAVING</h4>
+                            <p>குழுவாக்கப்பட்ட முடிவுகள் HAVING-ல் வடிகட்டப்படுகின்றன</p>
+                            <div class="code-snippet">
+                                <code>HAVING COUNT(*) > 2</code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>SELECT & ORDER BY</h4>
+                            <p>இறுதி முடிவுகள் தேர்ந்தெடுக்கப்பட்டு வரிசைப்படுத்தப்படுகின்றன</p>
+                            <div class="code-snippet">
+                                <code>SELECT City, COUNT(*) ORDER BY COUNT(*) DESC</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <p><strong>கவனிக்க:</strong> WHERE குழுவாக்கத்திற்கு <strong>முன்</strong> வேலை செய்கிறது, HAVING குழுவாக்கத்திற்கு <strong>பின்</strong> வேலை செய்கிறது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Use Cases -->
+        <section class="content-section" id="use-cases">
+            <h2>நடைமுறை பயன்பாட்டு நிகழ்வுகள்</h2>
+            
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>செயல்திறன் பகுப்பாய்வு</h4>
+                    <p>குறிப்பிட்ட வரம்புகளை தாண்டிய ஊழியர்கள் அல்லது வாடிக்கையாளர்களைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT EmployeeID, COUNT(OrderID)
+FROM Orders
+GROUP BY EmployeeID
+HAVING COUNT(OrderID) > 50;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>விற்பனை அறிக்கைகள்</h4>
+                    <p>குறிப்பிட்ட விற்பனை குறிகாட்டிகளை அடைந்த தயாரிப்புகளைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT ProductID, SUM(Quantity)
+FROM OrderDetails
+GROUP BY ProductID
+HAVING SUM(Quantity) > 1000;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4>புவியியல் பகுப்பாய்வு</h4>
+                    <p>குறிப்பிட்ட எண்ணிக்கையிலான வாடிக்கையாளர்களைக் கொண்ட நகரங்களைக் கண்டறிய</p>
+                    <div class="code-block small">
+                        <pre><code>SELECT City, COUNT(CustomerID)
+FROM Customers
+GROUP BY City
+HAVING COUNT(CustomerID) > 3;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><i class="fas fa-question-circle exercise-icon"></i> SQL HAVING clause-ன் முதன்மை நோக்கம் என்ன?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">குழுவாக்குவதற்கு முன் ஒரு நிபந்தனையின் அடிப்படையில் வரிசைகளை வடிகட்ட</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது WHERE clause-ன் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">குழுவாக்கிய பின் ஒரு aggregate நிபந்தனையின் அடிப்படையில் குழுக்களை வடிகட்ட</div>
+                            <div class="option-feedback correct">✓ சரி! HAVING clause குழுவாக்கப்பட்ட பிறகு aggregate conditions-ஐப் பயன்படுத்தி குழுக்களை வடிகட்ட பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">முடிவு தொகுப்பை ஏறுவரிசை அல்லது இறங்குவரிசையில் வரிசைப்படுத்த</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது ORDER BY clause-ன் வேலை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">பல அட்டவணைகளை இணைக்க</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது JOIN-ன் வேலை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="SQL GROUP BY Statement.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="SQL EXISTS Operator.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-having">HAVING Clause என்றால் என்ன?</a></li>
+                    <li><a href="#having-examples">HAVING உதாரணங்கள்</a></li>
+                    <li><a href="#where-vs-having">WHERE vs HAVING</a></li>
+                    <li><a href="#use-cases">பயன்பாட்டு நிகழ்வுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .visual-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .query-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(52, 152, 219, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .step-number {
+            background: var(--git-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        .step-content p {
+            margin: 0 0 1rem 0;
+            color: #666;
+        }
+        
+        .code-snippet {
+            background: #2d2d2d;
+            border-radius: 5px;
+            padding: 0.5rem;
+        }
+        
+        .code-snippet code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .flow-arrow {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .flow-arrow i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .explanation {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary);
+            margin-top: 1.5rem;
+        }
+        
+        .explanation p {
+            margin: 0;
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .comparison-card li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Use Cases Grid */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .use-case-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .use-case-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .use-case-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .use-case-card h4 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .use-case-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Code Block Styles */
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .code-block.small {
+            margin: 0.8rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Exercise Styles */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid,
+            .use-cases-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .step-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .visual-container {
+                padding: 1rem;
+            }
+            
+            .flow-step {
+                padding: 1rem;
+            }
+            
+            .code-snippet {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

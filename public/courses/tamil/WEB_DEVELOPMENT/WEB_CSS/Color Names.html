@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Names - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Color grid styling */
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 2rem 0;
+        }
+        
+        .color-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            background: white;
+        }
+        
+        .color-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .color-preview {
+            height: 80px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        .color-details {
+            padding: 12px;
+            background: white;
+        }
+        
+        .color-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        
+        .color-hex {
+            font-family: 'Courier New', monospace;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        /* Color categories */
+        .color-category {
+            margin: 3rem 0 2rem 0;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color);
+            color: var(--dark);
+        }
+        
+        .color-category h3 {
+            display: inline-block;
+            padding-right: 20px;
+        }
+        
+        /* Color mixer section */
+        .color-mixer {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .mixer-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .color-slider {
+            margin-bottom: 1rem;
+        }
+        
+        .color-slider label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .color-slider input {
+            width: 100%;
+        }
+        
+        .mixer-result {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .result-color {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 3px solid white;
+        }
+        
+        .result-values {
+            text-align: left;
+        }
+        
+        .result-values h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        /* Color picker */
+        .color-picker {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .picker-input {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .picker-input input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 200px;
+        }
+        
+        .picker-preview {
+            width: 100%;
+            height: 100px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 2px solid #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="PX%20to%20EM%20Conversion.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS Legal Color Values.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Color Names</h2>
+            <p>அனைத்து உலாவிகளாலும் ஆதரிக்கப்படும் நிற பெயர்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>Color Names Supported by All Browsers</h2>
+            
+            <p>பின்வரும் 140 நிற பெயர்களை அனைத்து நவீன உலாவிகளும் ஆதரிக்கின்றன (நிற பெயரை அல்லது ஹெக்ஸ் மதிப்பைக் கிளிக் செய்து, பின்னணி நிறமாக நிறத்தைப் பார்க்கவும், வெவ்வேறு உரை நிறங்களுடன்):</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎨</span> CSS வண்ணங்களின் முழுமையான கண்ணோட்டத்திற்கு:</h4>
+                <p>எங்கள் வண்ணங்கள் டுடோரியலைப் பார்வையிடவும்.</p>
+            </div>
+        </section>
+
+        <!-- Basic Colors -->
+        <section class="content-section" id="basic-colors">
+            <div class="color-category">
+                <h3>Basic Colors</h3>
+            </div>
+            
+            <div class="colors-grid">
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Black;">
+                        Black
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Black</div>
+                        <div class="color-hex">#000000</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: White; color: #000;">
+                        White
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">White</div>
+                        <div class="color-hex">#FFFFFF</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Red;">
+                        Red
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Red</div>
+                        <div class="color-hex">#FF0000</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Green;">
+                        Green
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Green</div>
+                        <div class="color-hex">#008000</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Blue;">
+                        Blue
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Blue</div>
+                        <div class="color-hex">#0000FF</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Yellow; color: #000;">
+                        Yellow
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Yellow</div>
+                        <div class="color-hex">#FFFF00</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Cyan; color: #000;">
+                        Cyan
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Cyan</div>
+                        <div class="color-hex">#00FFFF</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Magenta;">
+                        Magenta
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Magenta</div>
+                        <div class="color-hex">#FF00FF</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Extended Colors -->
+        <section class="content-section" id="extended-colors">
+            <div class="color-category">
+                <h3>Extended Color Names</h3>
+            </div>
+            
+            <div class="colors-grid">
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: AliceBlue; color: #000;">
+                        AliceBlue
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">AliceBlue</div>
+                        <div class="color-hex">#F0F8FF</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: AntiqueWhite; color: #000;">
+                        AntiqueWhite
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">AntiqueWhite</div>
+                        <div class="color-hex">#FAEBD7</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Aquamarine; color: #000;">
+                        Aquamarine
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Aquamarine</div>
+                        <div class="color-hex">#7FFFD4</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Azure; color: #000;">
+                        Azure
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Azure</div>
+                        <div class="color-hex">#F0FFFF</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Beige; color: #000;">
+                        Beige
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Beige</div>
+                        <div class="color-hex">#F5F5DC</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Bisque; color: #000;">
+                        Bisque
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Bisque</div>
+                        <div class="color-hex">#FFE4C4</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: BlanchedAlmond; color: #000;">
+                        BlanchedAlmond
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">BlanchedAlmond</div>
+                        <div class="color-hex">#FFEBCD</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: BlueViolet;">
+                        BlueViolet
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">BlueViolet</div>
+                        <div class="color-hex">#8A2BE2</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Brown;">
+                        Brown
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Brown</div>
+                        <div class="color-hex">#A52A2A</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: BurlyWood; color: #000;">
+                        BurlyWood
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">BurlyWood</div>
+                        <div class="color-hex">#DEB887</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: CadetBlue;">
+                        CadetBlue
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">CadetBlue</div>
+                        <div class="color-hex">#5F9EA0</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Chartreuse; color: #000;">
+                        Chartreuse
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Chartreuse</div>
+                        <div class="color-hex">#7FFF00</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Chocolate;">
+                        Chocolate
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Chocolate</div>
+                        <div class="color-hex">#D2691E</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Coral;">
+                        Coral
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Coral</div>
+                        <div class="color-hex">#FF7F50</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: CornflowerBlue;">
+                        CornflowerBlue
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">CornflowerBlue</div>
+                        <div class="color-hex">#6495ED</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Cornsilk; color: #000;">
+                        Cornsilk
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Cornsilk</div>
+                        <div class="color-hex">#FFF8DC</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: Crimson;">
+                        Crimson
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">Crimson</div>
+                        <div class="color-hex">#DC143C</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dark Colors -->
+        <section class="content-section" id="dark-colors">
+            <div class="color-category">
+                <h3>Dark Colors</h3>
+            </div>
+            
+            <div class="colors-grid">
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkBlue;">
+                        DarkBlue
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkBlue</div>
+                        <div class="color-hex">#00008B</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkCyan;">
+                        DarkCyan
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkCyan</div>
+                        <div class="color-hex">#008B8B</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkGoldenRod;">
+                        DarkGoldenRod
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkGoldenRod</div>
+                        <div class="color-hex">#B8860B</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkGray; color: #000;">
+                        DarkGray
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkGray</div>
+                        <div class="color-hex">#A9A9A9</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkGreen;">
+                        DarkGreen
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkGreen</div>
+                        <div class="color-hex">#006400</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkKhaki; color: #000;">
+                        DarkKhaki
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkKhaki</div>
+                        <div class="color-hex">#BDB76B</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkMagenta;">
+                        DarkMagenta
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkMagenta</div>
+                        <div class="color-hex">#8B008B</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkOliveGreen;">
+                        DarkOliveGreen
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkOliveGreen</div>
+                        <div class="color-hex">#556B2F</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkOrange;">
+                        DarkOrange
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkOrange</div>
+                        <div class="color-hex">#FF8C00</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkOrchid;">
+                        DarkOrchid
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkOrchid</div>
+                        <div class="color-hex">#9932CC</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkRed;">
+                        DarkRed
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkRed</div>
+                        <div class="color-hex">#8B0000</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkSalmon;">
+                        DarkSalmon
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkSalmon</div>
+                        <div class="color-hex">#E9967A</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkSeaGreen;">
+                        DarkSeaGreen
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkSeaGreen</div>
+                        <div class="color-hex">#8FBC8F</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkSlateBlue;">
+                        DarkSlateBlue
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkSlateBlue</div>
+                        <div class="color-hex">#483D8B</div>
+                    </div>
+                </div>
+                
+                <div class="color-item">
+                    <div class="color-preview" style="background-color: DarkSlateGray;">
+                        DarkSlateGray
+                    </div>
+                    <div class="color-details">
+                        <div class="color-name">DarkSlateGray</div>
+                        <div class="color-hex">#2F4F4F</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Color Mixer -->
+        <section class="content-section" id="color-mixer">
+            <h2>Color Mixer</h2>
+            
+            <div class="color-mixer">
+                <p>நீங்கள் சொந்த வண்ணங்களைக் கலந்து புதிய வண்ணங்களை உருவாக்கவும்:</p>
+                
+                <div class="mixer-controls">
+                    <div class="color-slider">
+                        <label for="red-slider">Red</label>
+                        <input type="range" id="red-slider" min="0" max="255" value="100">
+                        <span id="red-value">100</span>
+                    </div>
+                    
+                    <div class="color-slider">
+                        <label for="green-slider">Green</label>
+                        <input type="range" id="green-slider" min="0" max="255" value="150">
+                        <span id="green-value">150</span>
+                    </div>
+                    
+                    <div class="color-slider">
+                        <label for="blue-slider">Blue</label>
+                        <input type="range" id="blue-slider" min="0" max="255" value="200">
+                        <span id="blue-value">200</span>
+                    </div>
+                </div>
+                
+                <div class="mixer-result">
+                    <div class="result-color" id="mixed-color"></div>
+                    <div class="result-values">
+                        <h4>Result Color</h4>
+                        <p>RGB: <span id="rgb-value">rgb(100, 150, 200)</span></p>
+                        <p>HEX: <span id="hex-value">#6496C8</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Color Picker -->
+        <section class="content-section" id="color-picker">
+            <h2>Color Picker</h2>
+            
+            <div class="color-picker">
+                <p>ஒரு நிறத்தைத் தேர்ந்தெடுத்து அதன் மதிப்புகளைப் பாருங்கள்:</p>
+                
+                <div class="picker-input">
+                    <input type="color" id="color-selector" value="#6496c8">
+                    <span id="selected-hex">#6496C8</span>
+                </div>
+                
+                <div class="picker-preview" id="color-preview"></div>
+                
+                <div class="result-values" style="margin-top: 1rem;">
+                    <h4>Selected Color Values</h4>
+                    <p>HEX: <span id="picker-hex">#6496C8</span></p>
+                    <p>RGB: <span id="picker-rgb">rgb(100, 150, 200)</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் CSS நிறப் பெயர்களில் எது அனைத்து நவீன உலாவிகளாலும் ஆதரிக்கப்படுகிறது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">SkyBlue</div>
+                            <div class="option-feedback incorrect">✗ தவறு! SkyBlue என்பது ஆதரிக்கப்படும் நிறமாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">LightGray</div>
+                            <div class="option-feedback incorrect">✗ தவறு! LightGray என்பது ஆதரிக்கப்படும் நிறமாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">FacebookBlue</div>
+                            <div class="option-feedback correct">✓ சரி! FacebookBlue என்பது CSS இல் ஆதரிக்கப்படும் நிறப் பெயர் அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">DarkGreen</div>
+                            <div class="option-feedback incorrect">✗ தவறு! DarkGreen என்பது ஆதரிக்கப்படும் நிறமாகும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="PX%20to%20EM%20Conversion.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Legal%20Color%20Values.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">நிற பெயர்கள்</a></li>
+                    <li><a href="#basic-colors">அடிப்படை நிறங்கள்</a></li>
+                    <li><a href="#extended-colors">நீட்டிக்கப்பட்ட நிறங்கள்</a></li>
+                    <li><a href="#dark-colors">இருண்ட நிறங்கள்</a></li>
+                    <li><a href="#color-mixer">நிற கலவை</a></li>
+                    <li><a href="#color-picker">நிற தேர்வு</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Color Mixer functionality
+        function updateColorMixer() {
+            const red = document.getElementById('red-slider').value;
+            const green = document.getElementById('green-slider').value;
+            const blue = document.getElementById('blue-slider').value;
+            
+            // Update values display
+            document.getElementById('red-value').textContent = red;
+            document.getElementById('green-value').textContent = green;
+            document.getElementById('blue-value').textContent = blue;
+            
+            // Convert to hex
+            const hexColor = rgbToHex(parseInt(red), parseInt(green), parseInt(blue));
+            
+            // Update color display
+            document.getElementById('mixed-color').style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+            document.getElementById('rgb-value').textContent = `rgb(${red}, ${green}, ${blue})`;
+            document.getElementById('hex-value').textContent = hexColor;
+        }
+        
+        function rgbToHex(r, g, b) {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+        }
+        
+        // Initialize color mixer
+        document.getElementById('red-slider').addEventListener('input', updateColorMixer);
+        document.getElementById('green-slider').addEventListener('input', updateColorMixer);
+        document.getElementById('blue-slider').addEventListener('input', updateColorMixer);
+        updateColorMixer();
+        
+        // Color Picker functionality
+        function updateColorPicker() {
+            const color = document.getElementById('color-selector').value;
+            document.getElementById('selected-hex').textContent = color.toUpperCase();
+            document.getElementById('color-preview').style.backgroundColor = color;
+            document.getElementById('picker-hex').textContent = color.toUpperCase();
+            
+            // Convert hex to rgb
+            const rgb = hexToRgb(color);
+            if (rgb) {
+                document.getElementById('picker-rgb').textContent = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+            }
+        }
+        
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        
+        // Initialize color picker
+        document.getElementById('color-selector').addEventListener('input', updateColorPicker);
+        updateColorPicker();
+        
+        // Color item click functionality
+        document.querySelectorAll('.color-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const colorName = this.querySelector('.color-name').textContent;
+                const colorHex = this.querySelector('.color-hex').textContent;
+                
+                // Show color info
+                alert(`Color: ${colorName}\nHEX: ${colorHex}\n\nஇந்த நிறத்தை CSS இல் பயன்படுத்த:\ncolor: ${colorName};\nஅல்லது\ncolor: ${colorHex};`);
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

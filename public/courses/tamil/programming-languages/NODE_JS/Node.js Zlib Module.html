@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Zlib Module - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Net Module.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Real-World Examples.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Zlib Module</h2>
+            <p>Node.js இல் சுருக்கம் மற்றும் சுருக்க நீக்கம் செயல்பாடுகளை கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to the Zlib Module -->
+        <section class="content-section" id="introduction">
+            <h2>Zlib தொகுதிக்கு அறிமுகம்</h2>
+            
+            <p>Zlib தொகுதி zlib மற்றும் brotli சுருக்க நூலகங்களுக்கு பைண்டிங்களை வழங்குகிறது, இது உங்களை இயலச் செய்கிறது:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file-archive"></i>
+                        <h4>கோப்புகள் மற்றும் தரவு ஸ்ட்ரீம்களை சுருக்கவும் மற்றும் சுருக்க நீக்கவும்</h4>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-globe"></i>
+                        <h4>HTTP சுருக்கத்தை செயல்படுத்தவும்</h4>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file"></i>
+                        <h4>சுருக்கப்பட்ட கோப்பு வடிவங்களுடன் பணிபுரியவும் (.gz, .zip)</h4>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h4>வலை பயன்பாடுகளில் பேண்ட்வித் பயன்பாட்டை மேம்படுத்தவும்</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Importing the Zlib Module -->
+        <section class="content-section" id="importing-zlib">
+            <h2>Zlib தொகுதியை இறக்குமதி செய்தல்</h2>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');</code></pre>
+            </div>
+        </section>
+
+        <!-- Compression Methods -->
+        <section class="content-section" id="compression-methods">
+            <h2>சுருக்க முறைகள்</h2>
+            
+            <p>Zlib தொகுதி பல சுருக்க முறைகளை ஆதரிக்கிறது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gzip/Gunzip</strong></td>
+                            <td>மிகவும் பரவலாக பயன்படுத்தப்படும் சுருக்க வடிவம், குறிப்பாக வலை உள்ளடக்கத்திற்கு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Deflate/Inflate</strong></td>
+                            <td>தலைப்புகள் அல்லது செக்சம்கள் இல்லாமல் மூல deflate அல்காரிதம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DeflateRaw/InflateRaw</strong></td>
+                            <td>தனிப்பயன் தலைப்பு மற்றும் செக்சம் கையாளுதலுடன் மூல deflate அல்காரிதம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Brotli</strong></td>
+                            <td>சிறந்த விகிதங்களை வழங்கும் நவீன சுருக்க அல்காரிதம் (Node.js 10.16.0 இல் சேர்க்கப்பட்டது)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Basic Compression and Decompression -->
+        <section class="content-section" id="basic-compression">
+            <h2>அடிப்படை சுருக்கம் மற்றும் சுருக்க நீக்கம்</h2>
+            
+            <h3>கால்பேக்குகளைப் பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+
+const input = 'This is some text that will be compressed using the zlib module in Node.js.';
+
+// Compress data using gzip
+zlib.gzip(input, (err, compressed) => {
+  if (err) {
+    console.error('Compression error:', err);
+    return;
+  }
+  
+  console.log('Original size:', input.length, 'bytes');
+  console.log('Compressed size:', compressed.length, 'bytes');
+  console.log('Compression ratio:', Math.round(100 - (compressed.length / input.length * 100)) + '%');
+  
+  // Decompress the data
+  zlib.gunzip(compressed, (err, decompressed) => {
+    if (err) {
+      console.error('Decompression error:', err);
+      return;
+    }
+    
+    console.log('Decompressed data:', decompressed.toString());
+    console.log('Successfully decompressed:', input === decompressed.toString());
+  });
+});</code></pre>
+            </div>
+
+            <h3>புரோமிஸ்களைப் பயன்படுத்துதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+const { promisify } = require('util');
+
+// Convert callback-based functions to promise-based
+const gzipPromise = promisify(zlib.gzip);
+const gunzipPromise = promisify(zlib.gunzip);
+
+async function compressAndDecompress(input) {
+  try {
+    // Compress
+    const compressed = await gzipPromise(input);
+    console.log('Original size:', input.length, 'bytes');
+    console.log('Compressed size:', compressed.length, 'bytes');
+    
+    // Decompress
+    const decompressed = await gunzipPromise(compressed);
+    console.log('Decompressed data:', decompressed.toString());
+    console.log('Success:', input === decompressed.toString());
+    
+    return compressed;
+  } catch (err) {
+    console.error('Error:', err);
+  }
+}
+
+// Example usage
+const testData = 'This is some test data that will be compressed with the zlib module.';
+compressAndDecompress(testData);</code></pre>
+            </div>
+        </section>
+
+        <!-- Working with Streams -->
+        <section class="content-section" id="working-streams">
+            <h2>ஸ்ட்ரீம்களுடன் பணிபுரிதல்</h2>
+            
+            <p>Zlib தொகுதி பெரிய கோப்புகள் அல்லது தரவுகளை செயலாக்க ஸ்ட்ரீம்களுடன் பயன்படுத்தப்படலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+const fs = require('fs');
+const path = require('path');
+
+// Compress a file
+function compressFile(inputPath) {
+  const outputPath = inputPath + '.gz';
+  
+  // Create read and write streams
+  const input = fs.createReadStream(inputPath);
+  const output = fs.createWriteStream(outputPath);
+  
+  // Create gzip transform stream
+  const gzip = zlib.createGzip();
+  
+  // Pipe data through the compression stream
+  input.pipe(gzip).pipe(output);
+  
+  // Handle events
+  input.on('error', (err) => console.error('Input error:', err));
+  gzip.on('error', (err) => console.error('Compression error:', err));
+  output.on('error', (err) => console.error('Output error:', err));
+  
+  output.on('finish', () => {
+    console.log(`File compressed successfully: ${outputPath}`);
+    
+    // Get file sizes for comparison
+    const inputStats = fs.statSync(inputPath);
+    const outputStats = fs.statSync(outputPath);
+    
+    console.log(`Original size: ${inputStats.size} bytes`);
+    console.log(`Compressed size: ${outputStats.size} bytes`);
+    console.log(`Compression ratio: ${Math.round(100 - (outputStats.size / inputStats.size * 100))}%`);
+  });
+}
+
+// Decompress a file
+function decompressFile(inputPath) {
+  // Remove .gz extension for output path
+  const outputPath = inputPath.endsWith('.gz')
+    ? inputPath.slice(0, -3)
+    : inputPath + '.uncompressed';
+  
+  // Create streams
+  const input = fs.createReadStream(inputPath);
+  const output = fs.createWriteStream(outputPath);
+  const gunzip = zlib.createGunzip();
+  
+  // Pipe data through decompression stream
+  input.pipe(gunzip).pipe(output);
+  
+  // Handle events
+  input.on('error', (err) => console.error('Input error:', err));
+  gunzip.on('error', (err) => console.error('Decompression error:', err));
+  output.on('error', (err) => console.error('Output error:', err));
+  
+  output.on('finish', () => {
+    console.log(`File decompressed successfully: ${outputPath}`);
+  });
+}
+
+// Example usage (assuming you have a text file)
+// compressFile('example.txt');
+// decompressFile('example.txt.gz');
+
+// Note: Uncomment the above lines to actually run the compression/decompression
+console.log('This example shows how to compress and decompress files using streams.');
+console.log('Create a text file named "example.txt" and uncomment the function calls to test.');</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> ஸ்ட்ரீம் நன்மைகள்:</h4>
+                <p>ஸ்ட்ரீம்களைப் பயன்படுத்துவது பெரிய கோப்புகளை செயலாக்க நினைவக திறன் கொண்டது, ஏனெனில் முழு கோப்பும் ஒரே நேரத்தில் நினைவகத்தில் ஏற்ற வேண்டியதில்லை.</p>
+            </div>
+        </section>
+
+        <!-- HTTP Compression -->
+        <section class="content-section" id="http-compression">
+            <h2>HTTP சுருக்கம்</h2>
+            
+            <p>Zlib தொகுதி பேண்ட்வித் பயன்பாட்டைக் குறைக்க HTTP சுருக்கத்திற்காக பொதுவாகப் பயன்படுத்தப்படுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const zlib = require('zlib');
+
+// Create an HTTP server with compression
+const server = http.createServer((req, res) => {
+  // Sample response content
+  const responseBody = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Zlib Compression Example</title>
+    </head>
+    <body>
+      <h1>HTTP Compression with Zlib</h1>
+      <p>This content is being compressed with Gzip before sending to your browser.</p>
+      <p>Compression reduces bandwidth usage and improves page load times.</p>
+      ${'<p>This paragraph is repeated to demonstrate compression efficiency.</p>'.repeat(50)}
+    </body>
+    </html>
+  `;
+  
+  // Check if client accepts gzip encoding
+  const acceptEncoding = req.headers['accept-encoding'] || '';
+  
+  // Set content type
+  res.setHeader('Content-Type', 'text/html');
+  
+  // Compress response if client supports it
+  if (/\bgzip\b/.test(acceptEncoding)) {
+    // Client supports gzip
+    res.setHeader('Content-Encoding', 'gzip');
+    
+    // Compress and send
+    zlib.gzip(responseBody, (err, compressed) => {
+      if (err) {
+        res.statusCode = 500;
+        res.end('Internal Server Error');
+        return;
+      }
+      
+      res.end(compressed);
+    });
+  } else if (/\bdeflate\b/.test(acceptEncoding)) {
+    // Client supports deflate
+    res.setHeader('Content-Encoding', 'deflate');
+    
+    // Compress and send
+    zlib.deflate(responseBody, (err, compressed) => {
+      if (err) {
+        res.statusCode = 500;
+        res.end('Internal Server Error');
+        return;
+      }
+      
+      res.end(compressed);
+    });
+  } else {
+    // No compression supported
+    res.end(responseBody);
+  }
+});
+
+// Start server on port 8080
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+  console.log('Open this URL in your browser to see compression in action');
+  console.log('The browser will automatically decompress the content');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Working with Brotli Compression -->
+        <section class="content-section" id="brotli-compression">
+            <h2>Brotli சுருக்கத்துடன் பணிபுரிதல்</h2>
+            
+            <p>Brotli என்பது Gzip ஐ விட சிறந்த சுருக்க விகிதங்களை பெரும்பாலும் அடையும் ஒரு நவீன சுருக்க அல்காரிதம் ஆகும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+
+// Sample data to compress
+const input = 'This is some test data that will be compressed with different algorithms for comparison.'.repeat(20);
+
+// Compare compression methods
+function compareCompression() {
+  console.log(`Original data size: ${input.length} bytes`);
+  
+  // Gzip compression
+  zlib.gzip(input, (err, gzipped) => {
+    if (err) {
+      console.error('Gzip error:', err);
+      return;
+    }
+    
+    console.log(`Gzip size: ${gzipped.length} bytes (${Math.round(100 - (gzipped.length / input.length * 100))}% reduction)`);
+    
+    // Deflate compression
+    zlib.deflate(input, (err, deflated) => {
+      if (err) {
+        console.error('Deflate error:', err);
+        return;
+      }
+      
+      console.log(`Deflate size: ${deflated.length} bytes (${Math.round(100 - (deflated.length / input.length * 100))}% reduction)`);
+      
+      // Brotli compression (if available)
+      if (typeof zlib.brotliCompress === 'function') {
+        zlib.brotliCompress(input, (err, brotli) => {
+          if (err) {
+            console.error('Brotli error:', err);
+            return;
+          }
+          
+          console.log(`Brotli size: ${brotli.length} bytes (${Math.round(100 - (brotli.length / input.length * 100))}% reduction)`);
+        });
+      } else {
+        console.log('Brotli compression not available in this Node.js version');
+      }
+    });
+  });
+}
+
+// Run the comparison
+compareCompression();</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">ℹ️</span> Brotli குறிப்பு:</h4>
+                <p>Brotli சுருக்கம் Node.js 10.16.0 மற்றும் பிந்தைய பதிப்புகளில் கிடைக்கும். இது பொதுவாக சிறந்த சுருக்க விகிதங்களை அடைகிறது ஆனால் Gzip ஐ விட மெதுவாக இருக்கலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Compression Options -->
+        <section class="content-section" id="compression-options">
+            <h2>சுருக்க விருப்பங்கள்</h2>
+            
+            <p>விருப்பங்களுடன் சுருக்க நடத்தையை தனிப்பயனாக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+
+const input = 'This is example content for compression with custom options.'.repeat(50);
+
+// Test different compression levels
+function testCompressionLevels() {
+  console.log(`Original size: ${input.length} bytes`);
+  
+  // Default compression (level 6)
+  zlib.gzip(input, (err, compressed) => {
+    if (err) throw err;
+    console.log(`Default compression (level 6): ${compressed.length} bytes`);
+    
+    // Fastest compression (level 1)
+    zlib.gzip(input, { level: 1 }, (err, fastCompressed) => {
+      if (err) throw err;
+      console.log(`Fast compression (level 1): ${fastCompressed.length} bytes`);
+      
+      // Best compression (level 9)
+      zlib.gzip(input, { level: 9 }, (err, bestCompressed) => {
+        if (err) throw err;
+        console.log(`Best compression (level 9): ${bestCompressed.length} bytes`);
+      });
+    });
+  });
+}
+
+// Test compression with custom memory usage
+function testMemoryLevels() {
+  // Memory levels: 1 (lowest) to 9 (highest)
+  zlib.gzip(input, { memLevel: 9 }, (err, compressed) => {
+    if (err) throw err;
+    console.log(`High memory usage (memLevel 9): ${compressed.length} bytes`);
+    
+    zlib.gzip(input, { memLevel: 4 }, (err, lowMemCompressed) => {
+      if (err) throw err;
+      console.log(`Low memory usage (memLevel 4): ${lowMemCompressed.length} bytes`);
+    });
+  });
+}
+
+// Run tests
+testCompressionLevels();
+setTimeout(testMemoryLevels, 1000); // Slight delay to separate console output</code></pre>
+            </div>
+            
+            <h3>பொதுவான Zlib விருப்பங்கள்:</h3>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>விருப்பம்</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>level</strong></td>
+                            <td>சுருக்க நிலை (0-9, 0=இல்லை, 9=சிறந்தது)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memLevel</strong></td>
+                            <td>நினைவக பயன்பாடு (1-9, 1=மிகக் குறைந்த, 9=மிக அதிக)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>strategy</strong></td>
+                            <td>சுருக்க உத்தி (எ.கா., Z_DEFAULT_STRATEGY)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>dictionary</strong></td>
+                            <td>சுருக்கத்திற்கான முன்-வரையறுக்கப்பட்ட அகராதி</td>
+                        </tr>
+                        <tr>
+                            <td><strong>windowBits</strong></td>
+                            <td>சாளர அளவு மடக்கை</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Error Handling -->
+        <section class="content-section" id="error-handling">
+            <h2>பிழை கையாளுதல்</h2>
+            
+            <p>சுருக்கத்துடன் பணிபுரியும் போது சரியான பிழை கையாளுதல் முக்கியமானது:</p>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+const fs = require('fs');
+
+// Function to safely decompress data
+function safeDecompress(compressedData) {
+  return new Promise((resolve, reject) => {
+    zlib.gunzip(compressedData, { finishFlush: zlib.constants.Z_SYNC_FLUSH }, (err, result) => {
+      if (err) {
+        // Handle specific error types
+        if (err.code === 'Z_DATA_ERROR') {
+          reject(new Error('Invalid or corrupt compressed data'));
+        } else if (err.code === 'Z_BUF_ERROR') {
+          reject(new Error('Incomplete compressed data'));
+        } else {
+          reject(err);
+        }
+        return;
+      }
+      
+      resolve(result);
+    });
+  });
+}
+
+// Example usage with error handling
+async function demonstrateErrorHandling() {
+  try {
+    // Valid compression
+    const validData = await zlib.gzipSync('This is valid data');
+    console.log('Successfully compressed valid data');
+    
+    // Try to decompress valid data
+    const result = await safeDecompress(validData);
+    console.log('Successfully decompressed:', result.toString());
+    
+    // Try to decompress invalid data
+    const invalidData = Buffer.from('This is not compressed data');
+    await safeDecompress(invalidData);
+    
+  } catch (err) {
+    console.error('Error occurred:', err.message);
+  }
+}
+
+demonstrateErrorHandling();</code></pre>
+            </div>
+        </section>
+
+        <!-- Practical Applications -->
+        <section class="content-section" id="practical-applications">
+            <h2>நடைமுறை பயன்பாடுகள்</h2>
+            
+            <h3>1. பதிவு கோப்புகளை சுருக்குதல்</h3>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+const fs = require('fs');
+const path = require('path');
+
+// Compress log files and add timestamp
+function compressLogFile(logFilePath) {
+  // Generate output path with timestamp
+  const timestamp = new Date().toISOString().replace(/:/g, '-');
+  const basename = path.basename(logFilePath);
+  const outputPath = path.join(
+    path.dirname(logFilePath),
+    `${basename}-${timestamp}.gz`
+  );
+  
+  // Create streams
+  const input = fs.createReadStream(logFilePath);
+  const output = fs.createWriteStream(outputPath);
+  const gzip = zlib.createGzip();
+  
+  // Pipe the streams
+  input.pipe(gzip).pipe(output);
+  
+  // Handle events
+  output.on('finish', () => {
+    console.log(`Log file compressed: ${outputPath}`);
+    
+    // Optionally, clear the original log file
+    fs.writeFile(logFilePath, '', err => {
+      if (err) {
+        console.error(`Error clearing log file: ${err.message}`);
+      } else {
+        console.log(`Original log file cleared: ${logFilePath}`);
+      }
+    });
+  });
+  
+  input.on('error', err => console.error(`Read error: ${err.message}`));
+  gzip.on('error', err => console.error(`Compression error: ${err.message}`));
+  output.on('error', err => console.error(`Write error: ${err.message}`));
+}
+
+// Example usage
+// compressLogFile('server.log');
+
+// Note: Uncomment the line above to compress an actual log file
+console.log('This example shows how to compress log files with timestamps.');</code></pre>
+            </div>
+
+            <h3>2. API பதில் சுருக்கம்</h3>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+const zlib = require('zlib');
+
+// Sample API data (imagine this is from a database)
+const apiData = {
+  users: Array.from({ length: 100 }, (_, i) => ({
+    id: i + 1,
+    name: `User ${i + 1}`,
+    email: `user${i + 1}@example.com`,
+    role: i % 3 === 0 ? 'admin' : 'user',
+    created: new Date().toISOString(),
+    profile: {
+      bio: `This is a sample bio for user ${i + 1}. It contains some text to demonstrate compression.`,
+      interests: ['programming', 'reading', 'hiking', 'cooking', 'music'],
+      settings: {
+        notifications: true,
+        theme: 'dark',
+        language: 'en'
+      }
+    }
+  }))
+};
+
+// Create a simple API server
+const server = http.createServer((req, res) => {
+  // Only handle GET requests to /api/users
+  if (req.method === 'GET' && req.url === '/api/users') {
+    // Convert data to JSON string
+    const jsonData = JSON.stringify(apiData);
+    
+    // Check if client accepts compression
+    const acceptEncoding = req.headers['accept-encoding'] || '';
+    
+    // Set JSON content type
+    res.setHeader('Content-Type', 'application/json');
+    
+    // Compress based on accepted encoding
+    if (/\bgzip\b/.test(acceptEncoding)) {
+      res.setHeader('Content-Encoding', 'gzip');
+      
+      // Compress and send
+      zlib.gzip(jsonData, (err, compressed) => {
+        if (err) {
+          res.statusCode = 500;
+          res.end(JSON.stringify({ error: 'Compression failed' }));
+          return;
+        }
+        
+        console.log(`Original size: ${jsonData.length} bytes`);
+        console.log(`Compressed size: ${compressed.length} bytes`);
+        console.log(`Compression ratio: ${Math.round(100 - (compressed.length / jsonData.length * 100))}%`);
+        
+        res.end(compressed);
+      });
+    } else {
+      // No compression
+      console.log(`Sending uncompressed response: ${jsonData.length} bytes`);
+      res.end(jsonData);
+    }
+  } else {
+    // Not found
+    res.statusCode = 404;
+    res.end(JSON.stringify({ error: 'Not found' }));
+  }
+});
+
+// Start server
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`API server running at http://localhost:${PORT}/`);
+  console.log('Test the API by visiting: http://localhost:8080/api/users');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Advanced Compression Techniques -->
+        <section class="content-section" id="advanced-techniques">
+            <h2>மேம்பட்ட சுருக்க நுட்பங்கள்</h2>
+            
+            <h3>1. சுருக்க உத்திகள்</h3>
+            
+            <p>Zlib சில வகையான தரவுகளுக்கு மிகவும் பயனுள்ளதாக இருக்கும் வெவ்வேறு சுருக்க உத்திகளை வழங்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+
+// Sample data with repeated patterns (good for RLE)
+const repeatedData = 'ABC'.repeat(1000);
+
+// Test different compression strategies
+function testStrategies(data) {
+  const strategies = [
+    { name: 'DEFAULT_STRATEGY', value: zlib.constants.Z_DEFAULT_STRATEGY },
+    { name: 'FILTERED', value: zlib.constants.Z_FILTERED },
+    { name: 'HUFFMAN_ONLY', value: zlib.constants.Z_HUFFMAN_ONLY },
+    { name: 'RLE', value: zlib.constants.Z_RLE },
+    { name: 'FIXED', value: zlib.constants.Z_FIXED }
+  ];
+  
+  console.log(`Original size: ${data.length} bytes`);
+  
+  strategies.forEach(({ name, value }) => {
+    const compressed = zlib.gzipSync(data, { strategy: value });
+    console.log(`${name.padEnd(20)}: ${compressed.length.toString().padEnd(5)} bytes`);
+  });
+}
+
+testStrategies(repeatedData);</code></pre>
+            </div>
+
+            <h3>2. தனிப்பயன் அகராதிகள்</h3>
+            
+            <p>குறிப்பிட்ட தரவு வடிவங்களுக்கு, தனிப்பயன் அகராதிகள் சுருக்க விகிதத்தை மேம்படுத்தும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+
+// Create a custom dictionary with common terms
+const dictionary = Buffer.from('username,password,email,first_name,last_name,created_at,updated_at,status,active,inactive,pending,admin,user,role,permissions');
+
+// Sample data that benefits from the dictionary
+const userData = JSON.stringify({
+  username: 'johndoe',
+  email: 'john@example.com',
+  first_name: 'John',
+  last_name: 'Doe',
+  role: 'admin',
+  status: 'active',
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString()
+});
+
+// Compress with and without dictionary
+const compressedWithout = zlib.deflateSync(userData);
+const compressedWith = zlib.deflateSync(userData, { dictionary });
+
+console.log('Original size:', Buffer.byteLength(userData), 'bytes');
+console.log('Compressed without dictionary:', compressedWithout.length, 'bytes');
+console.log('Compressed with dictionary:', compressedWith.length, 'bytes');
+console.log('Improvement:', Math.round((1 - (compressedWith.length / compressedWithout.length)) * 100) + '%');
+
+// Decompress with dictionary
+const decompressed = zlib.inflateSync(compressedWith, { dictionary });
+console.log('Decompressed matches original:', decompressed.toString() === userData);</code></pre>
+            </div>
+
+            <h3>3. முன்னேற்ற சுருக்கம்</h3>
+            
+            <p>தரவு கிடைக்கும் போது துண்டுகளில் தரவை செயலாக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>const zlib = require('zlib');
+const { Transform } = require('stream');
+
+class ProgressTracker extends Transform {
+  constructor(options = {}) {
+    super(options);
+    this.processedBytes = 0;
+    this.startTime = Date.now();
+  }
+  
+  _transform(chunk, encoding, callback) {
+    this.processedBytes += chunk.length;
+    const elapsed = (Date.now() - this.startTime) / 1000;
+    const rate = (this.processedBytes / 1024 / 1024 / elapsed).toFixed(2);
+    
+    process.stdout.write(`\rProcessed: ${(this.processedBytes / 1024 / 1024).toFixed(2)} MB | ` +
+                       `Rate: ${rate} MB/s`);
+    
+    this.push(chunk);
+    callback();
+  }
+}
+
+// Simulate processing a large file
+function processLargeFile() {
+  const gzip = zlib.createGzip({ level: 6 });
+  const progress = new ProgressTracker();
+  
+  // Generate 100MB of random data
+  const data = Buffer.alloc(1024 * 1024 * 100);
+  
+  // Create a readable stream from buffer
+  const { Readable } = require('stream');
+  const readable = Readable.from(data);
+  
+  console.log('Starting compression...');
+  
+  readable
+    .pipe(progress)
+    .pipe(gzip)
+    .pipe(process.stdout);
+    
+  gzip.on('end', () => {
+    console.log('\nCompression complete!');
+  });
+}
+
+// Uncomment to run (creates a large file)
+// processLargeFile();</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Considerations -->
+        <section class="content-section" id="performance-considerations">
+            <h2>செயல்திறன் பரிசீலனைகள்</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-balance-scale"></i>
+                    <span><strong>சுருக்க நிலை வர்த்தகங்கள்:</strong> அதிக நிலைகள் = சிறந்த சுருக்கம் ஆனால் மெதுவான செயலாக்கம்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>நினைவக பயன்பாடு:</strong> சுருக்கம் நினைவக-தீவிரமானதாக இருக்கலாம், குறிப்பாக அதிக நிலைகளுடன்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    <span><strong>எப்போது சுருக்க வேண்டும்:</strong> சுருக்கத்திலிருந்து பயனடையும் தரவை மட்டுமே சுருக்கவும் (உரை, JSON, முதலியன)</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-file-image"></i>
+                    <span><strong>ஏற்கனவே சுருக்கப்பட்ட தரவு:</strong> ஏற்கனவே சுருக்கப்பட்ட கோப்புகளை சுருக்க வேண்டாம் (படங்கள், வீடியோக்கள், முதலியன)</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-stream"></i>
+                    <span><strong>ஸ்ட்ரீமிங்:</strong> நினைவக சிக்கல்களைத் தவிர்க்க பெரிய கோப்புகளுக்கு ஸ்ட்ரீம்களைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-cogs"></i>
+                    <span><strong>நூல் குழு பயன்பாடு:</strong> Zlib செயல்பாடுகள் libuv இன் நூல் குழுவைப் பயன்படுத்துகின்றன; தேவைப்பட்டால் UV_THREADPOOL_SIZE உடன் உள்ளமைக்கவும்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <p>Node.js Zlib தொகுதி இவற்றிற்கான அத்தியாவசிய சுருக்கம் மற்றும் சுருக்க நீக்கம் செயல்பாட்டை வழங்குகிறது:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file-export"></i>
+                        <h4>கோப்பு அளவுகள் மற்றும் பேண்ட்வித் பயன்பாட்டைக் குறைத்தல்</h4>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-archive"></i>
+                        <h4>சுருக்கப்பட்ட வடிவங்களுடன் பணிபுரிதல்</h4>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>HTTP சுருக்கத்தை செயல்படுத்துதல்</h4>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>ஸ்ட்ரீம்களைப் பயன்படுத்தி பெரிய தரவை திறம்பட செயலாக்குதல்</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>முக்கிய அம்சங்கள்:</h3>
+            
+            <ul>
+                <li>பல சுருக்க அல்காரிதம்களுக்கு ஆதரவு (Gzip, Deflate, Brotli)</li>
+                <li>இரண்டும் ஒத்திசைவு மற்றும் அசிங்க்ரோனஸ் APIகள்</li>
+                <li>நினைவக திறனுக்கான ஸ்ட்ரீம்-அடிப்படையிலான செயலாக்கம்</li>
+                <li>உள்ளமைக்கக்கூடிய சுருக்க நிலைகள் மற்றும் விருப்பங்கள்</li>
+            </ul>
+            
+            <p>Zlib தொகுதியைப் புரிந்துகொள்வது Node.js பயன்பாடுகளில் தரவு பரிமாற்றம் மற்றும் சேமிப்பை மேம்படுத்துவதற்கு அத்தியாவசியமானது.</p>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் சுருக்கம் மற்றும் சுருக்க நீக்கம் செயல்பாட்டை வழங்கும் சரியான தொகுதி பெயரைத் தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">compress</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "compress" என்பது Node.js இல் ஒரு செல்லுபடியாகும் தொகுதி அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">gzip</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "gzip" என்பது Node.js இல் ஒரு செல்லுபடியாகும் தொகுதி அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">zlib</div>
+                            <div class="option-feedback correct">✓ சரி! "zlib" தொகுதி Node.js இல் சுருக்கம் மற்றும் சுருக்க நீக்கம் செயல்பாட்டை வழங்குகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">deflate</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "deflate" என்பது Node.js இல் ஒரு செல்லுபடியாகும் தொகுதி அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Net Module.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Real-World Examples.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">Zlib தொகுதிக்கு அறிமுகம்</a></li>
+                    <li><a href="#basic-compression">அடிப்படை சுருக்கம்</a></li>
+                    <li><a href="#http-compression">HTTP சுருக்கம்</a></li>
+                    <li><a href="#practical-applications">நடைமுறை பயன்பாடுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Router - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular Forms.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Services & Dependency Injection.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Router</h2>
+<p>URLs-ஐ views-க்கு map செய்து உங்கள் app-ல் users navigate செய்ய அனுமதிக்கிறது</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>Angular Router</h2>
+<p>Router URLs-ஐ views-க்கு map செய்து உங்கள் app-ல் users navigate செய்ய அனுமதிக்கிறது.</p>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i> Router Essentials</h4>
+<ul>
+<li><strong>URL-driven UI:</strong> Router URL-அடிப்படையில் views-ஐ swap செய்கிறது.</li>
+<li><strong>RouterOutlet:</strong> Active route-ன் component render செய்யும் placeholder.</li>
+<li><strong>routerLink:</strong> Full page reloads இல்லாமல் navigate செய்ய.</li>
+<li><strong>RouterLinkActive:</strong> Active links-க்கு classes add செய்கிறது (root-க்கு { exact: true } பயன்படுத்தவும்).</li>
+<li><strong>Performance & control:</strong> Feature areas lazy load செய்யவும்; navigation allow/block செய்ய guards பயன்படுத்தவும்.</li>
+</ul>
+</div>
+
+<div class="code-example">
+<h3>Router Setup Example</h3>
+<pre><code class="command-input">import { provideRouter, withHashLocation, RouterOutlet, RouterLink } from '@angular/router';
+
+const routes = [
+  { path: '', component: Home },
+  { path: 'about', component: About }
+];
+
+bootstrapApplication(App, {
+  providers: [provideRouter(routes, withHashLocation())]
+});
+
+// Template
+// &lt;a routerLink="/about"&gt;About&lt;/a&gt;
+// &lt;router-outlet&gt;&lt;/router-outlet&gt;</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-info-circle tip-icon"></i> Notes</h4>
+<ul>
+<li><strong>Related:</strong> Components for building views, Services for shared logic/guards, and Templates for markup and directives ஆகியவற்றை காணவும்.</li>
+<li><strong>Standalone apps:</strong> RouterOutlet/RouterLink import செய்யவும் மற்றும் provideRouter() உடன் routes provide செய்யவும்.</li>
+<li><strong>Sandboxes/runners:</strong> Server config இல்லாமல் links work செய்ய withHashLocation() பயன்படுத்தவும் (hash URLs /#/path போல் தெரியும்).</li>
+</ul>
+</div>
+</section>
+
+<!-- Router Basics -->
+<section class="content-section" id="router-basics">
+<h2>Router Basics</h2>
+<p>Paths-ஐ components-க்கு map செய்ய routes array define செய்யவும்.</p>
+<p>provideRouter() உடன் routes provide செய்யவும் (sandboxes-க்கு withHashLocation() பயன்படுத்தவும்).</p>
+<p>Navigation-க்கு routerLink பயன்படுத்தவும் மற்றும் views render செய்ய RouterOutlet பயன்படுத்தவும்.</p>
+
+<div class="code-example">
+<h3>Basic Routes Syntax</h3>
+<pre><code class="command-input">const routes = [ { path: '', component: Home }, { path: 'about', component: About } ];
+// template
+// &lt;a routerLink="/about"&gt;About&lt;/a&gt;
+// &lt;router-outlet&gt;&lt;/router-outlet&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>Router Basics Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { provideRouter, RouterOutlet, RouterLink, withHashLocation } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink],
+  template: `
+    &lt;h3&gt;Router&lt;/h3&gt;
+    &lt;nav&gt;
+      &lt;a routerLink="/"&gt;Home&lt;/a&gt; |
+      &lt;a routerLink="/about"&gt;About&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt;
+  `
+})
+export class App {}
+
+@Component({
+  standalone: true,
+  template: `&lt;p&gt;Home works!&lt;/p&gt;`
+})
+export class Home {}
+
+@Component({
+  standalone: true,
+  template: `&lt;p&gt;About works!&lt;/p&gt;`
+})
+export class About {}
+
+const routes = [
+  { path: '', component: Home },
+  { path: 'about', component: About }
+];
+
+bootstrapApplication(App, {
+  providers: [provideRouter(routes, withHashLocation())]
+});</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>provideRouter(routes):</strong> App-க்கு routes register செய்கிறது.</li>
+<li><strong>RouterOutlet:</strong> Active route-ன் component render செய்யும் placeholder.</li>
+<li><strong>routerLink:</strong> Page reload இல்லாமல் navigate செய்கிறது.</li>
+<li><strong>withHashLocation():</strong> Sandboxes-ல் server rewrites இல்லாமல் links work செய்ய hash URLs பயன்படுத்துகிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Use routerLink, not href:</strong> href page reload செய்கிறது.</li>
+<li><strong>Use routerLink for SPA navigation.</strong></li>
+<li><strong>Standalone imports:</strong> RouterOutlet/RouterLink import செய்யவும் மற்றும் provideRouter() உடன் routes provide செய்யவும்.</li>
+</ul>
+</div>
+</section>
+
+<!-- Router Params -->
+<section class="content-section" id="router-params">
+<h2>Router Params</h2>
+<p>Paths-ல் variables capture செய்ய :id உடன் (e.g., /product/42).</p>
+<p>ActivatedRoute மூலம் அவற்றை read செய்யவும் (snapshot அல்லது paramMap observable).</p>
+
+<div class="code-example">
+<h3>Route with Parameter</h3>
+<pre><code class="command-input">{ path: 'product/:id', component: Product }
+// class Product {
+//  id = '';
+//  route = inject(ActivatedRoute);
+//  ngOnInit() { this.id = this.route.snapshot.paramMap.get('id') ?? ''; }
+// }</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>Router Params Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, OnInit, inject } from '@angular/core';
+import { provideRouter, RouterOutlet, RouterLink, RouterLinkActive, ActivatedRoute, withHashLocation } from '@angular/router';
+
+@Component({
+  selector: 'home-cmp',
+  standalone: true,
+  template: `&lt;p&gt;Home works!&lt;/p&gt;`
+})
+export class Home {}
+
+@Component({
+  selector: 'product-cmp',
+  standalone: true,
+  template: `&lt;p&gt;Product ID: {{ id }}&lt;/p&gt;`
+})
+export class Product implements OnInit {
+  id = '';
+  private route = inject(ActivatedRoute);
+  ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id') ?? '';
+  }
+}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  template: `
+    &lt;h3&gt;Router Params&lt;/h3&gt;
+    &lt;nav&gt;
+      &lt;a routerLink="/"&gt;Home&lt;/a&gt; |
+      &lt;a routerLink="/product/1" routerLinkActive="active"&gt;Product 1&lt;/a&gt; |
+      &lt;a routerLink="/product/2" routerLinkActive="active"&gt;Product 2&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt;
+  `,
+  styles: [`nav a { margin-right: 6px; } .active { font-weight: bold; }`]
+})
+export class App {}
+
+const routes = [
+  { path: '', component: Home },
+  { path: 'product/:id', component: Product }
+];
+
+bootstrapApplication(App, {
+  providers: [provideRouter(routes, withHashLocation())]
+});</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>product/:id:</strong> id என்று named path parameter declare செய்கிறது.</li>
+<li><strong>ActivatedRoute:</strong> ngOnInit-ல் snapshot.paramMap.get('id') இலிருந்து id-ஐ read செய்கிறது.</li>
+<li><strong>Links:</strong> routerLink="/product/1" மற்றும் /product/2 parameterized navigation demonstrate செய்கின்றன.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Note</h4>
+<p><strong>Params update within the same component:</strong> வெவ்வேறு params உடன் அதே route-க்கு navigate செய்யும் போது, one-time snapshot பயன்படுத்துவதற்கு பதிலாக paramMap (அல்லது params)-க்கு subscribe செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Active Links -->
+<section class="content-section" id="active-links">
+<h2>Active Links</h2>
+<p>Link match ஆகும் போது classes toggle செய்ய routerLinkActive பயன்படுத்தவும்.</p>
+<p>Root links போன்ற /-க்கு { exact: true } set செய்யவும்.</p>
+
+<div class="code-example">
+<h3>Active Links Example</h3>
+<pre><code class="command-input">&lt;a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"&gt;Home&lt;/a&gt;
+&lt;a routerLink="/about" routerLinkActive="active"&gt;About&lt;/a&gt;</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>Active Links Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { provideRouter, RouterOutlet, RouterLink, RouterLinkActive, withHashLocation } from '@angular/router';
+
+@Component({
+  standalone: true,
+  template: `&lt;p&gt;Home works!&lt;/p&gt;`
+})
+export class Home {}
+
+@Component({
+  standalone: true,
+  template: `&lt;p&gt;About works!&lt;/p&gt;`
+})
+export class About {}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  styles: [`
+    nav a { margin-right: 8px; text-decoration: none; }
+    .active { font-weight: 600; color: seagreen; }
+  `],
+  template: `
+    &lt;h3&gt;Active Links (routerLinkActive)&lt;/h3&gt;
+    &lt;nav&gt;
+      &lt;a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"&gt;Home&lt;/a&gt;
+      &lt;a routerLink="/about" routerLinkActive="active"&gt;About&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt;
+  `
+})
+export class App {}
+
+const routes = [
+  { path: '', component: Home },
+  { path: 'about', component: About }
+];
+
+bootstrapApplication(App, {
+  providers: [provideRouter(routes, withHashLocation())]
+});</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>routerLinkActive="active":</strong> Link current URL-க்கு match ஆகும் போது active class add செய்கிறது.</li>
+<li><strong>[routerLinkActiveOptions]="{ exact: true }":</strong> Root (/)-க்கு, exact match-ல் மட்டுமே active mark செய்ய.</li>
+<li><strong>RouterOutlet:</strong> Current route-க்கு matched component-ஐ render செய்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Exact for root:</strong> / links-க்கு, { exact: true } set செய்யவும் அதனால் parent paths அவற்றை active-காக வைக்காது.</li>
+<li><strong>Apply on containers:</strong> Groups of links style செய்ய parent element-ல் routerLinkActive வைக்கவும்.</li>
+<li><strong>Multiple classes:</strong> பல classes add செய்யலாம்: routerLinkActive="active bold".</li>
+</ul>
+</div>
+</section>
+
+<!-- Lazy-loaded Component -->
+<section class="content-section" id="lazy-loading">
+<h2>Lazy-loaded Component</h2>
+<p>Navigation வரை code loading defer செய்ய loadComponent அல்லது loadChildren பயன்படுத்தவும்.</p>
+<p>Bundles splitting செய்வதன் மூலம் initial load time improve செய்கிறது.</p>
+
+<div class="code-example">
+<h3>Lazy Loading Syntax</h3>
+<pre><code class="command-input">{ path: 'about', loadComponent: () => import('./about').then(m => m.About) }</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>Lazy-loaded Component Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { provideRouter, RouterOutlet, RouterLink, withHashLocation } from '@angular/router';
+
+@Component({
+  standalone: true,
+  template: `&lt;p&gt;Home works!&lt;/p&gt;`
+})
+export class Home {}
+
+@Component({
+  standalone: true,
+  template: `&lt;p&gt;About works (lazy)!&lt;/p&gt;`
+})
+export class About {}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink],
+  styles: [`
+    nav a { margin-right: 8px; text-decoration: none; }
+  `],
+  template: `
+    &lt;h3&gt;Lazy-loaded Component (loadComponent)&lt;/h3&gt;
+    &lt;nav&gt;
+      &lt;a routerLink="/"&gt;Home&lt;/a&gt;
+      &lt;a routerLink="/about"&gt;About (lazy)&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt;
+  `
+})
+export class App {}
+
+const routes = [
+  { path: '', component: Home },
+  // Use Promise.resolve to simulate lazy loading without dynamic imports
+  { path: 'about', loadComponent: () => Promise.resolve(About) }
+];
+
+bootstrapApplication(App, {
+  providers: [provideRouter(routes, withHashLocation())]
+});</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>loadComponent:</strong> Navigation வரை route-ன் component loading defer செய்கிறது (இங்கு Promise.resolve உடன் simulate செய்யப்பட்டது).</li>
+<li><strong>Routes:</strong> Home eager; About lazy.</li>
+<li><strong>Navigation:</strong> "About (lazy)" click செய்வது demand-ல் component load மற்றும் render செய்கிறது.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Notes</h4>
+<ul>
+<li><strong>Route order and wildcards:</strong> Catch-all routes last வைக்கவும் அதனால் அவை மற்ற routes-ஐ swallow செய்யாது.</li>
+<li><strong>Deep-link refreshes:</strong> Server rewrites இல்லாமல், refreshes 404 ஆக முடியும்.</li>
+<li><strong>In demos/sandboxes use withHashLocation().</strong></li>
+</ul>
+</div>
+</section>
+
+<!-- Route Guard -->
+<section class="content-section" id="route-guard">
+<h2>Route Guard (canActivate)</h2>
+<p>Guards navigation allowed என்பதை தீர்மானிக்கின்றன.</p>
+<p>true (allow), false/UrlTree (block/redirect), அல்லது async equivalents return செய்யவும்.</p>
+
+<div class="code-example">
+<h3>Route Guard Syntax</h3>
+<pre><code class="command-input">export const authGuard = () => isLoggedIn ? true : inject(Router).createUrlTree(['/']);
+{ path: 'protected', component: Protected, canActivate: [authGuard] }</code></pre>
+</div>
+
+<h3>Example</h3>
+<div class="code-example">
+<h3>Route Guard Example</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component, inject } from '@angular/core';
+import { provideRouter, RouterOutlet, RouterLink, withHashLocation, Router } from '@angular/router';
+
+let loggedIn = false;
+
+export const authGuard = () => {
+  if (loggedIn) return true;
+  const router = inject(Router);
+  return router.createUrlTree(['/']);
+};
+
+@Component({
+  standalone: true,
+  template: `&lt;p&gt;Home (public).&lt;/p&gt;
+&lt;p&gt;Login to access protected route.&lt;/p&gt;`
+})
+export class Home {}
+
+@Component({
+  standalone: true,
+  template: `&lt;p&gt;Protected works! You are logged in.&lt;/p&gt;`
+})
+export class Protected {}
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink],
+  styles: [`
+    nav a { margin-right: 8px; text-decoration: none; }
+    .status { margin-left: 8px; font-weight: 600; }
+  `],
+  template: `
+    &lt;h3&gt;Route Guard (canActivate)&lt;/h3&gt;
+    &lt;div class="toolbar"&gt;
+      &lt;button (click)="toggle()"&gt;{{ loggedIn ? 'Log out' : 'Log in' }}&lt;/button&gt;
+      &lt;span class="status"&gt;Status: {{ loggedIn ? 'Logged in' : 'Logged out' }}&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;nav&gt;
+      &lt;a routerLink="/"&gt;Home&lt;/a&gt;
+      &lt;a routerLink="/protected"&gt;Protected&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt;
+  `
+})
+export class App {
+  get loggedIn() { return loggedIn; }
+  toggle() { loggedIn = !loggedIn; }
+}
+
+const routes = [
+  { path: '', component: Home },
+  { path: 'protected', component: Protected, canActivate: [authGuard] }
+];
+
+bootstrapApplication(App, {
+  providers: [provideRouter(routes, withHashLocation())]
+});</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-graduation-cap tip-icon"></i> Example Explained</h4>
+<ul>
+<li><strong>authGuard:</strong> Logged in ஆக இருக்கும் போது true return செய்கிறது; இல்லையெனில் /-க்கு redirect செய்ய UrlTree return செய்கிறது.</li>
+<li><strong>inject(Router):</strong> Guard function-ல் redirect UrlTree create செய்ய Router-ஐ access செய்கிறது.</li>
+<li><strong>canActivate:</strong> /protected route-க்கு guard apply செய்கிறது.</li>
+<li><strong>Toggle:</strong> Button loggedIn state flip செய்கிறது இரண்டு branches test செய்ய.</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i> Note</h4>
+<p><strong>Guard return types:</strong> Boolean, UrlTree, அல்லது அவற்றின் observable/promise return செய்யவும்.</p>
+</div>
+</section>
+
+<!-- Exercise Section -->
+<section class="content-section" id="exercise">
+<h2>Exercise</h2>
+<div class="exercise-box">
+<h4><i class="fas fa-question-circle exercise-icon"></i> Which directive updates the URL without reloading the page?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">routerLink</div>
+<div class="option-feedback correct">✓ Correct! routerLink directive URL-ஐ page reload இல்லாமல் update செய்கிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">href</div>
+<div class="option-feedback incorrect">✗ Incorrect! href attribute full page reload செய்கிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">onclick</div>
+<div class="option-feedback incorrect">✗ Incorrect! onclick event handler மட்டுமே, router navigation-க்கு பயன்படாது</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular Forms.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Services & Dependency Injection.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality programming education.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">Router Introduction</a></li>
+<li><a href="#router-basics">Router Basics</a></li>
+<li><a href="#router-params">Router Params</a></li>
+<li><a href="#active-links">Active Links</a></li>
+<li><a href="#lazy-loading">Lazy Loading</a></li>
+<li><a href="#route-guard">Route Guard</a></li>
+<li><a href="#exercise">Exercise</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contact</h3>
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Location &amp; Hours</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

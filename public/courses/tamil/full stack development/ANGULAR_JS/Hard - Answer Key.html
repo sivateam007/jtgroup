@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS Hard Level - Answer Key | Jassif Team</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* All CSS remains the same as Angular Hard Answer Key */
+        .jassif-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--git-color);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .team-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .quiz-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quiz-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .quiz-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .question-selection-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .question-number-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number-btn:hover {
+            border-color: var(--git-color);
+            transform: translateY(-3px);
+        }
+
+        .question-number-btn.active {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .question-number-btn.answered {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: var(--dark);
+        }
+
+        .difficulty-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 8px 8px 0 0;
+            background-color: #dc3545;
+        }
+
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+
+        .current-question-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .quiz-info {
+            display: none;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--git-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        .quiz-option.selected.correct {
+            border-color: #27ae60;
+            background: #d4edda;
+        }
+
+        .quiz-option.selected.incorrect {
+            border-color: var(--accent);
+            background: #f8d7da;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected.correct .option-letter {
+            background: #27ae60;
+        }
+
+        .quiz-option.selected.incorrect .option-letter {
+            background: var(--accent);
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-btn.prev {
+            background: #667eea;
+        }
+
+        .quiz-btn.submit {
+            background: var(--success);
+        }
+
+        .results-container {
+            display: none;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: black;
+            padding: 0;
+        }
+
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .answer-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .answer-feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #27ae60;
+            color: #155724;
+        }
+
+        .answer-feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid var(--accent);
+            color: #721c24;
+        }
+
+        .feedback-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .team-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quiz-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .question-selection-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .question-number-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="jassif-header">
+        <div class="header-container">
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <img src="logo.jpg" alt="Jassif Team Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">JASSIF TEAM</div>
+                    <div class="logo-sub">ANGULARJS COURSE - HARD ANSWER KEY</div>
+                </div>
+            </a>
+            <div class="team-info">
+                <div class="team-badge">
+                    <i class="fab fa-angular"></i>
+                    AngularJS Course
+                </div>
+                <div class="team-badge">
+                    <i class="fas fa-key"></i>
+                    Hard Answer Key
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Hero Section -->
+    <section class="quiz-hero">
+        <div class="quiz-hero-content">
+            <h2>AngularJS Hard Level - Answer Key</h2>
+            <p>Click on any option to see if it's correct (green) or incorrect (red). Learn all 30 hard AngularJS questions.</p>
+            <div class="quiz-badges">
+                <span class="info-badge level"><i class="fas fa-signal"></i> Hard Level</span>
+                <span class="info-badge"><i class="fas fa-question-circle"></i> 30 Questions</span>
+                <span class="info-badge"><i class="fas fa-check-circle"></i> Interactive Answers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Question Selection Grid -->
+    <section class="question-selection-section">
+        <div class="section-title">
+            <h2>Hard Level Questions - Answer Key</h2>
+            <p>Click on any question number to jump directly to it. Click options to see answers.</p>
+        </div>
+        
+        <div class="question-selection-grid" id="questionSelectionGrid">
+            <!-- Question numbers will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Main Quiz Container -->
+    <main class="quiz-container">
+        <!-- Quiz Interface -->
+        <div class="quiz-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="current-question-number" id="questionNumber">
+                    Question 1 of 30
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <!-- Question -->
+            <div class="question-text" id="questionText">
+                AngularJS-இல் digest cycle performance optimization-ஐ எப்படி implement செய்யலாம்?
+            </div>
+            
+            <!-- Options -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+
+            <!-- Answer Feedback -->
+            <div class="answer-feedback" id="answerFeedback">
+                <!-- Feedback will be inserted here -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="quiz-footer">
+                <button class="quiz-btn prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="quiz-btn next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <div class="footer-logo-image">
+                <img src="logo.jpg" alt="Jassif Team Logo">
+            </div>
+            <div>Jassif Team - AngularJS Course Answer Key</div>
+        </div>
+        <div class="footer-text">
+            &copy; 2024 Jassif Team. All rights reserved. | Hard Level AngularJS Answer Key
+        </div>
+    </footer>
+
+    <script>
+        // AngularJS Hard Level Answer Key Data - 30 QUESTIONS WITH EXPLANATIONS
+        const quizData = [
+            { 
+                question: "AngularJS-இல் digest cycle performance optimization-ஐ எப்படி implement செய்யலாம்?", 
+                options: [
+                    "Debounce ng-model updates",
+                    "One-time binding use செய்ய",
+                    "Limit $watch expressions",
+                    "மேலே உள்ள அனைத்தும்"
+                ], 
+                correct: 3,
+                explanation: "Digest cycle optimization: ng-model debounce (ng-model-options), one-time binding (::), $watch expressions limit, track by in ng-repeat, pagination implement, virtual scrolling, scope hierarchy flatten, watcher count reduce."
+            },
+            { 
+                question: "AngularJS-இல் custom $digest cycle implementation considerations?", 
+                options: [
+                    "TTL (Time To Live) limits",
+                    "Infinite loop prevention",
+                    "Performance implications",
+                    "All considerations"
+                ], 
+                correct: 3,
+                explanation: "Custom digest: TTL configuration (default 10), infinite loop detection, performance monitoring, watcher priority management, async operation coordination, error recovery mechanisms, browser compatibility considerations."
+            },
+            { 
+                question: "AngularJS-இல் $$watchers vs $$asyncQueue vs $$postDigestQueue?", 
+                options: [
+                    "Different queue mechanisms",
+                    "Execution timing differences",
+                    "Priority-based processing",
+                    "All distinctions"
+                ], 
+                correct: 3,
+                explanation: "$$watchers - dirty checking list, $$asyncQueue - $evalAsync tasks, $$postDigestQueue - post-digest tasks. Different execution timing, priority handling, error propagation, memory management strategies."
+            },
+            { 
+                question: "AngularJS-இல் $applyAsync vs $evalAsync vs $$postDigest?", 
+                options: [
+                    "Different async execution strategies",
+                    "Digest cycle coordination",
+                    "Performance trade-offs",
+                    "All differences"
+                ], 
+                correct: 3,
+                explanation: "$applyAsync - multiple calls batch, single digest trigger. $evalAsync - current/next digest cycle execute. $$postDigest - after digest complete execute. Different use cases, performance characteristics, error handling."
+            },
+            { 
+                question: "AngularJS-இல் manual dirty checking implementation?", 
+                options: [
+                    "Custom $watch functions",
+                    "Object.observe alternatives",
+                    "Change detection strategies",
+                    "All approaches"
+                ], 
+                correct: 3,
+                explanation: "Manual dirty checking: Custom watchers implement, Object.observe (deprecated) alternatives, manual change detection triggers, immutable data patterns, manual digest scheduling, performance monitoring integration."
+            },
+            { 
+                question: "AngularJS-இல் scope inheritance performance optimization?", 
+                options: [
+                    "Prototypal inheritance implications",
+                    "Watcher propagation patterns",
+                    "Memory leak prevention",
+                    "All optimizations"
+                ], 
+                correct: 3,
+                explanation: "Scope inheritance optimization: Flatten scope hierarchy, isolate scopes use, prototypal inheritance chain minimize, watcher propagation patterns understand, memory leak prevention strategies, child scope destruction management."
+            },
+            { 
+                question: "AngularJS-இல் digest cycle deadlock scenarios?", 
+                options: [
+                    "Circular dependency detection",
+                    "Async operation coordination",
+                    "Timeout/resolve patterns",
+                    "All scenarios"
+                ], 
+                correct: 3,
+                explanation: "Digest deadlock: Circular dependencies detect, async operations coordinate, $timeout/$q integration, TTL exceeded scenarios, infinite $watch callbacks, recursive $apply() calls, synchronization issues resolve."
+            },
+            { 
+                question: "AngularJS-இல் $digest vs $apply vs $timeout timing differences?", 
+                options: [
+                    "Execution context variations",
+                    "Error handling strategies",
+                    "Performance characteristics",
+                    "All differences"
+                ], 
+                correct: 3,
+                explanation: "$digest - current scope and children only, $apply - $rootScopeから start, error handling differences, $timeout - next tick execute, digest cycle automatic. Performance, error recovery, use case variations."
+            },
+            { 
+                question: "AngularJS-இல் watcher deregistration strategies?", 
+                options: [
+                    "Manual cleanup requirements",
+                    "Memory leak prevention",
+                    "Destroy event handling",
+                    "All strategies"
+                ], 
+                correct: 3,
+                explanation: "Watcher deregistration: Manual cleanup (return function), $destroy event handlers, scope hierarchy management, watcher array manipulation safe, garbage collection considerations, memory leak detection tools."
+            },
+            { 
+                question: "AngularJS-இல் digest cycle profiling techniques?", 
+                options: [
+                    "Performance monitoring tools",
+                    "Watcher count analysis",
+                    "Digest duration measurement",
+                    "All techniques"
+                ], 
+                correct: 3,
+                explanation: "Digest profiling: Browser dev tools, AngularJS Batarang, custom performance monitors, watcher count tracking, digest duration measurement, slow watchers identification, memory usage analysis."
+            },
+            { 
+                question: "AngularJS-இல் compile phase optimization strategies?", 
+                options: [
+                    "Template pre-compilation",
+                    "Directive priority management",
+                    "Transclusion performance",
+                    "All strategies"
+                ], 
+                correct: 3,
+                explanation: "Compile optimization: Template caching, directive priority optimization, transclusion performance, compile function efficiency, DOM manipulation minimize, element cloning strategies, compile-time transformations."
+            },
+            { 
+                question: "AngularJS-இல் link phase performance considerations?", 
+                options: [
+                    "DOM manipulation timing",
+                    "Event handler registration",
+                    "Scope watcher initialization",
+                    "All considerations"
+                ], 
+                correct: 3,
+                explanation: "Link phase: DOM manipulation batch, event handler delegation, watcher initialization optimize, scope property access patterns, memory allocation strategies, link function execution frequency."
+            },
+            { 
+                question: "AngularJS-இல் $$ phase methods usage precautions?", 
+                options: [
+                    "Private API stability concerns",
+                    "Version compatibility risks",
+                    "Performance implications",
+                    "All precautions"
+                ], 
+                correct: 3,
+                explanation: "$$ methods: Private API documentation limited, version compatibility risks, performance implications, debugging difficulties, alternative public APIs preference, careful testing required."
+            },
+            { 
+                question: "AngularJS-இல் digest cycle vs zone.js comparison?", 
+                options: [
+                    "Different change detection approaches",
+                    "Performance characteristics",
+                    "Error handling differences",
+                    "All comparisons"
+                ], 
+                correct: 3,
+                explanation: "Digest vs Zone.js: Dirty checking vs interception-based, performance characteristics different, error handling approaches, async operation coordination, browser API coverage, migration considerations."
+            },
+            { 
+                question: "AngularJS-இல் manual scope.$destroy() implementation?", 
+                options: [
+                    "Watcher cleanup procedures",
+                    "Event listener removal",
+                    "Child scope destruction",
+                    "All procedures"
+                ], 
+                correct: 3,
+                explanation: "Manual $destroy(): Watchers deregister, event listeners remove, child scopes destroy, DOM references clean, memory leak prevention, cleanup hooks execute, parent scope references update."
+            },
+            { 
+                question: "AngularJS-இல் $$asyncQueue vs $$postDigestQueue execution order?", 
+                options: [
+                    "Queue processing priorities",
+                    "Timing synchronization issues",
+                    "Race condition prevention",
+                    "All considerations"
+                ], 
+                correct: 3,
+                explanation: "Queue execution: $$asyncQueue - during digest, $$postDigestQueue - after digest. Priority handling, timing synchronization, race condition prevention, execution order guarantees, error recovery strategies."
+            },
+            { 
+                question: "AngularJS-இல் $evalAsync within $watch functions?", 
+                options: [
+                    "Infinite loop prevention",
+                    "Performance optimization",
+                    "Change detection coordination",
+                    "All considerations"
+                ], 
+                correct: 3,
+                explanation: "$evalAsync in $watch: Infinite loop risks, performance optimization opportunities, change detection coordination, digest cycle phases understanding, watcher execution timing control."
+            },
+            { 
+                question: "AngularJS-இல் manual $$phase management?", 
+                options: [
+                    "$apply() vs $digest() decisions",
+                    "Phase transition handling",
+                    "Error recovery strategies",
+                    "All management aspects"
+                ], 
+                correct: 3,
+                explanation: "$$phase management: Current phase detection, $apply() vs $digest() decisions, phase transition handling, error recovery strategies, performance optimization, debugging assistance."
+            },
+            { 
+                question: "AngularJS-இல் $watch deregistration performance impact?", 
+                options: [
+                    "Memory cleanup timing",
+                    "Garbage collection implications",
+                    "Watcher array management",
+                    "All impacts"
+                ], 
+                correct: 3,
+                explanation: "$watch deregistration: Memory cleanup timing, garbage collection triggers, watcher array management overhead, scope lifecycle implications, performance monitoring considerations."
+            },
+            { 
+                question: "AngularJS-இல் digest cycle TTL (Time To Live) configuration?", 
+                options: [
+                    "Infinite loop prevention",
+                    "Performance tuning",
+                    "Default value considerations",
+                    "All configuration aspects"
+                ], 
+                correct: 3,
+                explanation: "TTL configuration: Infinite loop prevention, performance tuning parameter, default value (10) considerations, application-specific adjustments, debugging tool integration, error reporting strategies."
+            },
+            { 
+                question: "AngularJS-இல் $scope.$new() performance considerations?", 
+                options: [
+                    "Isolate scope creation overhead",
+                    "Prototypal inheritance chain",
+                    "Memory allocation patterns",
+                    "All considerations"
+                ], 
+                correct: 3,
+                explanation: "$scope.$new(): Isolate scope creation overhead, prototypal inheritance chain implications, memory allocation patterns, watcher inheritance behavior, destruction cleanup requirements."
+            },
+            { 
+                question: "AngularJS-இல் $$watchersCount monitoring strategies?", 
+                options: [
+                    "Performance profiling tools",
+                    "Memory leak detection",
+                    "Optimization metrics",
+                    "All strategies"
+                ], 
+                correct: 3,
+                explanation: "$$watchersCount monitoring: Performance profiling integration, memory leak detection, optimization metrics tracking, application health monitoring, alerting systems integration."
+            },
+            { 
+                question: "AngularJS-இல் $digest cycle vs $apply error handling?", 
+                options: [
+                    "Exception propagation differences",
+                    "Recovery mechanism variations",
+                    "User experience implications",
+                    "All handling aspects"
+                ], 
+                correct: 3,
+                explanation: "Error handling: $digest vs $apply exception propagation different, recovery mechanisms vary, user experience implications, debugging complexity, error boundary implementation strategies."
+            },
+            { 
+                question: "AngularJS-இல் manual scope.$applyAsync() implementation?", 
+                options: [
+                    "Request batching strategies",
+                    "Digest cycle optimization",
+                    "UI rendering coordination",
+                    "All implementations"
+                ], 
+                correct: 3,
+                explanation: "Manual $applyAsync(): Request batching strategies, digest cycle optimization, UI rendering coordination, performance monitoring integration, error recovery mechanisms, browser compatibility considerations."
+            },
+            { 
+                question: "AngularJS-இல் $$postDigest vs $timeout(0) timing?", 
+                options: [
+                    "Execution order guarantees",
+                    "Browser event loop integration",
+                    "Performance characteristics",
+                    "All timing aspects"
+                ], 
+                correct: 3,
+                explanation: "$$postDigest vs $timeout(0): Execution order different guarantees, browser event loop integration variations, performance characteristics, use case suitability, error handling approaches."
+            },
+            { 
+                question: "AngularJS-இல் digest cycle interruption strategies?", 
+                options: [
+                    "Error boundary implementation",
+                    "Recovery procedure design",
+                    "User notification mechanisms",
+                    "All strategies"
+                ], 
+                correct: 3,
+                explanation: "Digest interruption: Error boundary implementation, recovery procedure design, user notification mechanisms, debugging tools integration, performance monitoring, graceful degradation strategies."
+            },
+            { 
+                question: "AngularJS-இல் $watch deregistration during digest?", 
+                options: [
+                    "Array mutation considerations",
+                    "Iterator invalidation issues",
+                    "Safe removal patterns",
+                    "All considerations"
+                ], 
+                correct: 3,
+                explanation: "$watch deregistration during digest: Array mutation considerations, iterator invalidation issues, safe removal patterns, memory management implications, performance optimization opportunities."
+            },
+            { 
+                question: "AngularJS-இல் $$asyncQueue vs $q integration?", 
+                options: [
+                    "Promise resolution timing",
+                    "Digest cycle coordination",
+                    "Error propagation handling",
+                    "All integration aspects"
+                ], 
+                correct: 3,
+                explanation: "$$asyncQueue vs $q: Promise resolution timing differences, digest cycle coordination mechanisms, error propagation handling, performance characteristics, use case compatibility."
+            },
+            { 
+                question: "AngularJS-இல் manual $$applyAsyncId management?", 
+                options: [
+                    "Request debouncing implementation",
+                    "Memory leak prevention",
+                    "Performance optimization",
+                    "All management aspects"
+                ], 
+                correct: 3,
+                explanation: "$$applyAsyncId management: Request debouncing implementation, memory leak prevention, performance optimization, cancellation mechanism design, error recovery strategies."
+            },
+            { 
+                question: "AngularJS-இல் digest cycle vs manual change detection?", 
+                options: [
+                    "Performance trade-off analysis",
+                    "Use case suitability",
+                    "Implementation complexity",
+                    "All comparisons"
+                ], 
+                correct: 3,
+                explanation: "Digest vs manual: Performance trade-offs analyze, use case suitability evaluate, implementation complexity compare, maintenance considerations, debugging difficulty, team skill requirements."
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let answeredQuestions = new Array(quizData.length).fill(false);
+
+        // DOM elements
+        const questionSelectionGrid = document.getElementById('questionSelectionGrid');
+        const questionNumberElement = document.getElementById('questionNumber');
+        const questionTextElement = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const answerFeedback = document.getElementById('answerFeedback');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+
+        // Initialize question selection grid with RED color
+        function initializeQuestionGrid() {
+            questionSelectionGrid.innerHTML = '';
+            quizData.forEach((question, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'question-number-btn';
+                btn.dataset.index = index;
+                
+                const difficultyIndicator = document.createElement('div');
+                difficultyIndicator.className = 'difficulty-indicator';
+                btn.appendChild(difficultyIndicator);
+                
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'question-number';
+                numberSpan.textContent = index + 1;
+                btn.appendChild(numberSpan);
+                
+                if (index === 0) {
+                    btn.classList.add('active');
+                }
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    updateQuestionGrid();
+                });
+                
+                questionSelectionGrid.appendChild(btn);
+            });
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const buttons = document.querySelectorAll('.question-number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = quizData[currentQuestionIndex];
+            
+            questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            questionTextElement.textContent = question.question;
+            
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            optionsContainer.innerHTML = '';
+            
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.dataset.optionIndex = index;
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            answerFeedback.style.display = 'none';
+            answerFeedback.className = 'answer-feedback';
+            answerFeedback.innerHTML = '';
+            
+            prevBtn.disabled = currentQuestionIndex === 0;
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            const question = quizData[currentQuestionIndex];
+            const optionElements = document.querySelectorAll('.quiz-option');
+            
+            optionElements.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            const selectedOption = optionElements[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            if (optionIndex === question.correct) {
+                selectedOption.classList.add('correct');
+                showFeedback(true, question.explanation);
+            } else {
+                selectedOption.classList.add('incorrect');
+                const correctOption = optionElements[question.correct];
+                correctOption.classList.add('correct');
+                showFeedback(false, question.explanation);
+            }
+            
+            if (!answeredQuestions[currentQuestionIndex]) {
+                answeredQuestions[currentQuestionIndex] = true;
+                updateQuestionGrid();
+            }
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect, explanation) {
+            answerFeedback.className = `answer-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            const icon = isCorrect ? 'fa-check-circle' : 'fa-times-circle';
+            const message = isCorrect ? 'சரியான விடை!' : 'தவறான விடை!';
+            
+            answerFeedback.innerHTML = `
+                <div>
+                    <i class="fas ${icon} feedback-icon"></i>
+                    <strong>${message}</strong> ${explanation}
+                </div>
+            `;
+            
+            answerFeedback.style.display = 'block';
+            answerFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        // Initialize the answer key
+        initializeQuestionGrid();
+        loadQuestion();
+    </script>
+</body>
+</html>

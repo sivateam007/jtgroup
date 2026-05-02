@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Display Objects - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .display-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .display-table th {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .display-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .display-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .display-table tr:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .object-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .object-box {
+            border: 2px solid var(--git-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem;
+            min-width: 200px;
+            text-align: center;
+            background: white;
+        }
+        
+        .property-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #dee2e6;
+        }
+        
+        .property-name {
+            color: var(--git-color);
+            font-weight: bold;
+        }
+        
+        .property-value {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20Object%20Methods.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20Scope.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript Display Objects</h2>
+            <p>JavaScript பொருள்களைக் காட்சிப்படுத்துவதைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>JavaScript பொருள்களை எவ்வாறு காட்சிப்படுத்துவது?</h2>
+            <p>ஒரு JavaScript பொருளைக் காட்சிப்படுத்துவது <code>[object Object]</code> வெளியீட்டைக் கொடுக்கும்.</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு பொருளை உருவாக்கவும்
+const person = {
+  name: "John",
+  age: 30,
+  city: "New York"
+};
+
+let text = person;
+// 'text' என்பது "[object Object]" ஐக் கொண்டிருக்கும்</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔍</span> தீர்வுகள்:</h4>
+                <p>JavaScript பொருள்களைக் காட்சிப்படுத்த சில தீர்வுகள்:</p>
+                <ul>
+                    <li>பெயரால் பொருள் பண்புகளைக் காட்சிப்படுத்துதல்</li>
+                    <li>ஒரு லூப்பில் பொருள் பண்புகளைக் காட்சிப்படுத்துதல்</li>
+                    <li><code>Object.values()</code> பயன்படுத்தி பொருளைக் காட்சிப்படுத்துதல்</li>
+                    <li><code>JSON.stringify()</code> பயன்படுத்தி பொருளைக் காட்சிப்படுத்துதல்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Displaying Object Properties -->
+        <section class="content-section" id="display-properties">
+            <h2>பொருள் பண்புகளைக் காட்சிப்படுத்துதல்</h2>
+            <p>ஒரு பொருளின் பண்புகளை ஒரு சரத்தில் சேர்க்கலாம்:</p>
+            
+            <div class="object-visual">
+                <div class="object-box">
+                    <h4>person பொருள்</h4>
+                    <div class="property-item">
+                        <span class="property-name">name</span>
+                        <span class="property-value">"John"</span>
+                    </div>
+                    <div class="property-item">
+                        <span class="property-name">age</span>
+                        <span class="property-value">30</span>
+                    </div>
+                    <div class="property-item">
+                        <span class="property-name">city</span>
+                        <span class="property-value">"New York"</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு பொருளை உருவாக்கவும்
+const person = {
+  name: "John",
+  age: 30,
+  city: "New York"
+};
+
+// பண்புகளைச் சேர்க்கவும்
+let text = person.name + "," + person.age + "," + person.city;
+// 'text' என்பது "John,30,New York" ஐக் கொண்டிருக்கும்</code></pre>
+            </div>
+        </section>
+
+        <!-- Using a For .. In Loop -->
+        <section class="content-section" id="for-in-loop">
+            <h2>For .. In லூப் பயன்படுத்துதல்</h2>
+            <p>ஒரு பொருளின் பண்புகளை ஒரு லூப்பில் சேகரிக்கலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு பொருளை உருவாக்கவும்
+const person = {
+  name: "John",
+  age: 30,
+  city: "New York"
+};
+
+// ஒரு உரையை உருவாக்கவும்
+let text = "";
+for (let x in person) {
+  text += person[x] + " ";
+}
+// 'text' என்பது "John 30 New York " ஐக் கொண்டிருக்கும்</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>நீங்கள் லூப்பில் <code>person[x]</code> பயன்படுத்த வேண்டும். <code>person.x</code> வேலை செய்யாது (ஏனெனில் x என்பது லூப் மாறி).</p>
+            </div>
+            
+            <h4>For..in லூப் படிப்படியாக:</h4>
+            <div class="code-example">
+                <pre><code>let text = "";
+// முதல் மறு செய்கை: x = "name", person[x] = "John"
+// இரண்டாவது மறு செய்கை: x = "age", person[x] = 30  
+// மூன்றாவது மறு செய்கை: x = "city", person[x] = "New York"
+// இறுதி உரை: "John 30 New York "</code></pre>
+            </div>
+        </section>
+
+        <!-- Using Object.values() -->
+        <section class="content-section" id="object-values">
+            <h2>Object.values() பயன்படுத்துதல்</h2>
+            <p><code>Object.values()</code> பண்பு மதிப்புகளிலிருந்து ஒரு வரிசையை உருவாக்குகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு பொருளை உருவாக்கவும்
+const person = {
+  name: "John",
+  age: 30,
+  city: "New York"
+};
+
+// ஒரு வரிசையை உருவாக்கவும்
+const myArray = Object.values(person);
+// myArray = ["John", 30, "New York"]
+
+// வரிசையை சரமாக மாற்றவும்
+let text = myArray.toString();
+// 'text' என்பது "John,30,New York" ஐக் கொண்டிருக்கும்</code></pre>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-object-group"></i>
+                        <h4>உள்ளீட்டு பொருள்</h4>
+                    </div>
+                    <div class="property-item">
+                        <span class="property-name">name</span>
+                        <span class="property-value">"John"</span>
+                    </div>
+                    <div class="property-item">
+                        <span class="property-name">age</span>
+                        <span class="property-value">30</span>
+                    </div>
+                    <div class="property-item">
+                        <span class="property-name">city</span>
+                        <span class="property-value">"New York"</span>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrow-right"></i>
+                        <h4>Object.values()</h4>
+                    </div>
+                    <p>பொருளிலிருந்து மதிப்புகளை எடுக்கிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-list-ol"></i>
+                        <h4>வெளியீட்டு வரிசை</h4>
+                    </div>
+                    <p>["John", 30, "New York"]</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Using Object.entries() -->
+        <section class="content-section" id="object-entries">
+            <h2>Object.entries() பயன்படுத்துதல்</h2>
+            <p><code>Object.entries()</code> லூப்களில் பொருள்களைப் பயன்படுத்த எளிதாக்குகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>const fruits = {Bananas:300, Oranges:200, Apples:500};
+
+let text = "";
+for (let [fruit, value] of Object.entries(fruits)) {
+  text += fruit + ": " + value + "<br>";
+}
+/*
+வெளியீடு:
+Bananas: 300<br>
+Oranges: 200<br>
+Apples: 500<br>
+*/</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🎯</span> Object.entries() வேலை:</h4>
+                <p><code>Object.entries()</code> பொருளை [key, value] ஜோடிகளின் வரிசையாக மாற்றுகிறது:</p>
+                <div class="code-example" style="padding: 0.5rem; margin: 0.5rem 0; background: rgba(255,255,255,0.1);">
+                    <pre style="margin: 0; color: white;"><code>Object.entries({Bananas:300, Oranges:200, Apples:500})
+// விளைவு: [["Bananas", 300], ["Oranges", 200], ["Apples", 500]]</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Using JSON.stringify() -->
+        <section class="content-section" id="json-stringify">
+            <h2>JSON.stringify() பயன்படுத்துதல்</h2>
+            <p>JavaScript பொருள்களை JSON முறை <code>JSON.stringify()</code> உடன் ஒரு சரமாக மாற்றலாம்.</p>
+            
+            <p><code>JSON.stringify()</code> JavaScript இல் சேர்க்கப்பட்டுள்ளது மற்றும் அனைத்து உலாவிகளிலும் ஆதரிக்கப்படுகிறது.</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>முடிவு JSON குறியீட்டில் எழுதப்பட்ட ஒரு சரமாக இருக்கும்: <code>{"name":"John","age":50,"city":"New York"}</code></p>
+            </div>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <div class="code-example">
+                <pre><code>// ஒரு பொருளை உருவாக்கவும்
+const person = {
+  name: "John",
+  age: 30,
+  city: "New York"
+};
+
+// பொருளை சரமாக மாற்றவும்
+let text = JSON.stringify(person);
+// 'text' என்பது '{"name":"John","age":30,"city":"New York"}' ஐக் கொண்டிருக்கும்</code></pre>
+            </div>
+            
+            <h4>JSON.stringify() விருப்பங்கள்:</h4>
+            <div class="code-example">
+                <pre><code>const person = {name: "John", age: 30, city: "New York"};
+
+// அழகான அச்சிடல்:
+let prettyText = JSON.stringify(person, null, 2);
+/*
+வெளியீடு:
+{
+  "name": "John",
+  "age": 30,
+  "city": "New York"
+}
+*/</code></pre>
+            </div>
+        </section>
+
+        <!-- Method Comparison -->
+        <section class="content-section" id="method-comparison">
+            <h2>முறை ஒப்பீடு</h2>
+            
+            <table class="display-table">
+                <thead>
+                    <tr>
+                        <th>முறை</th>
+                        <th>விளக்கம்</th>
+                        <th>பயன்பாடு</th>
+                        <th>வெளியீடு எடுத்துக்காட்டு</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>பண்பு அணுகல்</strong></td>
+                        <td>பெயரால் நேரடி பண்பு அணுகல்</td>
+                        <td>தனிப்பட்ட பண்புகள் தேவைப்படும் போது</td>
+                        <td><code>"John,30,New York"</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>for..in லூப்</strong></td>
+                        <td>அனைத்து பண்புகளையும் லூப் செய்தல்</td>
+                        <td>அனைத்து பண்புகளையும் செயலாக்க வேண்டும்</td>
+                        <td><code>"John 30 New York "</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Object.values()</strong></td>
+                        <td>மதிப்புகளின் வரிசையை உருவாக்குதல்</td>
+                        <td>மதிப்புகள் மட்டும் தேவைப்படும் போது</td>
+                        <td><code>"John,30,New York"</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Object.entries()</strong></td>
+                        <td>முக்கிய-மதிப்பு ஜோடிகளின் வரிசை</td>
+                        <td>முக்கியங்கள் மற்றும் மதிப்புகள் தேவைப்படும் போது</td>
+                        <td><code>"John: 30, city: New York"</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>JSON.stringify()</strong></td>
+                        <td>JSON சரமாக மாற்றுதல்</td>
+                        <td>JSON வடிவத்தில் சேமிக்க/அனுப்ப வேண்டும்</td>
+                        <td><code>'{"name":"John","age":30,"city":"New York"}'</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Learn More -->
+        <section class="content-section" id="learn-more">
+            <h2>மேலும் அறிக</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h4>JavaScript Object Definitions</h4>
+                    <p>பொருள் வரையறைகளைக் கற்றுக்கொள்ளுங்கள்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <h4>JavaScript Object Constructors</h4>
+                    <p>பொருள் கட்டுநர்களைக் கற்றுக்கொள்ளுங்கள்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>JavaScript Object this</h4>
+                    <p>this முக்கியச் சொல்லைப் புரிந்துகொள்ளுங்கள்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-unpack"></i>
+                    </div>
+                    <h4>JavaScript Object Destructuring</h4>
+                    <p>பொருள் பிரித்தலையும் பயன்படுத்தவும்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-clone"></i>
+                    </div>
+                    <h4>JavaScript Object Prototypes</h4>
+                    <p>புரோட்டோடைப் பயன்படுத்தவும்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h4>JavaScript Object Iterations</h4>
+                    <p>பொருள் மறு செய்கைகளைக் கற்றுக்கொள்ளுங்கள்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section (ONLY ONE) -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் முறைகளில் ஒன்று மட்டுமே உள்ளமைக்கப்பட்ட JavaScript Object முறையாகும், எது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">return()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! <code>return()</code> என்பது JavaScript இல் உள்ளமைக்கப்பட்ட Object முறை அல்ல. <code>return</code> என்பது ஒரு முக்கியச் சொல், இது ஒரு செயல்பாட்டிலிருந்து ஒரு மதிப்பைத் திரும்பப் பெற பயன்படுகிறது, ஆனால் இது ஒரு முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">all()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! <code>all()</code> என்பது JavaScript இல் உள்ளமைக்கப்பட்ட Object முறை அல்ல. <code>Promise.all()</code> உள்ளது, ஆனால் <code>Object.all()</code> இல்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">entries()</div>
+                            <div class="option-feedback correct">✓ சரி! <code>Object.entries()</code> என்பது ஒரு உள்ளமைக்கப்பட்ட JavaScript Object முறையாகும், இது ஒரு பொருளின் [key, value] ஜோடிகளின் வரிசையை வழங்குகிறது. இது ES2017 இல் அறிமுகப்படுத்தப்பட்டது மற்றும் பொருள் பண்புகளை மறு செய்கை செய்வதற்கு பயனுள்ளதாக இருக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">methods()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! <code>methods()</code> என்பது JavaScript இல் உள்ளமைக்கப்பட்ட Object முறை அல்ல. JavaScript இல் பொருளின் முறைகளைப் பெற ஒரு நிலையான முறை இல்லை</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20Object%20Methods.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20Scope.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">பொருள்களைக் காட்சிப்படுத்துதல்</a></li>
+                    <li><a href="#display-properties">பண்புகளைக் காட்சிப்படுத்துதல்</a></li>
+                    <li><a href="#for-in-loop">For..in லூப்</a></li>
+                    <li><a href="#object-values">Object.values()</a></li>
+                    <li><a href="#object-entries">Object.entries()</a></li>
+                    <li><a href="#json-stringify">JSON.stringify()</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

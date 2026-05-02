@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js WriteStream Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js ReadStream Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Server Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js WriteStream Reference</h2>
+            <p>Node.js இல் WriteStream பொருளைப் பயன்படுத்தி தரவை எழுத கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- WriteStream Object -->
+        <section class="content-section" id="writestream-object">
+            <h2>WriteStream பொருள்</h2>
+            
+            <p>ஒரு WriteStream என்பது ஒரு இலக்குக்கு தரவை எழுத உங்களை அனுமதிக்கும் ஒரு ஸ்ட்ரீம் ஆகும். Node.js வெவ்வேறு பயன்பாட்டு நோக்கங்களுக்கான WriteStream செயலாக்கங்களை வழங்குகிறது, கோப்புகளுக்கு எழுதுவதற்கு (fs.WriteStream) அல்லது நிலையான வெளியீட்டுக்கு (process.stdout) போன்றவை.</p>
+            
+            <p>WriteStreams stream.Writable இடைமுகத்தை செயல்படுத்துகின்றன, அதாவது அவை அசிங்க்ரோனஸாக தரவை எழுதவும் மற்றும் backpressure ஐ கையாளவும் முறைகள் மற்றும் நிகழ்வுகளை வழங்குகின்றன.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file"></i>
+                        <h4>fs.WriteStream</h4>
+                    </div>
+                    <p>கோப்புகளுக்கு எழுதுவதற்கு</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-terminal"></i>
+                        <h4>process.stdout</h4>
+                    </div>
+                    <p>நிலையான வெளியீட்டுக்கு எழுதுவதற்கு</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>net.Socket</h4>
+                    </div>
+                    <p>நெட்வொர்க் இணைப்புகளுக்கு எழுதுவதற்கு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common WriteStream Types -->
+        <section class="content-section" id="writestream-types">
+            <h2>பொதுவான WriteStream வகைகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>வகை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>fs.WriteStream</strong></td>
+                            <td>கோப்புகளுக்கு எழுதுவதற்கு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>process.stdout மற்றும் process.stderr</strong></td>
+                            <td>நிலையான வெளியீட்டு மற்றும் பிழைக்கு எழுதுவதற்கு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>net.Socket</strong></td>
+                            <td>நெட்வொர்க் இணைப்புகளுக்கு எழுதுவதற்கு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>http.ServerResponse</strong></td>
+                            <td>HTTP பதில்களை எழுதுவதற்கு</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- WriteStream Properties -->
+        <section class="content-section" id="writestream-properties">
+            <h2>WriteStream பண்புகள்</h2>
+            
+            <p>Node.js WriteStream பொருள்களில் பொதுவாகக் கிடைக்கும் பண்புகள் இங்கே உள்ளன, முதன்மையாக fs.WriteStream செயலாக்கத்தை அடிப்படையாகக் கொண்டவை:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>writeStream.bytesWritten</strong></td>
+                            <td>இதுவரை எழுதப்பட்ட பைட்டுகளின் எண்ணிக்கை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.path</strong></td>
+                            <td>இந்த WriteStream எழுதும் கோப்பு பாதை (fs.WriteStream மட்டும்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.pending</strong></td>
+                            <td>true எனில், அடிப்படை கோப்பு இன்னும் திறக்கப்படவில்லை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.writableHighWaterMark</strong></td>
+                            <td>இந்த WriteStream க்கான highWaterMark மதிப்பைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.writableLength</strong></td>
+                            <td>எழுதத் தயாராக write queue இல் உள்ள பைட்டுகள் (அல்லது பொருள்கள்) எண்ணிக்கையைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.writableEnded</strong></td>
+                            <td>end() அழைக்கப்பட்ட பிறகு true ஆக மாறும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.writableFinished</strong></td>
+                            <td>'finish' நிகழ்வு வெளியிடப்பட்ட பிறகு true ஆக மாறும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.writableObjectMode</strong></td>
+                            <td>WriteStream object mode இல் உள்ளதா என்பதைக் குறிக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.destroyed</strong></td>
+                            <td>ஸ்ட்ரீம் அழிக்கப்பட்டதா என்பதைக் குறிக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- WriteStream Methods -->
+        <section class="content-section" id="writestream-methods">
+            <h2>WriteStream முறைகள்</h2>
+            
+            <p>WriteStream பொருள்களில் கிடைக்கும் மிக முக்கியமான முறைகள் இங்கே உள்ளன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>writeStream.write(chunk[, encoding][, callback])</strong></td>
+                            <td>ஸ்ட்ரீமுக்கு chunk ஐ எழுதுகிறது. தரவு முழுமையாக கையாளப்பட்டால் true, அல்லது buffer செய்யப்பட்டால் false திரும்பும். chunk flush செய்யப்படும் போது callback அழைக்கப்படும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.end([chunk][, encoding][, callback])</strong></td>
+                            <td>இனி WriteStream க்கு தரவு எழுதப்படாது என்பதைக் குறிக்கிறது. chunk வழங்கப்பட்டால், அது writeStream.write(chunk, encoding) மற்றும் அதைத் தொடர்ந்து writeStream.end(callback) க்கு சமமானது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.cork()</strong></td>
+                            <td>எழுதப்பட்ட அனைத்து தரவையும் நினைவகத்தில் buffer செய்ய கட்டாயப்படுத்துகிறது, அது uncork() அல்லது end() அழைக்கப்படும் போது flush செய்யப்படும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.uncork()</strong></td>
+                            <td>cork() அழைக்கப்பட்டதிலிருந்து buffer செய்யப்பட்ட அனைத்து தரவையும் flush செய்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.destroy([error])</strong></td>
+                            <td>ஸ்ட்ரீமை அழிக்கிறது, மற்றும் விருப்பமாக error நிகழ்வை வெளியிடுகிறது. இந்த அழைப்புக்குப் பிறகு, WriteStream பயன்படுத்த முடியாது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>writeStream.setDefaultEncoding(encoding)</strong></td>
+                            <td>ஸ்ட்ரீமுக்கு எழுதப்படும் சரங்களுக்கான இயல்புநிலை encoding ஐ அமைக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- WriteStream Events -->
+        <section class="content-section" id="writestream-events">
+            <h2>WriteStream நிகழ்வுகள்</h2>
+            
+            <p>WriteStream பொருள்கள் பின்வரும் நிகழ்வுகளை வெளியிடுகின்றன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>நிகழ்வு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>'close'</strong></td>
+                            <td>ஸ்ட்ரீம் மற்றும் அதன் அடிப்படை வளங்கள் ஏதேனும் மூடப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'drain'</strong></td>
+                            <td>write buffer காலியாகும் போது மற்றும் மீண்டும் எழுத பாதுகாப்பாக இருக்கும் போது வெளியிடப்படுகிறது. write() false திரும்பும் போது ஓட்டக் கட்டுப்பாட்டிற்கு இது பயன்படுத்தப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'error'</strong></td>
+                            <td>எழுதும் போது பிழை ஏற்பட்டால் வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'finish'</strong></td>
+                            <td>end() அழைக்கப்பட்ட பிறகு மற்றும் அனைத்து தரவும் செயலாக்கப்பட்ட பிறகு வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'open'</strong></td>
+                            <td>அடிப்படை வளம் (எ.க., கோப்பு descriptor) திறக்கப்படும் போது வெளியிடப்படுகிறது (fs.WriteStream க்கு குறிப்பிட்டது)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'pipe'</strong></td>
+                            <td>pipe() முறை ஒரு ReadStream இல் அழைக்கப்படும் போது வெளியிடப்படுகிறது, இந்த WriteStream ஐ அதன் இலக்காகச் சேர்த்தல்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'unpipe'</strong></td>
+                            <td>unpipe() முறை ஒரு ReadStream இல் அழைக்கப்படும் போது வெளியிடப்படுகிறது, இது முன்பு இந்த WriteStream க்கு pipe செய்யப்பட்டது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'ready'</strong></td>
+                            <td>ஸ்ட்ரீம் பயன்படுத்த தயாராக இருக்கும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Writing to a File -->
+        <section class="content-section" id="writing-file">
+            <h2>ஒரு கோப்புக்கு எழுதுதல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு ஒரு கோப்பு WriteStream ஐ உருவாக்குவதும் அதற்கு தரவை எழுதுவதும் எப்படி என்பதைக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const path = require('path');
+
+// வெளியீட்டு கோப்பு பாதையை வரையறுக்கவும்
+const outputFile = path.join(__dirname, 'writestream-example.txt');
+
+// கோப்புக்கு எழுத ஒரு WriteStream உருவாக்க
+const writeStream = fs.createWriteStream(outputFile, {
+  // விருப்பங்கள்
+  flags: 'w',          // எழுதுவதற்கு 'w' (ஏற்கனவே உள்ள கோப்பை மேலெழுதும்)
+  encoding: 'utf8',    // சரங்களுக்கான encoding ஐ அமை
+  mode: 0o666,         // கோப்பு பயன்முறை (அனுமதிகள்)
+  autoClose: true      // ஸ்ட்ரீம் முடிவடையும் போது தானாகவே கோப்பு descriptor ஐ மூடு
+});
+
+console.log('File WriteStream properties:');
+console.log(`- Path: ${writeStream.path}`);
+console.log(`- Pending: ${writeStream.pending}`);
+console.log(`- High Water Mark: ${writeStream.writableHighWaterMark} bytes`);
+
+// ஸ்ட்ரீம் நிகழ்வுகளைக் கையாள
+writeStream.on('open', (fd) => {
+  console.log(`File opened with descriptor: ${fd}`);
+});
+
+writeStream.on('ready', () => {
+  console.log('WriteStream is ready');
+  
+  // ஸ்ட்ரீமுக்கு தரவை எழுது
+  writeStream.write('Hello, this is the first line.\n');
+  writeStream.write('This is the second line.\n');
+  writeStream.write('And this is the third line.\n');
+  
+  // அனைத்து தரவையும் எழுதிய பிறகு ஸ்ட்ரீமை முடி
+  writeStream.end('This is the final line.\n', () => {
+    console.log('Finished writing to the file');
+    console.log(`Total bytes written: ${writeStream.bytesWritten}`);
+  });
+});
+
+// drain நிகழ்வைக் கையாள (buffer காலியாகும் போது)
+writeStream.on('drain', () => {
+  console.log('Write buffer drained');
+});
+
+// finish நிகழ்வைக் கையாள (end() மற்றும் அனைத்து தரவும் flush செய்யப்பட்ட பிறகு)
+writeStream.on('finish', () => {
+  console.log('All writes have been completed');
+  
+  // சரிபார்க்க கோப்பு உள்ளடக்கங்களை மீண்டும் வாசி
+  fs.readFile(outputFile, 'utf8', (err, data) => {
+    if (err) {
+      console.error(`Error reading file: ${err.message}`);
+      return;
+    }
+    
+    console.log('\nFile content:');
+    console.log('-'.repeat(20));
+    console.log(data);
+    console.log('-'.repeat(20));
+    
+    // மாதிரி கோப்பை சுத்தம் செய்
+    fs.unlink(outputFile, (err) => {
+      if (err) {
+        console.error(`Error removing file: ${err.message}`);
+        return;
+      }
+      console.log('Sample file removed');
+    });
+  });
+});
+
+writeStream.on('close', () => {
+  console.log('Stream closed');
+});
+
+writeStream.on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Handling Backpressure -->
+        <section class="content-section" id="handling-backpressure">
+            <h2>Backpressure ஐக் கையாளுதல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு பெரிய அளவிலான தரவை எழுதும் போது backpressure ஐக் கையாளுவது எப்படி என்பதை நிரூபிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const path = require('path');
+
+// வெளியீட்டு கோப்பு பாதையை வரையறுக்கவும்
+const backpressureFile = path.join(__dirname, 'backpressure-example.txt');
+
+// backpressure ஐ நிரூபிக்க ஒரு சிறிய highWaterMark உடன் ஒரு WriteStream உருவாக்க
+const writeStream = fs.createWriteStream(backpressureFile, {
+  highWaterMark: 1024 // 1KB buffer (backpressure ஐ நிரூபிக்க சிறியது)
+});
+
+// எத்தனை chunks எழுதப்பட்டுள்ளன என்பதற்கான counter
+let chunksWritten = 0;
+let drainEvents = 0;
+
+// backpressure ஏற்படும் வரை தரவை எழுதும் செயல்பாடு
+function writeChunks() {
+  console.log('Writing chunks...');
+  
+  // தரவின் ஒரு பெரிய chunk ஐ உருவாக்கு
+  const chunk = 'a'.repeat(256); // ஒரு chunk க்கு 256 பைட்டுகள்
+  
+  // பல chunks எழுத முயற்சி
+  let canContinue = true;
+  
+  while (canContinue && chunksWritten < 100) {
+    // chunk ஐ எழுத முயற்சி
+    canContinue = writeStream.write(`Chunk ${chunksWritten}: ${chunk}\n`);
+    chunksWritten++;
+    
+    if (chunksWritten % 10 === 0) {
+      console.log(`Wrote ${chunksWritten} chunks so far`);
+    }
+    
+    // canContinue false எனில், நாம் backpressure ஐத் தாக்கினோம்
+    if (!canContinue) {
+      console.log(`Backpressure hit after ${chunksWritten} chunks. Waiting for drain...`);
+      
+      // தொடர்வதற்கு முன் drain நிகழ்வுக்குக் காத்திரு
+      writeStream.once('drain', () => {
+        drainEvents++;
+        console.log(`Drain event #${drainEvents} occurred. Resuming writes...`);
+        writeChunks(); // எழுதுவதைத் தொடர்
+      });
+    }
+  }
+  
+  // அனைத்து chunks எழுதப்பட்டிருந்தால், ஸ்ட்ரீமை முடி
+  if (chunksWritten >= 100) {
+    writeStream.end('\nAll chunks have been written.\n', () => {
+      console.log('Ended the WriteStream after writing all chunks');
+    });
+  }
+}
+
+// ஸ்ட்ரீம் தயாராக இருக்கும் போது chunks எழுதத் தொடங்கு
+writeStream.on('ready', () => {
+  console.log('WriteStream is ready with highWaterMark =',
+    writeStream.writableHighWaterMark, 'bytes');
+  
+  // chunks எழுதத் தொடங்கு
+  writeChunks();
+});
+
+// finish நிகழ்வைக் கையாள
+writeStream.on('finish', () => {
+  console.log('\nWrite operation completed');
+  console.log(`Total chunks written: ${chunksWritten}`);
+  console.log(`Total drain events: ${drainEvents}`);
+  console.log(`Total bytes written: ${writeStream.bytesWritten}`);
+  
+  // மாதிரி கோப்பை சுத்தம் செய்
+  fs.unlink(backpressureFile, (err) => {
+    if (err) {
+      console.error(`Error removing file: ${err.message}`);
+      return;
+    }
+    console.log('Sample file removed');
+  });
+});
+
+// பிழைகளைக் கையாள
+writeStream.on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Using cork() and uncork() -->
+        <section class="content-section" id="using-cork">
+            <h2>cork() மற்றும் uncork() ஐப் பயன்படுத்துதல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு cork() மற்றும் uncork() ஐப் பயன்படுத்தி எழுதுதல்களை ஒன்றாக batch செய்வதை நிரூபிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const path = require('path');
+
+// வெளியீட்டு கோப்பு பாதைகளை வரையறுக்கவும்
+const uncorkedFile = path.join(__dirname, 'uncorked-example.txt');
+const corkedFile = path.join(__dirname, 'corked-example.txt');
+
+// நிரூபணத்தை இயக்கும் செயல்பாடு
+function demonstrateCorkUncork() {
+  console.log('Demonstrating cork() and uncork() methods');
+  
+  // 1. corking இல்லாமல் எழுது
+  const uncorkedStream = fs.createWriteStream(uncorkedFile);
+  
+  uncorkedStream.on('finish', () => {
+    console.log(`Uncorked stream finished. Bytes written: ${uncorkedStream.bytesWritten}`);
+    
+    // 2. இப்போது corking உடன் எழுது
+    const corkedStream = fs.createWriteStream(corkedFile);
+    
+    corkedStream.on('finish', () => {
+      console.log(`Corked stream finished. Bytes written: ${corkedStream.bytesWritten}`);
+      
+      // கோப்புகளை ஒப்பிடு
+      fs.readFile(uncorkedFile, 'utf8', (err, uncorkedData) => {
+        if (err) {
+          console.error(`Error reading uncorked file: ${err.message}`);
+          return;
+        }
+        
+        fs.readFile(corkedFile, 'utf8', (err, corkedData) => {
+          if (err) {
+            console.error(`Error reading corked file: ${err.message}`);
+            return;
+          }
+          
+          console.log('\nFile comparison:');
+          console.log(`- Uncorked file size: ${uncorkedData.length} bytes`);
+          console.log(`- Corked file size: ${corkedData.length} bytes`);
+          console.log(`- Content identical: ${uncorkedData === corkedData}`);
+          
+          // மாதிரி கோப்புகளை சுத்தம் செய்
+          fs.unlinkSync(uncorkedFile);
+          fs.unlinkSync(corkedFile);
+          console.log('Sample files removed');
+        });
+      });
+    });
+    
+    // cork செயல்பாட்டைத் தொடங்கு
+    console.log('Writing with cork()...');
+    corkedStream.cork();
+    
+    // தரவின் பல chunks எழுது
+    for (let i = 0; i < 1000; i++) {
+      corkedStream.write(`Line ${i}: This data is being corked.\n`);
+    }
+    
+    // buffer ஐ flush செய்ய uncork - உண்மையான பயன்பாடுகளில், எழுதுதல்களை ஒன்றாக batch செய்ய பல முறை cork/uncork செய்யலாம்
+    corkedStream.uncork();
+    
+    // ஸ்ட்ரீமை முடி
+    corkedStream.end();
+  });
+  
+  // corking இல்லாமல் எழுது
+  console.log('Writing without cork()...');
+  for (let i = 0; i < 1000; i++) {
+    uncorkedStream.write(`Line ${i}: This data is not being corked.\n`);
+  }
+  
+  // ஸ்ட்ரீமை முடி
+  uncorkedStream.end();
+}
+
+// நிரூபணத்தை இயக்கு
+demonstrateCorkUncork();</code></pre>
+            </div>
+        </section>
+
+        <!-- Writing to Standard Output -->
+        <section class="content-section" id="writing-stdout">
+            <h2>நிலையான வெளியீட்டுக்கு எழுதுதல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு process.stdout WriteStream ஐப் பயன்படுத்துவது எப்படி என்பதைக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>// process.stdout ஒரு WriteStream ஆகும்
+
+// stdout க்கு அடிப்படை எழுதுதல்
+process.stdout.write('Hello, ');
+process.stdout.write('world!\n');
+
+// stdout வண்ணங்களை ஆதரிக்கிறதா எனச் சரிபார்க்கவும் (பெரும்பாலான முனையங்கள் செய்கின்றன)
+const supportsColor = process.stdout.hasColors && process.stdout.hasColors();
+
+// வண்ணம் ஆதரிக்கப்பட்டால் எளிய வடிவமைப்பு
+if (supportsColor) {
+  // வண்ணங்களுக்கான ANSI escape codes
+  const colors = {
+    red: '\x1b[31m',
+    green: '\x1b[32m',
+    yellow: '\x1b[33m',
+    blue: '\x1b[34m',
+    reset: '\x1b[0m'
+  };
+  
+  process.stdout.write(`${colors.red}This text is red.\n${colors.reset}`);
+  process.stdout.write(`${colors.green}This text is green.\n${colors.reset}`);
+  process.stdout.write(`${colors.blue}This text is blue.\n${colors.reset}`);
+} else {
+  process.stdout.write('Your terminal does not support colors.\n');
+}
+
+// அட்டவணை தரவை எழுதுதல்
+const table = [
+  ['Name', 'Age', 'Country'],
+  ['John', '28', 'USA'],
+  ['Maria', '32', 'Spain'],
+  ['Yuki', '24', 'Japan']
+];
+
+process.stdout.write('\nTable Example:\n');
+table.forEach(row => {
+  process.stdout.write(`${row[0].padEnd(10)}${row[1].padEnd(5)}${row[2]}\n`);
+});
+
+// முன்னேற்ற பட்டி எடுத்துக்காட்டு
+process.stdout.write('\nProgress Bar Example:\n');
+
+function showProgress(percent) {
+  const width = 40;
+  const completed = Math.floor(width * (percent / 100));
+  const remaining = width - completed;
+  
+  // முன்னேற்ற பட்டியை உருவாக்கு
+  const bar = '[' + '#'.repeat(completed) + ' '.repeat(remaining) + ']';
+  
+  // வரியின் தொடக்கத்திற்குத் திரும்ப \r ஐப் பயன்படுத்து
+  process.stdout.write(`\r${bar} ${percent}%`);
+  
+  // முடிந்தால், ஒரு புதிய வரியைச் சேர்
+  if (percent === 100) {
+    process.stdout.write('\nComplete!\n');
+  }
+}
+
+// முன்னேற்றத்தை உருவகப்படுத்து
+let progress = 0;
+const progressInterval = setInterval(() => {
+  progress += 10;
+  showProgress(progress);
+  
+  if (progress >= 100) {
+    clearInterval(progressInterval);
+  }
+}, 300);
+
+// குறிப்பு: முன்னேற்ற பட்டி எடுத்துக்காட்டு W3Schools TryIt எடிட்டரை விட ஒரு முனையத்தில் அதிக பயனுள்ளதாக இருக்கும்</code></pre>
+            </div>
+        </section>
+
+        <!-- HTTP WriteStream Example -->
+        <section class="content-section" id="http-writestream">
+            <h2>HTTP WriteStream எடுத்துக்காட்டு</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு HTTP பதில் தரவைக் கையாள ஒரு WriteStream ஐப் பயன்படுத்துவது எப்படி என்பதைக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// ஒரு HTTP சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  // res ஒரு http.ServerResponse, இது ஒரு WriteStream ஆகும்
+  console.log(`Received ${req.method} request to ${req.url}`);
+  
+  // பதில் தலைப்புகளை அமை
+  res.setHeader('Content-Type', 'text/html');
+  
+  // client ஒரு streaming பதிலைக் கோரியதா எனச் சரிபார்க்கவும்
+  if (req.url === '/stream') {
+    // ஒரு பெரிய பதிலை streaming செய்வதை நிரூபிக்கவும்
+    streamLargeResponse(res);
+  } else {
+    // இயல்புநிலை handler - எடுத்துக்காட்டுகளுக்கான இணைப்புகளைக் காட்டு
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end(`
+      <!DOCTYPE html>
+      <html>
+      <head><title>HTTP WriteStream Example</title></head>
+      <body>
+        <h1>HTTP WriteStream Examples</h1>
+        <ul>
+          <li><a href="/stream">Stream a large response</a></li>
+        </ul>
+      </body>
+      </html>
+    `);
+  }
+});
+
+// துண்டு துண்டாக ஒரு பெரிய பதிலை streaming செய்யும் செயல்பாடு
+function streamLargeResponse(res) {
+  // பொருத்தமான தலைப்புகளை அமை
+  res.writeHead(200, {
+    'Content-Type': 'text/html',
+    'Transfer-Encoding': 'chunked'  // chunked transfer encoding ஐ இயக்கு
+  });
+  
+  // HTML தலைப்பை எழுது
+  res.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Streaming Response Example</title>
+      <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .chunk { padding: 10px; margin: 5px; background-color: #f0f0f0; }
+      </style>
+    </head>
+    <body>
+      <h1>Streaming Response Example</h1>
+      <p>This response is being streamed in chunks with delays between them.</p>
+      <div id="chunks">
+  `);
+  
+  // அனுப்ப வேண்டிய chunks எண்ணிக்கை
+  const totalChunks = 10;
+  let sentChunks = 0;
+  
+  // ஒரு chunk ஐ அனுப்பும் செயல்பாடு
+  function sendChunk() {
+    sentChunks++;
+    
+    const now = new Date().toISOString();
+    const chunk = `
+      <div class="chunk">
+        <h3>Chunk ${sentChunks} of ${totalChunks}</h3>
+        <p>Sent at: ${now}</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vehicula magna eros,
+        eget gravida dolor fermentum non.</p>
+      </div>
+    `;
+    
+    // பதிலுக்கு chunk ஐ எழுது
+    res.write(chunk);
+    
+    // அனைத்து chunks அனுப்பப்பட்டிருந்தால், பதிலை முடி
+    if (sentChunks >= totalChunks) {
+      // HTML footer ஐ எழுது
+      res.end(`
+        </div>
+        <p>All chunks have been sent.</p>
+      </body>
+      </html>
+      `);
+      console.log('Finished streaming response');
+    } else {
+      // இல்லையெனில், அடுத்த chunk ஐ திட்டமிடு
+      setTimeout(sendChunk, 500); // ஒவ்வொரு 500ms க்கும் ஒரு chunk ஐ அனுப்பு
+    }
+  }
+  
+  // chunks அனுப்பத் தொடங்கு
+  console.log('Starting to stream response');
+  sendChunk();
+}
+
+// சேவையகத்தைத் தொடங்கு
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`HTTP WriteStream example server running at http://localhost:${PORT}`);
+});
+
+// குறிப்பு: இதைச் செயல்பாட்டில் பார்க்க, நீங்கள் சேவையகத்தை இயக்கி உலாவியைத் திறக்க வேண்டும்
+// http://localhost:8080</code></pre>
+            </div>
+        </section>
+
+        <!-- Error Handling with WriteStreams -->
+        <section class="content-section" id="error-handling">
+            <h2>WriteStreams உடன் பிழை கையாளுதல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு WriteStreams உடன் சரியான பிழை கையாளுதலை நிரூபிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const path = require('path');
+
+// சரியான பிழை கையாளுதலுடன் ஒரு கோப்புக்கு எழுதும் செயல்பாடு
+function writeWithErrorHandling(filePath, data) {
+  console.log(`Attempting to write to: ${filePath}`);
+  
+  // WriteStream ஐ உருவாக்கு
+  const writeStream = fs.createWriteStream(filePath);
+  
+  // முடிவு அல்லது பிழையைப் பிடிக்க promise ஐ அமை
+  return new Promise((resolve, reject) => {
+    // பிழைகளைக் கையாள
+    writeStream.on('error', (err) => {
+      console.error(`Error writing to ${filePath}: ${err.message}`);
+      
+      // ஸ்ட்ரீம் சரியாக அழிக்கப்பட்டுள்ளதா என்பதை உறுதிப்படுத்து
+      writeStream.destroy();
+      reject(err);
+    });
+    
+    // வெற்றிகரமான நிறைவைக் கையாள
+    writeStream.on('finish', () => {
+      console.log(`Successfully wrote ${writeStream.bytesWritten} bytes to ${filePath}`);
+      resolve(writeStream.bytesWritten);
+    });
+    
+    // தரவை எழுது
+    writeStream.write(data, (err) => {
+      if (err) {
+        console.error(`Error during write operation: ${err.message}`);
+        // இந்த வழக்கில் 'error' நிகழ்வும் வெளியிடப்படும்
+      } else {
+        console.log('Data written successfully, ending stream');
+        writeStream.end();
+      }
+    });
+  });
+}
+
+// செல்லுபடியாகும் மற்றும் செல்லாத கோப்பு பாதைகளுடன் சோதிக்கவும்
+const validPath = path.join(__dirname, 'valid-path.txt');
+const invalidPath = path.join('/', 'invalid', 'path', 'file.txt'); // பெரும்பாலான அமைப்புகளில் செல்லாததாக இருக்க வாய்ப்புள்ளது
+
+// எடுத்துக்காட்டு 1: ஒரு செல்லுபடியாகும் பாதைக்கு எழுதுதல்
+console.log('Example 1: Writing to a valid path');
+writeWithErrorHandling(validPath, 'This is test content for error handling example')
+  .then(bytesWritten => {
+    console.log(`Verified: ${bytesWritten} bytes written`);
+    
+    // சோதனை கோப்பை சுத்தம் செய்
+    fs.unlinkSync(validPath);
+    console.log('Test file removed');
+    
+    // எடுத்துக்காட்டு 2: ஒரு செல்லாத பாதைக்கு எழுதுதல்
+    console.log('\nExample 2: Writing to an invalid path');
+    return writeWithErrorHandling(invalidPath, 'This should fail');
+  })
+  .catch(err => {
+    console.log('Error caught in Promise catch:', err.message);
+  });
+
+// எடுத்துக்காட்டு 3: அழிக்கப்பட்ட ஸ்ட்ரீம்களை நிரூபித்தல்
+console.log('\nExample 3: Demonstrating destroyed streams');
+
+function demonstrateDestroyedStream() {
+  const destroyTestFile = path.join(__dirname, 'destroy-test.txt');
+  const writeStream = fs.createWriteStream(destroyTestFile);
+  
+  writeStream.on('error', (err) => {
+    console.error(`Destruction error: ${err.message}`);
+  });
+  
+  writeStream.on('close', () => {
+    console.log('Destroyed stream closed');
+    
+    // கோப்பு உருவாக்கப்பட்டால் சுத்தம் செய்
+    if (fs.existsSync(destroyTestFile)) {
+      fs.unlinkSync(destroyTestFile);
+      console.log('Destroy test file removed');
+    }
+  });
+  
+  // சில தரவை எழுது
+  writeStream.write('Initial data before destruction\n');
+  
+  // பிழையுடன் ஸ்ட்ரீமை அழி
+  console.log('Deliberately destroying the stream');
+  writeStream.destroy(new Error('Stream manually destroyed'));
+  
+  // அழித்த பிறகு எழுத முயற்சி (சத்தமில்லாமல் தோல்வியடைய வேண்டும்)
+  const writeResult = writeStream.write('This should not be written');
+  console.log(`Attempt to write after destruction returned: ${writeResult}`);
+}
+
+demonstrateDestroyedStream();</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices for WriteStreams -->
+        <section class="content-section" id="best-practices">
+            <h2>WriteStreams க்கான சிறந்த நடைமுறைகள்</h2>
+            
+            <p>Node.js இல் WriteStreams உடன் பணிபுரியும் போது, இந்த சிறந்த நடைமுறைகளைக் கவனியுங்கள்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>எப்போதும் பிழைகளைக் கையாளுங்கள்:</strong> unhandled exceptions தடுக்க WriteStreams இலிருந்து 'error' நிகழ்வுகளை எப்போதும் கேட்டு கையாளுங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>Backpressure ஐக் கையாளுங்கள்:</strong> write() இன் return value கவனிக்கவும் மற்றும் ஓட்டத்தைக் கட்டுப்படுத்தவும் மற்றும் நினைவக பிரச்சினைகளைத் தடுக்க 'drain' நிகழ்வைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-layer-group"></i>
+                    <span><strong>Batch செய்வதற்கு cork() ஐப் பயன்படுத்துங்கள்:</strong> பல சிறிய எழுதுதல்களுக்கான செயல்திறனை மேம்படுத்த எழுதும் செயல்பாடுகளை batch செய்ய cork() மற்றும் uncork() ஐப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-broom"></i>
+                    <span><strong>வளங்களை சுத்தம் செய்யுங்கள்:</strong> ஸ்ட்ரீம்கள் இனி தேவையில்லாதபோது end() உடன் சரியாக மூடப்பட்டுள்ளதா அல்லது destroy() உடன் அழிக்கப்பட்டுள்ளதா என்பதை உறுதிப்படுத்துங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>பொருத்தமான buffer அளவுகளை அமைக்கவும்:</strong> அதிக-வழங்கல் பயன்பாடுகளைக் கையாளும் போது நினைவக பயன்பாட்டைக் கட்டுப்படுத்த highWaterMark விருப்பத்தைப் பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <span><strong>முடிந்தால் pipe() ஐப் பயன்படுத்துங்கள்:</strong> pipe() முறை தானாகவே backpressure ஐ கையாள்கிறது மற்றும் ஸ்ட்ரீம்களை இணைப்பதற்கான பொதுவாக சிறந்த வழியாகும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-font"></i>
+                    <span><strong>Encoding ஐக் கவனியுங்கள்:</strong> நீங்கள் உரையுடன் பணிபுரிகிறீர்கள் என்றால் setDefaultEncoding() உடன் பொருத்தமான encoding ஐ அமைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>stream.finished() ஐப் பயன்படுத்துங்கள்:</strong> சுத்தம் செய்வதற்கு, ஸ்ட்ரீம் இனி writable அல்லது பிழை அல்லது முன்கூட்டிய close ஐ எதிர்கொண்டுள்ளதா எனக் கண்டறிய stream தொகுதியிலிருந்து stream.finished() ஐக் கவனியுங்கள்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் கோப்புக்கு தரவை எழுத பயன்படுத்தப்படும் சரியான WriteStream வகையைத் தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">fs.WriteFile</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "fs.WriteFile" என்பது ஒரு ஸ்ட்ரீம் அல்ல, இது ஒரு முறையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">fs.WriteStream</div>
+                            <div class="option-feedback correct">✓ சரி! "fs.WriteStream" என்பது Node.js இல் கோப்புகளுக்கு தரவை எழுத பயன்படும் சரியான WriteStream வகையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">fs.FileWriter</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "fs.FileWriter" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">fs.StreamWriter</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "fs.StreamWriter" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js ReadStream Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Server Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#writestream-object">WriteStream பொருள்</a></li>
+                    <li><a href="#writestream-properties">WriteStream பண்புகள்</a></li>
+                    <li><a href="#writestream-methods">WriteStream முறைகள்</a></li>
+                    <li><a href="#writestream-events">WriteStream நிகழ்வுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

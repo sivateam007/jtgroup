@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Table Styling - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Table styling for examples */
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        
+        .example-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .example-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .example-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Specific styling examples */
+        .padding-example th,
+        .padding-example td {
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .dividers-example th,
+        .dividers-example td {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 12px;
+        }
+        
+        .dividers-example tr:last-child td {
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .hover-example tr:hover {
+            background-color: coral !important;
+            transition: background-color 0.3s;
+        }
+        
+        .zebra-example tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .color-example th {
+            background-color: #04AA6D !important;
+            color: white;
+        }
+        
+        .color-example td {
+            background-color: white;
+        }
+        
+        /* Drag and drop exercise */
+        .drag-drop-area {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            min-height: 200px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        .code-line {
+            margin: 0.5rem 0;
+        }
+        
+        .code-property {
+            display: inline-block;
+            background: #444;
+            color: #8be9fd;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            margin: 0 0.2rem;
+            cursor: move;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .code-property:hover {
+            background: #555;
+            border-color: #ff79c6;
+        }
+        
+        .code-property.dragging {
+            opacity: 0.5;
+        }
+        
+        .drop-target {
+            display: inline-block;
+            min-width: 100px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin: 0 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .drop-target.active {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4CAF50;
+        }
+        
+        .drop-target.incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: #f44336;
+        }
+        
+        .property-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .check-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .check-button:hover {
+            background: #45a049;
+        }
+        
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Table%20Alignment.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Responsive%20Tables.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Table Styling</h2>
+            <p>அட்டவணைகளை கவர்ச்சிகரமாக வடிவமைக்கவும்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Table Padding -->
+        <section class="content-section" id="table-padding">
+            <h2>CSS Table Padding</h2>
+            
+            <p>அட்டவணையில் உள்ள உள் எல்லைகள் மற்றும் உள்ளடக்கத்திற்கு இடையே சிறிது இடத்தைச் சேர்க்க, &lt;td&gt; மற்றும் &lt;th&gt; உறுப்புகளில் padding பண்பைப் பயன்படுத்தவும்:</p>
+            
+            <table class="example-table padding-example">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Savings</th>
+                </tr>
+                <tr>
+                    <td>Peter</td>
+                    <td>Griffin</td>
+                    <td>$100</td>
+                </tr>
+                <tr>
+                    <td>Lois</td>
+                    <td>Griffin</td>
+                    <td>$150</td>
+                </tr>
+                <tr>
+                    <td>Joe</td>
+                    <td>Swanson</td>
+                    <td>$300</td>
+                </tr>
+            </table>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>th, td {
+  padding: 10px;
+  text-align: left;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS Horizontal Dividers -->
+        <section class="content-section" id="horizontal-dividers">
+            <h2>CSS Horizontal Dividers</h2>
+            
+            <p>அட்டவணைக்கு கிடைமட்ட பிரிப்பான்களை உருவாக்க, &lt;th&gt; மற்றும் &lt;td&gt; உறுப்புகளுக்கு border-bottom பண்பைச் சேர்க்கவும்:</p>
+            
+            <table class="example-table dividers-example">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Savings</th>
+                </tr>
+                <tr>
+                    <td>Peter</td>
+                    <td>Griffin</td>
+                    <td>$100</td>
+                </tr>
+                <tr>
+                    <td>Lois</td>
+                    <td>Griffin</td>
+                    <td>$150</td>
+                </tr>
+                <tr>
+                    <td>Joe</td>
+                    <td>Swanson</td>
+                    <td>$300</td>
+                </tr>
+            </table>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>th, td {
+  border-bottom: 1px solid #ddd;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS Hoverable Table -->
+        <section class="content-section" id="hoverable-table">
+            <h2>CSS Hoverable Table</h2>
+            
+            <p>சுட்டியை நகர்த்தும்போது அட்டவணை வரிசைகளை முன்னிலைப்படுத்த &lt;tr&gt; இல் CSS :hover தேர்ந்தெடுப்பியைப் பயன்படுத்தவும்:</p>
+            
+            <table class="example-table hover-example">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Savings</th>
+                </tr>
+                <tr>
+                    <td>Peter</td>
+                    <td>Griffin</td>
+                    <td>$100</td>
+                </tr>
+                <tr>
+                    <td>Lois</td>
+                    <td>Griffin</td>
+                    <td>$150</td>
+                </tr>
+                <tr>
+                    <td>Joe</td>
+                    <td>Swanson</td>
+                    <td>$300</td>
+                </tr>
+            </table>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>tr:hover {background-color: coral;}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS Zebra-striped Table -->
+        <section class="content-section" id="zebra-striped">
+            <h2>CSS Zebra-striped Table</h2>
+            
+            <p>சீப்ரா-பட்டை அட்டவணைகளுக்கு, nth-child() தேர்ந்தெடுப்பியைப் பயன்படுத்தி அனைத்து இரட்டை (அல்லது ஒற்றைப்படை) அட்டவணை வரிசைகளுக்கும் பின்னணி நிறத்தைச் சேர்க்கவும்:</p>
+            
+            <table class="example-table zebra-example">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Savings</th>
+                </tr>
+                <tr>
+                    <td>Peter</td>
+                    <td>Griffin</td>
+                    <td>$100</td>
+                </tr>
+                <tr>
+                    <td>Lois</td>
+                    <td>Griffin</td>
+                    <td>$150</td>
+                </tr>
+                <tr>
+                    <td>Joe</td>
+                    <td>Swanson</td>
+                    <td>$300</td>
+                </tr>
+            </table>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>tr:nth-child(even) {background-color: #f2f2f2;}</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS Table Color -->
+        <section class="content-section" id="table-color">
+            <h2>CSS Table Color</h2>
+            
+            <p>கீழே உள்ள எடுத்துக்காட்டு &lt;th&gt; உறுப்புகளுக்கு ஒரு பின்னணி நிறம் மற்றும் உரை நிறத்தைக் குறிப்பிடுகிறது:</p>
+            
+            <table class="example-table color-example">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Savings</th>
+                </tr>
+                <tr>
+                    <td>Peter</td>
+                    <td>Griffin</td>
+                    <td>$100</td>
+                </tr>
+                <tr>
+                    <td>Lois</td>
+                    <td>Griffin</td>
+                    <td>$150</td>
+                </tr>
+                <tr>
+                    <td>Joe</td>
+                    <td>Swanson</td>
+                    <td>$300</td>
+                </tr>
+            </table>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>th {
+  background-color: #04AA6D;
+  color: white;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <p>இது என்ன? இந்தப் பக்கத்தின் தலைப்புகள் பற்றி சில கேள்விகளுக்கு பதிலளிப்பதன் மூலம் உங்கள் திறமைகளை சோதிக்கவும்.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🎯</span> th மற்றும் td க்கான padding மற்றும் alignment ஐ அமைக்க சரியான CSS பண்புகளை இழுத்து விடவும்.</h4>
+                
+                <div class="drag-drop-area">
+                    <div class="code-block">
+                        <div class="code-line">th, td {</div>
+                        <div class="code-line">&nbsp;&nbsp;<span class="drop-target" id="drop1"></span>: 15px;</div>
+                        <div class="code-line">&nbsp;&nbsp;<span class="drop-target" id="drop2"></span>: left;</div>
+                        <div class="code-line">}</div>
+                    </div>
+                    
+                    <div class="property-pool" id="propertyPool">
+                        <div class="code-property" draggable="true" data-value="padding">padding</div>
+                        <div class="code-property" draggable="true" data-value="margin">margin</div>
+                        <div class="code-property" draggable="true" data-value="text-align">text-align</div>
+                        <div class="code-property" draggable="true" data-value="align">align</div>
+                        <div class="code-property" draggable="true" data-value="border">border</div>
+                        <div class="code-property" draggable="true" data-value="color">color</div>
+                    </div>
+                    
+                    <button class="check-button" onclick="checkExercise()">பதிலை சரிபார்க்கவும்</button>
+                    
+                    <div class="feedback" id="feedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Table%20Alignment.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Responsive%20Tables.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#table-padding">Table Padding</a></li>
+                    <li><a href="#horizontal-dividers">Horizontal Dividers</a></li>
+                    <li><a href="#hoverable-table">Hoverable Table</a></li>
+                    <li><a href="#zebra-striped">Zebra-striped Table</a></li>
+                    <li><a href="#table-color">Table Color</a></li>
+                    <li><a href="#exercises">Exercise</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Drag and drop functionality
+        let draggedItem = null;
+        
+        document.querySelectorAll('.code-property').forEach(item => {
+            item.addEventListener('dragstart', function(e) {
+                draggedItem = this;
+                this.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', this.getAttribute('data-value'));
+            });
+            
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+                draggedItem = null;
+            });
+        });
+        
+        document.querySelectorAll('.drop-target').forEach(target => {
+            target.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('active');
+            });
+            
+            target.addEventListener('dragleave', function() {
+                this.classList.remove('active');
+            });
+            
+            target.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('active');
+                
+                if (draggedItem) {
+                    const value = draggedItem.getAttribute('data-value');
+                    this.innerHTML = `<span class="code-property" data-value="${value}">${value}</span>`;
+                    this.setAttribute('data-filled', value);
+                    
+                    // Remove from pool
+                    draggedItem.style.display = 'none';
+                }
+            });
+        });
+        
+        // Check exercise function
+        function checkExercise() {
+            const drop1 = document.getElementById('drop1');
+            const drop2 = document.getElementById('drop2');
+            const feedback = document.getElementById('feedback');
+            
+            const answer1 = drop1.getAttribute('data-filled');
+            const answer2 = drop2.getAttribute('data-filled');
+            
+            if (answer1 === 'padding' && answer2 === 'text-align') {
+                feedback.textContent = '✓ சரி! th, td { padding: 15px; text-align: left; } என்பது சரியான CSS ஆகும்.';
+                feedback.className = 'feedback correct';
+                feedback.style.display = 'block';
+                
+                // Mark drop targets as correct
+                drop1.classList.remove('incorrect');
+                drop1.classList.add('active');
+                drop2.classList.remove('incorrect');
+                drop2.classList.add('active');
+            } else {
+                feedback.textContent = '✗ தவறு! மீண்டும் முயற்சிக்கவும். சரியான பதில்: th, td { padding: 15px; text-align: left; }';
+                feedback.className = 'feedback incorrect';
+                feedback.style.display = 'block';
+                
+                // Mark incorrect answers
+                if (answer1 !== 'padding') {
+                    drop1.classList.add('incorrect');
+                }
+                if (answer2 !== 'text-align') {
+                    drop2.classList.add('incorrect');
+                }
+            }
+        }
+        
+        // Reset functionality
+        function resetExercise() {
+            document.querySelectorAll('.drop-target').forEach(target => {
+                target.innerHTML = '';
+                target.removeAttribute('data-filled');
+                target.classList.remove('active', 'incorrect');
+            });
+            
+            document.querySelectorAll('.code-property').forEach(prop => {
+                prop.style.display = 'inline-block';
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+        }
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

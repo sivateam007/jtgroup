@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Async/Await - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Promises.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Error Handling.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Async/Await</h2>
+            <p>அசிங்க்ரோனஸ் குறியீட்டை ஒத்திசைவு குறியீடு போல் எழுதுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction to Async/Await -->
+        <section class="content-section" id="introduction">
+            <h2>Async/Await க்கு அறிமுகம்</h2>
+            
+            <p>Async/await என்பது Node.js இல் அசிங்க்ரோனஸ் செயல்பாடுகளைக் கையாள ஒரு நவீன வழியாகும், இது வாக்குறுதிகளின் மேல் கட்டப்பட்டு இன்னும் சிறந்த வாசிப்புத்திறனைக் கொண்ட குறியீட்டை உருவாக்க உதவுகிறது.</p>
+            
+            <p>Node.js 7.6 இல் அறிமுகப்படுத்தப்பட்டு ES2017 இல் தரநிலையாக்கப்பட்ட, async/await ஒத்திசைவு குறியீடு போல் தோற்றமளிக்கும் மற்றும் செயல்படும் அசிங்க்ரோனஸ் குறியீட்டை எழுத உங்களை அனுமதிக்கிறது.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>மேம்பட்ட வாசிப்புத்திறன்</h4>
+                    </div>
+                    <p>ஒத்திசைவு குறியீடு போல் தோற்றமளிக்கும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bug"></i>
+                        <h4>எளிதான பிழை கையாளுதல்</h4>
+                    </div>
+                    <p>try/catch தொகுதிகளைப் பயன்படுத்துகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>வாக்குறுதிகளின் அடிப்படை</h4>
+                    </div>
+                    <p>வாக்குறுதிகளின் மேல் கட்டப்பட்டது</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கிய குறிப்பு:</h4>
+                <p>Async/await அடிப்படையில் மேம்பட்ட வாசிப்புத்திறன் கொண்ட தொடரியல் உடைய வாக்குறுதிகள் ஆகும். இது உங்கள் குறியீட்டை தூய்மையாகவும் பராமரிக்க எளிதாகவும் ஆக்குகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Syntax and Usage -->
+        <section class="content-section" id="syntax">
+            <h2>தொடரியல் மற்றும் பயன்பாடு</h2>
+            
+            <p>தொடரியல் இரண்டு முக்கிய சொற்களைக் கொண்டுள்ளது:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-key"></i>
+                        <h4>async</h4>
+                    </div>
+                    <p>வாக்குறுதியை வழங்கும் அசிங்க்ரோனஸ் செயல்பாட்டை அறிவிக்கப் பயன்படுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-pause"></i>
+                        <h4>await</h4>
+                    </div>
+                    <p>ஒரு வாக்குறுதி தீர்க்கப்படும் வரை செயல்பாட்டை இடைநிறுத்தப் பயன்படுகிறது, async செயல்பாடுகளுக்குள் மட்டுமே பயன்படுத்த முடியும்</p>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: அடிப்படை Async/Await</h3>
+                <div class="code-example">
+                    <pre><code>async function getData() {
+  console.log('Starting...');
+  const result = await someAsyncOperation();
+  console.log(`Result: ${result}`);
+  return result;
+}
+
+function someAsyncOperation() {
+  return new Promise(resolve => {
+    setTimeout(() => resolve('Operation completed'), 1000);
+  });
+}
+
+// Call the async function
+getData().then(data => console.log('Final data:', data));</code></pre>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: Async/Await உடன் கோப்பு படித்தல்</h3>
+                <div class="code-example">
+                    <pre><code>const fs = require('fs').promises;
+
+async function readFile() {
+  try {
+    const data = await fs.readFile('myfile.txt', 'utf8');
+    console.log(data);
+  } catch (error) {
+    console.error('Error reading file:', error);
+  }
+}
+
+readFile();</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Handling with Try/Catch -->
+        <section class="content-section" id="error-handling">
+            <h2>Try/Catch உடன் பிழை கையாளுதல்</h2>
+            
+            <p>Async/await இன் நன்மைகளில் ஒன்று, நீங்கள் பாரம்பரிய try/catch தொகுதிகளை பிழை கையாளுதலுக்குப் பயன்படுத்தலாம், இது உங்கள் குறியீட்டின் வாசிப்புத்திறனை மேம்படுத்துகிறது.</p>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: Async/Await உடன் பிழை கையாளுதல்</h3>
+                <div class="code-example">
+                    <pre><code>async function fetchUserData() {
+  try {
+    const response = await fetch('https://api.example.com/users/1');
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const user = await response.json();
+    console.log('User data:', user);
+    return user;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error; // Re-throw the error if needed
+  }
+}</code></pre>
+                </div>
+            </div>
+            
+            <div class="code-example">
+                <h3>வெவ்வேறு சூழ்நிலைகளுக்கு async/await ஐ Promise .catch() உடன் கலக்கலாம்:</h3>
+                <pre><code>// Using catch with an async function
+fetchUserData().catch(error => {
+  console.log('Caught outside of async function:', error.message);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Running Promises in Parallel -->
+        <section class="content-section" id="parallel-execution">
+            <h2>இணையாக வாக்குறுதிகளை இயக்குதல்</h2>
+            
+            <p>Async/await குறியீடு ஒத்திசைவு போல் தோற்றமளிக்கினாலும், சில நேரங்களில் சிறந்த செயல்திறனுக்காக செயல்பாடுகளை இணையாக இயக்க வேண்டியிருக்கும்.</p>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: வரிசை மற்றும் இணையான செயல்பாடுகள்</h3>
+                <div class="code-example">
+                    <pre><code>// Helper function to simulate an API call
+function fetchData(id) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(`Data for ID ${id}`), 1000);
+  });
+}
+
+// Sequential operation - takes ~3 seconds
+async function fetchSequential() {
+  console.time('sequential');
+  const data1 = await fetchData(1);
+  const data2 = await fetchData(2);
+  const data3 = await fetchData(3);
+  console.timeEnd('sequential');
+  return [data1, data2, data3];
+}
+
+// Parallel operation - takes ~1 second
+async function fetchParallel() {
+  console.time('parallel');
+  const results = await Promise.all([
+    fetchData(1),
+    fetchData(2),
+    fetchData(3)
+  ]);
+  console.timeEnd('parallel');
+  return results;
+}
+
+// Demo
+async function runDemo() {
+  console.log('Running sequentially...');
+  const seqResults = await fetchSequential();
+  console.log(seqResults);
+  
+  console.log('\nRunning in parallel...');
+  const parResults = await fetchParallel();
+  console.log(parResults);
+}
+
+runDemo();</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Async/Await vs Promises vs Callbacks -->
+        <section class="content-section" id="comparison">
+            <h2>Async/Await vs வாக்குறுதிகள் vs கால்பேக்குகள்</h2>
+            
+            <p>அதே பணி வெவ்வேறு அசிங்க்ரோனஸ் முறைகளுடன் எவ்வாறு கையாளப்படுகிறது என்பதைப் பார்ப்போம்:</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>கால்பேக்குகளுடன்</h4>
+                    <div class="code-example">
+                        <pre><code>function getUser(userId, callback) {
+  setTimeout(() => {
+    callback(null, { id: userId, name: 'John' });
+  }, 1000);
+}
+
+function getUserPosts(user, callback) {
+  setTimeout(() => {
+    callback(null, ['Post 1', 'Post 2']);
+  }, 1000);
+}
+
+// Using callbacks
+getUser(1, (error, user) => {
+  if (error) {
+    console.error(error);
+    return;
+  }
+  console.log('User:', user);
+  
+  getUserPosts(user, (error, posts) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    console.log('Posts:', posts);
+  });
+});</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>வாக்குறுதிகளுடன்</h4>
+                    <div class="code-example">
+                        <pre><code>function getUserPromise(userId) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({ id: userId, name: 'John' });
+    }, 1000);
+  });
+}
+
+function getUserPostsPromise(user) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(['Post 1', 'Post 2']);
+    }, 1000);
+  });
+}
+
+// Using promises
+getUserPromise(1)
+  .then(user => {
+    console.log('User:', user);
+    return getUserPostsPromise(user);
+  })
+  .then(posts => {
+    console.log('Posts:', posts);
+  })
+  .catch(error => {
+    console.error(error);
+  });</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h3>Async/Await உடன்</h3>
+                <div class="code-example">
+                    <pre><code>// Using async/await
+async function getUserAndPosts() {
+  try {
+    const user = await getUserPromise(1);
+    console.log('User:', user);
+    
+    const posts = await getUserPostsPromise(user);
+    console.log('Posts:', posts);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+getUserAndPosts();</code></pre>
+                </div>
+            </div>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>நன்மைகள்</th>
+                            <th>குறைபாடுகள்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>கால்பேக்குகள்</strong></td>
+                            <td>
+                                <ul>
+                                    <li>புரிந்துகொள்வது எளிது</li>
+                                    <li>பரவலாக ஆதரிக்கப்படுகிறது</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>கால்பேக் நரகம்</li>
+                                    <li>பிழை கையாளுதல் சிக்கலானது</li>
+                                    <li>பகுத்தறிவது கடினம்</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>வாக்குறுதிகள்</strong></td>
+                            <td>
+                                <ul>
+                                    <li>.then() உடன் சங்கிலியாக்கம்</li>
+                                    <li>சிறந்த பிழை கையாளுதல்</li>
+                                    <li>கூட்டுத்தன்மை</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>சிக்கலான பாய்வுகளுக்கு இன்னும் கூடு கட்டுதல் தேவை</li>
+                                    <li>async/await போல் வாசிக்க எளிதானது அல்ல</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Async/Await</strong></td>
+                            <td>
+                                <ul>
+                                    <li>தூய்மையான, ஒத்திசைவு போன்ற குறியீடு</li>
+                                    <li>try/catch உடன் எளிதான பிழை கையாளுதல்</li>
+                                    <li>பிழைத்திருத்தம் எளிதானது</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>வாக்குறுதிகளைப் புரிந்துகொள்ள வேண்டும்</li>
+                                    <li>தற்செயலாக செயல்பாட்டைத் தடுக்க எளிதானது</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <p>Node.js இல் async/await உடன் பணிபுரியும் போது, இந்த சிறந்த நடைமுறைகளைப் பின்பற்றவும்:</p>
+            
+            <div class="example-section">
+                <h3>Async செயல்பாடுகள் எப்போதும் வாக்குறுதிகளை வழங்கும் என்பதை நினைவில் கொள்ளுங்கள்</h3>
+                <div class="code-example">
+                    <pre><code>async function myFunction() {
+  return 'Hello';
+}
+
+// This returns a Promise that resolves to 'Hello', not the string 'Hello' directly
+const result = myFunction();
+console.log(result); // Promise { 'Hello' }
+
+// You need to await it or use .then()
+myFunction().then(message => console.log(message)); // Hello</code></pre>
+                </div>
+            </div>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>இணையான செயல்பாடுகளுக்கு Promise.all ஐப் பயன்படுத்தவும்</h3>
+                    <p>செயல்பாடுகள் இணையாக இயக்க முடியும் போது, செயல்திறனை மேம்படுத்த Promise.all ஐப் பயன்படுத்தவும்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>எப்போதும் பிழைகளைக் கையாளவும்</h3>
+                    <p>try/catch தொகுதிகளைப் பயன்படுத்தவும் அல்லது async செயல்பாட்டு அழைப்பில் .catch() ஐச் சங்கிலியாக்கவும்</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3>Async/await ஐ கால்பேக்குகளுடன் கலக்க வேண்டாம்</h3>
+                    <p>util.promisify அல்லது தனிப்புற மறைப்புகளைப் பயன்படுத்தி கால்பேக்-அடிப்படையிலான செயல்பாடுகளை வாக்குறுதி-அடிப்படையிலானவற்றாக மாற்றவும்</p>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h3>எடுத்துக்காட்டு: கால்பேக்குகளை வாக்குறுதிகளாக மாற்றுதல்</h3>
+                <div class="code-example">
+                    <pre><code>const util = require('util');
+const fs = require('fs');
+
+// Convert callback-based function to Promise-based
+const readFile = util.promisify(fs.readFile);
+
+async function readFileContents() {
+  const data = await readFile('file.txt', 'utf8');
+  return data;
+}</code></pre>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🚀</span> சிறந்த நடைமுறை:</h4>
+                <p>Node.js 14.8.0 மற்றும் அதற்கு மேல் உள்ள ECMAScript தொகுதிகள் (ESM) இல் கிடைக்கும் "மேல்-நிலை await" அம்சத்தை அறிந்து கொள்ளுங்கள், இது தொகுதி நிலையில் async செயல்பாடுகளுக்கு வெளியே await ஐப் பயன்படுத்த அனுமதிக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>சுருக்கம்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>ஒத்திசைவு போன்ற குறியீடு</h4>
+                    </div>
+                    <p>அசிங்க்ரோனஸ் குறியீடு ஒத்திசைவு குறியீடு போல் தோற்றமளிக்கும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>வாக்குறுதிகளின் அடிப்படை</h4>
+                    </div>
+                    <p>வாக்குறுதிகளின் மேல் கட்டப்பட்டது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bug"></i>
+                        <h4>try/catch பிழை கையாளுதல்</h4>
+                    </div>
+                    <p>பாரம்பரிய பிழை கையாளுதல் முறைகளைப் பயன்படுத்துகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>இணையான செயல்பாடு</h4>
+                    </div>
+                    <p>Promise.all உடன் இணையான செயல்பாட்டை ஆதரிக்கிறது</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💎</span> முக்கிய புள்ளிகள்:</h4>
+                <ul>
+                    <li>Async/await வாசிப்புத்திறனை கணிசமாக மேம்படுத்துகிறது</li>
+                    <li>வாக்குறுதிகளின் மேல் கட்டப்பட்டுள்ளது</li>
+                    <li>try/catch உடன் பிழை கையாளுதல் எளிதானது</li>
+                    <li>இணையான செயல்பாட்டிற்கு Promise.all ஐப் பயன்படுத்தவும்</li>
+                    <li>எப்போதும் async செயல்பாடுகள் வாக்குறுதிகளை வழங்கும் என்பதை நினைவில் கொள்ளுங்கள்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> சரியான முக்கிய சொல்லை தேர்ந்தெடுக்கவும்.</h4>
+                <p><strong>______</strong> முக்கிய சொல் வாக்குறுதியை வழங்கும் ஒரு செயல்பாட்டிற்கு முன் பயன்படுத்தப்படுகிறது.</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">await</div>
+                            <div class="option-feedback incorrect">✗ தவறு! await முக்கிய சொல் ஒரு வாக்குறுதி தீர்க்கப்படும் வரை காத்திருக்கப் பயன்படுகிறது, async செயல்பாட்டை அறிவிக்கப் பயன்படுவதில்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">async</div>
+                            <div class="option-feedback correct">✓ சரி! async முக்கிய சொல் வாக்குறுதியை வழங்கும் அசிங்க்ரோனஸ் செயல்பாட்டை அறிவிக்கப் பயன்படுகிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">promise</div>
+                            <div class="option-feedback incorrect">✗ தவறு! promise என்பது JavaScript இல் ஒரு முக்கிய சொல் அல்ல, மாறாக ஒரு பொருளாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">function</div>
+                            <div class="option-feedback incorrect">✗ தவறு! function முக்கிய சொல் செயல்பாடுகளை அறிவிக்கப் பயன்படுகிறது, ஆனால் அது வாக்குறுதியை வழங்கும் என்பதை உறுதிப்படுத்தாது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Promises.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Error Handling.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">அறிமுகம்</a></li>
+                    <li><a href="#syntax">தொடரியல்</a></li>
+                    <li><a href="#error-handling">பிழை கையாளுதல்</a></li>
+                    <li><a href="#parallel-execution">இணையான செயல்பாடு</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Additional styles for this page */
+        .architecture-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .flow-step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .step-content p {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .code-column h4 {
+            text-align: center;
+            margin-bottom: 0.8rem;
+            color: var(--git-color);
+            font-size: 1.1rem;
+        }
+        
+        .example-section {
+            margin-bottom: 3rem;
+        }
+        
+        .example-section h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example-icon {
+            font-size: 2rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .example-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .example-card p {
+            margin: 0.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .comparison-header i {
+            font-size: 1.5rem;
+            color: var(--git-color);
+        }
+        
+        .comparison-header h4 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        
+        .comparison-card li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .comparison-card li:before {
+            content: '•';
+            color: var(--git-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Comparison Table */
+        .comparison-table {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table ul {
+            margin: 0;
+            padding-left: 1rem;
+        }
+        
+        .comparison-table li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border-left: 6px solid #ff9ff3;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .warning-box:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .warning-box h4 {
+            color: #ff9ff3;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .warning-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .warning-box ul {
+            margin-left: 2rem;
+            margin-bottom: 0;
+        }
+        
+        .warning-box li {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .warning-icon {
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Exercise Styles */
+        .exercise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .exercise-icon {
+            margin-right: 10px;
+        }
+        
+        .exercise-box h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .option-card[data-correct="true"] {
+            border-color: #28a745;
+        }
+        
+        .option-card[data-correct="false"] {
+            border-color: #dc3545;
+        }
+        
+        .option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .option-feedback {
+            margin-left: 1rem;
+            font-weight: bold;
+            display: none;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 200px;
+        }
+        
+        .correct {
+            color: #28a745;
+        }
+        
+        .incorrect {
+            color: #dc3545;
+        }
+        
+        .option-card:hover .option-feedback {
+            display: block;
+        }
+        
+        /* Syntax Box */
+        .syntax-box {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .syntax-box pre {
+            margin: 0;
+            color: #f8f8f2;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .architecture-flow {
+                gap: 1.5rem;
+            }
+            
+            .flow-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .examples-grid,
+            .comparison-grid,
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .option-feedback {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .flow-step {
+                padding: 1rem;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .comparison-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Outline - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* Box Model Visualization Styles */
+        .box-model-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .box-model-title {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .box-model-visualization {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 1rem 0;
+        }
+        
+        .content-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 100px;
+            background: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 5px;
+            z-index: 1;
+        }
+        
+        .padding-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 140px;
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px dashed #4CAF50;
+            z-index: 2;
+        }
+        
+        .border-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 170px;
+            background: rgba(255, 193, 7, 0.2);
+            border: 3px solid #ffc107;
+            z-index: 3;
+        }
+        
+        .margin-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 200px;
+            background: rgba(33, 150, 243, 0.1);
+            border: 2px dotted #2196F3;
+            z-index: 4;
+        }
+        
+        .box-label {
+            position: absolute;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #333;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+        
+        .content-label {
+            top: calc(50% - 60px);
+            left: calc(50% - 75px);
+            color: #4CAF50;
+        }
+        
+        .padding-label {
+            top: calc(50% - 80px);
+            left: calc(50% + 90px);
+            color: #4CAF50;
+        }
+        
+        .border-label {
+            top: calc(50% + 95px);
+            left: calc(50% - 120px);
+            color: #ff9800;
+        }
+        
+        .margin-label {
+            top: calc(50% + 110px);
+            left: calc(50% + 100px);
+            color: #2196F3;
+        }
+        
+        /* Dotted Box Model with Outline */
+        .dotted-box-model {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 1rem 0;
+        }
+        
+        .element-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 100px;
+            background: #9C27B0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 5px;
+            border: 3px solid #673AB7;
+            z-index: 1;
+        }
+        
+        .dotted-outline {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 150px;
+            border: 4px dotted #E91E63;
+            z-index: 2;
+        }
+        
+        .outline-label {
+            position: absolute;
+            top: calc(50% - 85px);
+            right: calc(50% - 140px);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #E91E63;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+        
+        .border-label-outline {
+            position: absolute;
+            top: calc(50% + 70px);
+            left: calc(50% - 120px);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #673AB7;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+        
+        .visualization-note {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #e3f2fd;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+            font-size: 0.9rem;
+            color: #1565C0;
+        }
+        
+        @media (max-width: 768px) {
+            .box-model-visualization,
+            .dotted-box-model {
+                width: 250px;
+                height: 180px;
+            }
+            
+            .content-box, .element-box {
+                width: 120px;
+                height: 80px;
+                font-size: 0.9rem;
+            }
+            
+            .padding-box {
+                width: 160px;
+                height: 120px;
+            }
+            
+            .border-box {
+                width: 200px;
+                height: 140px;
+            }
+            
+            .margin-box {
+                width: 250px;
+                height: 180px;
+            }
+            
+            .dotted-outline {
+                width: 180px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Box%20Model.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Outline%20Width.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Outline</h2>
+            <p>CSS Outline பற்றி கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS Outline</h2>
+            
+            <p>Outline என்பது ஒரு உறுப்புக்கு சுற்றி வரையப்படும் ஒரு கோடு, அதன் border-க்கு வெளியே.</p>
+            
+            <div class="code-example">
+                <pre><code class="command-input">/* இந்த உறுப்புக்கு கருப்பு border மற்றும் 10px அகலமுள்ள பச்சை outline உள்ளது */</code></pre>
+            </div>
+        </section>
+
+        <!-- What is CSS Outline -->
+        <section class="content-section" id="what-is-outline">
+            <h2>CSS Outline என்றால் என்ன?</h2>
+            
+            <p>Outline என்பது உறுப்புகளைச் சுற்றி வரையப்படும் ஒரு கோடு, border-க்கு வெளியே, உறுப்பை "முன்னிறுத்த" உதவுகிறது.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>Outline என்பது border-லிருந்து வேறுபட்டது! Outline என்பது உறுப்பின் border-க்கு வெளியே வரையப்படுகிறது, மற்ற உள்ளடக்கங்களுடன் ஒன்றிணையலாம். மேலும், outline என்பது உறுப்பின் பரிமாணங்களின் ஒரு பகுதியாக இல்லை; outline-ன் அகலம் உறுப்பின் மொத்த அகலம் மற்றும் உயரத்தை பாதிப்பதில்லை.</p>
+            </div>
+            
+            <!-- Box Model Visualization -->
+            <div class="box-model-container">
+                <h3 class="box-model-title">CSS Box Model மாதிரி</h3>
+                
+                <div class="box-model-visualization">
+                    <div class="margin-box"></div>
+                    <div class="border-box"></div>
+                    <div class="padding-box"></div>
+                    <div class="content-box">Content</div>
+                    
+                    <div class="box-label content-label">Content</div>
+                    <div class="box-label padding-label">Padding</div>
+                    <div class="box-label border-label">Border</div>
+                    <div class="box-label margin-label">Margin</div>
+                </div>
+                
+                <div class="visualization-note">
+                    <strong>Box Model-ல்:</strong> Content → Padding → Border → Margin (இவை அனைத்தும் உறுப்பின் பரிமாணங்களின் ஒரு பகுதியாகும்)
+                </div>
+            </div>
+            
+            <!-- Dotted Box Model with Outline -->
+            <div class="box-model-container">
+                <h3 class="box-model-title">Outline உடன் Dotted Box Model</h3>
+                
+                <div class="dotted-box-model">
+                    <div class="dotted-outline"></div>
+                    <div class="element-box">Element</div>
+                    
+                    <div class="outline-label">Outline (border-க்கு வெளியே)</div>
+                    <div class="border-label-outline">Border</div>
+                </div>
+                
+                <div class="visualization-note">
+                    <strong>Outline-ல்:</strong> Outline என்பது border-க்கு வெளியே வரையப்படுகிறது மற்றும் உறுப்பின் பரிமாணங்களின் ஒரு பகுதியாக இல்லை. உறுப்பின் மொத்த அகலம்/உயரம் outline-ன் அகலத்தால் பாதிக்கப்படாது.
+                </div>
+                
+                <div class="code-example" style="margin-top: 1.5rem; background: #f5f5f5; color: #333;">
+                    <pre><code>/* உதாரணம்: Border மற்றும் Outline இடையே உள்ள வித்தியாசம் */
+.element {
+    width: 150px;
+    height: 100px;
+    border: 3px solid #673AB7;      /* Border - உறுப்பின் பரிமாணத்தின் பகுதி */
+    outline: 4px dotted #E91E63;   /* Outline - border-க்கு வெளியே, பரிமாணத்தை பாதிக்காது */
+    background: #9C27B0;
+    margin: 20px;
+}</code></pre>
+                </div>
+            </div>
+            
+            <div class="tip-box" style="margin-top: 2rem;">
+                <h4><span class="tip-icon">📊</span> Outline vs Border: முக்கிய வேறுபாடுகள்</h4>
+                <ul>
+                    <li><strong>Outline border-க்கு வெளியே</strong> வரையப்படுகிறது</li>
+                    <li><strong>Outline உறுப்பின் பரிமாணங்களை பாதிக்காது</strong> (width/height மாறாது)</li>
+                    <li><strong>Outline மற்ற உள்ளடக்கங்களுடன் ஒன்றிணையலாம்</strong></li>
+                    <li><strong>Outline-க்கு கட்டமைப்பு பாணிகள் இல்லை</strong> (no groove, ridge, inset, outset)</li>
+                    <li><strong>Outline-க்கு radius பண்பு இல்லை</strong> (cannot be rounded)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Outline Properties -->
+        <section class="content-section" id="outline-properties">
+            <h2>CSS Outline பண்புகள்</h2>
+            
+            <p>CSS-ல் பின்வரும் outline பண்புகள் உள்ளன:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-palette"></i>
+                        <h4>outline-style</h4>
+                    </div>
+                    <p>Outline-ன் பாணியை குறிப்பிடுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-fill-drip"></i>
+                        <h4>outline-color</h4>
+                    </div>
+                    <p>Outline-ன் நிறத்தை குறிப்பிடுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        <h4>outline-width</h4>
+                    </div>
+                    <p>Outline-ன் அகலத்தை குறிப்பிடுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-expand-alt"></i>
+                        <h4>outline-offset</h4>
+                    </div>
+                    <p>Outline மற்றும் உறுப்பின் விளிம்பு/ border-க்கு இடையே இடத்தை சேர்க்கிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>outline</h4>
+                    </div>
+                    <p>ஒரு சுருக்கப் பண்பு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The outline-style Property -->
+        <section class="content-section" id="outline-style">
+            <h2>CSS outline-style பண்பு</h2>
+            
+            <p>outline-style பண்பு outline-ன் பாணியை குறிப்பிடுகிறது, மற்றும் பின்வரும் மதிப்புகளில் ஒன்றைக் கொண்டிருக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code class="command-input">/* புள்ளியிட்ட outline வரையறுக்கிறது */
+p.dotted {outline-style: dotted;}
+
+/* துண்டு துண்டாக outline வரையறுக்கிறது */
+p.dashed {outline-style: dashed;}
+
+/* திடமான outline வரையறுக்கிறது */
+p.solid {outline-style: solid;}
+
+/* இரட்டை outline வரையறுக்கிறது */
+p.double {outline-style: double;}
+
+/* 3D குழிவான outline வரையறுக்கிறது */
+p.groove {outline-style: groove;}
+
+/* 3D மேடு outline வரையறுக்கிறது */
+p.ridge {outline-style: ridge;}
+
+/* 3D உள்தள்ளப்பட்ட outline வரையறுக்கிறது */
+p.inset {outline-style: inset;}
+
+/* 3D வெளித்தள்ளப்பட்ட outline வரையறுக்கிறது */
+p.outset {outline-style: outset;}
+
+/* outline இல்லை என வரையறுக்கிறது */
+p.none {outline-style: none;}
+
+/* மறைக்கப்பட்ட outline வரையறுக்கிறது */
+p.hidden {outline-style: hidden;}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கியமான குறிப்பு:</h4>
+                <p>outline-style பண்பு அமைக்கப்படாவிட்டால், மற்ற outline பண்புகள் எந்த விளைவையும் கொண்டிருக்காது!</p>
+            </div>
+        </section>
+
+        <!-- Outline Examples -->
+        <section class="content-section" id="outline-examples">
+            <h2>Outline பாணிகளின் மாதிரி</h2>
+            
+            <p>வெவ்வேறு outline-style மதிப்புகளின் நடைமுறை உதாரணங்கள்:</p>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                    <h4>Dotted Outline</h4>
+                    <p>புள்ளியிட்ட outline</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-grip-lines"></i>
+                    </div>
+                    <h4>Dashed Outline</h4>
+                    <p>துண்டு துண்டாக outline</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-square"></i>
+                    </div>
+                    <h4>Solid Outline</h4>
+                    <p>திடமான outline</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h4>Double Outline</h4>
+                    <p>இரட்டை outline</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h4>3D Outline Styles</h4>
+                    <p>groove, ridge, inset, outset</p>
+                </div>
+            </div>
+            
+            <p class="tip-box" style="background: linear-gradient(135deg, #4CAF50, #2E7D32); margin-top: 1.5rem;">
+                <strong>3D outline விளைவுகள்:</strong> groove, ridge, inset மற்றும் outset பாணிகளின் விளைவுகள் outline-color மதிப்பைப் பொறுத்தது.
+            </p>
+        </section>
+
+        <!-- SINGLE Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>CSS Outline பயிற்சி</h2>
+            
+            <p>Jassif Team இல், உங்கள் அறிவை சோதிக்க பயிற்சிகள் உள்ளன. கீழே உள்ள பயிற்சியை முயற்சிக்கவும்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> &lt;p&gt; உறுப்புக்கு சுற்றி புள்ளியிட்ட outline உருவாக்க சரியான பண்பு மற்றும் மதிப்பை இழுத்து விடவும்.</h4>
+                
+                <div class="code-example" style="background: rgba(255,255,255,0.1); border: 2px dashed rgba(255,255,255,0.3);">
+                    <pre><code>p.dotted {
+  : ;
+}</code></pre>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">border-style: dotted</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது border-க்கானது, outline-க்கு அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">style-outline: dotted</div>
+                            <div class="option-feedback incorrect">✗ தவறு! பண்பின் பெயர் தவறான வரிசையில் உள்ளது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">outline-dotted: yes</div>
+                            <div class="option-feedback incorrect">✗ தவறு! CSS-ல் இந்த பண்பு இல்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">outline-style: dotted</div>
+                            <div class="option-feedback correct">✓ சரி! outline-style: dotted என்பது புள்ளியிட்ட outline உருவாக்க சரியான CSS ஆகும்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>சிறந்த நடைமுறைகள்</h2>
+            
+            <p>CSS Outline-ஐ பயன்படுத்தும் போது பின்பற்ற வேண்டிய சில முக்கியமான குறிப்புகள்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>Outline என்பது border-க்கு வெளியே உள்ளது என்பதை எப்போதும் நினைவில் கொள்ளுங்கள்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>முக்கியமான உறுப்புகளை முன்னிலைப்படுத்த outline-ஐ பயன்படுத்துங்கள்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>outline-style அமைக்காமல் மற்ற outline பண்புகளை பயன்படுத்த வேண்டாம்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>focus நிலையில் உள்ள உறுப்புகளுக்கு outline பயன்படுத்துவது அணுகல் தன்மைக்கு நல்லது</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Track Your Progress -->
+        <section class="content-section" id="progress">
+            <h2>உங்கள் முன்னேற்றத்தைக் கண்காணிக்கவும்</h2>
+            
+            <p>ஒரு Jassif Team கணக்கை உருவாக்கி மேலும் அம்சங்கள் மற்றும் கற்றல் பொருட்களுக்கு அணுகலைப் பெறுங்கள்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>உங்கள் முடிக்கப்பட்ட CSS டுடோரியல்களைப் பார்க்கவும்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>outline பண்புகள் குறித்த மேலதிக பயிற்சிகளை அணுகவும்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>உங்கள் CSS திறமைகளை வளர்த்துக் கொள்ளுங்கள்</div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>இது ஒரு விருப்ப அம்சமாகும். Jassif Team இல் கணக்கு உருவாக்காமல் CSS outline பற்றி கற்றுக்கொள்ளலாம்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Box%20Model.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Outline%20Width.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">CSS Outline அறிமுகம்</a></li>
+                    <li><a href="#what-is-outline">Outline என்றால் என்ன</a></li>
+                    <li><a href="#what-is-outline">Box Model விஷுவலைசேஷன்</a></li>
+                    <li><a href="#what-is-outline">Dotted Box Model</a></li>
+                    <li><a href="#outline-properties">Outline பண்புகள்</a></li>
+                    <li><a href="#outline-style">outline-style பண்பு</a></li>
+                    <li><a href="#outline-examples">Outline உதாரணங்கள்</a></li>
+                    <li><a href="#exercises">Outline பயிற்சி</a></li>
+                    <li><a href="#best-practices">சிறந்த நடைமுறைகள்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction - ONLY ONE EXERCISE
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

@@ -1,0 +1,834 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL - JT GROUP OF INSTITUTION</title>
+    <link rel="icon" href="/assets/images/jt_logo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin:0;
+            background: #f5f7fa;
+        }
+        /* Professional Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top:0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding:0 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 1px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+        }
+        .home-link:hover {
+            opacity: 0.8;
+        }
+        .dashboard-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+            font-weight: 600;
+        }
+        .dashboard-link:hover {
+            opacity: 0.8;
+        }
+        /* Hero Section */
+        .course-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .course-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .course-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding:0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .course-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .course-hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .start-learning-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+        .start-learning-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+        /* Topics Grid */
+        .topics-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding:0 2rem;
+        }
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .topic-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid var(--git-color);
+            text-align: center;
+        }
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .topic-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        .topic-card h3 {
+            color: var(--dark);
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+        }
+        .topic-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .topic-card a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .topic-card a:hover {
+            background: var(--secondary);
+            transform: translateX(5px);
+        }
+        /* Start Here Card */
+        .topic-card:first-child {
+            border-top: 5px solid #e74c3c;
+        }
+        .topic-card:first-child .topic-icon {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        .topic-card:first-child h3 {
+            color: #e74c3c;
+        }
+        .topic-card:first-child a {
+            background: #e74c3c;
+        }
+        .topic-card:first-child a:hover {
+            background: #c0392b;
+        }
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding:0 20px;
+        }
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding:0;
+        }
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        .footer-column a:hover {
+            color: white;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 2rem 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo">
+                <h1>JT GROUP OF INSTITUTION</h1>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="home-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="/app/dashboard.html" class="dashboard-link">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="course-hero">
+        <div class="course-hero-content">
+            <h1><i class="fas fa-database"></i> SQL</h1>
+            <p>Master SQL with hands-on tutorials and examples</p>
+            <a href="SQL Tutorial.html" class="start-learning-btn">Start Learning <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Topics -->
+    <div class="topics-container">
+        <h2 style="text-align: center; color: var(--dark); margin-bottom: 2rem;">Available Topics</h2>
+        <div class="topics-grid">
+            <div class="topic-card" style="border-top: 5px solid #e74c3c;">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>Introduction to SQL</h3>
+                <p>Learn Introduction to SQL</p>
+                <a href="Introduction to SQL.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MS Access Functions</h3>
+                <p>Learn MS Access Functions</p>
+                <a href="MS Access Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MySQL Functions</h3>
+                <p>Learn MySQL Functions</p>
+                <a href="MySQL Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL ALTER TABLE Statement</h3>
+                <p>Learn SQL ALTER TABLE Statement</p>
+                <a href="SQL ALTER TABLE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL AND Operator</h3>
+                <p>Learn SQL AND Operator</p>
+                <a href="SQL AND Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL ANY and ALL Operators</h3>
+                <p>Learn SQL ANY and ALL Operators</p>
+                <a href="SQL ANY and ALL Operators.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL AUTO INCREMENT Field</h3>
+                <p>Learn SQL AUTO INCREMENT Field</p>
+                <a href="SQL AUTO INCREMENT Field.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL AVG() Function</h3>
+                <p>Learn SQL AVG() Function</p>
+                <a href="SQL AVG() Function.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Aggregate Functions</h3>
+                <p>Learn SQL Aggregate Functions</p>
+                <a href="SQL Aggregate Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Aliases</h3>
+                <p>Learn SQL Aliases</p>
+                <a href="SQL Aliases.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL BACKUP DATABASE for SQL Server</h3>
+                <p>Learn SQL BACKUP DATABASE for SQL Server</p>
+                <a href="SQL BACKUP DATABASE for SQL Server.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL BETWEEN Operator</h3>
+                <p>Learn SQL BETWEEN Operator</p>
+                <a href="SQL BETWEEN Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL CASE Expression</h3>
+                <p>Learn SQL CASE Expression</p>
+                <a href="SQL CASE Expression.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL CHECK Constraint</h3>
+                <p>Learn SQL CHECK Constraint</p>
+                <a href="SQL CHECK Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL COUNT() Function</h3>
+                <p>Learn SQL COUNT() Function</p>
+                <a href="SQL COUNT() Function.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL CREATE DATABASE Statement</h3>
+                <p>Learn SQL CREATE DATABASE Statement</p>
+                <a href="SQL CREATE DATABASE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL CREATE INDEX Statement</h3>
+                <p>Learn SQL CREATE INDEX Statement</p>
+                <a href="SQL CREATE INDEX Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL CREATE TABLE Statement</h3>
+                <p>Learn SQL CREATE TABLE Statement</p>
+                <a href="SQL CREATE TABLE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Comments</h3>
+                <p>Learn SQL Comments</p>
+                <a href="SQL Comments.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Constraints</h3>
+                <p>Learn SQL Constraints</p>
+                <a href="SQL Constraints.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL DEFAULT Constraint</h3>
+                <p>Learn SQL DEFAULT Constraint</p>
+                <a href="SQL DEFAULT Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL DELETE Statement</h3>
+                <p>Learn SQL DELETE Statement</p>
+                <a href="SQL DELETE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL DROP DATABASE Statement</h3>
+                <p>Learn SQL DROP DATABASE Statement</p>
+                <a href="SQL DROP DATABASE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL DROP TABLE Statement</h3>
+                <p>Learn SQL DROP TABLE Statement</p>
+                <a href="SQL DROP TABLE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Data Types for MySQL, SQL Server, and MS Access</h3>
+                <p>Learn SQL Data Types for MySQL, SQL Server, and MS Access</p>
+                <a href="SQL Data Types for MySQL, SQL Server, and MS Access.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL EXISTS Operator</h3>
+                <p>Learn SQL EXISTS Operator</p>
+                <a href="SQL EXISTS Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL GROUP BY Statement</h3>
+                <p>Learn SQL GROUP BY Statement</p>
+                <a href="SQL GROUP BY Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL HAVING Clause</h3>
+                <p>Learn SQL HAVING Clause</p>
+                <a href="SQL HAVING Clause.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Hosting</h3>
+                <p>Learn SQL Hosting</p>
+                <a href="SQL Hosting.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL IN Operator</h3>
+                <p>Learn SQL IN Operator</p>
+                <a href="SQL IN Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL INNER JOIN</h3>
+                <p>Learn SQL INNER JOIN</p>
+                <a href="SQL INNER JOIN.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL INSERT INTO SELECT Statement</h3>
+                <p>Learn SQL INSERT INTO SELECT Statement</p>
+                <a href="SQL INSERT INTO SELECT Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL INSERT INTO Statement</h3>
+                <p>Learn SQL INSERT INTO Statement</p>
+                <a href="SQL INSERT INTO Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Injection</h3>
+                <p>Learn SQL Injection</p>
+                <a href="SQL Injection.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Joins</h3>
+                <p>Learn SQL Joins</p>
+                <a href="SQL Joins.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL LIKE Operator</h3>
+                <p>Learn SQL LIKE Operator</p>
+                <a href="SQL LIKE Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL MIN() and MAX() Functions</h3>
+                <p>Learn SQL MIN() and MAX() Functions</p>
+                <a href="SQL MIN() and MAX() Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL NOT NULL Constraint</h3>
+                <p>Learn SQL NOT NULL Constraint</p>
+                <a href="SQL NOT NULL Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL NOT Operator</h3>
+                <p>Learn SQL NOT Operator</p>
+                <a href="SQL NOT Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL NULL Functions</h3>
+                <p>Learn SQL NULL Functions</p>
+                <a href="SQL NULL Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL NULL Values</h3>
+                <p>Learn SQL NULL Values</p>
+                <a href="SQL NULL Values.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL OR Operator</h3>
+                <p>Learn SQL OR Operator</p>
+                <a href="SQL OR Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Operators</h3>
+                <p>Learn SQL Operators</p>
+                <a href="SQL Operators.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Quick Reference</h3>
+                <p>Learn SQL Quick Reference</p>
+                <a href="SQL Quick Reference.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL SELECT DISTINCT Statement</h3>
+                <p>Learn SQL SELECT DISTINCT Statement</p>
+                <a href="SQL SELECT DISTINCT Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL SELECT INTO Statement</h3>
+                <p>Learn SQL SELECT INTO Statement</p>
+                <a href="SQL SELECT INTO Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL SELECT Statement</h3>
+                <p>Learn SQL SELECT Statement</p>
+                <a href="SQL SELECT Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL SUM() Function</h3>
+                <p>Learn SQL SUM() Function</p>
+                <a href="SQL SUM() Function.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Self Join</h3>
+                <p>Learn SQL Self Join</p>
+                <a href="SQL Self Join.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Server Functions</h3>
+                <p>Learn SQL Server Functions</p>
+                <a href="SQL Server Functions.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Stored Procedures for SQL Server</h3>
+                <p>Learn SQL Stored Procedures for SQL Server</p>
+                <a href="SQL Stored Procedures for SQL Server.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Syntax</h3>
+                <p>Learn SQL Syntax</p>
+                <a href="SQL Syntax.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL TOP, LIMIT, FETCH FIRST or ROWNUM Clause</h3>
+                <p>Learn SQL TOP, LIMIT, FETCH FIRST or ROWNUM Clause</p>
+                <a href="SQL TOP, LIMIT, FETCH FIRST or ROWNUM Clause.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Tutorial</h3>
+                <p>Learn SQL Tutorial</p>
+                <a href="SQL Tutorial.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL UNION ALL Operator</h3>
+                <p>Learn SQL UNION ALL Operator</p>
+                <a href="SQL UNION ALL Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL UNION Operator</h3>
+                <p>Learn SQL UNION Operator</p>
+                <a href="SQL UNION Operator.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL UNIQUE Constraint</h3>
+                <p>Learn SQL UNIQUE Constraint</p>
+                <a href="SQL UNIQUE Constraint.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL UPDATE Statement</h3>
+                <p>Learn SQL UPDATE Statement</p>
+                <a href="SQL UPDATE Statement.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Views</h3>
+                <p>Learn SQL Views</p>
+                <a href="SQL Views.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL WHERE Clause</h3>
+                <p>Learn SQL WHERE Clause</p>
+                <a href="SQL WHERE Clause.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Wildcards</h3>
+                <p>Learn SQL Wildcards</p>
+                <a href="SQL Wildcards.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>SQL Working With Dates</h3>
+                <p>Learn SQL Working With Dates</p>
+                <a href="SQL Working With Dates.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>JT GROUP OF INSTITUTION</h3>
+                <p style="color: #ddd; line-height: 1.6;">Leading educational institution providing quality programming education in multiple languages.</p>
+                <div style="padding: 1rem; margin-top: 1rem;">
+                    <h4 style="color: white; margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> Help Center</h4>
+                    <p style="color: #ddd;">jassifteam@jtgroupofinstitution.com</p>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/app/dashboard.html">Dashboard</a></li>
+                    <li><a href="/courses/tamil/">Courses</a></li>
+                    <li><a href="/app/login.html">Login</a></li>
+                    <li><a href="/app/signup.html">Sign Up</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Course Categories</h3>
+                <ul>
+                    <li><a href="/courses/tamil/FRONT_END_DEVELOPMENT/">Front End</a></li>
+                    <li><a href="/courses/tamil/full stack development/">Full Stack</a></li>
+                    <li><a href="/courses/tamil/backend development/">Backend</a></li>
+                    <li><a href="/courses/tamil/programming-languages/">Programming</a></li>
+                    <li><a href="/courses/tamil/WEB_DEVELOPMENT/">Web Dev</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 JT GROUP OF INSTITUTION. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MONGO_DB - JT GROUP OF INSTITUTION</title>
+    <link rel="icon" href="/assets/images/jt_logo.jpeg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f5f7fa;
+        }
+        /* Professional Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 1px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+        }
+        .home-link:hover {
+            opacity: 0.8;
+        }        .dashboard-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.3s;
+            font-weight: 600;
+        }
+        .dashboard-link:hover {
+            opacity: 0.8;
+        }
+        .user-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .user-btn:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .start-learning-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+        .start-learning-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+        /* Hero Section */
+        .course-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .course-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .course-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .course-hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        /* Topics Grid */
+        .topics-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .topic-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid var(--git-color);
+            text-align: center;
+        }
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .topic-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        .topic-card h3 {
+            color: var(--dark);
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+        }
+        .topic-card p {
+            color: #666;
+            margin: 0 0 1.5rem 0;
+        }
+        .topic-card a {
+            display: inline-block;
+            padding: 0.7rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s;
+        }
+        .topic-card a:hover {
+            background: var(--secondary);
+        }
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        .footer-column a:hover {
+            color: white;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 2rem 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/assets/images/jt_logo.jpeg" alt="JT Logo">
+                <h1>JT GROUP OF INSTITUTION</h1>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="home-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="/app/dashboard.html" class="dashboard-link">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="course-hero">
+        <div class="course-hero-content">
+            <h1><i class="fas fa-database"></i> MONGO_DB</h1>
+            <p>Master MONGO_DB with hands-on tutorials and examples</p>
+            <a href="MongoDB Tutorial.html" class="start-learning-btn">Start Learning <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Topics -->
+    <div class="topics-container">
+        <h2 style="text-align: center; color: var(--dark); margin-bottom: 2rem;">Available Topics</h2>
+        <div class="topics-grid">
+            <div class="topic-card" style="border-top: 5px solid #e74c3c;">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Tutorial (Start Here)</h3>
+                <p>Start your MongoDB learning journey here</p>
+                <a href="MongoDB Tutorial.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Getting Started</h3>
+                <p>Learn MongoDB Getting Started</p>
+                <a href="MongoDB Getting Started.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB mongosh DB</h3>
+                <p>Learn MongoDB mongosh Create Database</p>
+                <a href="MongoDB mongosh Create Database.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB mongosh Collection</h3>
+                <p>Learn MongoDB mongosh Create Collection</p>
+                <a href="MongoDB mongosh Create Collection.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB mongosh Insert</h3>
+                <p>Learn MongoDB mongosh Insert</p>
+                <a href="MongoDB mongosh Insert.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB mongosh Find</h3>
+                <p>Learn MongoDB mongosh Find</p>
+                <a href="MongoDB mongosh Find.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB mongosh Update</h3>
+                <p>Learn MongoDB mongosh Update</p>
+                <a href="MongoDB mongosh Update.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB mongosh Delete</h3>
+                <p>Learn MongoDB mongosh Delete</p>
+                <a href="MongoDB mongosh Delete.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Query Operators</h3>
+                <p>Learn MongoDB Query Operators</p>
+                <a href="MongoDB Query Operators.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Query API</h3>
+                <p>Learn MongoDB Query API</p>
+                <a href="MongoDB Query API.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Aggregation Pipelines</h3>
+                <p>Learn MongoDB Aggregation Pipelines</p>
+                <a href="MongoDB Aggregation Pipelines.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Aggregation $match</h3>
+                <p>Learn MongoDB Aggregation $match</p>
+                <a href="MongoDB Aggregation $match.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Aggregation $group</h3>
+                <p>Learn MongoDB Aggregation $group</p>
+                <a href="MongoDB Aggregation $group.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Aggregation $project</h3>
+                <p>Learn MongoDB Aggregation $project</p>
+                <a href="MongoDB Aggregation $project.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Aggregation $sort</h3>
+                <p>Learn MongoDB Aggregation $sort</p>
+                <a href="MongoDB Aggregation $sort.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Aggregation $limit</h3>
+                <p>Learn MongoDB Aggregation $limit</p>
+                <a href="MongoDB Aggregation $limit.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Aggregation $lookup</h3>
+                <p>Learn MongoDB Aggregation $lookup</p>
+                <a href="MongoDB Aggregation $lookup.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Aggregation $addFields</h3>
+                <p>Learn MongoDB Aggregation $addFields</p>
+                <a href="MongoDB Aggregation $addFields.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Aggregation $out</h3>
+                <p>Learn MongoDB Aggregation $out</p>
+                <a href="MongoDB Aggregation $out.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Update Operators</h3>
+                <p>Learn MongoDB Update Operators</p>
+                <a href="MongoDB Update Operators.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Schema Validation</h3>
+                <p>Learn MongoDB Schema Validation</p>
+                <a href="MongoDB Schema Validation.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Drivers</h3>
+                <p>Learn MongoDB Drivers</p>
+                <a href="MongoDB Drivers.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Node.js</h3>
+                <p>Learn MongoDB Node.js Database Interaction</p>
+                <a href="MongoDB Node.js Database Interaction.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Data API</h3>
+                <p>Learn MongoDB Data API</p>
+                <a href="MongoDB Data API.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB Charts</h3>
+                <p>Learn MongoDB Charts</p>
+                <a href="MongoDB Charts.html">Start Learning <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>JT GROUP OF INSTITUTION</h3>
+                <p style="color: #ddd; line-height: 1.6;">Leading educational institution providing quality programming education in multiple languages.</p>
+                <div style="padding: 1rem; margin-top: 1rem;">
+                    <h4 style="color: white; margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> Help Center</h4>
+                    <p style="color: #ddd;">jassifteam@jtgroupofinstitution.com</p>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/app/dashboard.html">Dashboard</a></li>
+                    <li><a href="/courses/tamil/">Courses</a></li>
+                    <li><a href="/app/login.html">Login</a></li>
+                    <li><a href="/app/signup.html">Sign Up</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Course Categories</h3>
+                <ul>
+                    <li><a href="/courses/tamil/FRONT_END_DEVELOPMENT/">Front End</a></li>
+                    <li><a href="/courses/tamil/full stack development/">Full Stack</a></li>
+                    <li><a href="/courses/tamil/programming-languages/">Programming</a></li>
+                    <li><a href="/courses/tamil/WEB_DEVELOPMENT/">Web Dev</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 JT GROUP OF INSTITUTION. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function logout() {
+            fetch('/api/auth/logout', {
+                method: 'POST'
+            }).then(() => {
+                window.location.href = '/app/login.html';
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+

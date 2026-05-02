@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js ECDH Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js DiffieHellman Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js Hash Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js ECDH Reference</h2>
+            <p>Node.js இல் Elliptic Curve Diffie-Hellman விசை பரிமாற்ற நெறிமுறையைப் பயன்படுத்துவதற்கான முழுமையான வழிகாட்டி</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- ECDH Object -->
+        <section class="content-section" id="ecdh-object">
+            <h2>ECDH Object</h2>
+            
+            <p>ECDH (Elliptic Curve Diffie-Hellman) வகுப்பு Node.js இன் crypto தொகுதியின் ஒரு பகுதியாகும். இது Elliptic Curve Diffie-Hellman விசை பரிமாற்ற நெறிமுறையை செயல்படுத்துகிறது, இது இரண்டு தரப்பினரும் நீள்வட்ட வளைவு குறியாக்கத்தைப் பயன்படுத்தி பாதுகாப்பற்ற சேனலில் பகிரப்பட்ட ரகசியத்தைப் பாதுகாப்பாக நிறுவ அனுமதிக்கிறது.</p>
+            
+            <p>ECDH பாரம்பரிய Diffie-Hellman விசை பரிமாற்றத்தை விட நன்மைகளை வழங்குகிறது, இதில் சிறிய விசை அளவுகள், வேகமான கணக்கீடு மற்றும் சமமான பாதுகாப்பு வலிமை ஆகியவை அடங்கும்.</p>
+        </section>
+
+        <!-- Import Crypto Module -->
+        <section class="content-section" id="import-crypto">
+            <h2>Import Crypto Module</h2>
+            
+            <div class="code-example">
+                <pre><code>// Import the crypto module
+const crypto = require('crypto');
+
+// Create an ECDH instance with a specific curve
+const ecdh = crypto.createECDH('prime256v1'); // Also known as P-256 or secp256r1</code></pre>
+            </div>
+        </section>
+
+        <!-- ECDH Methods -->
+        <section class="content-section" id="ecdh-methods">
+            <h2>ECDH Methods</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ecdh.generateKeys([encoding[, format]])</strong></td>
+                            <td>தனிப்பட்ட மற்றும் பொது EC Diffie-Hellman விசை மதிப்புகளை உருவாக்குகிறது. encoding வழங்கப்பட்டால், ஒரு சரம் திரும்பும்; இல்லையெனில், ஒரு Buffer திரும்பும். format வாதம் புள்ளி குறியீட்டைக் குறிப்பிடுகிறது மற்றும் 'compressed', 'uncompressed', அல்லது 'hybrid' ஆக இருக்கலாம்.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ecdh.computeSecret(otherPublicKey[, inputEncoding][, outputEncoding])</strong></td>
+                            <td>மற்ற தரப்பின் பொது விசையைப் பயன்படுத்தி பகிரப்பட்ட ரகசியத்தைக் கணக்கிடுகிறது. inputEncoding வழங்கப்பட்டால், otherPublicKey ஒரு சரமாக எதிர்பார்க்கப்படுகிறது; இல்லையெனில், ஒரு Buffer, TypedArray, அல்லது DataView. outputEncoding வழங்கப்பட்டால், ஒரு சரம் திரும்பும்; இல்லையெனில், ஒரு Buffer திரும்பும்.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ecdh.getPrivateKey([encoding])</strong></td>
+                            <td>EC Diffie-Hellman தனிப்பட்ட விசையைத் திரும்பப் பெறுகிறது. encoding வழங்கப்பட்டால், ஒரு சரம் திரும்பும்; இல்லையெனில், ஒரு Buffer திரும்பும்.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ecdh.getPublicKey([encoding][, format])</strong></td>
+                            <td>EC Diffie-Hellman பொது விசையைத் திரும்பப் பெறுகிறது. encoding வழங்கப்பட்டால், ஒரு சரம் திரும்பும்; இல்லையெனில், ஒரு Buffer திரும்பும். format வாதம் புள்ளி குறியீட்டைக் குறிப்பிடுகிறது மற்றும் 'compressed', 'uncompressed', அல்லது 'hybrid' ஆக இருக்கலாம்.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ecdh.setPrivateKey(privateKey[, encoding])</strong></td>
+                            <td>EC Diffie-Hellman தனிப்பட்ட விசையை அமைக்கிறது. encoding வழங்கப்பட்டால், privateKey ஒரு சரமாக எதிர்பார்க்கப்படுகிறது; இல்லையெனில், ஒரு Buffer, TypedArray, அல்லது DataView.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Supported Curves -->
+        <section class="content-section" id="supported-curves">
+            <h2>Supported Curves</h2>
+            
+            <p>Node.js ECDH க்கு பல்வேறு நீள்வட்ட வளைவுகளை ஆதரிக்கிறது. நீங்கள் ஆதரிக்கப்படும் அனைத்து வளைவுகளின் பட்டியலைப் பெறலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Get all supported elliptic curves
+console.log(crypto.getCurves());</code></pre>
+            </div>
+            
+            <p>ECDH க்கான பொதுவான வளைவுகள் அடங்கும்:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>வளைவு பெயர்</th>
+                            <th>மாற்று பெயர்கள்</th>
+                            <th>அளவு</th>
+                            <th>பாதுகாப்பு நிலை</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>prime256v1</strong></td>
+                            <td>P-256, secp256r1</td>
+                            <td>256 bits</td>
+                            <td>128 bits</td>
+                        </tr>
+                        <tr>
+                            <td><strong>secp384r1</strong></td>
+                            <td>P-384</td>
+                            <td>384 bits</td>
+                            <td>192 bits</td>
+                        </tr>
+                        <tr>
+                            <td><strong>secp521r1</strong></td>
+                            <td>P-521</td>
+                            <td>521 bits</td>
+                            <td>256 bits</td>
+                        </tr>
+                        <tr>
+                            <td><strong>secp256k1</strong></td>
+                            <td>(Bitcoin curve)</td>
+                            <td>256 bits</td>
+                            <td>128 bits</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ed25519</strong></td>
+                            <td>curve25519</td>
+                            <td>255 bits</td>
+                            <td>128 bits</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Basic Key Exchange Example -->
+        <section class="content-section" id="basic-exchange">
+            <h2>Basic Key Exchange Example</h2>
+            
+            <p>பின்வரும் எடுத்துக்காட்டு இரண்டு தரப்பினருக்கு இடையே (Alice மற்றும் Bob) அடிப்படை ECDH விசை பரிமாற்றத்தை விளக்குகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Alice creates an ECDH instance and generates keys
+console.log('Alice: Creating ECDH instance...');
+const alice = crypto.createECDH('prime256v1');
+alice.generateKeys();
+
+// Bob creates an ECDH instance and generates keys
+console.log('Bob: Creating ECDH instance...');
+const bob = crypto.createECDH('prime256v1');
+bob.generateKeys();
+
+// Exchange public keys (over an insecure channel)
+console.log('Exchanging public keys...');
+const alicePublicKey = alice.getPublicKey();
+const bobPublicKey = bob.getPublicKey();
+
+// Alice computes the shared secret using Bob's public key
+console.log('Alice: Computing shared secret...');
+const aliceSecret = alice.computeSecret(bobPublicKey);
+
+// Bob computes the shared secret using Alice's public key
+console.log('Bob: Computing shared secret...');
+const bobSecret = bob.computeSecret(alicePublicKey);
+
+// Both secrets should be the same
+console.log('Alice\'s secret:', aliceSecret.toString('hex'));
+console.log('Bob\'s secret:', bobSecret.toString('hex'));
+console.log('Do they match?', aliceSecret.equals(bobSecret));
+
+// This shared secret can now be used as a key for symmetric encryption</code></pre>
+            </div>
+        </section>
+
+        <!-- ECDH with Different Encoding Formats -->
+        <section class="content-section" id="encoding-formats">
+            <h2>ECDH with Different Encoding Formats</h2>
+            
+            <p>ECDH வெவ்வேறு பொது விசை குறியீட்டு வடிவங்களை ஆதரிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Create an ECDH instance
+const ecdh = crypto.createECDH('prime256v1');
+ecdh.generateKeys();
+
+// Get public key in different formats
+const uncompressedKey = ecdh.getPublicKey('hex', 'uncompressed');
+const compressedKey = ecdh.getPublicKey('hex', 'compressed');
+const hybridKey = ecdh.getPublicKey('hex', 'hybrid');
+
+console.log('Uncompressed public key:', uncompressedKey);
+console.log('Compressed public key:', compressedKey);
+console.log('Hybrid public key:', hybridKey);
+
+// Get key length in each format
+console.log('\nKey lengths:');
+console.log('Uncompressed:', Buffer.from(uncompressedKey, 'hex').length, 'bytes');
+console.log('Compressed:', Buffer.from(compressedKey, 'hex').length, 'bytes');
+console.log('Hybrid:', Buffer.from(hybridKey, 'hex').length, 'bytes');
+
+// Use a public key in different formats
+const otherEcdh = crypto.createECDH('prime256v1');
+otherEcdh.generateKeys();
+
+// Another party can use any format to compute the same secret
+const secret1 = otherEcdh.computeSecret(
+  Buffer.from(uncompressedKey, 'hex')
+);
+
+const secret2 = otherEcdh.computeSecret(
+  Buffer.from(compressedKey, 'hex')
+);
+
+console.log('\nSame secret computed from different formats?',
+  secret1.equals(secret2));</code></pre>
+            </div>
+        </section>
+
+        <!-- ECDH with Encryption -->
+        <section class="content-section" id="ecdh-with-encryption">
+            <h2>ECDH with Encryption</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு AES குறியாக்கத்திற்கான பகிரப்பட்ட விசையை நிறுவ ECDH ஐப் பயன்படுத்துவதன் முழுமையான காட்சியைக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Create ECDH instances for Alice and Bob
+const alice = crypto.createECDH('prime256v1');
+alice.generateKeys();
+
+const bob = crypto.createECDH('prime256v1');
+bob.generateKeys();
+
+// Exchange public keys
+const alicePublicKey = alice.getPublicKey();
+const bobPublicKey = bob.getPublicKey();
+
+// Compute shared secrets
+const aliceSecret = alice.computeSecret(bobPublicKey);
+const bobSecret = bob.computeSecret(alicePublicKey);
+
+// Use the shared secret as a key for encryption
+// First, derive a suitable key using a hash function
+function deriveKey(secret, salt, keyLength) {
+  return crypto.pbkdf2Sync(secret, salt, 1000, keyLength, 'sha256');
+}
+
+// Alice sends an encrypted message to Bob
+function encrypt(text, secret) {
+  // Create a salt and derive a key
+  const salt = crypto.randomBytes(16);
+  const key = deriveKey(secret, salt, 32); // 32 bytes for AES-256
+  const iv = crypto.randomBytes(16);
+  
+  // Encrypt the message
+  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
+  // Return everything Bob needs to decrypt
+  return {
+    salt: salt.toString('hex'),
+    iv: iv.toString('hex'),
+    encrypted
+  };
+}
+
+// Bob decrypts the message from Alice
+function decrypt(encryptedInfo, secret) {
+  // Parse values
+  const salt = Buffer.from(encryptedInfo.salt, 'hex');
+  const iv = Buffer.from(encryptedInfo.iv, 'hex');
+  const encrypted = encryptedInfo.encrypted;
+  
+  // Derive the same key
+  const key = deriveKey(secret, salt, 32);
+  
+  // Decrypt the message
+  const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  
+  return decrypted;
+}
+
+// Alice encrypts a message using the shared secret
+const message = 'Hello Bob, this is a secret message from Alice using ECDH!';
+console.log('Original message:', message);
+
+const encryptedMessage = encrypt(message, aliceSecret);
+console.log('Encrypted message:', encryptedMessage);
+
+// Bob decrypts the message using his shared secret
+const decryptedMessage = decrypt(encryptedMessage, bobSecret);
+console.log('Decrypted message:', decryptedMessage);
+
+// Verify the result
+console.log('Decryption successful:', message === decryptedMessage);</code></pre>
+            </div>
+        </section>
+
+        <!-- Setting Private Key Manually -->
+        <section class="content-section" id="setting-private-key">
+            <h2>Setting Private Key Manually</h2>
+            
+            <p>ஒன்றை உருவாக்குவதற்குப் பதிலாக நீங்கள் கைமுறையாக தனிப்பட்ட விசையை அமைக்கலாம்:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Create an ECDH instance
+const ecdh = crypto.createECDH('prime256v1');
+
+// Generate a random private key (32 bytes for prime256v1)
+const privateKey = crypto.randomBytes(32);
+console.log('Private key (hex):', privateKey.toString('hex'));
+
+// Set the private key
+ecdh.setPrivateKey(privateKey);
+
+// Derive the public key from the private key
+const publicKey = ecdh.getPublicKey('hex', 'uncompressed');
+console.log('Public key (hex):', publicKey);
+
+// You can also set the private key from a hex string
+const ecdh2 = crypto.createECDH('prime256v1');
+ecdh2.setPrivateKey(privateKey.toString('hex'), 'hex');
+
+// Check if both instances generate the same public key
+const publicKey2 = ecdh2.getPublicKey('hex', 'uncompressed');
+console.log('Same public keys:', publicKey === publicKey2);
+
+// This is useful for deterministic key generation or when loading keys from storage</code></pre>
+            </div>
+        </section>
+
+        <!-- ECDH with Different Curves -->
+        <section class="content-section" id="different-curves">
+            <h2>ECDH with Different Curves</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு ECDH உடன் வெவ்வேறு நீள்வட்ட வளைவுகளை எவ்வாறு பயன்படுத்துவது என்பதைக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+
+// Function to perform ECDH key exchange with a specific curve
+function testCurve(curveName) {
+  console.log(`\nTesting curve: ${curveName}`);
+  
+  try {
+    // Create ECDH instances
+    const alice = crypto.createECDH(curveName);
+    alice.generateKeys();
+    
+    const bob = crypto.createECDH(curveName);
+    bob.generateKeys();
+    
+    // Exchange public keys
+    const alicePublicKey = alice.getPublicKey();
+    const bobPublicKey = bob.getPublicKey();
+    
+    // Compute shared secrets
+    const aliceSecret = alice.computeSecret(bobPublicKey);
+    const bobSecret = bob.computeSecret(alicePublicKey);
+    
+    // Check if secrets match
+    const match = aliceSecret.equals(bobSecret);
+    
+    // Output results
+    console.log(`Public key size: ${alicePublicKey.length} bytes`);
+    console.log(`Shared secret size: ${aliceSecret.length} bytes`);
+    console.log(`Secrets match: ${match}`);
+    
+    return match;
+  } catch (error) {
+    console.error(`Error with curve ${curveName}: ${error.message}`);
+    return false;
+  }
+}
+
+// Test different curves
+const curves = [
+  'prime256v1',  // P-256 / secp256r1
+  'secp384r1',   // P-384
+  'secp521r1',   // P-521
+  'secp256k1',   // Bitcoin curve
+  'curve25519'   // Ed25519 curve (if supported)
+];
+
+curves.forEach(curve => {
+  testCurve(curve);
+});
+
+// Note: Not all curves may be supported in your Node.js version</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Comparison -->
+        <section class="content-section" id="performance-comparison">
+            <h2>Performance Comparison</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு ECDH இன் செயல்திறனை பாரம்பரிய Diffie-Hellman உடன் ஒப்பிடுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+const { performance } = require('perf_hooks');
+
+// Function to measure DH key generation time
+function measureDH(bits) {
+  const startTime = performance.now();
+  
+  const dh = crypto.createDiffieHellman(bits);
+  dh.generateKeys();
+  
+  const endTime = performance.now();
+  return endTime - startTime;
+}
+
+// Function to measure ECDH key generation time
+function measureECDH(curve) {
+  const startTime = performance.now();
+  
+  const ecdh = crypto.createECDH(curve);
+  ecdh.generateKeys();
+  
+  const endTime = performance.now();
+  return endTime - startTime;
+}
+
+// Function to measure secret computation time
+function measureSecretComputation(type, params) {
+  let alice, bob;
+  
+  // Create instances and generate keys
+  if (type === 'DH') {
+    alice = crypto.createDiffieHellman(params);
+    alice.generateKeys();
+    
+    bob = crypto.createDiffieHellman(alice.getPrime(), alice.getGenerator());
+    bob.generateKeys();
+  } else {
+    alice = crypto.createECDH(params);
+    alice.generateKeys();
+    
+    bob = crypto.createECDH(params);
+    bob.generateKeys();
+  }
+  
+  // Exchange public keys
+  const alicePublicKey = alice.getPublicKey();
+  const bobPublicKey = bob.getPublicKey();
+  
+  // Measure time for computing secrets
+  const startTime = performance.now();
+  
+  alice.computeSecret(bobPublicKey);
+  bob.computeSecret(alicePublicKey);
+  
+  const endTime = performance.now();
+  return endTime - startTime;
+}
+
+// Run performance tests
+console.log('Key Generation Performance:');
+console.log(`DH (1024 bits): ${measureDH(1024).toFixed(2)} ms`);
+console.log(`DH (2048 bits): ${measureDH(2048).toFixed(2)} ms`);
+console.log(`ECDH (P-256): ${measureECDH('prime256v1').toFixed(2)} ms`);
+console.log(`ECDH (P-384): ${measureECDH('secp384r1').toFixed(2)} ms`);
+console.log(`ECDH (P-521): ${measureECDH('secp521r1').toFixed(2)} ms`);
+
+console.log('\nSecret Computation Performance:');
+console.log(`DH (1024 bits): ${measureSecretComputation('DH', 1024).toFixed(2)} ms`);
+console.log(`DH (2048 bits): ${measureSecretComputation('DH', 2048).toFixed(2)} ms`);
+console.log(`ECDH (P-256): ${measureSecretComputation('ECDH', 'prime256v1').toFixed(2)} ms`);
+console.log(`ECDH (P-384): ${measureSecretComputation('ECDH', 'secp384r1').toFixed(2)} ms`);
+console.log(`ECDH (P-521): ${measureSecretComputation('ECDH', 'secp521r1').toFixed(2)} ms`);</code></pre>
+            </div>
+        </section>
+
+        <!-- ECDH Key Pair Generation for TLS -->
+        <section class="content-section" id="tls-key-generation">
+            <h2>ECDH Key Pair Generation for TLS</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு TLS உடன் பயன்படுத்த ECDH விசை ஜோடிகளை எவ்வாறு உருவாக்குவது என்பதைக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const crypto = require('crypto');
+const fs = require('fs');
+
+// Function to generate and save ECDH keys for TLS
+function generateEcdhKeysForTLS(curveName, keyFilePrefix) {
+  // Create ECDH instance
+  const ecdh = crypto.createECDH(curveName);
+  
+  // Generate keys
+  ecdh.generateKeys();
+  
+  // Get keys in PEM format
+  const privateKey = ecdh.getPrivateKey('hex');
+  const publicKey = ecdh.getPublicKey('hex', 'uncompressed');
+  
+  // Save keys to files
+  fs.writeFileSync(`${keyFilePrefix}_private.hex`, privateKey);
+  fs.writeFileSync(`${keyFilePrefix}_public.hex`, publicKey);
+  
+  console.log(`Generated ECDH key pair using ${curveName}`);
+  console.log(`Private key saved to ${keyFilePrefix}_private.hex`);
+  console.log(`Public key saved to ${keyFilePrefix}_public.hex`);
+  
+  return {
+    curve: curveName,
+    privateKey,
+    publicKey
+  };
+}
+
+// Generate keys for different curves
+generateEcdhKeysForTLS('prime256v1', 'ecdh_p256');
+generateEcdhKeysForTLS('secp384r1', 'ecdh_p384');
+
+console.log("\nThese keys can be used for ECDHE (Ephemeral ECDH) in TLS connections.");
+console.log("In a real application, you would use these with the TLS module or a library like Node.js's tls module.");</code></pre>
+            </div>
+        </section>
+
+        <!-- Security Considerations -->
+        <section class="content-section" id="security-considerations">
+            <h2>Security Considerations</h2>
+            
+            <p>ECDH விசை பரிமாற்றத்தைப் பயன்படுத்தும் போது, இந்த பாதுகாப்பு சிறந்த நடைமுறைகளைக் கவனியுங்கள்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-chart-line"></i>
+                    <span><strong>பொருத்தமான வளைவுகளைத் தேர்ந்தெடுக்கவும்:</strong> பெரும்பாலான பயன்பாடுகளுக்கு, P-256 (prime256v1) பாதுகாப்பு மற்றும் செயல்திறனின் நல்ல சமநிலையை வழங்குகிறது. அதிக பாதுகாப்பு தேவைகளுக்கு, P-384 அல்லது P-521 ஐக் கவனியுங்கள்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-ban"></i>
+                    <span><strong>பலவீனமான அல்லது மறக்கப்பட்ட வளைவுகளைத் தவிர்க்கவும்:</strong> சில வளைவுகள் பலவீனங்களைக் கொண்டுள்ளன. பாதுகாப்பு அதிகாரிகளால் பரிந்துரைக்கப்பட்ட நிலையான வளைவுகளை எப்போதும் பயன்படுத்தவும்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-sync"></i>
+                    <span><strong>குறுகிய கால விசைகளைப் பயன்படுத்தவும்:</strong> முன்னோக்கி இரகசியத்தை வழங்க ஒவ்வொரு அமர்வுக்கும் புதிய ECDH விசை ஜோடிகளை உருவாக்கவும்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-user-check"></i>
+                    <span><strong>அங்கீகாரத்தைச் சேர்க்கவும்:</strong> தூய ECDH (DH போன்றது) நடுவர் தாக்குதல்களுக்கு பாதிக்கப்படக்கூடியது. டிஜிட்டல் கையொப்பங்களுடன் ECDHE போன்ற அங்கீகரிக்கப்பட்ட விசை பரிமாற்ற நெறிமுறைகளைப் பயன்படுத்துவதைக் கவனியுங்கள்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span><strong>தனிப்பட்ட விசைகளைப் பாதுகாக்கவும்:</strong> பதிவுகள், பிழைத்திருத்த வெளியீடு அல்லது கிளையன்ட்-சைட் குறியீட்டில் தனிப்பட்ட விசைகளை வெளிப்படுத்த வேண்டாம்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-key"></i>
+                    <span><strong>குறியாக்க விசைகளை சரியாகப் பெறவும்:</strong> பகிரப்பட்ட ரகசியத்தை நேரடியாக குறியாக்க விசையாகப் பயன்படுத்த வேண்டாம். HKDF அல்லது PBKDF2 போன்ற விசை பெறுதல் செயல்பாட்டை (KDF) பயன்படுத்தவும்.</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>பொது விசைகளைச் சரிபார்க்கவும்:</strong> பெறப்பட்ட பொது விசைகள் நீள்வட்ட வளைவில் செல்லுபடியாகும் புள்ளிகள் என்பதைச் சரிபார்க்கவும், செல்லாத-வளைவு தாக்குதல்களைத் தடுக்க.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparing DH and ECDH -->
+        <section class="content-section" id="comparing-dh-ecdh">
+            <h2>Comparing DH and ECDH</h2>
+            
+            <p>இந்த அட்டவணை பாரம்பரிய Diffie-Hellman ஐ Elliptic Curve Diffie-Hellman உடன் ஒப்பிடுகிறது:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>Diffie-Hellman</th>
+                            <th>ECDH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>விசை அளவு</strong></td>
+                            <td>பொதுவாக 2048-4096 பிட்கள்</td>
+                            <td>பொதுவாக 256-384 பிட்கள்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>செயல்திறன்</strong></td>
+                            <td>மெதுவாக, அதிக கணக்கீடு தேவை</td>
+                            <td>வேகமாக, மிகவும் திறமையானது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>பாதுகாப்பு நிலை</strong></td>
+                            <td>2048-பிட் DH ≈ 112-பிட் பாதுகாப்பு</td>
+                            <td>256-பிட் ECDH ≈ 128-பிட் பாதுகாப்பு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>நினைவக பயன்பாடு</strong></td>
+                            <td>அதிக</td>
+                            <td>குறைந்த</td>
+                        </tr>
+                        <tr>
+                            <td><strong>நவீன பயன்பாடு</strong></td>
+                            <td>புதிய வடிவமைப்புகளில் குறைவாக பொதுவானது</td>
+                            <td>புதிய நெறிமுறைகளில் மிகவும் பொதுவானது (TLS 1.3, முதலியன)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>செயல்படுத்தல்</strong></td>
+                            <td>எளிமையான கணிதம்</td>
+                            <td>மிகவும் சிக்கலான நீள்வட்ட வளைவு செயல்பாடுகள்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> முக்கிய குறிப்பு:</h4>
+                <p>சமமான அல்லது சிறந்த பாதுகாப்பை வழங்கும் போது அதன் சிறந்த செயல்திறன் மற்றும் சிறிய விசை அளவுகளுக்காக, பெரும்பாலான நவீன பயன்பாடுகளில் ECDH விரும்பப்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் ECDH நிகழ்வை உருவாக்க பயன்படுத்தப்படும் சரியான முறையை தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">crypto.createECDHKey()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "crypto.createECDHKey()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">crypto.createECDH()</div>
+                            <div class="option-feedback correct">✓ சரி! "crypto.createECDH()" என்பது Node.js இல் ECDH நிகழ்வை உருவாக்க பயன்படும் சரியான முறையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">crypto.makeECDH()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "crypto.makeECDH()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">crypto.initECDH()</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "crypto.initECDH()" என்பது Node.js இல் ஒரு செல்லுபடியாகும் முறை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js DiffieHellman Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js Hash Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#ecdh-object">ECDH Object</a></li>
+                    <li><a href="#ecdh-methods">ECDH Methods</a></li>
+                    <li><a href="#supported-curves">Supported Curves</a></li>
+                    <li><a href="#basic-exchange">Basic Key Exchange</a></li>
+                    <li><a href="#security-considerations">Security Considerations</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

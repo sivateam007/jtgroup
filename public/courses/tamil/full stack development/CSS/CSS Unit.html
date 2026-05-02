@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Units - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Units table styling */
+        .units-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .units-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .units-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .units-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .unit-example {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: var(--git-color);
+        }
+        
+        /* Browser support table */
+        .browser-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .browser-table th {
+            background: var(--dark);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .browser-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .browser-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .browser-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .chrome { color: #4285F4; }
+        .edge { color: #0078D7; }
+        .firefox { color: #FF7139; }
+        .safari { color: #000000; }
+        .opera { color: #FF1B2D; }
+        
+        /* Comparison cards */
+        .unit-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .unit-type-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--git-color);
+        }
+        
+        .unit-type-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .unit-type-card h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .absolute { border-color: #e74c3c; }
+        .relative { border-color: #3498db; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Animatable.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="PX%20to%20EM%20Conversion.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Units</h2>
+            <p>CSS அலகுகளைப் பற்றி அறிந்து கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS Units</h2>
+            <p>CSS க்கு நீளத்தை வெளிப்படுத்த பல்வேறு அலகுகள் உள்ளன.</p>
+            
+            <p>பல CSS பண்புகள் "நீளம்" மதிப்புகளை எடுக்கும், உதாரணமாக width, margin, padding, font-size, முதலியன.</p>
+            
+            <p>நீளம் என்பது ஒரு எண்ணைத் தொடர்ந்து ஒரு நீள அலகு ஆகும், உதாரணமாக 10px, 2em, முதலியன.</p>
+        </section>
+
+        <!-- Example -->
+        <section class="content-section" id="example">
+            <h2>Example</h2>
+            <p>px (pixels) பயன்படுத்தி வெவ்வேறு நீள மதிப்புகளை அமைக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>h1 {
+  font-size: 60px;
+}
+
+p {
+  font-size: 25px;
+  line-height: 50px;
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📝</span> குறிப்பு:</h4>
+                <p>எண்ணுக்கும் அலகுக்கும் இடையே வெள்ளை இடம் தோன்றக்கூடாது. இருப்பினும், மதிப்பு 0 ஆக இருந்தால், அலகைத் தவிர்க்கலாம். சில CSS பண்புகளுக்கு, எதிர்மறை நீளங்கள் அனுமதிக்கப்படுகின்றன.</p>
+            </div>
+        </section>
+
+        <!-- Unit Types -->
+        <section class="content-section" id="unit-types">
+            <h2>Unit Types</h2>
+            <p>இரண்டு வகையான நீள அலகுகள் உள்ளன: முழுமையான (absolute) மற்றும் உறவின (relative).</p>
+            
+            <div class="unit-type-grid">
+                <div class="unit-type-card absolute">
+                    <h3><i class="fas fa-ruler-combined"></i> Absolute Lengths</h3>
+                    <p>முழுமையான நீள அலகுகள் நிலையானவை மற்றும் இவற்றில் ஏதேனும் ஒன்றில் வெளிப்படுத்தப்பட்ட நீளம் சரியாக அந்த அளவில் தோன்றும்.</p>
+                    <p>திரை அளவுகள் மிகவும் வேறுபடுவதால், திரையில் பயன்படுத்த முழுமையான நீள அலகுகள் பரிந்துரைக்கப்படுவதில்லை. இருப்பினும், வெளியீடு ஊடகம் அறியப்பட்டால், அவை பயன்படுத்தப்படலாம், உதாரணமாக அச்சு தளவமைப்புக்கு.</p>
+                </div>
+                
+                <div class="unit-type-card relative">
+                    <h3><i class="fas fa-exchange-alt"></i> Relative Lengths</h3>
+                    <p>உறவின நீள அலகுகள் மற்றொரு நீள பண்புக்கு தொடர்புடைய ஒரு நீளத்தை குறிப்பிடுகின்றன. உறவின நீள அலகுகள் வெவ்வேறு ரெண்டரிங் ஊடகங்களுக்கு இடையில் சிறப்பாக அளவிடப்படுகின்றன.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Absolute Lengths Table -->
+        <section class="content-section" id="absolute-lengths">
+            <h2>Absolute Lengths</h2>
+            
+            <table class="units-table">
+                <tr>
+                    <th>Unit</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>cm</strong></td>
+                    <td>centimeters</td>
+                    <td><span class="unit-example">5cm</span></td>
+                </tr>
+                <tr>
+                    <td><strong>mm</strong></td>
+                    <td>millimeters</td>
+                    <td><span class="unit-example">10mm</span></td>
+                </tr>
+                <tr>
+                    <td><strong>in</strong></td>
+                    <td>inches (1in = 96px = 2.54cm)</td>
+                    <td><span class="unit-example">2in</span></td>
+                </tr>
+                <tr>
+                    <td><strong>px *</strong></td>
+                    <td>pixels (1px = 1/96th of 1in)</td>
+                    <td><span class="unit-example">16px</span></td>
+                </tr>
+                <tr>
+                    <td><strong>pt</strong></td>
+                    <td>points (1pt = 1/72 of 1in)</td>
+                    <td><span class="unit-example">12pt</span></td>
+                </tr>
+                <tr>
+                    <td><strong>pc</strong></td>
+                    <td>picas (1pc = 12 pt)</td>
+                    <td><span class="unit-example">1pc</span></td>
+                </tr>
+            </table>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>* பிக்சல்கள் (px) காணும் சாதனத்துடன் தொடர்புடையவை. குறைந்த-தீர்மான சாதனங்களுக்கு, 1px என்பது காட்சியின் ஒரு சாதன பிக்சல் (புள்ளி) ஆகும். அச்சுப்பொறிகள் மற்றும் உயர் தீர்மான திரைகளுக்கு 1px என்பது பல சாதன பிக்சல்களைக் குறிக்கிறது.</p>
+            </div>
+        </section>
+
+        <!-- Relative Lengths Table -->
+        <section class="content-section" id="relative-lengths">
+            <h2>Relative Lengths</h2>
+            
+            <table class="units-table">
+                <tr>
+                    <th>Unit</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>em</strong></td>
+                    <td>தனிமத்தின் font-size உடன் தொடர்புடையது (2em என்பது தற்போதைய எழுத்துரு அளவின் 2 மடங்கு)</td>
+                    <td><span class="unit-example">2em</span></td>
+                </tr>
+                <tr>
+                    <td><strong>ex</strong></td>
+                    <td>தற்போதைய எழுத்துரின் x-height உடன் தொடர்புடையது (அரிதாக பயன்படுத்தப்படுகிறது)</td>
+                    <td><span class="unit-example">1ex</span></td>
+                </tr>
+                <tr>
+                    <td><strong>ch</strong></td>
+                    <td>"0" (பூஜ்யம்) இன் அகலத்துடன் தொடர்புடையது</td>
+                    <td><span class="unit-example">20ch</span></td>
+                </tr>
+                <tr>
+                    <td><strong>rem</strong></td>
+                    <td>ரூட் உறுப்பின் font-size உடன் தொடர்புடையது</td>
+                    <td><span class="unit-example">1.5rem</span></td>
+                </tr>
+                <tr>
+                    <td><strong>vw</strong></td>
+                    <td>பார்வைத்துளியின்* அகலத்தில் 1% உடன் தொடர்புடையது</td>
+                    <td><span class="unit-example">50vw</span></td>
+                </tr>
+                <tr>
+                    <td><strong>vh</strong></td>
+                    <td>பார்வைத்துளியின்* உயரத்தில் 1% உடன் தொடர்புடையது</td>
+                    <td><span class="unit-example">100vh</span></td>
+                </tr>
+                <tr>
+                    <td><strong>vmin</strong></td>
+                    <td>பார்வைத்துளியின்* சிறிய பரிமாணத்தில் 1% உடன் தொடர்புடையது</td>
+                    <td><span class="unit-example">10vmin</span></td>
+                </tr>
+                <tr>
+                    <td><strong>vmax</strong></td>
+                    <td>பார்வைத்துளியின்* பெரிய பரிமாணத்தில் 1% உடன் தொடர்புடையது</td>
+                    <td><span class="unit-example">10vmax</span></td>
+                </tr>
+                <tr>
+                    <td><strong>%</strong></td>
+                    <td>பெற்றோர் உறுப்புடன் தொடர்புடையது</td>
+                    <td><span class="unit-example">50%</span></td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>em மற்றும் rem அலகுகள் சரியாக அளவிடக்கூடிய தளவமைப்பை உருவாக்குவதில் நடைமுறை ரீதியாக பயனுள்ளவை!</p>
+                <p>* பார்வைத்துளி = உலாவி சாளர அளவு. பார்வைத்துளி 50cm அகலமாக இருந்தால், 1vw = 0.5cm.</p>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2>Browser Support</h2>
+            <p>அட்டவணையில் உள்ள எண்கள் நீள அலகை முழுமையாக ஆதரிக்கும் முதல் உலாவி பதிப்பைக் குறிக்கிறது.</p>
+            
+            <table class="browser-table">
+                <tr>
+                    <th>Length Unit</th>
+                    <th><i class="fab fa-chrome browser-icon chrome"></i>Chrome</th>
+                    <th><i class="fab fa-edge browser-icon edge"></i>Edge</th>
+                    <th><i class="fab fa-firefox browser-icon firefox"></i>Firefox</th>
+                    <th><i class="fab fa-safari browser-icon safari"></i>Safari</th>
+                    <th><i class="fab fa-opera browser-icon opera"></i>Opera</th>
+                </tr>
+                <tr>
+                    <td>em, ex, %, px, cm, mm, in, pt, pc</td>
+                    <td>1.0</td>
+                    <td>3.0</td>
+                    <td>1.0</td>
+                    <td>1.0</td>
+                    <td>3.5</td>
+                </tr>
+                <tr>
+                    <td>ch</td>
+                    <td>27.0</td>
+                    <td>9.0</td>
+                    <td>1.0</td>
+                    <td>7.0</td>
+                    <td>20.0</td>
+                </tr>
+                <tr>
+                    <td>rem</td>
+                    <td>4.0</td>
+                    <td>9.0</td>
+                    <td>3.6</td>
+                    <td>4.1</td>
+                    <td>11.6</td>
+                </tr>
+                <tr>
+                    <td>vh, vw</td>
+                    <td>20.0</td>
+                    <td>9.0</td>
+                    <td>19.0</td>
+                    <td>6.0</td>
+                    <td>20.0</td>
+                </tr>
+                <tr>
+                    <td>vmin</td>
+                    <td>20.0</td>
+                    <td>12.0</td>
+                    <td>19.0</td>
+                    <td>6.0</td>
+                    <td>20.0</td>
+                </tr>
+                <tr>
+                    <td>vmax</td>
+                    <td>26.0</td>
+                    <td>16.0</td>
+                    <td>19.0</td>
+                    <td>7.0</td>
+                    <td>20.0</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் CSS அலகுகளில் எது ஒரு உறவின (relative) அலகு?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">px</div>
+                            <div class="option-feedback incorrect">✗ தவறு! px என்பது முழுமையான (absolute) அலகு</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">em</div>
+                            <div class="option-feedback correct">✓ சரி! em என்பது உறவின (relative) அலகு</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">cm</div>
+                            <div class="option-feedback incorrect">✗ தவறு! cm என்பது முழுமையான (absolute) அலகு</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">in</div>
+                            <div class="option-feedback incorrect">✗ தவறு! in (inches) என்பது முழுமையான (absolute) அலகு</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Animatable.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="PX%20to%20EM%20Conversion.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">CSS அலகுகள்</a></li>
+                    <li><a href="#absolute-lengths">முழுமையான நீளங்கள்</a></li>
+                    <li><a href="#relative-lengths">உறவின நீளங்கள்</a></li>
+                    <li><a href="#browser-support">உலாவி ஆதரவு</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

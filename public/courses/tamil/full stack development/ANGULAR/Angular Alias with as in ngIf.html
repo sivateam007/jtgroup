@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Alias with as in *ngIf - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .alias-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            margin: 2rem 0;
+        }
+        
+        .demo-container {
+            background: white;
+            color: #333;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        
+        .demo-btn {
+            padding: 8px 16px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #e74c3c;
+        }
+        
+        .demo-output {
+            margin-top: 20px;
+            padding: 20px;
+            min-height: 80px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .user-display {
+            padding: 15px 25px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .empty-display {
+            padding: 15px 25px;
+            background: #f8d7da;
+            color: #721c24;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .alias-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2.5rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            padding: 0 1rem;
+        }
+        
+        .flow-step:not(:last-child):after {
+            content: '→';
+            position: absolute;
+            right: -0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--git-color);
+            font-weight: bold;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .comparison-column {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .without-alias {
+            border-top: 4px solid #dc3545;
+        }
+        
+        .with-alias {
+            border-top: 4px solid #28a745;
+        }
+        
+        .code-snippet {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .use-case-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 4px solid var(--git-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .use-case-icon {
+            font-size: 1.5rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .alias-flow {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .flow-step:not(:last-child):after {
+                content: '↓';
+                right: 50%;
+                bottom: -1.5rem;
+                top: auto;
+                transform: translateX(50%);
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a class="nav-tab prev" href="Angular Template Statements and $event.html">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a class="nav-tab அடுத்தது" href="Angular Pipes in Templates.html">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Angular Alias with as in *ngIf</h2>
+            <p>உண்மை மதிப்பிலிருந்து உள்ளூர் மாற்றுப் பெயரை உருவாக்க as ஐப் பயன்படுத்தி வெளிப்பாடுகளை மீண்டும் செய்வதைத் தவிர்க்க</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What is alias with as in *ngIf? -->
+        <section class="content-section" id="what-is-alias">
+            <h2>*ngIf இல் as உடன் மாற்றுப் பெயர் என்றால் என்ன?</h2>
+            <p>நிபந்தனையின் உண்மை மதிப்பிற்கு உள்ளூர் மாற்றுப் பெயரை உருவாக்கவும்.</p>
+            <p>எடுத்துக்காட்டு: <code>*ngIf="user as u"</code> பின்னர் உள்ளே <code>u</code> ஐப் பயன்படுத்தவும்.</p>
+            <p>வெளிப்பாடுகளை மீண்டும் செய்வதன் மூலம் டெம்ப்ளேட்டுகளை சுத்தமாக்குகிறது.</p>
+            
+            <div class="alias-flow">
+                <div class="flow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4>நிபந்தனை மதிப்பீடு</h4>
+                    <p><code>user</code> உண்மையா?</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h4>மாற்றுப் பெயர் உருவாக்கம்</h4>
+                    <p><code>as u</code> உள்ளூர் மாற்றுப் பெயரை உருவாக்குகிறது</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>டெம்ப்ளேட் பயன்பாடு</h4>
+                    <p><code>u.name</code> உடன் மீண்டும் செய்யாமல் பயன்படுத்தவும்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- When to use alias with as -->
+        <section class="content-section" id="when-to-use">
+            <h2>எப்போது as உடன் மாற்றுப் பெயரைப் பயன்படுத்துவது</h2>
+            
+            <div class="use-cases">
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <h4>அதே வெளிப்பாடு பல முறை குறிப்பிடப்படும் போது</h4>
+                    <p>மறுபடியும் பயன்படுத்துவதைத் தவிர்க்க</p>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h4>மதிப்பு தேவைப்படும் else டெம்ப்ளேட்டைப் பயன்படுத்தும் போது</h4>
+                    <p>இரண்டு கிளைகளுக்கும் அணுகலை வழங்குகிறது</p>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h4>வாசிப்புத்தன்மையை மேம்படுத்த மற்றும் நகலெடுப்பைக் குறைக்க</h4>
+                    <p>டெம்ப்ளேட்டுகளை சுத்தமாகவும் பராமரிக்கக்கூடியதாகவும் வைத்திருங்கள்</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-eye"></i></span>நிபந்தனை ரெண்டரிங்:</h4>
+                <p>as மற்றும் else உடன் *ngIf க்கான எடுத்துக்காட்டுகள் நிபந்தனை ரெண்டரிங் பகுதியின் கீழ் உள்ளன.</p>
+            </div>
+        </section>
+
+        <!-- Comparison: Without vs With Alias -->
+        <section class="content-section" id="comparison">
+            <h2>ஒப்பீடு: மாற்றுப் பெயர் இல்லாமல் vs மாற்றுப் பெயருடன்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-column without-alias">
+                    <div class="comparison-title">
+                        <h4><i class="fas fa-times-circle" style="color: #dc3545;"></i> மாற்றுப் பெயர் இல்லாமல்</h4>
+                    </div>
+                    <div class="code-snippet">
+&lt;p *ngIf="user"&gt;<br>
+&nbsp;&nbsp;Hello {{ user.name }}!<br>
+&nbsp;&nbsp;Email: {{ user.email }}<br>
+&nbsp;&nbsp;Age: {{ user.age }}<br>
+&lt;/p&gt;<br>
+&lt;ng-template #empty&gt;No user&lt;/ng-template&gt;
+                    </div>
+                    <ul>
+                        <li><strong>குறைபாடுகள்:</strong> <code>user</code> பல முறை மீண்டும் செய்யப்படுகிறது</li>
+                        <li><strong>பராமரிப்பு:</strong> மாற்றங்களுக்கு பல இடங்களைப் புதுப்பிக்க வேண்டும்</li>
+                        <li><strong>பிழை அபாயம்:</strong> தட்டச்சு பிழைகளுக்கான உயர் வாய்ப்பு</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-column with-alias">
+                    <div class="comparison-title">
+                        <h4><i class="fas fa-check-circle" style="color: #28a745;"></i> மாற்றுப் பெயருடன்</h4>
+                    </div>
+                    <div class="code-snippet">
+&lt;p *ngIf="user as u; else empty"&gt;<br>
+&nbsp;&nbsp;Hello {{ u.name }}!<br>
+&nbsp;&nbsp;Email: {{ u.email }}<br>
+&nbsp;&nbsp;Age: {{ u.age }}<br>
+&lt;/p&gt;<br>
+&lt;ng-template #empty&gt;No user&lt;/ng-template&gt;
+                    </div>
+                    <ul>
+                        <li><strong>நன்மைகள்:</strong> <code>user</code> ஒரு முறை மட்டுமே குறிப்பிடப்பட்டுள்ளது</li>
+                        <li><strong>பராமரிப்பு:</strong> ஒரு இடத்தில் மட்டுமே மாற்றங்கள் தேவை</li>
+                        <li><strong>துல்லியம்:</strong> தட்டச்சு பிழைகளின் குறைந்த வாய்ப்பு</li>
+                        <li><strong>வாசிப்புத்தன்மை:</strong> குறுகிய, சுத்தமான குறியீடு</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example -->
+        <section class="content-section" id="example">
+            <h2>எடுத்துக்காட்டு</h2>
+            <p>உங்கள் சொந்த Angular சேவையகத்தைப் பெறுங்கள்:</p>
+            
+            <div class="code-example">
+                <h3>main.ts</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <button (click)="toggle()">Toggle user</button>
+    <p *ngIf="user as u; else empty">Hello {{ u.name }}!</p>
+    <ng-template #empty>No user</ng-template>
+  `
+})
+export class App {
+  user: { name: string } | null = { name: 'Ada' };
+  toggle() { this.user = this.user ? null : { name: 'Ada' }; }
+}
+
+bootstrapApplication(App);</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>index.html</h3>
+<pre><code class="command-input">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Angular App&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;app-root&gt;&lt;/app-root&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="alias-demo">
+                <h3 style="color: white; text-align: center;">நேரடி டெமோ: மாற்றுப் பெயர் கையாளுதல்</h3>
+                <div class="demo-container">
+                    <div class="demo-buttons">
+                        <button class="demo-btn" onclick="toggleUser()">பயனரை மாற்று</button>
+                        <button class="demo-btn" onclick="createUser()">பயனரை உருவாக்கு</button>
+                        <button class="demo-btn" onclick="clearUser()">பயனரை அழி</button>
+                    </div>
+                    
+                    <div class="demo-output" id="aliasOutput">
+                        <div class="user-display">
+                            Hello Ada!
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                        <p><strong>நடப்பு நிலை:</strong> <span id="currentState" style="color: var(--git-color); font-weight: bold;">பயனர் வரையறுக்கப்பட்டுள்ளது</span></p>
+                        <p><strong>டெம்ப்ளேட் வெளிப்பாடு:</strong> <code id="templateExpr">*ngIf="user as u; else empty"</code></p>
+                        <p><strong>மாற்றுப் பெயர் மதிப்பு:</strong> <code id="aliasValue">u = { name: 'Ada' }</code></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example explained -->
+        <section class="content-section" id="example-explained">
+            <h2>எடுத்துக்காட்டு விளக்கம்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-column">
+                    <h4><code>*ngIf="user as u"</code></h4>
+                    <p>user உண்மையாக இருக்கும் போது, user மதிப்பை வைத்திருக்கும் உள்ளூர் மாற்றுப் பெயர் u ஐ உருவாக்கவும்.</p>
+                </div>
+                
+                <div class="comparison-column">
+                    <h4>மாற்றுப் பெயர் பயன்பாடு</h4>
+                    <p>தொகுதிக்குள், user.name ஐ மீண்டும் செய்வதற்குப் பதிலாக u.name ஐப் பயன்படுத்தவும்.</p>
+                </div>
+                
+                <div class="comparison-column">
+                    <h4><code>else empty</code></h4>
+                    <p>user பொய்யாக இருக்கும் போது, #empty மூலம் குறிப்பிடப்பட்ட டெம்ப்ளேட்டை ரெண்டர் செய்யவும்.</p>
+                </div>
+                
+                <div class="comparison-column">
+                    <h4><code>toggle()</code></h4>
+                    <p>பொத்தான் user ஐ null மற்றும் ஒரு பொருள் இடையே மாற்றுகிறது இரண்டு பாதைகளையும் நிரூபிக்க.</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon"><i class="fas fa-exclamation-triangle"></i></span>மாற்றுப் பெயர் நோக்கம்:</h4>
+                <p>as மாற்றுப் பெயர் <strong>நிபந்தனை உண்மையாக இருக்கும் தொகுதிக்கு மட்டுமே</strong> நோக்கப்பட்டுள்ளது. else தொகுதிக்குள் மாற்றுப் பெயரை நீங்கள் அணுக முடியாது, ஏனெனில் அது வரையறுக்கப்படவில்லை (நிபந்தனை பொய் என்பதால்). இரண்டு கிளைகளுக்கும் மதிப்பு தேவைப்பட்டால், கூறு முறையைப் பயன்படுத்தவும்.</p>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-history"></i></span>Angular 17+ கட்டுப்பாட்டு ஓட்டம்:</h4>
+                <p>Angular 17+ இல் புதிய கட்டுப்பாட்டு ஓட்ட தொடரியல் (@if, @for, @switch) அதே அம்சத்தை வழங்குகிறது: <code>@if (user; as u) { Hello {{ u.name }}! } @else { No user }</code>. புதிய திட்டங்களுக்கு புதிய தொடரியலைப் பயன்படுத்த பரிந்துரைக்கப்படுகிறது, ஆனால் இருக்கும் குறியீட்டுக்கு *ngIf இல் as இன்னும் முழுமையாக ஆதரிக்கப்படுகிறது.</p>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            <p>உங்கள் அறிவைச் சோதிக்க இந்தப் பயிற்சியை முயற்சிக்கவும்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span>*ngIf / @if மாற்றுப் பெயரிடலில் 'as' என்ன செய்கிறது?</h4>
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">கூறின் பெயரை மாற்றுகிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறானது! 'as' கூறு பெயர் மாற்றத்திற்குப் பயன்படுத்தப்படவில்லை. கூறு பெயர்கள் TypeScript வகுப்பு பெயர்கள் மற்றும் HTML தேர்விகளால் வரையறுக்கப்படுகின்றன, *ngIf தொடரியல் மூலம் அல்ல.</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">மதிப்புக்கு உள்ளூர் மாற்றுப் பெயரை உருவாக்குகிறது</div>
+                            <div class="option-feedback correct">✓ சரி! *ngIf அல்லது @if இல் 'as' கீப்வேர்டு நிபந்தனை உண்மையாக இருக்கும் போது அதன் மதிப்பிற்கு ஒரு உள்ளூர் மாற்றுப் பெயரை (அலியஸ்) உருவாக்கப் பயன்படுகிறது. இது டெம்ப்ளேட் தொகுதிக்குள் அந்த மதிப்பை மீண்டும் மீண்டும் சொல்லாமல் பயன்படுத்த அனுமதிக்கிறது, குறியீட்டை சுத்தமாகவும் பராமரிக்கக்கூடியதாகவும் ஆக்குகிறது.</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">ஒரு தொகுதியை இறக்குமதி செய்கிறது</div>
+                            <div class="option-feedback incorrect">✗ தவறானது! 'as' தொகுதி இறக்குமதிக்குப் பயன்படுத்தப்படவில்லை. தொகுதிகள் TypeScript இறக்குமதி அறிக்கைகள் (import) மூலம் இறக்குமதி செய்யப்படுகின்றன, *ngIf தொடரியல் மூலம் அல்ல.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-magic"></i></span>மாற்றுப் பெயர் நன்மைகள்:</h4>
+                <p>as மாற்றுப் பெயரைப் பயன்படுத்துவது பல நன்மைகளைக் கொண்டுள்ளது: 1) <strong>நகலெடுப்பைக் குறைக்கிறது</strong> (மதிப்பை ஒருமுறை மட்டுமே குறிப்பிடவும்), 2) <strong>பராமரிப்பை மேம்படுத்துகிறது</strong> (ஒரு இடத்தில் மட்டுமே மாற்றங்கள்), 3) <strong>பிழைகளைக் குறைக்கிறது</strong> (தட்டச்சு பிழைகளின் குறைந்த வாய்ப்பு), மற்றும் 4) <strong>வாசிப்புத்தன்மையை மேம்படுத்துகிறது</strong> (குறுகிய, தெளிவான குறியீடு).</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a class="nav-tab prev" href="Angular Template Statements and $event.html">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a class="nav-tab அடுத்தது" href="Angular Pipes in Templates.html">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழ் மொழியில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணிகக் கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#what-is-alias">*ngIf இல் as உடன் மாற்றுப் பெயர்</a></li>
+                    <li><a href="#when-to-use">எப்போது பயன்படுத்துவது</a></li>
+                    <li><a href="#comparison">ஒப்பீடு: இல்லாமல் vs உடன்</a></li>
+                    <li><a href="#example">எடுத்துக்காட்டு</a></li>
+                    <li><a href="#example-explained">எடுத்துக்காட்டு விளக்கம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">எங்களைத் தொடர்பு கொள்ளவும்</a></li>
+                    <li><a href="#">இடம் மற்றும் நேரம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>எங்களைப் பின்தொடருங்கள்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Demo functionality
+        let user = { name: 'Ada' };
+        
+        function updateDemo() {
+            const aliasOutput = document.getElementById('aliasOutput');
+            const currentState = document.getElementById('currentState');
+            const templateExpr = document.getElementById('templateExpr');
+            const aliasValue = document.getElementById('aliasValue');
+            
+            if (user) {
+                aliasOutput.innerHTML = '<div class="user-display">Hello ' + user.name + '!</div>';
+                currentState.textContent = 'பயனர் வரையறுக்கப்பட்டுள்ளது';
+                currentState.style.color = 'var(--git-color)';
+                templateExpr.textContent = '*ngIf="user as u; else empty"';
+                aliasValue.textContent = 'u = { name: \'' + user.name + '\' }';
+            } else {
+                aliasOutput.innerHTML = '<div class="empty-display">No user</div>';
+                currentState.textContent = 'பயனர் வரையறுக்கப்படவில்லை';
+                currentState.style.color = '#dc3545';
+                templateExpr.textContent = '*ngIf="user as u; else empty"';
+                aliasValue.textContent = 'u = undefined (else தொகுதி செயலில் உள்ளது)';
+            }
+        }
+        
+        function toggleUser() {
+            user = user ? null : { name: 'Ada' };
+            updateDemo();
+        }
+        
+        function createUser() {
+            user = { name: 'Ada' };
+            updateDemo();
+        }
+        
+        function clearUser() {
+            user = null;
+            updateDemo();
+        }
+        
+        // Initialize demo
+        updateDemo();
+    </script>
+
+    <!-- Home Button -->
+    <a class="home-icon" href="index.html">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

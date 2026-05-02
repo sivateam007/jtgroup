@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git MCQ Quiz - Easy Level | Jassif Team</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional Quiz-specific styles */
+        
+        /* Jassif Team Quiz Header */
+        .jassif-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Logo Section - FIXED with BLACK background */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: black; /* CHANGED from white to black */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--git-color);
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .team-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Quiz Hero */
+        .quiz-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quiz-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .quiz-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Question Selection Grid */
+        .question-selection-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        /* MODIFIED: Question number button with ONLY easy level color */
+        .question-number-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number-btn:hover {
+            border-color: var(--git-color);
+            transform: translateY(-3px);
+        }
+
+        .question-number-btn.active {
+            background: var(--git-color);
+            color: white;
+            border-color: var(--git-color);
+        }
+
+        .question-number-btn.answered {
+            background: #e8f4fc;
+            border-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        /* NEW: Difficulty level indicator in question tabs - ONLY EASY */
+        .difficulty-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 8px 8px 0 0;
+            background-color: #28a745; /* Green for Easy */
+        }
+
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color);
+        }
+
+        .current-question-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* REMOVED: Quiz info section */
+        .quiz-info {
+            display: none; /* Hide the score and answered count */
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--git-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        /* MODIFIED: Only show selection color, NOT correct/incorrect */
+        .quiz-option.selected {
+            border-color: var(--secondary);
+            background: #e8f4fc;
+        }
+
+        /* These classes are only applied AFTER quiz submission */
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--accent);
+            background: #f8d7da;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected .option-letter {
+            background: var(--secondary);
+        }
+
+        .quiz-option.correct .option-letter {
+            background: var(--success);
+        }
+
+        .quiz-option.incorrect .option-letter {
+            background: var(--accent);
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-btn.prev {
+            background: #667eea;
+        }
+
+        .quiz-btn.submit {
+            background: var(--success);
+        }
+
+        /* Results Container */
+        .results-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .results-score {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--git-color);
+            margin: 1rem 0;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+        }
+
+        .results-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--git-color);
+            margin-top: 0.5rem;
+        }
+
+        .quiz-btn.restart {
+            background: var(--git-color);
+            margin-top: 1rem;
+        }
+
+        /* Footer - FIXED with BLACK background */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: black; /* CHANGED from white to black */
+            padding: 0;
+        }
+
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .team-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quiz-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .question-selection-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .question-number-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="jassif-header">
+        <div class="header-container">
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <!-- CHANGED: img.jpg to logo.jpg -->
+                    <img src="logo.jpg" alt="Jassif Team Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">JASSIF TEAM</div>
+                    <div class="logo-sub">GIT COURSE</div>
+                </div>
+            </a>
+            <div class="team-info">
+                <div class="team-badge">
+                    <i class="fas fa-code-branch"></i>
+                    Git Course
+                </div>
+                <div class="team-badge">
+                    <i class="fas fa-question-circle"></i>
+                    Easy MCQ Quiz
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Hero Section -->
+    <section class="quiz-hero">
+        <div class="quiz-hero-content">
+            <h2>Git MCQ Quiz - Easy Level Questions</h2>
+            <p>Test your basic Git knowledge with 30 easy difficulty multiple-choice questions in Tamil. All questions are marked with green indicator.</p>
+            <div class="quiz-badges">
+                <span class="info-badge level"><i class="fas fa-signal"></i> Easy Level</span>
+                <span class="info-badge"><i class="fas fa-clock"></i> 15-20 min</span>
+                <span class="info-badge"><i class="fas fa-question-circle"></i> 30 Questions</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Question Selection Grid -->
+    <section class="question-selection-section">
+        <div class="section-title">
+            <h2>Easy Level Questions</h2>
+            <p>All questions are easy level. Click on any question number to jump directly to it.</p>
+        </div>
+        
+        <div class="question-selection-grid" id="questionSelectionGrid">
+            <!-- Question numbers will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Main Quiz Container -->
+    <main class="quiz-container">
+        <!-- Quiz Interface -->
+        <div class="quiz-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="current-question-number" id="questionNumber">
+                    Question 1 of 30
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <!-- Question -->
+            <div class="question-text" id="questionText">
+                Git என்றால் என்ன?
+            </div>
+            
+            <!-- Options -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="quiz-footer">
+                <button class="quiz-btn prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="quiz-btn next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="quiz-btn submit" id="submitBtn" style="display: none;">
+                    <i class="fas fa-paper-plane"></i> Submit Quiz
+                </button>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div class="results-container" id="resultsContainer">
+            <h2 class="section-title">Easy Quiz Results</h2>
+            <div class="results-score" id="finalScore">0/30</div>
+            <div class="results-message" id="resultMessage">
+                Your performance message will appear here.
+            </div>
+            
+            <div class="results-details">
+                <div class="result-card">
+                    <h4><i class="fas fa-check-circle"></i> Correct Answers</h4>
+                    <div class="result-value" id="correctCount">0</div>
+                </div>
+                <div class="result-card">
+                    <h4><i class="fas fa-percentage"></i> Percentage</h4>
+                    <div class="result-value" id="percentage">0%</div>
+                </div>
+                <div class="result-card">
+                    <h4><i class="fas fa-trophy"></i> Performance</h4>
+                    <div class="result-value" id="performance">Beginner</div>
+                </div>
+            </div>
+            
+            <div class="results-actions">
+                <p>Review your answers or try the quiz again.</p>
+                <button class="quiz-btn restart" id="restartBtn">
+                    <i class="fas fa-redo"></i> Restart Easy Quiz
+                </button>
+            </div>
+             <!-- Certificate Button -->
+ <div class="results-actions">
+                
+                <button class="quiz-btn restart" id="restartBtn" onclick="certificate()">
+                    <i class="fas fa-award"></i>GET CERTIFICATE
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <div class="footer-logo-image">
+                <!-- CHANGED: img.jpg to logo.jpg -->
+                <img src="logo.jpg" alt="Jassif Team Logo">
+            </div>
+            <div>Jassif Team - Git Course</div>
+        </div>
+        <div class="footer-text">
+            &copy; 2024 Jassif Team. All rights reserved. | Easy Level Git MCQ Quiz
+        </div>
+    </footer>
+
+    <script>
+        // Git Easy Level Quiz data in Tamil
+        const quizData = [
+            { 
+                question: "Git என்றால் என்ன?", 
+                options: [
+                    "விநியோகிக்கப்பட்ட பதிப்புக் கட்டுப்பாடு அமைப்பு", 
+                    "ஒரு நிரலாக்க மொழி", 
+                    "வலைத்தள வடிவமைப்பு கருவி", 
+                    "தரவுத்தள மேலாண்மை அமைப்பு"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Git இல் ஒரு புதிய களஞ்சியத்தை (repository) உருவாக்க பயன்படும் கட்டளை?", 
+                options: [
+                    "git start", 
+                    "git init", 
+                    "git create", 
+                    "git new"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Git இல் பயனர் பெயர் அமைக்க பயன்படும் கட்டளை?", 
+                options: [
+                    "git set user.name \"பெயர்\"", 
+                    "git config --global user.name \"பெயர்\"", 
+                    "git user \"பெயர்\"", 
+                    "git username \"பெயர்\""
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Git இல் பயனர் மின்னஞ்சல் அமைக்க பயன்படும் கட்டளை?", 
+                options: [
+                    "git email \"மின்னஞ்சல்\"", 
+                    "git config --global user.email \"மின்னஞ்சல்\"", 
+                    "git set email \"மின்னஞ்சல்\"", 
+                    "git user.email \"மின்னஞ்சல்\""
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Git இல் ஒரு கோப்பை நிலையான பகுதியில் (Staging Area) சேர்க்க பயன்படும் கட்டளை?", 
+                options: [
+                    "git stage கோப்பு", 
+                    "git add கோப்பு", 
+                    "git include கோப்பு", 
+                    "git commit கோப்பு"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "அனைத்து கோப்புகளையும் நிலையான பகுதியில் சேர்க்க பயன்படும் கட்டளை?", 
+                options: [
+                    "git add *", 
+                    "git add all", 
+                    "git stage all", 
+                    "git include *"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "நிலையான பகுதியில் உள்ள மாற்றங்களை சேமிக்க (Commit) பயன்படும் கட்டளை?", 
+                options: [
+                    "git save -m \"செய்தி\"", 
+                    "git commit -m \"செய்தி\"", 
+                    "git store -m \"செய்தி\"", 
+                    "git keep -m \"செய்தி\""
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Commit செய்யாமல் நேரடியாக கோப்புகளை சேமிக்கும் கட்டளை?", 
+                options: [
+                    "git commit --direct", 
+                    "git commit -a -m \"செய்தி\"", 
+                    "git save -a", 
+                    "git direct commit"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Git இல் தற்போதைய நிலையை (Status) சரிபார்க்க பயன்படும் கட்டளை?", 
+                options: [
+                    "git check", 
+                    "git status", 
+                    "git current", 
+                    "git state"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Git இல் களஞ்சியத்தின் வரலாற்றை (History) காண்பிக்கும் கட்டளை?", 
+                options: [
+                    "git history", 
+                    "git log", 
+                    "git list", 
+                    "git show"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "ஒரு குறிப்பிட்ட கோப்பின் மாற்றங்களை மட்டும் காண்பிக்கும் கட்டளை?", 
+                options: [
+                    "git log கோப்பு", 
+                    "git history கோப்பு", 
+                    "git show கோப்பு", 
+                    "git changes கோப்பு"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "Git இல் ஒரு குறிப்பை (Tag) உருவாக்க பயன்படும் கட்டளை?", 
+                options: [
+                    "git create tag v1.0", 
+                    "git tag v1.0", 
+                    "git mark v1.0", 
+                    "git label v1.0"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "தற்காலிக மாற்றங்களை சேமிக்க (Stash) பயன்படும் கட்டளை?", 
+                options: [
+                    "git temporary save", 
+                    "git stash", 
+                    "git save temporary", 
+                    "git hold"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Stash செய்த மாற்றங்களை மீட்டெடுக்கும் கட்டளை?", 
+                options: [
+                    "git stash return", 
+                    "git stash pop", 
+                    "git stash get", 
+                    "git stash restore"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "Stash பட்டியலைக் காண்பிக்கும் கட்டளை?", 
+                options: [
+                    "git stash list", 
+                    "git stash show", 
+                    "git stash history", 
+                    "git stash all"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "உதவி (Help) பெற பயன்படும் கட்டளை?", 
+                options: [
+                    "git help", 
+                    "git assistance", 
+                    "git manual", 
+                    "git info"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "ஒரு குறிப்பிட்ட கட்டளையின் உதவியைப் பெற?", 
+                options: [
+                    "git help கட்டளை", 
+                    "git கட்டளை --help", 
+                    "இரண்டும் சரி", 
+                    "எதுவும் இல்லை"
+                ], 
+                correct: 2
+            },
+            { 
+                question: "புதிய கிளை (Branch) உருவாக்க பயன்படும் கட்டளை?", 
+                options: [
+                    "git create branch பெயர்", 
+                    "git branch பெயர்", 
+                    "git new branch பெயர்", 
+                    "git make branch பெயர்"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "உள்ள கிளைகளைக் காண்பிக்கும் கட்டளை?", 
+                options: [
+                    "git show branches", 
+                    "git branch", 
+                    "git list branches", 
+                    "git all branches"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "கிளையை மாற்ற (Switch) பயன்படும் கட்டளை?", 
+                options: [
+                    "git move branch பெயர்", 
+                    "git switch branch பெயர்", 
+                    "git checkout பெயர்", 
+                    "git change branch பெயர்"
+                ], 
+                correct: 2
+            },
+            { 
+                question: "இரண்டு கிளைகளை இணைக்க (Merge) பயன்படும் கட்டளை?", 
+                options: [
+                    "git combine branch", 
+                    "git merge branch", 
+                    "git join branch", 
+                    "git unify branch"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "GitHub என்றால் என்ன?", 
+                options: [
+                    "Git களஞ்சியங்களை ஹோஸ்ட் செய்யும் சேவை", 
+                    "ஒரு நிரலாக்க மொழி", 
+                    "ஒரு இயக்க முறைமை", 
+                    "ஒரு தரவுத்தளம்"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "SSH விசை (Key) என்றால் என்ன?", 
+                options: [
+                    "பாதுகாப்பான உள்நுழைவுக்கான மறைகுறியீடு தொழில்நுட்பம்", 
+                    "ஒரு நிரலாக்க விசை", 
+                    "ஒரு தரவு விசை", 
+                    "ஒரு கணினி விசை"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "GitHub இல் SSH விசையைச் சேர்க்கும் இடம்?", 
+                options: [
+                    "Settings > SSH and GPG keys", 
+                    "Account > Security", 
+                    "Profile > Keys", 
+                    "Repository > Settings"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "தொலைக் களஞ்சியத்தை (Remote) அமைக்கும் கட்டளை?", 
+                options: [
+                    "git remote add origin URL", 
+                    "git set remote URL", 
+                    "git connect remote URL", 
+                    "git link remote URL"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "தொலைக் களஞ்சியத்தில் இருந்து மாற்றங்களைப் பெற (Pull) பயன்படும் கட்டளை?", 
+                options: [
+                    "git get", 
+                    "git pull", 
+                    "git fetch", 
+                    "git receive"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "மாற்றங்களைத் தொலைக் களஞ்சியத்துக்கு அனுப்ப (Push) பயன்படும் கட்டளை?", 
+                options: [
+                    "git send", 
+                    "git push", 
+                    "git upload", 
+                    "git post"
+                ], 
+                correct: 1
+            },
+            { 
+                question: "GitHub Pages என்றால் என்ன?", 
+                options: [
+                    "இலவச வலைத்தள ஹோஸ்டிங் சேவை", 
+                    "ஒரு தரவு பக்கங்கள்", 
+                    "ஒரு ஆவணப்படுத்தல் கருவி", 
+                    "ஒரு பயனர் முகப்பு"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "GitHub இல் ஒரு களஞ்சியத்தைப் பிரித்தெடுக்க (Fork) பயன்படும் பொத்தான்?", 
+                options: [
+                    "Fork பொத்தான்", 
+                    "Copy பொத்தான்", 
+                    "Clone பொத்தான்", 
+                    "Duplicate பொத்தான்"
+                ], 
+                correct: 0
+            },
+            { 
+                question: "GitHub இலிருந்து களஞ்சியத்தை நகலெடுக்க (Clone) பயன்படும் கட்டளை?", 
+                options: [
+                    "git copy URL", 
+                    "git clone URL", 
+                    "git download URL", 
+                    "git get URL"
+                ], 
+                correct: 1
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let isQuizSubmitted = false;
+
+        // DOM elements
+        const questionSelectionGrid = document.getElementById('questionSelectionGrid');
+        const quizCard = document.getElementById('quizCard');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const questionNumberElement = document.getElementById('questionNumber');
+        const questionTextElement = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressBar = document.getElementById('progressBar');
+        const finalScoreElement = document.getElementById('finalScore');
+        const resultMessageElement = document.getElementById('resultMessage');
+        const correctCountElement = document.getElementById('correctCount');
+        const percentageElement = document.getElementById('percentage');
+        const performanceElement = document.getElementById('performance');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Initialize question selection grid with ONLY easy level color
+        function initializeQuestionGrid() {
+            questionSelectionGrid.innerHTML = '';
+            quizData.forEach((question, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'question-number-btn';
+                btn.dataset.index = index;
+                
+                // Add green difficulty indicator (ALL questions are easy)
+                const difficultyIndicator = document.createElement('div');
+                difficultyIndicator.className = 'difficulty-indicator';
+                btn.appendChild(difficultyIndicator);
+                
+                // Add question number
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'question-number';
+                numberSpan.textContent = index + 1;
+                btn.appendChild(numberSpan);
+                
+                if (index === 0) {
+                    btn.classList.add('active');
+                }
+                
+                if (userAnswers[index] !== null) {
+                    btn.classList.add('answered');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    updateQuestionGrid();
+                });
+                
+                questionSelectionGrid.appendChild(btn);
+            });
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const buttons = document.querySelectorAll('.question-number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                
+                if (userAnswers[index] !== null) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = quizData[currentQuestionIndex];
+            
+            // Update question number
+            questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            
+            // Update question text
+            questionTextElement.textContent = question.question;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                
+                // Check if this option was previously selected
+                if (userAnswers[currentQuestionIndex] === index) {
+                    optionElement.classList.add('selected');
+                }
+                
+                // Only show correct/incorrect if quiz is submitted
+                if (isQuizSubmitted && userAnswers[currentQuestionIndex] === index) {
+                    if (index === question.correct) {
+                        optionElement.classList.add('correct');
+                    } else {
+                        optionElement.classList.add('incorrect');
+                    }
+                }
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update navigation buttons
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.style.display = currentQuestionIndex < quizData.length - 1 ? 'block' : 'none';
+            submitBtn.style.display = currentQuestionIndex === quizData.length - 1 ? 'block' : 'none';
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            if (isQuizSubmitted) return;
+            
+            // Remove selected class from all options
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            const selectedOption = document.querySelectorAll('.quiz-option')[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            // Store the answer
+            userAnswers[currentQuestionIndex] = optionIndex;
+            
+            // Check if answer is correct
+            const question = quizData[currentQuestionIndex];
+            if (optionIndex === question.correct) {
+                if (!question.answered) {
+                    score++;
+                    question.answered = true;
+                }
+            } else {
+                if (question.answered) {
+                    score--;
+                    question.answered = false;
+                }
+            }
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        submitBtn.addEventListener('click', submitQuiz);
+
+        // Submit the quiz
+        function submitQuiz() {
+            isQuizSubmitted = true;
+            
+            const totalQuestions = quizData.length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Update results
+            finalScoreElement.textContent = `${score}/${totalQuestions}`;
+            correctCountElement.textContent = score;
+            percentageElement.textContent = `${percentage}%`;
+            
+            // Determine performance level - Adjusted for Easy level
+            let performance = '';
+            let message = '';
+            
+            if (percentage >= 90) {
+                performance = 'Git Expert';
+                message = 'சிறப்பு! Git அடிப்படைகளை முழுமையாக தெரிந்துள்ளீர்கள்!';
+            } else if (percentage >= 70) {
+                performance = 'Advanced';
+                message = 'நன்றாக செய்தீர்கள்! Git பற்றி நல்ல புரிதல் உள்ளது.';
+            } else if (percentage >= 50) {
+                performance = 'Intermediate';
+                message = 'நல்ல முயற்சி! Git பற்றி அடிப்படை புரிதல் உள்ளது.';
+            } else {
+                performance = 'Beginner';
+                message = 'தொடர்ந்து பயிற்சி செய்யுங்கள்! எளிய Git கருத்துக்களை மீண்டும் பாருங்கள்.';
+            }
+            
+            performanceElement.textContent = performance;
+            resultMessageElement.textContent = message;
+            
+            // Show results container
+            quizCard.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            // Show correct/incorrect answers
+            loadQuestion();
+        }
+
+        // Restart quiz
+        restartBtn.addEventListener('click', () => {
+            // Reset quiz state
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            isQuizSubmitted = false;
+            
+            // Reset answered flag for all questions
+            quizData.forEach(question => {
+                question.answered = false;
+            });
+            
+            // Reset UI
+            resultsContainer.style.display = 'none';
+            quizCard.style.display = 'block';
+            
+            // Reload first question
+            loadQuestion();
+            initializeQuestionGrid();
+        });
+
+        // Initialize the quiz
+        initializeQuestionGrid();
+        loadQuestion();
+         // Certificate function
+          function certificate() {
+            window.location.href = 'certificate.html';
+        }
+    </script>
+</body>
+</html>

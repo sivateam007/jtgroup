@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Template Statements and $event - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        .event-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            margin: 2rem 0;
+        }
+        
+        .demo-container {
+            background: white;
+            color: #333;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .demo-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .demo-button {
+            padding: 10px 20px;
+            background: var(--git-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: center;
+        }
+        
+        .demo-button:hover {
+            background: #e74c3c;
+        }
+        
+        .demo-input {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .demo-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--git-color);
+            margin-top: 5px;
+        }
+        
+        .event-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2.5rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            padding: 0 1rem;
+        }
+        
+        .flow-step:not(:last-child):after {
+            content: '→';
+            position: absolute;
+            right: -0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--git-color);
+            font-weight: bold;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--git-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .event-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .event-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 4px solid var(--git-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .event-icon {
+            font-size: 1.5rem;
+            color: var(--git-color);
+            margin-bottom: 1rem;
+        }
+        
+        .event-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .syntax-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .syntax-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .event-flow {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .flow-step:not(:last-child):after {
+                content: '↓';
+                right: 50%;
+                bottom: -1.5rem;
+                top: auto;
+                transform: translateX(50%);
+            }
+            
+            .demo-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a class="nav-tab prev" href="Angular ngTemplateOutlet.html">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a class="nav-tab அடுத்தது" href="Angular Alias with as in ngIf.html">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Angular Template Statements and $event</h2>
+            <p>டெம்ப்ளேட்டில் பயனர் நிகழ்வுகளைக் கையாளுதல் மற்றும் $event மூலம் சொந்த நிகழ்வை அணுகுதல்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What are Template Statements and $event? -->
+        <section class="content-section" id="what-are-statements">
+            <h2>டெம்ப்ளேட் அறிக்கைகள் மற்றும் $event என்றால் என்ன?</h2>
+            <p>(click), (input), போன்றவற்றுடன் பைண்ட் செய்யப்பட்ட நிகழ்வுகளுக்கு பதிலளிக்க இயங்கும்.</p>
+            <p>சொந்த நிகழ்வு பொருளுக்கு $event ஐப் பயன்படுத்தவும்.</p>
+            <p>target.value போன்ற வகைகளுக்கு உதவ $any(...) ஐப் பயன்படுத்தவும்.</p>
+            
+            <div class="event-flow">
+                <div class="flow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
+                    <h4>பயனர் நிகழ்வு</h4>
+                    <p>கிளிக், உள்ளீடு, கீபோர்டு</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h4>$event பொருள்</h4>
+                    <p>நிகழ்வு விவரங்களைக் கொண்டுள்ளது</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>டெம்ப்ளேட் அறிக்கை</h4>
+                    <p>நிகழ்வைக் கையாளும் தர்க்கம்</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-code"></i></span>தொடரியல்:</h4>
+                <p><strong>&lt;button (click)="count = count + 1"&gt;Add&lt;/button&gt;</strong></p>
+                <p><strong>&lt;input (input)="text = $any($event.target).value"&gt;</strong></p>
+            </div>
+        </section>
+
+        <!-- When to use Template Statements -->
+        <section class="content-section" id="when-to-use">
+            <h2>எப்போது டெம்ப்ளேட் அறிக்கைகளைப் பயன்படுத்துவது</h2>
+            
+            <div class="event-types">
+                <div class="event-card">
+                    <div class="event-icon">
+                        <i class="fas fa-mouse"></i>
+                    </div>
+                    <h4>எளிய UI தொடர்புகள்</h4>
+                    <p>நிகழ்வுகளிலிருந்து நிலைப் புதுப்பிப்புகள்</p>
+                    <div class="event-example">
+                        (click)="toggle()"
+                    </div>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h4>குறைந்தபட்ச டெம்ப்ளேட் தர்க்கம்</h4>
+                    <p>சிக்கலான தர்க்கத்தை கூறு வகுப்பிற்கு நகர்த்தவும்</p>
+                    <div class="event-example">
+                        handleComplexLogic()
+                    </div>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h4>டெம்ப்ளேட் குறிப்பு மாறிகள்</h4>
+                    <p>நேரடி தொடர்புகளுக்கு ஜோடியாக</p>
+                    <div class="event-example">
+                        (input)="value = #box.value"
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon"><i class="fas fa-exclamation-triangle"></i></span>சிறந்த நடைமுறை:</h4>
+                <p>எளிய பணிகளுக்கு மட்டுமே டெம்ப்ளேட் அறிக்கைகளைப் பயன்படுத்தவும். சிக்கலான தர்க்கத்திற்கு, கூறு முறைகளைப் பயன்படுத்தவும். டெம்ப்ளேட்டை சுத்தமாகவும் பராமரிக்கக்கூடியதாகவும் வைத்திருங்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Basic Example -->
+        <section class="content-section" id="basic-example">
+            <h2>அடிப்படை எடுத்துக்காட்டு</h2>
+            <p>நிகழ்வுகளை டெம்ப்ளேட்டில் கையாளவும் மற்றும் $event ஐப் பயன்படுத்தி சொந்த மதிப்புகளை அணுகவும்:</p>
+            
+            <div class="syntax-comparison">
+                <div class="syntax-card">
+                    <h4>கிளிக் நிகழ்வு</h4>
+                    <div class="event-example">
+                        &lt;button (click)="count = count + 1"&gt;Add&lt;/button&gt;
+                    </div>
+                    <p><strong>(click):</strong> கூறு நிலையைப் புதுப்பிக்கும் கிளிக் ஹேண்ட்லரை பைண்ட் செய்கிறது.</p>
+                </div>
+                
+                <div class="syntax-card">
+                    <h4>உள்ளீட்டு நிகழ்வு</h4>
+                    <div class="event-example">
+                        &lt;input (input)="text = $any($event.target).value"&gt;
+                    </div>
+                    <p><strong>$event:</strong> சொந்த நிகழ்வு பொருள்; $any($event.target).value உள்ளீட்டு உரையைப் படிக்கிறது.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Example -->
+        <section class="content-section" id="interactive-example">
+            <h2>உரையாடல் எடுத்துக்காட்டு</h2>
+            <p>நிகழ்வுகளை டெம்ப்ளேட்டில் கையாளவும் மற்றும் $event ஐப் பயன்படுத்தி சொந்த மதிப்புகளை அணுகவும்:</p>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-code"></i></span>எடுத்துக்காட்டு:</h4>
+                <p>உங்கள் சொந்த Angular சேவையகத்தைப் பெறுங்கள்</p>
+            </div>
+            
+            <div class="code-example">
+                <h3>main.ts</h3>
+<pre><code class="command-input">import { bootstrapApplication } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  template: `
+    <button (click)="count = count + 1">Increment</button>
+    <input placeholder="Type" (input)="text = $any($event.target).value" [value]="text" />
+    <p>Count: {{ count }}</p>
+    <p>Text: {{ text || '(empty)' }}</p>
+  `
+})
+export class App {
+  count = 0;
+  text = '';
+}
+
+bootstrapApplication(App);</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>index.html</h3>
+<pre><code class="command-input">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Angular App&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;app-root&gt;&lt;/app-root&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            
+            <div class="event-demo">
+                <h3 style="color: white; text-align: center;">நேரடி டெமோ: நிகழ்வு கையாளுதல்</h3>
+                <div class="demo-container">
+                    <div class="demo-controls">
+                        <button class="demo-button" onclick="incrementCount()">அதிகரிக்கவும் (Increment)</button>
+                        <input type="text" class="demo-input" id="demoInput" placeholder="இங்கே தட்டச்சு செய்யவும்..." oninput="updateText()"/>
+                    </div>
+                    
+                    <div class="demo-stats">
+                        <div class="stat-card">
+                            <h4>எண்ணிக்கை</h4>
+                            <div class="stat-value" id="countValue">0</div>
+                            <p><strong>டெம்ப்ளேட் அறிக்கை:</strong> <code>(click)="count = count + 1"</code></p>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h4>உரை</h4>
+                            <div class="stat-value" id="textValue">(காலி)</div>
+                            <p><strong>டெம்ப்ளேட் அறிக்கை:</strong> <code>(input)="text = $any($event.target).value"</code></p>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h4>$event மதிப்பு</h4>
+                            <div class="stat-value" id="eventValue">-</div>
+                            <p><strong>கடைசி நிகழ்வு:</strong> <span id="lastEvent">இல்லை</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example explained -->
+        <section class="content-section" id="example-explained">
+            <h2>எடுத்துக்காட்டு விளக்கம்</h2>
+            
+            <div class="syntax-comparison">
+                <div class="syntax-card">
+                    <h4><code>(click)="count = count + 1"</code></h4>
+                    <p>பொத்தான் கிளிக் செய்யப்படும் போது கூறு சூழலில் அறிக்கையை இயக்குகிறது, count புலத்தைப் புதுப்பிக்கிறது.</p>
+                </div>
+                
+                <div class="syntax-card">
+                    <h4><code>$event</code></h4>
+                    <p>சொந்த நிகழ்வு பொருள். $any($event.target).value தற்போதைய உள்ளீட்டு உரையைப் படிக்கிறது (TypeScript ஐ திருப்திப்படுத்த வார்ப்படைக்கப்பட்டது).</p>
+                </div>
+                
+                <div class="syntax-card">
+                    <h4><code>[value]="text"</code></h4>
+                    <p>தற்போதைய கூறு நிலையை உள்ளீட்டு உறுப்புக்கு மீண்டும் பிரதிபலிக்கும் ஒரு-வழி பண்பு பைண்டிங்.</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon"><i class="fas fa-bolt"></i></span>தர்க்கத்தை சிறியதாக வைத்திருங்கள்:</h4>
+                <p>டெம்ப்ளேட்டில் எளிய பணிகளைச் செய்யுங்கள்; பல-படி தர்க்கத்தை கூறு முறைகளுக்குள் நகர்த்தவும்.</p>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-keyboard"></i></span>மேலும் கற்றுக்கொள்ள:</h4>
+                <p>நிகழ்வு பைண்டிங் மற்றும் கீபோர்டு நிகழ்வுகள் பற்றி மேலும் நிகழ்வுகள் பகுதியைப் பார்க்கவும்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            <p>உங்கள் அறிவைச் சோதிக்க இந்தப் பயிற்சியை முயற்சிக்கவும்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span>டெம்ப்ளேட்டிலிருந்து ஒரு அறிக்கையை (முறையை அழைக்க) எப்படி பைண்ட் செய்வது?</h4>
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">(event)="handler()"</div>
+                            <div class="option-feedback correct">✓ சரி! (event)="handler()" தொடரியல் ஒரு நிகழ்வு ஹேண்ட்லரை ஒரு டெம்ப்ளேட் அறிக்கையுடன் பைண்ட் செய்யப் பயன்படுகிறது. இது நிகழ்வு பைண்டிங் தொடரியல் ஆகும், இது Angular க்கு ஒரு நிகழ்வைக் கையாள ஒரு முறையை அழைக்க வேண்டும் என்பதைக் குறிக்கிறது.</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">[event]="handler()"</div>
+                            <div class="option-feedback incorrect">✗ தவறானது! [event]="handler()" தொடரியல் நிகழ்வு பைண்டிங் அல்ல - இது பண்பு பைண்டிங் தொடரியல் ஆகும், இது உறுப்பு பண்புகளை அமைக்கப் பயன்படுகிறது. சதுர அடைப்புக்குறிகள் [] பண்பு பைண்டிங்கிற்குப் பயன்படுத்தப்படுகின்றன, நிகழ்வு பைண்டிங்கிற்கு அல்ல.</div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">{{ handler() }}</div>
+                            <div class="option-feedback incorrect">✗ தவறானது! {{ handler() }} தொடரியல் நிகழ்வு பைண்டிங் அல்ல - இது இடைச்செருகல் தொடரியல் ஆகும், இது காட்சிக்கு தரவைக் காட்டப் பயன்படுகிறது. சுருள் அடைப்புக்குறிகள் {{ }} இடைச்செருகலுக்குப் பயன்படுத்தப்படுகின்றன, இது தானாகவே மதிப்பீடு செய்யப்படுகிறது, நிகழ்வுகளுக்காகக் காத்திருக்காது.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon"><i class="fas fa-sitemap"></i></span>பைண்டிங் வகைகள்:</h4>
+                <p>Angular மூன்று முக்கிய வகையான பைண்டிங்களைக் கொண்டுள்ளது: <strong>நிகழ்வு பைண்டிங் ((event))</strong> பயனர் நிகழ்வுகளைக் கையாள, <strong>பண்பு பைண்டிங் ([prop])</strong> உறுப்பு பண்புகளை அமைக்க, மற்றும் <strong>இடைச்செருகல் ({{ }})</strong> காட்சிக்கு தரவைக் காட்ட. ஒவ்வொன்றும் வெவ்வேறு நோக்கங்களுக்காக உள்ளன மற்றும் வேறுபட்ட தொடரியலைக் கொண்டுள்ளன.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a class="nav-tab prev" href="Angular ngTemplateOutlet.html">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a class="nav-tab அடுத்தது" href="Angular Alias with as in ngIf.html">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>தமிழ் மொழியில் தரமான நிரலாக்க கல்வியை வழங்கும் முன்னணிகக் கல்வி நிறுவனம்.</p>
+            </div>
+            <div class="footer-column">
+                <h3>விரைவு இணைப்புகள்</h3>
+                <ul>
+                    <li><a href="#what-are-statements">டெம்ப்ளேட் அறிக்கைகள் மற்றும் $event</a></li>
+                    <li><a href="#when-to-use">எப்போது பயன்படுத்துவது</a></li>
+                    <li><a href="#basic-example">அடிப்படை எடுத்துக்காட்டு</a></li>
+                    <li><a href="#interactive-example">உரையாடல் எடுத்துக்காட்டு</a></li>
+                    <li><a href="#example-explained">எடுத்துக்காட்டு விளக்கம்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>தொடர்பு</h3>
+                <ul>
+                    <li><a href="#">எங்களைப் பற்றி</a></li>
+                    <li><a href="#">எங்களைத் தொடர்பு கொள்ளவும்</a></li>
+                    <li><a href="#">இடம் மற்றும் நேரம்</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>எங்களைப் பின்தொடருங்கள்</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // Demo functionality
+        let count = 0;
+        let text = '';
+        let lastEventType = 'இல்லை';
+        let lastEventValue = '-';
+        
+        function incrementCount() {
+            count++;
+            lastEventType = 'கிளிக்';
+            lastEventValue = 'பொத்தான் கிளிக் செய்யப்பட்டது';
+            updateDemo();
+        }
+        
+        function updateText() {
+            const input = document.getElementById('demoInput');
+            text = input.value;
+            lastEventType = 'உள்ளீடு';
+            lastEventValue = `"${text}"`;
+            updateDemo();
+        }
+        
+        function updateDemo() {
+            document.getElementById('countValue').textContent = count;
+            document.getElementById('textValue').textContent = text || '(காலி)';
+            document.getElementById('eventValue').textContent = lastEventValue;
+            document.getElementById('lastEvent').textContent = lastEventType;
+        }
+        
+        // Initialize demo
+        updateDemo();
+    </script>
+
+    <!-- Home Button -->
+    <a class="home-icon" href="index.html">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

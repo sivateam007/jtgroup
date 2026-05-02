@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Gap - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Grid gap styling */
+        .grid-example {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .grid-visual {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin: 1rem 0;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+        }
+        
+        .grid-item {
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            padding: 20px;
+            font-size: 24px;
+            text-align: center;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .gap-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: #f0f8ff;
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        .gap-line {
+            position: absolute;
+            background: rgba(231, 76, 60, 0.7);
+            pointer-events: none;
+        }
+        
+        .gap-label {
+            position: absolute;
+            background: #e74c3c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        
+        .code-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .code-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .property-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .property-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .property-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Grid%20Tracks.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20Grid%20Container%20-%20Align%20Grid%20Content.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Grid Gap</h2>
+            <p>CSS கிரிட் இடைவெளிகளைக் கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Grid Gaps Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>CSS கிரிட் இடைவெளிகள்</h2>
+            
+            <p>கிரிட் கொண்டெய்னரில் உள்ள வரிசைகள் மற்றும் நெடுவரிசைகளுக்கு இடையேயான இடைவெளி இடைவெளிகள் (அல்லது கட்டர்கள்) என்று அழைக்கப்படுகிறது.</p>
+            
+            <p>இடைவெளிகள் கிரிட் வரிசைகள் மற்றும் நெடுவரிசைகளுக்கு இடையில் உருவாக்கப்படுகின்றன, கிரிட் கொண்டெய்னரின் வெளிப்புற விளிம்புகளில் அல்ல.</p>
+            
+            <div class="gap-demo" style="height: 200px; padding: 20px;">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+                
+                <!-- Column gap lines -->
+                <div class="gap-line" style="left: calc(33.33% - 10px); top: 0; width: 20px; height: 100%;"></div>
+                <div class="gap-line" style="left: calc(66.66% - 10px); top: 0; width: 20px; height: 100%;"></div>
+                
+                <!-- Row gap lines -->
+                <div class="gap-line" style="top: calc(50% - 10px); left: 0; height: 20px; width: 100%;"></div>
+                
+                <!-- Labels -->
+                <div class="gap-label" style="top: 25%; left: calc(33.33% - 25px);">நெடுவரிசை இடைவெளி</div>
+                <div class="gap-label" style="top: 75%; left: 50%; transform: translateX(-50%);">வரிசை இடைவெளி</div>
+            </div>
+            
+            <p>இடைவெளியின் இயல்புநிலை அளவு 0 ஆகும், அதாவது கிரிட் உருப்படிகளுக்கு இடையே எந்த இடைவெளியும் இல்லை.</p>
+            
+            <p>இடைவெளியின் அளவை பின்வரும் பண்புகளுடன் சரிசெய்யலாம்:</p>
+            
+            <ul>
+                <li><strong>column-gap</strong> - கிரிட் நெடுவரிசைகளுக்கு இடையேயான இடைவெளியைக் குறிப்பிடுகிறது</li>
+                <li><strong>row-gap</strong> - கிரிட் வரிசைகளுக்கு இடையேயான இடைவெளியைக் குறிப்பிடுகிறது</li>
+                <li><strong>gap</strong> - row-gap மற்றும் column-gap க்கான சுருக்கப் பண்பு</li>
+            </ul>
+        </section>
+
+        <!-- The CSS column-gap Property -->
+        <section class="content-section" id="column-gap">
+            <h2>CSS column-gap பண்பு</h2>
+            
+            <p>column-gap பண்பு கிரிட்டில் உள்ள நெடுவரிசைகளுக்கு இடையேயான இடைவெளியைக் குறிப்பிடுகிறது.</p>
+            
+            <div class="grid-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>கிரிட் நெடுவரிசைகளுக்கு இடையே 50 பிக்சல் இடைவெளியைக் குறிப்பிடவும்:</p>
+                
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  column-gap: 50px;
+}</code></pre>
+                </div>
+                
+                <p><strong>முடிவு:</strong></p>
+                <div class="grid-visual" style="column-gap: 50px;">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The CSS row-gap Property -->
+        <section class="content-section" id="row-gap">
+            <h2>CSS row-gap பண்பு</h2>
+            
+            <p>row-gap பண்பு கிரிட்டில் உள்ள வரிசைகளுக்கு இடையேயான இடைவெளியைக் குறிப்பிடுகிறது.</p>
+            
+            <div class="grid-example">
+                <h4>எடுத்துக்காட்டு</h4>
+                <p>கிரிட் வரிசைகளுக்கு இடையே 50 பிக்சல் இடைவெளியைக் குறிப்பிடவும்:</p>
+                
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  row-gap: 50px;
+}</code></pre>
+                </div>
+                
+                <p><strong>முடிவு:</strong></p>
+                <div class="grid-visual" style="row-gap: 50px;">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The CSS gap Property -->
+        <section class="content-section" id="gap-property">
+            <h2>CSS gap பண்பு</h2>
+            
+            <p>gap பண்பு row-gap மற்றும் column-gap க்கான சுருக்கப் பண்பாகும்.</p>
+            
+            <p>ஒரு மதிப்பு வழங்கப்பட்டால், அது வரிசைகள் மற்றும் நெடுவரிசைகள் இரண்டிற்கும் ஒரே இடைவெளியைப் பயன்படுத்துகிறது.</p>
+            
+            <p>இரண்டு மதிப்புகள் வழங்கப்பட்டால், முதல் மதிப்பு row-gap ஐ அமைக்கிறது, மற்றும் இரண்டாவது மதிப்பு column-gap ஐ அமைக்கிறது.</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>எடுத்துக்காட்டு 1</h4>
+                    <p>ஒரு மதிப்பைப் பயன்படுத்துதல் - வரிசைகள் மற்றும் நெடுவரிசைகளுக்கு இடையேயான இடைவெளியை 50px என அமைக்கவும்:</p>
+                    <div class="code-example">
+                        <pre><code>.container {
+  display: grid;
+  gap: 50px;
+}</code></pre>
+                    </div>
+                    <p><strong>முடிவு:</strong></p>
+                    <div class="grid-visual" style="gap: 50px;">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">5</div>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>எடுத்துக்காட்டு 2</h4>
+                    <p>இரண்டு மதிப்புகளைப் பயன்படுத்துதல் - வரிசைகளுக்கு இடையேயான இடைவெளியை 30px எனவும், நெடுவரிசைகளுக்கு இடையேயான இடைவெளியை 100px எனவும் அமைக்கவும்:</p>
+                    <div class="code-example">
+                        <pre><code>.container {
+  display: grid;
+  gap: 30px 100px;
+}</code></pre>
+                    </div>
+                    <p><strong>முடிவு:</strong></p>
+                    <div class="grid-visual" style="gap: 30px 100px;">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">5</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p><strong>gap: 20px;</strong> என்பது <strong>row-gap: 20px; column-gap: 20px;</strong> என்பதற்கு சமம்.</p>
+                <p><strong>gap: 10px 30px;</strong> என்பது <strong>row-gap: 10px; column-gap: 30px;</strong> என்பதற்கு சமம்.</p>
+            </div>
+        </section>
+
+        <!-- CSS Grid Gap Properties Table -->
+        <section class="content-section" id="properties">
+            <h2>CSS கிரிட் கேப் பண்புகள்</h2>
+            
+            <p>CSS கிரிட் இடைவெளி பண்புகள் மற்றும் அவற்றின் விளக்கங்கள்:</p>
+            
+            <table class="property-table">
+                <thead>
+                    <tr>
+                        <th>பண்பு</th>
+                        <th>விளக்கம்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>column-gap</td><td>கிரிட் நெடுவரிசைகளுக்கு இடையேயான இடைவெளியைக் குறிப்பிடுகிறது</td></tr>
+                    <tr><td>gap</td><td>row-gap மற்றும் column-gap பண்புகளுக்கான சுருக்கப் பண்பு</td></tr>
+                    <tr><td>row-gap</td><td>கிரிட் வரிசைகளுக்கு இடையேயான இடைவெளியைக் குறிப்பிடுகிறது</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>CSS கிரிட் கேப் பயிற்சி</h2>
+            
+            <p>கிரிட் இடைவெளிகள் பற்றிய உங்கள் அறிவை இந்தப் பயிற்சி சோதிக்கும்:</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> வரிசைகளுக்கு இடையே 20px இடைவெளியையும், நெடுவரிசைகளுக்கு இடையே 40px இடைவெளியையும் அமைக்க எந்த CSS குறியீடு சரியானது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">gap: 20px 40px;</div>
+                            <div class="option-feedback incorrect">✗ தவறு! gap: 20px 40px; என்பது row-gap: 20px; column-gap: 40px; என்பதற்கு சமம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">row-gap: 20px; column-gap: 40px;</div>
+                            <div class="option-feedback correct">✓ சரி! row-gap மற்றும் column-gap பண்புகளை தனித்தனியாகப் பயன்படுத்தலாம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">margin: 20px 40px;</div>
+                            <div class="option-feedback incorrect">✗ தவறு! margin பண்பு கிரிட் இடைவெளிகளுக்குப் பயன்படுத்தப்படுவதில்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">grid-gap: 20px 40px;</div>
+                            <div class="option-feedback incorrect">✗ தவறு! grid-gap என்பது பழைய பெயர், புதிய பதிப்புகளில் gap பயன்படுத்துங்கள்</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">📚</span> வரலாற்றுக் குறிப்பு:</h4>
+                <p>CSS கிரிடின் ஆரம்ப பதிப்புகளில் <strong>grid-gap</strong>, <strong>grid-row-gap</strong>, மற்றும் <strong>grid-column-gap</strong> பண்புகள் பயன்படுத்தப்பட்டன. இப்போது <strong>gap</strong>, <strong>row-gap</strong>, மற்றும் <strong>column-gap</strong> ஆகியவை நிலையான பண்புகளாகும்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Grid%20Tracks.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20Grid%20Container%20-%20Align%20Grid%20Content.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">கிரிட் இடைவெளிகள்</a></li>
+                    <li><a href="#column-gap">column-gap பண்பு</a></li>
+                    <li><a href="#row-gap">row-gap பண்பு</a></li>
+                    <li><a href="#gap-property">gap பண்பு</a></li>
+                    <li><a href="#properties">கேப் பண்புகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

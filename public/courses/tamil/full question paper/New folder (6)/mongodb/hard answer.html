@@ -1,0 +1,1163 @@
+﻿<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Hard Level - Answer Key | Jassif Team</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional Quiz-specific styles - EXACT SAME AS hard answer.html */
+        
+        /* Jassif Team Quiz Header */
+        .jassif-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            font-size: 0.9rem;
+            color: var(--git-color); /* SAME AS hard answer.html */
+            font-weight: 600;
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .team-info {
+            display: flex;
+            gap: 15px;
+        }
+
+        .team-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .team-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Quiz Hero - SAME COLOR AS hard answer.html */
+        .quiz-hero {
+            background: linear-gradient(135deg, var(--git-color), #6e5494);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .quiz-hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .quiz-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .info-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Question Selection Grid - ONLY RED CHANGES HERE */
+        .question-selection-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .question-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        /* ONLY CHANGE: Question number button with Hard level color (RED) */
+        .question-number-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number-btn:hover {
+            border-color: var(--git-color);
+            transform: translateY(-3px);
+        }
+
+        .question-number-btn.active {
+            background: #dc3545; /* ONLY CHANGE: RED for Hard */
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .question-number-btn.answered {
+            background: #f8d7da; /* Light red for answered */
+            border-color: #dc3545;
+            color: var(--dark);
+        }
+
+        /* ONLY CHANGE: Difficulty level indicator - RED for Hard */
+        .difficulty-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 8px 8px 0 0;
+            background-color: #dc3545; /* ONLY CHANGE: Red for Hard */
+        }
+
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Quiz Container - SAME AS hard answer.html */
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--git-color); /* SAME */
+        }
+
+        .current-question-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* REMOVED: Quiz info section */
+        .quiz-info {
+            display: none;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--git-color); /* SAME */
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: #f8f9fa;
+        }
+
+        /* ANSWER KEY MODIFICATION: Show correct/incorrect colors immediately on click */
+        .quiz-option.selected.correct {
+            border-color: #27ae60; /* GREEN for correct */
+            background: #d4edda;
+        }
+
+        .quiz-option.selected.incorrect {
+            border-color: var(--accent);
+            background: #f8d7da;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected.correct .option-letter {
+            background: #27ae60; /* GREEN */
+        }
+
+        .quiz-option.selected.incorrect .option-letter {
+            background: var(--accent);
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: var(--git-color); /* SAME */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn:hover {
+            background: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-btn.prev {
+            background: #667eea;
+        }
+
+        .quiz-btn.submit {
+            background: var(--success);
+        }
+
+        /* Results Container - HIDDEN FOR ANSWER KEY */
+        .results-container {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            overflow: hidden;
+            background-color: black;
+            padding: 0;
+        }
+
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Answer Feedback Section */
+        .answer-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .answer-feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #27ae60; /* GREEN */
+            color: #155724;
+        }
+
+        .answer-feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid var(--accent);
+            color: #721c24;
+        }
+
+        .feedback-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .team-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quiz-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .question-selection-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            
+            .question-number-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="jassif-header">
+        <div class="header-container">
+            <a href="#" class="logo-container">
+                <div class="logo-image">
+                    <img src="logo.jpg" alt="Jassif Team Logo">
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">JASSIF TEAM</div>
+                    <div class="logo-sub">MONGODB COURSE - HARD ANSWER KEY</div>
+                </div>
+            </a>
+            <div class="team-info">
+                <div class="team-badge">
+                    <i class="fas fa-database"></i>
+                    MongoDB Course
+                </div>
+                <div class="team-badge">
+                    <i class="fas fa-key"></i>
+                    Hard Answer Key
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Hero Section - SAME COLOR AS hard answer.html -->
+    <section class="quiz-hero">
+        <div class="quiz-hero-content">
+            <h2>MongoDB Hard Level - Answer Key</h2>
+            <p>Click on any option to see if it's correct (green) or incorrect (red). Learn all 30 hard MongoDB questions.</p>
+            <div class="quiz-badges">
+                <span class="info-badge level"><i class="fas fa-signal"></i> Hard Level</span>
+                <span class="info-badge"><i class="fas fa-question-circle"></i> 30 Questions</span>
+                <span class="info-badge"><i class="fas fa-check-circle"></i> Interactive Answers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Question Selection Grid - RED COLOR HERE ONLY -->
+    <section class="question-selection-section">
+        <div class="section-title">
+            <h2>Hard Level Questions - Answer Key</h2>
+            <p>Click on any question number to jump directly to it. Click options to see answers.</p>
+        </div>
+        
+        <div class="question-selection-grid" id="questionSelectionGrid">
+            <!-- Question numbers will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Main Quiz Container -->
+    <main class="quiz-container">
+        <!-- Quiz Interface -->
+        <div class="quiz-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="current-question-number" id="questionNumber">
+                    Question 1 of 30
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <!-- Question -->
+            <div class="question-text" id="questionText">
+                $facet aggregation stage-à®‡à®©à¯ à®®à¯à®•à¯à®•à®¿à®¯ à®ªà®¯à®©à¯ à®Žà®©à¯à®©?
+            </div>
+            
+            <!-- Options -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+
+            <!-- Answer Feedback -->
+            <div class="answer-feedback" id="answerFeedback">
+                <!-- Feedback will be inserted here -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="quiz-footer">
+                <button class="quiz-btn prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="quiz-btn next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <div class="footer-logo-image">
+                <img src="logo.jpg" alt="Jassif Team Logo">
+            </div>
+            <div>Jassif Team - MongoDB Course Answer Key</div>
+        </div>
+        <div class="footer-text">
+            &copy; 2024 Jassif Team. All rights reserved. | Hard Level MongoDB Answer Key
+        </div>
+    </footer>
+
+    <script>
+        // MongoDB Hard Level Answer Key Data - 30 QUESTIONS WITH EXPLANATIONS
+        const quizData = [
+            { 
+                question: "$facet aggregation stage-à®‡à®©à¯ à®®à¯à®•à¯à®•à®¿à®¯ à®ªà®¯à®©à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "à®’à®°à¯‡ input-à®²à®¿à®°à¯à®¨à¯à®¤à¯ à®ªà®² aggregation operations à®šà¯†à®¯à¯à®¤à¯ à®ªà®² outputs à®ªà¯†à®±",
+                    "à®µà¯‡à®•à®®à®¾à®© query execution",
+                    "à®¤à®°à®µà¯à®•à®³à¯ˆ compress à®šà¯†à®¯à¯à®¯",
+                    "à®¤à®°à®µà¯à®•à®³à¯ˆ encrypt à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "$facet stage à®’à®°à¯‡ input document-à®²à®¿à®°à¯à®¨à¯à®¤à¯ à®ªà®²à®µà¯‡à®±à¯ aggregation pipelines execute à®šà¯†à®¯à¯à®¤à¯, à®ªà®²à®µà¯‡à®±à¯ output arrays produce à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ à®’à®°à¯‡ query-à®²à¯ à®ªà®²à®µà¯‡à®±à¯ aggregations perform à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Change Streams-à® à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®µà®¤à®©à¯ à®¨à®©à¯à®®à¯ˆ à®Žà®©à¯à®©?", 
+                options: [
+                    "Real-time data changes-à® monitor à®šà¯†à®¯à¯à®¯",
+                    "Database-à® backup à®Žà®Ÿà¯à®•à¯à®•",
+                    "Query performance improve à®šà¯†à®¯à¯à®¯",
+                    "Indexes rebuild à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "Change Streams MongoDB collection-à®²à¯ real-time data changes-à® monitor à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ applications-à®•à¯ database-à®²à¯ à®¨à®Ÿà®•à¯à®•à¯à®®à¯ changes-à® immediately respond à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "MongoDB-à®‡à®²à¯ Read Preference 'nearest' à®Žà®ªà¯à®ªà¯‹à®¤à¯ à®ªà®¯à®©à¯à®³à¯à®³à®¤à®¾à®• à®‡à®°à¯à®•à¯à®•à¯à®®à¯?", 
+                options: [
+                    "Low latency à®¤à¯‡à®µà¯ˆà®ªà¯à®ªà®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "Strong consistency à®¤à¯‡à®µà¯ˆà®ªà¯à®ªà®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "Write operations optimize à®šà¯†à®¯à¯à®¯",
+                    "Backup operations à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "'nearest' read preference lowest network latency à®‰à®³à¯à®³ replica set member-à®²à®¿à®°à¯à®¨à¯à®¤à¯ read à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ geographic distribution à®‰à®³à¯à®³ deployments-à®²à¯ performance improve à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®³à¯à®³à®¤à¯."
+            },
+            { 
+                question: "$graphLookup stage à®Žà®¨à¯à®¤ à®µà®•à¯ˆ à®¤à®°à®µà¯à®•à®³à¯à®•à¯à®•à¯ à®à®±à¯à®±à®¤à¯?", 
+                options: [
+                    "Hierarchical à®…à®²à¯à®²à®¤à¯ graph-structured data",
+                    "Simple flat documents",
+                    "Encrypted data",
+                    "Compressed data"
+                ], 
+                correct: 0,
+                explanation: "$graphLookup stage hierarchical à®…à®²à¯à®²à®¤à¯ graph-structured data-à®•à¯à®•à¯ à®à®±à¯à®±à®¤à¯. à®‡à®¤à¯ à®’à®°à¯ collection-à®²à¯ recursive relationships perform à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯, tree à®…à®²à¯à®²à®¤à¯ graph traversal operations-à®•à¯à®•à¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Write Concern { w: 'majority', j: true }-à®‡à®©à¯ à®ªà¯Šà®°à¯à®³à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "Majority replica members-à®•à¯à®•à¯ write à®šà¯†à®¯à¯à®¤à¯ journal-à®‰à®®à¯ flush à®šà¯†à®¯à¯à®¯",
+                    "Primary-à®•à¯à®•à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯ write à®šà¯†à®¯à¯à®¯",
+                    "Asynchronous write à®šà¯†à®¯à¯à®¯",
+                    "Write-à® rollback à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "Write Concern {w: 'majority', j: true} à®Žà®©à¯à®ªà®¤à¯ write operation majority of replica set members-à®•à¯à®•à¯ acknowledge à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®®à®±à¯à®±à¯à®®à¯ journal-à®²à¯à®®à¯ flushed à®†à®• à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®Žà®©à¯à®±à¯ à®•à¯à®±à®¿à®•à¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ strong durability guarantee à®•à¯Šà®Ÿà¯à®•à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Compound Index-à®‡à®²à¯ Index Prefix Principle-à® à®µà®¿à®³à®•à¯à®•à¯à®•", 
+                options: [
+                    "{a:1, b:1, c:1} index {a:1} à®®à®±à¯à®±à¯à®®à¯ {a:1, b:1} queries-à®•à¯à®•à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®®à¯",
+                    "Index-à® reverse order-à®²à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®®à¯",
+                    "à®Žà®²à¯à®²à®¾ fields-à®‰à®®à¯ query-à®‡à®²à¯ à®‡à®°à¯à®¨à¯à®¤à®¾à®²à¯à®¤à®¾à®©à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®®à¯",
+                    "Compound index-à® à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤ à®®à¯à®Ÿà®¿à®¯à®¾à®¤à¯"
+                ], 
+                correct: 0,
+                explanation: "Index Prefix Principle compound index {a:1, b:1, c:1} queries {a:1} à®®à®±à¯à®±à¯à®®à¯ {a:1, b:1} à®†à®•à®¿à®¯à®µà®±à¯à®±à¯à®•à¯à®•à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®®à¯ à®Žà®©à¯à®±à¯ à®•à¯‚à®±à¯à®•à®¿à®±à®¤à¯. Prefix fields (à®®à¯à®©à¯à®©à¯Šà®Ÿà¯à®Ÿà¯ fields) à®®à®Ÿà¯à®Ÿà¯à®®à¯ query-à®²à¯ à®‡à®°à¯à®¨à¯à®¤à®¾à®²à¯‡ index à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®®à¯."
+            },
+            { 
+                question: "MongoDB-à®‡à®²à¯ Collation-à® à®Žà®ªà¯à®ªà¯‹à®¤à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®µà¯‹à®®à¯?", 
+                options: [
+                    "Language-specific string comparison rules define à®šà¯†à®¯à¯à®¯",
+                    "Data compression à®šà¯†à®¯à¯à®¯",
+                    "Network latency à®•à¯à®±à¯ˆà®¯",
+                    "Memory usage optimize à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "Collation language-specific string comparison rules define à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ case sensitivity, accent marks, à®®à®±à¯à®±à¯à®®à¯ language-specific sorting rules-à® specify à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "$expr operator-à®‰à®Ÿà®©à¯ $function operator-à® à®Žà®ªà¯à®ªà¯‹à®¤à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®µà¯‹à®®à¯?", 
+                options: [
+                    "Custom JavaScript function execute à®šà¯†à®¯à¯à®¯ aggregation-à®‡à®²à¯",
+                    "Regular expression match à®šà¯†à®¯à¯à®¯",
+                    "Simple arithmetic operations à®šà¯†à®¯à¯à®¯",
+                    "String concatenation à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "$function operator custom JavaScript functions-à® aggregation pipeline-à®‡à®²à¯ execute à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. $expr operator-à®‰à®Ÿà®©à¯ à®šà¯‡à®°à¯à®¤à¯à®¤à¯, complex calculations à®®à®±à¯à®±à¯à®®à¯ custom logic perform à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "MongoDB Atlas Search-à®‡à®©à¯ compound operator-à® à®Žà®ªà¯à®ªà®Ÿà®¿ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®µà¯‹à®®à¯?", 
+                options: [
+                    "Multiple search conditions combine à®šà¯†à®¯à¯à®¯",
+                    "Single field-à®²à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯ search à®šà¯†à®¯à¯à®¯",
+                    "Indexes create à®šà¯†à®¯à¯à®¯",
+                    "Data export à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "compound operator multiple search conditions combine à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ must, should, must_not, à®®à®±à¯à®±à¯à®®à¯ filter clauses-à® combine à®šà¯†à®¯à¯à®¤à¯ complex full-text search queries build à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "Multi-key Index-à®•à¯à®•à¯à®®à¯ Compound Multi-key Index-à®•à¯à®•à¯à®®à¯ à®‰à®³à¯à®³ à®µà®¿à®¤à¯à®¤à®¿à®¯à®¾à®šà®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "Compound multi-key index array fields-à® support à®šà¯†à®¯à¯à®¯à®¾à®¤à¯",
+                    "Compound multi-key index à®’à®°à¯‡ à®’à®°à¯ array field-à® à®®à®Ÿà¯à®Ÿà¯à®®à¯ allow à®šà¯†à®¯à¯à®¯à¯à®®à¯",
+                    "Compound multi-key index à®ªà®² array fields-à® allow à®šà¯†à®¯à¯à®¯à®¾à®¤à¯",
+                    "Compound multi-key index à®Žà®¨à¯à®¤ array fields-à®‰à®®à¯ allow à®šà¯†à®¯à¯à®¯à®¾à®¤à¯"
+                ], 
+                correct: 1,
+                explanation: "Compound multi-key index à®’à®°à¯‡ à®’à®°à¯ array field-à® à®®à®Ÿà¯à®Ÿà¯à®®à¯ allow à®šà¯†à®¯à¯à®¯à¯à®®à¯. à®’à®©à¯à®±à¯à®•à¯à®•à¯ à®®à¯‡à®±à¯à®ªà®Ÿà¯à®Ÿ array fields à®‰à®³à¯à®³ compound index create à®šà¯†à®¯à¯à®¯ à®®à¯à®¯à®±à¯à®šà®¿à®¤à¯à®¤à®¾à®²à¯ MongoDB error throw à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "$merge stage-à®‡à®©à¯ whenMatched option 'merge' à®Žà®©à¯à®ªà®¤à®©à¯ à®ªà¯Šà®°à¯à®³à¯", 
+                options: [
+                    "Existing document-à®‰à®Ÿà®©à¯ source document-à® merge à®šà¯†à®¯à¯à®¯",
+                    "Existing document-à® replace à®šà¯†à®¯à¯à®¯",
+                    "Existing document-à® delete à®šà¯†à®¯à¯à®¯",
+                    "New document-à® insert à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "'merge' option matching documents-à® source document fields-à®‰à®Ÿà®©à¯ merge à®šà¯†à®¯à¯à®¯à¯à®®à¯. Existing fields preserve à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®®à¯, new fields add à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®®à¯, à®®à®±à¯à®±à¯à®®à¯ conflicts à®‡à®°à¯à®¨à¯à®¤à®¾à®²à¯ source document fields win à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "MongoDB-à®‡à®©à¯ Read/Write Query Hedging à®Žà®¤à®±à¯à®•à®¾à®•?", 
+                options: [
+                    "Multiple replica members-à®²à®¿à®°à¯à®¨à¯à®¤à¯ parallel-à®† read à®šà¯†à®¯à¯à®¤à¯ fastest response à®Žà®Ÿà¯à®•à¯à®•",
+                    "Write operations distribute à®šà¯†à®¯à¯à®¯",
+                    "Indexes rebuild à®šà¯†à®¯à¯à®¯",
+                    "Backup automate à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "Query Hedging multiple replica set members-à®²à®¿à®°à¯à®¨à¯à®¤à¯ parallel read operations send à®šà¯†à®¯à¯à®¤à¯ fastest response return à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ read latency à®•à¯à®±à¯ˆà®•à¯à®• à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "$addFields stage-à®‰à®Ÿà®©à¯ $cond operator-à® combine à®šà¯†à®¯à¯à®¤à®¾à®²à¯ à®Žà®©à¯à®© advantage?", 
+                options: [
+                    "Conditional logic based-à®²à¯ à®ªà¯à®¤à®¿à®¯ fields create à®šà¯†à®¯à¯à®¯",
+                    "Data delete à®šà¯†à®¯à¯à®¯",
+                    "Index create à®šà¯†à®¯à¯à®¯",
+                    "Performance improve à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "$cond operator-à® $addFields stage-à®‰à®Ÿà®©à¯ combine à®šà¯†à®¯à¯à®¤à®¾à®²à¯, conditional logic based-à®²à¯ à®ªà¯à®¤à®¿à®¯ fields create à®šà¯†à®¯à¯à®¯ à®®à¯à®Ÿà®¿à®¯à¯à®®à¯. à®‡à®¤à¯ if-then-else logic implement à®šà¯†à®¯à¯à®¯ aggregation pipeline-à®‡à®²à¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "MongoDB-à®‡à®²à¯ Zoned Sharding-à® à®Žà®ªà¯à®ªà¯‹à®¤à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®µà¯‹à®®à¯?", 
+                options: [
+                    "Specific shard keys-à® specific shards-à®²à¯ place à®šà¯†à®¯à¯à®¯",
+                    "Random sharding à®šà¯†à®¯à¯à®¯",
+                    "All data à®’à®°à¯‡ shard-à®²à¯ à®µà¯ˆà®•à¯à®•",
+                    "Sharding disable à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "Zoned Sharding specific ranges of shard keys specific shards-à®²à¯ place à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ geographic distribution, hardware isolation, à®…à®²à¯à®²à®¤à¯ data sovereignty requirements manage à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "$out stage à®®à®±à¯à®±à¯à®®à¯ $merge stage-à®•à¯à®•à¯ à®‡à®Ÿà¯ˆà®¯à¯‡ à®‰à®³à¯à®³ à®®à¯à®•à¯à®•à®¿à®¯ à®µà®¿à®¤à¯à®¤à®¿à®¯à®¾à®šà®®à¯", 
+                options: [
+                    "$merge existing collection-à®‰à®Ÿà®©à¯ merge à®šà¯†à®¯à¯à®¯à¯à®®à¯, $out replace à®šà¯†à®¯à¯à®¯à¯à®®à¯",
+                    "$out merge à®šà¯†à®¯à¯à®¯à¯à®®à¯, $merge replace à®šà¯†à®¯à¯à®¯à¯à®®à¯",
+                    "à®‡à®°à®£à¯à®Ÿà¯à®®à¯ à®’à®©à¯à®±à¯‡",
+                    "à®‡à®°à®£à¯à®Ÿà¯à®®à¯ collection create à®šà¯†à®¯à¯à®¯à®¾à®¤à¯"
+                ], 
+                correct: 0,
+                explanation: "$out stage à®®à¯à®´à¯ collection-à® replace à®šà¯†à®¯à¯à®¯à¯à®®à¯, $merge stage existing collection-à®‰à®Ÿà®©à¯ results merge à®šà¯†à®¯à¯à®¯à¯à®®à¯. $merge stage matching documents update à®šà¯†à®¯à¯à®¯, non-matching documents insert à®šà¯†à®¯à¯à®¯, à®®à®±à¯à®±à¯à®®à¯ various conflict resolution strategies offer à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "MongoDB-à®‡à®²à¯ Retryable Writes-à® enable à®šà¯†à®¯à¯à®µà®¤à®©à¯ à®¨à®©à¯à®®à¯ˆ", 
+                options: [
+                    "Network failures-à®²à¯ automatic-à®† retry à®šà¯†à®¯à¯à®¯à¯à®®à¯",
+                    "Write speed increase à®šà¯†à®¯à¯à®¯à¯à®®à¯",
+                    "Data compress à®šà¯†à®¯à¯à®¯à¯à®®à¯",
+                    "Indexes rebuild à®šà¯†à®¯à¯à®¯à¯à®®à¯"
+                ], 
+                correct: 0,
+                explanation: "Retryable Writes network failures, primary election, à®®à®±à¯à®±à¯à®®à¯ transient errors-à®²à¯ automatic-à®† write operations retry à®šà¯†à®¯à¯à®¯à¯à®®à¯. à®‡à®¤à¯ applications-à®•à¯ manual retry logic write à®šà¯†à®¯à¯à®¯ à®¤à¯‡à®µà¯ˆà®¯à®¿à®²à¯à®²à®¾à®®à®²à¯ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "$indexStats aggregation stage à®Žà®¤à®±à¯à®•à®¾à®• à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯?", 
+                options: [
+                    "Index usage statistics à®ªà¯†à®±",
+                    "New index create à®šà¯†à®¯à¯à®¯",
+                    "Old index delete à®šà¯†à®¯à¯à®¯",
+                    "Index rename à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "$indexStats stage index usage statistics return à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ operations, hits, misses, à®®à®±à¯à®±à¯à®®à¯ other metrics-à® provide à®šà¯†à®¯à¯à®¯à¯à®®à¯, index performance analyze à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "MongoDB-à®‡à®²à¯ Field Level Encryption (FLE)-à®‡à®©à¯ advantage", 
+                options: [
+                    "Sensitive data-à® application level-à®²à¯‡à®¯à¯‡ encrypt à®šà¯†à®¯à¯à®¯",
+                    "All data-à® automatically compress à®šà¯†à®¯à¯à®¯",
+                    "Query speed increase à®šà¯†à®¯à¯à®¯",
+                    "Backup size à®•à¯à®±à¯ˆà®¯"
+                ], 
+                correct: 0,
+                explanation: "Field Level Encryption (FLE) sensitive data-à® application level-à®²à¯‡à®¯à¯‡ encrypt à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. Encrypted data à®®à®Ÿà¯à®Ÿà¯à®®à¯‡ database-à®²à¯ store à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯, client-side encryption à®®à¯‚à®²à®®à¯ data confidentiality ensure à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "$geoWithin operator-à®‰à®Ÿà®©à¯ $centerSphere-à® à®Žà®ªà¯à®ªà®Ÿà®¿ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®µà¯‹à®®à¯?", 
+                options: [
+                    "Circular geographic area define à®šà¯†à®¯à¯à®¯",
+                    "Rectangular area define à®šà¯†à®¯à¯à®¯",
+                    "Polygon area define à®šà¯†à®¯à¯à®¯",
+                    "Linear path define à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "$centerSphere à®’à®°à¯ center point à®®à®±à¯à®±à¯à®®à¯ radius (radians-à®²à¯) specify à®šà¯†à®¯à¯à®¤à¯ circular geographic area define à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. $geoWithin operator-à®‰à®Ÿà®©à¯ à®šà¯‡à®°à¯à®¤à¯à®¤à¯, documents à®…à®¨à¯à®¤ circle-à®‡à®²à¯ à®‰à®³à¯à®³à®¤à®¾ à®Žà®©à¯à®±à¯ query à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "MongoDB-à®‡à®²à¯ Causal Consistency-à® à®Žà®ªà¯à®ªà®Ÿà®¿ achieve à®šà¯†à®¯à¯à®µà¯‹à®®à¯?", 
+                options: [
+                    "Read concern 'majority' à®®à®±à¯à®±à¯à®®à¯ write concern 'majority' à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤",
+                    "Local read concern à®®à®Ÿà¯à®Ÿà¯à®®à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤",
+                    "No read concern à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤",
+                    "Asynchronous writes à®®à®Ÿà¯à®Ÿà¯à®®à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤"
+                ], 
+                correct: 0,
+                explanation: "Causal Consistency achieve à®šà¯†à®¯à¯à®¯ read concern 'majority' à®®à®±à¯à®±à¯à®®à¯ write concern 'majority' à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯. OperationTime return à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®®à¯, à®ªà®¿à®©à¯à®©à®°à¯ subsequent reads-à®•à¯ afterClusterTime option-à®† pass à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®®à¯."
+            },
+            { 
+                question: "$bucketAuto stage-à®‡à®©à¯ à®šà®¿à®±à®ªà¯à®ªà¯ à®…à®®à¯à®šà®®à¯ à®Žà®©à¯à®©?", 
+                options: [
+                    "Automatically optimal bucket boundaries calculate à®šà¯†à®¯à¯à®¯à¯à®®à¯",
+                    "Manual boundaries specify à®šà¯†à®¯à¯à®¯ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯",
+                    "Only numeric data-à®•à¯à®•à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯",
+                    "String data-à®•à¯à®•à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯"
+                ], 
+                correct: 0,
+                explanation: "$bucketAuto stage automatically optimal bucket boundaries calculate à®šà¯†à®¯à¯à®¯à¯à®®à¯, specified number of buckets attempt à®šà¯†à®¯à¯à®¯à¯à®®à¯. à®‡à®¤à¯ data distribution based-à®²à¯ boundaries determine à®šà¯†à®¯à¯à®¯à¯à®®à¯, manual boundary specification à®¤à¯‡à®µà¯ˆà®¯à®¿à®²à¯à®²à¯ˆ."
+            },
+            { 
+                question: "MongoDB Atlas Data Lake-à®‰à®Ÿà®©à¯ Federation à®Žà®¤à®±à¯à®•à®¾à®•?", 
+                options: [
+                    "Multiple data sources-à® à®’à®°à¯‡ query-à®¯à®¿à®²à¯ access à®šà¯†à®¯à¯à®¯",
+                    "Data delete à®šà¯†à®¯à¯à®¯",
+                    "Local storage à®®à®Ÿà¯à®Ÿà¯à®®à¯",
+                    "Backup purposes à®®à®Ÿà¯à®Ÿà¯à®®à¯"
+                ], 
+                correct: 0,
+                explanation: "Federation multiple data sources (MongoDB Atlas clusters, Data Lakes) à®’à®°à¯‡ query-à®¯à®¿à®²à¯ access à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ unified view of distributed data provide à®šà¯†à®¯à¯à®¯à¯à®®à¯, data silos eliminate à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "$convert aggregation operator-à® à®Žà®ªà¯à®ªà¯‹à®¤à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®µà¯‹à®®à¯?", 
+                options: [
+                    "Data type conversion à®šà¯†à®¯à¯à®¯",
+                    "Data delete à®šà¯†à®¯à¯à®¯",
+                    "Index create à®šà¯†à®¯à¯à®¯",
+                    "Query optimize à®šà¯†à®¯à¯à®¯"
+                ], 
+                correct: 0,
+                explanation: "$convert operator data type conversion à®šà¯†à®¯à¯à®¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ à®’à®°à¯ value-à® à®’à®°à¯ data type-à®²à®¿à®°à¯à®¨à¯à®¤à¯ à®®à®±à¯à®±à¯Šà®°à¯ data type-à®•à¯à®•à¯ convert à®šà¯†à®¯à¯à®¯à¯à®®à¯, conversion errors handle à®šà¯†à®¯à¯à®¯ onError à®®à®±à¯à®±à¯à®®à¯ onNull options provide à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "MongoDB-à®‡à®²à¯ Read Concern 'snapshot' à®Žà®ªà¯à®ªà¯‹à®¤à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®µà¯‹à®®à¯?", 
+                options: [
+                    "Multi-document transactions-à®‡à®²à¯ consistent snapshot à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "Fast reads à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "Casual reads à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯",
+                    "Async reads à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯"
+                ], 
+                correct: 0,
+                explanation: "Read Concern 'snapshot' multi-document transactions-à®‡à®²à¯ consistent snapshot à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®ªà¯‹à®¤à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ transaction à®®à¯à®´à¯à®µà®¤à¯à®®à¯ à®’à®°à¯‡ data snapshot read à®šà¯†à®¯à¯à®¯ guarantee à®šà¯†à®¯à¯à®¯à¯à®®à¯, preventing phantom reads."
+            },
+            { 
+                question: "$regex operator-à®‰à®Ÿà®©à¯ $options 'i' à®®à®±à¯à®±à¯à®®à¯ 'm'-à®‡à®©à¯ à®µà®¿à®¤à¯à®¤à®¿à®¯à®¾à®šà®®à¯", 
+                options: [
+                    "'i' - case insensitive, 'm' - multiline matching",
+                    "'i' - multiline, 'm' - case insensitive",
+                    "à®‡à®°à®£à¯à®Ÿà¯à®®à¯ à®’à®©à¯à®±à¯‡",
+                    "à®Žà®¤à®±à¯à®•à¯à®®à¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®¾à®¤à¯"
+                ], 
+                correct: 0,
+                explanation: "$regex option 'i' case-insensitive matching-à®•à¯à®•à¯ (upper/lower case ignore à®šà¯†à®¯à¯à®¯à¯à®®à¯). Option 'm' multiline matching-à®•à¯à®•à¯ (^ à®®à®±à¯à®±à¯à®®à¯ $ string-à®‡à®©à¯ beginning/end à®®à®Ÿà¯à®Ÿà¯à®®à®²à¯à®², line-à®‡à®©à¯ beginning/end-à®‰à®®à¯ match à®šà¯†à®¯à¯à®¯à¯à®®à¯)."
+            },
+            { 
+                question: "MongoDB-à®‡à®²à¯ Change Streams Pre- and Post-Images enable à®šà¯†à®¯à¯à®µà®¤à¯ à®Žà®¤à®±à¯à®•à®¾à®•?", 
+                options: [
+                    "Update operations-à®‡à®©à¯ before/after state capture à®šà¯†à®¯à¯à®¯",
+                    "Faster queries",
+                    "Smaller storage",
+                    "Automatic backups"
+                ], 
+                correct: 0,
+                explanation: "Pre- and Post-Images update operations-à®‡à®©à¯ before à®®à®±à¯à®±à¯à®®à¯ after state capture à®šà¯†à®¯à¯à®¯ enable à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®•à®¿à®©à¯à®±à®©. à®‡à®¤à¯ Change Streams-à®²à¯ à®®à¯à®´à¯ document changes track à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯, delta changes à®®à®Ÿà¯à®Ÿà¯à®®à®²à¯à®²."
+            },
+            { 
+                question: "$unionWith stage-à®‰à®Ÿà®©à¯ pipeline parameter-à® à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à¯à®µà®¤à®©à¯ advantage", 
+                options: [
+                    "Second collection-à®²à¯ additional processing à®šà¯†à®¯à¯à®¯",
+                    "Direct merge à®®à®Ÿà¯à®Ÿà¯à®®à¯",
+                    "Data delete à®®à®Ÿà¯à®Ÿà¯à®®à¯",
+                    "Index create à®®à®Ÿà¯à®Ÿà¯à®®à¯"
+                ], 
+                correct: 0,
+                explanation: "$unionWith stage-à®‡à®©à¯ pipeline parameter second collection-à®²à¯ additional processing perform à®šà¯†à®¯à¯à®¯ allow à®šà¯†à®¯à¯à®¯à¯à®®à¯ before union à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®•à®¿à®±à®¤à¯. à®‡à®¤à¯ filtering, transformations, à®…à®²à¯à®²à®¤à¯ aggregations perform à®šà¯†à®¯à¯à®¯ à®‰à®¤à®µà¯à®•à®¿à®±à®¤à¯."
+            },
+            { 
+                question: "MongoDB-à®‡à®²à¯ Time Series Collections-à®‡à®©à¯ compression mechanism", 
+                options: [
+                    "Automatic compression based on time patterns",
+                    "Manual compression only",
+                    "No compression",
+                    "Lossy compression"
+                ], 
+                correct: 0,
+                explanation: "Time Series Collections automatic compression based on time patterns use à®šà¯†à®¯à¯à®¯à¯à®®à¯. à®‡à®¤à¯ time-ordered data-à®•à¯à®•à¯ optimized storage provide à®šà¯†à®¯à¯à®¯à¯à®®à¯, similar measurements across time compress à®šà¯†à®¯à¯à®¯à¯à®®à¯, storage requirements significantly reduce à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            },
+            { 
+                question: "$merge stage-à®‡à®©à¯ whenNotMatched option 'discard' à®Žà®©à¯à®ªà®¤à®©à¯ à®ªà¯Šà®°à¯à®³à¯", 
+                options: [
+                    "Source documents-à® ignore à®šà¯†à®¯à¯à®¯",
+                    "Insert new documents",
+                    "Error throw à®šà¯†à®¯à¯à®¯",
+                    "Delete existing documents"
+                ], 
+                correct: 0,
+                explanation: "'discard' option source documents that don't match any documents in target collection ignore à®šà¯†à®¯à¯à®¯à¯à®®à¯. No insert operations performed, unmatched documents silently discarded à®†à®•à¯à®®à¯."
+            },
+            { 
+                question: "MongoDB Atlas Serverless Instances-à®‡à®©à¯ scaling mechanism", 
+                options: [
+                    "Automatically scales based on workload",
+                    "Manual scaling only",
+                    "Fixed capacity",
+                    "No scaling"
+                ], 
+                correct: 0,
+                explanation: "MongoDB Atlas Serverless Instances automatically scale based on workload. à®‡à®¤à¯ provisioned capacity manage à®šà¯†à®¯à¯à®¯ à®¤à¯‡à®µà¯ˆà®¯à®¿à®²à¯à®²à®¾à®®à®²à¯ à®šà¯†à®¯à¯à®•à®¿à®±à®¤à¯, usage based-à®²à¯ automatically scale up/down à®šà¯†à®¯à¯à®¯à¯à®®à¯."
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let answeredQuestions = new Array(quizData.length).fill(false);
+
+        // DOM elements
+        const questionSelectionGrid = document.getElementById('questionSelectionGrid');
+        const questionNumberElement = document.getElementById('questionNumber');
+        const questionTextElement = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const answerFeedback = document.getElementById('answerFeedback');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+
+        // Initialize question selection grid with RED color
+        function initializeQuestionGrid() {
+            questionSelectionGrid.innerHTML = '';
+            quizData.forEach((question, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'question-number-btn';
+                btn.dataset.index = index;
+                
+                // Add RED difficulty indicator
+                const difficultyIndicator = document.createElement('div');
+                difficultyIndicator.className = 'difficulty-indicator';
+                btn.appendChild(difficultyIndicator);
+                
+                // Add question number
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'question-number';
+                numberSpan.textContent = index + 1;
+                btn.appendChild(numberSpan);
+                
+                if (index === 0) {
+                    btn.classList.add('active');
+                }
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    updateQuestionGrid();
+                });
+                
+                questionSelectionGrid.appendChild(btn);
+            });
+        }
+
+        // Update question grid
+        function updateQuestionGrid() {
+            const buttons = document.querySelectorAll('.question-number-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                
+                if (answeredQuestions[index]) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.remove('answered');
+                }
+                
+                if (index === currentQuestionIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = quizData[currentQuestionIndex];
+            
+            // Update question number
+            questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            
+            // Update question text
+            questionTextElement.textContent = question.question;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.dataset.optionIndex = index;
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Clear feedback
+            answerFeedback.style.display = 'none';
+            answerFeedback.className = 'answer-feedback';
+            answerFeedback.innerHTML = '';
+            
+            // Update navigation buttons
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            // Update question grid
+            updateQuestionGrid();
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            const question = quizData[currentQuestionIndex];
+            const optionElements = document.querySelectorAll('.quiz-option');
+            
+            // Remove any previous selection classes
+            optionElements.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Mark the selected option
+            const selectedOption = optionElements[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            // Check if answer is correct
+            if (optionIndex === question.correct) {
+                selectedOption.classList.add('correct');
+                showFeedback(true, question.explanation);
+            } else {
+                selectedOption.classList.add('incorrect');
+                // Also show the correct answer
+                const correctOption = optionElements[question.correct];
+                correctOption.classList.add('correct');
+                showFeedback(false, question.explanation);
+            }
+            
+            // Mark question as answered
+            if (!answeredQuestions[currentQuestionIndex]) {
+                answeredQuestions[currentQuestionIndex] = true;
+                updateQuestionGrid();
+            }
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect, explanation) {
+            answerFeedback.className = `answer-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            const icon = isCorrect ? 'fa-check-circle' : 'fa-times-circle';
+            const message = isCorrect ? 'à®šà®°à®¿à®¯à®¾à®© à®µà®¿à®Ÿà¯ˆ!' : 'à®¤à®µà®±à®¾à®© à®µà®¿à®Ÿà¯ˆ!';
+            
+            answerFeedback.innerHTML = `
+                <div>
+                    <i class="fas ${icon} feedback-icon"></i>
+                    <strong>${message}</strong> ${explanation}
+                </div>
+            `;
+            
+            answerFeedback.style.display = 'block';
+            
+            // Scroll feedback into view
+            answerFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        // Initialize the answer key
+        initializeQuestionGrid();
+        loadQuestion();
+    </script>
+</body>
+</html>

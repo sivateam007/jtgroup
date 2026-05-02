@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js MySQL Where - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js MySQL Select From.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js MySQL Order By.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js MySQL Where</h2>
+            <p>Node.js ஐப் பயன்படுத்தி MySQL வினாக்களில் WHERE கூற்றுடன் தரவை வடிகட்ட கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Select With a Filter -->
+        <section class="content-section" id="select-filter">
+            <h2>வடிகட்டியுடன் தேர்ந்தெடுத்தல்</h2>
+            
+            <p>ஒரு அட்டவணையில் இருந்து பதிவுகளைத் தேர்ந்தெடுக்கும் போது, "WHERE" கூற்றைப் பயன்படுத்தி தேர்வை வடிகட்டலாம்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>"Park Lane 38" என்ற முகவரியுடன் பதிவு(களை)த் தேர்ந்தெடுக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  con.query("SELECT * FROM customers WHERE address = 'Park Lane 38'", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_db_where.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_db_where.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { id: 11, name: 'Ben', address: 'Park Lane 38'}
+]</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> WHERE கூற்றின் முக்கிய குறிப்புகள்:</h4>
+                <ul>
+                    <li><strong>சமத்துவ சோதனை:</strong> = ஆபரேட்டர் சரியான பொருத்தத்திற்குப் பயன்படுத்தப்படுகிறது</li>
+                    <li><strong>சரம் மதிப்புகள்:</strong> சரம் மதிப்புகள் ஒற்றை மேற்கோள்களில் இருக்க வேண்டும்</li>
+                    <li><strong>ஒற்றை முடிவு:</strong> WHERE கூற்று ஒன்று அல்லது அதற்கு மேற்பட்ட பதிவுகளைத் திருப்பித் தரும்</li>
+                    <li><strong>தரவு வகைகள்:</strong> எண்கள் மேற்கோள்கள் இல்லாமல் பயன்படுத்தப்படலாம்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Wildcard Characters -->
+        <section class="content-section" id="wildcard">
+            <h2>வைல்ட்கார்ட் எழுத்துகள்</h2>
+            
+            <p>கொடுக்கப்பட்ட எழுத்து அல்லது சொற்றொடரில் தொடங்கும், உள்ளடக்கிய அல்லது முடிவடையும் பதிவுகளையும் நீங்கள் தேர்ந்தெடுக்கலாம்.</p>
+            
+            <p>பூஜ்ஜியம், ஒன்று அல்லது பல எழுத்துகளைக் குறிக்க '%' வைல்ட்கார்டைப் பயன்படுத்தவும்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>'S' என்ற எழுத்தில் தொடங்கும் முகவரியுடன் பதிவுகளைத் தேர்ந்தெடுக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let mysql = require('mysql');
+
+let con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  con.query("SELECT * FROM customers WHERE address LIKE 'S%'", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});</code></pre>
+            </div>
+            
+            <p>மேலே உள்ள குறியீட்டை "demo_db_where_s.js" என்ற கோப்பில் சேமித்து கோப்பை இயக்கவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>C:\Users\Your Name>node demo_db_where_s.js</code></pre>
+            </div>
+            
+            <p>இது உங்களுக்கு இந்த முடிவைக் கொடுக்கும்:</p>
+            
+            <div class="code-example">
+                <pre><code>[
+  { id: 8, name: 'Richard', address: 'Sky st 331'},
+  { id: 14, name: 'Viola', address: 'Sideway 1633'}
+]</code></pre>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>தொடங்குவது</h4>
+                    </div>
+                    <p><code>'S%'</code> - 'S' இல் தொடங்கும் மதிப்புகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>முடிவடைவது</h4>
+                    </div>
+                    <p><code>'%S'</code> - 'S' இல் முடிவடையும் மதிப்புகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-search"></i>
+                        <h4>உள்ளடக்கம்</h4>
+                    </div>
+                    <p><code>'%S%'</code> - எங்கேயும் 'S' ஐக் கொண்ட மதிப்புகள்</p>
+                </div>
+            </div>
+            
+            <h3>கூடுதல் LIKE ஆபரேட்டர் எடுத்துக்காட்டுகள்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Address contains 'way'
+con.query("SELECT * FROM customers WHERE address LIKE '%way%'", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Name ends with 'y'
+con.query("SELECT * FROM customers WHERE name LIKE '%y'", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Name has exactly 3 characters
+con.query("SELECT * FROM customers WHERE name LIKE '___'", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Escaping Query Values -->
+        <section class="content-section" id="escaping">
+            <h2>வினா மதிப்புகளைத் தப்பிக்கச் செய்தல்</h2>
+            
+            <p>வினா மதிப்புகள் பயனரால் வழங்கப்பட்ட மாறிகள் ஆகும் போது, நீங்கள் மதிப்புகளைத் தப்பிக்கச் செய்ய வேண்டும்.</p>
+            
+            <p>இது SQL injections தடுக்க, இது உங்கள் தரவுத்தளத்தை அழிக்க அல்லது தவறாகப் பயன்படுத்தும் ஒரு பொதுவான வெப் ஹேக்கிங் நுட்பமாகும்.</p>
+            
+            <p>MySQL தொகுதியில் வினா மதிப்புகளைத் தப்பிக்கச் செய்யும் முறைகள் உள்ளன:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>mysql.escape() முறையைப் பயன்படுத்தி வினா மதிப்புகளைத் தப்பிக்கச் செய்யவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let adr = 'Mountain 21';
+let sql = 'SELECT * FROM customers WHERE address = ' + mysql.escape(adr);
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+            
+            <p>நீங்கள் தப்பிக்கச் செய்ய விரும்பும் மதிப்புகளுக்கான ஒரு இடம் கொள்ளும் என ? ஐப் பயன்படுத்தலாம்.</p>
+            
+            <p>இந்த வழக்கில், query() முறையில் இரண்டாவது அளவுருவாக மாறி அனுப்பப்படுகிறது:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>இடம் கொள்ளும் ? முறையைப் பயன்படுத்தி வினா மதிப்புகளைத் தப்பிக்கச் செய்யவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let adr = 'Mountain 21';
+let sql = 'SELECT * FROM customers WHERE address = ?';
+con.query(sql, [adr], function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+            
+            <p>உங்களிடம் பல இடம் கொள்ளும் இருந்தால், வரிசையில் பல மதிப்புகள் உள்ளன, அந்த வரிசையில்:</p>
+            
+            <h3>எடுத்துக்காட்டு</h3>
+            <p>பல இடம் கொள்ளும்:</p>
+            
+            <div class="code-example">
+                <pre><code>let name = 'Amy';
+let adr = 'Mountain 21';
+let sql = 'SELECT * FROM customers WHERE name = ? OR address = ?';
+con.query(sql, [name, adr], function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> பாதுகாப்பு எச்சரிக்கை:</h4>
+                <ul>
+                    <li><strong>SQL Injection:</strong> பயனர் உள்ளீட்டை எப்போதும் தப்பிக்கச் செய்யவும்</li>
+                    <li><strong>மேற்கோள்கள்:</strong> mysql.escape() சரங்களுக்கான மேற்கோள்களைத் தானாகச் சேர்க்கிறது</li>
+                    <li><strong>இடம் கொள்ளும்:</strong> பல மதிப்புகளுக்கு பரிந்துரைக்கப்படும் முறை</li>
+                    <li><strong>தரவு சுத்திகரிப்பு:</strong> பயனர் உள்ளீட்டை எப்போதும் சரிபார்க்கவும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Additional WHERE Operators -->
+        <section class="content-section" id="where-operators">
+            <h2>கூடுதல் WHERE ஆபரேட்டர்கள்</h2>
+            
+            <h3>ஒப்பீட்டு ஆபரேட்டர்கள்</h3>
+            
+            <div class="code-example">
+                <pre><code>// Greater than
+con.query("SELECT * FROM customers WHERE id > 5", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Less than or equal
+con.query("SELECT * FROM customers WHERE id <= 10", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Not equal
+con.query("SELECT * FROM customers WHERE name != 'John'", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Between
+con.query("SELECT * FROM customers WHERE id BETWEEN 5 AND 10", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+            
+            <h3>தருக்க ஆபரேட்டர்கள்</h3>
+            
+            <div class="code-example">
+                <pre><code>// AND operator
+con.query("SELECT * FROM customers WHERE name = 'John' AND address = 'Highway 71'", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// OR operator
+con.query("SELECT * FROM customers WHERE name = 'John' OR name = 'Amy'", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// NOT operator
+con.query("SELECT * FROM customers WHERE NOT name = 'John'", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// Combined conditions
+con.query("SELECT * FROM customers WHERE (name = 'John' OR name = 'Amy') AND id > 5", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+            
+            <h3>IN ஆபரேட்டர்</h3>
+            
+            <div class="code-example">
+                <pre><code>// IN operator with multiple values
+con.query("SELECT * FROM customers WHERE name IN ('John', 'Amy', 'Hannah')", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+// NOT IN operator
+con.query("SELECT * FROM customers WHERE name NOT IN ('John', 'Amy')", function (err, result) {
+  if (err) throw err;
+  console.log(result);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices for WHERE Clauses -->
+        <section class="content-section" id="best-practices">
+            <h2>WHERE கூற்றுகளுக்கான சிறந்த நடைமுறைகள்</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>பாதுகாப்பு</h4>
+                    </div>
+                    <ul>
+                        <li>SQL injection தடுக்க எப்போதும் இடம் கொள்ளும் பயன்படுத்தவும்</li>
+                        <li>பயனர் உள்ளீட்டை எப்போதும் சரிபார்க்கவும் மற்றும் சுத்திகரிக்கவும்</li>
+                        <li>நேரடி சரம் இணைப்புகளைத் தவிர்க்கவும்</li>
+                        <li>பிழை செய்திகளை வெளிப்படையாகக் காட்ட வேண்டாம்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-bolt"></i>
+                        <h4>செயல்திறன்</h4>
+                    </div>
+                    <ul>
+                        <li>தேவையான நெடுவரிசைகளை மட்டும் தேர்ந்தெடுக்கவும்</li>
+                        <li>செயல்திறனுக்கான குறியீட்டு நெடுவரிசைகளைப் பயன்படுத்தவும்</li>
+                        <li>சிக்கலான வினாக்களுக்கு WHERE கூற்றுகளை எளிதாக்கவும்</li>
+                        <li>LIKE வினாக்களில் ஆரம்பத்தில் வைல்ட்கார்ட்களைத் தவிர்க்கவும்</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-code"></i>
+                        <h4>குறியீடு தரம்</h4>
+                    </div>
+                    <ul>
+                        <li>மறுபயன்பாட்டிற்காக WHERE கூற்றுகளைக் காப்பாற்றவும்</li>
+                        <li>சரியான பிழை கையாளுதலையும் கண்காணிப்பையும் பயன்படுத்தவும்</li>
+                        <li>வாசிப்புக்காக வினாக்களை வடிவமைக்கவும்</li>
+                        <li>நிலையான குறியீட்டு மரபுகளைப் பின்பற்றவும்</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete Example -->
+        <section class="content-section" id="complete-example">
+            <h2>முழுமையான எடுத்துக்காட்டு</h2>
+            
+            <p>அனைத்து WHERE கூற்று நுட்பங்களையும் உள்ளடக்கிய முழுமையான எடுத்துக்காட்டு:</p>
+            
+            <div class="code-example">
+                <pre><code>const mysql = require('mysql');
+
+// Create connection
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "company_db"
+});
+
+// Connect to MySQL
+con.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL:', err.message);
+    return;
+  }
+  
+  console.log('Connected to MySQL database');
+  
+  // Example 1: Basic WHERE with exact match
+  console.log('\n1. Customers with specific address:');
+  const address = 'Park Lane 38';
+  con.query("SELECT * FROM customers WHERE address = ?", [address], (err, result) => {
+    if (err) {
+      console.error('Error in query 1:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 2: WHERE with LIKE and wildcard
+  console.log('\n2. Customers with address starting with S:');
+  con.query("SELECT * FROM customers WHERE address LIKE 'S%'", (err, result) => {
+    if (err) {
+      console.error('Error in query 2:', err.message);
+      return;
+    }
+    console.log(result);
+  });
+  
+  // Example 3: WHERE with multiple conditions
+  console.log('\n3. Customers with complex conditions:');
+  const minId = 5;
+  const maxId = 10;
+  const namePattern = '%y%';
+  
+  con.query(
+    "SELECT * FROM customers WHERE id BETWEEN ? AND ? AND name LIKE ?",
+    [minId, maxId, namePattern],
+    (err, result) => {
+      if (err) {
+        console.error('Error in query 3:', err.message);
+        return;
+      }
+      console.log(result);
+    }
+  );
+  
+  // Example 4: WHERE with IN operator
+  console.log('\n4. Customers with specific names:');
+  const names = ['John', 'Amy', 'Hannah'];
+  con.query("SELECT * FROM customers WHERE name IN (?, ?, ?)", names, (err, result) => {
+    if (err) {
+      console.error('Error in query 4:', err.message);
+      return;
+    }
+    console.log(result);
+    
+    // Close connection after all queries
+    setTimeout(() => {
+      con.end((err) => {
+        if (err) {
+          console.error('Error closing connection:', err.message);
+          return;
+        }
+        console.log('\nConnection closed');
+      });
+    }, 1000);
+  });
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> MySQL வினாவில் பதிவுகளை வடிகட்ட பயன்படுத்தப்படும் சரியான SQL கூற்றைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">FILTER BY</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "FILTER BY" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL கூற்று அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">CONDITION</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "CONDITION" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL கூற்று அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">WHERE</div>
+                            <div class="option-feedback correct">✓ சரி! "WHERE" என்பது MySQL வினாவில் பதிவுகளை வடிகட்ட பயன்படும் சரியான SQL கூற்றாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">IF</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "IF" என்பது MySQL இல் ஒரு செல்லுபடியாகும் SQL கூற்று அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js MySQL Select From.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js MySQL Order By.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#select-filter">வடிகட்டியுடன் தேர்ந்தெடுத்தல்</a></li>
+                    <li><a href="#wildcard">வைல்ட்கார்ட் எழுத்துகள்</a></li>
+                    <li><a href="#escaping">வினா மதிப்புகளைத் தப்பிக்கச் செய்தல்</a></li>
+                    <li><a href="#where-operators">WHERE ஆபரேட்டர்கள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

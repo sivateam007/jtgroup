@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript WeakMap - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* WeakMap visualization */
+        .weakmap-visual {
+            background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .weakmap-visual:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .weakmap-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .weakness-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* Key-value visualization */
+        .key-value-visual {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .key-value-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 4px solid var(--git-color);
+        }
+        
+        .key-display {
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .value-display {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .arrow {
+            color: var(--git-color);
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+        
+        /* Privacy visualization */
+        .privacy-box {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .privacy-box:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .lock-icon {
+            font-size: 3rem;
+            color: #f39c12;
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Comparison table */
+        .comparison-table-container {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .comparison-table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            min-width: 700px;
+        }
+        
+        .comparison-table-container th {
+            background: linear-gradient(135deg, var(--git-color), #e74c3c);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table-container td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .comparison-table-container tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .comparison-table-container tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .check-mark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .cross-mark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="JavaScript%20Map%20Methods.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="JavaScript%20Map%20Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>JavaScript WeakMap</h2>
+            <p>பலவீனமான குறிப்புகளின் விசை-மதிப்பு தொகுப்பு</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>WeakMap பொருள்</h2>
+            
+            <div class="weakmap-visual">
+                <div class="weakness-badge">பலவீனமான குறிப்புகள்</div>
+                <div class="weakmap-content">
+                    <h4 style="color: white; margin-bottom: 1rem;">JavaScript WeakMap</h4>
+                    <p style="color: white;">ஒரு JavaScript WeakMap என்பது விசை/மதிப்பு ஜோடிகளின் தொகுப்பாகும், அங்கு விசைகள் பொருள்களாக இருக்க வேண்டும்.</p>
+                    <p style="color: white;">ஒரு WeakMap அதன் விசைகளுக்கு பலவீனமான குறிப்புகளை வைத்திருக்கிறது.</p>
+                </div>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// WeakMap உருவாக்கு
+let myMap = new WeakMap();
+
+// பொருள் உருவாக்கு
+let myObj = {fname:"John", lname:"Doe"};
+
+// WeakMap மதிப்பை அமை
+myMap.set(myObj, "player");
+
+// WeakMap மதிப்பைப் பெறு
+let type = myMap.get(myObj);</code></pre>
+            </div>
+        </section>
+
+        <!-- Garbage Collection -->
+        <section class="content-section" id="garbage-collection">
+            <h2>கழிவு சேகரிப்பு</h2>
+            
+            <p>JavaScript கழிவு சேகரிப்பு என்று அழைக்கப்படும் நினைவக மேலாண்மை வழிமுறையைப் பயன்படுத்துகிறது.</p>
+            
+            <p>முதன்மை செயல்பாடுகள்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>நினைவக வளங்களின் திறமையான பயன்பாட்டை உறுதிப்படுத்துதல்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>பயன்பாட்டில் இல்லாத மாறிகள் ஆக்கிரமித்த நினைவகத்தை மீட்டெடுத்தல்</div>
+                </div>
+                
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <div>நினைவக கசிவுகளைத் தடுத்தல்</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weak References -->
+        <section class="content-section" id="weak-references">
+            <h2>பலவீனமான குறிப்புகள்</h2>
+            
+            <p>வழக்கமான Map போலல்லாமல், ஒரு WeakMap அதன் விசைகள் கழிவு சேகரிக்கப்படுவதைத் தடுக்காது.</p>
+            
+            <p>ஒரு விசை (ஒரு பொருள்) ஒரு நிரலில் குறிப்புகள் இல்லையென்றால், அது கழிவு சேகரிப்புக்கு தகுதியானதாகிறது.</p>
+            
+            <p>விசை கழிவு சேகரிக்கப்படும்போது, அதன் விசை-மதிப்பு ஜோடி WeakMap இலிருந்து அகற்றப்படும்.</p>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>let myMap = new WeakMap();
+let myObj = {fname:"John", lname:"Doe"};
+
+myMap.set(myObj, "secret");
+myObj = null;
+// இப்போது myMap இல் உள்ள myObj (மற்றும் அதன் மதிப்புகள்) கழிவு சேகரிக்கப்படும்</code></pre>
+            </div>
+            
+            <div class="key-value-visual">
+                <div class="key-value-item">
+                    <div class="key-display">{fname: "John", lname: "Doe"}</div>
+                    <div class="arrow">↓</div>
+                    <div class="value-display">"secret"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Keys Must Be Objects -->
+        <section class="content-section" id="keys-must-be-objects">
+            <h2>விசைகள் பொருள்களாக இருக்க வேண்டும்</h2>
+            
+            <p>முதன்மை மதிப்புகள் WeakMap இல் விசைகளாகப் பயன்படுத்த முடியாது.</p>
+            
+            <p>விசைகள் பொருள்கள் அல்லது பதிவு செய்யப்படாத சின்னங்களாக இருக்க வேண்டும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">❌</span> தவறானது:</h4>
+                <div class="code-example" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); margin-top: 1rem;">
+                    <pre><code>let weakMap = new WeakMap();
+weakMap.set(42, "value");          // பிழை!
+weakMap.set("key", "value");       // பிழை!
+weakMap.set(true, "value");        // பிழை!</code></pre>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">✅</span> சரியானது:</h4>
+                <div class="code-example" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); margin-top: 1rem;">
+                    <pre><code>let weakMap = new WeakMap();
+weakMap.set({name: "John"}, "value");     // சரி!
+weakMap.set([1, 2, 3], "value");          // சரி!
+weakMap.set(new Date(), "value");         // சரி!</code></pre>
+                </div>
+            </div>
+            
+            <p>இந்த கட்டுப்பாடு கழிவு சேகரிப்பு வழிமுறையுடன் தொடர்புடையது; முதன்மை மதிப்புகள் பொருள்களைப் போல கழிவு சேகரிக்கப்படுவதில்லை.</p>
+        </section>
+
+        <!-- Tracking Objects -->
+        <section class="content-section" id="tracking-objects">
+            <h2>பொருள்களைக் கண்காணித்தல்</h2>
+            
+            <p>WeakMap இல் உள்ள உள்ளீடுகள் பலவீனமாக வைத்திருக்கப்படுகின்றன: பொருள் விசை அணுக முடியாததாக மாறினால், அதன் மேப்பிங் தானாகவே அகற்றப்படும்.</p>
+            
+            <p>கழிவு சேகரிப்பைத் தடுக்காமல் பொருள்களைப் பற்றிய தரவைக் கண்காணிப்பதற்கு இது சரியானது.</p>
+            
+            <h3>வருகையாளர்களைக் கண்காணித்தல்</h3>
+            <div class="code-example">
+                <pre><code>let text = "";
+
+// வருகை எண்ணிக்கையைச் சேமிக்க WeakMap உருவாக்கு
+const visitsCount = new WeakMap();
+
+// வருகையாளர் பொருள்களை உருவாக்கு
+const John = {name:"John", age:40};
+const Paul = {name:"Paul", age:41};
+const Ringo = {name:"Ringo", age:42};
+const George = {name:"George", age:43};
+
+// வருகைகளைக் கண்காணி
+track(Paul);
+track(Ringo);
+track(Paul);
+track(Paul);
+track(John);
+
+// வருகையாளர்களைக் கண்காணிக்க செயல்பாடு
+function track(visitor) {
+  let count = visitsCount.get(visitor) || 0;
+  count++;
+  visitsCount.set(visitor, count);
+  text += visitor.name + ", age " + visitor.age + ", has visited " + count + " time(s).<br>";
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Automatic Cleanup -->
+        <section class="content-section" id="automatic-cleanup">
+            <h2>தானியங்கி சுத்திகரிப்பு</h2>
+            
+            <p>நீங்கள் ஒரு வருகையாளர் பொருளுக்கான அனைத்து குறிப்புகளையும் அகற்றினால்:</p>
+            
+            <h3>வருகையாளர்களைக் கண்காணித்தல்:</h3>
+            <div class="code-example">
+                <pre><code>John = null;
+
+// John க்கான உள்ளீடு இப்போது WeakMap (persons) இலிருந்து அகற்றப்படும்</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🧹</span> தானியங்கி சுத்திகரிப்பு:</h4>
+                <p>WeakMap மெமரி மேலாண்மையை எளிதாக்குகிறது. நீங்கள் பொருள்களை நீக்க வேண்டியதில்லை - அவை தானாகவே கழிவு சேகரிக்கப்படும்.</p>
+            </div>
+        </section>
+
+        <!-- Not Iterable -->
+        <section class="content-section" id="not-iterable">
+            <h2>மறு செய்கை செய்ய முடியாதது</h2>
+            
+            <p>WeakMaps மறு செய்கை செய்ய முடியாதவை.</p>
+            
+            <p>நீங்கள் for சுழற்சிகள், forEach(), அல்லது keys() மூலம் விசைகள் மற்றும் மதிப்புகள் வழியாக மறு செய்கை செய்ய முடியாது.</p>
+            
+            <p>நீங்கள் அளவை அணுக முடியாது.</p>
+            
+            <div class="comparison-table-container">
+                <table>
+                    <tr>
+                        <th>செயல்பாடு</th>
+                        <th>Map</th>
+                        <th>WeakMap</th>
+                    </tr>
+                    <tr>
+                        <td>மறு செய்கை (for...of)</td>
+                        <td class="check-mark">✓ ஆதரிக்கிறது</td>
+                        <td class="cross-mark">✗ ஆதரிக்காது</td>
+                    </tr>
+                    <tr>
+                        <td>forEach() முறை</td>
+                        <td class="check-mark">✓ ஆதரிக்கிறது</td>
+                        <td class="cross-mark">✗ ஆதரிக்காது</td>
+                    </tr>
+                    <tr>
+                        <td>size பண்பு</td>
+                        <td class="check-mark">✓ உள்ளது</td>
+                        <td class="cross-mark">✗ இல்லை</td>
+                    </tr>
+                    <tr>
+                        <td>keys() முறை</td>
+                        <td class="check-mark">✓ ஆதரிக்கிறது</td>
+                        <td class="cross-mark">✗ ஆதரிக்காது</td>
+                    </tr>
+                    <tr>
+                        <td>values() முறை</td>
+                        <td class="check-mark">✓ ஆதரிக்கிறது</td>
+                        <td class="cross-mark">✗ ஆதரிக்காது</td>
+                    </tr>
+                    <tr>
+                        <td>entries() முறை</td>
+                        <td class="check-mark">✓ ஆதரிக்கிறது</td>
+                        <td class="cross-mark">✗ ஆதரிக்காது</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Limited Methods -->
+        <section class="content-section" id="limited-methods">
+            <h2>வரையறுக்கப்பட்ட முறைகள்</h2>
+            
+            <p>WeakMap வரையறுக்கப்பட்ட முறைகளை வழங்குகிறது:</p>
+            
+            <div class="key-value-visual">
+                <div class="key-value-item">
+                    <div class="key-display">new WeakMap()</div>
+                    <div class="value-display">புதிய WeakMap பொருளை உருவாக்குகிறது</div>
+                </div>
+                
+                <div class="key-value-item">
+                    <div class="key-display">get(key)</div>
+                    <div class="value-display">WeakMap இல் ஒரு விசைக்கான மதிப்பைப் பெறுகிறது</div>
+                </div>
+                
+                <div class="key-value-item">
+                    <div class="key-display">set(key, value)</div>
+                    <div class="value-display">WeakMap இல் ஒரு விசைக்கான மதிப்பை அமைக்கிறது</div>
+                </div>
+                
+                <div class="key-value-item">
+                    <div class="key-display">delete(key)</div>
+                    <div class="value-display">விசையால் குறிப்பிடப்பட்ட உறுப்பை அகற்றுகிறது</div>
+                </div>
+                
+                <div class="key-value-item">
+                    <div class="key-display">has(key)</div>
+                    <div class="value-display">விசை WeakMap இல் இருந்தால் true தரும்</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weak Map Secret Data -->
+        <section class="content-section" id="secret-data">
+            <h2>WeakMap இரகசிய தரவு</h2>
+            
+            <div class="privacy-box">
+                <div class="lock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h4 style="color: white; text-align: center; margin-bottom: 1rem;">தனியுரிமை பாதுகாப்பு</h4>
+                <p style="color: white; text-align: center;">WeakMap தனியுரிமைக்காக வடிவமைக்கப்பட்டது: உள்ளே என்ன இருக்கிறது என்று ஆய்வு செய்ய முடியாது</p>
+            </div>
+            
+            <h3>Example</h3>
+            <div class="code-example">
+                <pre><code>// WeakMap உருவாக்கு
+const myMap = new WeakMap();
+
+// தனிப்பட்ட புலங்கள் உருவகப்படுத்துதல்
+class User {
+  constructor(name) {
+  myMap.set(this, {secret:"hidden data"});
+  this.name = name;
+ }
+ getSecret() {
+  return myMap.get(this).secret;
+  }
+}
+
+const user1 = new User("John");
+secret = user1.getSecret();</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🔐</span> Example Explained:</h4>
+                <p>ஒரு WeakMap மறு செய்கையை அனுமதிக்காது.</p>
+                <p>வெளிப்புற குறியீட்டால் WeakMap இல் என்ன பொருள்கள் சேமிக்கப்படுகின்றன என்று "கண்டுபிடிக்க" முடியாது.</p>
+                <p>இரகசியத்தைப் பெற, கட்டமைப்பாளரில் பயன்படுத்தப்பட்ட this குறிப்பு உங்களுக்குத் தேவை.</p>
+                <p>வெளிப்புற குறியீட்டிற்கு user1 மற்றும் myMap ஆகியவற்றிற்கு அணுகல் உள்ளது, ஆனால் myMap இல் உள்ள this குறிப்புக்கு அல்ல, நீங்கள் வெளிப்படையாக வெளிப்படுத்தாவிட்டால், getSecret() வழியாக, இரகசிய மதிப்பு அணுக முடியாதது.</p>
+            </div>
+        </section>
+
+        <!-- Privacy -->
+        <section class="content-section" id="privacy">
+            <h2>தனியுரிமை</h2>
+            
+            <p>WeakMap தனியுரிமைக்காக வேண்டுமென்றே வடிவமைக்கப்பட்டது: நீங்கள் ஒரு பொருள் விசையைப் பயன்படுத்தி அமைக்கலாம், பெறலாம், சோதிக்கலாம் மற்றும் நீக்கலாம், ஆனால் உள்ளே என்ன இருக்கிறது என்று ஆய்வு செய்ய முடியாது.</p>
+            
+            <p>இது JavaScript வகுப்புகளில் தனிப்பட்ட பண்புகளை உருவகப்படுத்துவதற்கான ஒரு சிறந்த கருவியாக இருந்தது (#தனிப்பட்ட புலங்கள் மொழியில் சேர்க்கப்படுவதற்கு முன்பு).</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-user-secret"></i>
+                        <h4>தனியுரிமை</h4>
+                    </div>
+                    <p>வெளிப்புற குறியீட்டிலிருந்து தரவை மறைக்க WeakMap பயன்படுத்தலாம்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-memory"></i>
+                        <h4>நினைவக மேலாண்மை</h4>
+                    </div>
+                    <p>கழிவு சேகரிப்பு தானாகவே கையாளப்படுகிறது</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-broom"></i>
+                        <h4>தானியங்கி சுத்திகரிப்பு</h4>
+                    </div>
+                    <p>பொருள்கள் அகற்றப்படும்போது உள்ளீடுகள் தானாகவே அகற்றப்படும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-ban"></i>
+                        <h4>கட்டுப்பாடுகள்</h4>
+                    </div>
+                    <p>மறு செய்கை, அளவு மற்றும் பல முறைகள் இல்லை</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>WeakMap பயிற்சி</h2>
+            
+            <p>JavaScript WeakMap இன் கருத்துகளைப் புரிந்துகொள்வதை இந்த பயிற்சி சோதிக்கிறது.</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் கூற்றுகளில் எது WeakMap பற்றி சரியானது?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">WeakMap எந்த வகை விசைகளையும் ஏற்கும்</div>
+                            <div class="option-feedback incorrect">✗ தவறு! WeakMap இல் விசைகள் பொருள்களாக மட்டுமே இருக்க வேண்டும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">WeakMap அதன் விசைகளுக்கு பலவீனமான குறிப்புகளை வைத்திருக்கிறது</div>
+                            <div class="option-feedback correct">✓ சரி! WeakMap பலவீனமான குறிப்புகளை வைத்திருக்கிறது, இது கழிவு சேகரிப்பைத் தடுக்காது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">WeakMap க்கு size பண்பு உள்ளது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! WeakMap க்கு size பண்பு இல்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">WeakMap மறு செய்கை செய்யக்கூடியது</div>
+                            <div class="option-feedback incorrect">✗ தவறு! WeakMap மறு செய்கை செய்ய முடியாதது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learn More -->
+        <section class="content-section" id="learn-more">
+            <h2>மேலும் அறிய</h2>
+            
+            <p>WeakMap பற்றிய மேலும் விரிவான தகவலுக்கு:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>JavaScript Maps</h4>
+                    </div>
+                    <p>Maps அறிமுகம் மற்றும் அடிப்படைகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tools"></i>
+                        <h4>JavaScript Map Methods</h4>
+                    </div>
+                    <p>Map முறைகள் மற்றும் பண்புகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-book"></i>
+                        <h4>JavaScript Map Reference</h4>
+                    </div>
+                    <p>முழுமையான Map குறிப்பு</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>JavaScript Sets</h4>
+                    </div>
+                    <p>Sets அறிமுகம் மற்றும் அடிப்படைகள்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="content-section" id="browser-support">
+            <h2>உலாவி ஆதரவு</h2>
+            
+            <p>WeakMap ஒரு ES6 அம்சமாகும்.</p>
+            
+            <p>ES6 ஜூன் 2017 முதல் அனைத்து நவீன உலாவிகளிலும் முழுமையாக ஆதரிக்கப்படுகிறது:</p>
+            
+            <div class="comparison-table-container" style="min-width: 600px;">
+                <table>
+                    <tr>
+                        <th>உலாவி</th>
+                        <th>பதிப்பு</th>
+                        <th>வெளியீட்டு தேதி</th>
+                    </tr>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>51</td>
+                        <td>May 2016</td>
+                    </tr>
+                    <tr>
+                        <td>Edge</td>
+                        <td>15</td>
+                        <td>Apr 2017</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>54</td>
+                        <td>Jun 2017</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>10</td>
+                        <td>Sep 2016</td>
+                    </tr>
+                    <tr>
+                        <td>Opera</td>
+                        <td>38</td>
+                        <td>Jun 2016</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="JavaScript%20Map%20Methods.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="JavaScript%20Map%20Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">WeakMap அறிமுகம்</a></li>
+                    <li><a href="#weak-references">பலவீனமான குறிப்புகள்</a></li>
+                    <li><a href="#keys-must-be-objects">விசைகள் பொருள்களாக</a></li>
+                    <li><a href="#tracking-objects">பொருள்களைக் கண்காணித்தல்</a></li>
+                    <li><a href="#secret-data">இரகசிய தரவு</a></li>
+                    <li><a href="#privacy">தனியுரிமை</a></li>
+                    <li><a href="#exercises">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Privacy lock animation
+        const lockIcon = document.querySelector('.lock-icon');
+        if (lockIcon) {
+            lockIcon.addEventListener('click', function() {
+                this.style.transform = 'scale(1.2)';
+                this.style.color = '#e74c3c';
+                setTimeout(() => {
+                    this.style.transform = '';
+                    this.style.color = '';
+                }, 300);
+            });
+        }
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

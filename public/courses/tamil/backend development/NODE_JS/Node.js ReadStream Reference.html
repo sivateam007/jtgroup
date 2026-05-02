@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js ReadStream Reference - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Socket Reference.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js WriteStream Reference.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js ReadStream Reference</h2>
+            <p>Node.js இல் ReadStream பொருளைப் பயன்படுத்தி தரவை வாசிக்க கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- ReadStream Object -->
+        <section class="content-section" id="readstream-object">
+            <h2>ReadStream பொருள்</h2>
+            
+            <p>ஒரு ReadStream என்பது ஒரு வளத்திலிருந்து தரவைப் படிக்க உங்களை அனுமதிக்கும் ஒரு ஸ்ட்ரீம் ஆகும். Node.js வெவ்வேறு பயன்பாட்டு நோக்கங்களுக்கான ReadStream செயலாக்கங்களை வழங்குகிறது, கோப்புகளிலிருந்து வாசிப்பதற்கு (fs.ReadStream) அல்லது நிலையான உள்ளீட்டிலிருந்து (process.stdin) போன்றவை.</p>
+            
+            <p>ReadStreams stream.Readable இடைமுகத்தை செயல்படுத்துகின்றன, அதாவது அவை அசிங்க்ரோனஸாக தரவைப் படிக்கவும், backpressure ஐ கையாளவும் மற்றும் வெவ்வேறு ஸ்ட்ரீம் பயன்முறைகளுடன் (flowing/paused) பணிபுரியவும் முறைகள் மற்றும் நிகழ்வுகளை வழங்குகின்றன.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file"></i>
+                        <h4>fs.ReadStream</h4>
+                    </div>
+                    <p>கோப்புகளிலிருந்து வாசிப்பதற்கு</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-terminal"></i>
+                        <h4>process.stdin</h4>
+                    </div>
+                    <p>நிலையான உள்ளீட்டிலிருந்து வாசிப்பதற்கு</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>net.Socket</h4>
+                    </div>
+                    <p>நெட்வொர்க் இணைப்புகளிலிருந்து வாசிப்பதற்கு</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common ReadStream Types -->
+        <section class="content-section" id="readstream-types">
+            <h2>பொதுவான ReadStream வகைகள்</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>வகை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>fs.ReadStream</strong></td>
+                            <td>கோப்புகளிலிருந்து வாசிப்பதற்கு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>process.stdin</strong></td>
+                            <td>நிலையான உள்ளீட்டிலிருந்து வாசிப்பதற்கு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>net.Socket</strong></td>
+                            <td>நெட்வொர்க் இணைப்புகளிலிருந்து வாசிப்பதற்கு</td>
+                        </tr>
+                        <tr>
+                            <td><strong>http.IncomingMessage</strong></td>
+                            <td>HTTP கோரிக்கை உடல்களை வாசிப்பதற்கு</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ReadStream Properties -->
+        <section class="content-section" id="readstream-properties">
+            <h2>ReadStream பண்புகள்</h2>
+            
+            <p>Node.js ReadStream பொருள்களில் பொதுவாகக் கிடைக்கும் பண்புகள் இங்கே உள்ளன, முதன்மையாக fs.ReadStream செயலாக்கத்தை அடிப்படையாகக் கொண்டவை:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>பண்பு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>readStream.bytesRead</strong></td>
+                            <td>இதுவரை வாசிக்கப்பட்ட பைட்டுகளின் எண்ணிக்கை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.path</strong></td>
+                            <td>இந்த ReadStream வாசிக்கும் கோப்பு பாதை (fs.ReadStream மட்டும்)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.pending</strong></td>
+                            <td>true எனில், அடிப்படை கோப்பு இன்னும் திறக்கப்படவில்லை</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.readableHighWaterMark</strong></td>
+                            <td>இந்த ReadStream க்கான highWaterMark மதிப்பைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.readableLength</strong></td>
+                            <td>வாசிக்கத் தயாராக read queue இல் உள்ள பைட்டுகள் (அல்லது பொருள்கள்) எண்ணிக்கையைத் தரும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.readableEnded</strong></td>
+                            <td>'end' நிகழ்வு வெளியிடப்படும் போது true ஆக மாறும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.readableFlowing</strong></td>
+                            <td>ReadStream இன் நிலையைக் குறிக்கிறது (null, false, அல்லது true)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.destroyed</strong></td>
+                            <td>ஸ்ட்ரீம் அழிக்கப்பட்டதா என்பதைக் குறிக்கிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ReadStream Methods -->
+        <section class="content-section" id="readstream-methods">
+            <h2>ReadStream முறைகள்</h2>
+            
+            <p>ReadStream பொருள்களில் கிடைக்கும் மிக முக்கியமான முறைகள் இங்கே உள்ளன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>முறை</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>readStream.read([size])</strong></td>
+                            <td>உள் buffer இலிருந்து தரவைப் படித்து தரும். தரவு கிடைக்கவில்லை என்றால், null திரும்பும். size குறிப்பிடப்பட்டால், அந்த எண்ணிக்கையிலான பைட்டுகளைப் படிக்க முயற்சிக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.pause()</strong></td>
+                            <td>தரவு வாசிப்பை இடைநிறுத்துகிறது, ஸ்ட்ரீமை flowing பயன்முறையிலிருந்து வெளியேற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.resume()</strong></td>
+                            <td>pause() அழைப்புக்குப் பிறகு வாசிப்பைத் தொடர்கிறது, ஸ்ட்ரீமை flowing பயன்முறைக்கு மாற்றுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.pipe(destination[, options])</strong></td>
+                            <td>ஒரு Writable ஸ்ட்ரீமை ReadStream உடன் இணைக்கிறது, destination ஒரு வேகமான ReadStream மூலம் மூழ்கடிக்கப்படாமல் இருக்கும் வகையில் ஓட்டத்தை தானாகவே நிர்வகிக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.unpipe([destination])</strong></td>
+                            <td>pipe() பயன்படுத்தி முன்பு இணைக்கப்பட்ட Writable ஸ்ட்ரீமைத் துண்டிக்கிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.unshift(chunk[, encoding])</strong></td>
+                            <td>தரவின் ஒரு chunk ஐ உள் buffer க்கு மீண்டும் தள்ளுகிறது, அது அடுத்த read() அழைப்பால் திரும்பப் பெறப்படும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.wrap(stream)</strong></td>
+                            <td>பழைய பாணியின் readable ஸ்ட்ரீமை புதிய பாணியின் readable ஸ்ட்ரீமாக மூடுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.destroy([error])</strong></td>
+                            <td>ஸ்ட்ரீமை அழிக்கிறது, மற்றும் விருப்பமாக error நிகழ்வை வெளியிடுகிறது. இந்த அழைப்புக்குப் பிறகு, ReadStream பயன்படுத்த முடியாது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>readStream.setEncoding(encoding)</strong></td>
+                            <td>ஸ்ட்ரீமிலிருந்து வாசிக்கப்பட்ட தரவுக்கான எழுத்து encoding ஐ அமைக்கிறது. அமைக்கப்பட்டால், ஸ்ட்ரீம் தரவை Buffer பொருள்களுக்குப் பதிலாக சரங்களாக decode செய்யும்</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ReadStream Events -->
+        <section class="content-section" id="readstream-events">
+            <h2>ReadStream நிகழ்வுகள்</h2>
+            
+            <p>ReadStream பொருள்கள் பின்வரும் நிகழ்வுகளை வெளியிடுகின்றன:</p>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>நிகழ்வு</th>
+                            <th>விளக்கம்</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>'close'</strong></td>
+                            <td>ஸ்ட்ரீம் மற்றும் அதன் அடிப்படை வளங்கள் ஏதேனும் மூடப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'data'</strong></td>
+                            <td>ஸ்ட்ரீமிலிருந்து தரவு வாசிக்கக் கிடைக்கும் போது வெளியிடப்படுகிறது. தரவு ஒரு Buffer அல்லது string ஆக இருக்கும், setEncoding() உடன் அமைக்கப்பட்ட encoding ஐப் பொறுத்து</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'end'</strong></td>
+                            <td>ஸ்ட்ரீமிலிருந்து உட்கொள்ள இன்னும் தரவு இல்லாதபோது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'error'</strong></td>
+                            <td>வாசிப்பின் போது பிழை ஏற்பட்டால் வெளியிடப்படுகிறது. இந்த நிகழ்வுக்குப் பிறகு ஸ்ட்ரீம் மூடப்படும்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'open'</strong></td>
+                            <td>அடிப்படை வளம் (எ.க., கோப்பு descriptor) திறக்கப்படும் போது வெளியிடப்படுகிறது (fs.ReadStream க்கு குறிப்பிட்டது)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'readable'</strong></td>
+                            <td>ஸ்ட்ரீமிலிருந்து தரவு வாசிக்கக் கிடைக்கும் போது அல்லது ஸ்ட்ரீமின் முடிவு அடையப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'ready'</strong></td>
+                            <td>ஸ்ட்ரீம் பயன்படுத்த தயாராக இருக்கும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'pause'</strong></td>
+                            <td>ஸ்ட்ரீம் இடைநிறுத்தப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                        <tr>
+                            <td><strong>'resume'</strong></td>
+                            <td>ஸ்ட்ரீம் மீண்டும் தொடங்கப்படும் போது வெளியிடப்படுகிறது</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Reading from a File -->
+        <section class="content-section" id="reading-file">
+            <h2>ஒரு கோப்பிலிருந்து வாசித்தல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு ஒரு கோப்பு ReadStream ஐ உருவாக்குவதும் அதிலிருந்து தரவை வாசிப்பதும் எப்படி என்பதைக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const path = require('path');
+
+// எடுத்துக்காட்டுக்கு ஒரு மாதிரி கோப்பை உருவாக்கு
+const sampleFile = path.join(__dirname, 'readstream-example.txt');
+fs.writeFileSync(sampleFile, 'This is a test file.\nIt has multiple lines.\nEach line has its own content.\nStreaming makes file reading efficient.');
+
+// கோப்பிலிருந்து வாசிக்க ஒரு ReadStream உருவாக்க
+const readStream = fs.createReadStream(sampleFile, {
+  // விருப்பங்கள்
+  encoding: 'utf8',  // encoding ஐ அமை (utf8, ascii, binary, முதலியன)
+  highWaterMark: 64, // பைட்டுகளில் Buffer அளவு
+  autoClose: true    // ஸ்ட்ரீம் முடிவடையும் போது தானாகவே கோப்பு descriptor ஐ மூடு
+});
+
+console.log('File ReadStream properties:');
+console.log(`- Path: ${readStream.path}`);
+console.log(`- Pending: ${readStream.pending}`);
+console.log(`- High Water Mark: ${readStream.readableHighWaterMark} bytes`);
+
+// ஸ்ட்ரீம் நிகழ்வுகளைக் கையாள
+readStream.on('open', (fd) => {
+  console.log(`File opened with descriptor: ${fd}`);
+});
+
+readStream.on('ready', () => {
+  console.log('ReadStream is ready');
+});
+
+// தரவு நிகழ்வுகளைக் கையாள
+readStream.on('data', (chunk) => {
+  console.log('\nReceived chunk:');
+  console.log('-'.repeat(20));
+  console.log(chunk);
+  console.log('-'.repeat(20));
+  console.log(`Bytes read so far: ${readStream.bytesRead}`);
+});
+
+readStream.on('end', () => {
+  console.log('\nReached end of file');
+  console.log(`Total bytes read: ${readStream.bytesRead}`);
+  
+  // மாதிரி கோப்பை சுத்தம் செய்
+  fs.unlinkSync(sampleFile);
+  console.log('Sample file removed');
+});
+
+readStream.on('close', () => {
+  console.log('Stream closed');
+});
+
+readStream.on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Controlling Stream Flow -->
+        <section class="content-section" id="controlling-flow">
+            <h2>ஸ்ட்ரீம் ஓட்டத்தைக் கட்டுப்படுத்துதல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு pause() மற்றும் resume() உடன் தரவின் ஓட்டத்தைக் கட்டுப்படுத்துவது எப்படி என்பதை நிரூபிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const path = require('path');
+
+// ஓட்டக் கட்டுப்பாட்டு எடுத்துக்காட்டுக்கு ஒரு பெரிய மாதிரி கோப்பை உருவாக்கு
+const flowFile = path.join(__dirname, 'flow-control-example.txt');
+let sampleContent = '';
+for (let i = 1; i <= 1000; i++) {
+  sampleContent += `This is line ${i} of the test file.\n`;
+}
+fs.writeFileSync(flowFile, sampleContent);
+
+// ஒரு ReadStream உருவாக்க
+const readStream = fs.createReadStream(flowFile, {
+  encoding: 'utf8',
+  highWaterMark: 1024 // 1KB buffer
+});
+
+let chunkCount = 0;
+let totalBytes = 0;
+let isPaused = false;
+
+// ஓட்டக் கட்டுப்பாட்டுடன் தரவு chunks களைக் கையாள
+readStream.on('data', (chunk) => {
+  chunkCount++;
+  totalBytes += chunk.length;
+  
+  console.log(`Chunk #${chunkCount} received, size: ${chunk.length} bytes`);
+  
+  // ஓட்டக் கட்டுப்பாட்டை நிரூபிக்க ஒவ்வொரு 5 chunks க்கும் ஸ்ட்ரீமை இடைநிறுத்து
+  if (chunkCount % 5 === 0 && !isPaused) {
+    console.log('\nPausing the stream for 1 second...');
+    isPaused = true;
+    
+    // ஸ்ட்ரீமை இடைநிறுத்து
+    readStream.pause();
+    
+    // 1 விநாடிக்குப் பிறகு மீண்டும் தொடங்கு
+    setTimeout(() => {
+      console.log('Resuming the stream...\n');
+      isPaused = false;
+      readStream.resume();
+    }, 1000);
+  }
+});
+
+readStream.on('end', () => {
+  console.log(`\nFinished reading file. Received ${chunkCount} chunks, ${totalBytes} bytes total.`);
+  
+  // மாதிரி கோப்பை சுத்தம் செய்
+  fs.unlinkSync(flowFile);
+  console.log('Sample file removed');
+});
+
+readStream.on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Using the read() Method -->
+        <section class="content-section" id="using-read">
+            <h2>read() முறையைப் பயன்படுத்துதல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு 'readable' நிகழ்வில் read() முறையைப் பயன்படுத்துவதை நிரூபிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const path = require('path');
+
+// ஒரு மாதிரி கோப்பை உருவாக்கு
+const readableFile = path.join(__dirname, 'readable-example.txt');
+fs.writeFileSync(readableFile, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.repeat(100));
+
+// auto-flowing இல்லாமல் ஒரு ReadStream உருவாக்கு
+const readStream = fs.createReadStream(readableFile, {
+  highWaterMark: 32 // பல வாசிப்புகளை நிரூபிக்க சிறிய buffer
+});
+
+console.log('Using the readable event and read() method:');
+
+// கைமுறை வாசிப்புக்கு 'readable' நிகழ்வைப் பயன்படுத்துதல்
+readStream.on('readable', () => {
+  let chunk;
+  // வாசிக்க இன்னும் தரவு இல்லாதபோது read() null திரும்பும்
+  while (null !== (chunk = readStream.read(16))) {
+    console.log(`Read ${chunk.length} bytes: ${chunk.toString('utf8').substring(0, 10)}...`);
+  }
+});
+
+readStream.on('end', () => {
+  console.log('End of stream reached');
+  
+  // மாதிரி கோப்பை சுத்தம் செய்
+  fs.unlinkSync(readableFile);
+  console.log('Sample file removed');
+});
+
+readStream.on('error', (err) => {
+  console.error(`Error: ${err.message}`);
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Piping between Streams -->
+        <section class="content-section" id="piping-streams">
+            <h2>ஸ்ட்ரீம்களுக்கு இடையே Piping செய்தல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு pipe() ஐப் பயன்படுத்தி ஒரு ReadStream இலிருந்து ஒரு WriteStream க்கு தரவை அனுப்புவது எப்படி என்பதை நிரூபிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const path = require('path');
+const zlib = require('zlib');
+
+// மூல மற்றும் இலக்கு கோப்பு பாதைகள்
+const sourceFile = path.join(__dirname, 'pipe-source-example.txt');
+const destFile = path.join(__dirname, 'pipe-destination.txt');
+const compressedFile = path.join(__dirname, 'pipe-compressed.gz');
+
+// மாதிரி உள்ளடக்கத்தை உருவாக்கு
+fs.writeFileSync(sourceFile, 'This is the source content for the pipe example.\n'.repeat(100));
+
+// ReadStream மற்றும் பல்வேறு WriteStreams உருவாக்கு
+const readStream = fs.createReadStream(sourceFile);
+const writeStream = fs.createWriteStream(destFile);
+const compressStream = zlib.createGzip(); // சுருக்கம் transform ஸ்ட்ரீம்
+const compressedWriteStream = fs.createWriteStream(compressedFile);
+
+// ReadStream ஐ நேரடியாக WriteStream க்கு pipe செய்
+readStream.pipe(writeStream);
+
+// நிறைவு நிகழ்வுகளைக் கேள்
+writeStream.on('finish', () => {
+  console.log(`File copied from ${sourceFile} to ${destFile}`);
+  
+  // தொடர்ச்சியான pipes ஐ நிரூபிக்க ஒரு புதிய ReadStream உருவாக்கு
+  const readStream2 = fs.createReadStream(sourceFile);
+  
+  // பல pipes ஐ தொடர்ச்சியாக இணை: read -> compress -> write
+  readStream2.pipe(compressStream).pipe(compressedWriteStream);
+  
+  compressedWriteStream.on('finish', () => {
+    console.log(`File compressed from ${sourceFile} to ${compressedFile}`);
+    
+    // கோப்பு அளவுகளை ஒப்பிடு
+    const originalSize = fs.statSync(sourceFile).size;
+    const compressedSize = fs.statSync(compressedFile).size;
+    console.log(`Original size: ${originalSize} bytes`);
+    console.log(`Compressed size: ${compressedSize} bytes`);
+    console.log(`Compression ratio: ${(compressedSize / originalSize * 100).toFixed(2)}%`);
+    
+    // நிரூபணத்திற்குப் பிறகு கோப்புகளை சுத்தம் செய்
+    [sourceFile, destFile, compressedFile].forEach(file => {
+      fs.unlinkSync(file);
+    });
+    console.log('All sample files removed');
+  });
+});
+
+// பிழைகளைக் கையாள
+readStream.on('error', (err) => console.error(`Read error: ${err.message}`));
+writeStream.on('error', (err) => console.error(`Write error: ${err.message}`));
+compressStream.on('error', (err) => console.error(`Compression error: ${err.message}`));
+compressedWriteStream.on('error', (err) => console.error(`Compressed write error: ${err.message}`));</code></pre>
+            </div>
+        </section>
+
+        <!-- Reading from Standard Input -->
+        <section class="content-section" id="reading-stdin">
+            <h2>நிலையான உள்ளீட்டிலிருந்து வாசித்தல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு process.stdin ReadStream ஐப் பயன்படுத்துவது எப்படி என்பதைக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>// process.stdin ஒரு ReadStream ஆகும்
+
+console.log('Enter some text (press Ctrl+D or Ctrl+C to end input):');
+
+// Buffer பொருள்களுக்குப் பதிலாக சரங்களைப் பெற utf8 க்கு encoding ஐ அமை
+process.stdin.setEncoding('utf8');
+
+let inputData = '';
+
+// stdin இலிருந்து தரவைக் கையாள
+process.stdin.on('data', (chunk) => {
+  console.log(`Received chunk: "${chunk.trim()}"`);
+  inputData += chunk;
+});
+
+// உள்ளீட்டின் முடிவைக் கையாள
+process.stdin.on('end', () => {
+  console.log('\nEnd of input.');
+  console.log(`Total input received: ${inputData.length} characters`);
+  console.log('You entered:');
+  console.log('-'.repeat(20));
+  console.log(inputData);
+  console.log('-'.repeat(20));
+});
+
+// Ctrl+C (SIGINT) ஐக் கையாள
+process.on('SIGINT', () => {
+  console.log('\nInput interrupted with Ctrl+C');
+  process.exit();
+});
+
+// குறிப்பு: இந்த எடுத்துக்காட்டுக்கு ஒரு முனையத்தில் பயனர் உள்ளீடு தேவை
+// W3Schools TryIt எடிட்டரில் திறம்பட நிரூபிக்க முடியாது</code></pre>
+            </div>
+        </section>
+
+        <!-- HTTP ReadStream Example -->
+        <section class="content-section" id="http-readstream">
+            <h2>HTTP ReadStream எடுத்துக்காட்டு</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு HTTP கோரிக்கை தரவைக் கையாள ஒரு ReadStream ஐப் பயன்படுத்துவது எப்படி என்பதைக் காட்டுகிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const http = require('http');
+
+// ஒரு HTTP சேவையகத்தை உருவாக்கு
+const server = http.createServer((req, res) => {
+  // req ஒரு http.IncomingMessage, இது ஒரு ReadStream ஆகும்
+  console.log(`Received ${req.method} request to ${req.url}`);
+  
+  // பதில் தலைப்புகளை அமை
+  res.setHeader('Content-Type', 'text/plain');
+  
+  // வெவ்வேறு வகையான கோரிக்கைகளைக் கையாள
+  if (req.method === 'GET') {
+    res.end('Send a POST request with a body to see the ReadStream in action');
+  }
+  else if (req.method === 'POST') {
+    // கோரிக்கை ஸ்ட்ரீமுக்கான encoding ஐ அமை
+    req.setEncoding('utf8');
+    
+    let body = '';
+    
+    // கோரிக்கை ஸ்ட்ரீமிலிருந்து தரவு நிகழ்வுகளைக் கையாள
+    req.on('data', (chunk) => {
+      console.log(`Received chunk of ${chunk.length} bytes`);
+      body += chunk;
+      
+      // ஒரு எளிய flood பாதுகாப்பை செயல்படுத்து
+      if (body.length > 1e6) {
+        // உடல் மிகப் பெரியதாக இருந்தால், ஸ்ட்ரீமை அழி
+        body = '';
+        res.writeHead(413, {'Content-Type': 'text/plain'});
+        res.end('Request entity too large');
+        req.destroy();
+      }
+    });
+    
+    // கோரிக்கை ஸ்ட்ரீமின் முடிவைக் கையாள
+    req.on('end', () => {
+      console.log('End of request data');
+      
+      try {
+        // JSON ஆக parse செய்ய முயற்சி
+        const data = JSON.parse(body);
+        console.log('Parsed JSON data:', data);
+        
+        // ஒரு பதிலை அனுப்பு
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({
+          message: 'Data received',
+          size: body.length,
+          data: data
+        }));
+      } catch (e) {
+        // செல்லுபடியாகும் JSON இல்லையென்றால், raw தரவை echo back செய்
+        console.log('Could not parse as JSON, treating as plain text');
+        
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end(`Received ${body.length} bytes of data:\n${body}`);
+      }
+    });
+  }
+  else {
+    // மற்ற HTTP முறைகளுக்கு
+    res.writeHead(405, {'Content-Type': 'text/plain'});
+    res.end('Method not allowed');
+  }
+});
+
+// சேவையகத்தைத் தொடங்கு
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`HTTP ReadStream example server running at http://localhost:${PORT}`);
+  console.log('To test:');
+  console.log(`1. Open http://localhost:${PORT} in a browser for GET request`);
+  console.log(`2. Use curl or Postman to send POST requests with a body to http://localhost:${PORT}`);
+});
+
+// குறிப்பு: curl உடன் சோதிக்க:
+// curl -X POST -H "Content-Type: application/json" -d '{"name":"John","age":30}' http://localhost:8080</code></pre>
+            </div>
+        </section>
+
+        <!-- Error Handling with ReadStreams -->
+        <section class="content-section" id="error-handling">
+            <h2>ReadStreams உடன் பிழை கையாளுதல்</h2>
+            
+            <p>இந்த எடுத்துக்காட்டு ReadStreams உடன் சரியான பிழை கையாளுதலை நிரூபிக்கிறது:</p>
+            
+            <div class="code-example">
+                <pre><code>const fs = require('fs');
+const path = require('path');
+
+// சரியான பிழை கையாளுதலுடன் ஒரு ReadStream உருவாக்கி கையாளும் செயல்பாடு
+function readWithErrorHandling(filePath) {
+  console.log(`Attempting to read: ${filePath}`);
+  
+  // ReadStream ஐ உருவாக்கு
+  const readStream = fs.createReadStream(filePath);
+  
+  // முடிவு அல்லது பிழையைப் பிடிக்க promise ஐ அமை
+  return new Promise((resolve, reject) => {
+    let data = '';
+    
+    // தரவு நிகழ்வுகளைக் கையாள
+    readStream.on('data', (chunk) => {
+      data += chunk;
+    });
+    
+    // வெற்றிகரமான நிறைவைக் கையாள
+    readStream.on('end', () => {
+      console.log(`Successfully read ${readStream.bytesRead} bytes from ${filePath}`);
+      resolve(data);
+    });
+    
+    // பிழைகளைக் கையாள
+    readStream.on('error', (err) => {
+      console.error(`Error reading ${filePath}: ${err.message}`);
+      reject(err);
+    });
+    
+    // ஸ்ட்ரீம் மூடல் (பிழை இருந்தாலும் எப்போதும் நடக்கும்)
+    readStream.on('close', () => {
+      console.log(`Stream for ${filePath} closed`);
+    });
+  });
+}
+
+// இரண்டும் இருக்கும் மற்றும் இல்லாத கோப்புகளுடன் சோதிக்க
+const existingFile = path.join(__dirname, 'test-existing.txt');
+const nonExistingFile = path.join(__dirname, 'non-existing-file.txt');
+
+// சோதனை கோப்பை உருவாக்கு
+fs.writeFileSync(existingFile, 'This is test content for error handling example');
+
+// எடுத்துக்காட்டு 1: இருக்கும் கோப்பை வாசித்தல்
+console.log('Example 1: Reading an existing file');
+readWithErrorHandling(existingFile)
+  .then(data => {
+    console.log('File content:', data);
+    
+    // எடுத்துக்காட்டு 2: இல்லாத கோப்பை வாசித்தல்
+    console.log('\nExample 2: Reading a non-existing file');
+    return readWithErrorHandling(nonExistingFile);
+  })
+  .catch(err => {
+    console.log('Error caught in Promise catch:', err.message);
+  })
+  .finally(() => {
+    // சோதனை கோப்பை சுத்தம் செய்
+    if (fs.existsSync(existingFile)) {
+      fs.unlinkSync(existingFile);
+      console.log('Test file removed');
+    }
+  });
+
+// எடுத்துக்காட்டு 3: அழிக்கப்பட்ட ஸ்ட்ரீம்களை நிரூபித்தல்
+console.log('\nExample 3: Demonstrating destroyed streams');
+const destroyTestFile = path.join(__dirname, 'destroy-test.txt');
+fs.writeFileSync(destroyTestFile, 'A'.repeat(10000));
+
+const destroyStream = fs.createReadStream(destroyTestFile);
+
+destroyStream.on('data', (chunk) => {
+  console.log(`Received ${chunk.length} bytes before destroying the stream`);
+  
+  // முதல் chunk பெற்ற பிறகு ஸ்ட்ரீமை அழி
+  console.log('Deliberately destroying the stream');
+  destroyStream.destroy(new Error('Stream manually destroyed'));
+});
+
+destroyStream.on('error', (err) => {
+  console.error(`Destruction error: ${err.message}`);
+});
+
+destroyStream.on('close', () => {
+  console.log('Destroyed stream closed');
+  
+  // சுத்தம் செய்
+  fs.unlinkSync(destroyTestFile);
+  console.log('Destroy test file removed');
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- Best Practices for ReadStreams -->
+        <section class="content-section" id="best-practices">
+            <h2>ReadStreams க்கான சிறந்த நடைமுறைகள்</h2>
+            
+            <p>Node.js இல் ReadStreams உடன் பணிபுரியும் போது, இந்த சிறந்த நடைமுறைகளைக் கவனியுங்கள்:</p>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><strong>எப்போதும் பிழைகளைக் கையாளுங்கள்:</strong> unhandled exceptions தடுக்க ReadStreams இலிருந்து 'error' நிகழ்வுகளை எப்போதும் கேட்டு கையாளுங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-broom"></i>
+                    <span><strong>வளங்களை சுத்தம் செய்யுங்கள்:</strong> ஸ்ட்ரீம்கள் இனி தேவையில்லாதபோது சரியாக மூடப்பட்டுள்ளதா அல்லது அழிக்கப்பட்டுள்ளதா என்பதை உறுதிப்படுத்துங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-link"></i>
+                    <span><strong>பெரும்பாலான நிகழ்வுகளுக்கு pipe() ஐப் பயன்படுத்துங்கள்:</strong> pipe() முறை தானாகவே backpressure ஐ கையாள்கிறது மற்றும் ஸ்ட்ரீம்களை இணைப்பதற்கான பொதுவாக சிறந்த வழியாகும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span><strong>பொருத்தமான buffer அளவுகளை அமைக்கவும்:</strong> நினைவக பயன்பாட்டைக் கட்டுப்படுத்த highWaterMark விருப்பத்தைப் பயன்படுத்தவும், குறிப்பாக பெரிய கோப்புகளுக்கு</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span><strong>சரியான பயன்முறையைத் தேர்ந்தெடுக்கவும்:</strong> flowing மற்றும் paused பயன்முறைகளுக்கு இடையேயான வித்தியாசத்தைப் புரிந்து கொள்ளுங்கள், மற்றும் உங்கள் பயன்பாட்டு நோக்கத்திற்கு பொருத்தமான ஒன்றைப் பயன்படுத்துங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-font"></i>
+                    <span><strong>Encoding ஐக் கவனியுங்கள்:</strong> நீங்கள் உரையுடன் பணிபுரிகிறீர்கள் என்றால் setEncoding() உடன் பொருத்தமான encoding ஐ அமைக்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>stream.finished() ஐப் பயன்படுத்துங்கள்:</strong> சுத்தம் செய்வதற்கு, ஸ்ட்ரீம் இனி readable அல்லது writable இல்லை அல்லது பிழை அல்லது முன்கூட்டிய close ஐ எதிர்கொண்டுள்ளதா எனக் கண்டறிய stream தொகுதியிலிருந்து stream.finished() ஐக் கவனியுங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-memory"></i>
+                    <span><strong>முழு கோப்புகளையும் நினைவகத்தில் வாசிப்பதைத் தவிர்க்கவும்:</strong> நினைவக பிரச்சினைகளைத் தவிர்க்க பெரிய கோப்புகளுக்கு fs.readFile() போன்ற முறைகளுக்குப் பதிலாக ஸ்ட்ரீம்களைப் பயன்படுத்தவும்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> Node.js இல் கோப்பிலிருந்து தரவை வாசிக்க பயன்படுத்தப்படும் சரியான ReadStream வகையைத் தேர்வு செய்யவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">fs.ReadFile</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "fs.ReadFile" என்பது ஒரு ஸ்ட்ரீம் அல்ல, இது ஒரு முறையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">fs.ReadStream</div>
+                            <div class="option-feedback correct">✓ சரி! "fs.ReadStream" என்பது Node.js இல் கோப்புகளிலிருந்து தரவை வாசிக்க பயன்படும் சரியான ReadStream வகையாகும்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">fs.FileReader</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "fs.FileReader" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">fs.StreamReader</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "fs.StreamReader" என்பது Node.js இல் ஒரு செல்லுபடியாகும் வகை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Socket Reference.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js WriteStream Reference.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#readstream-object">ReadStream பொருள்</a></li>
+                    <li><a href="#readstream-properties">ReadStream பண்புகள்</a></li>
+                    <li><a href="#readstream-methods">ReadStream முறைகள்</a></li>
+                    <li><a href="#readstream-events">ReadStream நிகழ்வுகள்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

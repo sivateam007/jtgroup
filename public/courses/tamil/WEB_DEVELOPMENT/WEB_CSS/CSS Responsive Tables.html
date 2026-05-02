@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Responsive Tables - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Responsive table container */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Responsive table styling */
+        .responsive-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 800px; /* Force horizontal scroll on small screens */
+        }
+        
+        .responsive-table th {
+            background: var(--git-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .responsive-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .responsive-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .responsive-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Fancy table example */
+        .fancy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .fancy-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border: none;
+        }
+        
+        .fancy-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .fancy-table tr:hover {
+            background-color: rgba(102, 126, 234, 0.05);
+            transition: background-color 0.3s;
+        }
+        
+        .fancy-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Table with caption */
+        .caption-table-container {
+            position: relative;
+            margin: 2rem 0;
+        }
+        
+        .caption-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .caption-table caption {
+            caption-side: top;
+            background: var(--git-color);
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .caption-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .caption-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        /* CSS Properties Table */
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .properties-table th {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .properties-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        .properties-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .properties-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Scrollbar styling */
+        .table-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb {
+            background: var(--git-color);
+            border-radius: 4px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #d1402a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="CSS%20Table%20Styling.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="CSS%20The%20display%20Property.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>CSS Responsive Tables</h2>
+            <p>அனைத்து சாதனங்களிலும் சிறப்பாக தோன்றும் அட்டவணைகளை உருவாக்குங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- CSS Responsive Tables -->
+        <section class="content-section" id="responsive-tables">
+            <h2>CSS Responsive Tables</h2>
+            
+            <p>முழு உள்ளடக்கத்தையும் காண்பிக்க திரை மிகவும் சிறியதாக இருந்தால், பதிலளிக்கும் அட்டவணை ஒரு கிடைமட்ட உருளும் பட்டையைக் காண்பிக்கும்.</p>
+            
+            <p>விளைவைக் காண உலாவி சாளரத்தின் அளவை மாற்றவும்:</p>
+            
+            <div class="table-container">
+                <table class="responsive-table">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                        <th>Points</th>
+                    </tr>
+                    <tr>
+                        <td>Jill</td>
+                        <td>Smith</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>Eve</td>
+                        <td>Jackson</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                        <td>94</td>
+                    </tr>
+                    <tr>
+                        <td>Adam</td>
+                        <td>Johnson</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                        <td>67</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>இது எப்படி செய்வது:</h3>
+            <p>&lt;table&gt; உறுப்பை ஒரு &lt;div&gt; கொள்கலனில் மூடவும்.</p>
+            <p>&lt;div&gt; உறுப்புக்கு overflow-x பண்பை auto ஆக அமைக்கவும்:</p>
+            
+            <div class="code-example">
+                <h3>Example</h3>
+                <pre><code>div.tablecontainer {
+  overflow-x: auto;
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💻</span> குறிப்பு:</h4>
+                <p>OS X Lion (Mac இல்), உருளும் பட்டைகள் இயல்பாக மறைக்கப்பட்டு, பயன்படுத்தப்படும்போது மட்டுமே காட்டப்படும் ("overflow:scroll" அமைக்கப்பட்டிருந்தாலும் கூட).</p>
+            </div>
+        </section>
+
+        <!-- More Examples -->
+        <section class="content-section" id="more-examples">
+            <h2>More Examples</h2>
+            
+            <h3>ஒரு அழகான அட்டவணையை உருவாக்கவும்</h3>
+            <p>இந்த எடுத்துக்காட்டு ஒரு அழகான அட்டவணையை எவ்வாறு உருவாக்குவது என்பதை நிரூபிக்கிறது.</p>
+            
+            <table class="fancy-table">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th>City</th>
+                </tr>
+                <tr>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>30</td>
+                    <td>New York</td>
+                </tr>
+                <tr>
+                    <td>Jane</td>
+                    <td>Smith</td>
+                    <td>25</td>
+                    <td>London</td>
+                </tr>
+                <tr>
+                    <td>Bob</td>
+                    <td>Johnson</td>
+                    <td>35</td>
+                    <td>Paris</td>
+                </tr>
+            </table>
+            
+            <h3>அட்டவணைத் தலைப்பைச் சேர்க்கவும் மற்றும் நிலைநிறுத்தவும்</h3>
+            <p>இந்த எடுத்துக்காட்டு ஒரு அட்டவணைத் தலைப்பை எவ்வாறு சேர்ப்பது மற்றும் நிலைநிறுத்துவது என்பதை நிரூபிக்கிறது.</p>
+            
+            <div class="caption-table-container">
+                <table class="caption-table">
+                    <caption>Employee Information</caption>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Department</th>
+                        <th>Salary</th>
+                    </tr>
+                    <tr>
+                        <td>John Smith</td>
+                        <td>Developer</td>
+                        <td>IT</td>
+                        <td>$65,000</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Doe</td>
+                        <td>Designer</td>
+                        <td>Creative</td>
+                        <td>$55,000</td>
+                    </tr>
+                    <tr>
+                        <td>Bob Wilson</td>
+                        <td>Manager</td>
+                        <td>Operations</td>
+                        <td>$75,000</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercises">
+            <h2>Exercise</h2>
+            
+            <p>CSS ஐப் பயன்படுத்தி ஒரு அட்டவணையை பதிலளிக்கும் வகையில் எப்படி உருவாக்க முடியும்?</p>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> CSS ஐப் பயன்படுத்தி ஒரு அட்டவணையை பதிலளிக்கும் வகையில் எப்படி உருவாக்க முடியும்?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Use overflow-y:auto on the &lt;table&gt; element</div>
+                            <div class="option-feedback incorrect">✗ தவறு! overflow-y செங்குத்து உருளுதலுக்கு மட்டுமே, கிடைமட்ட பதிலளிப்புத் தன்மைக்கு இல்லை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">Wrap the table inside a &lt;div&gt; with overflow-x:auto</div>
+                            <div class="option-feedback correct">✓ சரி! அட்டவணையை overflow-x:auto கொண்ட &lt;div&gt; உள்ளே மூடுவது சிறிய திரைகளில் கிடைமட்ட உருளலை அனுமதிக்கிறது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Set display: block on the &lt;table&gt; element</div>
+                            <div class="option-feedback incorrect">✗ தவறு! display: block அட்டவணையின் இயல்பான தளவமைப்பை மாற்றும் ஆனால் பதிலளிக்கும் தன்மையை உறுதிப்படுத்தாது</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">Apply width: 100% to the &lt;table&gt; element</div>
+                            <div class="option-feedback incorrect">✗ தவறு! width: 100% அட்டவணையை முழு அகலமாக்கும் ஆனால் நீளமான அட்டவணைகளுக்கு கிடைமட்ட உருளலை வழங்காது</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Table Properties -->
+        <section class="content-section" id="table-properties">
+            <h2>CSS Table Properties</h2>
+            
+            <p>அட்டவணைகளை வடிவமைக்க உதவும் முக்கிய CSS பண்புகள்:</p>
+            
+            <table class="properties-table">
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>border</td>
+                    <td>ஒரே அறிவிப்பில் அனைத்து எல்லைப் பண்புகளையும் அமைக்கிறது</td>
+                </tr>
+                <tr>
+                    <td>border-collapse</td>
+                    <td>அட்டவணை எல்லைகள் சுருக்கப்பட வேண்டுமா இல்லையா என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>border-spacing</td>
+                    <td>அடுத்தடுத்த கலங்களின் எல்லைகளுக்கு இடையே உள்ள தூரத்தைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>caption-side</td>
+                    <td>அட்டவணைத் தலைப்பின் இடத்தைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>empty-cells</td>
+                    <td>அட்டவணையில் உள்ள வெற்று கலங்களில் எல்லைகள் மற்றும் பின்னணியைக் காட்ட வேண்டுமா இல்லையா என்பதைக் குறிப்பிடுகிறது</td>
+                </tr>
+                <tr>
+                    <td>table-layout</td>
+                    <td>அட்டவணைக்குப் பயன்படுத்த வேண்டிய தளவமைப்பு வழிமுறையை அமைக்கிறது</td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> மேம்பட்ட உதவிக்குறிப்பு:</h4>
+                <p>பதிலளிக்கும் அட்டவணைகளை உருவாக்கும்போது, மொபைல் சாதனங்களில் தகவலை வழங்க வேறுபட்ட வடிவமைப்புகளை கருத்தில் கொள்ளுங்கள். சிக்கலான அட்டவணைகளுக்கு, கார்டுகள் அல்லது கட்டமைக்கப்பட்ட பட்டியல்களைப் பயன்படுத்தவும்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="CSS%20Table%20Styling.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="CSS%20The%20display%20Property.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#responsive-tables">Responsive Tables</a></li>
+                    <li><a href="#more-examples">More Examples</a></li>
+                    <li><a href="#exercises">Exercise</a></li>
+                    <li><a href="#table-properties">Table Properties</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Add responsive behavior demonstration
+        window.addEventListener('resize', function() {
+            const tableContainer = document.querySelector('.table-container');
+            if (window.innerWidth < 800) {
+                tableContainer.style.border = '2px dashed var(--git-color)';
+                tableContainer.style.padding = '10px';
+                tableContainer.style.backgroundColor = 'rgba(240, 83, 51, 0.05)';
+            } else {
+                tableContainer.style.border = 'none';
+                tableContainer.style.padding = '0';
+                tableContainer.style.backgroundColor = 'transparent';
+            }
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

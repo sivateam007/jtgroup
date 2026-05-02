@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML HSL and HSLA Colors - Jassif Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important; /* Remove pulse animation */
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important; /* Ensure no animations */
+        }
+        
+        /* HSL specific styles */
+        .hsl-display {
+            height: 100px;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hsl-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .hsl-example {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        .slider-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .slider-group {
+            margin: 1rem 0;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .slider-value {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 25px;
+            -webkit-appearance: none;
+            background: #e9ecef;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--git-color);
+            cursor: pointer;
+        }
+        
+        .color-wheel-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .color-wheel {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                hsl(0, 100%, 50%),
+                hsl(30, 100%, 50%),
+                hsl(60, 100%, 50%),
+                hsl(90, 100%, 50%),
+                hsl(120, 100%, 50%),
+                hsl(150, 100%, 50%),
+                hsl(180, 100%, 50%),
+                hsl(210, 100%, 50%),
+                hsl(240, 100%, 50%),
+                hsl(270, 100%, 50%),
+                hsl(300, 100%, 50%),
+                hsl(330, 100%, 50%),
+                hsl(360, 100%, 50%)
+            );
+            position: relative;
+        }
+        
+        .wheel-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .scale-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .scale-box {
+            height: 60px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .alpha-scale {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .alpha-box {
+            flex: 1;
+            min-width: 100px;
+            height: 60px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .hsl-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .hsl-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .color-wheel {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .alpha-scale {
+                flex-direction: column;
+            }
+            
+            .alpha-box {
+                min-width: 100%;
+            }
+        }
+        
+        .formula-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+        }
+        
+        .hsl-explanation {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .parameter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .parameter-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+        
+        .exercise-hello {
+            color: #000000 !important;
+            font-size: 2rem;
+            margin: 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="Jassif Team Logo" class="logo-image">
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="HTML%20HEX%20Colors.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="HTML%20Styles%20-%20CSS.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>HTML HSL and HSLA Colors</h2>
+            <p>HSL மற்றும் HSLA வண்ணங்கள் - மனிதர்களுக்கு உள்ளுணர்வு வண்ண மாதிரி</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="content-section" id="introduction">
+            <h2>HTML HSL and HSLA Colors</h2>
+            
+            <p>HSL என்பது hue (நிறம்), saturation (செறிவு), மற்றும் lightness (ஒளிர்வு) ஆகியவற்றைக் குறிக்கிறது.</p>
+            
+            <p>HSLA வண்ண மதிப்புகள் ஆல்பா சேனலுடன் (வெளிப்படைத்தன்மை) HSL இன் நீட்டிப்பாகும்.</p>
+            
+            <div class="parameter-grid">
+                <div class="parameter-card" style="background: linear-gradient(135deg, #ff0000, #ff9999);">
+                    <i class="fas fa-palette" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <h3>HUE<br>நிறம்</h3>
+                    <p>வண்ணச் சக்கரத்தில் 0-360 டிகிரி</p>
+                </div>
+                
+                <div class="parameter-card" style="background: linear-gradient(135deg, #ff0000, #800000);">
+                    <i class="fas fa-tint" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <h3>SATURATION<br>செறிவு</h3>
+                    <p>0% (சாம்பல்) முதல் 100% (முழு வண்ணம்)</p>
+                </div>
+                
+                <div class="parameter-card" style="background: linear-gradient(135deg, #000000, #ff0000, #ffffff);">
+                    <i class="fas fa-sun" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <h3>LIGHTNESS<br>ஒளிர்வு</h3>
+                    <p>0% (கருப்பு) முதல் 100% (வெள்ளை)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HSL Color Values -->
+        <section class="content-section" id="hsl-values">
+            <h2>HSL Color Values</h2>
+            
+            <p>HTML இல், ஒரு வண்ணத்தை hue, saturation, மற்றும் lightness (HSL) பயன்படுத்தி பின்வரும் வடிவத்தில் குறிப்பிடலாம்:</p>
+            
+            <div class="formula-box">
+                hsl(hue, saturation, lightness)
+            </div>
+            
+            <div class="hsl-explanation">
+                <h3>HSL அளவுருக்கள்:</h3>
+                
+                <div class="comparison-container">
+                    <div style="padding: 1rem;">
+                        <h4 style="color: var(--git-color);">HUE (நிறம்)</h4>
+                        <p>வண்ணச் சக்கரத்தில் 0 முதல் 360 வரையிலான டிகிரி.</p>
+                        <ul>
+                            <li>0 = சிவப்பு</li>
+                            <li>120 = பச்சை</li>
+                            <li>240 = நீலம்</li>
+                            <li>360 = சிவப்பு (மீண்டும்)</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="padding: 1rem;">
+                        <h4 style="color: var(--git-color);">SATURATION (செறிவு)</h4>
+                        <p>சதவீத மதிப்பு.</p>
+                        <ul>
+                            <li>0% = சாம்பல் நிறத்தின் நிழல்</li>
+                            <li>100% = முழு வண்ணம்</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="padding: 1rem;">
+                        <h4 style="color: var(--git-color);">LIGHTNESS (ஒளிர்வு)</h4>
+                        <p>சதவீத மதிப்பு.</p>
+                        <ul>
+                            <li>0% = கருப்பு</li>
+                            <li>50% = இயல்பான ஒளிர்வு</li>
+                            <li>100% = வெள்ளை</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="color-wheel-container">
+                    <h3>வண்ணச் சக்கரம் (Color Wheel)</h3>
+                    <div class="color-wheel">
+                        <div class="wheel-marker" style="top: 10px; left: 50%; transform: translateX(-50%);">0°<br>சிவப்பு</div>
+                        <div class="wheel-marker" style="top: 50%; right: 10px; transform: translateY(-50%);">90°<br>மஞ்சள்</div>
+                        <div class="wheel-marker" style="bottom: 10px; left: 50%; transform: translateX(-50%);">180°<br>cyan</div>
+                        <div class="wheel-marker" style="top: 50%; left: 10px; transform: translateY(-50%);">270°<br>மெஜந்தா</div>
+                    </div>
+                    <p style="margin-top: 1rem;">HUE மதிப்பு வண்ணச் சக்கரத்தில் உள்ள நிலையை குறிக்கிறது</p>
+                </div>
+            </div>
+            
+            <h3>முக்கிய HSL மதிப்புகள்:</h3>
+            
+            <div class="hsl-grid">
+                <div class="hsl-example" style="background-color: hsl(0, 100%, 50%);">
+                    hsl(0, 100%, 50%)<br>
+                    <strong>சிவப்பு</strong>
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(120, 100%, 50%);">
+                    hsl(120, 100%, 50%)<br>
+                    <strong>பச்சை</strong>
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(240, 100%, 50%);">
+                    hsl(240, 100%, 50%)<br>
+                    <strong>நீலம்</strong>
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(0, 0%, 0%);">
+                    hsl(0, 0%, 0%)<br>
+                    <strong>கருப்பு</strong>
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(0, 0%, 100%); color: #333;">
+                    hsl(0, 0%, 100%)<br>
+                    <strong>வெள்ளை</strong>
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(0, 0%, 50%);">
+                    hsl(0, 0%, 50%)<br>
+                    <strong>சாம்பல்</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- HSL Mixer -->
+        <section class="content-section" id="hsl-mixer">
+            <h2>HSL கலவை சோதனை</h2>
+            
+            <p>கீழே உள்ள HSL மதிப்புகளை கலந்து சோதனை செய்யுங்கள்:</p>
+            
+            <div class="slider-container">
+                <div class="hsl-display" id="hslDisplay" style="background-color: hsl(0, 100%, 50%);">
+                    hsl(0, 100%, 50%)
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #e74c3c;">HUE</span>
+                        <span class="slider-value" id="hueValue">0°</span>
+                    </div>
+                    <input type="range" min="0" max="360" value="0" class="slider" id="hueSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #27ae60;">SATURATION</span>
+                        <span class="slider-value" id="saturationValue">100%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="100" class="slider" id="saturationSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #3498db;">LIGHTNESS</span>
+                        <span class="slider-value" id="lightnessValue">50%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="lightnessSlider">
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-flask tip-icon"></i> Jassif Team சோதனை:</h4>
+                <p>சிலிண்டர்களை நகர்த்துவதன் மூலம் வெவ்வேறு HSL வண்ணங்களை உருவாக்க முயற்சிக்கவும்:<br>
+                   • HUE: வண்ணத்தை மாற்றுகிறது (0-360°)<br>
+                   • SATURATION: வண்ணத்தின் செறிவை மாற்றுகிறது (0-100%)<br>
+                   • LIGHTNESS: வண்ணத்தின் பிரகாசத்தை மாற்றுகிறது (0-100%)</p>
+            </div>
+        </section>
+
+        <!-- HSL Examples -->
+        <section class="content-section" id="hsl-examples">
+            <h2>HSL எடுத்துக்காட்டுகள்</h2>
+            
+            <p>பொதுவான HSL வண்ணங்களின் எடுத்துக்காட்டுகள்:</p>
+            
+            <div class="hsl-grid">
+                <div class="hsl-example" style="background-color: hsl(0, 100%, 50%);">
+                    hsl(0, 100%, 50%)
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(240, 100%, 50%);">
+                    hsl(240, 100%, 50%)
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(147, 50%, 47%);">
+                    hsl(147, 50%, 47%)
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(300, 76%, 72%);">
+                    hsl(300, 76%, 72%)
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(39, 100%, 50%);">
+                    hsl(39, 100%, 50%)
+                </div>
+                
+                <div class="hsl-example" style="background-color: hsl(248, 53%, 58%);">
+                    hsl(248, 53%, 58%)
+                </div>
+            </div>
+        </section>
+
+        <!-- Saturation Examples -->
+        <section class="content-section" id="saturation">
+            <h2>SATURATION (செறிவு)</h2>
+            
+            <p>செறிவு ஒரு வண்ணத்தின் தீவிரமாக விவரிக்கப்படலாம்.</p>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-tint tip-icon"></i> Jassif Team விளக்கம்:</h4>
+                <p>100% என்பது தூய வண்ணம், சாம்பல் நிறத்தின் நிழல்கள் இல்லை.<br>
+                   50% என்பது 50% சாம்பல், ஆனால் நீங்கள் இன்னும் வண்ணத்தைக் காணலாம்.<br>
+                   0% என்பது முற்றிலும் சாம்பல்; நீங்கள் இனி வண்ணத்தைக் காண முடியாது.</p>
+            </div>
+            
+            <h3>செறிவு எடுத்துக்காட்டுகள் (சிவப்பு நிறம்):</h3>
+            
+            <div class="scale-grid">
+                <div class="scale-box" style="background-color: hsl(0, 100%, 50%);">
+                    hsl(0, 100%, 50%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 80%, 50%);">
+                    hsl(0, 80%, 50%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 60%, 50%);">
+                    hsl(0, 60%, 50%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 40%, 50%);">
+                    hsl(0, 40%, 50%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 20%, 50%);">
+                    hsl(0, 20%, 50%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 0%, 50%);">
+                    hsl(0, 0%, 50%)
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightness Examples -->
+        <section class="content-section" id="lightness">
+            <h2>LIGHTNESS (ஒளிர்வு)</h2>
+            
+            <p>ஒரு வண்ணத்தின் ஒளிர்வு, 0% என்பது ஒளி இல்லை (கருப்பு), 50% என்பது 50% ஒளி (இருண்டதும் இல்லை, ஒளிர்வதும் இல்லை), மற்றும் 100% என்பது முழு ஒளிர்வு (வெள்ளை) என எவ்வளவு ஒளியை வழங்க வேண்டும் என விவரிக்கப்படலாம்.</p>
+            
+            <h3>ஒளிர்வு எடுத்துக்காட்டுகள் (சிவப்பு நிறம்):</h3>
+            
+            <div class="scale-grid">
+                <div class="scale-box" style="background-color: hsl(0, 100%, 0%);">
+                    hsl(0, 100%, 0%)<br>
+                    கருப்பு
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 100%, 25%);">
+                    hsl(0, 100%, 25%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 100%, 50%);">
+                    hsl(0, 100%, 50%)<br>
+                    இயல்பான சிவப்பு
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 100%, 75%);">
+                    hsl(0, 100%, 75%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 100%, 90%); color: #333;">
+                    hsl(0, 100%, 90%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 100%, 100%); color: #333;">
+                    hsl(0, 100%, 100%)<br>
+                    வெள்ளை
+                </div>
+            </div>
+        </section>
+
+        <!-- Shades of Gray in HSL -->
+        <section class="content-section" id="hsl-gray">
+            <h2>HSL இல் சாம்பல் நிறத்தின் நிழல்கள்</h2>
+            
+            <p>சாம்பல் நிறத்தின் நிழல்கள் பெரும்பாலும் நிறம் மற்றும் செறிவை 0 ஆக அமைத்து, ஒளிர்வை 0% முதல் 100% வரை சரிசெய்வதன் மூலம் கருப்பு/வெள்ளை நிழல்களைப் பெற வரையறுக்கப்படுகின்றன:</p>
+            
+            <div class="scale-grid">
+                <div class="scale-box" style="background-color: hsl(0, 0%, 20%);">
+                    hsl(0, 0%, 20%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 0%, 30%);">
+                    hsl(0, 0%, 30%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 0%, 40%);">
+                    hsl(0, 0%, 40%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 0%, 60%); color: #333;">
+                    hsl(0, 0%, 60%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 0%, 70%); color: #333;">
+                    hsl(0, 0%, 70%)
+                </div>
+                
+                <div class="scale-box" style="background-color: hsl(0, 0%, 90%); color: #333;">
+                    hsl(0, 0%, 90%)
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><i class="fas fa-balance-scale warning-icon"></i> Jassif Team விதி:</h4>
+                <p>HSL சாம்பல் நிறங்களுக்கு HUE மற்றும் SATURATION இரண்டும் 0 ஆக இருக்க வேண்டும். LIGHTNESS மதிப்பு 0% க்கு அருகில் இருந்தால் கருப்பு நிறத்திற்கு அருகில், 100% க்கு அருகில் இருந்தால் வெள்ளை நிறத்திற்கு அருகில்.</p>
+            </div>
+        </section>
+
+        <!-- HSLA Color Values -->
+        <section class="content-section" id="hsla-values">
+            <h2>HSLA Color Values</h2>
+            
+            <p>HSLA வண்ண மதிப்புகள் ஆல்பா சேனலுடன் HSL வண்ண மதிப்புகளின் நீட்டிப்பாகும் - இது ஒரு வண்ணத்திற்கான வெளிப்படைத்தன்மையை குறிப்பிடுகிறது.</p>
+            
+            <p>ஒரு HSLA வண்ண மதிப்பு இவ்வாறு குறிப்பிடப்படுகிறது:</p>
+            
+            <div class="formula-box">
+                hsla(hue, saturation, lightness, alpha)
+            </div>
+            
+            <p>ஆல்பா அளவுரு 0.0 (முழுமையாக வெளிப்படையானது) மற்றும் 1.0 (வெளிப்படையானது அல்ல) க்கு இடையே உள்ள ஒரு எண்ணாகும்:</p>
+            
+            <div class="alpha-scale">
+                <div class="alpha-box" style="background-color: hsla(9, 100%, 64%, 0); background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc); background-size: 20px 20px;">
+                    hsla(9, 100%, 64%, 0)<br>
+                    முழு வெளிப்படைத்தன்மை
+                </div>
+                
+                <div class="alpha-box" style="background-color: hsla(9, 100%, 64%, 0.2);">
+                    hsla(9, 100%, 64%, 0.2)
+                </div>
+                
+                <div class="alpha-box" style="background-color: hsla(9, 100%, 64%, 0.4);">
+                    hsla(9, 100%, 64%, 0.4)
+                </div>
+                
+                <div class="alpha-box" style="background-color: hsla(9, 100%, 64%, 0.6);">
+                    hsla(9, 100%, 64%, 0.6)
+                </div>
+                
+                <div class="alpha-box" style="background-color: hsla(9, 100%, 64%, 0.8);">
+                    hsla(9, 100%, 64%, 0.8)
+                </div>
+                
+                <div class="alpha-box" style="background-color: hsla(9, 100%, 64%, 1);">
+                    hsla(9, 100%, 64%, 1)<br>
+                    வெளிப்படைத்தன்மை இல்லை
+                </div>
+            </div>
+        </section>
+
+        <!-- HSLA Mixer -->
+        <section class="content-section" id="hsla-mixer">
+            <h2>HSLA கலவை சோதனை</h2>
+            
+            <p>கீழே உள்ள HSLA மதிப்புகளை கலந்து சோதனை செய்யுங்கள்:</p>
+            
+            <div class="slider-container">
+                <div class="hsl-display" id="hslaDisplay" style="background-color: hsla(0, 100%, 50%, 0.5);">
+                    hsla(0, 100%, 50%, 0.5)
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #e74c3c;">HUE</span>
+                        <span class="slider-value" id="hslaHueValue">0°</span>
+                    </div>
+                    <input type="range" min="0" max="360" value="0" class="slider" id="hslaHueSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #27ae60;">SATURATION</span>
+                        <span class="slider-value" id="hslaSaturationValue">100%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="100" class="slider" id="hslaSaturationSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #3498db;">LIGHTNESS</span>
+                        <span class="slider-value" id="hslaLightnessValue">50%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="hslaLightnessSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span style="color: #9b59b6;">ALPHA</span>
+                        <span class="slider-value" id="hslaAlphaValue">0.5</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="hslaAlphaSlider">
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-eye-dropper tip-icon"></i> Jassif Team வெளிப்படைத்தன்மை:</h4>
+                <p>ஆல்பா மதிப்பு 0.0 என்பது முழுமையாக வெளிப்படையானது (கண்ணுக்குப் புலப்படாதது), 0.5 என்பது 50% வெளிப்படைத்தன்மை, 1.0 என்பது வெளிப்படைத்தன்மை இல்லை (முழுமையானது).</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>பயிற்சி</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">🎨</span> பின்வரும் வண்ண மதிப்புகளில் எது கருப்பு நிறத்தை உருவாக்கும்?</h4>
+                
+                <div class="comparison-container" style="justify-content: center; grid-template-columns: repeat(3, 1fr);">
+                    <div style="background: white; border: 2px solid #ddd; border-radius: 10px; padding: 2rem; text-align: center;">
+                        <h3 style="margin: 0; color: #333; font-size: 1.5rem; font-family: 'Courier New', monospace;">
+                            hsl(0, 100%, 0%)
+                        </h3>
+                        <div style="width: 100%; height: 60px; background-color: hsl(0, 100%, 0%); border-radius: 5px; margin: 1rem 0;"></div>
+                        <p style="margin: 0; font-size: 1rem; color: #666;">
+                            0% ஒளிர்வு = கருப்பு
+                        </p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid #ddd; border-radius: 10px; padding: 2rem; text-align: center;">
+                        <h3 style="margin: 0; color: #333; font-size: 1.5rem; font-family: 'Courier New', monospace;">
+                            hsl(0, 0, 100%)
+                        </h3>
+                        <div style="width: 100%; height: 60px; background-color: white; border: 2px solid #ddd; border-radius: 5px; margin: 1rem 0;"></div>
+                        <p style="margin: 0; font-size: 1rem; color: #666;">
+                            செறிவு குறிப்பிடப்படவில்லை
+                        </p>
+                    </div>
+                    
+                    <div style="background: white; border: 2px solid #ddd; border-radius: 10px; padding: 2rem; text-align: center;">
+                        <h3 style="margin: 0; color: #333; font-size: 1.5rem; font-family: 'Courier New', monospace;">
+                            hsl(0, 100%, 100%)
+                        </h3>
+                        <div style="width: 100%; height: 60px; background-color: white; border: 2px solid #ddd; border-radius: 5px; margin: 1rem 0;"></div>
+                        <p style="margin: 0; font-size: 1rem; color: #666;">
+                            100% ஒளிர்வு = வெள்ளை
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">hsl(0, 100%, 0%)</div>
+                            <div class="option-feedback correct">✓ சரி! 0% ஒளிர்வு என்பது கருப்பு நிறம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">hsl(0, 0, 100%)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது செல்லுபடியாகாத தொடரியல் (செறிவு சதவீத குறி இல்லை)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">hsl(0, 100%, 100%)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! 100% ஒளிர்வு என்பது வெள்ளை நிறம்</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">hsl(0, 0%, 50%)</div>
+                            <div class="option-feedback incorrect">✗ தவறு! இது சாம்பல் நிறம், கருப்பு அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb tip-icon"></i> Jassif Team HSL குறிப்பு:</h4>
+                <p>hsl(hue, saturation, lightness) இல்:<br>
+                   • Lightness = 0% → கருப்பு (எந்த நிறமும் இல்லை)<br>
+                   • Lightness = 50% → இயல்பான வண்ணம்<br>
+                   • Lightness = 100% → வெள்ளை (எந்த நிறமும் இல்லை)<br>
+                   • Saturation = 0% → சாம்பல் நிற நிழல்<br>
+                   • Saturation = 100% → முழு வண்ண செறிவு</p>
+            </div>
+        </section>
+
+        <!-- HSL vs RGB Comparison -->
+        <section class="content-section" id="comparison">
+            <h2>HSL vs RGB ஒப்பீடு</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>அம்சம்</th>
+                            <th>HSL</th>
+                            <th>RGB</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>முழுப் பெயர்</strong></td>
+                            <td>Hue Saturation Lightness</td>
+                            <td>Red Green Blue</td>
+                        </tr>
+                        <tr>
+                            <td><strong>சூத்திரம்</strong></td>
+                            <td>hsl(h, s%, l%)</td>
+                            <td>rgb(r, g, b)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>மதிப்பு வரம்பு</strong></td>
+                            <td>0-360°, 0-100%, 0-100%</td>
+                            <td>0-255, 0-255, 0-255</td>
+                        </tr>
+                        <tr>
+                            <td><strong>மனிதர்களுக்கு</strong></td>
+                            <td>உள்ளுணர்வு</td>
+                            <td>தொழில்நுட்பம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>பயன்பாடு</strong></td>
+                            <td>வடிவமைப்பு, கலர் பிக்கர்</td>
+                            <td>பொது நோக்கம்</td>
+                        </tr>
+                        <tr>
+                            <td><strong>கருப்பு</strong></td>
+                            <td>hsl(0, 0%, 0%)</td>
+                            <td>rgb(0, 0, 0)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>வெள்ளை</strong></td>
+                            <td>hsl(0, 0%, 100%)</td>
+                            <td>rgb(255, 255, 255)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>சிவப்பு</strong></td>
+                            <td style="color: hsl(0, 100%, 50%);">hsl(0, 100%, 50%)</td>
+                            <td style="color: rgb(255, 0, 0);">rgb(255, 0, 0)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-random tip-icon"></i> Jassif Team மாற்று சூத்திரம்:</h4>
+                <p>HSL மனிதர்களுக்கு உள்ளுணர்வு உள்ளது - நிறம் மாற்ற, HUE ஐ மாற்றவும்; செறிவு மாற்ற, SATURATION ஐ மாற்றவும்; பிரகாசம் மாற்ற, LIGHTNESS ஐ மாற்றவும்.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="HTML%20HEX%20Colors.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="HTML%20Styles%20-%20CSS.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#introduction">HSL & HSLA Colors</a></li>
+                    <li><a href="#hsl-values">HSL Values</a></li>
+                    <li><a href="#hsl-mixer">HSL Mixer</a></li>
+                    <li><a href="#hsla-values">HSLA Values</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+
+        // HSL Slider functionality
+        const hueSlider = document.getElementById('hueSlider');
+        const saturationSlider = document.getElementById('saturationSlider');
+        const lightnessSlider = document.getElementById('lightnessSlider');
+        const hslDisplay = document.getElementById('hslDisplay');
+        const hueValue = document.getElementById('hueValue');
+        const saturationValue = document.getElementById('saturationValue');
+        const lightnessValue = document.getElementById('lightnessValue');
+
+        function updateHSLDisplay() {
+            const hue = parseInt(hueSlider.value);
+            const saturation = parseInt(saturationSlider.value);
+            const lightness = parseInt(lightnessSlider.value);
+            
+            hueValue.textContent = hue + '°';
+            saturationValue.textContent = saturation + '%';
+            lightnessValue.textContent = lightness + '%';
+            
+            const hslColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+            hslDisplay.style.backgroundColor = hslColor;
+            hslDisplay.textContent = hslColor;
+            
+            // Adjust text color based on lightness
+            hslDisplay.style.color = lightness > 50 ? 'black' : 'white';
+        }
+
+        hueSlider.addEventListener('input', updateHSLDisplay);
+        saturationSlider.addEventListener('input', updateHSLDisplay);
+        lightnessSlider.addEventListener('input', updateHSLDisplay);
+
+        // HSLA Slider functionality
+        const hslaHueSlider = document.getElementById('hslaHueSlider');
+        const hslaSaturationSlider = document.getElementById('hslaSaturationSlider');
+        const hslaLightnessSlider = document.getElementById('hslaLightnessSlider');
+        const hslaAlphaSlider = document.getElementById('hslaAlphaSlider');
+        const hslaDisplay = document.getElementById('hslaDisplay');
+        const hslaHueValue = document.getElementById('hslaHueValue');
+        const hslaSaturationValue = document.getElementById('hslaSaturationValue');
+        const hslaLightnessValue = document.getElementById('hslaLightnessValue');
+        const hslaAlphaValue = document.getElementById('hslaAlphaValue');
+
+        function updateHSLADisplay() {
+            const hue = parseInt(hslaHueSlider.value);
+            const saturation = parseInt(hslaSaturationSlider.value);
+            const lightness = parseInt(hslaLightnessSlider.value);
+            const alpha = (hslaAlphaSlider.value / 100).toFixed(2);
+            
+            hslaHueValue.textContent = hue + '°';
+            hslaSaturationValue.textContent = saturation + '%';
+            hslaLightnessValue.textContent = lightness + '%';
+            hslaAlphaValue.textContent = alpha;
+            
+            const hslaColor = `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
+            hslaDisplay.style.backgroundColor = hslaColor;
+            hslaDisplay.textContent = hslaColor;
+            
+            // Add checkered background pattern for transparency
+            hslaDisplay.style.backgroundImage = `linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), 
+                                                 linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc)`;
+            hslaDisplay.style.backgroundSize = '20px 20px';
+            hslaDisplay.style.backgroundPosition = '0 0, 10px 10px';
+        }
+
+        hslaHueSlider.addEventListener('input', updateHSLADisplay);
+        hslaSaturationSlider.addEventListener('input', updateHSLADisplay);
+        hslaLightnessSlider.addEventListener('input', updateHSLADisplay);
+        hslaAlphaSlider.addEventListener('input', updateHSLADisplay);
+
+        // Initialize displays
+        updateHSLDisplay();
+        updateHSLADisplay();
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>

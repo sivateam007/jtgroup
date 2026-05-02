@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angular Templates: TrackBy with *ngFor - Jassif Team</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+        .content-section p, 
+        .content-section li,
+        .content-section h3,
+        .content-section h4,
+        .comparison-card p {
+            color: #333 !important;
+        }
+        
+        .tip-box p,
+        .tip-box li,
+        .tip-box h4 {
+            color: white !important;
+        }
+        
+        .warning-box p,
+        .warning-box li,
+        .warning-box h4 {
+            color: white !important;
+        }
+        
+        .exercise-box p,
+        .exercise-box h4 {
+            color: white !important;
+        }
+        
+        /* Stable logo styling - NO ANIMATIONS */
+        .logo-icon {
+            animation: none !important;
+        }
+        
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: none !important;
+        }
+        
+        /* Performance indicator styling */
+        .performance-meter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 1rem 0;
+        }
+        
+        .performance-bar {
+            flex: 1;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .performance-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            transition: width 0.5s ease;
+        }
+        
+        .performance-label {
+            font-weight: bold;
+            min-width: 100px;
+        }
+        
+        /* List visualization */
+        .list-visualization {
+            display: flex;
+            gap: 10px;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .list-item {
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .list-item.moved {
+            background: #e74c3c;
+            transform: translateY(-5px);
+        }
+        
+        .list-item.reused {
+            background: #2ecc71;
+        }
+    
+
+
+
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav .nav-tab {
+    margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="header-container">
+<div class="logo">
+<div class="logo-icon">
+<img alt="Jassif Team Logo" class="logo-image" src="logo.jpg"/>
+</div>
+<h1>Jassif Team <span>Institution</span></h1>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Tabs -->
+<div class="nav-tabs">
+<a class="nav-tab prev" href="Angular Templates Attribute Binding.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Components.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="hero-content">
+<h2>Angular Templates: TrackBy with *ngFor</h2>
+<p>பட்டியல்களை விரைவாகவும் நிலையாகவும் வைத்திருங்கள் - ஒரு தனிப்பட்ட விசையுடன் உருப்படிகளை அடையாளம் காண trackBy பயன்படுத்தவும்</p>
+</div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+<!-- Introduction -->
+<section class="content-section" id="introduction">
+<h2>TrackBy with *ngFor என்றால் என்ன?</h2>
+<p>ஆங்குலர் பட்டியல் உருப்படிகளை எவ்வாறு அடையாளம் காண்கிறது என்பதை வரையறுக்கிறது.</p>
+<p>உருப்படிகள் நகர்த்தப்படும்போது, செருகப்படும்போது அல்லது அகற்றப்படும்போது DOM முனைகளை மீண்டும் பயன்படுத்துவதை இயலுமைப்படுத்துகிறது.</p>
+<p>பொதுவாக ஒவ்வொரு உருப்படிக்கும் ஒரு தனிப்பட்ட ID ஐ திருப்பி அனுப்புகிறது.</p>
+
+<div class="performance-meter">
+<div class="performance-label">Without trackBy:</div>
+<div class="performance-bar">
+<div class="performance-fill" style="width: 30%;"></div>
+</div>
+<div class="performance-label">Slow Performance</div>
+</div>
+
+<div class="performance-meter">
+<div class="performance-label">With trackBy:</div>
+<div class="performance-bar">
+<div class="performance-fill" style="width: 90%;"></div>
+</div>
+<div class="performance-label">Fast Performance</div>
+</div>
+</section>
+
+<!-- When to use TrackBy -->
+<section class="content-section" id="when-to-use">
+<h2>TrackBy எப்போது பயன்படுத்த வேண்டும்</h2>
+<ul>
+<li>அடிக்கடி மறுசீரமைக்கப்படும், செருகப்படும் அல்லது அகற்றப்படும் பட்டியல்கள்</li>
+<li>தேவையற்ற மறு-வழங்கலைத் தவிர்ப்பதற்கும் செயல்திறனை மேம்படுத்துவதற்கும்</li>
+<li>உருப்படிகள் நிலையான, தனிப்பட்ட அடையாளங்காட்டிகளைக் கொண்டிருக்கும் போது</li>
+</ul>
+
+<div class="list-visualization">
+<div class="list-item">Item 1</div>
+<div class="list-item">Item 2</div>
+<div class="list-item">Item 3</div>
+<div class="list-item">Item 4</div>
+<div class="list-item">Item 5</div>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-lightbulb tip-icon"></i>Performance Tip</h4>
+<p><strong>trackBy</strong> இல்லாமல், ஆங்குலர் ஒவ்வொரு மாற்றத்திலும் முழு DOM மரத்தையும் மறுவழங்க வேண்டியிருக்கும். <strong>trackBy</strong> உடன், DOM முனைகள் தேவைப்படும்போது மீண்டும் பயன்படுத்தப்படும்.</p>
+</div>
+</section>
+
+<!-- How TrackBy Works -->
+<section class="content-section" id="how-it-works">
+<h2>TrackBy எவ்வாறு செயல்படுகிறது</h2>
+<div class="code-comparison">
+<div class="code-column">
+<h4>Without trackBy</h4>
+<div class="code-example">
+<pre><code><span class="html-tag">&lt;li</span> <span class="attribute">*ngFor</span>=<span class="angular-binding">"let item of items"</span><span class="html-tag">&gt;</span>
+  {{ item.name }}
+<span class="html-tag">&lt;/li&gt;</span></code></pre>
+</div>
+<p><strong>சிக்கல்:</strong> ஒவ்வொரு மாற்றத்திலும் முழு பட்டியலையும் ஆங்குலர் மறுவழங்குகிறது</p>
+<p><strong>செயல்திறன்:</strong> மோசமானது</p>
+</div>
+
+<div class="code-column">
+<h4>With trackBy</h4>
+<div class="code-example">
+<pre><code><span class="html-tag">&lt;li</span> <span class="attribute">*ngFor</span>=<span class="angular-binding">"let item of items; 
+         trackBy: trackById"</span><span class="html-tag">&gt;</span>
+  {{ item.name }}
+<span class="html-tag">&lt;/li&gt;</span></code></pre>
+</div>
+<p><strong>நன்மை:</strong> ஆங்குலர் DOM முனைகளை மீண்டும் பயன்படுத்துகிறது</p>
+<p><strong>செயல்திறன்:</strong> சிறந்தது</p>
+</div>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-triangle warning-icon"></i>Important Warning</h4>
+<p>தொடர்புடைய பைண்டிங்குகள் மற்றும் சங்கிலி விளைவுகளுடன் பெரிய பட்டியல்களுக்கு trackBy இல்லாமல், கடுமையான செயல்திறன் சிக்கல்கள் ஏற்படலாம்.</p>
+</div>
+</section>
+
+<!-- Example -->
+<section class="content-section" id="example">
+<h2>Example</h2>
+
+<div class="code-example">
+<h3>Complete Angular Example</h3>
+<pre><code><span class="angular-keyword">import</span> { bootstrapApplication } <span class="angular-keyword">from</span> <span class="angular-binding">'@angular/platform-browser'</span>;
+<span class="angular-keyword">import</span> { Component } <span class="angular-keyword">from</span> <span class="angular-binding">'@angular/core'</span>;
+<span class="angular-keyword">import</span> { CommonModule } <span class="angular-keyword">from</span> <span class="angular-binding">'@angular/common'</span>;
+
+<span class="comment">// Define Item type</span>
+<span class="angular-keyword">type</span> Item = { 
+  id: number; 
+  name: string 
+};
+
+<span class="angular-keyword">@Component</span>({
+  selector: <span class="angular-binding">'app-root'</span>,
+  standalone: <span class="angular-keyword">true</span>,
+  imports: [CommonModule],
+  template: <span class="angular-binding">`
+    &lt;button (click)="shuffle()"&gt;Shuffle Items&lt;/button&gt;
+    &lt;ul&gt;
+      &lt;li *ngFor="let it of items; trackBy: trackById"&gt;
+        {{ it.id }} - {{ it.name }}
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  `</span>
+})
+<span class="angular-keyword">export class</span> App {
+  <span class="comment">// Initial items array</span>
+  items: Item[] = [
+    { id: 1, name: <span class="angular-binding">'Alpha'</span> },
+    { id: 2, name: <span class="angular-binding">'Beta'</span> },
+    { id: 3, name: <span class="angular-binding">'Gamma'</span> }
+  ];
+  
+  <span class="comment">// Shuffle method to reorder items</span>
+  shuffle() {
+    <span class="comment">// Reverse the array to demonstrate trackBy benefits</span>
+    <span class="angular-keyword">this</span>.items = [...<span class="angular-keyword">this</span>.items].reverse();
+  }
+  
+  <span class="comment">// TrackBy function - identifies each item uniquely</span>
+  trackById(_i: number, it: Item) { 
+    <span class="angular-keyword">return</span> it.id; 
+  }
+}
+
+bootstrapApplication(App);</code></pre>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-code tip-icon"></i>Example Explained</h4>
+<p><strong>*ngFor ... trackBy: trackById:</strong> பட்டியல் வரிசை மாறும்போது ஆங்குலர் DOM முனைகளை மீண்டும் பயன்படுத்தக்கூடிய வகையில் ஒவ்வொரு உருப்படிக்கும் நிலையான அடையாளத்தைக் கொடுக்க trackById ஐப் பயன்படுத்துகிறது.</p>
+<p><strong>trackById(index, item):</strong> ஒரு உருப்படிக்கான தனிப்பட்ட விசையைத் திருப்பி அனுப்புகிறது. இங்கே, குறியீட்டைப் பொருட்படுத்தாமல் item.id ஐத் திருப்பி அனுப்புகிறது.</p>
+<p><strong>shuffle():</strong> trackBy உடன், ஆங்குலர் இருக்கும் DOM முனைகளை அழிப்பதற்கும் மீண்டும் உருவாக்குவதற்கும் பதிலாக நகர்த்துகிறது என்பதை நிரூபிக்க வரிசையை மாற்றுகிறது.</p>
+</div>
+</section>
+
+<!-- Visual Demonstration -->
+<section class="content-section" id="visual-demo">
+<h2>Visual Demonstration</h2>
+<div class="comparison-grid">
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-times-circle"></i>
+<h4>Without trackBy</h4>
+</div>
+<p><strong>DOM முனைகள் அழிக்கப்பட்டு மீண்டும் உருவாக்கப்படுகின்றன</strong></p>
+<div class="list-visualization">
+<div class="list-item">Alpha</div>
+<div class="list-item">Beta</div>
+<div class="list-item">Gamma</div>
+</div>
+<p>↓ Shuffle ↓</p>
+<div class="list-visualization">
+<div class="list-item moved">Gamma</div>
+<div class="list-item moved">Beta</div>
+<div class="list-item moved">Alpha</div>
+</div>
+<p><strong>6 DOM செயல்பாடுகள்</strong></p>
+</div>
+
+<div class="comparison-card">
+<div class="comparison-header">
+<i class="fas fa-check-circle"></i>
+<h4>With trackBy</h4>
+</div>
+<p><strong>DOM முனைகள் மீண்டும் பயன்படுத்தப்படுகின்றன</strong></p>
+<div class="list-visualization">
+<div class="list-item">Alpha</div>
+<div class="list-item">Beta</div>
+<div class="list-item">Gamma</div>
+</div>
+<p>↓ Shuffle ↓</p>
+<div class="list-visualization">
+<div class="list-item reused">Gamma</div>
+<div class="list-item reused">Beta</div>
+<div class="list-item reused">Alpha</div>
+</div>
+<p><strong>3 DOM செயல்பாடுகள்</strong></p>
+</div>
+</div>
+</section>
+
+<!-- Common Patterns -->
+<section class="content-section" id="patterns">
+<h2>Common TrackBy Patterns</h2>
+<div class="examples-grid">
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-hashtag"></i>
+</div>
+<h4>Using ID Field</h4>
+<pre style="font-size: 0.9rem;">trackById(index, item) {
+  return item.id;
+}</pre>
+<p>மிகவும் பொதுவான முறை</p>
+</div>
+
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-key"></i>
+</div>
+<h4>Using Unique Key</h4>
+<pre style="font-size: 0.9rem;">trackByKey(index, item) {
+  return item.uniqueKey;
+}</pre>
+<p>மாற்று தனிப்பட்ட புலத்திற்கு</p>
+</div>
+
+<div class="example-card">
+<div class="example-icon">
+<i class="fas fa-barcode"></i>
+</div>
+<h4>Using Index (Caution)</h4>
+<pre style="font-size: 0.9rem;">trackByIndex(index, item) {
+  return index;
+}</pre>
+<p>இறுதி முயற்சியாக மட்டுமே - தரவு மாறினால் சிக்கல்கள்</p>
+</div>
+</div>
+
+<div class="warning-box">
+<h4><i class="fas fa-exclamation-circle warning-icon"></i>Index as TrackBy Warning</h4>
+<p>குறியீட்டை trackBy செயல்பாடாகப் பயன்படுத்த வேண்டாம், ஏனெனில்:</p>
+<ul>
+<li>உருப்படிகள் சேர்க்கப்படும்போது அல்லது அகற்றப்படும்போது குறியீடுகள் மாறுகின்றன</li>
+<li>தவறான DOM மறுபயன்பாட்டிற்கு வழிவகுக்கும்</li>
+<li>தரவு பைண்டிங் சிக்கல்களை ஏற்படுத்தும்</li>
+</ul>
+</div>
+</section>
+
+<!-- Exercise -->
+<section class="content-section" id="exercise">
+<h2>Exercise</h2>
+<p>பட்டியல் வழங்கலுடன் trackBy பயன்படுத்துவதன் நன்மை என்ன?</p>
+<div class="exercise-box">
+<h4><span class="exercise-icon">❓</span>பட்டியல் வழங்கலுடன் trackBy பயன்படுத்துவதன் நன்மை என்ன?</h4>
+<div class="options-grid">
+<div class="option-card" data-correct="true">
+<div class="option-content">
+<div class="option-text">உருப்படி அடையாளத்தை கண்காணிப்பதன் மூலம் வழங்கும் செயல்திறனை மேம்படுத்துகிறது</div>
+<div class="option-feedback correct">✓ சரி! trackBy ஆங்குலருக்கு DOM முனைகளை மீண்டும் பயன்படுத்த அனுமதிக்கிறது, மறுவழங்கும் செயல்திறனை கணிசமாக மேம்படுத்துகிறது</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">பட்டியலை தானாகவே வரிசைப்படுத்துகிறது</div>
+<div class="option-feedback incorrect">✗ தவறு! trackBy பட்டியலை வரிசைப்படுத்தாது - அது தரவு மேலாளரின் பொறுப்பு</div>
+</div>
+</div>
+<div class="option-card" data-correct="false">
+<div class="option-content">
+<div class="option-text">மாற்றங்களைக் கண்டறிதலைத் தடுக்கிறது</div>
+<div class="option-feedback incorrect">✗ தவறு! trackBy மாற்றங்களைக் கண்டறிதலைத் தடுக்காது, ஆனால் DOM செயல்திறனை மேம்படுத்துகிறது</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Best Practices -->
+<section class="content-section" id="best-practices">
+<h2>Best Practices for TrackBy</h2>
+<div class="best-practice-list">
+<div class="practice-item positive">
+<i class="fas fa-check-circle"></i>
+<div>
+<h4>Always Use trackBy for Large Lists</h4>
+<p>50+ உருப்படிகள் கொண்ட எந்தப் பட்டியலுக்கும் trackBy ஐ எப்போதும் பயன்படுத்தவும்</p>
+</div>
+</div>
+
+<div class="practice-item positive">
+<i class="fas fa-check-circle"></i>
+<div>
+<h4>Use Stable Unique Identifiers</h4>
+<p>உருப்படி வாழ்நாள் முழுவதும் மாறாத தனிப்பட்ட அடையாளங்காட்டிகளைப் பயன்படுத்தவும்</p>
+</div>
+</div>
+
+<div class="practice-item negative">
+<i class="fas fa-times-circle"></i>
+<div>
+<h4>Never Use Random Values</h4>
+<p>Math.random() அல்லது Date.now() போன்ற சீரற்ற மதிப்புகளை trackBy செயல்பாடாகப் பயன்படுத்த வேண்டாம்</p>
+</div>
+</div>
+</div>
+
+<div class="tip-box">
+<h4><i class="fas fa-rocket tip-icon"></i>Performance Checklist</h4>
+<ul>
+<li>✅ பெரிய பட்டியல்களுக்கு எப்போதும் trackBy ஐப் பயன்படுத்தவும்</li>
+<li>✅ உருப்படி வாழ்நாள் முழுவதும் நிலையான ID புலங்களைப் பயன்படுத்தவும்</li>
+<li>✅ trackBy செயல்பாடு எளிமையாகவும் வேகமாகவும் இருக்க வேண்டும்</li>
+<li>✅ பட்டியல் தரவு மாறும்போது குறியீட்டைப் பயன்படுத்துவதைத் தவிர்க்கவும்</li>
+</ul>
+</div>
+</section>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a class="nav-tab prev" href="Angular Templates Attribute Binding.html">
+<i class="fas fa-arrow-left"></i>
+<span>முந்தைய</span>
+</a>
+<a class="nav-tab அடுத்தது" href="Angular Components.html">
+<span>அடுத்தது</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</main>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Jassif Team Institution</h3>
+<p>Leading educational institution providing quality Angular programming education in Tamil.</p>
+</div>
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#introduction">TrackBy என்றால் என்ன?</a></li>
+<li><a href="#when-to-use">எப்போது பயன்படுத்த வேண்டும்</a></li>
+<li><a href="#how-it-works">எவ்வாறு செயல்படுகிறது</a></li>
+<li><a href="#example">முழுமையான உதாரணம்</a></li>
+<li><a href="#exercise">பயிற்சி</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Angular Templates Series</h3>
+<ul>
+<li><a href="Angular Templates Attribute Binding.html">Attribute Binding</a></li>
+<li><a href="#home">TrackBy with *ngFor</a></li>
+<li><a href="Angular Components.html">Components</a></li>
+<li><a href="#">Directives</a></li>
+<li><a href="#">Pipes</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<ul>
+<li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+<li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+</ul>
+</div>
+</div>
+<div class="copyright">
+<p>© 2023 Jassif Team Institution. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+        
+        // Visual demonstration animation
+        const listItems = document.querySelectorAll('.list-visualization .list-item');
+        listItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('moved');
+                setTimeout(() => {
+                    item.classList.remove('moved');
+                    if (item.classList.contains('reused')) {
+                        item.classList.add('reused');
+                    }
+                }, 1000);
+            }, index * 300);
+        });
+    </script>
+
+<!-- Home Button -->
+<a class="home-icon" href="index.html">
+<i class="fas fa-home"></i>
+</a>
+</body>
+</html>

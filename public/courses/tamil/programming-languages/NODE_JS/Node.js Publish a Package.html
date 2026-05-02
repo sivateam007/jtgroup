@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Publish a Package - Jassif Team Institution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Jassif Team <span>Institution</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+        <a href="Node.js Managing Dependencies.html" class="nav-tab prev">
+            <i class="fas fa-arrow-left"></i>
+            <span>முந்தைய</span>
+        </a>
+        <a href="Node.js HTTP Module.html" class="nav-tab next">
+            <span>அடுத்தது</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Node.js Publish a Package</h2>
+            <p>உங்கள் Node.js தொகுப்பை npm பதிவேட்டில் வெளியிட கற்றுக்கொள்ளுங்கள்</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- What Does it Mean to Publish a Package -->
+        <section class="content-section" id="what-is-publishing">
+            <h2>What Does it Mean to Publish a Package?</h2>
+            
+            <p>தொகுப்பு வெளியிடுவது என்பது உங்கள் Node.js தொகுதி அல்லது திட்டத்தை npm பதிவேட்டின் மூலம் மற்றவர்கள் நிறுவி பயன்படுத்துவதற்கு கிடைக்கச் செய்வதாகும்.</p>
+            
+            <p>திறந்த மூல நூலகங்கள் மற்றும் கருவிகள் Node.js சமூகத்துடன் இந்த வழியில் பகிரப்படுகின்றன.</p>
+            
+            <p>நீங்கள் ஒரு தொகுப்பை வெளியிடும்போது, அது <code>npm install your-package-name</code> பயன்படுத்தி யாரும் நிறுவக்கூடியதாக மாறும்.</p>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">⚠️</span> குறிப்பு:</h4>
+                <p>உங்கள் தொகுப்பு மதிப்பை வழங்குகிறது என்பதை உறுதிப்படுத்தவும், மேலும் அது NPM இல் இருக்கும் ஏற்கனவே உள்ள தொகுப்பின் நகல் அல்ல என்பதை உறுதிப்படுத்தவும்.</p>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-box-open"></i>
+                        <h4>தனிப்பட்ட பயன்பாடு</h4>
+                    </div>
+                    <p>உள் திட்டங்களுக்கான தொகுப்புகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-users"></i>
+                        <h4>பொது வெளியீடு</h4>
+                    </div>
+                    <p>உலகளாவிய பயன்பாட்டிற்கான தொகுப்புகள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-building"></i>
+                        <h4>அமைப்பு வெளியீடு</h4>
+                    </div>
+                    <p>அமைப்பு உள்ளே பயன்படுத்த தொகுப்புகள்</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preparing Your Package -->
+        <section class="content-section" id="preparing-package">
+            <h2>Preparing Your Package</h2>
+            
+            <h3>1. தொகுப்பைத் தொடங்கவும்</h3>
+            <p>ஒரு புதிய அடைவை உருவாக்கி உங்கள் தொகுப்பைத் தொடங்கவும்:</p>
+            <div class="code-example">
+                <pre><code>mkdir my-package
+cd my-package
+npm init -y</code></pre>
+            </div>
+            
+            <h3>2. அத்தியாவசிய கோப்புகள்</h3>
+            <p>ஒரு தொகுப்பில் இந்த முக்கிய கோப்புகள் இருக்க வேண்டும்:</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-file-code"></i>
+                        <h4>package.json</h4>
+                    </div>
+                    <p>உங்கள் தொகுப்பைப் பற்றிய மெட்டாடேட்டா</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-book"></i>
+                        <h4>README.md</h4>
+                    </div>
+                    <p>ஆவணங்கள் (மார்க்டவுனை ஆதரிக்கிறது)</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-play"></i>
+                        <h4>index.js</h4>
+                    </div>
+                    <p>முக்கிய நுழைவு புள்ளி (அல்லது package.json இல் குறிப்பிடவும்)</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-balance-scale"></i>
+                        <h4>LICENSE</h4>
+                    </div>
+                    <p>பயன்பாட்டு விதிமுறைகள் (MIT, ISC, முதலியன)</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-eye-slash"></i>
+                        <h4>.gitignore</h4>
+                    </div>
+                    <p>node_modules, பதிவுகள் போன்றவற்றை விலக்க</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-archive"></i>
+                        <h4>.npmignore</h4>
+                    </div>
+                    <p>வெளியிடப்பட்ட தொகுப்பிலிருந்து கோப்புகளை விலக்க (விருப்பத்தேர்வு)</p>
+                </div>
+            </div>
+            
+            <h3>3. Package.json Essentials</h3>
+            <p>உங்கள் package.json இல் இந்த குறைந்தபட்ச புலங்கள் உள்ளன என்பதை உறுதிப்படுத்தவும்:</p>
+            
+            <div class="code-example">
+                <pre><code>{
+  "name": "your-package-name",
+  "version": "1.0.0",
+  "description": "A brief description of your package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["keyword1", "keyword2"],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT"
+}</code></pre>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💡</span> உதவிக்குறிப்பு:</h4>
+                <p>உங்கள் தொகுப்பு பெயர் தனித்துவமானதாகவும், விவரணை தெளிவாகவும் இருக்க வேண்டும். முக்கிய சொற்கள் மற்றவர்கள் உங்கள் தொகுப்பைக் கண்டுபிடிக்க உதவும்.</p>
+            </div>
+        </section>
+
+        <!-- Creating an npm Account -->
+        <section class="content-section" id="npm-account">
+            <h2>Creating an npm Account</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>1. பதிவு செய்யுங்கள்</h3>
+                    <p>உங்களிடம் கணக்கு இல்லையென்றால் npmjs.com/signup இல் ஒரு கணக்கை உருவாக்கவும்.</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>2. உங்கள் மின்னஞ்சலைச் சரிபார்க்கவும்</h3>
+                    <p>வெளியிடுவதற்கு முன் உங்கள் மின்னஞ்சலைச் சரிபார்க்கவும் மற்றும் உங்கள் கணக்கைச் சரிபார்க்கவும்.</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </div>
+                    <h3>3. CLI வழியாக உள்நுழைக</h3>
+                    <p>உங்கள் டெர்மினலைத் திறந்து இயக்கவும்:</p>
+                    <div class="code-example">
+                        <pre><code>npm login</code></pre>
+                    </div>
+                    <p>உங்களிடம் கேட்கப்படும்:</p>
+                    <ul>
+                        <li>பயனர்பெயர்</li>
+                        <li>கடவுச்சொல்</li>
+                        <li>மின்னஞ்சல் (உங்கள் npm கணக்குடன் பொருந்த வேண்டும்)</li>
+                        <li>ஒரு முறை கடவுச்சொல் (2FA இயக்கப்பட்டிருந்தால்)</li>
+                    </ul>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>4. உள்நுழைந்த நிலையைச் சரிபார்க்கவும்</h3>
+                    <div class="code-example">
+                        <pre><code>npm whoami</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publishing Your Package -->
+        <section class="content-section" id="publishing">
+            <h2>Publishing Your Package</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>1. பெயர் கிடைக்கும் தன்மையைச் சரிபார்க்கவும்</h3>
+                    <div class="code-example">
+                        <pre><code>npm view &lt;package-name&gt;</code></pre>
+                    </div>
+                    <p>அந்த பெயருடன் தொகுப்பு ஏற்கனவே இல்லையென்றால், நீங்கள் அந்த பெயரைப் பயன்படுத்தலாம்.</p>
+                    <p>அது இருந்தால், உங்கள் package.json இல் வேறு பெயரை நீங்கள் தேர்வு செய்ய வேண்டும்.</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                    <h3>2. தொகுப்பை உள்ளூரில் சோதிக்கவும்</h3>
+                    <p>வெளியிடுவதற்கு முன், உங்கள் தொகுப்பை உள்ளூரில் சோதிக்கவும்:</p>
+                    <div class="code-example">
+                        <pre><code># In your package directory
+npm link
+
+# In another project directory
+npm link &lt;package-name&gt;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>3. npm பதிவேட்டில் வெளியிடவும்</h3>
+                    <div class="code-example">
+                        <pre><code># First, make sure you're in the right directory
+cd path/to/your/package
+
+# Publish to the public npm registry
+npm publish</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h3>4. குறிப்பிட்ட டேக் உடன் வெளியிடவும்</h3>
+                    <div class="code-example">
+                        <pre><code>npm publish --tag beta</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>5. பொது தொகுப்பை வெளியிடவும்</h3>
+                    <div class="code-example">
+                        <pre><code>npm publish --access public</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">🚀</span> வெற்றிகரமான வெளியீட்டிற்கான உதவிக்குறிப்புகள்:</h4>
+                <ul>
+                    <li>வெளியிடுவதற்கு முன் உங்கள் தொகுப்பை முழுமையாகச் சோதிக்கவும்</li>
+                    <li>ஒரு தெளிவான README.md கோப்பைச் சேர்க்கவும்</li>
+                    <li>உங்கள் தொகுப்பு பெயர் தனித்துவமானது என்பதை உறுதிப்படுத்தவும்</li>
+                    <li>உங்கள் npm கணக்கில் உள்நுழைந்துள்ளீர்கள் என்பதை உறுதிப்படுத்தவும்</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Updating Your Package -->
+        <section class="content-section" id="updating-package">
+            <h2>Updating Your Package</h2>
+            
+            <h3>1. பதிப்பு எண்ணைப் புதுப்பிக்கவும்</h3>
+            <p>உங்கள் தொகுப்பு பதிப்பைப் புதுப்பிக்க செமான்டிக் பதிப்பு மேலாண்மையைப் (SemVer) பயன்படுத்தவும்:</p>
+            
+            <div class="code-comparison">
+                <div class="code-column">
+                    <h4>பேட்ச் வெளியீட்டிற்கு (பிழை திருத்தங்கள்)</h4>
+                    <div class="code-example">
+                        <pre><code>npm version patch</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>சிறிய வெளியீட்டிற்கு (பின்னோக்கி இணக்கமான அம்சங்கள்)</h4>
+                    <div class="code-example">
+                        <pre><code>npm version minor</code></pre>
+                    </div>
+                </div>
+                
+                <div class="code-column">
+                    <h4>முக்கிய வெளியீட்டிற்கு (உடைக்கும் மாற்றங்கள்)</h4>
+                    <div class="code-example">
+                        <pre><code>npm version major</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>2. மாற்றப் பதிவைப் புதுப்பிக்கவும்</h3>
+            <p>இந்த பதிப்பில் உள்ள மாற்றங்களை ஆவணப்படுத்த உங்கள் CHANGELOG.md ஐப் புதுப்பிக்கவும்.</p>
+            
+            <h3>3. புதுப்பிப்பை வெளியிடவும்</h3>
+            <div class="code-example">
+                <pre><code>npm publish</code></pre>
+            </div>
+            
+            <h3>4. வெளியீட்டைக் குறிக்கவும் (விருப்பத்தேர்வு)</h3>
+            <p>நீங்கள் Git ஐப் பயன்படுத்தினால், வெளியீட்டிற்கான குறியை உருவாக்கவும்:</p>
+            <div class="code-example">
+                <pre><code>git tag -a v1.0.0 -m "Initial release"
+git push origin v1.0.0</code></pre>
+            </div>
+        </section>
+
+        <!-- Managing Published Packages -->
+        <section class="content-section" id="managing-packages">
+            <h2>Managing Published Packages</h2>
+            
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <h3>தொகுப்பை வெளியிடாது செய்தல்</h3>
+                    <p>npm பதிவேட்டிலிருந்து ஒரு தொகுப்பை அகற்ற:</p>
+                    <div class="code-example">
+                        <pre><code># Unpublish a specific version
+npm unpublish &lt;package-name&gt;@&lt;version&gt;
+
+# Unpublish the entire package (only works within 72 hours of publishing)
+npm unpublish &lt;package-name&gt; --force</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>குறிப்பு:</h3>
+                    <p>வெளியிடாது செய்வது கடுமையாக ஊக்குவிக்கப்படுகிறது, ஏனெனில் இது உங்கள் தொகுப்பைச் சார்ந்திருக்கும் மற்ற திட்டங்களை உடைக்கும். அதற்கு பதிலாக <code>npm deprecate</code> பயன்படுத்துவதைக் கவனியுங்கள்.</p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h3>தொகுப்பைக் கைவிடுதல்</h3>
+                    <p>நீங்கள் பயனர்கள் ஒரு பதிப்பை நிறுவுவதைத் தடுக்க விரும்பினால் ஆனால் அதை இருக்கும் பயனர்களுக்குக் கிடைக்க வைக்க:</p>
+                    <div class="code-example">
+                        <pre><code># Deprecate a specific version
+npm deprecate &lt;package-name&gt;@&lt;version&gt; "message"
+
+# Example
+npx deprecate my-package@1.0.0 "This version is no longer maintained. Please upgrade to v2.0.0"</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>உரிமையை மாற்றுதல்</h3>
+                    <p>மற்றொரு பயனர் அல்லது அமைப்புக்கு ஒரு தொகுப்பை மாற்ற:</p>
+                    <div class="code-example">
+                        <pre><code>npm owner add &lt;username&gt; &lt;package-name&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4><span class="warning-icon">🚫</span> முக்கியமானது:</h4>
+                <p>தொகுப்புகளை வெளியிடாது செய்வது npm சமூகத்தில் மோசமான பழக்கமாகக் கருதப்படுகிறது. உங்கள் தொகுப்பைப் பராமரிக்க முடியாவிட்டால், அதைக் கைவிடுவது நல்லது.</p>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="content-section" id="best-practices">
+            <h2>Best Practices</h2>
+            
+            <div class="best-practice-list">
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>செமான்டிக் பதிப்பு மேலாண்மையைப் பின்பற்றவும் - MAJOR.MINOR.PATCH பதிப்பு எண்களைத் தகுந்தவாறு பயன்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>நல்ல ஆவணங்களை எழுதுங்கள் - உங்கள் README இல் தெளிவான பயன்பாட்டு எடுத்துக்காட்டுகளைச் சேர்க்கவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>சோதனைகளைச் சேர்க்கவும் - யூனிட் சோதனைகளைச் சேர்க்கவும் மற்றும் அவற்றை எவ்வாறு இயக்குவது என்பதை ஆவணப்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>.npmignore ஐப் பயன்படுத்தவும் - தேவையான கோப்புகளை மட்டுமே வெளியிடவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>முக்கிய சொற்களைச் சேர்க்கவும் - மற்றவர்கள் உங்கள் தொகுப்பைக் கண்டுபிடிக்க உதவுங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>சரியான உரிமத்தைத் தேர்ந்தெடுக்கவும் - உங்கள் விதிமுறைகளைப் பயனர்களுக்குத் தெளிவுபடுத்துங்கள்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>மாற்றப் பதிவைப் பராமரிக்கவும் - பதிப்புகளுக்கு இடையிலான மாற்றங்களை ஆவணப்படுத்தவும்</span>
+                </div>
+                <div class="practice-item positive">
+                    <i class="fas fa-check-circle"></i>
+                    <span>தொடர்ச்சியான ஒருங்கிணைப்பைப் பயன்படுத்தவும் - சோதனை மற்றும் வெளியீட்டை தானியக்கமாக்குங்கள்</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section" id="summary">
+            <h2>Summary</h2>
+            
+            <p>npm க்கு தொகுப்புகளை வெளியிடுவது உங்கள் குறியீட்டை Node.js சமூகத்துடன் பகிர ஒரு சிறந்த வழியாகும்.</p>
+            
+            <p>நீங்கள் சிறந்த நடைமுறைகளைப் பின்பற்றி உங்கள் தொகுப்புகளை நன்கு பராமரித்தால், மற்றவர்கள் அதன் மீது கட்டமைக்கக்கூடிய மதிப்புமிக்க கருவிகளை நீங்கள் பங்களிக்கலாம்.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-share-alt"></i>
+                        <h4>பகிர்வு</h4>
+                    </div>
+                    <p>உங்கள் தீர்வுகளை உலகத்துடன் பகிர்ந்து கொள்ளுங்கள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-hands-helping"></i>
+                        <h4>சமூகம்</h4>
+                    </div>
+                    <p>Node.js சமூகத்திற்கு பங்களிக்கவும்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-tools"></i>
+                        <h4>கருவிகள்</h4>
+                    </div>
+                    <p>மற்றவர்கள் பயன்படுத்தக்கூடிய கருவிகளை உருவாக்குங்கள்</p>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-header">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>கற்றல்</h4>
+                    </div>
+                    <p>மற்றவர்களின் குறியீட்டிலிருந்து கற்றுக்கொள்ளுங்கள்</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><span class="tip-icon">💎</span> நினைவில் கொள்ளுங்கள்:</h4>
+                <p>பெரிய சக்தியுடன் பெரிய பொறுப்பு வருகிறது. நீங்கள் ஒரு தொகுப்பை வெளியிடும்போது, அதைப் பராமரிக்க அல்லது அதன் நிலையைப் பயனர்களுக்குத் தெளிவாகத் தொடர்பு கொள்ள நீங்கள் ஒரு உறுதிப்பாட்டைச் செய்கிறீர்கள்.</p>
+            </div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section class="content-section" id="exercise">
+            <h2>Exercise</h2>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> தொகுப்பை npm க்கு வெளியிட சரியான கட்டளையைத் தேர்ந்தெடுக்கவும்.</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">npm deploy</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "npm deploy" என்பது npm இல் ஒரு செல்லுபடியாகும் கட்டளை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">npm release</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "npm release" என்பது npm இல் ஒரு செல்லுபடியாகும் கட்டளை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">npm publish</div>
+                            <div class="option-feedback correct">✓ சரி! "npm publish" என்பது npm பதிவேட்டில் ஒரு தொகுப்பை வெளியிட பயன்படும் சரியான கட்டளை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">npm push</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "npm push" என்பது npm இல் ஒரு செல்லுபடியாகும் கட்டளை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exercise-box">
+                <h4><span class="exercise-icon">❓</span> பின்வரும் கட்டளைகளில் எது ஒரு தொகுப்பின் பேட்ச் பதிப்பைப் புதுப்பிக்கும்?</h4>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">npm update patch</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "npm update patch" என்பது சரியான கட்டளை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="true">
+                        <div class="option-content">
+                            <div class="option-text">npm version patch</div>
+                            <div class="option-feedback correct">✓ சரி! "npm version patch" என்பது ஒரு தொகுப்பின் பேட்ச் பதிப்பைப் புதுப்பிக்கும் சரியான கட்டளை</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">npm patch</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "npm patch" என்பது npm இல் ஒரு செல்லுபடியாகும் கட்டளை அல்ல</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card" data-correct="false">
+                        <div class="option-content">
+                            <div class="option-text">npm bump patch</div>
+                            <div class="option-feedback incorrect">✗ தவறு! "npm bump patch" என்பது npm இல் ஒரு செல்லுபடியாகும் கட்டளை அல்ல</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="Node.js Managing Dependencies.html" class="nav-tab prev">
+                <i class="fas fa-arrow-left"></i>
+                <span>முந்தைய</span>
+            </a>
+            <a href="Node.js HTTP Module.html" class="nav-tab next">
+                <span>அடுத்தது</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Jassif Team Institution</h3>
+                <p>Leading educational institution providing quality programming education in Tamil.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#what-is-publishing">தொகுப்பு வெளியிடுவது என்றால் என்ன</a></li>
+                    <li><a href="#preparing-package">தொகுப்பைத் தயாரித்தல்</a></li>
+                    <li><a href="#npm-account">npm கணக்கு</a></li>
+                    <li><a href="#publishing">தொகுப்பை வெளியிடுதல்</a></li>
+                    <li><a href="#exercise">பயிற்சி</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Location & Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Jassif Team Institution. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all content sections for animation
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Exercise interaction
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Show feedback for all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.querySelector('.option-feedback').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Home Button -->
+    <a href="index.html" class="home-icon">
+        <i class="fas fa-home"></i>
+    </a>
+</body>
+</html>
