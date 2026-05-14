@@ -77,6 +77,76 @@ const courseStructure = {
       ]
     }
   },
+  'telugu': {
+    'WEB_DEVELOPMENT': {
+      name: 'Web Development',
+      icon: 'fa-globe',
+      courses: [
+        { name: 'HTML', folder: 'WEB_HTML' },
+        { name: 'CSS', folder: 'WEB_CSS' },
+        { name: 'JavaScript', folder: 'WEB_JAVASCRIPT' }
+      ]
+    },
+    'FRONT_END_DEVELOPMENT': {
+      name: 'Front End Development',
+      icon: 'fa-code',
+      courses: [
+        { name: 'HTML', folder: 'front_HTML' },
+        { name: 'CSS', folder: 'front_CSS' },
+        { name: 'JavaScript', folder: 'front_JAVASCRIPT' }
+      ]
+    },
+    'full stack development': {
+      name: 'Full Stack Development',
+      icon: 'fa-layer-group',
+      courses: [
+        { name: 'HTML', folder: 'HTML' },
+        { name: 'CSS', folder: 'CSS' },
+        { name: 'JavaScript', folder: 'JAVASCRIPT' },
+        { name: 'Angular', folder: 'ANGULAR' },
+        { name: 'Angular JS', folder: 'ANGULAR_JS' },
+        { name: 'Node.js', folder: 'NODE_JS' },
+        { name: 'MongoDB', folder: 'MONGO_DB' },
+        { name: 'Python', folder: 'PYTHON' },
+        { name: 'MySQL', folder: 'MY_SQL' },
+        { name: 'SQL', folder: 'SQL' }
+      ]
+    },
+    'backend development': {
+      name: 'Backend Development',
+      icon: 'fa-server',
+      courses: [
+        { name: 'Python', folder: 'PYTHON' },
+        { name: 'Node.js', folder: 'NODE_JS' }
+      ]
+    },
+    'programming-languages': {
+      name: 'Programming Languages',
+      icon: 'fa-laptop-code',
+      courses: [
+        { name: 'Python', folder: 'PYTHON' },
+        { name: 'JavaScript', folder: 'JAVASCRIPT' },
+        { name: 'HTML', folder: 'HTML' },
+        { name: 'CSS', folder: 'CSS' },
+        { name: 'MongoDB', folder: 'MONGO_DB' },
+        { name: 'Angular', folder: 'ANGULAR' },
+        { name: 'Angular JS', folder: 'ANGULAR_JS' },
+        { name: 'Git', folder: 'GIT' },
+        { name: 'MySQL', folder: 'MY_SQL' },
+        { name: 'SQL', folder: 'SQL' },
+        { name: 'Node.js', folder: 'NODE_JS' }
+      ]
+    },
+    'database': {
+      name: 'Database Courses',
+      icon: 'fa-database',
+      courses: [
+        { name: 'MySQL', folder: 'MY_SQL' },
+        { name: 'SQL', folder: 'SQL' },
+        { name: 'MongoDB', folder: 'MONGO_DB' }
+      ]
+    }
+  },
   'hindi': {},
   'bengali': {},
   'malayalam': {}
