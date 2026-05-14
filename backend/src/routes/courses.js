@@ -160,13 +160,21 @@ router.get('/', (req, res) => {
     return res.status(400).json({ error: 'Invalid language' });
   }
 
-  const courses = courseStructure[language];
-  const hasCourses = Object.keys(courses).length > 0;
+  let courses = courseStructure[language];
+  let hasCourses = Object.keys(courses).length > 0;
+  let basePath = `/courses/${language}`;
+
+  // Fallback to Tamil courses for languages without their own content
+  if (!hasCourses && language !== 'tamil') {
+    courses = courseStructure['tamil'];
+    hasCourses = true;
+    basePath = '/courses/tamil';
+  }
 
   res.json({
     language: language,
     courses: courses,
-    basePath: `/courses/${language}`,
+    basePath: basePath,
     hasCourses: hasCourses
   });
 });
