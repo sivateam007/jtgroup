@@ -637,7 +637,7 @@
                 
                 for (const [category, info] of Object.entries(data.courses)) {
                     html += `
-                        <a href="${data.basePath}/${category}/" class="course-card">
+                        <a href="/courses/${currentLanguage}/${category}/" class="course-card">
                             <div class="course-icon">
                                 <i class="fas ${iconMap[category] || 'fa-book'}"></i>
                             </div>
@@ -711,13 +711,13 @@
                     <li><a href="/courses/tamil/programming-languages/">Programming</a></li>
                     <li><a href="/courses/tamil/WEB_DEVELOPMENT/">Web Dev</a></li>
                 </ul>
-                <h4 style="color: var(--accent); margin-top: 1rem; margin-bottom: 0.5rem;">తెలుగు Courses</h4>
+                <h4 style="color: var(--accent); margin-top: 1rem; margin-bottom: 0.5rem;">courses</h4>
                 <ul>
-                    <li><a href="/courses/telugu/FRONT_END_DEVELOPMENT/">Front End</a></li>
-                    <li><a href="/courses/telugu/full stack development/">Full Stack</a></li>
-                    <li><a href="/courses/telugu/backend development/">Backend</a></li>
-                    <li><a href="/courses/telugu/programming-languages/">Programming</a></li>
-                    <li><a href="/courses/telugu/WEB_DEVELOPMENT/">Web Dev</a></li>
+                    <li><a href="/courses/tamil/FRONT_END_DEVELOPMENT/">Front End</a></li>
+                    <li><a href="/courses/tamil/full stack development/">Full Stack</a></li>
+                    <li><a href="/courses/tamil/backend development/">Backend</a></li>
+                    <li><a href="/courses/tamil/programming-languages/">Programming</a></li>
+                    <li><a href="/courses/tamil/WEB_DEVELOPMENT/">Web Dev</a></li>
                 </ul>
             </div>
         </div>
@@ -725,5 +725,79 @@
             <p>&copy; 2026 JT GROUP OF INSTITUTION. All rights reserved.</p>
         </div>
     </footer>
+
+<script>
+(function(){
+    var langMap = {tamil:'ta', hindi:'hi', bengali:'bn', malayalam:'ml', telugu:'te'};
+    var path = window.location.pathname;
+    var match = path.match(/\/courses\/(tamil|hindi|bengali|malayalam|telugu)\//);
+    var targetLang = match ? langMap[match[1]] : 'ta';
+    if (targetLang === 'ta') return;
+    var div = document.createElement('div');
+    div.id = 'gt_auto';
+    div.style.cssText = 'display:none!important;width:0!important;height:0!important';
+    document.body.appendChild(div);
+    window.googleTranslateElementInit = function() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'ta',
+            includedLanguages: 'ta,hi,bn,ml,te,en',
+            autoDisplay: false,
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'gt_auto');
+        var check = setInterval(function() {
+            var sel = document.querySelector('.goog-te-combo');
+            if (sel && sel.options.length > 1) {
+                clearInterval(check);
+                sel.value = targetLang;
+                sel.dispatchEvent(new Event('change'));
+            }
+        }, 200);
+    };
+})();
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>
+.goog-te-banner-frame.skiptranslate{display:none!important}
+body{top:0!important}
+.goog-te-gadget{display:none!important}
+.skiptranslate{display:none!important}
+</style>
+
+<script>
+(function(){
+    var langMap = {tamil:'ta', hindi:'hi', bengali:'bn', malayalam:'ml', telugu:'te'};
+    var path = window.location.pathname;
+    var match = path.match(/\/courses\/(tamil|hindi|bengali|malayalam|telugu)\//);
+    var targetLang = match ? langMap[match[1]] : 'ta';
+    if (targetLang === 'ta') return;
+    var div = document.createElement('div');
+    div.id = 'gt_auto';
+    div.style.cssText = 'display:none!important;width:0!important;height:0!important';
+    document.body.appendChild(div);
+    window.googleTranslateElementInit = function() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'ta',
+            includedLanguages: 'ta,hi,bn,ml,te,en',
+            autoDisplay: false,
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'gt_auto');
+        var check = setInterval(function() {
+            var sel = document.querySelector('.goog-te-combo');
+            if (sel && sel.options.length > 1) {
+                clearInterval(check);
+                sel.value = targetLang;
+                sel.dispatchEvent(new Event('change'));
+            }
+        }, 200);
+    };
+})();
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>
+.goog-te-banner-frame.skiptranslate{display:none!important}
+body{top:0!important}
+.goog-te-gadget{display:none!important}
+.skiptranslate{display:none!important}
+</style>
 </body>
 </html>

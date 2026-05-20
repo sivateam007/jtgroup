@@ -74,10 +74,10 @@ app.use('/courses', (req, res, next) => {
   if (urlPath.endsWith('/') || urlPath.endsWith('index.html')) {
     // Extract the path after /courses/
     const subPath = urlPath.replace(/^\//, '').replace(/\/$/, '');
-    const indexPath = path.join(__dirname, '../../public/courses', subPath, 'index.html');
+    let indexPath = path.join(__dirname, '../../public/courses', subPath, 'index.html');
 
     // Security: Ensure the resolved path is within the courses directory
-    const resolvedPath = path.resolve(indexPath);
+    let resolvedPath = path.resolve(indexPath);
     const coursesRoot = path.resolve(path.join(__dirname, '../../public/courses'));
     if (!resolvedPath.startsWith(coursesRoot)) {
       return res.status(403).send('Forbidden');
@@ -86,12 +86,36 @@ app.use('/courses', (req, res, next) => {
     if (require('fs').existsSync(indexPath)) {
       return res.sendFile(indexPath);
     }
+
+    // Fallback: if language folder doesn't exist, try serving from Tamil
+    const langMatch = subPath.match(/^([^/]+)/);
+    if (langMatch && langMatch[1] !== 'tamil') {
+      const fallbackPath = subPath.replace(/^[^/]+/, 'tamil');
+      indexPath = path.join(__dirname, '../../public/courses', fallbackPath, 'index.html');
+      resolvedPath = path.resolve(indexPath);
+      if (resolvedPath.startsWith(coursesRoot) && require('fs').existsSync(indexPath)) {
+        return res.sendFile(indexPath);
+      }
+    }
   }
   next();
 });
 
 // Serve course content with access control (must be after the public routes)
 app.use('/courses', require('./middleware/accessControl'), express.static(path.join(__dirname, '../../public/courses')));
+
+// Fallback: serve Tamil course files for languages that don't have their own folder
+app.use('/courses', (req, res, next) => {
+  const langMatch = req.path.match(/^\/([^/]+)/);
+  if (langMatch && langMatch[1] !== 'tamil') {
+    const tamilPath = req.path.replace(/^\/[^/]+/, '/tamil');
+    const filePath = path.join(__dirname, '../../public/courses', tamilPath);
+    if (require('fs').existsSync(filePath)) {
+      return res.sendFile(filePath);
+    }
+  }
+  next();
+});
 
 // Landing page
 app.get('/', (req, res) => {

@@ -162,19 +162,17 @@ router.get('/', (req, res) => {
 
   let courses = courseStructure[language];
   let hasCourses = Object.keys(courses).length > 0;
-  let basePath = `/courses/${language}`;
 
   // Fallback to Tamil courses for languages without their own content
   if (!hasCourses && language !== 'tamil') {
     courses = courseStructure['tamil'];
     hasCourses = true;
-    basePath = '/courses/tamil';
   }
 
   res.json({
     language: language,
     courses: courses,
-    basePath: basePath,
+    basePath: `/courses/${language}`,
     hasCourses: hasCourses
   });
 });
