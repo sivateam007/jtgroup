@@ -36,7 +36,7 @@
     </div>
     <div id="jt-chat-window">
       <div id="jt-chat-header">
-        <span>SK Assistant</span>
+        <span>Goku</span>
         <button id="jt-chat-close">&times;</button>
       </div>
       <div id="jt-lang-bar"></div>
@@ -83,7 +83,7 @@
     chatWindow.classList.add('open');
     bubble.style.display = 'none';
     if (chatBody.children.length === 0) {
-      addBotMsg('Hello! 👋 I\'m <strong>SK Assistant</strong>. Pick a language above, then choose a question below.');
+      addBotMsg('Hello! 👋 I\'m <strong>Goku</strong>. Pick a language above, then choose a question below.');
     } else {
       setTimeout(() => { chatBody.scrollTop = chatBody.scrollHeight; }, 100);
     }

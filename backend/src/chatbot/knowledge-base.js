@@ -1,7 +1,7 @@
 const en = {
   greeting: 'Hello! 👋 Welcome to JT Group of Institution. How can I help you today?',
   how_are_you: "I'm doing great, thanks for asking! How can I assist you today?",
-  who_are_you: 'I\'m <strong>SK Assistant</strong>, an AI assistant for JT Group of Institution\'s online learning platform. I can help you find courses, understand pricing, and navigate the website!',
+  who_are_you: 'I\'m <strong>Goku</strong>, an AI assistant for JT Group of Institution\'s online learning platform. I can help you find courses, understand pricing, and navigate the website!',
   thank_you: "You're welcome! 😊 If you have any more questions, feel free to ask.",
   goodbye: 'Goodbye! Happy learning with JT Group of Institution! 🎓',
   help: `I can help you with:
@@ -112,7 +112,7 @@ What would you like to explore?`,
 const ta = {
   greeting: 'வணக்கம்! 👋 ஜேடி குரூப் ஆப் இன்ஸ்டிடியூஷனுக்கு வரவேற்கிறோம். இன்று நான் உங்களுக்கு எப்படி உதவ முடியும்?',
   how_are_you: 'நான் நன்றாக இருக்கிறேன், நன்றி! இன்று நான் உங்களுக்கு எப்படி உதவ முடியும்?',
-  who_are_you: 'நான் <strong>SK Assistant</strong>, ஜேடி குரூப் ஆப் இன்ஸ்டிடியூஷனின் ஆன்லைன் கற்றல் தளத்திற்கான AI உதவியாளர். படிப்புகளைக் கண்டறிய, விலை நிர்ணயத்தைப் புரிந்துகொள்ள, மற்றும் இணையதளத்தில் வழிசெலுத்த உங்களுக்கு உதவ முடியும்!',
+  who_are_you: 'நான் <strong>Goku</strong>, ஜேடி குரூப் ஆப் இன்ஸ்டிடியூஷனின் ஆன்லைன் கற்றல் தளத்திற்கான AI உதவியாளர். படிப்புகளைக் கண்டறிய, விலை நிர்ணயத்தைப் புரிந்துகொள்ள, மற்றும் இணையதளத்தில் வழிசெலுத்த உங்களுக்கு உதவ முடியும்!',
   thank_you: 'உங்களை வரவேற்கிறேன்! 😊 மேலும் கேள்விகள் இருந்தால், தயங்காமல் கேளுங்கள்.',
   goodbye: 'பிரியாவிடை! ஜேடி குரூப் ஆப் இன்ஸ்டிடியூஷனுடன் மகிழ்ச்சியான கற்றல்! 🎓',
   help: `நான் உங்களுக்கு உதவ முடியும்:
