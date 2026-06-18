@@ -1,0 +1,110 @@
+JT GROUP - REUPLOAD GUIDE (Preserve Existing Users)
+Documentation created by Sivateam
+=====================================================
+
+Use this guide if you already have JT Group running on your VPS
+and you want to upload the updated project without losing user data.
+
+-----------------------------------------------------
+PREREQUISITES
+-----------------------------------------------------
+- SSH access to your VPS
+- Your existing app.db backed up on your computer
+- The updated project folder (v1) on your computer
+
+-----------------------------------------------------
+STEP 1: Backup Current Database
+-----------------------------------------------------
+SSH into your VPS and backup the existing database:
+
+  ssh root@your-vps-ip
+  cp /var/www/jtgroupofinstitution/backend/data/app.db ~/app.db.backup
+  ls -la ~/app.db.backup
+
+Keep this SSH session open for Step 3.
+
+-----------------------------------------------------
+STEP 2: Upload New Project Files
+-----------------------------------------------------
+From your computer, upload the v1 folder to your VPS.
+
+Option A - SCP (recommended):
+  scp -r /path/to/v1 root@your-vps-ip:/var/www/jtgroupofinstitution-new
+
+Option B - FTP (FileZilla, WinSCP):
+  Connect via SFTP (port 22) and upload v1 folder to /var/www/jtgroupofinstitution-new
+
+-----------------------------------------------------
+STEP 3: Swap Versions (Keep Database)
+-----------------------------------------------------
+On your VPS (same SSH session):
+
+  pm2 stop jtgroup
+  mv /var/www/jtgroupofinstitution /var/www/jtgroupofinstitution-old
+  mv /var/www/jtgroupofinstitution-new /var/www/jtgroupofinstitution
+  cp ~/app.db.backup /var/www/jtgroupofinstitution/backend/data/app.db
+  chmod -R 755 /var/www/jtgroupofinstitution
+  chmod 644 /var/www/jtgroupofinstitution/backend/data/app.db
+  cd /var/www/jtgroupofinstitution
+  cp backend/.env.example .env
+
+Now edit the .env file (see Step 4).
+
+-----------------------------------------------------
+STEP 4: Configure .env File
+-----------------------------------------------------
+  nano /var/www/jtgroupofinstitution/.env
+
+Fill in these values:
+
+  PORT                  = 3000
+  NODE_ENV              = production
+  APP_ORIGIN            = https://yourdomain.com
+  JWT_SECRET            = your secret key
+  JWT_COOKIE_NAME       = jt_group_token
+  RAZORPAY_KEY_ID       = your Razorpay key
+  RAZORPAY_KEY_SECRET   = your Razorpay secret
+  RAZORPAY_WEBHOOK_SECRET = your webhook secret
+  PLAN_PRICE_INR        = 999
+  PLAN_VALID_DAYS       = 365
+  CERTIFICATE_PRICE_INR = 499
+
+Save and exit (Ctrl+X, then Y, then Enter).
+
+-----------------------------------------------------
+STEP 5: Restart App
+-----------------------------------------------------
+  cd /var/www/jtgroupofinstitution
+  npm install --production
+  pm2 start backend/src/server.js --name jtgroup
+  pm2 save
+
+-----------------------------------------------------
+STEP 6: Verify
+-----------------------------------------------------
+  pm2 status
+  pm2 logs jtgroup --lines 20
+
+Visit your domain in a browser and check:
+- Login works with existing users
+- Courses load correctly
+- Dashboard shows fine
+
+-----------------------------------------------------
+STEP 7: Clean Up (if everything works)
+-----------------------------------------------------
+  rm -rf /var/www/jtgroupofinstitution-old
+
+-----------------------------------------------------
+IMPORTANT NOTES
+-----------------------------------------------------
+- app.db is auto-created on first signup. Restoring backup
+  preserves all users, subscriptions, and progress.
+- .env file is NOT included in the project. You must create it.
+- If JWT_SECRET changes, all users must log in again.
+- node_modules is included in the upload.
+- If app doesn't start, check: pm2 logs jtgroup
+- If users can't login, verify JWT_SECRET matches the old one.
+- If database not found, run:
+    mkdir -p /var/www/jtgroupofinstitution/backend/data
+    chmod 755 /var/www/jtgroupofinstitution/backend/data

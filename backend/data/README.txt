@@ -1,9 +1,11 @@
 JT GROUP OF INSTITUTION - DATABASE INFO
 =========================================
 
+Documentation created by Sivateam
+
 DATA FOLDER LOCATION:
 ----------------------
-C:\Users\siva\Desktop\project files\jtgroupofinstitution\backend\data\
+/var/www/jtgroupofinstitution/backend/data/
 
 WHAT'S IN THE DATA FOLDER:
 --------------------------

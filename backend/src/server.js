@@ -8,6 +8,7 @@ const authRoutes = require('./routes/auth');
 const paymentRoutes = require('./routes/payment');
 const courseRoutes = require('./routes/courses');
 const progressRoutes = require('./routes/progress');
+const chatRoutes = require('./routes/chat');
 const auth = require('./middleware/auth');
 
 const app = express();
@@ -57,6 +58,7 @@ app.use('/app', express.static(path.join(__dirname, '../../public/app')));
 // API routes with rate limiting
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/payment', auth, paymentRoutes); // Add auth middleware to protect payment routes
+app.use('/api/chat', chatRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/progress', auth, progressRoutes);
 
